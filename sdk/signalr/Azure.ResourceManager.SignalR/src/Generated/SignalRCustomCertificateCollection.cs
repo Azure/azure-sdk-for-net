@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SignalRCustomCertificateResource" /> and their operations.
-    /// Each <see cref="SignalRCustomCertificateResource" /> in the collection will belong to the same instance of <see cref="SignalRResource" />.
-    /// To get a <see cref="SignalRCustomCertificateCollection" /> instance call the GetSignalRCustomCertificates method from an instance of <see cref="SignalRResource" />.
+    /// A class representing a collection of <see cref="SignalRCustomCertificateResource"/> and their operations.
+    /// Each <see cref="SignalRCustomCertificateResource"/> in the collection will belong to the same instance of <see cref="SignalRResource"/>.
+    /// To get a <see cref="SignalRCustomCertificateCollection"/> instance call the GetSignalRCustomCertificates method from an instance of <see cref="SignalRResource"/>.
     /// </summary>
     public partial class SignalRCustomCertificateCollection : ArmCollection, IEnumerable<SignalRCustomCertificateResource>, IAsyncEnumerable<SignalRCustomCertificateResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRCustomCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRCustomCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRCustomCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRCustomCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.SignalR
             {
                 var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/customCertificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalRCustomCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Custom certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SignalRCustomCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SignalRCustomCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/customCertificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalRCustomCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Custom certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual NullableResponse<SignalRCustomCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SignalRCustomCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A Class representing a ManagedHsmPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedHsmPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedHsmPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedHsmResource" /> using the GetManagedHsmPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedHsmPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedHsmPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedHsmResource"/> using the GetManagedHsmPrivateEndpointConnection method.
     /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedHsmPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedHsmPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedHsmPrivateEndpointConnectionResource(ArmClient client, ManagedHsmPrivateEndpointConnectionData data) : this(client, data.Id)

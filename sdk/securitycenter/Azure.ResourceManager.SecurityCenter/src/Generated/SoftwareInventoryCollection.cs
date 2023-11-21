@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SoftwareInventoryResource" /> and their operations.
-    /// Each <see cref="SoftwareInventoryResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SoftwareInventoryCollection" /> instance call the GetSoftwareInventories method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SoftwareInventoryResource"/> and their operations.
+    /// Each <see cref="SoftwareInventoryResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SoftwareInventoryCollection"/> instance call the GetSoftwareInventories method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SoftwareInventoryCollection : ArmCollection, IEnumerable<SoftwareInventoryResource>, IAsyncEnumerable<SoftwareInventoryResource>
     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareInventoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareInventoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
@@ -245,6 +245,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SoftwareInventoryResource>> GetIfExistsAsync(string softwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+
+            using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareInventoryResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
+        public virtual NullableResponse<SoftwareInventoryResource> GetIfExists(string softwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+
+            using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareInventoryResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

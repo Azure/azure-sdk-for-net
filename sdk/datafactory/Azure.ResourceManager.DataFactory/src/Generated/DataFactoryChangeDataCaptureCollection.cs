@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryChangeDataCaptureResource" /> and their operations.
-    /// Each <see cref="DataFactoryChangeDataCaptureResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryChangeDataCaptureCollection" /> instance call the GetDataFactoryChangeDataCaptures method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryChangeDataCaptureResource"/> and their operations.
+    /// Each <see cref="DataFactoryChangeDataCaptureResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryChangeDataCaptureCollection"/> instance call the GetDataFactoryChangeDataCaptures method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryChangeDataCaptureCollection : ArmCollection, IEnumerable<DataFactoryChangeDataCaptureResource>, IAsyncEnumerable<DataFactoryChangeDataCaptureResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryChangeDataCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryChangeDataCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryChangeDataCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryChangeDataCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryChangeDataCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryChangeDataCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -321,6 +321,82 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChangeDataCapture_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="changeDataCaptureName"> The change data capture name. </param>
+        /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryChangeDataCaptureResource>> GetIfExistsAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
+
+            using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryChangeDataCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChangeDataCapture_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="changeDataCaptureName"> The change data capture name. </param>
+        /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryChangeDataCaptureResource> GetIfExists(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
+
+            using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, ifNoneMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryChangeDataCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

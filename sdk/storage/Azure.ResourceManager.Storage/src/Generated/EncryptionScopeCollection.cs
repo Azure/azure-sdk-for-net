@@ -21,9 +21,9 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EncryptionScopeResource" /> and their operations.
-    /// Each <see cref="EncryptionScopeResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
-    /// To get an <see cref="EncryptionScopeCollection" /> instance call the GetEncryptionScopes method from an instance of <see cref="StorageAccountResource" />.
+    /// A class representing a collection of <see cref="EncryptionScopeResource"/> and their operations.
+    /// Each <see cref="EncryptionScopeResource"/> in the collection will belong to the same instance of <see cref="StorageAccountResource"/>.
+    /// To get an <see cref="EncryptionScopeCollection"/> instance call the GetEncryptionScopes method from an instance of <see cref="StorageAccountResource"/>.
     /// </summary>
     public partial class EncryptionScopeCollection : ArmCollection, IEnumerable<EncryptionScopeResource>, IAsyncEnumerable<EncryptionScopeResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only encryption scope names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, when specified, will list encryption scopes with the specific state. Defaults to All. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only encryption scope names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, when specified, will list encryption scopes with the specific state. Defaults to All. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EncryptionScopeResource> GetAll(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionScopes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EncryptionScopeResource>> GetIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
+
+            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EncryptionScopeResource>(response.GetRawResponse());
+                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionScopes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
+        public virtual NullableResponse<EncryptionScopeResource> GetIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
+
+            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EncryptionScopeResource>(response.GetRawResponse());
+                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

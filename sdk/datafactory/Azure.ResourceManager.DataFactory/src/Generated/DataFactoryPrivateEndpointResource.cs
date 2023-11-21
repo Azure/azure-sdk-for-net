@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryPrivateEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryPrivateEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryPrivateEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryManagedVirtualNetworkResource" /> using the GetDataFactoryPrivateEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryPrivateEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryPrivateEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryManagedVirtualNetworkResource"/> using the GetDataFactoryPrivateEndpoint method.
     /// </summary>
     public partial class DataFactoryPrivateEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryPrivateEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="managedVirtualNetworkName"> The managedVirtualNetworkName. </param>
+        /// <param name="managedPrivateEndpointName"> The managedPrivateEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}/managedPrivateEndpoints/{managedPrivateEndpointName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryPrivateEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryPrivateEndpointResource(ArmClient client, DataFactoryPrivateEndpointData data) : this(client, data.Id)

@@ -12,6 +12,12 @@ namespace Azure.AI.OpenAI.Tests
 
         public string AzureCognitiveSearchApiKey => GetOptionalVariable("ACS_BYOD_API_KEY");
 
+        public string TestAudioInputPathEnglish => GetOptionalVariable("OAI_TEST_AUDIO_INPUT_ENGLISH_PATH");
+
+        public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
+
+        public AzureKeyCredential GetKeyVariable(string variableName) => new(GetOptionalVariable(variableName) ?? "placeholder");
+
         public void ThrowIfCannotDeploy()
         {
             string[] requiredVariableNames = new string[]

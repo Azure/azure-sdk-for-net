@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a PrivateEndpointConnectionProxy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateEndpointConnectionProxyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateEndpointConnectionProxyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource" /> using the GetPrivateEndpointConnectionProxy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateEndpointConnectionProxyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateEndpointConnectionProxyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource"/> using the GetPrivateEndpointConnectionProxy method.
     /// </summary>
     public partial class PrivateEndpointConnectionProxyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointConnectionProxyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="privateEndpointConnectionProxyId"> The privateEndpointConnectionProxyId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnectionProxyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionProxyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateEndpointConnectionProxyResource(ArmClient client, PrivateEndpointConnectionProxyData data) : this(client, data.Id)

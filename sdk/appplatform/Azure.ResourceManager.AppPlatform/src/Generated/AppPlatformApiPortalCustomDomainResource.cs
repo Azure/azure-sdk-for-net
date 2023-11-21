@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformApiPortalCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformApiPortalCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformApiPortalCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformApiPortalResource" /> using the GetAppPlatformApiPortalCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformApiPortalCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformApiPortalCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformApiPortalResource"/> using the GetAppPlatformApiPortalCustomDomain method.
     /// </summary>
     public partial class AppPlatformApiPortalCustomDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformApiPortalCustomDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="apiPortalName"> The apiPortalName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}/domains/{domainName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformApiPortalCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformApiPortalCustomDomainResource(ArmClient client, AppPlatformApiPortalCustomDomainData data) : this(client, data.Id)

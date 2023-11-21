@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection" /> instance call the GetDeviceProvisioningServicesPrivateLinkResources method from an instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> and their operations.
+    /// Each <see cref="DeviceProvisioningServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
+    /// To get a <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> instance call the GetDeviceProvisioningServicesPrivateLinkResources method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateLinkResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,6 +231,80 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<DeviceProvisioningServicesPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<DeviceProvisioningServicesPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

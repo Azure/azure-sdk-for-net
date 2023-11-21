@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                    Value = BinaryData.FromString("\"[parameters('storageAccountType')]\""),
                 },
             })
             {
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["tagName"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("costCenter"),
+                    Value = BinaryData.FromString("\"costCenter\""),
                 },
                 ["tagValue"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                    Value = BinaryData.FromString("\"[parameter('costCenter')]\""),
                 },
             })
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             // invoke the operation
             string artifactName = "ownerAssignment";
-            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("\"[parameters('owners')]\""))
             {
                 DisplayName = "enforce owners of given subscription",
             };
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                    Value = BinaryData.FromString("\"[parameters('storageAccountType')]\""),
                 },
             })
             {
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["tagName"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("costCenter"),
+                    Value = BinaryData.FromString("\"costCenter\""),
                 },
                 ["tagValue"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                    Value = BinaryData.FromString("\"[parameter('costCenter')]\""),
                 },
             })
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             // invoke the operation
             string artifactName = "ownerAssignment";
-            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("\"[parameters('owners')]\""))
             {
                 DisplayName = "enforce owners of given subscription",
             };
@@ -431,6 +431,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // MG-ARMTemplateArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_MGARMTemplateArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/ARMTemplateArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "providers/Microsoft.Management/managementGroups/ContosoOnlineGroup";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "storageTemplate";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // MG-PolicyAssignmentArtifact
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -493,6 +535,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             bool result = await collection.ExistsAsync(artifactName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // MG-PolicyAssignmentArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_MGPolicyAssignmentArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/PolicyAssignmentArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "providers/Microsoft.Management/managementGroups/ContosoOnlineGroup";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "costCenterPolicy";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // MG-RoleAssignmentArtifact
@@ -559,6 +643,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // MG-RoleAssignmentArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_MGRoleAssignmentArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/RoleAssignmentArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "providers/Microsoft.Management/managementGroups/ContosoOnlineGroup";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "ownerAssignment";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Sub-ARMTemplateArtifact
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -621,6 +747,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             bool result = await collection.ExistsAsync(artifactName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Sub-ARMTemplateArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SubARMTemplateArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/ARMTemplateArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "storageTemplate";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // Sub-PolicyAssignmentArtifact
@@ -687,6 +855,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Sub-PolicyAssignmentArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SubPolicyAssignmentArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/PolicyAssignmentArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "costCenterPolicy";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Sub-RoleAssignmentArtifact
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -749,6 +959,48 @@ namespace Azure.ResourceManager.Blueprint.Samples
             bool result = await collection.ExistsAsync(artifactName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Sub-RoleAssignmentArtifact
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SubRoleAssignmentArtifact()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/RoleAssignmentArtifact_Get.json
+            // this example is just showing the usage of "Artifacts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlueprintResource created on azure
+            // for more information of creating BlueprintResource, please refer to the document of BlueprintResource
+            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            string blueprintName = "simpleBlueprint";
+            ResourceIdentifier blueprintResourceId = BlueprintResource.CreateResourceIdentifier(resourceScope, blueprintName);
+            BlueprintResource blueprint = client.GetBlueprintResource(blueprintResourceId);
+
+            // get the collection of this BlueprintArtifactResource
+            BlueprintArtifactCollection collection = blueprint.GetBlueprintArtifacts();
+
+            // invoke the operation
+            string artifactName = "ownerAssignment";
+            NullableResponse<BlueprintArtifactResource> response = await collection.GetIfExistsAsync(artifactName);
+            BlueprintArtifactResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // MG-ArtifactList

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkVirtualAppliance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkVirtualApplianceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkVirtualApplianceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkVirtualAppliance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkVirtualApplianceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkVirtualApplianceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkVirtualAppliance method.
     /// </summary>
     public partial class NetworkVirtualApplianceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkVirtualApplianceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkVirtualApplianceName"> The networkVirtualApplianceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualApplianceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkVirtualApplianceResource(ArmClient client, NetworkVirtualApplianceData data) : this(client, data.Id)
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualApplianceSiteResources and their operations over a VirtualApplianceSiteResource. </returns>
         public virtual VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {
-            return GetCachedClient(Client => new VirtualApplianceSiteCollection(Client, Id));
+            return GetCachedClient(client => new VirtualApplianceSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualApplianceSiteResource>> GetVirtualApplianceSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualApplianceSiteResource> GetVirtualApplianceSite(string siteName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceConnectionResources and their operations over a NetworkVirtualApplianceConnectionResource. </returns>
         public virtual NetworkVirtualApplianceConnectionCollection GetNetworkVirtualApplianceConnections()
         {
-            return GetCachedClient(Client => new NetworkVirtualApplianceConnectionCollection(Client, Id));
+            return GetCachedClient(client => new NetworkVirtualApplianceConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +171,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the NVA connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkVirtualApplianceConnectionResource>> GetNetworkVirtualApplianceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +194,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the NVA connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceConnectionResource> GetNetworkVirtualApplianceConnection(string connectionName, CancellationToken cancellationToken = default)
         {

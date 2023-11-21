@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a JitNetworkAccessPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JitNetworkAccessPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJitNetworkAccessPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetJitNetworkAccessPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JitNetworkAccessPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJitNetworkAccessPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetJitNetworkAccessPolicy method.
     /// </summary>
     public partial class JitNetworkAccessPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JitNetworkAccessPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="jitNetworkAccessPolicyName"> The jitNetworkAccessPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JitNetworkAccessPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JitNetworkAccessPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JitNetworkAccessPolicyResource(ArmClient client, JitNetworkAccessPolicyData data) : this(client, data.Id)

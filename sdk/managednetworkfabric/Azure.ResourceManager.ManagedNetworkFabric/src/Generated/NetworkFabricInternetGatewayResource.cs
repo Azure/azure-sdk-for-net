@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricInternetGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricInternetGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricInternetGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricInternetGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricInternetGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricInternetGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricInternetGateway method.
     /// </summary>
     public partial class NetworkFabricInternetGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricInternetGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="internetGatewayName"> The internetGatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string internetGatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricInternetGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternetGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricInternetGatewayResource(ArmClient client, NetworkFabricInternetGatewayData data) : this(client, data.Id)

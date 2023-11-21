@@ -21,9 +21,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapabilityResource" /> and their operations.
-    /// Each <see cref="CapabilityResource" /> in the collection will belong to the same instance of <see cref="TargetResource" />.
-    /// To get a <see cref="CapabilityCollection" /> instance call the GetCapabilities method from an instance of <see cref="TargetResource" />.
+    /// A class representing a collection of <see cref="CapabilityResource"/> and their operations.
+    /// Each <see cref="CapabilityResource"/> in the collection will belong to the same instance of <see cref="TargetResource"/>.
+    /// To get a <see cref="CapabilityCollection"/> instance call the GetCapabilities method from an instance of <see cref="TargetResource"/>.
     /// </summary>
     public partial class CapabilityCollection : ArmCollection, IEnumerable<CapabilityResource>, IAsyncEnumerable<CapabilityResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapabilityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapabilityResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapabilityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapabilityResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.Chaos
             {
                 var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CapabilityResource>> GetIfExistsAsync(string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            using var scope = _capabilityClientDiagnostics.CreateScope("CapabilityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CapabilityResource>(response.GetRawResponse());
+                return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        public virtual NullableResponse<CapabilityResource> GetIfExists(string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            using var scope = _capabilityClientDiagnostics.CreateScope("CapabilityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CapabilityResource>(response.GetRawResponse());
+                return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

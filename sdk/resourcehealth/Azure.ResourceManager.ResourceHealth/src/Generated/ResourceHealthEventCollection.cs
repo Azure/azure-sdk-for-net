@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceHealthEventResource" /> and their operations.
-    /// Each <see cref="ResourceHealthEventResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="ResourceHealthEventCollection" /> instance call the GetResourceHealthEvents method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ResourceHealthEventResource"/> and their operations.
+    /// Each <see cref="ResourceHealthEventResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ResourceHealthEventCollection"/> instance call the GetResourceHealthEvents method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ResourceHealthEventCollection : ArmCollection, IEnumerable<ResourceHealthEventResource>, IAsyncEnumerable<ResourceHealthEventResource>
     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthEventResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthEventResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthEventResource> GetAllAsync(string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, queryStartTime);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthEventResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthEventResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthEventResource> GetAll(string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, queryStartTime);
@@ -251,6 +251,84 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 var response = _resourceHealthEventEventRestClient.GetBySubscriptionIdAndTrackingId(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceHealthEventResource>> GetIfExistsAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
+
+            using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceHealthEventEventRestClient.GetBySubscriptionIdAndTrackingIdAsync(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthEventResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        public virtual NullableResponse<ResourceHealthEventResource> GetIfExists(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
+
+            using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceHealthEventEventRestClient.GetBySubscriptionIdAndTrackingId(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthEventResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,5 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

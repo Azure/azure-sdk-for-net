@@ -21,9 +21,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseTransparentDataEncryptionResource" /> and their operations.
-    /// Each <see cref="SynapseTransparentDataEncryptionResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseTransparentDataEncryptionCollection" /> instance call the GetSynapseTransparentDataEncryptions method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseTransparentDataEncryptionResource"/> and their operations.
+    /// Each <see cref="SynapseTransparentDataEncryptionResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseTransparentDataEncryptionCollection"/> instance call the GetSynapseTransparentDataEncryptions method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseTransparentDataEncryptionCollection : ArmCollection, IEnumerable<SynapseTransparentDataEncryptionResource>, IAsyncEnumerable<SynapseTransparentDataEncryptionResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseTransparentDataEncryptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseTransparentDataEncryptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -296,6 +296,72 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/transparentDataEncryption/{transparentDataEncryptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolTransparentDataEncryptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseTransparentDataEncryptionResource>> GetIfExistsAsync(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseTransparentDataEncryptionResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/transparentDataEncryption/{transparentDataEncryptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolTransparentDataEncryptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseTransparentDataEncryptionResource> GetIfExists(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseTransparentDataEncryptionResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

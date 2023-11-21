@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkloadGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkloadGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkloadGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseWorkloadGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkloadGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkloadGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseWorkloadGroup method.
     /// </summary>
     public partial class SynapseWorkloadGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseWorkloadGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="workloadGroupName"> The workloadGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/workloadGroups/{workloadGroupName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkloadGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkloadGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkloadGroupResource(ArmClient client, SynapseWorkloadGroupData data) : this(client, data.Id)
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkloadClassifierResources and their operations over a SynapseWorkloadClassifierResource. </returns>
         public virtual SynapseWorkloadClassifierCollection GetSynapseWorkloadClassifiers()
         {
-            return GetCachedClient(Client => new SynapseWorkloadClassifierCollection(Client, Id));
+            return GetCachedClient(client => new SynapseWorkloadClassifierCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +113,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseWorkloadClassifierResource>> GetSynapseWorkloadClassifierAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +136,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseWorkloadClassifierResource> GetSynapseWorkloadClassifier(string workloadClassifierName, CancellationToken cancellationToken = default)
         {

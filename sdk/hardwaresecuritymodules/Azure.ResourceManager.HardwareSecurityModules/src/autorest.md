@@ -31,6 +31,7 @@ format-by-name-rules:
 rename-mapping:
   NetworkInterface.id: -|arm-id
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
+  PrivateLinkResource: HardwareSecurityModulesPrivateLinkData
 
 acronym-mapping:
   CPU: Cpu

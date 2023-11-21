@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorRouteResource" /> and their operations.
-    /// Each <see cref="FrontDoorRouteResource" /> in the collection will belong to the same instance of <see cref="FrontDoorEndpointResource" />.
-    /// To get a <see cref="FrontDoorRouteCollection" /> instance call the GetFrontDoorRoutes method from an instance of <see cref="FrontDoorEndpointResource" />.
+    /// A class representing a collection of <see cref="FrontDoorRouteResource"/> and their operations.
+    /// Each <see cref="FrontDoorRouteResource"/> in the collection will belong to the same instance of <see cref="FrontDoorEndpointResource"/>.
+    /// To get a <see cref="FrontDoorRouteCollection"/> instance call the GetFrontDoorRoutes method from an instance of <see cref="FrontDoorEndpointResource"/>.
     /// </summary>
     public partial class FrontDoorRouteCollection : ArmCollection, IEnumerable<FrontDoorRouteResource>, IAsyncEnumerable<FrontDoorRouteResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorRouteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRouteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorRouteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRouteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorRoutes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeName"> Name of the routing rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontDoorRouteResource>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+
+            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorRoutes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeName"> Name of the routing rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        public virtual NullableResponse<FrontDoorRouteResource> GetIfExists(string routeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+
+            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

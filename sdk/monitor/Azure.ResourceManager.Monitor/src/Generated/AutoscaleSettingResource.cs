@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing an AutoscaleSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutoscaleSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutoscaleSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutoscaleSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutoscaleSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutoscaleSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoscaleSetting method.
     /// </summary>
     public partial class AutoscaleSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoscaleSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="autoscaleSettingName"> The autoscaleSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string autoscaleSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutoscaleSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutoscaleSettingResource(ArmClient client, AutoscaleSettingData data) : this(client, data.Id)

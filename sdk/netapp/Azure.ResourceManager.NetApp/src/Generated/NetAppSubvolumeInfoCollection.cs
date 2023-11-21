@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppSubvolumeInfoResource" /> and their operations.
-    /// Each <see cref="NetAppSubvolumeInfoResource" /> in the collection will belong to the same instance of <see cref="NetAppVolumeResource" />.
-    /// To get a <see cref="NetAppSubvolumeInfoCollection" /> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource" />.
+    /// A class representing a collection of <see cref="NetAppSubvolumeInfoResource"/> and their operations.
+    /// Each <see cref="NetAppSubvolumeInfoResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
+    /// To get a <see cref="NetAppSubvolumeInfoCollection"/> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
     public partial class NetAppSubvolumeInfoCollection : ArmCollection, IEnumerable<NetAppSubvolumeInfoResource>, IAsyncEnumerable<NetAppSubvolumeInfoResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppSubvolumeInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppSubvolumeInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubvolumeInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppSubvolumeInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppSubvolumeInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubvolumeInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.NetApp
             {
                 var response = _netAppSubvolumeInfoSubvolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subvolumes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetAppSubvolumeInfoResource>> GetIfExistsAsync(string subvolumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+
+            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _netAppSubvolumeInfoSubvolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetAppSubvolumeInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppSubvolumeInfoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subvolumes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subvolumeName"> The name of the subvolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        public virtual NullableResponse<NetAppSubvolumeInfoResource> GetIfExists(string subvolumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+
+            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _netAppSubvolumeInfoSubvolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetAppSubvolumeInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppSubvolumeInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

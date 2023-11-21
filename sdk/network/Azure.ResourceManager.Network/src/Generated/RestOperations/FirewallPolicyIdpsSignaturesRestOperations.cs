@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Retrieves the current status of IDPS signatures for the relevant policy. </summary>
+        /// <summary> Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the current status of IDPS signatures for the relevant policy. </summary>
+        /// <summary> Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>

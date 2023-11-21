@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotSecuritySolutionResource" /> and their operations.
-    /// Each <see cref="IotSecuritySolutionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="IotSecuritySolutionCollection" /> instance call the GetIotSecuritySolutions method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="IotSecuritySolutionResource"/> and their operations.
+    /// Each <see cref="IotSecuritySolutionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="IotSecuritySolutionCollection"/> instance call the GetIotSecuritySolutions method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class IotSecuritySolutionCollection : ArmCollection, IEnumerable<IotSecuritySolutionResource>, IAsyncEnumerable<IotSecuritySolutionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecuritySolutionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecuritySolutionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _iotSecuritySolutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionName"> The name of the IoT Security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IotSecuritySolutionResource>> GetIfExistsAsync(string solutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _iotSecuritySolutionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IotSecuritySolutionResource>(response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionName"> The name of the IoT Security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        public virtual NullableResponse<IotSecuritySolutionResource> GetIfExists(string solutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _iotSecuritySolutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IotSecuritySolutionResource>(response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

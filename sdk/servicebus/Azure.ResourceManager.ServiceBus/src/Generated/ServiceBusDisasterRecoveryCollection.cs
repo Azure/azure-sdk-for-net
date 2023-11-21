@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryResource" /> and their operations.
-    /// Each <see cref="ServiceBusDisasterRecoveryResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
-    /// To get a <see cref="ServiceBusDisasterRecoveryCollection" /> instance call the GetServiceBusDisasterRecoveries method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryResource"/> and their operations.
+    /// Each <see cref="ServiceBusDisasterRecoveryResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="ServiceBusDisasterRecoveryCollection"/> instance call the GetServiceBusDisasterRecoveries method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryCollection : ArmCollection, IEnumerable<ServiceBusDisasterRecoveryResource>, IAsyncEnumerable<ServiceBusDisasterRecoveryResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusDisasterRecoveryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusDisasterRecoveryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceBusDisasterRecoveryResource>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceBusDisasterRecoveryResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual NullableResponse<ServiceBusDisasterRecoveryResource> GetIfExists(string @alias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceBusDisasterRecoveryResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

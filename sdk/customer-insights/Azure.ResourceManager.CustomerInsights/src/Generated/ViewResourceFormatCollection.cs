@@ -18,9 +18,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ViewResourceFormatResource" /> and their operations.
-    /// Each <see cref="ViewResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="ViewResourceFormatCollection" /> instance call the GetViewResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="ViewResourceFormatResource"/> and their operations.
+    /// Each <see cref="ViewResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="ViewResourceFormatCollection"/> instance call the GetViewResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class ViewResourceFormatCollection : ArmCollection
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="userId"> The user ID. Use * to retrieve hub level views. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ViewResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ViewResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ViewResourceFormatResource> GetAllAsync(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="userId"> The user ID. Use * to retrieve hub level views. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ViewResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ViewResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ViewResourceFormatResource> GetAll(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -329,6 +329,84 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _viewResourceFormatViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, userId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Views_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> The name of the view. </param>
+        /// <param name="userId"> The user ID. Use * to retrieve hub level view. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ViewResourceFormatResource>> GetIfExistsAsync(string viewName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
+
+            using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _viewResourceFormatViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, userId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ViewResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Views_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> The name of the view. </param>
+        /// <param name="userId"> The user ID. Use * to retrieve hub level view. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
+        public virtual NullableResponse<ViewResourceFormatResource> GetIfExists(string viewName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
+
+            using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _viewResourceFormatViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, viewName, userId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ViewResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupResourceEncryptionConfigExtendedResource" /> and their operations.
-    /// Each <see cref="BackupResourceEncryptionConfigExtendedResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BackupResourceEncryptionConfigExtendedCollection" /> instance call the GetBackupResourceEncryptionConfigExtendeds method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BackupResourceEncryptionConfigExtendedResource"/> and their operations.
+    /// Each <see cref="BackupResourceEncryptionConfigExtendedResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BackupResourceEncryptionConfigExtendedCollection"/> instance call the GetBackupResourceEncryptionConfigExtendeds method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BackupResourceEncryptionConfigExtendedCollection : ArmCollection
     {
@@ -270,6 +270,80 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 var response = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceEncryptionConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupResourceEncryptionConfigExtendedResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupResourceEncryptionConfigExtendedResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceEncryptionConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public virtual NullableResponse<BackupResourceEncryptionConfigExtendedResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupResourceEncryptionConfigExtendedResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

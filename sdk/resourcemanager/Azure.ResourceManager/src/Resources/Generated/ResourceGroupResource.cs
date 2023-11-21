@@ -21,13 +21,15 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ResourceGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetResourceGroup method.
     /// </summary>
     public partial class ResourceGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGroupResource(ArmClient client, ResourceGroupData data) : this(client, data.Id)

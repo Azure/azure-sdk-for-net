@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementNotificationResource" /> and their operations.
-    /// Each <see cref="ApiManagementNotificationResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementNotificationCollection" /> instance call the GetApiManagementNotifications method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementNotificationResource"/> and their operations.
+    /// Each <see cref="ApiManagementNotificationResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementNotificationCollection"/> instance call the GetApiManagementNotifications method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementNotificationCollection : ArmCollection, IEnumerable<ApiManagementNotificationResource>, IAsyncEnumerable<ApiManagementNotificationResource>
     {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementNotificationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementNotificationResource> GetAllAsync(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementNotificationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementNotificationResource> GetAll(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
@@ -294,6 +294,72 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementNotificationNotificationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Notification_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ApiManagementNotificationResource>> GetIfExistsAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementNotificationNotificationClientDiagnostics.CreateScope("ApiManagementNotificationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementNotificationNotificationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementNotificationResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Notification_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ApiManagementNotificationResource> GetIfExists(NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementNotificationNotificationClientDiagnostics.CreateScope("ApiManagementNotificationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementNotificationNotificationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementNotificationResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

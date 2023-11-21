@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> Defines the resource properties. </summary>
+    /// <summary> Specifies the compute and storage placement settings for the virtual machine. </summary>
     public partial class PlacementProfile
     {
         /// <summary> Initializes a new instance of PlacementProfile. </summary>

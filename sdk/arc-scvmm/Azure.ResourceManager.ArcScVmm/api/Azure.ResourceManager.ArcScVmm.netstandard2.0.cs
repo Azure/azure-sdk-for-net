@@ -51,6 +51,8 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.InventoryItemResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.InventoryItemResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.InventoryItemResource>> GetAsync(string inventoryItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.InventoryItemResource> GetIfExists(string inventoryItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.InventoryItemResource>> GetIfExistsAsync(string inventoryItemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.InventoryItemResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.InventoryItemResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.InventoryItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.InventoryItemResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -89,13 +91,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>> GetAsync(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetIfExists(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>> GetIfExistsAsync(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmAvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmAvailabilitySetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmAvailabilitySetData(Azure.Core.AzureLocation location) { }
         public string AvailabilitySetName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -132,13 +136,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>> GetAsync(string cloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetIfExists(string cloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>> GetIfExistsAsync(string cloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmCloudData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.ArcScVmm.Models.CloudCapacity CloudCapacity { get { throw null; } }
         public string CloudName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -179,13 +185,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>> GetAsync(string vmmServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetIfExists(string vmmServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>> GetIfExistsAsync(string vmmServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string fqdn) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string fqdn) { }
         public string ConnectionStatus { get { throw null; } }
         public Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials Credentials { get { throw null; } set { } }
         public string ErrorMessage { get { throw null; } }
@@ -230,13 +238,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>> GetAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetIfExists(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem> AvailabilitySets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.Checkpoint> Checkpoints { get { throw null; } }
         public string CheckpointType { get { throw null; } set { } }
@@ -298,13 +308,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>> GetAsync(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetIfExists(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>> GetIfExistsAsync(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmVirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualMachineTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualMachineTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public string ComputerName { get { throw null; } }
         public int? CpuCount { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk> Disks { get { throw null; } }
@@ -356,13 +368,15 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> GetAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetIfExists(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> GetIfExistsAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ScVmmVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string NetworkName { get { throw null; } }
@@ -389,6 +403,58 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ArcScVmm.Models.ResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ArcScVmm.Models.ResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ArcScVmm.Mocking
+{
+    public partial class MockableArcScVmmArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcScVmmArmClient() { }
+        public virtual Azure.ResourceManager.ArcScVmm.InventoryItemResource GetInventoryItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmCloudResource GetScVmmCloudResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmServerResource GetScVmmServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource GetScVmmVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableArcScVmmResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcScVmmResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmCloud(string cloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>> GetScVmmCloudAsync(string cloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmCloudCollection GetScVmmClouds() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetScVmmServer(string vmmServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>> GetScVmmServerAsync(string vmmServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmServerCollection GetScVmmServers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetScVmmVirtualMachine(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>> GetScVmmVirtualMachineAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineCollection GetScVmmVirtualMachines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks() { throw null; }
+    }
+    public partial class MockableArcScVmmSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcScVmmSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmClouds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmCloudsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetScVmmServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetScVmmServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetScVmmVirtualMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ArcScVmm.Models

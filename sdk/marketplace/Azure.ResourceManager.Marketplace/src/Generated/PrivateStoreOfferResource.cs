@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a PrivateStoreOffer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateStoreOfferResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateStoreOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreCollectionInfoResource" /> using the GetPrivateStoreOffer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateStoreOfferResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateStoreOfferResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreCollectionInfoResource"/> using the GetPrivateStoreOffer method.
     /// </summary>
     public partial class PrivateStoreOfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreOfferResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="collectionId"> The collectionId. </param>
+        /// <param name="offerId"> The offerId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, Guid collectionId, string offerId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}";
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateStoreOfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateStoreOfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateStoreOfferResource(ArmClient client, PrivateStoreOfferData data) : this(client, data.Id)

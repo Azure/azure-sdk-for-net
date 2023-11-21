@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExperimentResource" /> and their operations.
-    /// Each <see cref="ExperimentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ExperimentCollection" /> instance call the GetExperiments method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ExperimentResource"/> and their operations.
+    /// Each <see cref="ExperimentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ExperimentCollection"/> instance call the GetExperiments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ExperimentCollection : ArmCollection, IEnumerable<ExperimentResource>, IAsyncEnumerable<ExperimentResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentResource> GetAllAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentResource> GetAll(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
@@ -320,6 +320,80 @@ namespace Azure.ResourceManager.Chaos
             {
                 var response = _experimentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _experimentClientDiagnostics.CreateScope("ExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _experimentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual NullableResponse<ExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _experimentClientDiagnostics.CreateScope("ExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _experimentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

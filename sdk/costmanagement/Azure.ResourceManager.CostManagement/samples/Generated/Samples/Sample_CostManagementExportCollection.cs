@@ -282,6 +282,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ExportGetByBillingAccount
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetByBillingAccount()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByBillingAccount.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ExportGetByDepartment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -340,6 +380,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             bool result = await collection.ExistsAsync(exportName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ExportGetByDepartment
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetByDepartment()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByDepartment.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12/departments/1234";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // ExportGetByEnrollmentAccount
@@ -402,6 +482,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ExportGetByEnrollmentAccount
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetByEnrollmentAccount()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByEnrollmentAccount.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/100/enrollmentAccounts/456";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ExportGetByManagementGroup
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -460,6 +580,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             bool result = await collection.ExistsAsync(exportName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ExportGetByManagementGroup
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetByManagementGroup()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByManagementGroup.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "providers/Microsoft.Management/managementGroups/TestMG";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // ExportGetByResourceGroup
@@ -522,6 +682,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ExportGetByResourceGroup
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetByResourceGroup()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByResourceGroup.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ExportGetBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -580,6 +780,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             bool result = await collection.ExistsAsync(exportName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ExportGetBySubscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ExportGetBySubscription()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetBySubscription.json
+            // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementExportResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementExportCollection collection = client.GetCostManagementExports(scopeId);
+
+            // invoke the operation
+            string exportName = "TestExport";
+            NullableResponse<CostManagementExportResource> response = await collection.GetIfExistsAsync(exportName);
+            CostManagementExportResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementExportData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // ExportCreateOrUpdateByBillingAccount

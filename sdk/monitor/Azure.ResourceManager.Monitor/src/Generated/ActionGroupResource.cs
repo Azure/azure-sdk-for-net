@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing an ActionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ActionGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetActionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetActionGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ActionGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetActionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActionGroup method.
     /// </summary>
     public partial class ActionGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ActionGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="actionGroupName"> The actionGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string actionGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ActionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ActionGroupResource(ArmClient client, ActionGroupData data) : this(client, data.Id)

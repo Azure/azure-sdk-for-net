@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing a ContainerServiceMaintenanceConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerServiceMaintenanceConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerServiceMaintenanceConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource" /> using the GetContainerServiceMaintenanceConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceMaintenanceConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceMaintenanceConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetContainerServiceMaintenanceConfiguration method.
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceMaintenanceConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="configName"> The configName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string configName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerServiceMaintenanceConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceMaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceMaintenanceConfigurationResource(ArmClient client, ContainerServiceMaintenanceConfigurationData data) : this(client, data.Id)

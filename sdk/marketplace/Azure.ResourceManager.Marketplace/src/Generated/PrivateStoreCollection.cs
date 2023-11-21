@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateStoreResource" /> and their operations.
-    /// Each <see cref="PrivateStoreResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="PrivateStoreCollection" /> instance call the GetPrivateStores method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="PrivateStoreResource"/> and their operations.
+    /// Each <see cref="PrivateStoreResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="PrivateStoreCollection"/> instance call the GetPrivateStores method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class PrivateStoreCollection : ArmCollection, IEnumerable<PrivateStoreResource>, IAsyncEnumerable<PrivateStoreResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreResource> GetAllAsync(string useCache = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreResource> GetAll(string useCache = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
@@ -298,6 +298,72 @@ namespace Azure.ResourceManager.Marketplace
             {
                 var response = _privateStoreRestClient.Get(privateStoreId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PrivateStoreResource>> GetIfExistsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateStoreRestClient.GetAsync(privateStoreId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PrivateStoreResource> GetIfExists(Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateStoreRestClient.Get(privateStoreId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -165,9 +165,9 @@ Description = "Resource name suffix",
 ParameterType = ArmPolicyParameterType.Integer,
 AllowedValues =
 {
-BinaryData.FromString("0"),BinaryData.FromString("30"),BinaryData.FromString("90"),BinaryData.FromString("180"),BinaryData.FromString("365")
+BinaryData.FromString("\"0\""),BinaryData.FromString("\"30\""),BinaryData.FromString("\"90\""),BinaryData.FromString("\"180\""),BinaryData.FromString("\"365\"")
 },
-DefaultValue = BinaryData.FromString("365"),
+DefaultValue = BinaryData.FromString("\"365\""),
 Metadata = new ParameterDefinitionsValueMetadata()
 {
 DisplayName = "Required retention (days)",
@@ -246,6 +246,47 @@ Description = "The required diagnostic logs retention in days",
             bool result = await collection.ExistsAsync(policyDefinitionName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Retrieve a policy definition
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_RetrieveAPolicyDefinition()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinition.json
+            // this example is just showing the usage of "PolicyDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionPolicyDefinitionResource
+            SubscriptionPolicyDefinitionCollection collection = subscription.GetSubscriptionPolicyDefinitions();
+
+            // invoke the operation
+            string policyDefinitionName = "ResourceNaming";
+            NullableResponse<SubscriptionPolicyDefinitionResource> response = await collection.GetIfExistsAsync(policyDefinitionName);
+            SubscriptionPolicyDefinitionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyDefinitionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // List policy definitions by subscription

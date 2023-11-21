@@ -7,26 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_TillageData
+    public partial class Samples_TillageData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTillageData()
+        public void Example_GetTillageData_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetTillageData("<partyId>", "<tillageDataId>", new RequestContext());
+            Response response = client.GetTillageData("<partyId>", "<tillageDataId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTillageData_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -36,10 +49,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTillageData_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetTillageData("<partyId>", "<tillageDataId>", new RequestContext());
+            Response response = client.GetTillageData("<partyId>", "<tillageDataId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -64,17 +77,53 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTillageData_Async()
+        public async Task Example_GetTillageData_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", new RequestContext());
+            Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+            Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("eTag").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdate_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -82,49 +131,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTillageData_AllParameters_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-            Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("eTag").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            var data = new { };
-
-            Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", RequestContent.Create(data));
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -134,25 +147,15 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 tillageDepth = new
                 {
                     unit = "<unit>",
-                    value = 123.45d,
-                },
-                tillagePressure = new
-                {
-                    unit = "<unit>",
-                    value = 123.45d,
-                },
-                area = new
-                {
-                    unit = "<unit>",
-                    value = 123.45d,
+                    value = 123.45,
                 },
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -164,11 +167,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -193,47 +195,22 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 tillageDepth = new
                 {
                     unit = "<unit>",
-                    value = 123.45d,
-                },
-                tillagePressure = new
-                {
-                    unit = "<unit>",
-                    value = 123.45d,
-                },
-                area = new
-                {
-                    unit = "<unit>",
-                    value = 123.45d,
+                    value = 123.45,
                 },
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -245,11 +222,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -274,17 +250,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<tillageDataId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Delete_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -292,21 +281,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<tillageDataId>");
-            Console.WriteLine(response.Status);
-        }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
             Console.WriteLine(response.Status);
         }
 
@@ -314,21 +293,37 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
+
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -340,10 +335,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -358,31 +353,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("endTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -401,12 +381,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllTillageDataByPartyId()
+        public void Example_GetAllTillageDataByPartyId_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (var item in client.GetAllTillageDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllTillageDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllTillageDataByPartyId_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            await foreach (BinaryData item in client.GetAllTillageDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -417,10 +411,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTillageDataByPartyId_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (var item in client.GetAllTillageDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllTillageDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -445,18 +439,54 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result.GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("createdBy").ToString());
                 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTillageDataByPartyId_Async()
+        public async Task Example_GetAllTillageDataByPartyId_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetAllTillageData_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            foreach (BinaryData item in client.GetAllTillageData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -465,48 +495,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTillageDataByPartyId_AllParameters_Async()
+        public async Task Example_GetAllTillageData_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-                Console.WriteLine(result.GetProperty("partyId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllTillageData()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            foreach (var item in client.GetAllTillageData(3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllTillageDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -517,10 +511,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTillageData_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (var item in client.GetAllTillageData(3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllTillageData(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -545,21 +539,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result.GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("createdBy").ToString());
                 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTillageData_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            await foreach (var item in client.GetAllTillageDataAsync(3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -567,10 +547,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllTillageData_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (var item in client.GetAllTillageDataAsync(3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllTillageDataAsync(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -595,20 +575,36 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result.GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("createdBy").ToString());
                 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+
+            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -619,12 +615,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -642,30 +638,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
-
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
-
+            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());

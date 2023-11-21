@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsAlertRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsAlertRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsAlertRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsAlertRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsAlertRule method.
     /// </summary>
     public partial class SecurityInsightsAlertRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsAlertRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="ruleId"> The ruleId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsAlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsAlertRuleResource(ArmClient client, SecurityInsightsAlertRuleData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An object representing collection of SecurityInsightsAlertRuleActionResources and their operations over a SecurityInsightsAlertRuleActionResource. </returns>
         public virtual SecurityInsightsAlertRuleActionCollection GetSecurityInsightsAlertRuleActions()
         {
-            return GetCachedClient(Client => new SecurityInsightsAlertRuleActionCollection(Client, Id));
+            return GetCachedClient(client => new SecurityInsightsAlertRuleActionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="actionId"> Action ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityInsightsAlertRuleActionResource>> GetSecurityInsightsAlertRuleActionAsync(string actionId, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="actionId"> Action ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityInsightsAlertRuleActionResource> GetSecurityInsightsAlertRuleAction(string actionId, CancellationToken cancellationToken = default)
         {

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
@@ -18,12 +19,16 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
-        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
+
+        // we follow OpenTelemtery Semantic Conventions 1.23.0
+        // https://github.com/open-telemetry/semantic-conventions/blob/v1.23.0
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
+        [RequiresUnreferencedCode("The diagnosticSourceArgs are used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the type being passed in using DynamicDependency attributes.")]
 #if NETCOREAPP2_1
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
 #else
@@ -61,9 +66,12 @@ namespace Azure.Core.Pipeline
 
         public bool IsEnabled { get; }
 
-        public void AddAttribute(string name, string value)
+        public void AddAttribute(string name, string? value)
         {
-            _activityAdapter?.AddTag(name, value);
+            if (value != null)
+            {
+                _activityAdapter?.AddTag(name, value);
+            }
         }
 
         public void AddIntegerAttribute(string name, int value)
@@ -71,18 +79,9 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddTag(name, value);
         }
 
-        public void AddAttribute<T>(string name,
-#if AZURE_NULLABLE
-            [AllowNull]
-#endif
-            T value)
-        {
-            AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture) ?? string.Empty);
-        }
-
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-            if (_activityAdapter != null)
+            if (_activityAdapter != null && value != null)
             {
                 var formattedValue = format(value);
                 _activityAdapter.AddTag(name, formattedValue);
@@ -103,7 +102,10 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            if (_suppressNestedClientActivities)
+            {
+                started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            }
         }
 
         public void SetDisplayName(string displayName)
@@ -136,9 +138,33 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
-        public void Failed(Exception? exception = default)
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has public properties preserved on the inner method MarkFailed." +
+            "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when preserving all public properties. Since we do not use this property, and" +
+            "neither does Application Insights, we can suppress the warning coming from the inner method.")]
+        public void Failed(Exception exception)
         {
-            _activityAdapter?.MarkFailed(exception);
+            if (exception is RequestFailedException requestFailedException)
+            {
+                // TODO (limolkova) when we start targeting .NET 8 we should put
+                // requestFailedException.InnerException.HttpRequestError into error.type
+
+                _activityAdapter?.MarkFailed(exception, requestFailedException.ErrorCode);
+            }
+            else
+            {
+                _activityAdapter?.MarkFailed(exception, null);
+            }
+        }
+
+        /// <summary>
+        /// Marks the scope as failed with low-cardinality error.type attribute.
+        /// </summary>
+        /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when " +
+            "preserving all public properties. Since we do not use this property, and neither does Application Insights, we can suppress the warning coming from the inner method.")]
+        public void Failed(string errorCode)
+        {
+            _activityAdapter?.MarkFailed((Exception?)null, errorCode);
         }
 
 #if NETCOREAPP2_1
@@ -240,16 +266,12 @@ namespace Azure.Core.Pipeline
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
 #else
                     _tagCollection ??= new ActivityTagsCollection();
-                    _tagCollection.Add(name, value!);
+                    _tagCollection[name] = value!;
 #endif
                 }
                 else
                 {
-#if NETCOREAPP2_1
-                    _currentActivity?.AddObjectTag(name, value);
-#else
-                    _currentActivity?.AddTag(name, value);
-#endif
+                    AddObjectTag(name, value);
                 }
             }
 
@@ -334,6 +356,8 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(Activity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(DiagnosticActivity))]
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
@@ -398,11 +422,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-#if NETCOREAPP2_1
-                            _currentActivity.AddObjectTag(tag.Key, tag.Value);
-#else
-                            _currentActivity.AddTag(tag.Key, tag.Value);
-#endif
+                            AddObjectTag(tag.Key, tag.Value!);
                         }
                     }
 
@@ -423,7 +443,7 @@ namespace Azure.Core.Pipeline
                     _currentActivity.Start();
                 }
 
-                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+                WriteStartEvent();
 
                 if (_displayName != null)
                 {
@@ -435,6 +455,12 @@ namespace Azure.Core.Pipeline
                 }
 
                 return _currentActivity;
+            }
+
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency on the ActivityAdapter.Start() method, or the responsibility is on the user of this struct since the struct constructor is marked with RequiresUnreferencedCode.")]
+            private void WriteStartEvent()
+            {
+                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
             }
 
             public void SetDisplayName(string displayName)
@@ -487,7 +513,8 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-            public void MarkFailed(Exception? exception)
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes.")]
+            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T? exception, string? errorCode)
             {
                 if (exception != null)
                 {
@@ -500,7 +527,13 @@ namespace Azure.Core.Pipeline
                     _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
 #endif
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
+                if (errorCode == null && exception != null)
+                {
+                    errorCode = exception.GetType().FullName;
+                }
+
+                _currentActivity?.AddTag("error.type", errorCode ?? "_OTHER");
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }
@@ -515,6 +548,23 @@ namespace Azure.Core.Pipeline
                 _tracestate = tracestate;
             }
 
+            private void AddObjectTag(string name, object value)
+            {
+#if NETCOREAPP2_1
+                _currentActivity?.AddTag(name, value.ToString());
+#else
+                if (_activitySource?.HasListeners() == true)
+                {
+                    _currentActivity?.SetTag(name, value);
+                }
+                else
+                {
+                    _currentActivity?.AddTag(name, value.ToString());
+                }
+#endif
+            }
+
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The class constructor is marked with RequiresUnreferencedCode.")]
             public void Dispose()
             {
                 var activity = _currentActivity ?? _sampleOutActivity;
@@ -786,40 +836,6 @@ namespace Azure.Core.Pipeline
                 }
             }
             SetErrorStatusMethod(activity, 2 /* Error */, errorDescription);
-        }
-
-        public static void AddObjectTag(this Activity activity, string name, object value)
-        {
-            if (ActivityAddTagMethod == null)
-            {
-                var method = typeof(Activity).GetMethod("AddTag", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
-                {
-                    typeof(string),
-                    typeof(object)
-                }, null);
-
-                if (method == null)
-                {
-                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
-                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
-                    // be passing a string value.
-                    ActivityAddTagMethod = (activityParameter, nameParameter, valueParameter) => activityParameter.AddTag(
-                        nameParameter,
-                        // null check is required to keep nullable reference compilation happy
-                        valueParameter == null ? null : (string)valueParameter);
-                }
-                else
-                {
-                    var nameParameter = Expression.Parameter(typeof(string));
-                    var valueParameter = Expression.Parameter(typeof(object));
-
-                    ActivityAddTagMethod = Expression.Lambda<Action<Activity, string, object?>>(
-                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
-                        ActivityParameter, nameParameter, valueParameter).Compile();
-                }
-            }
-
-            ActivityAddTagMethod(activity, name, value);
         }
 
         public static bool SupportsActivitySource()

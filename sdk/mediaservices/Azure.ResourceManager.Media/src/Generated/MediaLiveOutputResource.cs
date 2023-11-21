@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaLiveOutput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaLiveOutputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaLiveOutputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaLiveEventResource" /> using the GetMediaLiveOutput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaLiveOutputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaLiveOutputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaLiveEventResource"/> using the GetMediaLiveOutput method.
     /// </summary>
     public partial class MediaLiveOutputResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaLiveOutputResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="liveEventName"> The liveEventName. </param>
+        /// <param name="liveOutputName"> The liveOutputName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaLiveOutputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaLiveOutputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaLiveOutputResource(ArmClient client, MediaLiveOutputData data) : this(client, data.Id)

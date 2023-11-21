@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeDeviceResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeDeviceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataBoxEdgeDeviceCollection" /> instance call the GetDataBoxEdgeDevices method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeDeviceResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeDeviceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataBoxEdgeDeviceCollection"/> instance call the GetDataBoxEdgeDevices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataBoxEdgeDeviceCollection : ArmCollection, IEnumerable<DataBoxEdgeDeviceResource>, IAsyncEnumerable<DataBoxEdgeDeviceResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeDeviceResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeDeviceResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, deviceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Devices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataBoxEdgeDeviceResource>> GetIfExistsAsync(string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, deviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeDeviceResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Devices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        public virtual NullableResponse<DataBoxEdgeDeviceResource> GetIfExists(string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, deviceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeDeviceResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

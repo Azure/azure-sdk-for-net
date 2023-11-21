@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubsApplicationGroupResource" /> and their operations.
-    /// Each <see cref="EventHubsApplicationGroupResource" /> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource" />.
-    /// To get an <see cref="EventHubsApplicationGroupCollection" /> instance call the GetEventHubsApplicationGroups method from an instance of <see cref="EventHubsNamespaceResource" />.
+    /// A class representing a collection of <see cref="EventHubsApplicationGroupResource"/> and their operations.
+    /// Each <see cref="EventHubsApplicationGroupResource"/> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource"/>.
+    /// To get an <see cref="EventHubsApplicationGroupCollection"/> instance call the GetEventHubsApplicationGroups method from an instance of <see cref="EventHubsNamespaceResource"/>.
     /// </summary>
     public partial class EventHubsApplicationGroupCollection : ArmCollection, IEnumerable<EventHubsApplicationGroupResource>, IAsyncEnumerable<EventHubsApplicationGroupResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubsApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsApplicationGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubsApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsApplicationGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubsApplicationGroupApplicationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroup_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationGroupName"> The Application Group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventHubsApplicationGroupResource>> GetIfExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventHubsApplicationGroupApplicationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventHubsApplicationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroup_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationGroupName"> The Application Group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        public virtual NullableResponse<EventHubsApplicationGroupResource> GetIfExists(string applicationGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventHubsApplicationGroupApplicationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventHubsApplicationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalRCustomCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRCustomCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRCustomCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource" /> using the GetSignalRCustomCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRCustomCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRCustomCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRCustomCertificate method.
     /// </summary>
     public partial class SignalRCustomCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SignalRCustomCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string certificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/customCertificates/{certificateName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SignalR
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRCustomCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRCustomCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRCustomCertificateResource(ArmClient client, SignalRCustomCertificateData data) : this(client, data.Id)

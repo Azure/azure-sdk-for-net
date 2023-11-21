@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementPortalRevision along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPortalRevisionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPortalRevisionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPortalRevision method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPortalRevisionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPortalRevisionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPortalRevision method.
     /// </summary>
     public partial class ApiManagementPortalRevisionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPortalRevisionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="portalRevisionId"> The portalRevisionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string portalRevisionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions/{portalRevisionId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPortalRevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPortalRevisionResource(ArmClient client, ApiManagementPortalRevisionData data) : this(client, data.Id)

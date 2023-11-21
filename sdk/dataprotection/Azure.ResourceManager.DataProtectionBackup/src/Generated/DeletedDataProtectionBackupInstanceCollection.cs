@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> and their operations.
-    /// Each <see cref="DeletedDataProtectionBackupInstanceResource" /> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource" />.
-    /// To get a <see cref="DeletedDataProtectionBackupInstanceCollection" /> instance call the GetDeletedDataProtectionBackupInstances method from an instance of <see cref="DataProtectionBackupVaultResource" />.
+    /// A class representing a collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> and their operations.
+    /// Each <see cref="DeletedDataProtectionBackupInstanceResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource"/>.
+    /// To get a <see cref="DeletedDataProtectionBackupInstanceCollection"/> instance call the GetDeletedDataProtectionBackupInstances method from an instance of <see cref="DataProtectionBackupVaultResource"/>.
     /// </summary>
     public partial class DeletedDataProtectionBackupInstanceCollection : ArmCollection, IEnumerable<DeletedDataProtectionBackupInstanceResource>, IAsyncEnumerable<DeletedDataProtectionBackupInstanceResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedDataProtectionBackupInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedDataProtectionBackupInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 var response = _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DeletedDataProtectionBackupInstanceResource>> GetIfExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DeletedDataProtectionBackupInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new DeletedDataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        public virtual NullableResponse<DeletedDataProtectionBackupInstanceResource> GetIfExists(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DeletedDataProtectionBackupInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new DeletedDataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

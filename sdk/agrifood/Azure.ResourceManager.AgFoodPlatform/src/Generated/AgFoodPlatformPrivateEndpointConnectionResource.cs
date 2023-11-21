@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing an AgFoodPlatformPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAgFoodPlatformPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource" /> using the GetAgFoodPlatformPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAgFoodPlatformPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource"/> using the GetAgFoodPlatformPrivateEndpointConnection method.
     /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="farmBeatsResourceName"> The farmBeatsResourceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgFoodPlatformPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AgFoodPlatformPrivateEndpointConnectionResource(ArmClient client, AgFoodPlatformPrivateEndpointConnectionData data) : this(client, data.Id)

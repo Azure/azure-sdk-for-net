@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/4c49a05d22106119afd2078a982f30855b91a010/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c280892951a9e45c059132c05aace25a9c752d48/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -59,12 +59,14 @@ rename-mapping:
   PublicNetworkAccess: KustoClusterPublicNetworkAccess
   ClusterNetworkAccessFlag: KustoClusterNetworkAccessFlag
   State: KustoClusterState
+  VnetState: KustoClusterVnetState
   VirtualNetworkConfiguration: KustoClusterVirtualNetworkConfiguration
   ClusterPrincipalAssignment: KustoClusterPrincipalAssignment
   ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
   ClusterPrincipalAssignment.properties.principalId: ClusterPrincipalId
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
+  Language: SandboxCustomImageLanguage
   LanguageExtension: KustoLanguageExtension
   LanguageExtensionsList: KustoLanguageExtensionList
   LanguageExtensionName: KustoLanguageExtensionName

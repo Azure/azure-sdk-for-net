@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing a CommunicationDomainResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunicationDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource" /> using the GetCommunicationDomainResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunicationDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource"/> using the GetCommunicationDomainResource method.
     /// </summary>
     public partial class CommunicationDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunicationDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunicationDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunicationDomainResource(ArmClient client, CommunicationDomainResourceData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of SenderUsernameResources and their operations over a SenderUsernameResource. </returns>
         public virtual SenderUsernameResourceCollection GetSenderUsernameResources()
         {
-            return GetCachedClient(Client => new SenderUsernameResourceCollection(Client, Id));
+            return GetCachedClient(client => new SenderUsernameResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, CancellationToken cancellationToken = default)
         {
@@ -133,12 +137,65 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SenderUsernameResource> GetSenderUsernameResource(string senderUsername, CancellationToken cancellationToken = default)
         {
             return GetSenderUsernameResources().Get(senderUsername, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SuppressionListResources in the CommunicationDomainResource. </summary>
+        /// <returns> An object representing collection of SuppressionListResources and their operations over a SuppressionListResource. </returns>
+        public virtual SuppressionListResourceCollection GetSuppressionListResources()
+        {
+            return GetCachedClient(client => new SuppressionListResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SuppressionList resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SuppressionLists_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="suppressionListName"> The name of the suppression list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SuppressionListResource>> GetSuppressionListResourceAsync(string suppressionListName, CancellationToken cancellationToken = default)
+        {
+            return await GetSuppressionListResources().GetAsync(suppressionListName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SuppressionList resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SuppressionLists_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="suppressionListName"> The name of the suppression list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SuppressionListResource> GetSuppressionListResource(string suppressionListName, CancellationToken cancellationToken = default)
+        {
+            return GetSuppressionListResources().Get(suppressionListName, cancellationToken);
         }
 
         /// <summary>

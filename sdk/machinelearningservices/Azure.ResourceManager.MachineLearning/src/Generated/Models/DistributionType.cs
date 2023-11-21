@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PyTorchValue = "PyTorch";
         private const string TensorFlowValue = "TensorFlow";
         private const string MpiValue = "Mpi";
+        private const string RayValue = "Ray";
 
         /// <summary> PyTorch. </summary>
         public static DistributionType PyTorch { get; } = new DistributionType(PyTorchValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static DistributionType TensorFlow { get; } = new DistributionType(TensorFlowValue);
         /// <summary> Mpi. </summary>
         public static DistributionType Mpi { get; } = new DistributionType(MpiValue);
+        /// <summary> Ray. </summary>
+        public static DistributionType Ray { get; } = new DistributionType(RayValue);
         /// <summary> Determines if two <see cref="DistributionType"/> values are the same. </summary>
         public static bool operator ==(DistributionType left, DistributionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributionType"/> values are not the same. </summary>

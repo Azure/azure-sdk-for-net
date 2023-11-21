@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteNetworkConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteNetworkConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteNetworkConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteNetworkConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteNetworkConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteNetworkConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteNetworkConfig method.
     /// </summary>
     public partial class SiteNetworkConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteNetworkConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteNetworkConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteNetworkConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteNetworkConfigResource(ArmClient client, SwiftVirtualNetworkData data) : this(client, data.Id)

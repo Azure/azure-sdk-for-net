@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudRackSkuResource" /> and their operations.
-    /// Each <see cref="NetworkCloudRackSkuResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="NetworkCloudRackSkuCollection" /> instance call the GetNetworkCloudRackSkus method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudRackSkuResource"/> and their operations.
+    /// Each <see cref="NetworkCloudRackSkuResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="NetworkCloudRackSkuCollection"/> instance call the GetNetworkCloudRackSkus method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class NetworkCloudRackSkuCollection : ArmCollection, IEnumerable<NetworkCloudRackSkuResource>, IAsyncEnumerable<NetworkCloudRackSkuResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudRackSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudRackSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudRackSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudRackSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudRackSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudRackSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -234,6 +234,80 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var response = _networkCloudRackSkuRackSkusRestClient.Get(Id.SubscriptionId, rackSkuName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RackSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rackSkuName"> The name of the rack SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudRackSkuResource>> GetIfExistsAsync(string rackSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
+
+            using var scope = _networkCloudRackSkuRackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudRackSkuRackSkusRestClient.GetAsync(Id.SubscriptionId, rackSkuName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudRackSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudRackSkuResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RackSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rackSkuName"> The name of the rack SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudRackSkuResource> GetIfExists(string rackSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
+
+            using var scope = _networkCloudRackSkuRackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudRackSkuRackSkusRestClient.Get(Id.SubscriptionId, rackSkuName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudRackSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudRackSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

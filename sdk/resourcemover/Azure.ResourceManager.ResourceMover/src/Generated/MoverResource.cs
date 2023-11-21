@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
     /// A Class representing a MoverResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMoverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MoverResourceSetResource" /> using the GetMoverResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MoverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMoverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MoverResourceSetResource"/> using the GetMoverResource method.
     /// </summary>
     public partial class MoverResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MoverResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="moverResourceSetName"> The moverResourceSetName. </param>
+        /// <param name="moverResourceName"> The moverResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moverResourceSetName, string moverResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moverResourceSetName}/moveResources/{moverResourceName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MoverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MoverResource(ArmClient client, MoverResourceData data) : this(client, data.Id)

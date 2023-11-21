@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabUserResource" /> and their operations.
-    /// Each <see cref="LabUserResource" /> in the collection will belong to the same instance of <see cref="LabResource" />.
-    /// To get a <see cref="LabUserCollection" /> instance call the GetLabUsers method from an instance of <see cref="LabResource" />.
+    /// A class representing a collection of <see cref="LabUserResource"/> and their operations.
+    /// Each <see cref="LabUserResource"/> in the collection will belong to the same instance of <see cref="LabResource"/>.
+    /// To get a <see cref="LabUserCollection"/> instance call the GetLabUsers method from an instance of <see cref="LabResource"/>.
     /// </summary>
     public partial class LabUserCollection : ArmCollection, IEnumerable<LabUserResource>, IAsyncEnumerable<LabUserResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LabServices
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabUserResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labUserUsersRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.LabServices
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabUserResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labUserUsersRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.LabServices
             {
                 var response = _labUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabUserResource>> GetIfExistsAsync(string userName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+
+            using var scope = _labUserUsersClientDiagnostics.CreateScope("LabUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabUserResource>(response.GetRawResponse());
+                return Response.FromValue(new LabUserResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        public virtual NullableResponse<LabUserResource> GetIfExists(string userName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+
+            using var scope = _labUserUsersClientDiagnostics.CreateScope("LabUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabUserResource>(response.GetRawResponse());
+                return Response.FromValue(new LabUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

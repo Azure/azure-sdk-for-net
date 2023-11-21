@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     /// <summary>
     /// A Class representing an AutoScaleVCore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutoScaleVCoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutoScaleVCoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutoScaleVCore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutoScaleVCoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutoScaleVCoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoScaleVCore method.
     /// </summary>
     public partial class AutoScaleVCoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoScaleVCoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vcoreName"> The vcoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vcoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutoScaleVCoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutoScaleVCoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutoScaleVCoreResource(ArmClient client, AutoScaleVCoreData data) : this(client, new ResourceIdentifier(data.Id))

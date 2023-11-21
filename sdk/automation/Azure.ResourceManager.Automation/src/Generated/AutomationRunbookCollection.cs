@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationRunbookResource" /> and their operations.
-    /// Each <see cref="AutomationRunbookResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationRunbookCollection" /> instance call the GetAutomationRunbooks method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationRunbookResource"/> and their operations.
+    /// Each <see cref="AutomationRunbookResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationRunbookCollection"/> instance call the GetAutomationRunbooks method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationRunbookCollection : ArmCollection, IEnumerable<AutomationRunbookResource>, IAsyncEnumerable<AutomationRunbookResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationRunbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationRunbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationRunbookResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationRunbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationRunbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationRunbookResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationRunbookRunbookRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runbook_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runbookName"> The runbook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationRunbookResource>> GetIfExistsAsync(string runbookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+
+            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationRunbookRunbookRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationRunbookResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runbook_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runbookName"> The runbook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        public virtual NullableResponse<AutomationRunbookResource> GetIfExists(string runbookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+
+            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationRunbookRunbookRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationRunbookResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

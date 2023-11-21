@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkPortMirroringProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkPortMirroringProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkPortMirroringProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkPortMirroringProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkPortMirroringProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkPortMirroringProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkPortMirroringProfile method.
     /// </summary>
     public partial class WorkloadNetworkPortMirroringProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkPortMirroringProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="portMirroringId"> The portMirroringId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkPortMirroringProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkPortMirroringProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkPortMirroringProfileResource(ArmClient client, WorkloadNetworkPortMirroringProfileData data) : this(client, data.Id)

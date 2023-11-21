@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2023-11-03)
+
+### Features Added
+
+- Upgraded the Flexible Server API version to `2023-06-01-preview`.
+- CapabilitySets API with optimized schema
+- New feature for Advanced Threat Protection
 
 ## 1.1.0-beta.2 (2023-06-07)
 

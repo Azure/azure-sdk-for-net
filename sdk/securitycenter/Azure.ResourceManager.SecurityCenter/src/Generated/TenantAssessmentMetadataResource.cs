@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a TenantAssessmentMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantAssessmentMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantAssessmentMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantAssessmentMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantAssessmentMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantAssessmentMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantAssessmentMetadata method.
     /// </summary>
     public partial class TenantAssessmentMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantAssessmentMetadataResource"/> instance. </summary>
+        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName)
         {
             var resourceId = $"/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantAssessmentMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)

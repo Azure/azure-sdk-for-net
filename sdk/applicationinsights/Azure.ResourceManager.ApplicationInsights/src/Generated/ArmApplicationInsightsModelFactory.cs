@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ETag? etag = null, string applicationId = null, string appId = null, string namePropertiesName = null, ApplicationType? applicationType = null, FlowType? flowType = null, RequestSource? requestSource = null, string instrumentationKey = null, DateTimeOffset? createdOn = null, Guid? tenantId = null, string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = null, string connectionString = null, int? retentionInDays = null, bool? isDisableIPMasking = null, bool? isImmediatePurgeDataOn30Days = null, string workspaceResourceId = null, DateTimeOffset? laMigrationOn = null, IEnumerable<PrivateLinkScopedResource> privateLinkScopedResources = null, PublicNetworkAccessType? publicNetworkAccessForIngestion = null, PublicNetworkAccessType? publicNetworkAccessForQuery = null, IngestionMode? ingestionMode = null, bool? isDisableLocalAuth = null, bool? isForceCustomerStorageForProfiler = null)
+        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ETag? etag = null, string applicationId = null, string appId = null, string namePropertiesName = null, ApplicationType? applicationType = null, FlowType? flowType = null, RequestSource? requestSource = null, string instrumentationKey = null, DateTimeOffset? createdOn = null, Guid? tenantId = null, string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = null, string connectionString = null, int? retentionInDays = null, bool? isDisableIPMasking = null, bool? isImmediatePurgeDataOn30Days = null, string workspaceResourceId = null, DateTimeOffset? laMigrationOn = null, IEnumerable<PrivateLinkScopedResourceContent> privateLinkScopedResources = null, PublicNetworkAccessType? publicNetworkAccessForIngestion = null, PublicNetworkAccessType? publicNetworkAccessForQuery = null, IngestionMode? ingestionMode = null, bool? isDisableLocalAuth = null, bool? isForceCustomerStorageForProfiler = null)
         {
             tags ??= new Dictionary<string, string>();
-            privateLinkScopedResources ??= new List<PrivateLinkScopedResource>();
+            privateLinkScopedResources ??= new List<PrivateLinkScopedResourceContent>();
 
             return new ApplicationInsightsComponentData(id, name, resourceType, systemData, tags, location, kind, etag, applicationId, appId, namePropertiesName, applicationType, flowType, requestSource, instrumentationKey, createdOn, tenantId, hockeyAppId, hockeyAppToken, provisioningState, samplingPercentage, connectionString, retentionInDays, isDisableIPMasking, isImmediatePurgeDataOn30Days, workspaceResourceId, laMigrationOn, privateLinkScopedResources?.ToList(), publicNetworkAccessForIngestion, publicNetworkAccessForQuery, ingestionMode, isDisableLocalAuth, isForceCustomerStorageForProfiler);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkScopedResourceContent. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkScopedResource"/> instance for mocking. </returns>
-        public static PrivateLinkScopedResource PrivateLinkScopedResource(string resourceId = null, string scopeId = null)
+        /// <returns> A new <see cref="Models.PrivateLinkScopedResourceContent"/> instance for mocking. </returns>
+        public static PrivateLinkScopedResourceContent PrivateLinkScopedResourceContent(string resourceId = null, string scopeId = null)
         {
-            return new PrivateLinkScopedResource(resourceId, scopeId);
+            return new PrivateLinkScopedResourceContent(resourceId, scopeId);
         }
 
         /// <summary> Initializes a new instance of ComponentPurgeResponse. </summary>

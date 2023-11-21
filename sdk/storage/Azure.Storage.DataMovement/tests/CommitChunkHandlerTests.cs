@@ -554,7 +554,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.DisposeAsync();
+            commitBlockHandler.Dispose();
 
             // Assert - Do not throw when trying to invoke the event handler when disposed
             await commitBlockHandler.InvokeEvent(default);

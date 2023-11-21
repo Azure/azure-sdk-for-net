@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a NetworkFeature along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFeatureResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFeatureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetNetworkFeature method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFeatureResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFeatureResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetNetworkFeature method.
     /// </summary>
     public partial class NetworkFeatureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFeatureResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="view"> The view. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string view)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFeatureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFeatureResource(ArmClient client, NetworkFeatureData data) : this(client, data.Id)

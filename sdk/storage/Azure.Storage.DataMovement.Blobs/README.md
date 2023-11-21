@@ -2,6 +2,12 @@
 
 > Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
+## Project Status: Beta
+
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
+
+---
+
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -191,7 +197,7 @@ Upload a block blob.
 
 ```C# Snippet:SimpleBlobUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromPath(sourceLocalPath),
+    sourceResource: files.FromFile(sourceLocalPath),
     destinationResource: blobs.FromClient(destinationBlob));
 await dataTransfer.WaitForCompletionAsync();
 ```
@@ -200,7 +206,7 @@ Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromPath(sourcePath),
+    sourceResource: files.FromDirectory(sourcePath),
     destinationResource: blobs.FromClient(
         blobContainerClient,
         new BlobStorageResourceContainerOptions()
@@ -224,7 +230,7 @@ BlobsStorageResourceProvider blobs = new();
 LocalFilesStorageResourceProvider files = new();
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromClient(sourceBlobClient),
-    destinationResource: files.FromPath(downloadPath));
+    destinationResource: files.FromFile(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -238,7 +244,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         {
             BlobDirectoryPrefix = optionalSourcePrefix
         }),
-    destinationResource: files.FromPath(downloadPath));
+    destinationResource: files.FromDirectory(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 

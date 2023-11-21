@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
     /// A Class representing an IotCentralApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotCentralAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotCentralAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIotCentralApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotCentralAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotCentralAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotCentralApp method.
     /// </summary>
     public partial class IotCentralAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotCentralAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.IotCentral
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotCentralAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotCentralAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotCentralAppResource(ArmClient client, IotCentralAppData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An object representing collection of IotCentralPrivateEndpointConnectionResources and their operations over a IotCentralPrivateEndpointConnectionResource. </returns>
         public virtual IotCentralPrivateEndpointConnectionCollection GetIotCentralPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new IotCentralPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new IotCentralPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotCentralPrivateEndpointConnectionResource>> GetIotCentralPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotCentralPrivateEndpointConnectionResource> GetIotCentralPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An object representing collection of IotCentralPrivateLinkResources and their operations over a IotCentralPrivateLinkResource. </returns>
         public virtual IotCentralPrivateLinkResourceCollection GetIotCentralPrivateLinkResources()
         {
-            return GetCachedClient(Client => new IotCentralPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new IotCentralPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotCentralPrivateLinkResource>> GetIotCentralPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotCentralPrivateLinkResource> GetIotCentralPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
         {

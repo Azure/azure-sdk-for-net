@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvsCloudLinkResource" /> and their operations.
-    /// Each <see cref="AvsCloudLinkResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get an <see cref="AvsCloudLinkCollection" /> instance call the GetAvsCloudLinks method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="AvsCloudLinkResource"/> and their operations.
+    /// Each <see cref="AvsCloudLinkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="AvsCloudLinkCollection"/> instance call the GetAvsCloudLinks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class AvsCloudLinkCollection : ArmCollection, IEnumerable<AvsCloudLinkResource>, IAsyncEnumerable<AvsCloudLinkResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsCloudLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsCloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsCloudLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsCloudLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsCloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsCloudLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AvsCloudLinkResource>> GetIfExistsAsync(string cloudLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsCloudLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        public virtual NullableResponse<AvsCloudLinkResource> GetIfExists(string cloudLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
+
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsCloudLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

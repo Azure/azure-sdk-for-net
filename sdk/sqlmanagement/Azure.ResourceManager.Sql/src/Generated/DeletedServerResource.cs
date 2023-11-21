@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DeletedServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedServer method.
     /// </summary>
     public partial class DeletedServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="deletedServerName"> The deletedServerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string deletedServerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}";
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedServerResource(ArmClient client, DeletedServerData data) : this(client, data.Id)

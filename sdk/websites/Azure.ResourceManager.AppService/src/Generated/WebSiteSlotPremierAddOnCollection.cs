@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotPremierAddOnResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotPremierAddOnResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotPremierAddOnCollection" /> instance call the GetWebSiteSlotPremierAddOns method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotPremierAddOnResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotPremierAddOnResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebSiteSlotPremierAddOnCollection"/> instance call the GetWebSiteSlotPremierAddOns method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class WebSiteSlotPremierAddOnCollection : ArmCollection
     {
@@ -268,6 +268,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetPremierAddOnSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="premierAddOnName"> Add-on name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteSlotPremierAddOnResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotPremierAddOnResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetPremierAddOnSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="premierAddOnName"> Add-on name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        public virtual NullableResponse<WebSiteSlotPremierAddOnResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotPremierAddOnResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
+            if (Optional.IsDefined(Profile))
+            {
+                writer.WritePropertyName("profile"u8);
+                writer.WriteStringValue(Profile.Value.ToString());
+            }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
+            Optional<FirewallPolicyIntrusionDetectionProfileType> profile = default;
             Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,6 +53,15 @@ namespace Azure.ResourceManager.Network.Models
                     mode = new FirewallPolicyIntrusionDetectionStateType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("profile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    profile = new FirewallPolicyIntrusionDetectionProfileType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -57,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyIntrusionDetection(Optional.ToNullable(mode), configuration.Value);
+            return new FirewallPolicyIntrusionDetection(Optional.ToNullable(mode), Optional.ToNullable(profile), configuration.Value);
         }
     }
 }

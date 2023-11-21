@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecuritySubAssessmentResource" /> and their operations.
-    /// Each <see cref="SecuritySubAssessmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
-    /// To get a <see cref="SecuritySubAssessmentCollection" /> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResource" />.
+    /// A class representing a collection of <see cref="SecuritySubAssessmentResource"/> and their operations.
+    /// Each <see cref="SecuritySubAssessmentResource"/> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource"/>.
+    /// To get a <see cref="SecuritySubAssessmentCollection"/> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResource"/>.
     /// </summary>
     public partial class SecuritySubAssessmentCollection : ArmCollection, IEnumerable<SecuritySubAssessmentResource>, IAsyncEnumerable<SecuritySubAssessmentResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySubAssessmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securitySubAssessmentSubAssessmentsRestClient.Get(Id.Parent, Id.Name, subAssessmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecuritySubAssessmentResource>> GetIfExistsAsync(string subAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
+
+            using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securitySubAssessmentSubAssessmentsRestClient.GetAsync(Id.Parent, Id.Name, subAssessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecuritySubAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        public virtual NullableResponse<SecuritySubAssessmentResource> GetIfExists(string subAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
+
+            using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securitySubAssessmentSubAssessmentsRestClient.Get(Id.Parent, Id.Name, subAssessmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecuritySubAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

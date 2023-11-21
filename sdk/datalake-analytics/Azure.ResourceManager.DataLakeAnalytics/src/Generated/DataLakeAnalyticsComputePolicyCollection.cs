@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> and their operations.
-    /// Each <see cref="DataLakeAnalyticsComputePolicyResource" /> in the collection will belong to the same instance of <see cref="DataLakeAnalyticsAccountResource" />.
-    /// To get a <see cref="DataLakeAnalyticsComputePolicyCollection" /> instance call the GetDataLakeAnalyticsComputePolicies method from an instance of <see cref="DataLakeAnalyticsAccountResource" />.
+    /// A class representing a collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> and their operations.
+    /// Each <see cref="DataLakeAnalyticsComputePolicyResource"/> in the collection will belong to the same instance of <see cref="DataLakeAnalyticsAccountResource"/>.
+    /// To get a <see cref="DataLakeAnalyticsComputePolicyCollection"/> instance call the GetDataLakeAnalyticsComputePolicies method from an instance of <see cref="DataLakeAnalyticsAccountResource"/>.
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyCollection : ArmCollection, IEnumerable<DataLakeAnalyticsComputePolicyResource>, IAsyncEnumerable<DataLakeAnalyticsComputePolicyResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsComputePolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsComputePolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComputePolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataLakeAnalyticsComputePolicyResource>> GetIfExistsAsync(string computePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
+
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeAnalyticsComputePolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComputePolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
+        public virtual NullableResponse<DataLakeAnalyticsComputePolicyResource> GetIfExists(string computePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
+
+            using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeAnalyticsComputePolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

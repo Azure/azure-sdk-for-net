@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostRulestackRuleResource" /> and their operations.
-    /// Each <see cref="PostRulestackRuleResource" /> in the collection will belong to the same instance of <see cref="GlobalRulestackResource" />.
-    /// To get a <see cref="PostRulestackRuleCollection" /> instance call the GetPostRulestackRules method from an instance of <see cref="GlobalRulestackResource" />.
+    /// A class representing a collection of <see cref="PostRulestackRuleResource"/> and their operations.
+    /// Each <see cref="PostRulestackRuleResource"/> in the collection will belong to the same instance of <see cref="GlobalRulestackResource"/>.
+    /// To get a <see cref="PostRulestackRuleCollection"/> instance call the GetPostRulestackRules method from an instance of <see cref="GlobalRulestackResource"/>.
     /// </summary>
     public partial class PostRulestackRuleCollection : ArmCollection, IEnumerable<PostRulestackRuleResource>, IAsyncEnumerable<PostRulestackRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostRulestackRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostRulestackRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 var response = _postRulestackRulePostRulesRestClient.Get(Id.Name, priority, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PostRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostRulestackRuleResource>> GetIfExistsAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postRulestackRulePostRulesRestClient.GetAsync(Id.Name, priority, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PostRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual NullableResponse<PostRulestackRuleResource> GetIfExists(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postRulestackRulePostRulesRestClient.Get(Id.Name, priority, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

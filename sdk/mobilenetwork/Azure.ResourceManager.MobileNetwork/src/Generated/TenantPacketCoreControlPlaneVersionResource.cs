@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a TenantPacketCoreControlPlaneVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPacketCoreControlPlaneVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantPacketCoreControlPlaneVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPacketCoreControlPlaneVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPacketCoreControlPlaneVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantPacketCoreControlPlaneVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPacketCoreControlPlaneVersion method.
     /// </summary>
     public partial class TenantPacketCoreControlPlaneVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPacketCoreControlPlaneVersionResource"/> instance. </summary>
+        /// <param name="versionName"> The versionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string versionName)
         {
             var resourceId = $"/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPacketCoreControlPlaneVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPacketCoreControlPlaneVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data) : this(client, data.Id)

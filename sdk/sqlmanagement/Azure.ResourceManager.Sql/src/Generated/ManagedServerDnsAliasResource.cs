@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedServerDnsAlias along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedServerDnsAliasResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedServerDnsAliasResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedServerDnsAlias method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedServerDnsAliasResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedServerDnsAliasResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedServerDnsAlias method.
     /// </summary>
     public partial class ManagedServerDnsAliasResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedServerDnsAliasResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="dnsAliasName"> The dnsAliasName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string dnsAliasName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedServerDnsAliasResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedServerDnsAliasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedServerDnsAliasResource(ArmClient client, ManagedServerDnsAliasData data) : this(client, data.Id)

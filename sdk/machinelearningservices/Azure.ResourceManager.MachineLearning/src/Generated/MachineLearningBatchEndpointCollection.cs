@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningBatchEndpointResource" /> and their operations.
-    /// Each <see cref="MachineLearningBatchEndpointResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningBatchEndpointCollection" /> instance call the GetMachineLearningBatchEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningBatchEndpointResource"/> and their operations.
+    /// Each <see cref="MachineLearningBatchEndpointResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningBatchEndpointCollection"/> instance call the GetMachineLearningBatchEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningBatchEndpointCollection : ArmCollection, IEnumerable<MachineLearningBatchEndpointResource>, IAsyncEnumerable<MachineLearningBatchEndpointResource>
     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningBatchEndpointBatchEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointOperationSource(Client), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, _machineLearningBatchEndpointBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointOperationSource(Client), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, _machineLearningBatchEndpointBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningBatchEndpointBatchEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointOperationSource(Client), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, _machineLearningBatchEndpointBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointOperationSource(Client), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, _machineLearningBatchEndpointBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningBatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningBatchEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningBatchEndpointResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningBatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningBatchEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningBatchEndpointResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningBatchEndpointBatchEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningBatchEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningBatchEndpointBatchEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningBatchEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningBatchEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningBatchEndpointBatchEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningBatchEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

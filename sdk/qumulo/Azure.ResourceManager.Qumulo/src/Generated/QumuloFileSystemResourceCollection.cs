@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
-    /// A class representing a collection of <see cref="QumuloFileSystemResource" /> and their operations.
-    /// Each <see cref="QumuloFileSystemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="QumuloFileSystemResourceCollection" /> instance call the GetQumuloFileSystemResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="QumuloFileSystemResource"/> and their operations.
+    /// Each <see cref="QumuloFileSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="QumuloFileSystemResourceCollection"/> instance call the GetQumuloFileSystemResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class QumuloFileSystemResourceCollection : ArmCollection, IEnumerable<QumuloFileSystemResource>, IAsyncEnumerable<QumuloFileSystemResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Qumulo
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QumuloFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Qumulo
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QumuloFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.Qumulo
             {
                 var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileSystems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileSystemName"> Name of the File System resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        public virtual async Task<NullableResponse<QumuloFileSystemResource>> GetIfExistsAsync(string fileSystemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
+
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<QumuloFileSystemResource>(response.GetRawResponse());
+                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileSystems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileSystemName"> Name of the File System resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        public virtual NullableResponse<QumuloFileSystemResource> GetIfExists(string fileSystemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
+
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<QumuloFileSystemResource>(response.GetRawResponse());
+                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

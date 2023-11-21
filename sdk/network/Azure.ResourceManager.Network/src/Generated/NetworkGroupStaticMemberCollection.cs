@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkGroupStaticMemberResource" /> and their operations.
-    /// Each <see cref="NetworkGroupStaticMemberResource" /> in the collection will belong to the same instance of <see cref="NetworkGroupResource" />.
-    /// To get a <see cref="NetworkGroupStaticMemberCollection" /> instance call the GetNetworkGroupStaticMembers method from an instance of <see cref="NetworkGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkGroupStaticMemberResource"/> and their operations.
+    /// Each <see cref="NetworkGroupStaticMemberResource"/> in the collection will belong to the same instance of <see cref="NetworkGroupResource"/>.
+    /// To get a <see cref="NetworkGroupStaticMemberCollection"/> instance call the GetNetworkGroupStaticMembers method from an instance of <see cref="NetworkGroupResource"/>.
     /// </summary>
     public partial class NetworkGroupStaticMemberCollection : ArmCollection, IEnumerable<NetworkGroupStaticMemberResource>, IAsyncEnumerable<NetworkGroupStaticMemberResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkGroupStaticMemberResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkGroupStaticMemberResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkGroupStaticMemberResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupStaticMemberStaticMembersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkGroupStaticMemberResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkGroupStaticMemberResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkGroupStaticMemberResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupStaticMemberStaticMembersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkGroupStaticMemberStaticMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="staticMemberName"> The name of the static member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkGroupStaticMemberResource>> GetIfExistsAsync(string staticMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
+
+            using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkGroupStaticMemberStaticMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkGroupStaticMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="staticMemberName"> The name of the static member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        public virtual NullableResponse<NetworkGroupStaticMemberResource> GetIfExists(string staticMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
+
+            using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkGroupStaticMemberStaticMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkGroupStaticMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

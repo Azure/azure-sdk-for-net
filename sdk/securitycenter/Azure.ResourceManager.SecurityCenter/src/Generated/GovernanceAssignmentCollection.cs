@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GovernanceAssignmentResource" /> and their operations.
-    /// Each <see cref="GovernanceAssignmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
-    /// To get a <see cref="GovernanceAssignmentCollection" /> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResource" />.
+    /// A class representing a collection of <see cref="GovernanceAssignmentResource"/> and their operations.
+    /// Each <see cref="GovernanceAssignmentResource"/> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource"/>.
+    /// To get a <see cref="GovernanceAssignmentCollection"/> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResource"/>.
     /// </summary>
     public partial class GovernanceAssignmentCollection : ArmCollection, IEnumerable<GovernanceAssignmentResource>, IAsyncEnumerable<GovernanceAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GovernanceAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GovernanceAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _governanceAssignmentRestClient.Get(Id.Parent, Id.Name, assignmentKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        public virtual async Task<NullableResponse<GovernanceAssignmentResource>> GetIfExistsAsync(string assignmentKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+
+            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _governanceAssignmentRestClient.GetAsync(Id.Parent, Id.Name, assignmentKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GovernanceAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        public virtual NullableResponse<GovernanceAssignmentResource> GetIfExists(string assignmentKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+
+            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _governanceAssignmentRestClient.Get(Id.Parent, Id.Name, assignmentKey, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GovernanceAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

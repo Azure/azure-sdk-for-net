@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisIotFhirDestinationResource" /> and their operations.
-    /// Each <see cref="HealthcareApisIotFhirDestinationResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisIotConnectorResource" />.
-    /// To get a <see cref="HealthcareApisIotFhirDestinationCollection" /> instance call the GetHealthcareApisIotFhirDestinations method from an instance of <see cref="HealthcareApisIotConnectorResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisIotFhirDestinationResource"/> and their operations.
+    /// Each <see cref="HealthcareApisIotFhirDestinationResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisIotConnectorResource"/>.
+    /// To get a <see cref="HealthcareApisIotFhirDestinationCollection"/> instance call the GetHealthcareApisIotFhirDestinations method from an instance of <see cref="HealthcareApisIotConnectorResource"/>.
     /// </summary>
     public partial class HealthcareApisIotFhirDestinationCollection : ArmCollection, IEnumerable<HealthcareApisIotFhirDestinationResource>, IAsyncEnumerable<HealthcareApisIotFhirDestinationResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisIotFhirDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisIotFhirDestinationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisIotFhirDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisIotFhirDestinationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -320,6 +320,80 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthcareApisIotFhirDestinationResource>> GetIfExistsAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+
+            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisIotFhirDestinationResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotFhirDestinationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        public virtual NullableResponse<HealthcareApisIotFhirDestinationResource> GetIfExists(string fhirDestinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+
+            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisIotFhirDestinationResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotFhirDestinationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

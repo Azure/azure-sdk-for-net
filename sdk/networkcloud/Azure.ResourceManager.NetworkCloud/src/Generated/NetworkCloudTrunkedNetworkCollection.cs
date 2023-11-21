@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudTrunkedNetworkResource" /> and their operations.
-    /// Each <see cref="NetworkCloudTrunkedNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="NetworkCloudTrunkedNetworkCollection" /> instance call the GetNetworkCloudTrunkedNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudTrunkedNetworkResource"/> and their operations.
+    /// Each <see cref="NetworkCloudTrunkedNetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkCloudTrunkedNetworkCollection"/> instance call the GetNetworkCloudTrunkedNetworks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class NetworkCloudTrunkedNetworkCollection : ArmCollection, IEnumerable<NetworkCloudTrunkedNetworkResource>, IAsyncEnumerable<NetworkCloudTrunkedNetworkResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var response = _networkCloudTrunkedNetworkTrunkedNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrunkedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudTrunkedNetworkResource>> GetIfExistsAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+
+            using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudTrunkedNetworkTrunkedNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudTrunkedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudTrunkedNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrunkedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudTrunkedNetworkResource> GetIfExists(string trunkedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+
+            using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudTrunkedNetworkTrunkedNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudTrunkedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudTrunkedNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConsumptionBudgetResource" /> and their operations.
-    /// Each <see cref="ConsumptionBudgetResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ConsumptionBudgetCollection" /> instance call the GetConsumptionBudgets method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ConsumptionBudgetResource"/> and their operations.
+    /// Each <see cref="ConsumptionBudgetResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ConsumptionBudgetCollection"/> instance call the GetConsumptionBudgets method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ConsumptionBudgetCollection : ArmCollection, IEnumerable<ConsumptionBudgetResource>, IAsyncEnumerable<ConsumptionBudgetResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumptionBudgetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConsumptionBudgetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionBudgetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionBudgetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConsumptionBudgetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionBudgetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
@@ -305,6 +305,80 @@ namespace Azure.ResourceManager.Consumption
             {
                 var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConsumptionBudgetResource>> GetIfExistsAsync(string budgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _consumptionBudgetBudgetsRestClient.GetAsync(Id, budgetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConsumptionBudgetResource>(response.GetRawResponse());
+                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        public virtual NullableResponse<ConsumptionBudgetResource> GetIfExists(string budgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConsumptionBudgetResource>(response.GetRawResponse());
+                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

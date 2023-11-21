@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an AdaptiveApplicationControlGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AdaptiveApplicationControlGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAdaptiveApplicationControlGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetAdaptiveApplicationControlGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdaptiveApplicationControlGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAdaptiveApplicationControlGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource"/> using the GetAdaptiveApplicationControlGroup method.
     /// </summary>
     public partial class AdaptiveApplicationControlGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdaptiveApplicationControlGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AdaptiveApplicationControlGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdaptiveApplicationControlGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdaptiveApplicationControlGroupResource(ArmClient client, AdaptiveApplicationControlGroupData data) : this(client, data.Id)

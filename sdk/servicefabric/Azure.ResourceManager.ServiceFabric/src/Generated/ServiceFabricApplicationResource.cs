@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
     /// A Class representing a ServiceFabricApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricClusterResource" /> using the GetServiceFabricApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricClusterResource"/> using the GetServiceFabricApplication method.
     /// </summary>
     public partial class ServiceFabricApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricApplicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationName"> The applicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricApplicationResource(ArmClient client, ServiceFabricApplicationData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An object representing collection of ServiceFabricServiceResources and their operations over a ServiceFabricServiceResource. </returns>
         public virtual ServiceFabricServiceCollection GetServiceFabricServices()
         {
-            return GetCachedClient(Client => new ServiceFabricServiceCollection(Client, Id));
+            return GetCachedClient(client => new ServiceFabricServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </summary>
         /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceFabricServiceResource>> GetServiceFabricServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </summary>
         /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceFabricServiceResource> GetServiceFabricService(string serviceName, CancellationToken cancellationToken = default)
         {

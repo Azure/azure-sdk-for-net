@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterScheduleResource" /> and their operations.
-    /// Each <see cref="DevCenterScheduleResource" /> in the collection will belong to the same instance of <see cref="DevCenterPoolResource" />.
-    /// To get a <see cref="DevCenterScheduleCollection" /> instance call the GetDevCenterSchedules method from an instance of <see cref="DevCenterPoolResource" />.
+    /// A class representing a collection of <see cref="DevCenterScheduleResource"/> and their operations.
+    /// Each <see cref="DevCenterScheduleResource"/> in the collection will belong to the same instance of <see cref="DevCenterPoolResource"/>.
+    /// To get a <see cref="DevCenterScheduleCollection"/> instance call the GetDevCenterSchedules method from an instance of <see cref="DevCenterPoolResource"/>.
     /// </summary>
     public partial class DevCenterScheduleCollection : ArmCollection, IEnumerable<DevCenterScheduleResource>, IAsyncEnumerable<DevCenterScheduleResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterScheduleResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterScheduleResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
@@ -323,6 +323,82 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterScheduleResource>> GetIfExistsAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _devCenterScheduleSchedulesClientDiagnostics.CreateScope("DevCenterScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterScheduleResource> GetIfExists(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _devCenterScheduleSchedulesClientDiagnostics.CreateScope("DevCenterScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

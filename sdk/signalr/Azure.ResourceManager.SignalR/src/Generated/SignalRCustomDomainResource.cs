@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalRCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource" /> using the GetSignalRCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRCustomDomain method.
     /// </summary>
     public partial class SignalRCustomDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SignalRCustomDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/customDomains/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SignalR
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRCustomDomainResource(ArmClient client, SignalRCustomDomainData data) : this(client, data.Id)

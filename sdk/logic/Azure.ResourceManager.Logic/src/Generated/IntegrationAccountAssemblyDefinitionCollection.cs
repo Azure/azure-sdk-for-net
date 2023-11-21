@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> and their operations.
-    /// Each <see cref="IntegrationAccountAssemblyDefinitionResource" /> in the collection will belong to the same instance of <see cref="IntegrationAccountResource" />.
-    /// To get an <see cref="IntegrationAccountAssemblyDefinitionCollection" /> instance call the GetIntegrationAccountAssemblyDefinitions method from an instance of <see cref="IntegrationAccountResource" />.
+    /// A class representing a collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> and their operations.
+    /// Each <see cref="IntegrationAccountAssemblyDefinitionResource"/> in the collection will belong to the same instance of <see cref="IntegrationAccountResource"/>.
+    /// To get an <see cref="IntegrationAccountAssemblyDefinitionCollection"/> instance call the GetIntegrationAccountAssemblyDefinitions method from an instance of <see cref="IntegrationAccountResource"/>.
     /// </summary>
     public partial class IntegrationAccountAssemblyDefinitionCollection : ArmCollection, IEnumerable<IntegrationAccountAssemblyDefinitionResource>, IAsyncEnumerable<IntegrationAccountAssemblyDefinitionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountAssemblyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountAssemblyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -313,6 +313,80 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/assemblies/{assemblyArtifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountAssemblies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assemblyArtifactName"> The assembly artifact name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountAssemblyDefinitionResource>> GetIfExistsAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+
+            using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountAssemblyDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountAssemblyDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/assemblies/{assemblyArtifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountAssemblies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assemblyArtifactName"> The assembly artifact name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountAssemblyDefinitionResource> GetIfExists(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+
+            using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountAssemblyDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountAssemblyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

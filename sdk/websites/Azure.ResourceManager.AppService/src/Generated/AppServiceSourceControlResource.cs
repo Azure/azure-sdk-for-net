@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServiceSourceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceSourceControlResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceSourceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAppServiceSourceControl method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServiceSourceControlResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServiceSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAppServiceSourceControl method.
     /// </summary>
     public partial class AppServiceSourceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceSourceControlResource"/> instance. </summary>
+        /// <param name="sourceControlType"> The sourceControlType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string sourceControlType)
         {
             var resourceId = $"/providers/Microsoft.Web/sourcecontrols/{sourceControlType}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServiceSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServiceSourceControlResource(ArmClient client, AppServiceSourceControlData data) : this(client, data.Id)

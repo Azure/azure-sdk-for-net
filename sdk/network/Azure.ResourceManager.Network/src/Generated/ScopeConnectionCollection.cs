@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScopeConnectionResource" /> and their operations.
-    /// Each <see cref="ScopeConnectionResource" /> in the collection will belong to the same instance of <see cref="NetworkManagerResource" />.
-    /// To get a <see cref="ScopeConnectionCollection" /> instance call the GetScopeConnections method from an instance of <see cref="NetworkManagerResource" />.
+    /// A class representing a collection of <see cref="ScopeConnectionResource"/> and their operations.
+    /// Each <see cref="ScopeConnectionResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
+    /// To get a <see cref="ScopeConnectionCollection"/> instance call the GetScopeConnections method from an instance of <see cref="NetworkManagerResource"/>.
     /// </summary>
     public partial class ScopeConnectionCollection : ArmCollection, IEnumerable<ScopeConnectionResource>, IAsyncEnumerable<ScopeConnectionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScopeConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeConnectionResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScopeConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScopeConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeConnectionResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _scopeConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScopeConnectionResource>> GetIfExistsAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+
+            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scopeConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScopeConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        public virtual NullableResponse<ScopeConnectionResource> GetIfExists(string scopeConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+
+            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scopeConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScopeConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

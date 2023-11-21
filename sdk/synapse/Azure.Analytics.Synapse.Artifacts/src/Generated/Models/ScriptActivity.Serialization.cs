@@ -70,6 +70,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(ScriptBlockExecutionTimeout))
+            {
+                writer.WritePropertyName("scriptBlockExecutionTimeout"u8);
+                writer.WriteObjectValue(ScriptBlockExecutionTimeout);
+            }
             if (Optional.IsCollectionDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
@@ -109,6 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
+            Optional<object> scriptBlockExecutionTimeout = default;
             Optional<IList<ScriptActivityScriptBlock>> scripts = default;
             Optional<ScriptActivityTypePropertiesLogSettings> logSettings = default;
             IDictionary<string, object> additionalProperties = default;
@@ -203,6 +209,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("scriptBlockExecutionTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scriptBlockExecutionTimeout = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("scripts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -232,7 +247,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScriptActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(scripts), logSettings.Value);
+            return new ScriptActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, scriptBlockExecutionTimeout.Value, Optional.ToList(scripts), logSettings.Value);
         }
 
         internal partial class ScriptActivityConverter : JsonConverter<ScriptActivity>

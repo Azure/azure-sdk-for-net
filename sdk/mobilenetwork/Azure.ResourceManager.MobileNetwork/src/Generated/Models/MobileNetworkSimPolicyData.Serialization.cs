@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("ueAmbr"u8);
             writer.WriteObjectValue(UeAmbr);
             writer.WritePropertyName("defaultSlice"u8);
-            JsonSerializer.Serialize(writer, DefaultSlice); if (Optional.IsDefined(RfspIndex))
+            JsonSerializer.Serialize(writer, DefaultSlice);
+            if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);

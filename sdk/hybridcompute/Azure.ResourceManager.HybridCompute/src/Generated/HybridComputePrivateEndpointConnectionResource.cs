@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource" /> using the GetHybridComputePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource"/> using the GetHybridComputePrivateEndpointConnection method.
     /// </summary>
     public partial class HybridComputePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scopeName"> The scopeName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputePrivateEndpointConnectionResource(ArmClient client, HybridComputePrivateEndpointConnectionData data) : this(client, data.Id)

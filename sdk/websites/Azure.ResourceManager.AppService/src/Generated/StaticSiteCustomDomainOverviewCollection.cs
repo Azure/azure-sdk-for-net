@@ -21,9 +21,9 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StaticSiteCustomDomainOverviewResource" /> and their operations.
-    /// Each <see cref="StaticSiteCustomDomainOverviewResource" /> in the collection will belong to the same instance of <see cref="StaticSiteResource" />.
-    /// To get a <see cref="StaticSiteCustomDomainOverviewCollection" /> instance call the GetStaticSiteCustomDomainOverviews method from an instance of <see cref="StaticSiteResource" />.
+    /// A class representing a collection of <see cref="StaticSiteCustomDomainOverviewResource"/> and their operations.
+    /// Each <see cref="StaticSiteCustomDomainOverviewResource"/> in the collection will belong to the same instance of <see cref="StaticSiteResource"/>.
+    /// To get a <see cref="StaticSiteCustomDomainOverviewCollection"/> instance call the GetStaticSiteCustomDomainOverviews method from an instance of <see cref="StaticSiteResource"/>.
     /// </summary>
     public partial class StaticSiteCustomDomainOverviewCollection : ArmCollection, IEnumerable<StaticSiteCustomDomainOverviewResource>, IAsyncEnumerable<StaticSiteCustomDomainOverviewResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteCustomDomainOverviewResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSiteCustomDomainOverviewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteCustomDomainOverviewResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteCustomDomainOverviewResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteCustomDomainOverviewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteCustomDomainOverviewResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteCustomDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The custom domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StaticSiteCustomDomainOverviewResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _staticSiteCustomDomainOverviewStaticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StaticSiteCustomDomainOverviewResource>(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteCustomDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The custom domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public virtual NullableResponse<StaticSiteCustomDomainOverviewResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StaticSiteCustomDomainOverviewResource>(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
