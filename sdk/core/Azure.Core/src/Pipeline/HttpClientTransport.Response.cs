@@ -27,6 +27,9 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
+        // Adapts an internal ClientModel HttpPipelineResponse.  Doing this instead
+        // of inheriting from HttpPipelineResponse allows us to keep HttpPipelineResponse
+        // internal in ClientModel.
         private sealed class HttpClientTransportResponse : PipelineResponse
         {
             private readonly PipelineResponse _httpPipelineResponse;

@@ -28,9 +28,18 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
+        // Adapts an internal ClientModel HttpPipelineRequest.  Doing this instead
+        // of inheriting from HttpPipelineRequest allows us to keep HttpPipelineRequest
+        // internal in ClientModel.
         private sealed class HttpClientTransportRequest : PipelineRequest
         {
             private RequestUriBuilder? _uriBuilder;
+            private readonly PipelineRequest _httpPipelineRequest;
+
+            public HttpClientTransportRequest()
+            {
+                _httpPipelineRequest = Create();
+            }
 
             public override Uri Uri
             {
@@ -64,6 +73,20 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            public override string Method
+            {
+                get => _httpPipelineRequest.Method;
+                set => _httpPipelineRequest.Method = value;
+            }
+            public override InputContent? Content
+            {
+                get => _httpPipelineRequest.Content;
+                set => _httpPipelineRequest.Content = value;
+            }
+
+            public override MessageHeaders Headers
+                => _httpPipelineRequest.Headers;
+
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
             internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
@@ -92,6 +115,9 @@ namespace Azure.Core.Pipeline
                 httpRequest.Properties[name] = value;
 #endif
             }
+
+            public override void Dispose()
+                => _httpPipelineRequest.Dispose();
         }
 
         private class RequestAdapter : Request
