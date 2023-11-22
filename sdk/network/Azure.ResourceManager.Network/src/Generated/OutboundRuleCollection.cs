@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

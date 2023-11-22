@@ -5,16 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricResult
+    public partial class MetricResult : IUtf8JsonSerializable, IJsonModel<MetricResult>
     {
-        internal static MetricResult DeserializeMetricResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceType);
+            writer.WritePropertyName("name"u8);
+            writer.WriteObjectValue(LocalizedName);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("displayDescription"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            writer.WritePropertyName("unit"u8);
+            writer.WriteStringValue(Unit.ToString());
+            writer.WritePropertyName("timeseries"u8);
+            writer.WriteStartArray();
+            foreach (var item in TimeSeries)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MetricResult IJsonModel<MetricResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricResult(document.RootElement, options);
+        }
+
+        internal static MetricResult DeserializeMetricResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +103,8 @@ namespace Azure.Monitor.Query.Models
             Optional<string> errorMessage = default;
             MetricUnit unit = default;
             IReadOnlyList<MetricTimeSeriesElement> timeseries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,8 +152,44 @@ namespace Azure.Monitor.Query.Models
                     timeseries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricResult(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricResult(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MetricResult IPersistableModel<MetricResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

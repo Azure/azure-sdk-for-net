@@ -14,13 +14,80 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Monitoring data point coming from SDK, which includes metrics, documents and other metadata info. </summary>
     internal partial class MonitoringDataPoint
     {
-        /// <summary> Initializes a new instance of MonitoringDataPoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
         public MonitoringDataPoint()
         {
             Metrics = new ChangeTrackingList<MetricPoint>();
             Documents = new ChangeTrackingList<DocumentIngress>();
             TopCpuProcesses = new ChangeTrackingList<ProcessCpuData>();
             CollectionConfigurationErrors = new ChangeTrackingList<CollectionConfigurationError>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
+        /// <param name="version"> AI SDK version. </param>
+        /// <param name="invariantVersion"> Version/generation of the data contract (MonitoringDataPoint) between SDK and QuickPulse. </param>
+        /// <param name="instance"> Service instance name where AI SDK lives. </param>
+        /// <param name="roleName"> Service role name. </param>
+        /// <param name="machineName"> Computer name where AI SDK lives. </param>
+        /// <param name="streamId"> Identifies an AI SDK as a trusted agent to report metrics and documents. </param>
+        /// <param name="timestamp"> Data point generation timestamp. </param>
+        /// <param name="transmissionTime"> Timestamp when SDK transmits the metrics and documents to QuickPulse. A 8-byte long type of ticks. </param>
+        /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
+        /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
+        /// <param name="metrics"> An array of meric data points. </param>
+        /// <param name="documents"> An array of documents of a specific type {RequestDocumentIngress}, {RemoteDependencyDocumentIngress}, {ExceptionDocumentIngress}, {EventDocumentIngress}, or {TraceDocumentIngress}. </param>
+        /// <param name="topCpuProcesses"> An array of top cpu consumption data point. </param>
+        /// <param name="collectionConfigurationErrors"> An array of error while parsing and applying . </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringDataPoint(string version, int? invariantVersion, string instance, string roleName, string machineName, string streamId, DateTimeOffset? timestamp, DateTimeOffset? transmissionTime, bool? isWebApp, bool? performanceCollectionSupported, IList<MetricPoint> metrics, IList<DocumentIngress> documents, IList<ProcessCpuData> topCpuProcesses, IList<CollectionConfigurationError> collectionConfigurationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            InvariantVersion = invariantVersion;
+            Instance = instance;
+            RoleName = roleName;
+            MachineName = machineName;
+            StreamId = streamId;
+            Timestamp = timestamp;
+            TransmissionTime = transmissionTime;
+            IsWebApp = isWebApp;
+            PerformanceCollectionSupported = performanceCollectionSupported;
+            Metrics = metrics;
+            Documents = documents;
+            TopCpuProcesses = topCpuProcesses;
+            CollectionConfigurationErrors = collectionConfigurationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AI SDK version. </summary>

@@ -5,14 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineReplaceParameters represents the body of the request to physically swap a bare metal machine for another. </summary>
     public partial class BareMetalMachineReplaceContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineReplaceContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
         public BareMetalMachineReplaceContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
+        /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
+        /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BmcCredentials = bmcCredentials;
+            BmcMacAddress = bmcMacAddress;
+            BootMacAddress = bootMacAddress;
+            MachineName = machineName;
+            SerialNumber = serialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>

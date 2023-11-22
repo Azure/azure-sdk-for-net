@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

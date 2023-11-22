@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

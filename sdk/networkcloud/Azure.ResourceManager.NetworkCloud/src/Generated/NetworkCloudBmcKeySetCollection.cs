@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

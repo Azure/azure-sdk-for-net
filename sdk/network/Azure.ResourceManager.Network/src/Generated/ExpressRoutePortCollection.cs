@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response for the LTR backup API call. </summary>
     public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
         internal PostgreSqlFlexibleServerLtrBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupName"> Name of Backup operation. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        internal PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PercentComplete = percentComplete;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Size of datasource in bytes. </summary>
