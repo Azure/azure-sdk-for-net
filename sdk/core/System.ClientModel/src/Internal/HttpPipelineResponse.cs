@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Net.Http;
 
-namespace System.ClientModel.Internal.Primitives;
+namespace System.ClientModel.Internal;
 
 internal class HttpPipelineResponse : PipelineResponse
 {

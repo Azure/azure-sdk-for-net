@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal.Primitives;
+namespace System.ClientModel.Internal;
 
 // This adds the Http dependency, and some implementation
 

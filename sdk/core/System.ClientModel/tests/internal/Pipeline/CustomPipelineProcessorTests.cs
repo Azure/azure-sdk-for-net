@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Internal.Primitives;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;

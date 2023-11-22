@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal.Primitives;
+using System.ClientModel.Internal;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
