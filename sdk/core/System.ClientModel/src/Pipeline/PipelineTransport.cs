@@ -1,13 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal.Primitives;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class PipelineTransport : PipelinePolicy
+public abstract class PipelineTransport : PipelinePolicy, IDisposable
 {
+    public static PipelineTransport Create(HttpClient client,
+        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest = default,
+        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse = default)
+        => new HttpClientPipelineTransport(client, onSendingRequest, onReceivedResponse);
+
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
@@ -40,4 +47,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
         await ProcessAsync(message).ConfigureAwait(false);
     }
+
+    /// <inheritdoc/>
+    public virtual void Dispose() { }
 }

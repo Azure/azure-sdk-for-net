@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal.Primitives;
 
-// Introduces the dependency on System.Net.Http;
-
-public class HttpClientPipelineTransport : PipelineTransport, IDisposable
+internal class HttpClientPipelineTransport : PipelineTransport
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
@@ -21,22 +19,30 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
+    private readonly Action<PipelineMessage, HttpRequestMessage>? _onSendingRequest;
+    private readonly Action<PipelineMessage, HttpResponseMessage>? _onReceivedResponse;
+
     private bool _disposed;
 
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(CreateDefaultClient(), default, default)
     {
         // We will dispose the httpClient.
         _ownsClient = true;
     }
 
-    public HttpClientPipelineTransport(HttpClient client)
+    public HttpClientPipelineTransport(HttpClient client,
+        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest,
+        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse)
     {
         ClientUtilities.AssertNotNull(client, nameof(client));
 
-        _httpClient = client;
-
         // The caller will dispose the httpClient.
         _ownsClient = false;
+
+        _httpClient = client;
+
+        _onSendingRequest = onSendingRequest;
+        _onReceivedResponse = onReceivedResponse;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -98,7 +104,10 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        OnSendingRequest(message, httpRequest);
+        if (_onSendingRequest is not null)
+        {
+            _onSendingRequest(message, httpRequest);
+        }
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
@@ -154,10 +163,15 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             throw new ClientRequestException(response: null, e.Message, e);
         }
 
+        message.Response = new HttpPipelineResponse(responseMessage);
+
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
-        OnReceivedResponse(message, responseMessage);
+        if (_onReceivedResponse is not null)
+        {
+            _onReceivedResponse(message, responseMessage);
+        }
 
         // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
@@ -176,21 +190,6 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             message.Response.IsError = message.MessageClassifier.IsError(message);
         }
     }
-
-    /// <summary>
-    /// TBD. Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpRequest"></param>
-    protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
-
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpResponse"></param>
-    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpPipelineResponse(httpResponse);
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
@@ -218,7 +217,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         }
     }
 
-    public virtual void Dispose()
+    public override void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

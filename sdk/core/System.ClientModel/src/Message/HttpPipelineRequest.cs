@@ -59,6 +59,10 @@ internal class HttpPipelineRequest : PipelineRequest
 
     public override MessageHeaders Headers => _headers;
 
+    // We don't dispose this because it is owned outside this type
+    // (Used in a using block by the transport)
+    internal HttpRequestMessage? HttpRequest { get; set; }
+
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
 
