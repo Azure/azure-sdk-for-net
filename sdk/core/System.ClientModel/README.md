@@ -1,4 +1,4 @@
-# System.ClientModel client library for .NET
+# System.ClientModel library for .NET
 
 `System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
 
