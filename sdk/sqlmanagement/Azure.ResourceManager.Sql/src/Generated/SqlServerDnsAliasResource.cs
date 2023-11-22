@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The <see cref="ServerDnsAliasAcquisition"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerDnsAliasResource>> AcquireAsync(WaitUntil waitUntil, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The <see cref="ServerDnsAliasAcquisition"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         public virtual ArmOperation<SqlServerDnsAliasResource> Acquire(WaitUntil waitUntil, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
