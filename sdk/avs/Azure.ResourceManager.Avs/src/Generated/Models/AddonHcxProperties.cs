@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of an HCX addon. </summary>
     public partial class AddonHcxProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonHcxProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         public AddonHcxProperties(string offer)
@@ -24,14 +25,20 @@ namespace Azure.ResourceManager.Avs.Models
             AddonType = AddonType.HCX;
         }
 
-        /// <summary> Initializes a new instance of AddonHcxProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
-        internal AddonHcxProperties(AddonType addonType, AddonProvisioningState? provisioningState, string offer) : base(addonType, provisioningState)
+        internal AddonHcxProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string offer) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             Offer = offer;
             AddonType = addonType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/> for deserialization. </summary>
+        internal AddonHcxProperties()
+        {
         }
 
         /// <summary> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </summary>

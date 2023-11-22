@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,19 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendChatMessageResultInternal
+    internal partial class SendChatMessageResultInternal : IUtf8JsonSerializable, IJsonModel<SendChatMessageResultInternal>
     {
-        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SendChatMessageResultInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SendChatMessageResultInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SendChatMessageResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SendChatMessageResultInternal)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SendChatMessageResultInternal IJsonModel<SendChatMessageResultInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendChatMessageResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SendChatMessageResultInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSendChatMessageResultInternal(document.RootElement, options);
+        }
+
+        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -25,8 +77,44 @@ namespace Azure.Communication.Chat
                     id = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SendChatMessageResultInternal(id);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SendChatMessageResultInternal(id, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SendChatMessageResultInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendChatMessageResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendChatMessageResultInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SendChatMessageResultInternal IPersistableModel<SendChatMessageResultInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendChatMessageResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSendChatMessageResultInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendChatMessageResultInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SendChatMessageResultInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

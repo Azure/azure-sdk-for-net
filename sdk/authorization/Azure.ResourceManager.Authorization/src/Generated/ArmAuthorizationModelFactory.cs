@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAuthorizationModelFactory
     {
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationClassicAdministrator"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AuthorizationClassicAdministrator"/> instance for mocking. </returns>
         public static AuthorizationClassicAdministrator AuthorizationClassicAdministrator(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailAddress = null, string role = null)
         {
-            return new AuthorizationClassicAdministrator(id, name, resourceType, systemData, emailAddress, role);
+            return new AuthorizationClassicAdministrator(id, name, resourceType, systemData, emailAddress, role, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.DenyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Authorization.Models
             principals ??= new List<RoleManagementPrincipal>();
             excludePrincipals ??= new List<RoleManagementPrincipal>();
 
-            return new DenyAssignmentData(id, name, resourceType, systemData, denyAssignmentName, description, permissions?.ToList(), scope, isAppliedToChildScopes, principals?.ToList(), excludePrincipals?.ToList(), isSystemProtected);
+            return new DenyAssignmentData(id, name, resourceType, systemData, denyAssignmentName, description, permissions?.ToList(), scope, isAppliedToChildScopes, principals?.ToList(), excludePrincipals?.ToList(), isSystemProtected, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DenyAssignmentPermission"/>. </summary>
         /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
         /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Authorization.Models
             dataActions ??= new List<string>();
             notDataActions ??= new List<string>();
 
-            return new DenyAssignmentPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList(), condition, conditionVersion);
+            return new DenyAssignmentPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList(), condition, conditionVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPrincipal"/>. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of the principal. </param>
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPrincipal"/> instance for mocking. </returns>
         public static RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, RoleManagementPrincipalType? principalType = null, string email = null)
         {
-            return new RoleManagementPrincipal(id, displayName, principalType, email);
+            return new RoleManagementPrincipal(id, displayName, principalType, email, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Authorization.Models
             resourceTypes ??= new List<AuthorizationProviderResourceType>();
             operations ??= new List<AuthorizationProviderOperationInfo>();
 
-            return new AuthorizationProviderOperationsMetadataData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), operations?.ToList());
+            return new AuthorizationProviderOperationsMetadataData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), operations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationProviderResourceType"/>. </summary>
         /// <param name="name"> The resource type name. </param>
         /// <param name="displayName"> The resource type display name. </param>
         /// <param name="operations"> The resource type operations. </param>
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             operations ??= new List<AuthorizationProviderOperationInfo>();
 
-            return new AuthorizationProviderResourceType(name, displayName, operations?.ToList());
+            return new AuthorizationProviderResourceType(name, displayName, operations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationProviderOperationInfo"/>. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AuthorizationProviderOperationInfo"/> instance for mocking. </returns>
         public static AuthorizationProviderOperationInfo AuthorizationProviderOperationInfo(string name = null, string displayName = null, string description = null, string origin = null, BinaryData properties = null, bool? isDataAction = null)
         {
-            return new AuthorizationProviderOperationInfo(name, displayName, description, origin, properties, isDataAction);
+            return new AuthorizationProviderOperationInfo(name, displayName, description, origin, properties, isDataAction, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -144,10 +144,29 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleAssignmentData"/> instance for mocking. </returns>
         public static RoleAssignmentData RoleAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, string description = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string createdBy = null, string updatedBy = null, ResourceIdentifier delegatedManagedIdentityResourceId = null)
         {
-            return new RoleAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, description, condition, conditionVersion, createdOn, updatedOn, createdBy, updatedBy, delegatedManagedIdentityResourceId);
+            return new RoleAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, description, condition, conditionVersion, createdOn, updatedOn, createdBy, updatedBy, delegatedManagedIdentityResourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleAssignmentCreateOrUpdateContent"/>. </summary>
+        /// <param name="scope"> The role assignment scope. </param>
+        /// <param name="roleDefinitionId"> The role definition ID. </param>
+        /// <param name="principalId"> The principal ID. </param>
+        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
+        /// <param name="description"> Description of role assignment. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is '2.0'. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
+        /// <param name="delegatedManagedIdentityResourceId"> Id of the delegated managed identity resource. </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static RoleAssignmentCreateOrUpdateContent RoleAssignmentCreateOrUpdateContent(string scope = null, ResourceIdentifier roleDefinitionId = null, Guid principalId = default, RoleManagementPrincipalType? principalType = null, string description = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string createdBy = null, string updatedBy = null, ResourceIdentifier delegatedManagedIdentityResourceId = null)
+        {
+            return new RoleAssignmentCreateOrUpdateContent(scope, roleDefinitionId, principalId, principalType, description, condition, conditionVersion, createdOn, updatedOn, createdBy, updatedBy, delegatedManagedIdentityResourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationRoleDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -163,20 +182,20 @@ namespace Azure.ResourceManager.Authorization.Models
             permissions ??= new List<RoleDefinitionPermission>();
             assignableScopes ??= new List<string>();
 
-            return new AuthorizationRoleDefinitionData(id, name, resourceType, systemData, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList());
+            return new AuthorizationRoleDefinitionData(id, name, resourceType, systemData, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EligibleChildResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EligibleChildResource"/>. </summary>
         /// <param name="id"> The resource scope Id. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.EligibleChildResource"/> instance for mocking. </returns>
         public static EligibleChildResource EligibleChildResource(string id = null, string name = null, string resourceType = null)
         {
-            return new EligibleChildResource(id, name, resourceType);
+            return new EligibleChildResource(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -200,10 +219,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleData"/> instance for mocking. </returns>
         public static RoleAssignmentScheduleData RoleAssignmentScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, ResourceIdentifier roleAssignmentScheduleRequestId = null, ResourceIdentifier linkedRoleEligibilityScheduleId = null, RoleAssignmentScheduleAssignmentType? assignmentType = null, RoleManagementScheduleMemberType? memberType = null, RoleManagementScheduleStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, RoleManagementExpandedProperties expandedProperties = null)
         {
-            return new RoleAssignmentScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleRequestId, linkedRoleEligibilityScheduleId, assignmentType, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties);
+            return new RoleAssignmentScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleRequestId, linkedRoleEligibilityScheduleId, assignmentType, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementExpandedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementExpandedProperties"/>. </summary>
         /// <param name="principalId"> Id of the principal. </param>
         /// <param name="principalDisplayName"> Display name of the principal. </param>
         /// <param name="email"> Email id of the principal. </param>
@@ -217,10 +236,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
         public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId = null, string principalDisplayName = null, string email = null, RoleManagementPrincipalType? principalType = null, ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, AuthorizationRoleType? roleType = null, ResourceIdentifier scopeId = null, string scopeDisplayName = null, RoleManagementScopeType? scopeType = null)
         {
-            return new RoleManagementExpandedProperties(principalId, principalDisplayName, email, principalType, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType);
+            return new RoleManagementExpandedProperties(principalId, principalDisplayName, email, principalType, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -245,10 +264,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleInstanceData"/> instance for mocking. </returns>
         public static RoleAssignmentScheduleInstanceData RoleAssignmentScheduleInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, ResourceIdentifier roleAssignmentScheduleId = null, ResourceIdentifier originRoleAssignmentId = null, RoleManagementScheduleStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ResourceIdentifier linkedRoleEligibilityScheduleId = null, ResourceIdentifier linkedRoleEligibilityScheduleInstanceId = null, RoleAssignmentScheduleAssignmentType? assignmentType = null, RoleManagementScheduleMemberType? memberType = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, RoleManagementExpandedProperties expandedProperties = null)
         {
-            return new RoleAssignmentScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleId, originRoleAssignmentId, status, startOn, endOn, linkedRoleEligibilityScheduleId, linkedRoleEligibilityScheduleInstanceId, assignmentType, memberType, condition, conditionVersion, createdOn, expandedProperties);
+            return new RoleAssignmentScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleId, originRoleAssignmentId, status, startOn, endOn, linkedRoleEligibilityScheduleId, linkedRoleEligibilityScheduleInstanceId, assignmentType, memberType, condition, conditionVersion, createdOn, expandedProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -277,10 +296,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleRequestData"/> instance for mocking. </returns>
         public static RoleAssignmentScheduleRequestData RoleAssignmentScheduleRequestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, RoleManagementScheduleRequestType? requestType = null, RoleManagementScheduleStatus? status = null, string approvalId = null, ResourceIdentifier targetRoleAssignmentScheduleId = null, ResourceIdentifier targetRoleAssignmentScheduleInstanceId = null, ResourceIdentifier linkedRoleEligibilityScheduleId = null, string justification = null, RoleAssignmentScheduleTicketInfo ticketInfo = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, Guid? requestorId = null, RoleManagementExpandedProperties expandedProperties = null, DateTimeOffset? startOn = null, RoleManagementScheduleExpirationType? expirationType = null, DateTimeOffset? endOn = null, TimeSpan? duration = null)
         {
-            return new RoleAssignmentScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleAssignmentScheduleId, targetRoleAssignmentScheduleInstanceId, linkedRoleEligibilityScheduleId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
+            return new RoleAssignmentScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleAssignmentScheduleId, targetRoleAssignmentScheduleInstanceId, linkedRoleEligibilityScheduleId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -302,10 +321,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleData"/> instance for mocking. </returns>
         public static RoleEligibilityScheduleData RoleEligibilityScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, ResourceIdentifier roleEligibilityScheduleRequestId = null, RoleManagementScheduleMemberType? memberType = null, RoleManagementScheduleStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, RoleManagementExpandedProperties expandedProperties = null)
         {
-            return new RoleEligibilityScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleRequestId, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties);
+            return new RoleEligibilityScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleRequestId, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -326,10 +345,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleInstanceData"/> instance for mocking. </returns>
         public static RoleEligibilityScheduleInstanceData RoleEligibilityScheduleInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, ResourceIdentifier roleEligibilityScheduleId = null, RoleManagementScheduleStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, RoleManagementScheduleMemberType? memberType = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, RoleManagementExpandedProperties expandedProperties = null)
         {
-            return new RoleEligibilityScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleId, status, startOn, endOn, memberType, condition, conditionVersion, createdOn, expandedProperties);
+            return new RoleEligibilityScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleId, status, startOn, endOn, memberType, condition, conditionVersion, createdOn, expandedProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -357,10 +376,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleRequestData"/> instance for mocking. </returns>
         public static RoleEligibilityScheduleRequestData RoleEligibilityScheduleRequestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, ResourceIdentifier roleDefinitionId = null, Guid? principalId = null, RoleManagementPrincipalType? principalType = null, RoleManagementScheduleRequestType? requestType = null, RoleManagementScheduleStatus? status = null, string approvalId = null, ResourceIdentifier targetRoleEligibilityScheduleId = null, ResourceIdentifier targetRoleEligibilityScheduleInstanceId = null, string justification = null, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, Guid? requestorId = null, RoleManagementExpandedProperties expandedProperties = null, DateTimeOffset? startOn = null, RoleManagementScheduleExpirationType? expirationType = null, DateTimeOffset? endOn = null, TimeSpan? duration = null)
         {
-            return new RoleEligibilityScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleEligibilityScheduleId, targetRoleEligibilityScheduleInstanceId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
+            return new RoleEligibilityScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleEligibilityScheduleId, targetRoleEligibilityScheduleInstanceId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleManagementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -388,20 +407,20 @@ namespace Azure.ResourceManager.Authorization.Models
             rules ??= new List<RoleManagementPolicyRule>();
             effectiveRules ??= new List<RoleManagementPolicyRule>();
 
-            return new RoleManagementPolicyData(id, name, resourceType, systemData, scope, displayName, description, isOrganizationDefault, lastModifiedBy, lastModifiedOn, rules?.ToList(), effectiveRules?.ToList(), policyProperties);
+            return new RoleManagementPolicyData(id, name, resourceType, systemData, scope, displayName, description, isOrganizationDefault, lastModifiedBy, lastModifiedOn, rules?.ToList(), effectiveRules?.ToList(), policyProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPolicyProperties"/>. </summary>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
         /// <returns> A new <see cref="Models.RoleManagementPolicyProperties"/> instance for mocking. </returns>
         public static RoleManagementPolicyProperties RoleManagementPolicyProperties(ResourceIdentifier scopeId = null, string scopeDisplayName = null, RoleManagementScopeType? scopeType = null)
         {
-            return new RoleManagementPolicyProperties(scopeId, scopeDisplayName, scopeType);
+            return new RoleManagementPolicyProperties(scopeId, scopeDisplayName, scopeType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleManagementPolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -420,10 +439,10 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             effectiveRules ??= new List<RoleManagementPolicyRule>();
 
-            return new RoleManagementPolicyAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, policyId, effectiveRules?.ToList(), policyAssignmentProperties);
+            return new RoleManagementPolicyAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, policyId, effectiveRules?.ToList(), policyAssignmentProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -440,7 +459,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
         public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier policyId = null, RoleManagementPrincipal lastModifiedBy = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, AuthorizationRoleType? roleType = null, ResourceIdentifier scopeId = null, string scopeDisplayName = null, RoleManagementScopeType? scopeType = null)
         {
-            return new PolicyAssignmentProperties(id, name, resourceType, systemData, policyId, lastModifiedBy, lastModifiedOn, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType);
+            return new PolicyAssignmentProperties(id, name, resourceType, systemData, policyId, lastModifiedBy, lastModifiedOn, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType, serializedAdditionalRawData: null);
         }
     }
 }

@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

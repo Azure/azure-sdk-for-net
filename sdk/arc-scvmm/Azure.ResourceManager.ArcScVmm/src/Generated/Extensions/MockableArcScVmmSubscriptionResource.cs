@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,18 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UnknownCustomDomainHttpsParameters. </summary>
     internal partial class UnknownCustomDomainHttpsParameters : CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of UnknownCustomDomainHttpsParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomDomainHttpsParameters"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
-        internal UnknownCustomDomainHttpsParameters(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion) : base(certificateSource, protocolType, minimumTlsVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCustomDomainHttpsParameters(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData)
         {
             CertificateSource = certificateSource;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomDomainHttpsParameters"/> for deserialization. </summary>
+        internal UnknownCustomDomainHttpsParameters()
+        {
         }
     }
 }

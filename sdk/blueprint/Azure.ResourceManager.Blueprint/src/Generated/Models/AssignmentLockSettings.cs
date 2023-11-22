@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Defines how resources deployed by a blueprint assignment are locked. </summary>
     public partial class AssignmentLockSettings
     {
-        /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentLockSettings"/>. </summary>
         public AssignmentLockSettings()
         {
             ExcludedPrincipals = new ChangeTrackingList<string>();
             ExcludedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentLockSettings"/>. </summary>
         /// <param name="mode"> Lock mode. </param>
         /// <param name="excludedPrincipals"> List of AAD principals excluded from blueprint locks. Up to 5 principals are permitted. </param>
         /// <param name="excludedActions"> List of management operations that are excluded from blueprint locks. Up to 200 actions are permitted. If the lock mode is set to 'AllResourcesReadOnly', then the following actions are automatically appended to 'excludedActions': '*/read', 'Microsoft.Network/virtualNetworks/subnets/join/action' and 'Microsoft.Authorization/locks/delete'. If the lock mode is set to 'AllResourcesDoNotDelete', then the following actions are automatically appended to 'excludedActions': 'Microsoft.Authorization/locks/delete'. Duplicate actions will get removed. </param>
-        internal AssignmentLockSettings(AssignmentLockMode? mode, IList<string> excludedPrincipals, IList<string> excludedActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentLockSettings(AssignmentLockMode? mode, IList<string> excludedPrincipals, IList<string> excludedActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             ExcludedPrincipals = excludedPrincipals;
             ExcludedActions = excludedActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Lock mode. </summary>

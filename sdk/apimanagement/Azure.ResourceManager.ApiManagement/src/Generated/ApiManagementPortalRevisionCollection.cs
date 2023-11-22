@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

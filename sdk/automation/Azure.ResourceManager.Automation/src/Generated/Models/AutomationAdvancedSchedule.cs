@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The properties of the create Advanced Schedule. </summary>
     public partial class AutomationAdvancedSchedule
     {
-        /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedSchedule"/>. </summary>
         public AutomationAdvancedSchedule()
         {
             WeekDays = new ChangeTrackingList<string>();
@@ -21,15 +54,17 @@ namespace Azure.ResourceManager.Automation.Models
             MonthlyOccurrences = new ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedSchedule"/>. </summary>
         /// <param name="weekDays"> Days of the week that the job should execute on. </param>
         /// <param name="monthDays"> Days of the month that the job should execute on. Must be between 1 and 31. </param>
         /// <param name="monthlyOccurrences"> Occurrences of days within a month. </param>
-        internal AutomationAdvancedSchedule(IList<string> weekDays, IList<int> monthDays, IList<AutomationAdvancedScheduleMonthlyOccurrence> monthlyOccurrences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAdvancedSchedule(IList<string> weekDays, IList<int> monthDays, IList<AutomationAdvancedScheduleMonthlyOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WeekDays = weekDays;
             MonthDays = monthDays;
             MonthlyOccurrences = monthlyOccurrences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Days of the week that the job should execute on. </summary>
