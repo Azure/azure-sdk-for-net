@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Developer.DevCenter;
+using Azure.Developer.DevCenter.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -48,6 +49,28 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironment_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Models.Environment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironment_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Models.Environment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
         }
 
         [Test]
@@ -102,6 +125,28 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironment_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Models.Environment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironment_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Models.Environment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -126,6 +171,28 @@ namespace Azure.Developer.DevCenter.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetCatalog_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Catalog> response = client.GetCatalog("<projectName>", "<catalogName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalog_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Catalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
         }
 
         [Test]
@@ -158,6 +225,28 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetCatalog_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Catalog> response = client.GetCatalog("<projectName>", "<catalogName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalog_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<Catalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentDefinition_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -186,6 +275,28 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinition_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinition_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
         }
 
         [Test]
@@ -244,6 +355,28 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinition_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinition_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAllEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -273,6 +406,32 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
                 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetAllEnvironments_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Models.Environment item in client.GetAllEnvironments("<projectName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllEnvironments_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Models.Environment item in client.GetAllEnvironmentsAsync("<projectName>"))
+            {
             }
         }
 
@@ -330,6 +489,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetAllEnvironments_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Models.Environment item in client.GetAllEnvironments("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllEnvironments_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Models.Environment item in client.GetAllEnvironmentsAsync("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -359,6 +544,32 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
                 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironments_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Models.Environment item in client.GetEnvironments("<projectName>", "<userId>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironments_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Models.Environment item in client.GetEnvironmentsAsync("<projectName>", "<userId>"))
+            {
             }
         }
 
@@ -416,6 +627,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironments_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Models.Environment item in client.GetEnvironments("<projectName>", "<userId>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironments_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Models.Environment item in client.GetEnvironmentsAsync("<projectName>", "<userId>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetCatalogs_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -441,6 +678,32 @@ namespace Azure.Developer.DevCenter.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetCatalogs_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Catalog item in client.GetCatalogs("<projectName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogs_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Catalog item in client.GetCatalogsAsync("<projectName>"))
+            {
             }
         }
 
@@ -476,6 +739,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetCatalogs_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (Catalog item in client.GetCatalogs("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogs_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (Catalog item in client.GetCatalogsAsync("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentDefinitions_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -505,6 +794,32 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinitions_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinitions_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
+            {
             }
         }
 
@@ -566,6 +881,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinitions_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinitions_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentDefinitionsByCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -595,6 +936,32 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinitionsByCatalog_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinitionsByCatalog_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
+            {
             }
         }
 
@@ -656,6 +1023,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentDefinitionsByCatalog_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentDefinitionsByCatalog_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentTypes_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -690,6 +1083,32 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentTypes_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentType item in client.GetEnvironmentTypes("<projectName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentTypes_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentTypes_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -719,6 +1138,32 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetEnvironmentTypes_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            foreach (EnvironmentType item in client.GetEnvironmentTypes("<projectName>", maxCount: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentTypes_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            await foreach (EnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>", maxCount: 1234))
+            {
             }
         }
 
@@ -766,6 +1211,32 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateEnvironment_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+            Operation<Models.Environment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+            Models.Environment responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEnvironment_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+            Operation<Models.Environment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+            Models.Environment responseData = operation.Value;
         }
 
         [Test]
@@ -832,6 +1303,38 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateEnvironment_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+            {
+                Parameters = BinaryData.FromObjectAsJson(new object()),
+            };
+            Operation<Models.Environment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+            Models.Environment responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEnvironment_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+            {
+                Parameters = BinaryData.FromObjectAsJson(new object()),
+            };
+            Operation<Models.Environment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+            Models.Environment responseData = operation.Value;
         }
 
         [Test]

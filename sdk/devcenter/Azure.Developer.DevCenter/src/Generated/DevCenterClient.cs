@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
@@ -61,12 +63,47 @@ namespace Azure.Developer.DevCenter
             _apiVersion = options.Version;
         }
 
+        /// <summary> Gets a project. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<Project>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetProjectAsync(projectName, context).ConfigureAwait(false);
+            return Response.FromValue(Project.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a project. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
+        public virtual Response<Project> GetProject(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetProject(projectName, context);
+            return Response.FromValue(Project.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a project.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -104,6 +141,11 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProject(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
@@ -131,12 +173,43 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        /// <summary> Lists all projects. </summary>
+        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<Project> GetProjectsAsync(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Project.DeserializeProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists all projects. </summary>
+        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,CancellationToken)']/*" />
+        public virtual Pageable<Project> GetProjects(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Project.DeserializeProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+        }
+
         /// <summary>
         /// [Protocol Method] Lists all projects.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectsAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -160,6 +233,11 @@ namespace Azure.Developer.DevCenter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjects(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -225,6 +303,17 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;
