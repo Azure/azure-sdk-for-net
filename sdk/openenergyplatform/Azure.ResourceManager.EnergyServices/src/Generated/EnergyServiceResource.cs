@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<EnergyServiceResource>> UpdateAsync(EnergyServicePatch patch, CancellationToken cancellationToken = default)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<EnergyServiceResource> Update(EnergyServicePatch patch, CancellationToken cancellationToken = default)
