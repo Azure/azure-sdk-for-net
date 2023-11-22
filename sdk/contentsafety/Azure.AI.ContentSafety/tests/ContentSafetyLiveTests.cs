@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -96,22 +97,34 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
-        public async Task TestCreateOrUpdateBlocklist()
+        public async Task TestAnalyzeTextWithBlocklist()
         {
-            var client = CreateBlocklistClient();
+            var client = CreateContentSafetyClient();
+            var blocklistClient = CreateBlocklistClient();
 
-            var blocklistName = "TestBlocklist";
+            // Create Blocklist
+            var blocklistName = "TestAnalyzeTextWithBlocklist";
             var blocklistDescription = "Test blocklist management";
+            Response createBlocklistResponse = await blocklistClient.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
+            Assert.IsNotNull(createBlocklistResponse);
+            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
 
-            var data = new
-            {
-                description = blocklistDescription,
-            };
+            // Add Blocklist items
+            var blocklistItemText1 = new TextBlocklistItem("k*ll");
+            var blocklistItemText2 = new TextBlocklistItem("h*te");
+            var addBlocklistItemResponse = await blocklistClient.AddOrUpdateBlocklistItemsAsync(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(new List<TextBlocklistItem> { blocklistItemText1, blocklistItemText2 }));
+            Assert.IsNotNull(addBlocklistItemResponse);
+            Assert.GreaterOrEqual(addBlocklistItemResponse.GetRawResponse().Status, 200);
 
-            Response response = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(data));
+            var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you.");
+            request.BlocklistNames.Add(blocklistName);
+            var response = await client.AnalyzeTextAsync(request);
 
             Assert.IsNotNull(response);
-            Assert.GreaterOrEqual(response.Status, 200);
+            Assert.IsNotNull(response.Value);
+            Assert.IsNotEmpty(response.Value.BlocklistsMatch);
+            Assert.True(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText1.Text));
+            Assert.True(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText2.Text));
         }
     }
 }
