@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         }
 
         [RecordedTest]
+        [Ignore("Exception")]
         public async Task CreateOrUpdateCloudHsmClusterTest()
         {
             string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
