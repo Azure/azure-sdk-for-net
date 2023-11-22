@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightPrivateEndpointConnectionResource(Client, HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(e)), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HDInsightPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HDInsightPrivateEndpointConnectionResource(Client, HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(e)), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HDInsightPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightPrivateEndpointConnectionResource(Client, HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(e)), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HDInsightPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HDInsightPrivateEndpointConnectionResource(Client, HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(e)), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HDInsightPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

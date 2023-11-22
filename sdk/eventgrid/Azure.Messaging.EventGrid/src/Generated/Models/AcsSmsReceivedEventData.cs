@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
         internal AcsSmsReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
-        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string message, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to, serializedAdditionalRawData)
         {
             Message = message;
             ReceivedTimestamp = receivedTimestamp;

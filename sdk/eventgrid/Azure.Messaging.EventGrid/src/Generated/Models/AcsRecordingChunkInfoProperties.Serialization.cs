@@ -5,15 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsRecordingChunkInfoProperties
+    public partial class AcsRecordingChunkInfoProperties : IUtf8JsonSerializable, IJsonModel<AcsRecordingChunkInfoProperties>
     {
-        internal static AcsRecordingChunkInfoProperties DeserializeAcsRecordingChunkInfoProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRecordingChunkInfoProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsRecordingChunkInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DocumentId))
+            {
+                writer.WritePropertyName("documentId"u8);
+                writer.WriteStringValue(DocumentId);
+            }
+            if (Optional.IsDefined(Index))
+            {
+                writer.WritePropertyName("index"u8);
+                writer.WriteNumberValue(Index.Value);
+            }
+            if (Optional.IsDefined(EndReason))
+            {
+                writer.WritePropertyName("endReason"u8);
+                writer.WriteStringValue(EndReason);
+            }
+            if (Optional.IsDefined(MetadataLocation))
+            {
+                writer.WritePropertyName("metadataLocation"u8);
+                writer.WriteStringValue(MetadataLocation);
+            }
+            if (Optional.IsDefined(ContentLocation))
+            {
+                writer.WritePropertyName("contentLocation"u8);
+                writer.WriteStringValue(ContentLocation);
+            }
+            if (Optional.IsDefined(DeleteLocation))
+            {
+                writer.WritePropertyName("deleteLocation"u8);
+                writer.WriteStringValue(DeleteLocation);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRecordingChunkInfoProperties IJsonModel<AcsRecordingChunkInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRecordingChunkInfoProperties(document.RootElement, options);
+        }
+
+        internal static AcsRecordingChunkInfoProperties DeserializeAcsRecordingChunkInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +101,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> metadataLocation = default;
             Optional<string> contentLocation = default;
             Optional<string> deleteLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentId"u8))
@@ -60,8 +139,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deleteLocation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsRecordingChunkInfoProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsRecordingChunkInfoProperties IPersistableModel<AcsRecordingChunkInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsRecordingChunkInfoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsRecordingChunkInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

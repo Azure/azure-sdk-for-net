@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,88 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(WebSlotSwapStartedEventDataConverter))]
-    public partial class WebSlotSwapStartedEventData
+    public partial class WebSlotSwapStartedEventData : IUtf8JsonSerializable, IJsonModel<WebSlotSwapStartedEventData>
     {
-        internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSlotSwapStartedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebSlotSwapStartedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WebSlotSwapStartedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AppEventTypeDetail))
+            {
+                writer.WritePropertyName("appEventTypeDetail"u8);
+                writer.WriteObjectValue(AppEventTypeDetail);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(CorrelationRequestId))
+            {
+                writer.WritePropertyName("correlationRequestId"u8);
+                writer.WriteStringValue(CorrelationRequestId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (Optional.IsDefined(Verb))
+            {
+                writer.WritePropertyName("verb"u8);
+                writer.WriteStringValue(Verb);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebSlotSwapStartedEventData IJsonModel<WebSlotSwapStartedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WebSlotSwapStartedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebSlotSwapStartedEventData(document.RootElement, options);
+        }
+
+        internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> requestId = default;
             Optional<string> address = default;
             Optional<string> verb = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
@@ -69,15 +152,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     verb = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebSlotSwapStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebSlotSwapStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebSlotSwapStartedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WebSlotSwapStartedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebSlotSwapStartedEventData IPersistableModel<WebSlotSwapStartedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebSlotSwapStartedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WebSlotSwapStartedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebSlotSwapStartedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class WebSlotSwapStartedEventDataConverter : JsonConverter<WebSlotSwapStartedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebSlotSwapStartedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override WebSlotSwapStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

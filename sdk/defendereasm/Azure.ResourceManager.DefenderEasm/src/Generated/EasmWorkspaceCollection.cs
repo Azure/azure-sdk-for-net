@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

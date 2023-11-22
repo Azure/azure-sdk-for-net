@@ -14,14 +14,46 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
     public partial class GuestConfigurationNavigation
     {
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()
         {
             ConfigurationParameters = new ChangeTrackingList<GuestConfigurationParameter>();
             ConfigurationProtectedParameters = new ChangeTrackingList<GuestConfigurationParameter>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
         /// <param name="name"> Name of the guest configuration. </param>
         /// <param name="version"> Version of the guest configuration. </param>
@@ -33,7 +65,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
         /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
-        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Name = name;
@@ -46,6 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ConfigurationParameters = configurationParameters;
             ConfigurationProtectedParameters = configurationProtectedParameters;
             ConfigurationSetting = configurationSetting;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of the guest configuration. For example:DSC. </summary>

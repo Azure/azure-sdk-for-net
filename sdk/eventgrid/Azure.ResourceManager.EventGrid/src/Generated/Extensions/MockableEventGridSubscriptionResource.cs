@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerDestinationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerDestinationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), PartnerDestinationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerDestinations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), PartnerDestinationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerDestinations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerDestinationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerDestinationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), PartnerDestinationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerDestinations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), PartnerDestinationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerDestinations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetSystemTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetSystemTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridTopics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "MockableEventGridSubscriptionResource.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
     }
 }

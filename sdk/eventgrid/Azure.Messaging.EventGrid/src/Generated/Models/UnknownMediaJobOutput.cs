@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
@@ -12,15 +14,21 @@ namespace Azure.Messaging.EventGrid.Models
     /// <summary> The UnknownMediaJobOutput. </summary>
     internal partial class UnknownMediaJobOutput : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of UnknownMediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>
         /// <param name="label"> Gets the Job output label. </param>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
-        internal UnknownMediaJobOutput(string odataType, MediaJobError error, string label, long progress, MediaJobState state) : base(odataType, error, label, progress, state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMediaJobOutput(string odataType, MediaJobError error, string label, long progress, MediaJobState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, error, label, progress, state, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaJobOutput"/> for deserialization. </summary>
+        internal UnknownMediaJobOutput()
+        {
         }
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,93 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MachineLearningServicesDatasetDriftDetectedEventDataConverter))]
-    public partial class MachineLearningServicesDatasetDriftDetectedEventData
+    public partial class MachineLearningServicesDatasetDriftDetectedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>
     {
-        internal static MachineLearningServicesDatasetDriftDetectedEventData DeserializeMachineLearningServicesDatasetDriftDetectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataDriftId))
+            {
+                writer.WritePropertyName("dataDriftId"u8);
+                writer.WriteStringValue(DataDriftId);
+            }
+            if (Optional.IsDefined(DataDriftName))
+            {
+                writer.WritePropertyName("dataDriftName"u8);
+                writer.WriteStringValue(DataDriftName);
+            }
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(BaseDatasetId))
+            {
+                writer.WritePropertyName("baseDatasetId"u8);
+                writer.WriteStringValue(BaseDatasetId);
+            }
+            if (Optional.IsDefined(TargetDatasetId))
+            {
+                writer.WritePropertyName("targetDatasetId"u8);
+                writer.WriteStringValue(TargetDatasetId);
+            }
+            if (Optional.IsDefined(DriftCoefficient))
+            {
+                writer.WritePropertyName("driftCoefficient"u8);
+                writer.WriteNumberValue(DriftCoefficient.Value);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime.Value, "O");
+            }
+            if (Optional.IsDefined(EndTime))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndTime.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningServicesDatasetDriftDetectedEventData IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement, options);
+        }
+
+        internal static MachineLearningServicesDatasetDriftDetectedEventData DeserializeMachineLearningServicesDatasetDriftDetectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +115,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<double> driftCoefficient = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDriftId"u8))
@@ -83,15 +171,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningServicesDatasetDriftDetectedEventData IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningServicesDatasetDriftDetectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesDatasetDriftDetectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

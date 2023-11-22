@@ -15,7 +15,39 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A collection of incoming relationships which relate digital twins together. </summary>
     internal partial class IncomingRelationshipCollection
     {
-        /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationshipCollection"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncomingRelationshipCollection(IEnumerable<IncomingRelationship> value)
@@ -25,13 +57,20 @@ namespace Azure.DigitalTwins.Core
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationshipCollection"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
-        internal IncomingRelationshipCollection(IReadOnlyList<IncomingRelationship> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncomingRelationshipCollection(IReadOnlyList<IncomingRelationship> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationshipCollection"/> for deserialization. </summary>
+        internal IncomingRelationshipCollection()
+        {
         }
 
         /// <summary> Gets the value. </summary>
