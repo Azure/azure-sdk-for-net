@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp", "..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj", "{5CFD80DB-98F3-4E59-9792-1C421786D3D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples.Processor.HostedService", "Azure.Messaging.EventHubs.Processor\samples\aspnethostedservice\Azure.Messaging.EventHubs.Samples.Processor.HostedService.csproj", "{AF90958B-92D7-4A5F-99A4-55EEC759B7B5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,10 +79,6 @@ Global
 		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF90958B-92D7-4A5F-99A4-55EEC759B7B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF90958B-92D7-4A5F-99A4-55EEC759B7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF90958B-92D7-4A5F-99A4-55EEC759B7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF90958B-92D7-4A5F-99A4-55EEC759B7B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

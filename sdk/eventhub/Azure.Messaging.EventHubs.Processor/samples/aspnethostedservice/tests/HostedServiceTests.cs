@@ -3,19 +3,19 @@
 
 #if !NET462
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Samples.Processor.HostedService;
-using Azure.Messaging.EventHubs.Tests;
+using Azure.Messaging.EventHubs.Processor.Samples.HostedService;
+using Azure.Storage.Blobs;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using static Azure.Messaging.EventHubs.Tests.EventProcessorClientTests;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests.Samples
+namespace Azure.Messaging.EventHubs.Tests
 {
     [TestFixture]
     public class HostedServiceTests
@@ -23,23 +23,22 @@ namespace Azure.Messaging.EventHubs.Processor.Tests.Samples
         [Test]
         public async Task HostedServiceProcessesEventWhenEventIsReceived()
         {
-            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockCheckpointStore = new Mock<BlobContainerClient>();
             var mockLogger = new Mock<ILogger<EventProcessorClientService>>();
-            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>());
             var mockAppProcessor = new Mock<ISampleApplicationProcessor>();
 
             var service = new EventProcessorClientService(mockLogger.Object, processorClient, mockAppProcessor.Object);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             await service.StartAsync(cancellationSource.Token);
 
             var eventBody = "Test";
 
-            MockEventData[] eventBatch = new[]
+            EventData[] eventBatch = new[]
             {
-                new MockEventData(Encoding.ASCII.GetBytes(eventBody))
+                new EventData(Encoding.ASCII.GetBytes(eventBody))
             };
 
             await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token);
@@ -50,15 +49,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests.Samples
         [Test]
         public async Task HostedServiceLogsExceptions()
         {
-            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockCheckpointStore = new Mock<BlobContainerClient>();
             var mockLogger = new Mock<ILogger<EventProcessorClientService>>();
-            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>());
             var mockAppProcessor = new Mock<ISampleApplicationProcessor>();
 
             var service = new EventProcessorClientService(mockLogger.Object, processorClient, mockAppProcessor.Object);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             await service.StartAsync(cancellationSource.Token);
 
@@ -80,15 +78,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests.Samples
         [Test]
         public async Task StartingHostedServiceStartsEventProcessing()
         {
-            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockCheckpointStore = new Mock<BlobContainerClient>();
             var mockLogger = new Mock<ILogger<EventProcessorClientService>>();
-            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>());
             var mockAppProcessor = new Mock<ISampleApplicationProcessor>();
 
             var service = new EventProcessorClientService(mockLogger.Object, processorClient, mockAppProcessor.Object);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             await service.StartAsync(cancellationSource.Token);
 
@@ -98,20 +95,46 @@ namespace Azure.Messaging.EventHubs.Processor.Tests.Samples
         [Test]
         public async Task StoppingHostedServiceStopsEventProcessing()
         {
-            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockCheckpointStore = new Mock<BlobContainerClient>();
             var mockLogger = new Mock<ILogger<EventProcessorClientService>>();
-            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>());
             var mockAppProcessor = new Mock<ISampleApplicationProcessor>();
 
             var service = new EventProcessorClientService(mockLogger.Object, processorClient, mockAppProcessor.Object);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             await service.StartAsync(cancellationSource.Token);
             await service.StopAsync(cancellationSource.Token);
 
             Assert.IsFalse(processorClient.IsRunning);
+        }
+
+        /// <summary>
+        ///   A mock <see cref="EventProcessorClient" /> used for testing purposes.
+        /// </summary>
+        ///
+        public class TestEventProcessorClient : EventProcessorClient
+        {
+            internal TestEventProcessorClient(BlobContainerClient checkpointStore,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              TokenCredential tokenCredential) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, tokenCredential)
+            {}
+
+            public Task InvokeOnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => base.OnProcessingEventBatchAsync(events, partition, cancellationToken);
+            public Task InvokeOnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => base.OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken);
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   A mock <see cref="EventProcessorPartition" /> used for testing purposes.
+        /// </summary>
+        ///
+        public class TestEventProcessorPartition : EventProcessorPartition
+        {
+            public TestEventProcessorPartition(string partitionId) { PartitionId = partitionId; }
         }
     }
 }
