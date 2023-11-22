@@ -442,6 +442,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(42, errorMessage);
 
         [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
-        public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(42, errorMessage);
+        public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
     }
 }
