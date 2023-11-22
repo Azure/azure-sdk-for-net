@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
     }
 }

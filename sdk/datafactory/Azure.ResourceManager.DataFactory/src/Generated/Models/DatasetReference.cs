@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Dataset reference type. </summary>
     public partial class DatasetReference
     {
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,15 +59,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
-        internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/> for deserialization. </summary>
+        internal DatasetReference()
+        {
         }
 
         /// <summary> Dataset reference type. </summary>

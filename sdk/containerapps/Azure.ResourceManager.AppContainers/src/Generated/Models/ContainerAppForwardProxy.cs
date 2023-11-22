@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class ContainerAppForwardProxy
     {
-        /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppForwardProxy"/>. </summary>
         public ContainerAppForwardProxy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppForwardProxy"/>. </summary>
         /// <param name="convention"> The convention used to determine the url of the request made. </param>
         /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
         /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
-        internal ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Convention = convention;
             CustomHostHeaderName = customHostHeaderName;
             CustomProtoHeaderName = customProtoHeaderName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The convention used to determine the url of the request made. </summary>

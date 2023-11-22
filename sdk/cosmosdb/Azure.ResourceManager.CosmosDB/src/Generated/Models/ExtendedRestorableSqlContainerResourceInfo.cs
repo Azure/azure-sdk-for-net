@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
     public partial class ExtendedRestorableSqlContainerResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableSqlContainerResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
         internal ExtendedRestorableSqlContainerResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableSqlContainerResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this container event. </param>
         /// <param name="eventTimestamp"> The when this container event happened. </param>
         /// <param name="containerName"> The name of this SQL container. </param>
         /// <param name="containerId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
-        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ContainerName = containerName;
             ContainerId = containerId;
             Container = container;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

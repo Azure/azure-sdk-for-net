@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
     public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         public ContainerRegistryCredentials()
         {
             CustomRegistries = new ChangeTrackingDictionary<string, CustomRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         /// <param name="sourceRegistry"> Describes the credential parameters for accessing the source registry. </param>
         /// <param name="customRegistries">
         /// Describes the credential parameters for accessing other custom registries. The key
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
         /// the value of the item will be the registry credentials for accessing the registry.
         /// </param>
-        internal ContainerRegistryCredentials(SourceRegistryCredentials sourceRegistry, IDictionary<string, CustomRegistryCredentials> customRegistries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryCredentials(SourceRegistryCredentials sourceRegistry, IDictionary<string, CustomRegistryCredentials> customRegistries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceRegistry = sourceRegistry;
             CustomRegistries = customRegistries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the credential parameters for accessing the source registry. </summary>

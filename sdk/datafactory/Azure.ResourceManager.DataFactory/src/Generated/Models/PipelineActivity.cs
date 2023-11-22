@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class PipelineActivity
     {
-        /// <summary> Initializes a new instance of PipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineActivity(string name)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependsOn = dependsOn;
             UserProperties = userProperties;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
+        internal PipelineActivity()
+        {
         }
 
         /// <summary> Activity name. </summary>

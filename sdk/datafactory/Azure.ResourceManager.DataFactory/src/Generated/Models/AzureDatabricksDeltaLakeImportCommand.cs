@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Databricks Delta Lake import command settings. </summary>
     public partial class AzureDatabricksDeltaLakeImportCommand : ImportSettings
     {
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeImportCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeImportCommand"/>. </summary>
         public AzureDatabricksDeltaLakeImportCommand()
         {
             ImportSettingsType = "AzureDatabricksDeltaLakeImportCommand";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeImportCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeImportCommand"/>. </summary>
         /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="dateFormat"> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>

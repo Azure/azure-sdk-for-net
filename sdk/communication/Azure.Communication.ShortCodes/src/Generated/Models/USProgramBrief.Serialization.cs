@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class USProgramBrief : IUtf8JsonSerializable
+    public partial class USProgramBrief : IUtf8JsonSerializable, IJsonModel<USProgramBrief>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<USProgramBrief>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<USProgramBrief>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<USProgramBrief>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(USProgramBrief)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -79,11 +89,40 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("trafficDetails"u8);
                 writer.WriteObjectValue(TrafficDetails);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static USProgramBrief DeserializeUSProgramBrief(JsonElement element)
+        USProgramBrief IJsonModel<USProgramBrief>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<USProgramBrief>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(USProgramBrief)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUSProgramBrief(document.RootElement, options);
+        }
+
+        internal static USProgramBrief DeserializeUSProgramBrief(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +138,8 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<CompanyInformation> companyInformation = default;
             Optional<MessageDetails> messageDetails = default;
             Optional<TrafficDetails> trafficDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,8 +243,44 @@ namespace Azure.Communication.ShortCodes.Models
                     trafficDetails = TrafficDetails.DeserializeTrafficDetails(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, Optional.ToList(reviewNotes), Optional.ToList(costs), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, Optional.ToList(reviewNotes), Optional.ToList(costs), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<USProgramBrief>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<USProgramBrief>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(USProgramBrief)} does not support '{options.Format}' format.");
+            }
+        }
+
+        USProgramBrief IPersistableModel<USProgramBrief>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<USProgramBrief>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUSProgramBrief(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(USProgramBrief)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<USProgramBrief>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB shard key. </summary>
     public partial class MongoDBShardKeySetting
     {
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
         public MongoDBShardKeySetting(IEnumerable<MongoDBShardKeyField> fields)
@@ -25,13 +57,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Fields = fields.ToList();
         }
 
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
-        internal MongoDBShardKeySetting(IList<MongoDBShardKeyField> fields, bool? isUnique)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBShardKeySetting(IList<MongoDBShardKeyField> fields, bool? isUnique, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fields = fields;
             IsUnique = isUnique;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/> for deserialization. </summary>
+        internal MongoDBShardKeySetting()
+        {
         }
 
         /// <summary> The fields within the shard key. </summary>

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
     }
 }

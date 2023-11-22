@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
@@ -14,23 +16,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> MEC role. </summary>
     public partial class MecRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of MecRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
         public MecRole()
         {
             Kind = DataBoxEdgeRoleType.Mec;
         }
 
-        /// <summary> Initializes a new instance of MecRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionString"> Activation key of the MEC. </param>
         /// <param name="controllerEndpoint"> Controller Endpoint. </param>
         /// <param name="resourceUniqueId"> Unique Id of the Resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             ControllerEndpoint = controllerEndpoint;
