@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

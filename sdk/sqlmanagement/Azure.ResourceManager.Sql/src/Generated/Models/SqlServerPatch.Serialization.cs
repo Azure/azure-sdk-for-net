@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlServerPatch : IUtf8JsonSerializable
+    public partial class SqlServerPatch : IUtf8JsonSerializable, IJsonModel<SqlServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlServerPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -50,6 +62,26 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
+            {
+                writer.WritePropertyName("fullyQualifiedDomainName"u8);
+                writer.WriteStringValue(FullyQualifiedDomainName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
@@ -59,6 +91,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceFeature))
+            {
+                writer.WritePropertyName("workspaceFeature"u8);
+                writer.WriteStringValue(WorkspaceFeature.Value.ToString());
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -90,8 +127,271 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isIPv6Enabled"u8);
                 writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
+            {
+                writer.WritePropertyName("externalGovernanceStatus"u8);
+                writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SqlServerPatch IJsonModel<SqlServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlServerPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerPatch(document.RootElement, options);
+        }
+
+        internal static SqlServerPatch DeserializeSqlServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> administratorLogin = default;
+            Optional<string> administratorLoginPassword = default;
+            Optional<string> version = default;
+            Optional<string> state = default;
+            Optional<string> fullyQualifiedDomainName = default;
+            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<string> minimalTlsVersion = default;
+            Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
+            Optional<ServerWorkspaceFeature> workspaceFeature = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
+            Optional<Guid> federatedClientId = default;
+            Optional<Uri> keyId = default;
+            Optional<ServerExternalAdministrator> administrators = default;
+            Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
+            Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
+            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("administratorLogin"u8))
+                        {
+                            administratorLogin = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("administratorLoginPassword"u8))
+                        {
+                            administratorLoginPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("state"u8))
+                        {
+                            state = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
+                        {
+                            fullyQualifiedDomainName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("minimalTlsVersion"u8))
+                        {
+                            minimalTlsVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("workspaceFeature"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryUserAssignedIdentityId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("federatedClientId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            federatedClientId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyId = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("administrators"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isIPv6Enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isIPv6Enabled = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("externalGovernanceStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlServerPatch(identity, Optional.ToDictionary(tags), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlServerPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlServerPatch IPersistableModel<SqlServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlServerPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlServerPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

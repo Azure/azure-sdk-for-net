@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

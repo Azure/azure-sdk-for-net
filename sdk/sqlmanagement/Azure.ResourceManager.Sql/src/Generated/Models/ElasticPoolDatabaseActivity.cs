@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,44 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the activity on an elastic pool. </summary>
     public partial class ElasticPoolDatabaseActivity : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivity"/>. </summary>
         public ElasticPoolDatabaseActivity()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +73,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
         /// <param name="startOn"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
-        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startOn, string state) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startOn, string state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DatabaseName = databaseName;
@@ -58,6 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
             ServerName = serverName;
             StartOn = startOn;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>

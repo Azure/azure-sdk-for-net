@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
     public abstract partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreStorageProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreStorageProjectionSelector"/>. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreStorageProjectionSelector(string storageContainer)
@@ -24,16 +24,22 @@ namespace Azure.Search.Documents.Indexes.Models
             StorageContainer = storageContainer;
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreStorageProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreStorageProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
-        internal KnowledgeStoreStorageProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs)
+        internal KnowledgeStoreStorageProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, serializedAdditionalRawData)
         {
             StorageContainer = storageContainer;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreStorageProjectionSelector"/> for deserialization. </summary>
+        internal KnowledgeStoreStorageProjectionSelector()
+        {
         }
 
         /// <summary> Blob container to store projections in. </summary>

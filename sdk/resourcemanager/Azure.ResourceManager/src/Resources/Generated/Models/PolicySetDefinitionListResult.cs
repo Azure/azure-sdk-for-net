@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,53 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of policy set definitions. </summary>
     internal partial class PolicySetDefinitionListResult
     {
-        /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionListResult"/>. </summary>
         internal PolicySetDefinitionListResult()
         {
             Value = new ChangeTrackingList<PolicySetDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionListResult"/>. </summary>
         /// <param name="value"> An array of policy set definitions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinitionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of policy set definitions. </summary>

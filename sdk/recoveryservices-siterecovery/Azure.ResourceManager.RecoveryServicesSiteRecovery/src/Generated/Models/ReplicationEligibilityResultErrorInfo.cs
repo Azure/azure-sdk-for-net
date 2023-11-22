@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Error model that can be exposed to the user. </summary>
     public partial class ReplicationEligibilityResultErrorInfo
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultErrorInfo"/>. </summary>
         internal ReplicationEligibilityResultErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
         /// <param name="recommendedAction"> The recommended action. </param>
         /// <param name="status"> The error status. </param>
-        internal ReplicationEligibilityResultErrorInfo(string code, string message, string possibleCauses, string recommendedAction, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationEligibilityResultErrorInfo(string code, string message, string possibleCauses, string recommendedAction, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             PossibleCauses = possibleCauses;
             RecommendedAction = recommendedAction;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error code. </summary>

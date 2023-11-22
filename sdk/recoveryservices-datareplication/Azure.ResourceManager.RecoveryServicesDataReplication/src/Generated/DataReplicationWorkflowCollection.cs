@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationWorkflowWorkflowRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationWorkflowWorkflowRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationWorkflowResource(Client, DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(e)), _dataReplicationWorkflowWorkflowClientDiagnostics, Pipeline, "DataReplicationWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationWorkflowResource(Client, DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(e)), _dataReplicationWorkflowWorkflowClientDiagnostics, Pipeline, "DataReplicationWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationWorkflowWorkflowRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationWorkflowWorkflowRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationWorkflowResource(Client, DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(e)), _dataReplicationWorkflowWorkflowClientDiagnostics, Pipeline, "DataReplicationWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationWorkflowResource(Client, DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(e)), _dataReplicationWorkflowWorkflowClientDiagnostics, Pipeline, "DataReplicationWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

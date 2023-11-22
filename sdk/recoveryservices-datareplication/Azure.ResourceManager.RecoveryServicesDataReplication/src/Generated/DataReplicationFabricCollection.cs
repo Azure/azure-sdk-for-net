@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationFabricFabricRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationFabricFabricRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), _dataReplicationFabricFabricClientDiagnostics, Pipeline, "DataReplicationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), _dataReplicationFabricFabricClientDiagnostics, Pipeline, "DataReplicationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationFabricFabricRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationFabricFabricRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), _dataReplicationFabricFabricClientDiagnostics, Pipeline, "DataReplicationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), _dataReplicationFabricFabricClientDiagnostics, Pipeline, "DataReplicationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

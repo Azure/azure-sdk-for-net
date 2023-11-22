@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MockableResourceMoverSubscriptionResource.GetMoverResourceSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MockableResourceMoverSubscriptionResource.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MockableResourceMoverSubscriptionResource.GetMoverResourceSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MockableResourceMoverSubscriptionResource.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
     }
 }

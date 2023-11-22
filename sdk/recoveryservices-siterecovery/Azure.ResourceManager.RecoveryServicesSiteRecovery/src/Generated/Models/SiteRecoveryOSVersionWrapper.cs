@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Wrapper model for OSVersion to include version and service pack info. </summary>
     public partial class SiteRecoveryOSVersionWrapper
     {
-        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSVersionWrapper"/>. </summary>
         internal SiteRecoveryOSVersionWrapper()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSVersionWrapper"/>. </summary>
         /// <param name="version"> The version. </param>
         /// <param name="servicePack"> The service pack. </param>
-        internal SiteRecoveryOSVersionWrapper(string version, string servicePack)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryOSVersionWrapper(string version, string servicePack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             ServicePack = servicePack;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version. </summary>

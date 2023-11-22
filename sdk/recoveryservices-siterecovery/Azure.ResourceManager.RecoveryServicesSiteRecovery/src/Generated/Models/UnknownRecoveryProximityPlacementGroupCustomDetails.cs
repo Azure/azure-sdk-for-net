@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownRecoveryProximityPlacementGroupCustomDetails. </summary>
     internal partial class UnknownRecoveryProximityPlacementGroupCustomDetails : RecoveryProximityPlacementGroupCustomDetails
     {
-        /// <summary> Initializes a new instance of UnknownRecoveryProximityPlacementGroupCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryProximityPlacementGroupCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal UnknownRecoveryProximityPlacementGroupCustomDetails(string resourceType) : base(resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryProximityPlacementGroupCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Unknown";
         }

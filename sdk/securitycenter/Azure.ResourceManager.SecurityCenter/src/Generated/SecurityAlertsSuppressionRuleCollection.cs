@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
