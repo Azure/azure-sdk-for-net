@@ -5,13 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class StringEncoded
+    internal partial class StringEncoded : IXmlSerializable, IPersistableModel<StringEncoded>
     {
-        internal static StringEncoded DeserializeStringEncoded(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "StringEncoded");
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteValue(Content);
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static StringEncoded DeserializeStringEncoded(XElement element, ModelReaderWriterOptions options = null)
         {
             bool? encoded = default;
             string content = default;
@@ -20,7 +41,48 @@ namespace Azure.Storage.Files.Shares.Models
                 encoded = (bool?)encodedAttribute;
             }
             content = (string)element;
-            return new StringEncoded(encoded, content);
+            return new StringEncoded(encoded, content, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<StringEncoded>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringEncoded>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StringEncoded)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StringEncoded IPersistableModel<StringEncoded>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringEncoded>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeStringEncoded(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StringEncoded)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StringEncoded>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

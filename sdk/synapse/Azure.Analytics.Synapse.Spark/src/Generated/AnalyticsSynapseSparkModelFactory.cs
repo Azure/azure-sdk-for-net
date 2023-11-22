@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsSynapseSparkModelFactory
     {
-        /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobCollection"/>. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
         /// <param name="sessions"> Batch list. </param>
@@ -23,10 +23,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             sessions ??= new List<SparkBatchJob>();
 
-            return new SparkBatchJobCollection(@from, total, sessions?.ToList());
+            return new SparkBatchJobCollection(@from, total, sessions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJob"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
         /// <param name="notStartedAt"> the time that at which "not_started" livy state was first seen. </param>
         /// <param name="startingAt"> the time that at which "starting" livy state was first seen. </param>
         /// <param name="runningAt"> the time that at which "running" livy state was first seen. </param>
@@ -69,10 +69,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
         /// <param name="name"></param>
         /// <param name="file"></param>
         /// <param name="className"></param>
@@ -97,10 +97,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
             archives ??= new List<string>();
             configuration ??= new Dictionary<string, string>();
 
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
         /// <param name="submittedAt"></param>
         /// <param name="scheduledAt"></param>
         /// <param name="endedAt"></param>
@@ -109,10 +109,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
         public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
         {
-            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkServicePlugin"/>. </summary>
         /// <param name="preparationStartedAt"></param>
         /// <param name="resourceAcquisitionStartedAt"></param>
         /// <param name="submissionStartedAt"></param>
@@ -122,20 +122,51 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
         /// <param name="message"></param>
         /// <param name="errorCode"></param>
         /// <param name="source"></param>
         /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
         public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
         {
-            return new SparkServiceError(message, errorCode, source);
+            return new SparkServiceError(message, errorCode, source, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobOptions"/>. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="artifactId"></param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        /// <returns> A new <see cref="Models.SparkBatchJobOptions"/> instance for mocking. </returns>
+        public static SparkBatchJobOptions SparkBatchJobOptions(IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            arguments ??= new List<string>();
+            jars ??= new List<string>();
+            pythonFiles ??= new List<string>();
+            files ??= new List<string>();
+            archives ??= new List<string>();
+            configuration ??= new Dictionary<string, string>();
+
+            return new SparkBatchJobOptions(tags, artifactId, name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         /// <param name="sessions"></param>
@@ -144,10 +175,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             sessions ??= new List<SparkSession>();
 
-            return new SparkSessionCollection(@from, total, sessions?.ToList());
+            return new SparkSessionCollection(@from, total, sessions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSession"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"></param>
         /// <param name="workspaceName"></param>
@@ -174,10 +205,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkSession(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkSession(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkSessionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSessionState"/>. </summary>
         /// <param name="notStartedAt"></param>
         /// <param name="startingAt"></param>
         /// <param name="idleAt"></param>
@@ -192,10 +223,41 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkSessionState"/> instance for mocking. </returns>
         public static SparkSessionState SparkSessionState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? idleAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? shuttingDownAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, DateTimeOffset? busyAt = null, DateTimeOffset? errorAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, terminatedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest);
+            return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, terminatedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSessionOptions"/>. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="artifactId"></param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        /// <returns> A new <see cref="Models.SparkSessionOptions"/> instance for mocking. </returns>
+        public static SparkSessionOptions SparkSessionOptions(IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            arguments ??= new List<string>();
+            jars ??= new List<string>();
+            pythonFiles ??= new List<string>();
+            files ??= new List<string>();
+            archives ??= new List<string>();
+            configuration ??= new Dictionary<string, string>();
+
+            return new SparkSessionOptions(tags, artifactId, name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         /// <param name="statements"></param>
         /// <returns> A new <see cref="Models.SparkStatementCollection"/> instance for mocking. </returns>
@@ -203,10 +265,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             statements ??= new List<SparkStatement>();
 
-            return new SparkStatementCollection(total, statements?.ToList());
+            return new SparkStatementCollection(total, statements?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkStatement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatement"/>. </summary>
         /// <param name="id"></param>
         /// <param name="code"></param>
         /// <param name="state"></param>
@@ -214,10 +276,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <returns> A new <see cref="Models.SparkStatement"/> instance for mocking. </returns>
         public static SparkStatement SparkStatement(int id = default, string code = null, LivyStatementStates? state = null, SparkStatementOutput output = null)
         {
-            return new SparkStatement(id, code, state, output);
+            return new SparkStatement(id, code, state, output, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementOutput"/>. </summary>
         /// <param name="status"></param>
         /// <param name="executionCount"></param>
         /// <param name="data"> Any object. </param>
@@ -229,15 +291,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             traceback ??= new List<string>();
 
-            return new SparkStatementOutput(status, executionCount, data, errorName, errorValue, traceback?.ToList());
+            return new SparkStatementOutput(status, executionCount, data, errorName, errorValue, traceback?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCancellationResult"/>. </summary>
         /// <param name="message"> The msg property from the Livy API. The value is always "canceled". </param>
         /// <returns> A new <see cref="Models.SparkStatementCancellationResult"/> instance for mocking. </returns>
         public static SparkStatementCancellationResult SparkStatementCancellationResult(string message = null)
         {
-            return new SparkStatementCancellationResult(message);
+            return new SparkStatementCancellationResult(message, serializedAdditionalRawData: null);
         }
     }
 }

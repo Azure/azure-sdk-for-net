@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryRequest : IXmlSerializable
+    internal partial class QueryRequest : IXmlSerializable, IPersistableModel<QueryRequest>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueryRequest");
             writer.WriteStartElement("QueryType");
@@ -31,5 +36,73 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueryRequest DeserializeQueryRequest(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string queryType = default;
+            string expression = default;
+            QuerySerialization inputSerialization = default;
+            QuerySerialization outputSerialization = default;
+            if (element.Element("QueryType") is XElement queryTypeElement)
+            {
+                queryType = (string)queryTypeElement;
+            }
+            if (element.Element("Expression") is XElement expressionElement)
+            {
+                expression = (string)expressionElement;
+            }
+            if (element.Element("InputSerialization") is XElement inputSerializationElement)
+            {
+                inputSerialization = QuerySerialization.DeserializeQuerySerialization(inputSerializationElement);
+            }
+            if (element.Element("OutputSerialization") is XElement outputSerializationElement)
+            {
+                outputSerialization = QuerySerialization.DeserializeQuerySerialization(outputSerializationElement);
+            }
+            return new QueryRequest(queryType, expression, inputSerialization, outputSerialization, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<QueryRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryRequest IPersistableModel<QueryRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueryRequest(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

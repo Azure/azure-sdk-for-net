@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class KeyInfo : IXmlSerializable
+    internal partial class KeyInfo : IXmlSerializable, IPersistableModel<KeyInfo>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "KeyInfo");
             if (Optional.IsDefined(Start))
@@ -26,5 +31,63 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static KeyInfo DeserializeKeyInfo(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string start = default;
+            string expiry = default;
+            if (element.Element("Start") is XElement startElement)
+            {
+                start = (string)startElement;
+            }
+            if (element.Element("Expiry") is XElement expiryElement)
+            {
+                expiry = (string)expiryElement;
+            }
+            return new KeyInfo(start, expiry, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<KeyInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeyInfo IPersistableModel<KeyInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeKeyInfo(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

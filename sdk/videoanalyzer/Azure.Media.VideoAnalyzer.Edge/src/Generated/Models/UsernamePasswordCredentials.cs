@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Username and password credentials. </summary>
     public partial class UsernamePasswordCredentials : CredentialsBase
     {
-        /// <summary> Initializes a new instance of UsernamePasswordCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentials"/>. </summary>
         /// <param name="username"> Username to be presented as part of the credentials. </param>
         /// <param name="password"> Password to be presented as part of the credentials. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials";
         }
 
-        /// <summary> Initializes a new instance of UsernamePasswordCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentials"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> Username to be presented as part of the credentials. </param>
         /// <param name="password"> Password to be presented as part of the credentials. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
-        internal UsernamePasswordCredentials(string type, string username, string password) : base(type)
+        internal UsernamePasswordCredentials(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string password) : base(type, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             Type = type ?? "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentials"/> for deserialization. </summary>
+        internal UsernamePasswordCredentials()
+        {
         }
 
         /// <summary> Username to be presented as part of the credentials. </summary>

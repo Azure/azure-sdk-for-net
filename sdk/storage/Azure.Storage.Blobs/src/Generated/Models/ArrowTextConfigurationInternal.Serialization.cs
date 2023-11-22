@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowTextConfigurationInternal : IXmlSerializable
+    internal partial class ArrowTextConfigurationInternal : IXmlSerializable, IPersistableModel<ArrowTextConfigurationInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "ArrowConfiguration");
             writer.WriteStartElement("Schema");
@@ -23,5 +29,63 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ArrowTextConfigurationInternal DeserializeArrowTextConfigurationInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            IList<ArrowFieldInternal> schema = default;
+            if (element.Element("Schema") is XElement schemaElement)
+            {
+                var array = new List<ArrowFieldInternal>();
+                foreach (var e in schemaElement.Elements("Field"))
+                {
+                    array.Add(ArrowFieldInternal.DeserializeArrowFieldInternal(e));
+                }
+                schema = array;
+            }
+            return new ArrowTextConfigurationInternal(schema, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<ArrowTextConfigurationInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArrowTextConfigurationInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArrowTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArrowTextConfigurationInternal IPersistableModel<ArrowTextConfigurationInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArrowTextConfigurationInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeArrowTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArrowTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArrowTextConfigurationInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

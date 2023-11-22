@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Databricks Delta Lake dataset. </summary>
     public partial class AzureDatabricksDeltaLakeDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureDatabricksDeltaLakeDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDatabricksDeltaLakeDataset";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Table = table;
             Database = database;
             Type = type ?? "AzureDatabricksDeltaLakeDataset";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/> for deserialization. </summary>
+        internal AzureDatabricksDeltaLakeDataset()
+        {
         }
 
         /// <summary> The name of delta table. Type: string (or Expression with resultType string). </summary>

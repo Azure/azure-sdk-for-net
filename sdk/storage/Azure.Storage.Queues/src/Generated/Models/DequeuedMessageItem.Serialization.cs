@@ -6,14 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class DequeuedMessageItem
+    internal partial class DequeuedMessageItem : IXmlSerializable, IPersistableModel<DequeuedMessageItem>
     {
-        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("DequeueCount");
+            writer.WriteValue(DequeueCount);
+            writer.WriteEndElement();
+            writer.WriteStartElement("MessageText");
+            writer.WriteValue(MessageText);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;
@@ -50,7 +83,48 @@ namespace Azure.Storage.Queues.Models
             {
                 messageText = (string)messageTextElement;
             }
-            return new DequeuedMessageItem(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, dequeueCount, messageText);
+            return new DequeuedMessageItem(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, dequeueCount, messageText, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<DequeuedMessageItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DequeuedMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DequeuedMessageItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DequeuedMessageItem IPersistableModel<DequeuedMessageItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DequeuedMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeDequeuedMessageItem(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DequeuedMessageItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DequeuedMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

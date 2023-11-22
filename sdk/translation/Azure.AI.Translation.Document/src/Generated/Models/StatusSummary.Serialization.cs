@@ -5,14 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class StatusSummary
+    internal partial class StatusSummary : IUtf8JsonSerializable, IJsonModel<StatusSummary>
     {
-        internal static StatusSummary DeserializeStatusSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatusSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StatusSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StatusSummary)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("total"u8);
+            writer.WriteNumberValue(Total);
+            writer.WritePropertyName("failed"u8);
+            writer.WriteNumberValue(Failed);
+            writer.WritePropertyName("success"u8);
+            writer.WriteNumberValue(Success);
+            writer.WritePropertyName("inProgress"u8);
+            writer.WriteNumberValue(InProgress);
+            writer.WritePropertyName("notYetStarted"u8);
+            writer.WriteNumberValue(NotYetStarted);
+            writer.WritePropertyName("cancelled"u8);
+            writer.WriteNumberValue(Cancelled);
+            writer.WritePropertyName("totalCharacterCharged"u8);
+            writer.WriteNumberValue(TotalCharacterCharged);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StatusSummary IJsonModel<StatusSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StatusSummary)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatusSummary(document.RootElement, options);
+        }
+
+        internal static StatusSummary DeserializeStatusSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +86,8 @@ namespace Azure.AI.Translation.Document.Models
             int notYetStarted = default;
             int cancelled = default;
             long totalCharacterCharged = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("total"u8))
@@ -61,8 +125,44 @@ namespace Azure.AI.Translation.Document.Models
                     totalCharacterCharged = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StatusSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StatusSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StatusSummary IPersistableModel<StatusSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatusSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStatusSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StatusSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StatusSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

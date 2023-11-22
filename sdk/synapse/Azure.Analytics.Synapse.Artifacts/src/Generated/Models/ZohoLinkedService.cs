@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Zoho server linked service. </summary>
     public partial class ZohoLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ZohoLinkedService(object endpoint)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Zoho";
         }
 
-        /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "Zoho";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/> for deserialization. </summary>
+        internal ZohoLinkedService()
+        {
         }
 
         /// <summary> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>

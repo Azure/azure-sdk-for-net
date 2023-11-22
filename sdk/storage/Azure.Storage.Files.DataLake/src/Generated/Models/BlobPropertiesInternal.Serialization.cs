@@ -6,14 +6,200 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class BlobPropertiesInternal
+    internal partial class BlobPropertiesInternal : IXmlSerializable, IPersistableModel<BlobPropertiesInternal>
     {
-        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Properties");
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WriteStartElement("Creation-Time");
+                writer.WriteValue(CreationTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Last-Modified");
+            writer.WriteValue(LastModified, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Etag");
+            writer.WriteValue(Etag);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ContentLength))
+            {
+                writer.WriteStartElement("Content-Length");
+                writer.WriteValue(ContentLength.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WriteStartElement("Content-Type");
+                writer.WriteValue(ContentType);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentEncoding))
+            {
+                writer.WriteStartElement("Content-Encoding");
+                writer.WriteValue(ContentEncoding);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentLanguage))
+            {
+                writer.WriteStartElement("Content-Language");
+                writer.WriteValue(ContentLanguage);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentMD5))
+            {
+                writer.WriteStartElement("Content-MD5");
+                writer.WriteValue(ContentMD5, "D");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentDisposition))
+            {
+                writer.WriteStartElement("Content-Disposition");
+                writer.WriteValue(ContentDisposition);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CacheControl))
+            {
+                writer.WriteStartElement("Cache-Control");
+                writer.WriteValue(CacheControl);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(BlobSequenceNumber))
+            {
+                writer.WriteStartElement("x-ms-blob-sequence-number");
+                writer.WriteValue(BlobSequenceNumber.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyId))
+            {
+                writer.WriteStartElement("CopyId");
+                writer.WriteValue(CopyId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopySource))
+            {
+                writer.WriteStartElement("CopySource");
+                writer.WriteValue(CopySource);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyProgress))
+            {
+                writer.WriteStartElement("CopyProgress");
+                writer.WriteValue(CopyProgress);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyCompletionTime))
+            {
+                writer.WriteStartElement("CopyCompletionTime");
+                writer.WriteValue(CopyCompletionTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyStatusDescription))
+            {
+                writer.WriteStartElement("CopyStatusDescription");
+                writer.WriteValue(CopyStatusDescription);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ServerEncrypted))
+            {
+                writer.WriteStartElement("ServerEncrypted");
+                writer.WriteValue(ServerEncrypted.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IncrementalCopy))
+            {
+                writer.WriteStartElement("IncrementalCopy");
+                writer.WriteValue(IncrementalCopy.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DestinationSnapshot))
+            {
+                writer.WriteStartElement("DestinationSnapshot");
+                writer.WriteValue(DestinationSnapshot);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeletedTime))
+            {
+                writer.WriteStartElement("DeletedTime");
+                writer.WriteValue(DeletedTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RemainingRetentionDays))
+            {
+                writer.WriteStartElement("RemainingRetentionDays");
+                writer.WriteValue(RemainingRetentionDays.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierInferred))
+            {
+                writer.WriteStartElement("AccessTierInferred");
+                writer.WriteValue(AccessTierInferred.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CustomerProvidedKeySha256))
+            {
+                writer.WriteStartElement("CustomerProvidedKeySha256");
+                writer.WriteValue(CustomerProvidedKeySha256);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WriteStartElement("EncryptionScope");
+                writer.WriteValue(EncryptionScope);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierChangeTime))
+            {
+                writer.WriteStartElement("AccessTierChangeTime");
+                writer.WriteValue(AccessTierChangeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TagCount))
+            {
+                writer.WriteStartElement("TagCount");
+                writer.WriteValue(TagCount.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WriteStartElement("Expiry-Time");
+                writer.WriteValue(ExpiresOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsSealed))
+            {
+                writer.WriteStartElement("Sealed");
+                writer.WriteValue(IsSealed.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastAccessedOn))
+            {
+                writer.WriteStartElement("LastAccessTime");
+                writer.WriteValue(LastAccessedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeleteTime))
+            {
+                writer.WriteStartElement("DeleteTime");
+                writer.WriteValue(DeleteTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;
@@ -165,7 +351,48 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 deleteTime = deleteTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, copyId, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTierInferred, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, lastAccessedOn, deleteTime);
+            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, copyId, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTierInferred, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, lastAccessedOn, deleteTime, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobPropertiesInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobPropertiesInternal IPersistableModel<BlobPropertiesInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobPropertiesInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobPropertiesInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

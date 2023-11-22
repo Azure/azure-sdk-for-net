@@ -6,14 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueGeoReplication
+    public partial class QueueGeoReplication : IXmlSerializable, IPersistableModel<QueueGeoReplication>
     {
-        internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "GeoReplication");
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToSerialString());
+            writer.WriteEndElement();
+            if (LastSyncedOn != null)
+            {
+                writer.WriteStartElement("LastSyncTime");
+                writer.WriteValue(LastSyncedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element, ModelReaderWriterOptions options = null)
         {
             QueueGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
@@ -25,7 +46,48 @@ namespace Azure.Storage.Queues.Models
             {
                 lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new QueueGeoReplication(status, lastSyncedOn);
+            return new QueueGeoReplication(status, lastSyncedOn, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<QueueGeoReplication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueGeoReplication)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueueGeoReplication IPersistableModel<QueueGeoReplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueueGeoReplication(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueGeoReplication)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueGeoReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

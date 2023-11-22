@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

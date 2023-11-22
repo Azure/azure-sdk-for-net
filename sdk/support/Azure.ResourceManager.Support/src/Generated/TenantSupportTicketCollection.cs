@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListRequest(top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics, Pipeline, "TenantSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics, Pipeline, "TenantSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListRequest(top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics, Pipeline, "TenantSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics, Pipeline, "TenantSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

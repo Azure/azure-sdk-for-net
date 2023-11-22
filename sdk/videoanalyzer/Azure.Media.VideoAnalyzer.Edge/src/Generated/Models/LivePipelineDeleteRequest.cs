@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Deletes an existing live pipeline. </summary>
     public partial class LivePipelineDeleteRequest : MethodRequestEmptyBodyBase
     {
-        /// <summary> Initializes a new instance of LivePipelineDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeleteRequest"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipelineDeleteRequest(string name) : base(name)
@@ -23,13 +24,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "livePipelineDelete";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeleteRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
-        internal LivePipelineDeleteRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
+        internal LivePipelineDeleteRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(methodName, apiVersion, serializedAdditionalRawData, name)
         {
             MethodName = methodName ?? "livePipelineDelete";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeleteRequest"/> for deserialization. </summary>
+        internal LivePipelineDeleteRequest()
+        {
         }
     }
 }

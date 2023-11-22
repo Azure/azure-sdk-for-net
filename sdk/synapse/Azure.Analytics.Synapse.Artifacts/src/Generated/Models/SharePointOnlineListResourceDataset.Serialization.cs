@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SharePointOnlineListResourceDatasetConverter))]
-    public partial class SharePointOnlineListResourceDataset : IUtf8JsonSerializable
+    public partial class SharePointOnlineListResourceDataset : IUtf8JsonSerializable, IJsonModel<SharePointOnlineListResourceDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharePointOnlineListResourceDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SharePointOnlineListResourceDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SharePointOnlineListResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharePointOnlineListResourceDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -77,16 +87,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(ListName);
             }
             writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SharePointOnlineListResourceDataset DeserializeSharePointOnlineListResourceDataset(JsonElement element)
+        SharePointOnlineListResourceDataset IJsonModel<SharePointOnlineListResourceDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SharePointOnlineListResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharePointOnlineListResourceDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharePointOnlineListResourceDataset(document.RootElement, options);
+        }
+
+        internal static SharePointOnlineListResourceDataset DeserializeSharePointOnlineListResourceDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -207,6 +234,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SharePointOnlineListResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, listName.Value);
         }
+
+        BinaryData IPersistableModel<SharePointOnlineListResourceDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SharePointOnlineListResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharePointOnlineListResourceDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SharePointOnlineListResourceDataset IPersistableModel<SharePointOnlineListResourceDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SharePointOnlineListResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSharePointOnlineListResourceDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharePointOnlineListResourceDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SharePointOnlineListResourceDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SharePointOnlineListResourceDatasetConverter : JsonConverter<SharePointOnlineListResourceDataset>
         {

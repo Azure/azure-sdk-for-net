@@ -5,13 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobItem
+    internal partial class FilterBlobItem : IXmlSerializable, IPersistableModel<FilterBlobItem>
     {
-        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Blob");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Tags))
+            {
+                writer.WriteObjectValue(Tags, "Tags");
+            }
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             string containerName = default;
@@ -38,7 +74,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 isCurrentVersion = (bool?)isCurrentVersionElement;
             }
-            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion);
+            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<FilterBlobItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterBlobItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FilterBlobItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FilterBlobItem IPersistableModel<FilterBlobItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterBlobItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeFilterBlobItem(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FilterBlobItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilterBlobItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

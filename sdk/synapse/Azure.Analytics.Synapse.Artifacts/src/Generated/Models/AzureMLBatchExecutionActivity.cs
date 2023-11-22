@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure ML Batch Execution activity. </summary>
     public partial class AzureMLBatchExecutionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureMLBatchExecution";
         }
 
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WebServiceOutputs = webServiceOutputs;
             WebServiceInputs = webServiceInputs;
             Type = type ?? "AzureMLBatchExecution";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
         }
 
         /// <summary> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </summary>

@@ -6,14 +6,98 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ContainerPropertiesInternal
+    internal partial class ContainerPropertiesInternal : IXmlSerializable, IPersistableModel<ContainerPropertiesInternal>
     {
-        internal static ContainerPropertiesInternal DeserializeContainerPropertiesInternal(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "ContainerProperties");
+            writer.WriteStartElement("Last-Modified");
+            writer.WriteValue(LastModified, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Etag");
+            writer.WriteValue(Etag);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LeaseStatus))
+            {
+                writer.WriteStartElement("LeaseStatus");
+                writer.WriteValue(LeaseStatus.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LeaseState))
+            {
+                writer.WriteStartElement("LeaseState");
+                writer.WriteValue(LeaseState.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LeaseDuration))
+            {
+                writer.WriteStartElement("LeaseDuration");
+                writer.WriteValue(LeaseDuration.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PublicAccess))
+            {
+                writer.WriteStartElement("PublicAccess");
+                writer.WriteValue(PublicAccess.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(HasImmutabilityPolicy))
+            {
+                writer.WriteStartElement("HasImmutabilityPolicy");
+                writer.WriteValue(HasImmutabilityPolicy.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(HasLegalHold))
+            {
+                writer.WriteStartElement("HasLegalHold");
+                writer.WriteValue(HasLegalHold.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DefaultEncryptionScope))
+            {
+                writer.WriteStartElement("DefaultEncryptionScope");
+                writer.WriteValue(DefaultEncryptionScope);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PreventEncryptionScopeOverride))
+            {
+                writer.WriteStartElement("DenyEncryptionScopeOverride");
+                writer.WriteValue(PreventEncryptionScopeOverride.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeletedTime))
+            {
+                writer.WriteStartElement("DeletedTime");
+                writer.WriteValue(DeletedTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RemainingRetentionDays))
+            {
+                writer.WriteStartElement("RemainingRetentionDays");
+                writer.WriteValue(RemainingRetentionDays.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsImmutableStorageWithVersioningEnabled))
+            {
+                writer.WriteStartElement("ImmutableStorageWithVersioningEnabled");
+                writer.WriteValue(IsImmutableStorageWithVersioningEnabled.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ContainerPropertiesInternal DeserializeContainerPropertiesInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset lastModified = default;
             string etag = default;
@@ -80,7 +164,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 isImmutableStorageWithVersioningEnabled = (bool?)immutableStorageWithVersioningEnabledElement;
             }
-            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays, isImmutableStorageWithVersioningEnabled);
+            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays, isImmutableStorageWithVersioningEnabled, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ContainerPropertiesInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerPropertiesInternal IPersistableModel<ContainerPropertiesInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeContainerPropertiesInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerPropertiesInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

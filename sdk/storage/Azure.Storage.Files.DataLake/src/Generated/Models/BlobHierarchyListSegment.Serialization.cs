@@ -5,14 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class BlobHierarchyListSegment
+    internal partial class BlobHierarchyListSegment : IXmlSerializable, IPersistableModel<BlobHierarchyListSegment>
     {
-        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Blobs");
+            if (Optional.IsCollectionDefined(BlobPrefixes))
+            {
+                foreach (var item in BlobPrefixes)
+                {
+                    writer.WriteObjectValue(item, "BlobPrefix");
+                }
+            }
+            foreach (var item in BlobItems)
+            {
+                writer.WriteObjectValue(item, "Blob");
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<BlobPrefix> blobPrefixes = default;
             IReadOnlyList<BlobItemInternal> blobItems = default;
@@ -28,7 +53,48 @@ namespace Azure.Storage.Files.DataLake.Models
                 array0.Add(BlobItemInternal.DeserializeBlobItemInternal(e));
             }
             blobItems = array0;
-            return new BlobHierarchyListSegment(blobPrefixes, blobItems);
+            return new BlobHierarchyListSegment(blobPrefixes, blobItems, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobHierarchyListSegment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobHierarchyListSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobHierarchyListSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobHierarchyListSegment IPersistableModel<BlobHierarchyListSegment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobHierarchyListSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobHierarchyListSegment(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobHierarchyListSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobHierarchyListSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

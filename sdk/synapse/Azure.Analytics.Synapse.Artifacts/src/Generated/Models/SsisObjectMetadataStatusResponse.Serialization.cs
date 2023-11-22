@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SsisObjectMetadataStatusResponseConverter))]
-    public partial class SsisObjectMetadataStatusResponse : IUtf8JsonSerializable
+    public partial class SsisObjectMetadataStatusResponse : IUtf8JsonSerializable, IJsonModel<SsisObjectMetadataStatusResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisObjectMetadataStatusResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SsisObjectMetadataStatusResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisObjectMetadataStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SsisObjectMetadataStatusResponse)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -38,11 +49,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisObjectMetadataStatusResponse DeserializeSsisObjectMetadataStatusResponse(JsonElement element)
+        SsisObjectMetadataStatusResponse IJsonModel<SsisObjectMetadataStatusResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisObjectMetadataStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SsisObjectMetadataStatusResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisObjectMetadataStatusResponse(document.RootElement, options);
+        }
+
+        internal static SsisObjectMetadataStatusResponse DeserializeSsisObjectMetadataStatusResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +91,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<string> properties = default;
             Optional<string> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -73,9 +115,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     error = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SsisObjectMetadataStatusResponse(status.Value, name.Value, properties.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SsisObjectMetadataStatusResponse(status.Value, name.Value, properties.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SsisObjectMetadataStatusResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisObjectMetadataStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SsisObjectMetadataStatusResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SsisObjectMetadataStatusResponse IPersistableModel<SsisObjectMetadataStatusResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisObjectMetadataStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSsisObjectMetadataStatusResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SsisObjectMetadataStatusResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SsisObjectMetadataStatusResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SsisObjectMetadataStatusResponseConverter : JsonConverter<SsisObjectMetadataStatusResponse>
         {

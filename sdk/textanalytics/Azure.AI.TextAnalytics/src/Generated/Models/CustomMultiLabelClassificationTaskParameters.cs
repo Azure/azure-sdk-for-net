@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a Custom Multi Classification task. </summary>
     internal partial class CustomMultiLabelClassificationTaskParameters : CustomTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
@@ -23,11 +24,17 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
         }
 
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomMultiLabelClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut, projectName, deploymentName)
+        internal CustomMultiLabelClassificationTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string projectName, string deploymentName) : base(loggingOptOut, serializedAdditionalRawData, projectName, deploymentName)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/> for deserialization. </summary>
+        internal CustomMultiLabelClassificationTaskParameters()
         {
         }
     }

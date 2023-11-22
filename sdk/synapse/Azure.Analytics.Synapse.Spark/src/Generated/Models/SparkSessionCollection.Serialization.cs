@@ -5,16 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkSessionCollection
+    public partial class SparkSessionCollection : IUtf8JsonSerializable, IJsonModel<SparkSessionCollection>
     {
-        internal static SparkSessionCollection DeserializeSparkSessionCollection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkSessionCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkSessionCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkSessionCollection)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("from"u8);
+            writer.WriteNumberValue(From);
+            writer.WritePropertyName("total"u8);
+            writer.WriteNumberValue(Total);
+            if (Optional.IsCollectionDefined(Sessions))
+            {
+                writer.WritePropertyName("sessions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sessions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkSessionCollection IJsonModel<SparkSessionCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkSessionCollection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkSessionCollection(document.RootElement, options);
+        }
+
+        internal static SparkSessionCollection DeserializeSparkSessionCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +82,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
             int @from = default;
             int total = default;
             Optional<IReadOnlyList<SparkSession>> sessions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -48,8 +110,44 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     sessions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkSessionCollection(@from, total, Optional.ToList(sessions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkSessionCollection(@from, total, Optional.ToList(sessions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SparkSessionCollection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionCollection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkSessionCollection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkSessionCollection IPersistableModel<SparkSessionCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionCollection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkSessionCollection(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkSessionCollection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkSessionCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

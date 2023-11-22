@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,98 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableStatusConverter))]
-    public partial class LinkTableStatus
+    public partial class LinkTableStatus : IUtf8JsonSerializable, IJsonModel<LinkTableStatus>
     {
-        internal static LinkTableStatus DeserializeLinkTableStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkTableStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinkTableStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkTableStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkTableStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteObjectValue(StartTime);
+            }
+            if (Optional.IsDefined(StopTime))
+            {
+                writer.WritePropertyName("stopTime"u8);
+                writer.WriteObjectValue(StopTime);
+            }
+            if (Optional.IsDefined(LinkTableId))
+            {
+                writer.WritePropertyName("linkTableId"u8);
+                writer.WriteStringValue(LinkTableId);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(LastProcessedData))
+            {
+                writer.WritePropertyName("lastProcessedData"u8);
+                writer.WriteStringValue(LastProcessedData.Value, "O");
+            }
+            if (Optional.IsDefined(LastTransactionCommitTime))
+            {
+                writer.WritePropertyName("lastTransactionCommitTime"u8);
+                writer.WriteStringValue(LastTransactionCommitTime.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkTableStatus IJsonModel<LinkTableStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkTableStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkTableStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkTableStatus(document.RootElement, options);
+        }
+
+        internal static LinkTableStatus DeserializeLinkTableStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +121,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> errorCode = default;
             Optional<DateTimeOffset> lastProcessedData = default;
             Optional<DateTimeOffset> lastTransactionCommitTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,15 +186,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     lastTransactionCommitTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkTableStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkTableStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkTableStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LinkTableStatus IPersistableModel<LinkTableStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkTableStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLinkTableStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkTableStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkTableStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableStatus model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override LinkTableStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Git integration settings. </summary>
     public partial class SynapseWorkspaceRepositoryConfiguration
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceRepositoryConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceRepositoryConfiguration"/>. </summary>
         public SynapseWorkspaceRepositoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceRepositoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceRepositoryConfiguration"/>. </summary>
         /// <param name="workspaceRepositoryConfigurationType"> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </param>
         /// <param name="hostName"> GitHub Enterprise host name. For example: https://github.mydomain.com. </param>
         /// <param name="accountName"> Account name. </param>
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="rootFolder"> Root folder to use in the repository. </param>
         /// <param name="lastCommitId"> The last commit ID. </param>
         /// <param name="tenantId"> The VSTS tenant ID. </param>
-        internal SynapseWorkspaceRepositoryConfiguration(string workspaceRepositoryConfigurationType, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspaceRepositoryConfiguration(string workspaceRepositoryConfigurationType, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceRepositoryConfigurationType = workspaceRepositoryConfigurationType;
             HostName = hostName;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </summary>

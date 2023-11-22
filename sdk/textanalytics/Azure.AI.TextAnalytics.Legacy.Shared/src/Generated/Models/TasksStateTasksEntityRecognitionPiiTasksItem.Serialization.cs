@@ -6,16 +6,76 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class TasksStateTasksEntityRecognitionPiiTasksItem
+    internal partial class TasksStateTasksEntityRecognitionPiiTasksItem : IUtf8JsonSerializable, IJsonModel<TasksStateTasksEntityRecognitionPiiTasksItem>
     {
-        internal static TasksStateTasksEntityRecognitionPiiTasksItem DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TasksStateTasksEntityRecognitionPiiTasksItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TasksStateTasksEntityRecognitionPiiTasksItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TasksStateTasksEntityRecognitionPiiTasksItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TasksStateTasksEntityRecognitionPiiTasksItem IJsonModel<TasksStateTasksEntityRecognitionPiiTasksItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TasksStateTasksEntityRecognitionPiiTasksItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(document.RootElement, options);
+        }
+
+        internal static TasksStateTasksEntityRecognitionPiiTasksItem DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +84,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
             State status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -50,8 +112,44 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     status = property.Value.GetString().ToState();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TasksStateTasksEntityRecognitionPiiTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TasksStateTasksEntityRecognitionPiiTasksItem(lastUpdateDateTime, taskName.Value, status, serializedAdditionalRawData, results.Value);
         }
+
+        BinaryData IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TasksStateTasksEntityRecognitionPiiTasksItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TasksStateTasksEntityRecognitionPiiTasksItem IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TasksStateTasksEntityRecognitionPiiTasksItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TasksStateTasksEntityRecognitionPiiTasksItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
