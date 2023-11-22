@@ -5,15 +5,107 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteSection
+    public partial class RouteSection : IUtf8JsonSerializable, IJsonModel<RouteSection>
     {
-        internal static RouteSection DeserializeRouteSection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteSection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteSection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteSection)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(StartPointIndex))
+            {
+                writer.WritePropertyName("startPointIndex"u8);
+                writer.WriteNumberValue(StartPointIndex.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndPointIndex))
+            {
+                writer.WritePropertyName("endPointIndex"u8);
+                writer.WriteNumberValue(EndPointIndex.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SectionType))
+            {
+                writer.WritePropertyName("sectionType"u8);
+                writer.WriteStringValue(SectionType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TravelMode))
+            {
+                writer.WritePropertyName("travelMode"u8);
+                writer.WriteStringValue(TravelMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SimpleCategory))
+            {
+                writer.WritePropertyName("simpleCategory"u8);
+                writer.WriteStringValue(SimpleCategory.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveSpeedInKmh))
+            {
+                writer.WritePropertyName("effectiveSpeedInKmh"u8);
+                writer.WriteNumberValue(EffectiveSpeedInKmh.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DelayInSeconds))
+            {
+                writer.WritePropertyName("delayInSeconds"u8);
+                writer.WriteNumberValue(DelayInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DelayMagnitude))
+            {
+                writer.WritePropertyName("magnitudeOfDelay"u8);
+                writer.WriteStringValue(DelayMagnitude.Value.ToString());
+            }
+            if (Optional.IsDefined(Tec))
+            {
+                writer.WritePropertyName("tec"u8);
+                writer.WriteObjectValue(Tec);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteSection IJsonModel<RouteSection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteSection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteSection(document.RootElement, options);
+        }
+
+        internal static RouteSection DeserializeRouteSection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +119,8 @@ namespace Azure.Maps.Routing.Models
             Optional<int> delayInSeconds = default;
             Optional<DelayMagnitude> magnitudeOfDelay = default;
             Optional<RouteSectionTec> tec = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startPointIndex"u8))
@@ -110,8 +204,44 @@ namespace Azure.Maps.Routing.Models
                     tec = RouteSectionTec.DeserializeRouteSectionTec(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteSection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteSection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteSection IPersistableModel<RouteSection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteSection(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteSection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteSection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

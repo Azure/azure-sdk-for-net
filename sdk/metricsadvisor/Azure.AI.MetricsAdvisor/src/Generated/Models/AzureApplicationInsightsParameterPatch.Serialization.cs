@@ -5,12 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureApplicationInsightsParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureApplicationInsightsParameterPatch : IUtf8JsonSerializable, IJsonModel<AzureApplicationInsightsParameterPatch>
     {
+        void IJsonModel<AzureApplicationInsightsParameterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureApplicationInsightsParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureApplicationInsightsParameterPatch)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AzureCloud))
+            {
+                writer.WritePropertyName("azureCloud"u8);
+                writer.WriteStringValue(AzureCloud);
+            }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(ApiKey))
+            {
+                writer.WritePropertyName("apiKey"u8);
+                writer.WriteStringValue(ApiKey);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AzureApplicationInsightsParameterPatch IJsonModel<AzureApplicationInsightsParameterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureApplicationInsightsParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureApplicationInsightsParameterPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureApplicationInsightsParameterPatch(document.RootElement, options);
+        }
+
+        internal static AzureApplicationInsightsParameterPatch DeserializeAzureApplicationInsightsParameterPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> azureCloud = default;
+            Optional<string> applicationId = default;
+            Optional<string> apiKey = default;
+            Optional<string> query = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("azureCloud"u8))
+                {
+                    azureCloud = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("applicationId"u8))
+                {
+                    applicationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("apiKey"u8))
+                {
+                    apiKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureApplicationInsightsParameterPatch(azureCloud.Value, applicationId.Value, apiKey.Value, query.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AzureApplicationInsightsParameterPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureApplicationInsightsParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureApplicationInsightsParameterPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureApplicationInsightsParameterPatch IPersistableModel<AzureApplicationInsightsParameterPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureApplicationInsightsParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureApplicationInsightsParameterPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureApplicationInsightsParameterPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureApplicationInsightsParameterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

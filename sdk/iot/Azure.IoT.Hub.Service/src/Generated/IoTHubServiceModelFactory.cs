@@ -14,7 +14,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> Model factory for models. </summary>
     public static partial class IoTHubServiceModelFactory
     {
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationQueriesTestResponse"/>. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
         /// <returns> A new <see cref="Models.ConfigurationQueriesTestResponse"/> instance for mocking. </returns>
@@ -22,28 +22,28 @@ namespace Azure.IoT.Hub.Service.Models
         {
             customMetricQueryErrors ??= new Dictionary<string, string>();
 
-            return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors);
+            return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevicesStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total number of devices registered for the IoT Hub. </param>
         /// <param name="enabledDeviceCount"> The number of currently enabled devices. </param>
         /// <param name="disabledDeviceCount"> The number of currently disabled devices. </param>
         /// <returns> A new <see cref="Models.DevicesStatistics"/> instance for mocking. </returns>
         public static DevicesStatistics DevicesStatistics(long? totalDeviceCount = null, long? enabledDeviceCount = null, long? disabledDeviceCount = null)
         {
-            return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
+            return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceStatistics"/>. </summary>
         /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
         /// <returns> A new <see cref="Models.ServiceStatistics"/> instance for mocking. </returns>
         public static ServiceStatistics ServiceStatistics(long? connectedDeviceCount = null)
         {
-            return new ServiceStatistics(connectedDeviceCount);
+            return new ServiceStatistics(connectedDeviceCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BulkRegistryOperationResponse"/>. </summary>
         /// <param name="isSuccessful"> The operation result. </param>
         /// <param name="errors"> The device registry operation errors. </param>
         /// <param name="warnings"> The device registry operation warnings. </param>
@@ -53,10 +53,10 @@ namespace Azure.IoT.Hub.Service.Models
             errors ??= new List<DeviceRegistryOperationError>();
             warnings ??= new List<DeviceRegistryOperationWarning>();
 
-            return new BulkRegistryOperationResponse(isSuccessful, errors?.ToList(), warnings?.ToList());
+            return new BulkRegistryOperationResponse(isSuccessful, errors?.ToList(), warnings?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryOperationError"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorStatus"> The details of the error. </param>
@@ -65,30 +65,30 @@ namespace Azure.IoT.Hub.Service.Models
         /// <returns> A new <see cref="Models.DeviceRegistryOperationError"/> instance for mocking. </returns>
         public static DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, DeviceRegistryOperationErrorCode? errorCode = null, string errorStatus = null, string moduleId = null, string operation = null)
         {
-            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
+            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryOperationWarning"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryOperationWarning"/> instance for mocking. </returns>
         public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, DeviceRegistryOperationWarningCode? warningCode = null, string warningStatus = null)
         {
-            return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
+            return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurgeMessageQueueResult"/>. </summary>
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <returns> A new <see cref="Models.PurgeMessageQueueResult"/> instance for mocking. </returns>
         public static PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = null, string deviceId = null, string moduleId = null)
         {
-            return new PurgeMessageQueueResult(totalMessagesPurged, deviceId, moduleId);
+            return new PurgeMessageQueueResult(totalMessagesPurged, deviceId, moduleId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of JobResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobResponse"/>. </summary>
         /// <param name="jobId"> System generated.  Ignored at creation. The unique identifier of the job. </param>
         /// <param name="queryCondition"> The device query condition. </param>
         /// <param name="createdTime"> System generated.  Ignored at creation. The creation date and time of the job. </param>
@@ -105,10 +105,10 @@ namespace Azure.IoT.Hub.Service.Models
         /// <returns> A new <see cref="Models.JobResponse"/> instance for mocking. </returns>
         public static JobResponse JobResponse(string jobId = null, string queryCondition = null, DateTimeOffset? createdTime = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, long? maxExecutionTimeInSeconds = null, JobResponseType? type = null, CloudToDeviceMethodRequest cloudToDeviceMethod = null, TwinData updateTwin = null, JobResponseStatus? status = null, string failureReason = null, string statusMessage = null, DeviceJobStatistics deviceJobStatistics = null)
         {
-            return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
+            return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceJobStatistics"/>. </summary>
         /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
         /// <param name="succeededCount"> The number of succeeded jobs. </param>
@@ -117,10 +117,10 @@ namespace Azure.IoT.Hub.Service.Models
         /// <returns> A new <see cref="Models.DeviceJobStatistics"/> instance for mocking. </returns>
         public static DeviceJobStatistics DeviceJobStatistics(int? deviceCount = null, int? failedCount = null, int? succeededCount = null, int? runningCount = null, int? pendingCount = null)
         {
-            return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount);
+            return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryResult"/>. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
@@ -129,16 +129,16 @@ namespace Azure.IoT.Hub.Service.Models
         {
             items ??= new List<object>();
 
-            return new QueryResult(type, items?.ToList(), continuationToken);
+            return new QueryResult(type, items?.ToList(), continuationToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudToDeviceMethodResponse"/>. </summary>
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
         /// <returns> A new <see cref="Models.CloudToDeviceMethodResponse"/> instance for mocking. </returns>
         public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = null, object payload = null)
         {
-            return new CloudToDeviceMethodResponse(status, payload);
+            return new CloudToDeviceMethodResponse(status, payload, serializedAdditionalRawData: null);
         }
     }
 }

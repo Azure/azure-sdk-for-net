@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Administration;
 
@@ -13,16 +14,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The UnknownHookInfo. </summary>
     internal partial class UnknownHookInfo : NotificationHook
     {
-        /// <summary> Initializes a new instance of UnknownHookInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownHookInfo"/>. </summary>
         /// <param name="hookKind"> hook type. </param>
         /// <param name="id"> Hook unique id. </param>
         /// <param name="name"> hook unique name. </param>
         /// <param name="description"> hook description. </param>
         /// <param name="internalExternalLink"> hook external link. </param>
         /// <param name="administrators"> hook administrators. </param>
-        internal UnknownHookInfo(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators) : base(hookKind, id, name, description, internalExternalLink, administrators)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownHookInfo(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(hookKind, id, name, description, internalExternalLink, administrators, serializedAdditionalRawData)
         {
             HookKind = hookKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownHookInfo"/> for deserialization. </summary>
+        internal UnknownHookInfo()
+        {
         }
     }
 }

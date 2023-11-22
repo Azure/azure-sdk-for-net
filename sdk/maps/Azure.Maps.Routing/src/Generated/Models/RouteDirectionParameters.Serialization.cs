@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
 {
-    public partial class RouteDirectionParameters : IUtf8JsonSerializable
+    public partial class RouteDirectionParameters : IUtf8JsonSerializable, IJsonModel<RouteDirectionParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteDirectionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteDirectionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteDirectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteDirectionParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(_GeoJsonSupportingPoints))
             {
@@ -45,7 +58,136 @@ namespace Azure.Maps.Routing
                 writer.WritePropertyName("avoidAreas"u8);
                 writer.WriteObjectValue(_GeoJsonAvoidAreas);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RouteDirectionParameters IJsonModel<RouteDirectionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteDirectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteDirectionParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteDirectionParameters(document.RootElement, options);
+        }
+
+        internal static RouteDirectionParameters DeserializeRouteDirectionParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GeoJsonGeometryCollection> supportingPoints = default;
+            Optional<IList<string>> avoidVignette = default;
+            Optional<IList<string>> allowVignette = default;
+            Optional<GeoJsonMultiPolygon> avoidAreas = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("supportingPoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportingPoints = GeoJsonGeometryCollection.DeserializeGeoJsonGeometryCollection(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("avoidVignette"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    avoidVignette = array;
+                    continue;
+                }
+                if (property.NameEquals("allowVignette"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    allowVignette = array;
+                    continue;
+                }
+                if (property.NameEquals("avoidAreas"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    avoidAreas = GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteDirectionParameters(supportingPoints.Value, Optional.ToList(avoidVignette), Optional.ToList(allowVignette), avoidAreas.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RouteDirectionParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteDirectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteDirectionParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteDirectionParameters IPersistableModel<RouteDirectionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteDirectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteDirectionParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteDirectionParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteDirectionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

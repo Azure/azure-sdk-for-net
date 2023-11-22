@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningLabelingJobResource(Client, MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(e)), _machineLearningLabelingJobLabelingJobsClientDiagnostics, Pipeline, "MachineLearningLabelingJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningLabelingJobResource(Client, MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(e)), _machineLearningLabelingJobLabelingJobsClientDiagnostics, Pipeline, "MachineLearningLabelingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningLabelingJobResource(Client, MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(e)), _machineLearningLabelingJobLabelingJobsClientDiagnostics, Pipeline, "MachineLearningLabelingJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningLabelingJobResource(Client, MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(e)), _machineLearningLabelingJobLabelingJobsClientDiagnostics, Pipeline, "MachineLearningLabelingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

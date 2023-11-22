@@ -5,16 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteData
+    public partial class RouteData : IUtf8JsonSerializable, IJsonModel<RouteData>
     {
-        internal static RouteData DeserializeRouteData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteObjectValue(Summary);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Legs))
+            {
+                writer.WritePropertyName("legs"u8);
+                writer.WriteStartArray();
+                foreach (var item in Legs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sections))
+            {
+                writer.WritePropertyName("sections"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Guidance))
+            {
+                writer.WritePropertyName("guidance"u8);
+                writer.WriteObjectValue(Guidance);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteData IJsonModel<RouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteData(document.RootElement, options);
+        }
+
+        internal static RouteData DeserializeRouteData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +99,8 @@ namespace Azure.Maps.Routing.Models
             Optional<IReadOnlyList<RouteLeg>> legs = default;
             Optional<IReadOnlyList<RouteSection>> sections = default;
             Optional<RouteGuidance> guidance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -71,8 +149,44 @@ namespace Azure.Maps.Routing.Models
                     guidance = RouteGuidance.DeserializeRouteGuidance(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteData(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteData(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteData IPersistableModel<RouteData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

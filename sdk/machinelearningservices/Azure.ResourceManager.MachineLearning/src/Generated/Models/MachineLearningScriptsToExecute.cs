@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Customized setup scripts. </summary>
     public partial class MachineLearningScriptsToExecute
     {
-        /// <summary> Initializes a new instance of MachineLearningScriptsToExecute. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScriptsToExecute"/>. </summary>
         public MachineLearningScriptsToExecute()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScriptsToExecute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScriptsToExecute"/>. </summary>
         /// <param name="startupScript"> Script that's run every time the machine starts. </param>
         /// <param name="creationScript"> Script that's run only once during provision of the compute. </param>
-        internal MachineLearningScriptsToExecute(MachineLearningScriptReference startupScript, MachineLearningScriptReference creationScript)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningScriptsToExecute(MachineLearningScriptReference startupScript, MachineLearningScriptReference creationScript, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartupScript = startupScript;
             CreationScript = creationScript;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Script that's run every time the machine starts. </summary>

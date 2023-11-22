@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class X509Thumbprint : IUtf8JsonSerializable
+    public partial class X509Thumbprint : IUtf8JsonSerializable, IJsonModel<X509Thumbprint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X509Thumbprint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<X509Thumbprint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X509Thumbprint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(X509Thumbprint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryThumbprint))
             {
@@ -25,17 +37,48 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element)
+        X509Thumbprint IJsonModel<X509Thumbprint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X509Thumbprint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(X509Thumbprint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeX509Thumbprint(document.RootElement, options);
+        }
+
+        internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> primaryThumbprint = default;
             Optional<string> secondaryThumbprint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))
@@ -48,8 +91,44 @@ namespace Azure.IoT.Hub.Service.Models
                     secondaryThumbprint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new X509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new X509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<X509Thumbprint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X509Thumbprint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(X509Thumbprint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        X509Thumbprint IPersistableModel<X509Thumbprint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X509Thumbprint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeX509Thumbprint(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(X509Thumbprint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<X509Thumbprint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,16 +13,16 @@ namespace Azure.Maps.Rendering
     /// <summary> Model factory for models. </summary>
     public static partial class MapsRenderingModelFactory
     {
-        /// <summary> Initializes a new instance of CopyrightCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.CopyrightCaption"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="copyright"> Copyrights Caption property. </param>
         /// <returns> A new <see cref="Rendering.CopyrightCaption"/> instance for mocking. </returns>
         public static CopyrightCaption CopyrightCaption(string formatVersion = null, string copyright = null)
         {
-            return new CopyrightCaption(formatVersion, copyright);
+            return new CopyrightCaption(formatVersion, copyright, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RenderCopyright. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RenderCopyright"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="generalCopyrights"> General Copyrights array. </param>
         /// <param name="regionalCopyrights"> Regions array. </param>
@@ -32,10 +32,10 @@ namespace Azure.Maps.Rendering
             generalCopyrights ??= new List<string>();
             regionalCopyrights ??= new List<RegionalCopyright>();
 
-            return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList());
+            return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyright. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyright"/>. </summary>
         /// <param name="copyrights"> Copyrights array. </param>
         /// <param name="country"> Country property. </param>
         /// <returns> A new <see cref="Rendering.RegionalCopyright"/> instance for mocking. </returns>
@@ -43,16 +43,16 @@ namespace Azure.Maps.Rendering
         {
             copyrights ??= new List<string>();
 
-            return new RegionalCopyright(copyrights?.ToList(), country);
+            return new RegionalCopyright(copyrights?.ToList(), country, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyrightCountry"/>. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
         /// <returns> A new <see cref="Rendering.RegionalCopyrightCountry"/> instance for mocking. </returns>
         public static RegionalCopyrightCountry RegionalCopyrightCountry(string iso3 = null, string label = null)
         {
-            return new RegionalCopyrightCountry(iso3, label);
+            return new RegionalCopyrightCountry(iso3, label, serializedAdditionalRawData: null);
         }
     }
 }

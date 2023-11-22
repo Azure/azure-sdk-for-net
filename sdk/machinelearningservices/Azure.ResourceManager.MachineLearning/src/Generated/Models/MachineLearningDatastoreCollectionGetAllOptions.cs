@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDatastoreCollectionGetAllOptions. </summary>
     public partial class MachineLearningDatastoreCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCollectionGetAllOptions"/>. </summary>
         public MachineLearningDatastoreCollectionGetAllOptions()
         {
             Names = new ChangeTrackingList<string>();

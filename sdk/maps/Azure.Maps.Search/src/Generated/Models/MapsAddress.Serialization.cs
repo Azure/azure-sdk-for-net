@@ -5,16 +5,172 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class MapsAddress
+    public partial class MapsAddress : IUtf8JsonSerializable, IJsonModel<MapsAddress>
     {
-        internal static MapsAddress DeserializeMapsAddress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapsAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapsAddress)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BuildingNumber))
+            {
+                writer.WritePropertyName("buildingNumber"u8);
+                writer.WriteStringValue(BuildingNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Street))
+            {
+                writer.WritePropertyName("street"u8);
+                writer.WriteStringValue(Street);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CrossStreet))
+            {
+                writer.WritePropertyName("crossStreet"u8);
+                writer.WriteStringValue(CrossStreet);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StreetNumber))
+            {
+                writer.WritePropertyName("streetNumber"u8);
+                writer.WriteStringValue(StreetNumber);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RouteNumbers))
+            {
+                writer.WritePropertyName("routeNumbers"u8);
+                writer.WriteStartArray();
+                foreach (var item in RouteNumbers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(StreetName))
+            {
+                writer.WritePropertyName("streetName"u8);
+                writer.WriteStringValue(StreetName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StreetNameAndNumber))
+            {
+                writer.WritePropertyName("streetNameAndNumber"u8);
+                writer.WriteStringValue(StreetNameAndNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Municipality))
+            {
+                writer.WritePropertyName("municipality"u8);
+                writer.WriteStringValue(Municipality);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MunicipalitySubdivision))
+            {
+                writer.WritePropertyName("municipalitySubdivision"u8);
+                writer.WriteStringValue(MunicipalitySubdivision);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountryTertiarySubdivision))
+            {
+                writer.WritePropertyName("countryTertiarySubdivision"u8);
+                writer.WriteStringValue(CountryTertiarySubdivision);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountrySecondarySubdivision))
+            {
+                writer.WritePropertyName("countrySecondarySubdivision"u8);
+                writer.WriteStringValue(CountrySecondarySubdivision);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountrySubdivision))
+            {
+                writer.WritePropertyName("countrySubdivision"u8);
+                writer.WriteStringValue(CountrySubdivision);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostalCode))
+            {
+                writer.WritePropertyName("postalCode"u8);
+                writer.WriteStringValue(PostalCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtendedPostalCode))
+            {
+                writer.WritePropertyName("extendedPostalCode"u8);
+                writer.WriteStringValue(ExtendedPostalCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
+            {
+                writer.WritePropertyName("countryCode"u8);
+                writer.WriteStringValue(CountryCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Country))
+            {
+                writer.WritePropertyName("country"u8);
+                writer.WriteStringValue(Country);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountryCodeIso3))
+            {
+                writer.WritePropertyName("countryCodeISO3"u8);
+                writer.WriteStringValue(CountryCodeIso3);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FreeformAddress))
+            {
+                writer.WritePropertyName("freeformAddress"u8);
+                writer.WriteStringValue(FreeformAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountrySubdivisionName))
+            {
+                writer.WritePropertyName("countrySubdivisionName"u8);
+                writer.WriteStringValue(CountrySubdivisionName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LocalName))
+            {
+                writer.WritePropertyName("localName"u8);
+                writer.WriteStringValue(LocalName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BoundingBoxInternal))
+            {
+                writer.WritePropertyName("boundingBox"u8);
+                writer.WriteObjectValue(BoundingBoxInternal);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MapsAddress IJsonModel<MapsAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapsAddress)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsAddress(document.RootElement, options);
+        }
+
+        internal static MapsAddress DeserializeMapsAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +196,8 @@ namespace Azure.Maps.Search.Models
             Optional<string> countrySubdivisionName = default;
             Optional<string> localName = default;
             Optional<BoundingBoxCompassNotation> boundingBox = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildingNumber"u8))
@@ -160,8 +318,44 @@ namespace Azure.Maps.Search.Models
                     boundingBox = BoundingBoxCompassNotation.DeserializeBoundingBoxCompassNotation(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, Optional.ToList(routeNumbers), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, Optional.ToList(routeNumbers), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapsAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapsAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MapsAddress IPersistableModel<MapsAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapsAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapsAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapsAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

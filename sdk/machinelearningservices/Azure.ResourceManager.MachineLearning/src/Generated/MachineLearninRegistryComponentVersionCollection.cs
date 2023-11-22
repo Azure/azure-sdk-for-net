@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentVersionRegistryComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, stage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearninRegistryComponentVersionRegistryComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, stage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearninRegistryComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearninRegistryComponentVersionRegistryComponentVersionsClientDiagnostics, Pipeline, "MachineLearninRegistryComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearninRegistryComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearninRegistryComponentVersionRegistryComponentVersionsClientDiagnostics, Pipeline, "MachineLearninRegistryComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentVersionRegistryComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, stage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearninRegistryComponentVersionRegistryComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, stage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearninRegistryComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearninRegistryComponentVersionRegistryComponentVersionsClientDiagnostics, Pipeline, "MachineLearninRegistryComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearninRegistryComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearninRegistryComponentVersionRegistryComponentVersionsClientDiagnostics, Pipeline, "MachineLearninRegistryComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

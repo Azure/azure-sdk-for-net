@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersCommonPropertiesStatusFeaturesStatus
+    internal partial class ProvisionedClustersCommonPropertiesStatusFeaturesStatus : IUtf8JsonSerializable, IJsonModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>
     {
-        internal static ProvisionedClustersCommonPropertiesStatusFeaturesStatus DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatusFeaturesStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ArcAgentStatus))
+            {
+                writer.WritePropertyName("arcAgentStatus"u8);
+                writer.WriteObjectValue(ArcAgentStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProvisionedClustersCommonPropertiesStatusFeaturesStatus IJsonModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatusFeaturesStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(document.RootElement, options);
+        }
+
+        internal static ProvisionedClustersCommonPropertiesStatusFeaturesStatus DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArcAgentStatus> arcAgentStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentStatus"u8))
@@ -30,8 +84,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     arcAgentStatus = ArcAgentStatus.DeserializeArcAgentStatus(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatusFeaturesStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProvisionedClustersCommonPropertiesStatusFeaturesStatus IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatusFeaturesStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,16 +6,98 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataPointAnomaly
+    public partial class DataPointAnomaly : IUtf8JsonSerializable, IJsonModel<DataPointAnomaly>
     {
-        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPointAnomaly>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataPointAnomaly>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPointAnomaly>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataPointAnomaly)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DataFeedId))
+            {
+                writer.WritePropertyName("dataFeedId"u8);
+                writer.WriteStringValue(DataFeedId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
+            {
+                writer.WritePropertyName("metricId"u8);
+                writer.WriteStringValue(MetricId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DetectionConfigurationId))
+            {
+                writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
+                writer.WriteStringValue(DetectionConfigurationId);
+            }
+            writer.WritePropertyName("timestamp"u8);
+            writer.WriteStringValue(Timestamp, "O");
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("modifiedTime"u8);
+                writer.WriteStringValue(LastModified.Value, "O");
+            }
+            writer.WritePropertyName("dimension"u8);
+            writer.WriteStartObject();
+            foreach (var item in Dimension)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("property"u8);
+            writer.WriteObjectValue(Property);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataPointAnomaly IJsonModel<DataPointAnomaly>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPointAnomaly>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataPointAnomaly)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataPointAnomaly(document.RootElement, options);
+        }
+
+        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +110,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<DateTimeOffset> modifiedTime = default;
             IReadOnlyDictionary<string, string> dimension = default;
             AnomalyProperty property = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("dataFeedId"u8))
@@ -83,8 +167,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     property = AnomalyProperty.DeserializeAnomalyProperty(property0.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                }
             }
-            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataPointAnomaly>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPointAnomaly>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataPointAnomaly)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataPointAnomaly IPersistableModel<DataPointAnomaly>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPointAnomaly>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataPointAnomaly(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataPointAnomaly)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataPointAnomaly>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

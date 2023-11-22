@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The lab user list management profile. </summary>
     public partial class LabRosterProfile
     {
-        /// <summary> Initializes a new instance of LabRosterProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabRosterProfile"/>. </summary>
         public LabRosterProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabRosterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabRosterProfile"/>. </summary>
         /// <param name="activeDirectoryGroupId"> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </param>
         /// <param name="ltiContextId"> The unique context identifier for the lab in the lms. </param>
         /// <param name="lmsInstance"> The base URI identifying the lms instance. </param>
         /// <param name="ltiClientId"> The unique id of the azure lab services tool in the lms. </param>
         /// <param name="ltiRosterEndpoint"> The uri of the names and roles service endpoint on the lms for the class attached to this lab. </param>
-        internal LabRosterProfile(string activeDirectoryGroupId, string ltiContextId, Uri lmsInstance, string ltiClientId, Uri ltiRosterEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabRosterProfile(string activeDirectoryGroupId, string ltiContextId, Uri lmsInstance, string ltiClientId, Uri ltiRosterEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveDirectoryGroupId = activeDirectoryGroupId;
             LtiContextId = ltiContextId;
             LmsInstance = lmsInstance;
             LtiClientId = ltiClientId;
             LtiRosterEndpoint = ltiRosterEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </summary>

@@ -5,28 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ChangePointFeedbackValue : IUtf8JsonSerializable
+    internal partial class ChangePointFeedbackValue : IUtf8JsonSerializable, IJsonModel<ChangePointFeedbackValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangePointFeedbackValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChangePointFeedbackValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangePointFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ChangePointFeedbackValue)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("changePointValue"u8);
             writer.WriteStringValue(ChangePointValue.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ChangePointFeedbackValue DeserializeChangePointFeedbackValue(JsonElement element)
+        ChangePointFeedbackValue IJsonModel<ChangePointFeedbackValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangePointFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ChangePointFeedbackValue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChangePointFeedbackValue(document.RootElement, options);
+        }
+
+        internal static ChangePointFeedbackValue DeserializeChangePointFeedbackValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ChangePointValue changePointValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changePointValue"u8))
@@ -34,8 +77,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     changePointValue = new ChangePointValue(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChangePointFeedbackValue(changePointValue);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChangePointFeedbackValue(changePointValue, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ChangePointFeedbackValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangePointFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ChangePointFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ChangePointFeedbackValue IPersistableModel<ChangePointFeedbackValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangePointFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeChangePointFeedbackValue(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ChangePointFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChangePointFeedbackValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

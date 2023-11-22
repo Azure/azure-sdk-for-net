@@ -5,18 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeverityFilterCondition. </summary>
     internal partial class SeverityFilterCondition
     {
-        /// <summary> Initializes a new instance of SeverityFilterCondition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/>. </summary>
         /// <param name="min"> min severity. </param>
         /// <param name="max"> max severity. </param>
         public SeverityFilterCondition(AnomalySeverity min, AnomalySeverity max)
         {
             Min = min;
             Max = max;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/>. </summary>
+        /// <param name="min"> min severity. </param>
+        /// <param name="max"> max severity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SeverityFilterCondition(AnomalySeverity min, AnomalySeverity max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Min = min;
+            Max = max;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/> for deserialization. </summary>
+        internal SeverityFilterCondition()
+        {
         }
 
         /// <summary> min severity. </summary>

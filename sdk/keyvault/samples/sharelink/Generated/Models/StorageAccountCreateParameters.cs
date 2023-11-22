@@ -14,7 +14,39 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account create parameters. </summary>
     internal partial class StorageAccountCreateParameters
     {
-        /// <summary> Initializes a new instance of StorageAccountCreateParameters. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCreateParameters"/>. </summary>
         /// <param name="resourceId"> Storage account resource id. </param>
         /// <param name="activeKeyName"> Current active storage account key name. </param>
         /// <param name="autoRegenerateKey"> whether keyvault should manage the storage account for the user. </param>
@@ -28,6 +60,30 @@ namespace Azure.Security.KeyVault.Storage.Models
             ActiveKeyName = activeKeyName;
             AutoRegenerateKey = autoRegenerateKey;
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCreateParameters"/>. </summary>
+        /// <param name="resourceId"> Storage account resource id. </param>
+        /// <param name="activeKeyName"> Current active storage account key name. </param>
+        /// <param name="autoRegenerateKey"> whether keyvault should manage the storage account for the user. </param>
+        /// <param name="regenerationPeriod"> The key regeneration time duration specified in ISO-8601 format. </param>
+        /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountCreateParameters(string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            ActiveKeyName = activeKeyName;
+            AutoRegenerateKey = autoRegenerateKey;
+            RegenerationPeriod = regenerationPeriod;
+            StorageAccountAttributes = storageAccountAttributes;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCreateParameters"/> for deserialization. </summary>
+        internal StorageAccountCreateParameters()
+        {
         }
 
         /// <summary> Storage account resource id. </summary>

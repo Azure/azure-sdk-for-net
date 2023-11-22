@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelSettingsObjectDetection : IUtf8JsonSerializable
+    public partial class ImageModelSettingsObjectDetection : IUtf8JsonSerializable, IJsonModel<ImageModelSettingsObjectDetection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelSettingsObjectDetection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageModelSettingsObjectDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BoxDetectionsPerImage))
             {
@@ -537,11 +549,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element)
+        ImageModelSettingsObjectDetection IJsonModel<ImageModelSettingsObjectDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageModelSettingsObjectDetection(document.RootElement, options);
+        }
+
+        internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -593,6 +634,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<float?> warmupCosineLRCycles = default;
             Optional<int?> warmupCosineLRWarmupEpochs = default;
             Optional<float?> weightDecay = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boxDetectionsPerImage"u8))
@@ -1059,8 +1102,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageModelSettingsObjectDetection(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), Optional.ToNullable(boxDetectionsPerImage), Optional.ToNullable(boxScoreThreshold), Optional.ToNullable(imageSize), Optional.ToNullable(logTrainingMetrics), Optional.ToNullable(logValidationLoss), Optional.ToNullable(maxSize), Optional.ToNullable(minSize), Optional.ToNullable(modelSize), Optional.ToNullable(multiScale), Optional.ToNullable(nmsIouThreshold), tileGridSize.Value, Optional.ToNullable(tileOverlapRatio), Optional.ToNullable(tilePredictionsNmsThreshold), Optional.ToNullable(validationIouThreshold), Optional.ToNullable(validationMetricType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageModelSettingsObjectDetection(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), serializedAdditionalRawData, Optional.ToNullable(boxDetectionsPerImage), Optional.ToNullable(boxScoreThreshold), Optional.ToNullable(imageSize), Optional.ToNullable(logTrainingMetrics), Optional.ToNullable(logValidationLoss), Optional.ToNullable(maxSize), Optional.ToNullable(minSize), Optional.ToNullable(modelSize), Optional.ToNullable(multiScale), Optional.ToNullable(nmsIouThreshold), tileGridSize.Value, Optional.ToNullable(tileOverlapRatio), Optional.ToNullable(tilePredictionsNmsThreshold), Optional.ToNullable(validationIouThreshold), Optional.ToNullable(validationMetricType));
         }
+
+        BinaryData IPersistableModel<ImageModelSettingsObjectDetection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ImageModelSettingsObjectDetection IPersistableModel<ImageModelSettingsObjectDetection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImageModelSettingsObjectDetection(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImageModelSettingsObjectDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

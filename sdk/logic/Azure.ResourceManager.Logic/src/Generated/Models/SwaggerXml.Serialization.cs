@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerXml : IUtf8JsonSerializable
+    public partial class SwaggerXml : IUtf8JsonSerializable, IJsonModel<SwaggerXml>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerXml>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SwaggerXml>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SwaggerXml)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -65,11 +75,40 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerXml DeserializeSwaggerXml(JsonElement element)
+        SwaggerXml IJsonModel<SwaggerXml>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SwaggerXml)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerXml(document.RootElement, options);
+        }
+
+        internal static SwaggerXml DeserializeSwaggerXml(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +119,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<bool> attribute = default;
             Optional<bool> wrapped = default;
             Optional<IDictionary<string, BinaryData>> extensions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -136,8 +177,44 @@ namespace Azure.ResourceManager.Logic.Models
                     extensions = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), Optional.ToDictionary(extensions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), Optional.ToDictionary(extensions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SwaggerXml>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SwaggerXml)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SwaggerXml IPersistableModel<SwaggerXml>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSwaggerXml(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SwaggerXml)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SwaggerXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

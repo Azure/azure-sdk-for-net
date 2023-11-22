@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
