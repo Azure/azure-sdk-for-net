@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-12-30)
 
 ### Features Added
 
@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.0.0-beta.1 (2023-12-30)
+## 1.0.0-beta.1 (2023-10-30)
 
 ### General New Features
 
