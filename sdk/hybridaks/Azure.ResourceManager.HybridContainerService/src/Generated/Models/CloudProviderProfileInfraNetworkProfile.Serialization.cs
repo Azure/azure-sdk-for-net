@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VnetSubnetIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IList<string>> vnetSubnetIds = default;
+            Optional<IList<ResourceIdentifier>> vnetSubnetIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetSubnetIds"u8))
@@ -44,10 +49,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     vnetSubnetIds = array;
                     continue;

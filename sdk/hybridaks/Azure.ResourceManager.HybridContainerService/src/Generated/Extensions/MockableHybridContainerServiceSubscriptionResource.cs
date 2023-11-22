@@ -18,12 +18,8 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHybridContainerServiceSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _provisionedClusterClientDiagnostics;
-        private ProvisionedClustersRestOperations _provisionedClusterRestClient;
-        private ClientDiagnostics _storageSpacestorageSpacesClientDiagnostics;
-        private StorageSpacesRestOperations _storageSpacestorageSpacesRestClient;
-        private ClientDiagnostics _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics;
-        private VirtualNetworksRestOperations _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient;
+        private ClientDiagnostics _virtualNetworkvirtualNetworksClientDiagnostics;
+        private VirtualNetworksRestOperations _virtualNetworkvirtualNetworksRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceSubscriptionResource"/> class for mocking. </summary>
         protected MockableHybridContainerServiceSubscriptionResource()
@@ -37,12 +33,8 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         {
         }
 
-        private ClientDiagnostics ProvisionedClusterClientDiagnostics => _provisionedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ProvisionedClusterResource.ResourceType.Namespace, Diagnostics);
-        private ProvisionedClustersRestOperations ProvisionedClusterRestClient => _provisionedClusterRestClient ??= new ProvisionedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProvisionedClusterResource.ResourceType));
-        private ClientDiagnostics StorageSpacestorageSpacesClientDiagnostics => _storageSpacestorageSpacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", StorageSpaceResource.ResourceType.Namespace, Diagnostics);
-        private StorageSpacesRestOperations StorageSpacestorageSpacesRestClient => _storageSpacestorageSpacesRestClient ??= new StorageSpacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageSpaceResource.ResourceType));
-        private ClientDiagnostics HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics => _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", HybridContainerServiceVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworksRestOperations HybridContainerServiceVirtualNetworkvirtualNetworksRestClient => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridContainerServiceVirtualNetworkResource.ResourceType));
+        private ClientDiagnostics VirtualNetworkvirtualNetworksClientDiagnostics => _virtualNetworkvirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
+        private VirtualNetworksRestOperations VirtualNetworkvirtualNetworksRestClient => _virtualNetworkvirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,91 +43,25 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster in a subscription
+        /// Lists the Hybrid AKS virtual networks by subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// <description>virtualNetworks_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProvisionedClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProvisionedClusterResource> GetProvisionedClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProvisionedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProvisionedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), ProvisionedClusterClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetProvisionedClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProvisionedClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProvisionedClusterResource> GetProvisionedClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProvisionedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProvisionedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), ProvisionedClusterClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetProvisionedClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List the Hybrid AKS storage object by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSpaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageSpaceResource> GetStorageSpacesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), StorageSpacestorageSpacesClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetStorageSpaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List the Hybrid AKS storage object by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSpaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageSpaceResource> GetStorageSpaces(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), StorageSpacestorageSpacesClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetStorageSpaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,34 +78,12 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </summary>
+    /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
     public readonly partial struct OSType : IEquatable<OSType>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LinuxValue = "Linux";
         private const string WindowsValue = "Windows";
+        private const string LinuxValue = "Linux";
 
-        /// <summary> Linux. </summary>
-        public static OSType Linux { get; } = new OSType(LinuxValue);
         /// <summary> Windows. </summary>
         public static OSType Windows { get; } = new OSType(WindowsValue);
+        /// <summary> Linux. </summary>
+        public static OSType Linux { get; } = new OSType(LinuxValue);
         /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>

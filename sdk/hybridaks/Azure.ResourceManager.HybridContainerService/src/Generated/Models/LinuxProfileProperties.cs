@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> LinuxProfile - Profile for Linux VMs in the container service cluster. </summary>
-    public partial class LinuxProfileProperties
+    internal partial class LinuxProfileProperties
     {
         /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
         public LinuxProfileProperties()
@@ -18,16 +18,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
-        /// <param name="adminUsername"> AdminUsername - The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> SSH - SSH configuration for Linux-based VMs running on Azure. </param>
-        internal LinuxProfileProperties(string adminUsername, LinuxProfilePropertiesSsh ssh)
+        internal LinuxProfileProperties(LinuxProfilePropertiesSsh ssh)
         {
-            AdminUsername = adminUsername;
             Ssh = ssh;
         }
 
-        /// <summary> AdminUsername - The administrator username to use for Linux VMs. </summary>
-        public string AdminUsername { get; set; }
         /// <summary> SSH - SSH configuration for Linux-based VMs running on Azure. </summary>
         internal LinuxProfilePropertiesSsh Ssh { get; set; }
         /// <summary> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </summary>

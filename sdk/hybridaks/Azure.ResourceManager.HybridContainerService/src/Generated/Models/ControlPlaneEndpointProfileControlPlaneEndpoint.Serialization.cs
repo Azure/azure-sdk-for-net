@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteStringValue(Port);
+                writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<string> hostIP = default;
-            Optional<string> port = default;
+            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostIP"u8))
@@ -45,11 +45,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (property.NameEquals("port"u8))
                 {
-                    port = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    port = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ControlPlaneEndpointProfileControlPlaneEndpoint(hostIP.Value, port.Value);
+            return new ControlPlaneEndpointProfileControlPlaneEndpoint(hostIP.Value, Optional.ToNullable(port));
         }
     }
 }

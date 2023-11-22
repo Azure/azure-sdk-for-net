@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ControlPlaneEndpointProfileControlPlaneEndpoint. </summary>
         /// <param name="hostIP"> Host IP address for API server. </param>
         /// <param name="port"> Port for the API server. </param>
-        internal ControlPlaneEndpointProfileControlPlaneEndpoint(string hostIP, string port)
+        internal ControlPlaneEndpointProfileControlPlaneEndpoint(string hostIP, int? port)
         {
             HostIP = hostIP;
             Port = port;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Host IP address for API server. </summary>
         public string HostIP { get; set; }
         /// <summary> Port for the API server. </summary>
-        public string Port { get; set; }
+        public int? Port { get; set; }
     }
 }

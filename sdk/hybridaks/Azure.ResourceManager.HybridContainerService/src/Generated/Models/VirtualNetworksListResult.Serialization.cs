@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceVirtualNetworkData>> value = default;
+            Optional<IReadOnlyList<VirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    List<HybridContainerServiceVirtualNetworkData> array = new List<HybridContainerServiceVirtualNetworkData>();
+                    List<VirtualNetworkData> array = new List<VirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(item));
+                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item));
                     }
                     value = array;
                     continue;

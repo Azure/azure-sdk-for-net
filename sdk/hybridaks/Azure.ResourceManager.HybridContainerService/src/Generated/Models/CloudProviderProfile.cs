@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> CloudProviderProfile - The underlying cloud infra provider properties. </summary>
-    public partial class CloudProviderProfile
+    internal partial class CloudProviderProfile
     {
         /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
         public CloudProviderProfile()
@@ -19,36 +20,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
         /// <param name="infraNetworkProfile"> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </param>
-        /// <param name="infraStorageProfile"> InfraStorageProfile - List of infra storage profiles for the provisioned cluster. </param>
-        internal CloudProviderProfile(CloudProviderProfileInfraNetworkProfile infraNetworkProfile, CloudProviderProfileInfraStorageProfile infraStorageProfile)
+        internal CloudProviderProfile(CloudProviderProfileInfraNetworkProfile infraNetworkProfile)
         {
             InfraNetworkProfile = infraNetworkProfile;
-            InfraStorageProfile = infraStorageProfile;
         }
 
         /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>
         internal CloudProviderProfileInfraNetworkProfile InfraNetworkProfile { get; set; }
-        /// <summary> Array of references to azure resource corresponding to the new HybridAKSNetwork object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}. </summary>
-        public IList<string> InfraNetworkVnetSubnetIds
+        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        public IList<ResourceIdentifier> InfraNetworkVnetSubnetIds
         {
             get
             {
                 if (InfraNetworkProfile is null)
                     InfraNetworkProfile = new CloudProviderProfileInfraNetworkProfile();
                 return InfraNetworkProfile.VnetSubnetIds;
-            }
-        }
-
-        /// <summary> InfraStorageProfile - List of infra storage profiles for the provisioned cluster. </summary>
-        internal CloudProviderProfileInfraStorageProfile InfraStorageProfile { get; set; }
-        /// <summary> Reference to azure resource corresponding to the new HybridAKSStorage object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpaceName}. </summary>
-        public IList<string> StorageSpaceIds
-        {
-            get
-            {
-                if (InfraStorageProfile is null)
-                    InfraStorageProfile = new CloudProviderProfileInfraStorageProfile();
-                return InfraStorageProfile.StorageSpaceIds;
             }
         }
     }

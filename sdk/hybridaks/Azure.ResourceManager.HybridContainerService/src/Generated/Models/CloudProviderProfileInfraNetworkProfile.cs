@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>
         public CloudProviderProfileInfraNetworkProfile()
         {
-            VnetSubnetIds = new ChangeTrackingList<string>();
+            VnetSubnetIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>
-        /// <param name="vnetSubnetIds"> Array of references to azure resource corresponding to the new HybridAKSNetwork object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}. </param>
-        internal CloudProviderProfileInfraNetworkProfile(IList<string> vnetSubnetIds)
+        /// <param name="vnetSubnetIds"> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
+        internal CloudProviderProfileInfraNetworkProfile(IList<ResourceIdentifier> vnetSubnetIds)
         {
             VnetSubnetIds = vnetSubnetIds;
         }
 
-        /// <summary> Array of references to azure resource corresponding to the new HybridAKSNetwork object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}. </summary>
-        public IList<string> VnetSubnetIds { get; }
+        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        public IList<ResourceIdentifier> VnetSubnetIds { get; }
     }
 }

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridContainerService
 namespace: Azure.ResourceManager.HybridContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6aa2a459f126e277f3c77/specification/hybridaks/resource-manager/readme.md
-# tag: package-preview-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/21467ecae50d3ec069557cc6841d91fd805cc3b3/specification/hybridaks/resource-manager/readme.md
+# tag: package-preview-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

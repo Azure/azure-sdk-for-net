@@ -5,36 +5,36 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> HybridAKSNodePoolStatus defines the observed state of HybridAKSNodePool. </summary>
+    /// <summary> Defines the observed state of the agent pool. </summary>
     public partial class AgentPoolProvisioningStatusStatus
     {
         /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
         public AgentPoolProvisioningStatusStatus()
         {
+            ReadyReplicas = new ChangeTrackingList<AgentPoolUpdateProfile>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
-        /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
-        /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
-        /// <param name="readyReplicas"> Total number of ready machines targeted by this deployment. </param>
-        /// <param name="replicas"> Total number of non-terminated machines targeted by this deployment. </param>
-        internal AgentPoolProvisioningStatusStatus(string errorMessage, AgentPoolProvisioningStatusStatusProvisioningStatus provisioningStatus, int? readyReplicas, int? replicas)
+        /// <param name="errorMessage"> ErrorMessage - Error messages during creation of agent pool. </param>
+        /// <param name="operationStatus"> Contains Provisioning errors. </param>
+        /// <param name="readyReplicas"></param>
+        internal AgentPoolProvisioningStatusStatus(string errorMessage, AgentPoolProvisioningStatusOperationStatus operationStatus, IList<AgentPoolUpdateProfile> readyReplicas)
         {
             ErrorMessage = errorMessage;
-            ProvisioningStatus = provisioningStatus;
+            OperationStatus = operationStatus;
             ReadyReplicas = readyReplicas;
-            Replicas = replicas;
         }
 
-        /// <summary> ErrorMessage - Error messages during creation of cluster. </summary>
+        /// <summary> ErrorMessage - Error messages during creation of agent pool. </summary>
         public string ErrorMessage { get; set; }
         /// <summary> Contains Provisioning errors. </summary>
-        public AgentPoolProvisioningStatusStatusProvisioningStatus ProvisioningStatus { get; set; }
-        /// <summary> Total number of ready machines targeted by this deployment. </summary>
-        public int? ReadyReplicas { get; set; }
-        /// <summary> Total number of non-terminated machines targeted by this deployment. </summary>
-        public int? Replicas { get; set; }
+        public AgentPoolProvisioningStatusOperationStatus OperationStatus { get; set; }
+        /// <summary> Gets the ready replicas. </summary>
+        public IList<AgentPoolUpdateProfile> ReadyReplicas { get; }
     }
 }

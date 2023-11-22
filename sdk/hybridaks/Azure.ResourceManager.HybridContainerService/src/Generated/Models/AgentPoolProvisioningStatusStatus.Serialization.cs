@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,20 +21,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (Optional.IsDefined(OperationStatus))
             {
-                writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WritePropertyName("operationStatus"u8);
+                writer.WriteObjectValue(OperationStatus);
             }
-            if (Optional.IsDefined(ReadyReplicas))
+            if (Optional.IsCollectionDefined(ReadyReplicas))
             {
                 writer.WritePropertyName("readyReplicas"u8);
-                writer.WriteNumberValue(ReadyReplicas.Value);
-            }
-            if (Optional.IsDefined(Replicas))
-            {
-                writer.WritePropertyName("replicas"u8);
-                writer.WriteNumberValue(Replicas.Value);
+                writer.WriteStartArray();
+                foreach (var item in ReadyReplicas)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -45,9 +46,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<string> errorMessage = default;
-            Optional<AgentPoolProvisioningStatusStatusProvisioningStatus> provisioningStatus = default;
-            Optional<int> readyReplicas = default;
-            Optional<int> replicas = default;
+            Optional<AgentPoolProvisioningStatusOperationStatus> operationStatus = default;
+            Optional<IList<AgentPoolUpdateProfile>> readyReplicas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"u8))
+                if (property.NameEquals("operationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningStatus = AgentPoolProvisioningStatusStatusProvisioningStatus.DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(property.Value);
+                    operationStatus = AgentPoolProvisioningStatusOperationStatus.DeserializeAgentPoolProvisioningStatusOperationStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readyReplicas"u8))
@@ -70,20 +70,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    readyReplicas = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("replicas"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
                     }
-                    replicas = property.Value.GetInt32();
+                    readyReplicas = array;
                     continue;
                 }
             }
-            return new AgentPoolProvisioningStatusStatus(errorMessage.Value, provisioningStatus.Value, Optional.ToNullable(readyReplicas), Optional.ToNullable(replicas));
+            return new AgentPoolProvisioningStatusStatus(errorMessage.Value, operationStatus.Value, Optional.ToList(readyReplicas));
         }
     }
 }
