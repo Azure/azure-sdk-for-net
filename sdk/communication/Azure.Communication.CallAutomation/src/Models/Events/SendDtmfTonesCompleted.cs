@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -10,9 +9,19 @@ namespace Azure.Communication.CallAutomation
     /// The SendDtmfTonesCompleted event.
     /// </summary>
 
-    [CodeGenModel("SendDtmfTonesCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class SendDtmfTonesCompleted : CallAutomationEventBase
+    public class SendDtmfTonesCompleted : CallAutomationEventBase
     {
+        internal SendDtmfTonesCompleted() { }
+
+        internal SendDtmfTonesCompleted(SendDtmfTonesCompletedInternal internalEvent)
+        {
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+        }
+
         /// <summary>
         /// Deserialize <see cref="SendDtmfTonesCompleted"/> event.
         /// </summary>
@@ -23,7 +32,8 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeSendDtmfTonesCompleted(element);
+            var internalEvent = SendDtmfTonesCompletedInternal.DeserializeSendDtmfTonesCompletedInternal(element);
+            return new SendDtmfTonesCompleted(internalEvent);
         }
     }
 }

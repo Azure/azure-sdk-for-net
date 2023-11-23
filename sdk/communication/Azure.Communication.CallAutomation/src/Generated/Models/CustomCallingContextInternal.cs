@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CustomContext. </summary>
-    internal partial class CustomContextInternal
+    /// <summary> The CustomCallingContext. </summary>
+    internal partial class CustomCallingContextInternal
     {
-        /// <summary> Initializes a new instance of CustomContextInternal. </summary>
-        public CustomContextInternal()
+        /// <summary> Initializes a new instance of CustomCallingContextInternal. </summary>
+        public CustomCallingContextInternal()
         {
             VoipHeaders = new ChangeTrackingDictionary<string, string>();
             SipHeaders = new ChangeTrackingDictionary<string, string>();

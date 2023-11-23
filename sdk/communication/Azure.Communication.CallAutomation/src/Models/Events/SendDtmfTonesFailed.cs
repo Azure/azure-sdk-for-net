@@ -2,17 +2,25 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The SendDtmfFailed event.
     /// </summary>
-
-    [CodeGenModel("SendDtmfTonesFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class SendDtmfTonesFailed : CallAutomationEventBase
+    public class SendDtmfTonesFailed : CallAutomationEventBase
     {
+        internal SendDtmfTonesFailed() { }
+
+        internal SendDtmfTonesFailed(SendDtmfTonesFailedInternal internalEvent)
+        {
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+        }
+
         /// <summary>
         /// Deserialize <see cref="SendDtmfTonesFailed"/> event.
         /// </summary>
@@ -23,7 +31,8 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeSendDtmfTonesFailed(element);
+            var internalEvent = SendDtmfTonesFailedInternal.DeserializeSendDtmfTonesFailedInternal(element);
+            return new SendDtmfTonesFailed(internalEvent);
         }
     }
 }

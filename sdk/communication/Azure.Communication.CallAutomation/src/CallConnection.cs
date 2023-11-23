@@ -276,20 +276,16 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
-
-            request.CustomContext = new CustomContextInternal(
-                options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
-                options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
-
-            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
-
-            if (options.Transferee != null)
+            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
             {
-                request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
-            }
+                CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()),
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+            };
 
-            request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             return request;
         }
 
@@ -384,19 +380,18 @@ namespace Azure.Communication.CallAutomation
 
             AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
+                CustomCallingContext = new CustomCallingContextInternal(
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                    options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()
+                    ),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
                 SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
-                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds,
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
             };
-
-            request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
-            request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
-
-            request.CustomContext = new CustomContextInternal(
-                options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
-                options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
 
             return request;
         }

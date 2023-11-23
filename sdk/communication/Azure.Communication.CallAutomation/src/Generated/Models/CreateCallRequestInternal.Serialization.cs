@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionConfiguration"u8);
                 writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(CognitiveServicesEndpoint))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("cognitiveServicesEndpoint"u8);
-                writer.WriteStringValue(CognitiveServicesEndpoint);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

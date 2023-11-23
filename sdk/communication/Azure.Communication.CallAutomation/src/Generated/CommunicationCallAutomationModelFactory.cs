@@ -104,13 +104,18 @@ namespace Azure.Communication.CallAutomation
             return new UserConsent(recording);
         }
 
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
-        /// <returns> A new <see cref="CallAutomation.ToneInfo"/> instance for mocking. </returns>
-        public static ToneInfo ToneInfo(int sequenceId = default, DtmfTone tone = default)
+        /// <param name="operationContext"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(ResultInformation resultInformation = null, int? sequenceId = null, DtmfTone? tone = null, string operationContext = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new ToneInfo(sequenceId, tone);
+            return new ContinuousDtmfRecognitionToneReceived(resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of TranscriptionStarted. </summary>

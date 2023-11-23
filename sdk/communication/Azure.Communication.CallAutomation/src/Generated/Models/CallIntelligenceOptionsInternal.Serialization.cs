@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class UpdateTranscriptionDataRequestInternal : IUtf8JsonSerializable
+    internal partial class CallIntelligenceOptionsInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("locale"u8);
-            writer.WriteStringValue(Locale);
+            if (Optional.IsDefined(CognitiveServicesEndpoint))
+            {
+                writer.WritePropertyName("cognitiveServicesEndpoint"u8);
+                writer.WriteStringValue(CognitiveServicesEndpoint);
+            }
             writer.WriteEndObject();
         }
     }

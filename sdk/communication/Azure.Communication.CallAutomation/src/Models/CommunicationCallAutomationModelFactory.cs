@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("CallTransferFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("ContinuousDtmfRecognitionStopped", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("ContinuousDtmfRecognitionToneFailed", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
-    [CodeGenSuppress("ContinuousDtmfRecognitionToneReceived", typeof(ResultInformation), typeof(ToneInfo), typeof(string), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ContinuousDtmfRecognitionToneReceived", typeof(ResultInformation), typeof(DtmfTone?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int))]
     [CodeGenSuppress("PlayCompleted", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("PlayFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("RecognizeFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
@@ -352,15 +352,16 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="toneInfo"> Define the information for a tone. </param>
+        /// <param name="dtmfTone"> Define the information for a tone. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="sequenceId"></param>
         /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(DtmfTone? dtmfTone = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null, int sequenceId = default)
         {
-            return new ContinuousDtmfRecognitionToneReceived(resultInformation, toneInfo, operationContext, callConnectionId, serverCallId, correlationId);
+            return new ContinuousDtmfRecognitionToneReceived(resultInformation, sequenceId, dtmfTone, operationContext, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
@@ -454,7 +455,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesCompleted"/> instance for mocking. </returns>
         public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new SendDtmfTonesCompleted(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var internalObject = new SendDtmfTonesCompletedInternal(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+
+            return new SendDtmfTonesCompleted(internalObject);
         }
 
         /// <summary> Initializes a new instance of SendDtmfTonesFailed. </summary>
@@ -466,7 +469,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesFailed"/> instance for mocking. </returns>
         public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new SendDtmfTonesFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var internalObject = new SendDtmfTonesFailedInternal(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+
+            return new SendDtmfTonesFailed(internalObject);
         }
     }
 }

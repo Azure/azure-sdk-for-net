@@ -17,10 +17,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             if (Optional.IsDefined(OperationContext))
             {

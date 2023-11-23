@@ -26,8 +26,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
         /// <summary> Transferee is the participant who is transferred away. </summary>

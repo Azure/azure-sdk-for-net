@@ -48,9 +48,9 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
-        /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
-        public string CognitiveServicesEndpoint { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
+        /// <summary> AI options for the call. </summary>
+        public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
     }
 }

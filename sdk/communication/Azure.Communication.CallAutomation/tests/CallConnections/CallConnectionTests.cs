@@ -546,19 +546,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);
         }
 
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
-        {
-            var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
-            callInvite.CustomContext.Add(new VoipHeader("key1", "value1"));
-            return new[]
-            {
-                new object?[]
-                {
-                    callInvite
-                },
-            };
-        }
-
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
