@@ -130,7 +130,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri.AbsoluteUri,
+                    operationCallbackUri?.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(dialogId);
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri.AbsoluteUri,
+                    operationCallbackUri?.AbsoluteUri,
                     cancellationToken);
 
                 var result = new DialogResult(dialogId);

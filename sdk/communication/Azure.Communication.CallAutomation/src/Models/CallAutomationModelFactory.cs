@@ -13,13 +13,14 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("CallTransferFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("ContinuousDtmfRecognitionStopped", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("ContinuousDtmfRecognitionToneFailed", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
-    [CodeGenSuppress("ContinuousDtmfRecognitionToneReceived", typeof(ResultInformation), typeof(DtmfTone?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int))]
+    [CodeGenSuppress("ContinuousDtmfRecognitionToneReceived", typeof(ResultInformation), typeof(int?), typeof(DtmfTone?), typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("PlayCompleted", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("PlayFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("RecognizeFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingType?), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
@@ -352,16 +353,16 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="dtmfTone"> Define the information for a tone. </param>
+        /// <param name="tone"> Define the information for a tone. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="sequenceId"></param>
         /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(DtmfTone? dtmfTone = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null, int sequenceId = default)
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(int? sequenceId = null, DtmfTone? tone = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
         {
-            return new ContinuousDtmfRecognitionToneReceived(resultInformation, sequenceId, dtmfTone, operationContext, callConnectionId, serverCallId, correlationId);
+            return new ContinuousDtmfRecognitionToneReceived(resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
