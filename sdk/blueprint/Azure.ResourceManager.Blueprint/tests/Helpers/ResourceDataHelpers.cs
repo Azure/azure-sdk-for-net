@@ -108,19 +108,23 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         }
         #endregion
 
-        #region
+        #region Assignment
         // Assignment Data
-        public static AssignmentData GetAssignmentData()
+        public static AssignmentData GetAssignmentData(string blueprintId)
         {
             IDictionary<string, ParameterValue> parameter = new Dictionary<string, ParameterValue>()
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("Standard_LRS")
+                    Value = BinaryData.FromString("\"Standard_LRS\"")
                 },
                 ["costCenter"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("Contoso/Online/Shopping/Production")
+                    Value = BinaryData.FromString("\"Contoso/Online/Shopping/Production\"")
+                },
+                ["owners"] = new ParameterValue()
+                {
+                    Value = BinaryData.FromString("\"johnDoe@contoso.com\"")
                 }
             };
             IDictionary<string, ResourceGroupValue> resourceGroup = new Dictionary<string, ResourceGroupValue>()
@@ -133,9 +137,18 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
             };
             AssignmentData data = new AssignmentData(new Models.ManagedServiceIdentity(Models.ManagedServiceIdentityType.SystemAssigned), parameter, resourceGroup, AzureLocation.EastUS)
             {
-                Description = "Sdk test assignment"
+                Description = "sdk test assignment",
+                BlueprintId = blueprintId
             };
             return data;
+        }
+
+        public static void AssertAssignmentData(AssignmentData data1, AssignmentData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.Identity, data2.Identity);
+            Assert.AreEqual(data1.Location, data2.Location);
         }
         #endregion
 
@@ -184,10 +197,12 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         #endregion
 
         #region publishedBlueprint
-        public static PublishedBlueprintData GetPublishedBlueprintData()
+        public static PublishedBlueprintData GetPublishedBlueprintData(string printName)
         {
             return new PublishedBlueprintData()
             {
+                Description = "published for Assignment",
+                BlueprintName = printName,
             };
         }
         public static void AssertPublishedBlueprintData(PublishedBlueprintData data1, PublishedBlueprintData data2)
