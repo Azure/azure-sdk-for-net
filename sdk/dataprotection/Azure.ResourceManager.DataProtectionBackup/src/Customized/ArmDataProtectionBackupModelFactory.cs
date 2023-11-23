@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 featureSettings.CrossSubscriptionRestoreState = crossSubscriptionRestoreState;
             }
 
-            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, null);
+            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, null, null);
         }
 
         /// <summary>
