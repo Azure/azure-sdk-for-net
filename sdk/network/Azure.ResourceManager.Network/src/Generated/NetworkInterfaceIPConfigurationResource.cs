@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkInterfaceIPConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkInterfaceIPConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource" /> using the GetNetworkInterfaceIPConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkInterfaceIPConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkInterfaceIPConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource"/> using the GetNetworkInterfaceIPConfiguration method.
     /// </summary>
     public partial class NetworkInterfaceIPConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceIPConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkInterfaceIPConfigurationResource(ArmClient client, NetworkInterfaceIPConfigurationData data) : this(client, data.Id)

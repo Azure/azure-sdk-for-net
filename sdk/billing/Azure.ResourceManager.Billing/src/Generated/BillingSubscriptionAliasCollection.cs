@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingSubscriptionAliasResource" /> and their operations.
-    /// Each <see cref="BillingSubscriptionAliasResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingSubscriptionAliasCollection" /> instance call the GetBillingSubscriptionAliases method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingSubscriptionAliasResource"/> and their operations.
+    /// Each <see cref="BillingSubscriptionAliasResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingSubscriptionAliasCollection"/> instance call the GetBillingSubscriptionAliases method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingSubscriptionAliasCollection : ArmCollection, IEnumerable<BillingSubscriptionAliasResource>, IAsyncEnumerable<BillingSubscriptionAliasResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingSubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingSubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);

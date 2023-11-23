@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> and their operations.
-    /// Each <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
-    /// To get a <see cref="CosmosDBForPostgreSqlNodeConfigurationCollection" /> instance call the GetCosmosDBForPostgreSqlNodeConfigurations method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
+    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> and their operations.
+    /// Each <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
+    /// To get a <see cref="CosmosDBForPostgreSqlNodeConfigurationCollection"/> instance call the GetCosmosDBForPostgreSqlNodeConfigurations method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
     /// </summary>
     public partial class CosmosDBForPostgreSqlNodeConfigurationCollection : ArmCollection
     {

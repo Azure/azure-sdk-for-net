@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VMwareVmTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VMwareVmTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVMwareVmTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVMwareVmTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMwareVmTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVMwareVmTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVMwareVmTemplate method.
     /// </summary>
     public partial class VMwareVmTemplateResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VMwareVmTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareVmTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VMwareVmTemplateResource(ArmClient client, VMwareVmTemplateData data) : this(client, data.Id)

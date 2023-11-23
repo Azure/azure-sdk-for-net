@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing an Extension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource" /> using the GetExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource"/> using the GetExtension method.
     /// </summary>
     public partial class ExtensionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtensionResource(ArmClient client, ExtensionData data) : this(client, data.Id)

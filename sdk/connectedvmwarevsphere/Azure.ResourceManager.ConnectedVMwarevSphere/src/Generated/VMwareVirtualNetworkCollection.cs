@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VMwareVirtualNetworkResource" /> and their operations.
-    /// Each <see cref="VMwareVirtualNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="VMwareVirtualNetworkCollection" /> instance call the GetVMwareVirtualNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="VMwareVirtualNetworkResource"/> and their operations.
+    /// Each <see cref="VMwareVirtualNetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="VMwareVirtualNetworkCollection"/> instance call the GetVMwareVirtualNetworks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class VMwareVirtualNetworkCollection : ArmCollection, IEnumerable<VMwareVirtualNetworkResource>, IAsyncEnumerable<VMwareVirtualNetworkResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareVirtualNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareVirtualNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

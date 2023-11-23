@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a DeviceUpdateAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceUpdateAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceUpdateAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDeviceUpdateAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceUpdateAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceUpdateAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDeviceUpdateAccount method.
     /// </summary>
     public partial class DeviceUpdateAccountResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceUpdateAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceUpdateAccountResource(ArmClient client, DeviceUpdateAccountData data) : this(client, data.Id)

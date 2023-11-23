@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PurviewPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="PurviewPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
-    /// To get a <see cref="PurviewPrivateEndpointConnectionCollection" /> instance call the GetPurviewPrivateEndpointConnections method from an instance of <see cref="PurviewAccountResource" />.
+    /// A class representing a collection of <see cref="PurviewPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="PurviewPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="PurviewAccountResource"/>.
+    /// To get a <see cref="PurviewPrivateEndpointConnectionCollection"/> instance call the GetPurviewPrivateEndpointConnections method from an instance of <see cref="PurviewAccountResource"/>.
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PurviewPrivateEndpointConnectionResource>, IAsyncEnumerable<PurviewPrivateEndpointConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);

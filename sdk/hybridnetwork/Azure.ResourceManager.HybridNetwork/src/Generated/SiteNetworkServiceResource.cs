@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing a SiteNetworkService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteNetworkServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteNetworkServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteNetworkService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteNetworkServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteNetworkServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteNetworkService method.
     /// </summary>
     public partial class SiteNetworkServiceResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteNetworkServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteNetworkServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteNetworkServiceResource(ArmClient client, SiteNetworkServiceData data) : this(client, data.Id)

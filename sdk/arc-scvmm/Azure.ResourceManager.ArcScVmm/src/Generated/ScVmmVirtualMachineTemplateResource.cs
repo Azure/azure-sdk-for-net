@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmVirtualMachineTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmVirtualMachineTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmVirtualMachineTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmVirtualMachineTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmVirtualMachineTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmVirtualMachineTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmVirtualMachineTemplate method.
     /// </summary>
     public partial class ScVmmVirtualMachineTemplateResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmVirtualMachineTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmVirtualMachineTemplateResource(ArmClient client, ScVmmVirtualMachineTemplateData data) : this(client, data.Id)

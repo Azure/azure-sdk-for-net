@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> and their operations.
-    /// Each <see cref="NetworkCloudVirtualMachineConsoleResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudVirtualMachineResource" />.
-    /// To get a <see cref="NetworkCloudVirtualMachineConsoleCollection" /> instance call the GetNetworkCloudVirtualMachineConsoles method from an instance of <see cref="NetworkCloudVirtualMachineResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> and their operations.
+    /// Each <see cref="NetworkCloudVirtualMachineConsoleResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudVirtualMachineResource"/>.
+    /// To get a <see cref="NetworkCloudVirtualMachineConsoleCollection"/> instance call the GetNetworkCloudVirtualMachineConsoles method from an instance of <see cref="NetworkCloudVirtualMachineResource"/>.
     /// </summary>
     public partial class NetworkCloudVirtualMachineConsoleCollection : ArmCollection, IEnumerable<NetworkCloudVirtualMachineConsoleResource>, IAsyncEnumerable<NetworkCloudVirtualMachineConsoleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudVirtualMachineConsoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudVirtualMachineConsoleConsolesRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudVirtualMachineConsoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudVirtualMachineConsoleConsolesRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

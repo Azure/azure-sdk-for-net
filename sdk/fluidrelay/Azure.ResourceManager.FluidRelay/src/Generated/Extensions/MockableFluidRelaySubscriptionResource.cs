@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FluidRelayServerResource> GetFluidRelayServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CommitmentPlanResource" /> and their operations.
-    /// Each <see cref="CommitmentPlanResource" /> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource" />.
-    /// To get a <see cref="CommitmentPlanCollection" /> instance call the GetCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource" />.
+    /// A class representing a collection of <see cref="CommitmentPlanResource"/> and their operations.
+    /// Each <see cref="CommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CommitmentPlanCollection"/> instance call the GetCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CommitmentPlanCollection : ArmCollection, IEnumerable<CommitmentPlanResource>, IAsyncEnumerable<CommitmentPlanResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommitmentPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommitmentPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

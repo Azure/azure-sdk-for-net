@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
     /// A Class representing a ServiceAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetServiceAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetServiceAlert method.
     /// </summary>
     public partial class ServiceAlertResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceAlertResource(ArmClient client, ServiceAlertData data) : this(client, data.Id)

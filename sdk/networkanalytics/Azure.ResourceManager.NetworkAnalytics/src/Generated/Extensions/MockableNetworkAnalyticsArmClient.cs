@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProductResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProductResource.CreateResourceIdentifier" /> to create a <see cref="DataProductResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProductResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProductResource.CreateResourceIdentifier" /> to create a <see cref="DataProductResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProductResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataProductResource"/> object. </returns>
         public virtual DataProductResource GetDataProductResource(ResourceIdentifier id)
         {
             DataProductResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProductsCatalogResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProductsCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DataProductsCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataProductsCatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProductsCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DataProductsCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProductsCatalogResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataProductsCatalogResource"/> object. </returns>
         public virtual DataProductsCatalogResource GetDataProductsCatalogResource(ResourceIdentifier id)
         {
             DataProductsCatalogResource.ValidateResourceId(id);

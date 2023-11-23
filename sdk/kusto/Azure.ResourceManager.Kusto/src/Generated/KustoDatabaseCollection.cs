@@ -21,9 +21,9 @@ using Azure.ResourceManager.Kusto.Models;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoDatabaseResource" /> and their operations.
-    /// Each <see cref="KustoDatabaseResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoDatabaseCollection" /> instance call the GetKustoDatabases method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoDatabaseResource"/> and their operations.
+    /// Each <see cref="KustoDatabaseResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoDatabaseCollection"/> instance call the GetKustoDatabases method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoDatabaseCollection : ArmCollection, IEnumerable<KustoDatabaseResource>, IAsyncEnumerable<KustoDatabaseResource>
     {

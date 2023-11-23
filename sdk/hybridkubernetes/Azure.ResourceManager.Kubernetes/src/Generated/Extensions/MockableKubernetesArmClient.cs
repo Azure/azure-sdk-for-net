@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectedClusterResource"/> object. </returns>
         public virtual ConnectedClusterResource GetConnectedClusterResource(ResourceIdentifier id)
         {
             ConnectedClusterResource.ValidateResourceId(id);

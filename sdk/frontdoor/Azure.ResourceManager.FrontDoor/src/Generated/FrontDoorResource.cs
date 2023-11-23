@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFrontDoor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFrontDoor method.
     /// </summary>
     public partial class FrontDoorResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorResource(ArmClient client, FrontDoorData data) : this(client, data.Id)

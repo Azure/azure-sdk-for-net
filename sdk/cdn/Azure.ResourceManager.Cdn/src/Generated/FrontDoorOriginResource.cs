@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorOrigin along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorOriginResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorOriginResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorOriginGroupResource" /> using the GetFrontDoorOrigin method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorOriginResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorOriginResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorOriginGroupResource"/> using the GetFrontDoorOrigin method.
     /// </summary>
     public partial class FrontDoorOriginResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorOriginResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorOriginResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorOriginResource(ArmClient client, FrontDoorOriginData data) : this(client, data.Id)

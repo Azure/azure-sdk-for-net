@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkDeviceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkDevice method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkDeviceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkDevice method.
     /// </summary>
     public partial class NetworkDeviceResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkDeviceResource(ArmClient client, NetworkDeviceData data) : this(client, data.Id)

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> and their operations.
-    /// Each <see cref="ServiceEndpointPolicyDefinitionResource" /> in the collection will belong to the same instance of <see cref="ServiceEndpointPolicyResource" />.
-    /// To get a <see cref="ServiceEndpointPolicyDefinitionCollection" /> instance call the GetServiceEndpointPolicyDefinitions method from an instance of <see cref="ServiceEndpointPolicyResource" />.
+    /// A class representing a collection of <see cref="ServiceEndpointPolicyDefinitionResource"/> and their operations.
+    /// Each <see cref="ServiceEndpointPolicyDefinitionResource"/> in the collection will belong to the same instance of <see cref="ServiceEndpointPolicyResource"/>.
+    /// To get a <see cref="ServiceEndpointPolicyDefinitionCollection"/> instance call the GetServiceEndpointPolicyDefinitions method from an instance of <see cref="ServiceEndpointPolicyResource"/>.
     /// </summary>
     public partial class ServiceEndpointPolicyDefinitionCollection : ArmCollection, IEnumerable<ServiceEndpointPolicyDefinitionResource>, IAsyncEnumerable<ServiceEndpointPolicyDefinitionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceEndpointPolicyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceEndpointPolicyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

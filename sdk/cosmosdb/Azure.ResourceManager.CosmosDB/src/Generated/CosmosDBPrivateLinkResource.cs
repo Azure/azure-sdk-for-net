@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBPrivateLinkResource method.
     /// </summary>
     public partial class CosmosDBPrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBPrivateLinkResource(ArmClient client, CosmosDBPrivateLinkResourceData data) : this(client, data.Id)

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a CustomEntityStoreAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CustomEntityStoreAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCustomEntityStoreAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCustomEntityStoreAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomEntityStoreAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCustomEntityStoreAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCustomEntityStoreAssignment method.
     /// </summary>
     public partial class CustomEntityStoreAssignmentResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CustomEntityStoreAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomEntityStoreAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CustomEntityStoreAssignmentResource(ArmClient client, CustomEntityStoreAssignmentData data) : this(client, data.Id)

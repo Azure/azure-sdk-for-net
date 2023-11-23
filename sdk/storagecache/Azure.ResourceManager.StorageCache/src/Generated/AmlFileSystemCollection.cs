@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AmlFileSystemResource" /> and their operations.
-    /// Each <see cref="AmlFileSystemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AmlFileSystemCollection" /> instance call the GetAmlFileSystems method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AmlFileSystemResource"/> and their operations.
+    /// Each <see cref="AmlFileSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AmlFileSystemCollection"/> instance call the GetAmlFileSystems method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AmlFileSystemCollection : ArmCollection, IEnumerable<AmlFileSystemResource>, IAsyncEnumerable<AmlFileSystemResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AmlFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AmlFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

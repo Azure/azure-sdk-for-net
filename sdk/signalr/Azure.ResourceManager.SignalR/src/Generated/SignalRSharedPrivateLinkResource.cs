@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalRSharedPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRSharedPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRSharedPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource" /> using the GetSignalRSharedPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRSharedPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRSharedPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRSharedPrivateLinkResource method.
     /// </summary>
     public partial class SignalRSharedPrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SignalR
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRSharedPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRSharedPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRSharedPrivateLinkResource(ArmClient client, SignalRSharedPrivateLinkResourceData data) : this(client, data.Id)

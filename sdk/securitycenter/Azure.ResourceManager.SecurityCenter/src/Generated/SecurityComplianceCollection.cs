@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityComplianceResource" /> and their operations.
-    /// Each <see cref="SecurityComplianceResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="SecurityComplianceCollection" /> instance call the GetSecurityCompliances method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="SecurityComplianceResource"/> and their operations.
+    /// Each <see cref="SecurityComplianceResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityComplianceCollection"/> instance call the GetSecurityCompliances method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityComplianceCollection : ArmCollection, IEnumerable<SecurityComplianceResource>, IAsyncEnumerable<SecurityComplianceResource>
     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityComplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityComplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityComplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityComplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityComplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityComplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);

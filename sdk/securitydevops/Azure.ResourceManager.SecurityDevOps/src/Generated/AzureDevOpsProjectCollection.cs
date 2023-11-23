@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureDevOpsProjectResource" /> and their operations.
-    /// Each <see cref="AzureDevOpsProjectResource" /> in the collection will belong to the same instance of <see cref="AzureDevOpsOrgResource" />.
-    /// To get an <see cref="AzureDevOpsProjectCollection" /> instance call the GetAzureDevOpsProjects method from an instance of <see cref="AzureDevOpsOrgResource" />.
+    /// A class representing a collection of <see cref="AzureDevOpsProjectResource"/> and their operations.
+    /// Each <see cref="AzureDevOpsProjectResource"/> in the collection will belong to the same instance of <see cref="AzureDevOpsOrgResource"/>.
+    /// To get an <see cref="AzureDevOpsProjectCollection"/> instance call the GetAzureDevOpsProjects method from an instance of <see cref="AzureDevOpsOrgResource"/>.
     /// </summary>
     public partial class AzureDevOpsProjectCollection : ArmCollection, IEnumerable<AzureDevOpsProjectResource>, IAsyncEnumerable<AzureDevOpsProjectResource>
     {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsProjectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsProjectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

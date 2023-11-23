@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SubscriptionUsage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionUsageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionUsageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionUsage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionUsageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionUsageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionUsage method.
     /// </summary>
     public partial class SubscriptionUsageResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionUsageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionUsageResource(ArmClient client, SubscriptionUsageData data) : this(client, data.Id)

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource" /> using the GetAppPlatformDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource"/> using the GetAppPlatformDeployment method.
     /// </summary>
     public partial class AppPlatformDeploymentResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformDeploymentResource(ArmClient client, AppPlatformDeploymentData data) : this(client, data.Id)

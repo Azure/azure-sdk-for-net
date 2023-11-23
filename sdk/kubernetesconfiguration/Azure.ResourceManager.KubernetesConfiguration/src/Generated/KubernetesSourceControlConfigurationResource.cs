@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
     /// A Class representing a KubernetesSourceControlConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KubernetesSourceControlConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKubernetesSourceControlConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetKubernetesSourceControlConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubernetesSourceControlConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKubernetesSourceControlConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubernetesSourceControlConfiguration method.
     /// </summary>
     public partial class KubernetesSourceControlConfigurationResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KubernetesSourceControlConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KubernetesSourceControlConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KubernetesSourceControlConfigurationResource(ArmClient client, KubernetesSourceControlConfigurationData data) : this(client, data.Id)
