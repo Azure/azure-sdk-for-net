@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix issue [#38785](https://github.com/Azure/azure-sdk-for-net/issues/38785), allow property `resourceType` to be null
+
 ### Other Changes
 
 ## 1.0.0-beta.3 (2023-05-26)
