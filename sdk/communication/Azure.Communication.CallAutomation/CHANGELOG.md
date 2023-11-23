@@ -1,19 +1,13 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.1.0 (2023-11-23)
 
 ### Features Added
 - Mid-Call actions support overriding callback uri 
-- Cancel adding Participant invitation 
+- Cancel Add Participant Invitation 
 - Support transfer a participant in a group call to another participant
 - Add Custom Calling Context payload to Transfer and AddParticipant API
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-- Dependency versions updated.
 
 ## 1.1.0-beta.1 (2023-08-17)
 
