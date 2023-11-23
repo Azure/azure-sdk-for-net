@@ -14,17 +14,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new UnmuteParticipantOptions object.
         /// </summary>
-        public UnmuteParticipantOptions(IEnumerable<CommunicationIdentifier> targetParticipant)
+        public UnmuteParticipantOptions(CommunicationIdentifier targetParticipant)
         {
-            TargetParticipants = targetParticipant.ToList<CommunicationIdentifier>();
+            TargetParticipant = targetParticipant;
         }
 
         /// <summary>
         /// The identity of participants to be unmuted from the call.
-        /// Only one participant is currently supported.
         /// Only ACS Users are currently supported.
         /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> TargetParticipants { get; }
+        public CommunicationIdentifier TargetParticipant { get; }
 
         /// <summary>
         /// The operation context.

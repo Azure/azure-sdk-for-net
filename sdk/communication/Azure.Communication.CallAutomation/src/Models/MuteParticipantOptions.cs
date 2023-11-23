@@ -14,17 +14,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new MuteParticipantOptions object.
         /// </summary>
-        public MuteParticipantOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
+        public MuteParticipantOptions(CommunicationIdentifier targetParticipant)
         {
-            TargetParticipants = targetParticipants.ToList<CommunicationIdentifier>();
+            TargetParticipant = targetParticipant;
         }
 
         /// <summary>
         /// The identity of participants to be muted from the call.
-        /// Only one participant is currently supported.
         /// Only ACS Users are currently supported.
         /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> TargetParticipants { get; }
+        public CommunicationIdentifier TargetParticipant { get; }
 
         /// <summary>
         /// The operation context.

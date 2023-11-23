@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>AddParticipantsResult Result.</summary>
-    public class CancelAddParticipantResult
+    public class CancelAddParticipantOperationResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal CancelAddParticipantResult(CancelAddParticipantResponseInternal internalObj)
+        internal CancelAddParticipantOperationResult(CancelAddParticipantResponseInternal internalObj)
         {
             OperationContext = internalObj.OperationContext;
             InvitationId = internalObj.InvitationId;
         }
 
-        internal CancelAddParticipantResult(string invitationId, string operationcontext)
+        internal CancelAddParticipantOperationResult(string invitationId, string operationcontext)
         {
             InvitationId = invitationId;
             OperationContext = operationcontext;

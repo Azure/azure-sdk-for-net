@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -28,6 +30,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback URI to override the main callback URI.
         /// </summary>
-        public string OperationCallbackUri { get; set; }
+        public Uri OperationCallbackUri { get; set; }
     }
 }

@@ -8,13 +8,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The cancel add participant operation options.
     /// </summary>
-    public class CancelAddParticipantOptions
+    public class CancelAddParticipantOperationOptions
     {
         /// <summary>
         /// Creates new CancelAddParticipantOptions object.
         /// </summary>
         /// <param name="invitationId"></param>
-        public CancelAddParticipantOptions(string invitationId)
+        public CancelAddParticipantOperationOptions(string invitationId)
         {
             InvitationId = invitationId;
         }

@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingType?), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
-    public static partial class CommunicationCallAutomationModelFactory
+    public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participant"> Participant of the call. </param>
@@ -99,10 +99,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CancelAddParticipantResult. </summary>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResult"/> instance for mocking. </returns>
-        public static CancelAddParticipantResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
+        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantOperationResult"/> instance for mocking. </returns>
+        public static CancelAddParticipantOperationResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
         {
-            return new CancelAddParticipantResult(invitationId, operationContext);
+            return new CancelAddParticipantOperationResult(invitationId, operationContext);
         }
 
         /// <summary> Create an EventSource. </summary>

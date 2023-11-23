@@ -679,7 +679,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
 
                 return CallMediaRestClient.StartContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
@@ -729,7 +729,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
                 return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -777,7 +777,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
@@ -827,7 +827,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
                 return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -876,7 +876,7 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
 
                 var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -938,7 +938,7 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri
+                    OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri
                 };
 
                 var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
