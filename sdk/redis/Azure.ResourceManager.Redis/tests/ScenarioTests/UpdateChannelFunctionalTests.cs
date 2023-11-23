@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(0, responseCreate.Data.Sku.Capacity);
             Assert.AreEqual(6379, responseCreate.Data.Port);
             Assert.AreEqual(6380, responseCreate.Data.SslPort);
-            Assert.AreEqual("Stable", responseCreate.Data.UpdateChannel);
+            Assert.AreEqual(UpdateChannel.Stable, responseCreate.Data.UpdateChannel);
 
             var patch = new RedisPatch()
             {
-                UpdateChannel = "Preview"
+                UpdateChannel = UpdateChannel.Preview
             };
 
             var responseUpdate = (await responseCreate.UpdateAsync(WaitUntil.Completed, patch)).Value;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(0, responseUpdate.Data.Sku.Capacity);
             Assert.AreEqual(6379, responseUpdate.Data.Port);
             Assert.AreEqual(6380, responseUpdate.Data.SslPort);
-            Assert.AreEqual("Preview", responseCreate.Data.UpdateChannel);
+            Assert.AreEqual(UpdateChannel.Preview, responseCreate.Data.UpdateChannel);
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
