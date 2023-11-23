@@ -27,8 +27,7 @@ namespace Azure.AI.ContentSafety.Tests
 
             if (useTokenCredential)
             {
-                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new ContentSafetyClient(endpoint, credential, options: options);
+                client = new ContentSafetyClient(endpoint, TestEnvironment.Credential, options: options);
             }
             else
             {
@@ -125,6 +124,25 @@ namespace Azure.AI.ContentSafety.Tests
             Assert.IsNotEmpty(response.Value.BlocklistsMatch);
             Assert.True(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText1.Text));
             Assert.True(response.Value.BlocklistsMatch.ToList().Any(item => item.BlocklistItemText == blocklistItemText2.Text));
+        }
+
+        [RecordedTest]
+        public async Task TestAnalyzeTextWithAADAuth()
+        {
+            var client = CreateContentSafetyClient(true);
+
+            var request = new AnalyzeTextOptions(TestData.TestText);
+            request.Categories.Add(TextCategory.Hate);
+            request.Categories.Add(TextCategory.SelfHarm);
+            var response = await client.AnalyzeTextAsync(request);
+
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate));
+            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, 0);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm));
+            Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual));
+            Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence));
         }
     }
 }

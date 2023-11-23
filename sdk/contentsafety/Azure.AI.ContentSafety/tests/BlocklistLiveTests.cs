@@ -72,6 +72,50 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
+        public async Task TestDeleteTextBlocklist()
+        {
+            var client = CreateBlocklistClient();
+
+            // Create Blocklist
+            var blocklistName = "TestBlocklist";
+            var blocklistDescription = "Test blocklist management";
+            Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
+            Assert.IsNotNull(createBlocklistResponse);
+            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
+
+            var response = await client.DeleteTextBlocklistAsync(blocklistName);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Status, 204);
+        }
+
+        [RecordedTest]
+        public async Task TestGetTextBlocklists()
+        {
+            var client = CreateBlocklistClient();
+
+            // Create Blocklist
+            var blocklistName = "TestBlocklist";
+            var blocklistDescription = "Test blocklist management";
+            Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
+            Assert.IsNotNull(createBlocklistResponse);
+            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
+
+            // Create another Blocklist
+            var blocklistName2 = "AnotherTestBlocklist";
+            var blocklistDescription2 = "Another Test blocklist management";
+            Response createBlocklistResponse2 = await client.CreateOrUpdateTextBlocklistAsync(blocklistName2, RequestContent.Create(new { description = blocklistDescription2 }));
+            Assert.IsNotNull(createBlocklistResponse2);
+            Assert.GreaterOrEqual(createBlocklistResponse2.Status, 200);
+
+            var response = client.GetTextBlocklistsAsync();
+            Assert.IsNotNull(response);
+            List<TextBlocklist> blocklist = await response.ToListAsync();
+            Assert.True(blocklist.Any(item => item.Name == blocklistName));
+            Assert.True(blocklist.Any(item => item.Name == blocklistName2));
+        }
+
+        [RecordedTest]
         public async Task TestAddOrUpdateBlocklistItems()
         {
             var client = CreateBlocklistClient();
@@ -123,6 +167,54 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
+        public async Task TestGetTextBlocklistItems()
+        {
+            var client = CreateBlocklistClient();
+
+            // Create Blocklist
+            var blocklistName = "TestNewBlocklist";
+            var blocklistDescription = "Test blocklist management";
+            Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
+            Assert.IsNotNull(createBlocklistResponse);
+            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
+
+            // Add Blocklist items
+            var blocklistItemText1 = new TextBlocklistItem("This is a test.");
+            var blocklistItemText2 = new TextBlocklistItem("This is a test 2.");
+            var blocklistItemText3 = new TextBlocklistItem("This is a test 3.");
+            var blocklistItemText4 = new TextBlocklistItem("This is a test 4.");
+            var blocklistItemText5 = new TextBlocklistItem("This is a test 5.");
+
+            var blocklistItemList = new List<TextBlocklistItem> { blocklistItemText1, blocklistItemText2, blocklistItemText3, blocklistItemText4, blocklistItemText5 };
+            var addBlocklistItemResponse = await client.AddOrUpdateBlocklistItemsAsync(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(blocklistItemList));
+            Assert.IsNotNull(addBlocklistItemResponse);
+            Assert.GreaterOrEqual(addBlocklistItemResponse.GetRawResponse().Status, 200);
+            var blocklistItemId1 = addBlocklistItemResponse.Value.BlocklistItems[0].BlocklistItemId;
+            Assert.IsNotNull(blocklistItemId1);
+
+            // Test maxCount
+            var response = client.GetTextBlocklistItemsAsync(blocklistName, maxCount: 2);
+            Assert.IsNotNull(response);
+            List<TextBlocklistItem> blocklistItems = await response.ToListAsync();
+            Assert.AreEqual(blocklistItems.Count, 2);
+
+            // Test skip
+            response = client.GetTextBlocklistItemsAsync(blocklistName, skip: 2);
+            Assert.IsNotNull(response);
+            blocklistItems = await response.ToListAsync();
+            Assert.AreEqual(blocklistItems.Count, 3);
+
+            // Test maxpagesize
+            response = client.GetTextBlocklistItemsAsync(blocklistName, maxpagesize: 2);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(await response.CountAsync(), 5);
+            await foreach (var page in response.AsPages())
+            {
+                Assert.LessOrEqual(page.Values.Count, 2);
+            }
+        }
+
+        [RecordedTest]
         public async Task TestRemoveBlocklistItems()
         {
             var client = CreateBlocklistClient();
@@ -145,24 +237,6 @@ namespace Azure.AI.ContentSafety.Tests
 
             RemoveTextBlocklistItemsOptions options = new RemoveTextBlocklistItemsOptions(new List<string> { blocklistItemId1 });
             var response = await client.RemoveBlocklistItemsAsync(blocklistName, options);
-
-            Assert.IsNotNull(response);
-            Assert.AreEqual(response.Status, 204);
-        }
-
-        [RecordedTest]
-        public async Task TestDeleteTextBlocklist()
-        {
-            var client = CreateBlocklistClient();
-
-            // Create Blocklist
-            var blocklistName = "TestBlocklist";
-            var blocklistDescription = "Test blocklist management";
-            Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
-            Assert.IsNotNull(createBlocklistResponse);
-            Assert.GreaterOrEqual(createBlocklistResponse.Status, 200);
-
-            var response = await client.DeleteTextBlocklistAsync(blocklistName);
 
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Status, 204);
