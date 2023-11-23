@@ -618,6 +618,40 @@ namespace Azure.AI.DocumentIntelligence
             return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error);
         }
 
+        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expirationDateTime"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="apiVersion"> API version used to create this document classifier. </param>
+        /// <param name="docTypes"> List of document types to classify against. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null)
+        {
+            docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+
+            return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes);
+        }
+
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
@@ -673,40 +707,6 @@ namespace Azure.AI.DocumentIntelligence
             tags ??= new Dictionary<string, string>();
 
             return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="description"> Document classifier description. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the document classifier will expire. </param>
-        /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null)
-        {
-            docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
-
-            return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes);
         }
     }
 }
