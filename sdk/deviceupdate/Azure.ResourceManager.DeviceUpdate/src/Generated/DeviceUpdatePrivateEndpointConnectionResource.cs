@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a DeviceUpdatePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceUpdatePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceUpdatePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource" /> using the GetDeviceUpdatePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceUpdatePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource"/> using the GetDeviceUpdatePrivateEndpointConnection method.
     /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceUpdatePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceUpdatePrivateEndpointConnectionResource(ArmClient client, DeviceUpdatePrivateEndpointConnectionData data) : this(client, data.Id)

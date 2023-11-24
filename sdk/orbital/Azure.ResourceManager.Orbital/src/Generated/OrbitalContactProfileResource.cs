@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
     /// A Class representing an OrbitalContactProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OrbitalContactProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOrbitalContactProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOrbitalContactProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OrbitalContactProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOrbitalContactProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOrbitalContactProfile method.
     /// </summary>
     public partial class OrbitalContactProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OrbitalContactProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="contactProfileName"> The contactProfileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string contactProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/contactProfiles/{contactProfileName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Orbital
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OrbitalContactProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OrbitalContactProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OrbitalContactProfileResource(ArmClient client, OrbitalContactProfileData data) : this(client, data.Id)

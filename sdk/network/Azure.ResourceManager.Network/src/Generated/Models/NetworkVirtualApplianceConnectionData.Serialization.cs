@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue(ConnectionRoutingConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
             Optional<long> tunnelIdentifier = default;
             Optional<IList<string>> bgpPeerAddress = default;
             Optional<bool> enableInternetSecurity = default;
-            Optional<RoutingConfigurationNfv> routingConfiguration = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(property0.Value);
+                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
                     }

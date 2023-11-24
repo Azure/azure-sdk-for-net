@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountPoolResource" /> and their operations.
-    /// Each <see cref="BatchAccountPoolResource" /> in the collection will belong to the same instance of <see cref="BatchAccountResource" />.
-    /// To get a <see cref="BatchAccountPoolCollection" /> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountResource" />.
+    /// A class representing a collection of <see cref="BatchAccountPoolResource"/> and their operations.
+    /// Each <see cref="BatchAccountPoolResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchAccountPoolCollection"/> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchAccountPoolCollection : ArmCollection, IEnumerable<BatchAccountPoolResource>, IAsyncEnumerable<BatchAccountPoolResource>
     {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Batch
         ///  properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Batch
         ///  properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountPoolResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);

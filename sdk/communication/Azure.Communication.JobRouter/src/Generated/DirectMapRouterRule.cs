@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
     public partial class DirectMapRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal DirectMapRouterRule(string kind) : base(kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        internal DirectMapRouterRule(RouterRuleKind kind) : base(kind)
         {
         }
     }

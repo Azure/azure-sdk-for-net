@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingPaymentMethodResource" /> and their operations.
-    /// Each <see cref="BillingPaymentMethodResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingPaymentMethodCollection" /> instance call the GetBillingPaymentMethods method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingPaymentMethodResource"/> and their operations.
+    /// Each <see cref="BillingPaymentMethodResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingPaymentMethodCollection"/> instance call the GetBillingPaymentMethods method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingPaymentMethodCollection : ArmCollection, IEnumerable<BillingPaymentMethodResource>, IAsyncEnumerable<BillingPaymentMethodResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingPaymentMethodResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingPaymentMethodResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodPaymentMethodsRestClient.CreateListByUserRequest();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingPaymentMethodResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingPaymentMethodResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodPaymentMethodsRestClient.CreateListByUserRequest();

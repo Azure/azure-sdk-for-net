@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteDomainOwnershipIdentifier along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDomainOwnershipIdentifierResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteDomainOwnershipIdentifierResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDomainOwnershipIdentifier method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDomainOwnershipIdentifierResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteDomainOwnershipIdentifierResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDomainOwnershipIdentifier method.
     /// </summary>
     public partial class SiteDomainOwnershipIdentifierResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDomainOwnershipIdentifierResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="domainOwnershipIdentifierName"> The domainOwnershipIdentifierName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteDomainOwnershipIdentifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDomainOwnershipIdentifierResource(ArmClient client, AppServiceIdentifierData data) : this(client, data.Id)

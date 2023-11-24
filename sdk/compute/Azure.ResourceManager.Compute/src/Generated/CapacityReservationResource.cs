@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a CapacityReservation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CapacityReservationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCapacityReservationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CapacityReservationGroupResource" /> using the GetCapacityReservation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CapacityReservationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCapacityReservationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CapacityReservationGroupResource"/> using the GetCapacityReservation method.
     /// </summary>
     public partial class CapacityReservationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapacityReservationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="capacityReservationGroupName"> The capacityReservationGroupName. </param>
+        /// <param name="capacityReservationName"> The capacityReservationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}/capacityReservations/{capacityReservationName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CapacityReservationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CapacityReservationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CapacityReservationResource(ArmClient client, CapacityReservationData data) : this(client, data.Id)

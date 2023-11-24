@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Resources.Samples
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
@@ -111,11 +111,11 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
@@ -123,7 +123,7 @@ Value = BinaryData.FromString("-LC"),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -174,11 +174,11 @@ Value = BinaryData.FromString("-LC"),
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
@@ -186,7 +186,7 @@ Value = BinaryData.FromString("-LC"),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -400,11 +400,11 @@ In =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementBackend along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementBackendResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementBackendResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementBackend method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementBackendResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementBackendResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementBackend method.
     /// </summary>
     public partial class ApiManagementBackendResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementBackendResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="backendId"> The backendId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string backendId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementBackendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementBackendResource(ArmClient client, ApiManagementBackendData data) : this(client, data.Id)

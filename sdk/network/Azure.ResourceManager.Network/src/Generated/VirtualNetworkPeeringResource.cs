@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualNetworkPeering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkPeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource" /> using the GetVirtualNetworkPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualNetworkPeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualNetworkPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource"/> using the GetVirtualNetworkPeering method.
     /// </summary>
     public partial class VirtualNetworkPeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkPeeringResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkName"> The virtualNetworkName. </param>
+        /// <param name="virtualNetworkPeeringName"> The virtualNetworkPeeringName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/virtualNetworkPeerings/{virtualNetworkPeeringName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkPeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualNetworkPeeringResource(ArmClient client, VirtualNetworkPeeringData data) : this(client, data.Id)

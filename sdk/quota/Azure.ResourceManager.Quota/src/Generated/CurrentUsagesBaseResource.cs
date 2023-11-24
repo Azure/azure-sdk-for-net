@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A Class representing a CurrentUsagesBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CurrentUsagesBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCurrentUsagesBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCurrentUsagesBase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CurrentUsagesBaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCurrentUsagesBaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCurrentUsagesBase method.
     /// </summary>
     public partial class CurrentUsagesBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CurrentUsagesBaseResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Quota/usages/{resourceName}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Quota
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CurrentUsagesBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CurrentUsagesBaseResource(ArmClient client, CurrentUsagesBaseData data) : this(client, data.Id)

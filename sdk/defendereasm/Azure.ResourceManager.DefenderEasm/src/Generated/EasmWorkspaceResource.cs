@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
     /// A Class representing an EasmWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EasmWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEasmWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEasmWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EasmWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEasmWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEasmWorkspace method.
     /// </summary>
     public partial class EasmWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EasmWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Easm/workspaces/{workspaceName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.DefenderEasm
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EasmWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EasmWorkspaceResource(ArmClient client, EasmWorkspaceData data) : this(client, data.Id)
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An object representing collection of EasmLabelResources and their operations over a EasmLabelResource. </returns>
         public virtual EasmLabelCollection GetEasmLabels()
         {
-            return GetCachedClient(Client => new EasmLabelCollection(Client, Id));
+            return GetCachedClient(client => new EasmLabelCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EasmLabelResource>> GetEasmLabelAsync(string labelName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EasmLabelResource> GetEasmLabel(string labelName, CancellationToken cancellationToken = default)
         {

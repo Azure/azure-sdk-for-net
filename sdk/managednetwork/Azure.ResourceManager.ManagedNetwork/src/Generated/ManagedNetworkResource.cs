@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
     /// A Class representing a ManagedNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedNetwork method.
     /// </summary>
     public partial class ManagedNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedNetworkName"> The managedNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedNetworkResource(ArmClient client, ManagedNetworkData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ManagedNetworkGroupResources and their operations over a ManagedNetworkGroupResource. </returns>
         public virtual ManagedNetworkGroupCollection GetManagedNetworkGroups()
         {
-            return GetCachedClient(Client => new ManagedNetworkGroupCollection(Client, Id));
+            return GetCachedClient(client => new ManagedNetworkGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="managedNetworkGroupName"> The name of the Managed Network Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedNetworkGroupResource>> GetManagedNetworkGroupAsync(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="managedNetworkGroupName"> The name of the Managed Network Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedNetworkGroupResource> GetManagedNetworkGroup(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ManagedNetworkPeeringPolicyResources and their operations over a ManagedNetworkPeeringPolicyResource. </returns>
         public virtual ManagedNetworkPeeringPolicyCollection GetManagedNetworkPeeringPolicies()
         {
-            return GetCachedClient(Client => new ManagedNetworkPeeringPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ManagedNetworkPeeringPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="managedNetworkPeeringPolicyName"> The name of the Managed Network Peering Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedNetworkPeeringPolicyResource>> GetManagedNetworkPeeringPolicyAsync(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="managedNetworkPeeringPolicyName"> The name of the Managed Network Peering Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedNetworkPeeringPolicyResource> GetManagedNetworkPeeringPolicy(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {

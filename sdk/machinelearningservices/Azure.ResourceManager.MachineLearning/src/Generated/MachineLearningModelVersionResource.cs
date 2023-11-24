@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningModelVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningModelVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningModelVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningModelContainerResource" /> using the GetMachineLearningModelVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningModelVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningModelVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningModelContainerResource"/> using the GetMachineLearningModelVersion method.
     /// </summary>
     public partial class MachineLearningModelVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningModelVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningModelVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningModelVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningModelVersionResource(ArmClient client, MachineLearningModelVersionData data) : this(client, data.Id)

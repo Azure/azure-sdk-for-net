@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsWatchlistItemResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsWatchlistItemResource" /> in the collection will belong to the same instance of <see cref="SecurityInsightsWatchlistResource" />.
-    /// To get a <see cref="SecurityInsightsWatchlistItemCollection" /> instance call the GetSecurityInsightsWatchlistItems method from an instance of <see cref="SecurityInsightsWatchlistResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsWatchlistItemResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsWatchlistItemResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsWatchlistResource"/>.
+    /// To get a <see cref="SecurityInsightsWatchlistItemCollection"/> instance call the GetSecurityInsightsWatchlistItems method from an instance of <see cref="SecurityInsightsWatchlistResource"/>.
     /// </summary>
     public partial class SecurityInsightsWatchlistItemCollection : ArmCollection, IEnumerable<SecurityInsightsWatchlistItemResource>, IAsyncEnumerable<SecurityInsightsWatchlistItemResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsWatchlistItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsWatchlistItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsWatchlistItemResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsWatchlistItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsWatchlistItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsWatchlistItemResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);

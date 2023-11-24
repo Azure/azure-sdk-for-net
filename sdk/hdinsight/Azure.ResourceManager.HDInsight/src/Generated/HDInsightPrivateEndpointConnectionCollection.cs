@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HDInsightPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HDInsightPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HDInsightClusterResource" />.
-    /// To get a <see cref="HDInsightPrivateEndpointConnectionCollection" /> instance call the GetHDInsightPrivateEndpointConnections method from an instance of <see cref="HDInsightClusterResource" />.
+    /// A class representing a collection of <see cref="HDInsightPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HDInsightPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="HDInsightClusterResource"/>.
+    /// To get a <see cref="HDInsightPrivateEndpointConnectionCollection"/> instance call the GetHDInsightPrivateEndpointConnections method from an instance of <see cref="HDInsightClusterResource"/>.
     /// </summary>
     public partial class HDInsightPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HDInsightPrivateEndpointConnectionResource>, IAsyncEnumerable<HDInsightPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// A Class representing a ConnectedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConnectedClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConnectedClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConnectedCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetConnectedCluster method.
     /// </summary>
     public partial class ConnectedClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConnectedClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConnectedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterResource(ArmClient client, ConnectedClusterData data) : this(client, data.Id)

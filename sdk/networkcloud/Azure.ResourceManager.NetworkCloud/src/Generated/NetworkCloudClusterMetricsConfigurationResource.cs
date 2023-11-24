@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudClusterMetricsConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudClusterMetricsConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudClusterMetricsConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource" /> using the GetNetworkCloudClusterMetricsConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudClusterMetricsConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudClusterMetricsConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource"/> using the GetNetworkCloudClusterMetricsConfiguration method.
     /// </summary>
     public partial class NetworkCloudClusterMetricsConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="metricsConfigurationName"> The metricsConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string metricsConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations/{metricsConfigurationName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudClusterMetricsConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterMetricsConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudClusterMetricsConfigurationResource(ArmClient client, NetworkCloudClusterMetricsConfigurationData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> and their operations.
-    /// Each <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="LogicalDatabaseTransparentDataEncryptionCollection" /> instance call the GetLogicalDatabaseTransparentDataEncryptions method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> and their operations.
+    /// Each <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="LogicalDatabaseTransparentDataEncryptionCollection"/> instance call the GetLogicalDatabaseTransparentDataEncryptions method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionCollection : ArmCollection, IEnumerable<LogicalDatabaseTransparentDataEncryptionResource>, IAsyncEnumerable<LogicalDatabaseTransparentDataEncryptionResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicalDatabaseTransparentDataEncryptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicalDatabaseTransparentDataEncryptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

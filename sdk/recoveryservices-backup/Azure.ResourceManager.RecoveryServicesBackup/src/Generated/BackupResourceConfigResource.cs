@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupResourceConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupResourceConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupResourceConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupResourceConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupResourceConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupResourceConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupResourceConfig method.
     /// </summary>
     public partial class BackupResourceConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupResourceConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupResourceConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupResourceConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupResourceConfigResource(ArmClient client, BackupResourceConfigData data) : this(client, data.Id)

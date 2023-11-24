@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// A Class representing a StorageMoverEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageMoverEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageMoverEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageMoverResource" /> using the GetStorageMoverEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageMoverEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageMoverEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageMoverResource"/> using the GetStorageMoverEndpoint method.
     /// </summary>
     public partial class StorageMoverEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageMoverEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageMoverName"> The storageMoverName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/endpoints/{endpointName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.StorageMover
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageMoverEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageMoverEndpointResource(ArmClient client, StorageMoverEndpointData data) : this(client, data.Id)
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverEndpointPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverEndpointPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverEndpointResource>> UpdateAsync(StorageMoverEndpointPatch patch, CancellationToken cancellationToken = default)
@@ -266,7 +270,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverEndpointPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverEndpointPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverEndpointResource> Update(StorageMoverEndpointPatch patch, CancellationToken cancellationToken = default)

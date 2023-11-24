@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupProtectionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupProtectionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupProtectionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupProtectionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupProtectionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupProtectionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupProtectionPolicy method.
     /// </summary>
     public partial class BackupProtectionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupProtectionPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="policyName"> The policyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupProtectionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupProtectionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupProtectionPolicyResource(ArmClient client, BackupProtectionPolicyData data) : this(client, data.Id)

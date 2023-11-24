@@ -14,30 +14,22 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueue
     {
         /// <summary> Initializes a new instance of RouterQueue. </summary>
-        /// <param name="id"> The Id of this queue. </param>
-        /// <param name="name"> The name of this queue. </param>
-        /// <param name="distributionPolicyId">
-        /// The ID of the distribution policy that will determine how a job is distributed
-        /// to workers.
-        /// </param>
-        /// <param name="labels">
-        /// A set of key/value pairs that are identifying attributes used by the rules
-        /// engines to make decisions.
-        /// </param>
-        /// <param name="exceptionPolicyId">
-        /// (Optional) The ID of the exception policy that determines various job
-        /// escalation rules.
-        /// </param>
-        internal RouterQueue(string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a queue. </param>
+        /// <param name="name"> Friendly name of this queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
+        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
         {
+            _etag = etag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
-
-        /// <summary> The Id of this queue. </summary>
+        /// <summary> Id of a queue. </summary>
         public string Id { get; }
     }
 }

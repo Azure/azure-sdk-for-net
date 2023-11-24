@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.StoragePool
 {
     /// <summary>
     /// A Class representing a DiskPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskPool method.
     /// </summary>
     public partial class DiskPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskPoolName"> The diskPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}";
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskPoolResource(ArmClient client, DiskPoolData data) : this(client, data.Id)
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An object representing collection of DiskPoolIscsiTargetResources and their operations over a DiskPoolIscsiTargetResource. </returns>
         public virtual DiskPoolIscsiTargetCollection GetDiskPoolIscsiTargets()
         {
-            return GetCachedClient(Client => new DiskPoolIscsiTargetCollection(Client, Id));
+            return GetCachedClient(client => new DiskPoolIscsiTargetCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DiskPoolIscsiTargetResource>> GetDiskPoolIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DiskPoolIscsiTargetResource> GetDiskPoolIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
@@ -365,7 +368,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StoragePoolOutboundEnvironment"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -387,7 +390,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StoragePoolOutboundEnvironment"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

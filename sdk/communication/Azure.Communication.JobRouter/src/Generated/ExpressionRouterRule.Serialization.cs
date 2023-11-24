@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter
             }
             Optional<string> language = default;
             string expression = default;
-            string kind = default;
+            RouterRuleKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RouterRuleKind(property.Value.GetString());
                     continue;
                 }
             }

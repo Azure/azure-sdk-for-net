@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a RelationshipResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelationshipResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelationshipResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetRelationshipResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelationshipResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelationshipResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetRelationshipResourceFormat method.
     /// </summary>
     public partial class RelationshipResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RelationshipResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="relationshipName"> The relationshipName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string relationshipName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationships/{relationshipName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelationshipResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelationshipResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelationshipResourceFormatResource(ArmClient client, RelationshipResourceFormatData data) : this(client, data.Id)

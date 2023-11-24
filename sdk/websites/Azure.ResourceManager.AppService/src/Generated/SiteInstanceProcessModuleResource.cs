@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteInstanceProcessModule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteInstanceProcessModuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteInstanceProcessModuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceProcessResource" /> using the GetSiteInstanceProcessModule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceProcessModuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceProcessModuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceProcessResource"/> using the GetSiteInstanceProcessModule method.
     /// </summary>
     public partial class SiteInstanceProcessModuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteInstanceProcessModuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instanceId"> The instanceId. </param>
+        /// <param name="processId"> The processId. </param>
+        /// <param name="baseAddress"> The baseAddress. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteInstanceProcessModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteInstanceProcessModuleResource(ArmClient client, ProcessModuleInfoData data) : this(client, data.Id)

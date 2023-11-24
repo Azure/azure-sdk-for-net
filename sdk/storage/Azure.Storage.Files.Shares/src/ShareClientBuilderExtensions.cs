@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.Extensions;
+using Azure.Core;
 using Azure.Storage;
 using Azure.Storage.Files.Shares;
 

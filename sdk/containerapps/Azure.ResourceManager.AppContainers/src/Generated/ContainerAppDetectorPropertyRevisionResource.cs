@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppDetectorPropertyRevision along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppDetectorPropertyRevisionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppDetectorPropertyRevisionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppDetectorPropertyRevision method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppDetectorPropertyRevisionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppDetectorPropertyRevisionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppDetectorPropertyRevision method.
     /// </summary>
     public partial class ContainerAppDetectorPropertyRevisionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppDetectorPropertyRevisionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="revisionName"> The revisionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/{revisionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorPropertyRevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppDetectorPropertyRevisionResource(ArmClient client, ContainerAppRevisionData data) : this(client, data.Id)

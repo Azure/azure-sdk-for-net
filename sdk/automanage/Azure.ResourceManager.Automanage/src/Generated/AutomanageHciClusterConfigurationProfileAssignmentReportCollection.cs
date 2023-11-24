@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> and their operations.
-    /// Each <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> in the collection will belong to the same instance of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" />.
-    /// To get an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportCollection" /> instance call the GetAutomanageHciClusterConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" />.
+    /// A class representing a collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> and their operations.
+    /// Each <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> in the collection will belong to the same instance of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/>.
+    /// To get an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportCollection"/> instance call the GetAutomanageHciClusterConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/>.
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentReportCollection : ArmCollection, IEnumerable<AutomanageHciClusterConfigurationProfileAssignmentReportResource>, IAsyncEnumerable<AutomanageHciClusterConfigurationProfileAssignmentReportResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseGeoBackupPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseGeoBackupPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseGeoBackupPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseGeoBackupPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseGeoBackupPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseGeoBackupPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseGeoBackupPolicy method.
     /// </summary>
     public partial class SynapseGeoBackupPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseGeoBackupPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="geoBackupPolicyName"> The geoBackupPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseGeoBackupPolicyName geoBackupPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/geoBackupPolicies/{geoBackupPolicyName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseGeoBackupPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseGeoBackupPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseGeoBackupPolicyResource(ArmClient client, SynapseGeoBackupPolicyData data) : this(client, data.Id)

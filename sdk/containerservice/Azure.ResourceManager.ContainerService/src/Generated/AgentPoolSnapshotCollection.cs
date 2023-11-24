@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgentPoolSnapshotResource" /> and their operations.
-    /// Each <see cref="AgentPoolSnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AgentPoolSnapshotCollection" /> instance call the GetAgentPoolSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AgentPoolSnapshotResource"/> and their operations.
+    /// Each <see cref="AgentPoolSnapshotResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AgentPoolSnapshotCollection"/> instance call the GetAgentPoolSnapshots method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AgentPoolSnapshotCollection : ArmCollection, IEnumerable<AgentPoolSnapshotResource>, IAsyncEnumerable<AgentPoolSnapshotResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgentPoolSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgentPoolSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

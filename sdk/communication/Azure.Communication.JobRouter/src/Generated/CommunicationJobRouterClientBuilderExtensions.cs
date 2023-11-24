@@ -9,14 +9,14 @@ using System;
 using Azure.Communication.JobRouter;
 using Azure.Core.Extensions;
 
-namespace Microsoft.Extensions.Azure
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Extension methods to add <see cref="JobRouterAdministrationClient"/>, <see cref="JobRouterClient"/> to client builder. </summary>
-    public static partial class CommunicationJobRouterClientBuilderExtensions
+    internal static partial class CommunicationJobRouterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="endpoint"> Uri of your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="endpoint"> Uri of your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {

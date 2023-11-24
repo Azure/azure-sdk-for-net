@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentDetectorResource" /> and their operations.
-    /// Each <see cref="HostingEnvironmentDetectorResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
-    /// To get a <see cref="HostingEnvironmentDetectorCollection" /> instance call the GetHostingEnvironmentDetectors method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// A class representing a collection of <see cref="HostingEnvironmentDetectorResource"/> and their operations.
+    /// Each <see cref="HostingEnvironmentDetectorResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
+    /// To get a <see cref="HostingEnvironmentDetectorCollection"/> instance call the GetHostingEnvironmentDetectors method from an instance of <see cref="AppServiceEnvironmentResource"/>.
     /// </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetectorResource>, IAsyncEnumerable<HostingEnvironmentDetectorResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HostingEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

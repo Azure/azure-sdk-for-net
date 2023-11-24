@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
     public partial class QueueAndMatchMode : JobMatchingMode
     {
         /// <summary> Initializes a new instance of QueueAndMatchMode. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal QueueAndMatchMode(string kind) : base(kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        internal QueueAndMatchMode(JobMatchingModeKind kind) : base(kind)
         {
         }
     }

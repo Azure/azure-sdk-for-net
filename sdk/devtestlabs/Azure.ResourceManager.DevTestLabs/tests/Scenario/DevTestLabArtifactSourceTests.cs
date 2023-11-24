@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Tests
 {
+    [NonParallelizable]
     internal class DevTestLabArtifactSourceTests : DevTestLabsManagementTestBase
     {
         private DevTestLabArtifactSourceCollection _artifactSourceCollection => TestDevTestLab.GetDevTestLabArtifactSources();

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseRestoreDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseRestoreDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseRestoreDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseRestoreDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseRestoreDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseRestoreDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedDatabaseRestoreDetail method.
     /// </summary>
     public partial class ManagedDatabaseRestoreDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseRestoreDetailResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="restoreDetailsName"> The restoreDetailsName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RestoreDetailsName restoreDetailsName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseRestoreDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseRestoreDetailResource(ArmClient client, ManagedDatabaseRestoreDetailData data) : this(client, data.Id)

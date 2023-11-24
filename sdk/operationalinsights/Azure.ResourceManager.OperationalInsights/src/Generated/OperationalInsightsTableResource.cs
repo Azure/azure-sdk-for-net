@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsTable method.
     /// </summary>
     public partial class OperationalInsightsTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="tableName"> The tableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string tableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsTableResource(ArmClient client, OperationalInsightsTableData data) : this(client, data.Id)

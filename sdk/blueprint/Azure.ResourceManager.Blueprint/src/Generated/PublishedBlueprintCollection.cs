@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PublishedBlueprintResource" /> and their operations.
-    /// Each <see cref="PublishedBlueprintResource" /> in the collection will belong to the same instance of <see cref="BlueprintResource" />.
-    /// To get a <see cref="PublishedBlueprintCollection" /> instance call the GetPublishedBlueprints method from an instance of <see cref="BlueprintResource" />.
+    /// A class representing a collection of <see cref="PublishedBlueprintResource"/> and their operations.
+    /// Each <see cref="PublishedBlueprintResource"/> in the collection will belong to the same instance of <see cref="BlueprintResource"/>.
+    /// To get a <see cref="PublishedBlueprintCollection"/> instance call the GetPublishedBlueprints method from an instance of <see cref="BlueprintResource"/>.
     /// </summary>
     public partial class PublishedBlueprintCollection : ArmCollection
     {

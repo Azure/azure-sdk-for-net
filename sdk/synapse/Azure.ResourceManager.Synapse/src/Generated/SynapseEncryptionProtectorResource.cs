@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseEncryptionProtector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseEncryptionProtectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseEncryptionProtectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseEncryptionProtector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseEncryptionProtectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseEncryptionProtectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseEncryptionProtector method.
     /// </summary>
     public partial class SynapseEncryptionProtectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseEncryptionProtectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="encryptionProtectorName"> The encryptionProtectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, SynapseEncryptionProtectorName encryptionProtectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseEncryptionProtectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseEncryptionProtectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseEncryptionProtectorResource(ArmClient client, SynapseEncryptionProtectorData data) : this(client, data.Id)

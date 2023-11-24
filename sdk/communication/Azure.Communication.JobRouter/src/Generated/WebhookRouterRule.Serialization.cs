@@ -21,9 +21,9 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<Uri> authorizationServerUri = default;
-            Optional<Oauth2ClientCredential> clientCredential = default;
+            Optional<OAuth2WebhookClientCredential> clientCredential = default;
             Optional<Uri> webhookUri = default;
-            string kind = default;
+            RouterRuleKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerUri"u8))
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    clientCredential = Oauth2ClientCredential.DeserializeOauth2ClientCredential(property.Value);
+                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value);
                     continue;
                 }
                 if (property.NameEquals("webhookUri"u8))
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RouterRuleKind(property.Value.GetString());
                     continue;
                 }
             }

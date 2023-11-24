@@ -7,17 +7,15 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExpressionRouterRule")]
-    [CodeGenSuppress("ExpressionRouterRule", typeof(string), typeof(string))]
     public partial class ExpressionRouterRule : IUtf8JsonSerializable
     {
-        /// <summary> The available expression languages that can be configured. </summary>
-        public string Language { get; }
+        /// <summary> The expression language to compile to and execute. </summary>
+        internal string Language { get; }
 
-        /// <summary> Initializes a new instance of ExpressionRule. </summary>
-        /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
+        /// <summary> Initializes a new instance of an expression rule. </summary>
+        /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public ExpressionRouterRule(string expression) : this("expression-rule", ExpressionRouterRuleLanguage.PowerFx.ToString(), expression)
+        public ExpressionRouterRule(string expression) : this(RouterRuleKind.Expression, ExpressionRouterRuleLanguage.PowerFx.ToString(), expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
         }
@@ -33,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

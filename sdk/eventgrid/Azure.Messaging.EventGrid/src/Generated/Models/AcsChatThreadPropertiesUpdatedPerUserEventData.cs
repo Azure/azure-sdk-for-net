@@ -17,6 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedPerUserEventData. </summary>
         internal AcsChatThreadPropertiesUpdatedPerUserEventData()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -28,11 +29,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the thread. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version)
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
+            Metadata = metadata;
             Properties = properties;
         }
 
@@ -40,6 +43,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public CommunicationIdentifierModel EditedByCommunicationIdentifier { get; }
         /// <summary> The time at which the properties of the thread were updated. </summary>
         public DateTimeOffset? EditTime { get; }
+        /// <summary> The thread metadata. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> The updated thread properties. </summary>
         public IReadOnlyDictionary<string, object> Properties { get; }
     }

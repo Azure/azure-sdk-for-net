@@ -10,6 +10,21 @@
 
 ### Other Changes
 
+## 5.13.4 (2023-11-09)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.
+  Identity`.
+
+## 5.13.3 (2023-10-20)
+
+### Bugs Fixed
+
+- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+  an exception from out of proc extension.
+- Include underlying exception details in RpcException when a failure occurs.
+
 ## 5.13.2 (2023-10-18)
 
 ### Other Changes

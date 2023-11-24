@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudAgentPoolResource" /> and their operations.
-    /// Each <see cref="NetworkCloudAgentPoolResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudKubernetesClusterResource" />.
-    /// To get a <see cref="NetworkCloudAgentPoolCollection" /> instance call the GetNetworkCloudAgentPools method from an instance of <see cref="NetworkCloudKubernetesClusterResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudAgentPoolResource"/> and their operations.
+    /// Each <see cref="NetworkCloudAgentPoolResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
+    /// To get a <see cref="NetworkCloudAgentPoolCollection"/> instance call the GetNetworkCloudAgentPools method from an instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
     /// </summary>
     public partial class NetworkCloudAgentPoolCollection : ArmCollection, IEnumerable<NetworkCloudAgentPoolResource>, IAsyncEnumerable<NetworkCloudAgentPoolResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -22,8 +22,8 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "schedule-and-suspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element);
-                    case "queue-and-match": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element);
+                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element);
+                    case "queueAndMatch": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element);
                     case "suspend": return SuspendMode.DeserializeSuspendMode(element);
                 }
             }

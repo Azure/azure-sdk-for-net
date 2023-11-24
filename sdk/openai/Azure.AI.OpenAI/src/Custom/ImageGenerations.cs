@@ -5,10 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -19,39 +17,31 @@ namespace Azure.AI.OpenAI
         /// <summary>
         ///     Gets a list of generated image items in the format specified for the request.
         /// </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeDataProperty))]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeDataProperty), DeserializationValueHook = nameof(DeserializeDataProperty))]
         public IReadOnlyList<ImageLocation> Data { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializeDataProperty(Utf8JsonWriter writer)
+        {
+            // CUSTOM CODE NOTE: we always need to specify the serialization code explicitly when we change the type of a property
+            writer.WriteStartArray();
+            foreach (var item in Data)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializeDataProperty(JsonProperty property, ref IReadOnlyList<ImageLocation> data)
         {
-            // CUSTOM CODE NOTE: this hook for Data is needed pending improved codegen support for union types; it
-            //                      otherwise generates with "property.Value.()"
+            // CUSTOM CODE NOTE: we always need to specify the serialization code explicitly when we change the type of a property
             List<ImageLocation> array = new List<ImageLocation>();
             foreach (var item in property.Value.EnumerateArray())
             {
                 array.Add(ImageLocation.DeserializeImageLocation(item));
             }
             data = array;
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageGenerations FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            JsonElement element = document.RootElement;
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.NameEquals("result"u8))
-                {
-                    //we have the envelop and need to deserialize the inner object
-                    //https://github.com/Azure/autorest.csharp/issues/3837
-                    element = property.Value;
-                    break;
-                }
-            }
-            return DeserializeImageGenerations(element);
         }
     }
 }

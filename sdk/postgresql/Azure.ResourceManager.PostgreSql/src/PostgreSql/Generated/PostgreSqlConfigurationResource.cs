@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource"/> using the GetPostgreSqlConfiguration method.
     /// </summary>
     public partial class PostgreSqlConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/configurations/{configurationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlConfigurationResource(ArmClient client, PostgreSqlConfigurationData data) : this(client, data.Id)

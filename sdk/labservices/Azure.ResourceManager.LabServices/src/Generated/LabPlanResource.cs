@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
     /// A Class representing a LabPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLabPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLabPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLabPlan method.
     /// </summary>
     public partial class LabPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LabPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labPlanName"> The labPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.LabServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LabPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LabPlanResource(ArmClient client, LabPlanData data) : this(client, data.Id)
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabVirtualMachineImageResources and their operations over a LabVirtualMachineImageResource. </returns>
         public virtual LabVirtualMachineImageCollection GetLabVirtualMachineImages()
         {
-            return GetCachedClient(Client => new LabVirtualMachineImageCollection(Client, Id));
+            return GetCachedClient(client => new LabVirtualMachineImageCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.LabServices
         /// </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LabVirtualMachineImageResource>> GetLabVirtualMachineImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.LabServices
         /// </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LabVirtualMachineImageResource> GetLabVirtualMachineImage(string imageName, CancellationToken cancellationToken = default)
         {

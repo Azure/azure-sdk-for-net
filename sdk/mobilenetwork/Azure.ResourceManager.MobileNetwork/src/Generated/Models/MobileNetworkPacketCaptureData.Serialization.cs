@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<long> bytesToCapturePerPacket = default;
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
+            Optional<IReadOnlyList<string>> outputFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,11 +177,25 @@ namespace Azure.ResourceManager.MobileNetwork
                             timeLimitInSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("outputFiles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            outputFiles = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), Optional.ToList(networkInterfaces), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds));
+            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), Optional.ToList(networkInterfaces), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), Optional.ToList(outputFiles));
         }
     }
 }

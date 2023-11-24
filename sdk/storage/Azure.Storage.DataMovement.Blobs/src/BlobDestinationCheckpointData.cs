@@ -1,28 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
-using static Azure.Storage.DataMovement.JobPlanExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDestinationCheckpointData : StorageResourceCheckpointData
+    internal class BlobDestinationCheckpointData : BlobCheckpointData
     {
-        /// <summary>
-        /// Schema version.
-        /// </summary>
-        public int Version;
-
-        /// <summary>
-        /// The type of the destination blob.
-        /// </summary>
-        public BlobType BlobType;
-
         /// <summary>
         /// The content headers for the destination blob.
         /// </summary>
@@ -50,12 +40,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public Tags Tags;
         private byte[] _tagsBytes;
 
-        /// <summary>
-        /// The encryption scope to use when uploading the destination blob.
-        /// </summary>
-        public string CpkScope;
-        private byte[] _cpkScopeBytes;
-
         public override int Length => CalculateLength();
 
         public BlobDestinationCheckpointData(
@@ -63,31 +47,27 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobHttpHeaders contentHeaders,
             AccessTier? accessTier,
             Metadata metadata,
-            Tags blobTags,
-            string cpkScope)
+            Tags blobTags)
+            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
         {
-            Version = DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion;
-            BlobType = blobType;
             ContentHeaders = contentHeaders;
-            _contentTypeBytes = ContentHeaders?.ContentType != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentType) : new byte[0];
-            _contentEncodingBytes = ContentHeaders?.ContentEncoding != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentEncoding) : new byte[0];
-            _contentLanguageBytes = ContentHeaders?.ContentLanguage != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentLanguage) : new byte[0];
-            _contentDispositionBytes = ContentHeaders?.ContentDisposition != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentDisposition) : new byte[0];
-            _cacheControlBytes = ContentHeaders?.CacheControl != default ? Encoding.UTF8.GetBytes(ContentHeaders.CacheControl) : new byte[0];
+            _contentTypeBytes = ContentHeaders?.ContentType != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentType) : Array.Empty<byte>();
+            _contentEncodingBytes = ContentHeaders?.ContentEncoding != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentEncoding) : Array.Empty<byte>();
+            _contentLanguageBytes = ContentHeaders?.ContentLanguage != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentLanguage) : Array.Empty<byte>();
+            _contentDispositionBytes = ContentHeaders?.ContentDisposition != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentDisposition) : Array.Empty<byte>();
+            _cacheControlBytes = ContentHeaders?.CacheControl != default ? Encoding.UTF8.GetBytes(ContentHeaders.CacheControl) : Array.Empty<byte>();
             AccessTier = accessTier;
             Metadata = metadata;
-            _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : new byte[0];
+            _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : Array.Empty<byte>();
             Tags = blobTags;
-            _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : new byte[0];
-            CpkScope = cpkScope;
-            _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : new byte[0];
+            _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : Array.Empty<byte>();
         }
 
         protected override void Serialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex;
+            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
@@ -97,31 +77,28 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write((byte)BlobType);
 
             // ContentType offset/length
-            WriteVariableLengthFieldInfo(writer, _contentTypeBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_contentTypeBytes.Length, ref currentVariableLengthIndex);
 
             // ContentEncoding offset/length
-            WriteVariableLengthFieldInfo(writer, _contentEncodingBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_contentEncodingBytes.Length, ref currentVariableLengthIndex);
 
             // ContentLanguage offset/length
-            WriteVariableLengthFieldInfo(writer, _contentLanguageBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_contentLanguageBytes.Length, ref currentVariableLengthIndex);
 
             // ContentDisposition offset/length
-            WriteVariableLengthFieldInfo(writer, _contentDispositionBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_contentDispositionBytes.Length, ref currentVariableLengthIndex);
 
             // CacheControl offset/length
-            WriteVariableLengthFieldInfo(writer, _cacheControlBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_cacheControlBytes.Length, ref currentVariableLengthIndex);
 
             // AccessTier
             writer.Write((byte)AccessTier.ToJobPlanAccessTier());
 
             // Metadata offset/length
-            WriteVariableLengthFieldInfo(writer, _metadataBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_metadataBytes.Length, ref currentVariableLengthIndex);
 
             // Tags offset/length
-            WriteVariableLengthFieldInfo(writer, _tagsBytes, ref currentVariableLengthIndex);
-
-            // CpkScope offset/length
-            WriteVariableLengthFieldInfo(writer, _cpkScopeBytes, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_tagsBytes.Length, ref currentVariableLengthIndex);
 
             writer.Write(_contentTypeBytes);
             writer.Write(_contentEncodingBytes);
@@ -130,7 +107,6 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write(_cacheControlBytes);
             writer.Write(_metadataBytes);
             writer.Write(_tagsBytes);
-            writer.Write(_cpkScopeBytes);
         }
 
         internal static BlobDestinationCheckpointData Deserialize(Stream stream)
@@ -141,7 +117,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            CheckSchemaVersion(version);
+            if (version != DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+            }
 
             // BlobType
             BlobType blobType = (BlobType)reader.ReadByte();
@@ -168,7 +147,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // AccessTier
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
-            AccessTier accessTier = new AccessTier(jobPlanAccessTier.ToString());
+            AccessTier? accessTier = default;
+            if (!jobPlanAccessTier.Equals(JobPlanAccessTier.None))
+            {
+                accessTier = new AccessTier(jobPlanAccessTier.ToString());
+            }
 
             // Metadata offset/length
             int metadataOffset = reader.ReadInt32();
@@ -177,10 +160,6 @@ namespace Azure.Storage.DataMovement.Blobs
             // Tags offset/length
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
-
-            // CpkScope offset/length
-            int cpkScopeOffset = reader.ReadInt32();
-            int cpkScopeLength = reader.ReadInt32();
 
             // ContentType
             string contentType = null;
@@ -238,14 +217,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }
 
-            // CpkScope
-            string cpkScope = null;
-            if (cpkScopeOffset > 0)
-            {
-                reader.BaseStream.Position = cpkScopeOffset;
-                cpkScope = reader.ReadBytes(cpkScopeLength).AsString();
-            }
-
             BlobHttpHeaders contentHeaders = new BlobHttpHeaders()
             {
                 ContentType = contentType,
@@ -260,14 +231,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 contentHeaders,
                 accessTier,
                 metadataString.ToDictionary(nameof(metadataString)),
-                tagsString.ToDictionary(nameof(tagsString)),
-                cpkScope);
+                tagsString.ToDictionary(nameof(tagsString)));
         }
 
         private int CalculateLength()
         {
             // Length is fixed size fields plus length of each variable length field
-            int length = DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex;
+            int length = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             length += _contentTypeBytes.Length;
             length += _contentEncodingBytes.Length;
             length += _contentLanguageBytes.Length;
@@ -275,16 +245,7 @@ namespace Azure.Storage.DataMovement.Blobs
             length += _cacheControlBytes.Length;
             length += _metadataBytes.Length;
             length += _tagsBytes.Length;
-            length += _cpkScopeBytes.Length;
             return length;
-        }
-
-        private static void CheckSchemaVersion(int version)
-        {
-            if (version != DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion)
-            {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
-            }
         }
     }
 }

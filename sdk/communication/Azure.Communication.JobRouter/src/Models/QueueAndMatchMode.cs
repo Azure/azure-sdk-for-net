@@ -9,13 +9,12 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Used to specify default behavior of greedy matching of jobs and worker.
     /// </summary>
-    [CodeGenModel("QueueAndMatchMode")]
     public partial class QueueAndMatchMode : IUtf8JsonSerializable
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        public QueueAndMatchMode() : this("queue-and-match")
+        public QueueAndMatchMode() : this(JobMatchingModeKind.QueueAndMatch)
         {
         }
 
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

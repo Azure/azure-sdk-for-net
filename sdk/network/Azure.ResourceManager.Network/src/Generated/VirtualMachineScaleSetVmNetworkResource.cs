@@ -19,11 +19,15 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class extending from the VirtualMachineScaleSetVmResource in Azure.ResourceManager.Network along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="VirtualMachineScaleSetVmNetworkResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Compute/virtualMachineScaleSets/virtualMachines.
+    /// You can only construct a <see cref="VirtualMachineScaleSetVmNetworkResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Compute/virtualMachineScaleSets/virtualMachines.
     /// </summary>
     public partial class VirtualMachineScaleSetVmNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetVmNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName. </param>
+        /// <param name="virtualmachineIndex"> The virtualmachineIndex. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}";

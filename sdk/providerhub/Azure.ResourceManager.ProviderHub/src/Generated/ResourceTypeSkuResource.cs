@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a ResourceTypeSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceTypeSkuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceTypeSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource" /> using the GetResourceTypeSku method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceTypeSkuResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceTypeSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetResourceTypeSku method.
     /// </summary>
     public partial class ResourceTypeSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceTypeSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="sku"> The sku. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string sku)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceTypeSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceTypeSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceTypeSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)

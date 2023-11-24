@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a Probe along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProbeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProbeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource" /> using the GetProbe method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProbeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProbeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource"/> using the GetProbe method.
     /// </summary>
     public partial class ProbeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProbeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        /// <param name="probeName"> The probeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string probeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProbeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProbeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProbeResource(ArmClient client, ProbeData data) : this(client, data.Id)
