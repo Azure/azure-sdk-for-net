@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointCertificateRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointCertificateRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EndpointCertificateResource(Client, EndpointCertificateData.DeserializeEndpointCertificateData(e)), _endpointCertificateClientDiagnostics, Pipeline, "EndpointCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EndpointCertificateResource(Client, EndpointCertificateData.DeserializeEndpointCertificateData(e)), _endpointCertificateClientDiagnostics, Pipeline, "EndpointCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointCertificateRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointCertificateRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EndpointCertificateResource(Client, EndpointCertificateData.DeserializeEndpointCertificateData(e)), _endpointCertificateClientDiagnostics, Pipeline, "EndpointCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EndpointCertificateResource(Client, EndpointCertificateData.DeserializeEndpointCertificateData(e)), _endpointCertificateClientDiagnostics, Pipeline, "EndpointCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

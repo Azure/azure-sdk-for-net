@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM P1 for GCP offering. </summary>
     public partial class DefenderCspmGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderCspmGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOffering"/>. </summary>
         public DefenderCspmGcpOffering()
         {
             OfferingType = OfferingType.DefenderCspmGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        internal DefenderCspmGcpOffering(OfferingType offeringType, string description) : base(offeringType, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {
             OfferingType = offeringType;
         }

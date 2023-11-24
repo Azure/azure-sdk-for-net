@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of the table in the database full schema. </summary>
     public partial class SyncFullSchemaTable
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTable"/>. </summary>
         internal SyncFullSchemaTable()
         {
             Columns = new ChangeTrackingList<SyncFullSchemaTableColumn>();
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTable"/>. </summary>
         /// <param name="columns"> List of columns in the table of database full schema. </param>
         /// <param name="errorId"> Error id of the table. </param>
         /// <param name="hasError"> If there is error in the table. </param>
         /// <param name="name"> Name of the table. </param>
         /// <param name="quotedName"> Quoted name of the table. </param>
-        internal SyncFullSchemaTable(IReadOnlyList<SyncFullSchemaTableColumn> columns, string errorId, bool? hasError, string name, string quotedName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncFullSchemaTable(IReadOnlyList<SyncFullSchemaTableColumn> columns, string errorId, bool? hasError, string name, string quotedName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
             ErrorId = errorId;
             HasError = hasError;
             Name = name;
             QuotedName = quotedName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of columns in the table of database full schema. </summary>

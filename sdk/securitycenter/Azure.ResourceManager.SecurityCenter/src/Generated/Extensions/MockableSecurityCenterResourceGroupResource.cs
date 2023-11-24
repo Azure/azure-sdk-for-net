@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

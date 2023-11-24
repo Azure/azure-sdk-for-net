@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
@@ -14,20 +17,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public abstract partial class SecurityInsightsAutomationRuleAction
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleAction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
         /// <param name="order"></param>
         protected SecurityInsightsAutomationRuleAction(int order)
         {
             Order = order;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
-        internal SecurityInsightsAutomationRuleAction(int order, ActionType actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAutomationRuleAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Order = order;
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/> for deserialization. </summary>
+        internal SecurityInsightsAutomationRuleAction()
+        {
         }
 
         /// <summary> Gets or sets the order. </summary>

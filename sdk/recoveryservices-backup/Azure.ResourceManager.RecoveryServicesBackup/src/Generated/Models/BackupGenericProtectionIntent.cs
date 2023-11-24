@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -16,19 +18,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupGenericProtectionIntent
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectionIntent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionIntent"/>. </summary>
         protected BackupGenericProtectionIntent()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        internal BackupGenericProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectionIntentItemType = protectionIntentItemType;
             BackupManagementType = backupManagementType;
@@ -36,6 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ItemId = itemId;
             PolicyId = policyId;
             ProtectionState = protectionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> backup protectionIntent type. </summary>

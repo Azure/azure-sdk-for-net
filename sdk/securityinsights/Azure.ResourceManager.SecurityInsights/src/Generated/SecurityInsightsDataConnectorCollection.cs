@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsDataConnectorDataConnectorsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsDataConnectorDataConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsDataConnectorResource(Client, SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(e)), _securityInsightsDataConnectorDataConnectorsClientDiagnostics, Pipeline, "SecurityInsightsDataConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsDataConnectorResource(Client, SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(e)), _securityInsightsDataConnectorDataConnectorsClientDiagnostics, Pipeline, "SecurityInsightsDataConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsDataConnectorDataConnectorsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsDataConnectorDataConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsDataConnectorResource(Client, SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(e)), _securityInsightsDataConnectorDataConnectorsClientDiagnostics, Pipeline, "SecurityInsightsDataConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsDataConnectorResource(Client, SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(e)), _securityInsightsDataConnectorDataConnectorsClientDiagnostics, Pipeline, "SecurityInsightsDataConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

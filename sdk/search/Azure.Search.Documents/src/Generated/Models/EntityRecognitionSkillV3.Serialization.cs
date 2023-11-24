@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class EntityRecognitionSkillV3 : IUtf8JsonSerializable
+    internal partial class EntityRecognitionSkillV3 : IUtf8JsonSerializable, IJsonModel<EntityRecognitionSkillV3>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityRecognitionSkillV3>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EntityRecognitionSkillV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityRecognitionSkillV3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EntityRecognitionSkillV3)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -93,11 +104,40 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EntityRecognitionSkillV3 DeserializeEntityRecognitionSkillV3(JsonElement element)
+        EntityRecognitionSkillV3 IJsonModel<EntityRecognitionSkillV3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityRecognitionSkillV3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EntityRecognitionSkillV3)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntityRecognitionSkillV3(document.RootElement, options);
+        }
+
+        internal static EntityRecognitionSkillV3 DeserializeEntityRecognitionSkillV3(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,6 +152,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categories"u8))
@@ -198,8 +240,44 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EntityRecognitionSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), modelVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EntityRecognitionSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, serializedAdditionalRawData, Optional.ToList(categories), defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), modelVersion.Value);
         }
+
+        BinaryData IPersistableModel<EntityRecognitionSkillV3>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityRecognitionSkillV3>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EntityRecognitionSkillV3)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EntityRecognitionSkillV3 IPersistableModel<EntityRecognitionSkillV3>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityRecognitionSkillV3>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEntityRecognitionSkillV3(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EntityRecognitionSkillV3)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EntityRecognitionSkillV3>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

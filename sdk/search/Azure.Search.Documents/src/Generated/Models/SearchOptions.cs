@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Search.Documents.Models;
@@ -14,7 +15,39 @@ namespace Azure.Search.Documents
     /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
     public partial class SearchOptions
     {
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
             Facets = new ChangeTrackingList<string>();
@@ -22,7 +55,7 @@ namespace Azure.Search.Documents
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
@@ -53,7 +86,8 @@ namespace Azure.Search.Documents
         /// The available derived classes include <see cref="VectorizedQuery"/>.
         /// </param>
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string queryAnswerRaw, string queryCaptionRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string queryAnswerRaw, string queryCaptionRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -81,6 +115,7 @@ namespace Azure.Search.Documents
             QueryCaptionRaw = queryCaptionRaw;
             VectorQueries = vectorQueries;
             FilterMode = filterMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </summary>
         public string HighlightPostTag { get; set; }

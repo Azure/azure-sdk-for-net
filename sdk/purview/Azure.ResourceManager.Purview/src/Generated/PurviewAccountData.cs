@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PurviewAccountData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.Purview
         /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
         /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
         /// <param name="identity"> Identity Info on the tracked resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CloudConnectors = cloudConnectors;
@@ -64,6 +97,12 @@ namespace Azure.ResourceManager.Purview
             ProvisioningState = provisioningState;
             PublicNetworkAccess = publicNetworkAccess;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
+        internal PurviewAccountData()
+        {
         }
 
         /// <summary> Gets or sets the Sku. </summary>

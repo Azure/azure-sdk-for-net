@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

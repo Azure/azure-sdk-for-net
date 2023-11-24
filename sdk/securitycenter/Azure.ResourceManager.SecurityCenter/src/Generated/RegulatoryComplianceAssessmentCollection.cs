@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceAssessmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceAssessmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

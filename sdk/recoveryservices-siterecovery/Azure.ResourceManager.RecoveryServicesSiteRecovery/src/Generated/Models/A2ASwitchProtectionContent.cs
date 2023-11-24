@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A specific switch protection input. </summary>
     public partial class A2ASwitchProtectionContent : SwitchProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2ASwitchProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
         public A2ASwitchProtectionContent()
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
             VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
             InstanceType = "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="vmDisks"> The list of vm disk details. </param>
+        /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
+        /// <param name="recoveryCloudServiceId"> The recovery cloud service Id. Valid for V1 scenarios. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The boot diagnostic storage account. </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information. </param>
+        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryContainerId = recoveryContainerId;
+            VmDisks = vmDisks;
+            VmManagedDisks = vmManagedDisks;
+            RecoveryResourceGroupId = recoveryResourceGroupId;
+            RecoveryCloudServiceId = recoveryCloudServiceId;
+            RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            PolicyId = policyId;
+            RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
+            RecoveryAvailabilityZone = recoveryAvailabilityZone;
+            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
+            RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
+            RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
+            DiskEncryptionInfo = diskEncryptionInfo;
+            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery container Id. </summary>

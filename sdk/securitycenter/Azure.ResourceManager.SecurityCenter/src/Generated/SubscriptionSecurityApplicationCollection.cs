@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

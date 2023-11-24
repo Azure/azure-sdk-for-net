@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Fusion alert rule. </summary>
     public partial class SecurityInsightsFusionAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
         public SecurityInsightsFusionAlertRule()
         {
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
@@ -25,13 +25,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.Fusion;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
-        internal SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;

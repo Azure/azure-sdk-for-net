@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KeepTokenFilter : IUtf8JsonSerializable
+    public partial class KeepTokenFilter : IUtf8JsonSerializable, IJsonModel<KeepTokenFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeepTokenFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KeepTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeepTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeepTokenFilter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keepWords"u8);
             writer.WriteStartArray();
@@ -32,11 +43,40 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeepTokenFilter DeserializeKeepTokenFilter(JsonElement element)
+        KeepTokenFilter IJsonModel<KeepTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeepTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeepTokenFilter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeepTokenFilter(document.RootElement, options);
+        }
+
+        internal static KeepTokenFilter DeserializeKeepTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +85,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool> keepWordsCase = default;
             string odataType = default;
             string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keepWords"u8))
@@ -76,8 +118,44 @@ namespace Azure.Search.Documents.Indexes.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeepTokenFilter(odataType, name, keepWords, Optional.ToNullable(keepWordsCase));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeepTokenFilter(odataType, name, serializedAdditionalRawData, keepWords, Optional.ToNullable(keepWordsCase));
         }
+
+        BinaryData IPersistableModel<KeepTokenFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeepTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeepTokenFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeepTokenFilter IPersistableModel<KeepTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeepTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeepTokenFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeepTokenFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeepTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,16 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents job details based on specific job type. </summary>
     public partial class AsrJobDetails : SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of AsrJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsrJobDetails"/>. </summary>
         internal AsrJobDetails()
         {
             InstanceType = "AsrJobDetails";
         }
 
-        /// <summary> Initializes a new instance of AsrJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsrJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        internal AsrJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AsrJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "AsrJobDetails";
         }

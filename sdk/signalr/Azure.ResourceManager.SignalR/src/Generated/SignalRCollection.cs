@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), _signalRClientDiagnostics, Pipeline, "SignalRCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), _signalRClientDiagnostics, Pipeline, "SignalRCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), _signalRClientDiagnostics, Pipeline, "SignalRCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), _signalRClientDiagnostics, Pipeline, "SignalRCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

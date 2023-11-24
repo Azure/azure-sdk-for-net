@@ -6,15 +6,114 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class RenderingSession
+    public partial class RenderingSession : IUtf8JsonSerializable, IJsonModel<RenderingSession>
     {
-        internal static RenderingSession DeserializeRenderingSession(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenderingSession>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RenderingSession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RenderingSession>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RenderingSession)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(SessionId);
+            if (options.Format != "W" && Optional.IsDefined(ArrInspectorPort))
+            {
+                writer.WritePropertyName("arrInspectorPort"u8);
+                writer.WriteNumberValue(ArrInspectorPort.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HandshakePort))
+            {
+                writer.WritePropertyName("handshakePort"u8);
+                writer.WriteNumberValue(HandshakePort.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ElapsedTimeMinutes))
+            {
+                writer.WritePropertyName("elapsedTimeMinutes"u8);
+                writer.WriteNumberValue(ElapsedTimeMinutes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Host))
+            {
+                writer.WritePropertyName("hostname"u8);
+                writer.WriteStringValue(Host);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxLeaseTimeMinutes))
+            {
+                writer.WritePropertyName("maxLeaseTimeMinutes"u8);
+                writer.WriteNumberValue(MaxLeaseTimeMinutes.Value);
+            }
+            writer.WritePropertyName("size"u8);
+            writer.WriteStringValue(Size.ToString());
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Teraflops))
+            {
+                writer.WritePropertyName("teraflops"u8);
+                writer.WriteNumberValue(Teraflops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+                else
+                {
+                    writer.WriteNull("error");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RenderingSession IJsonModel<RenderingSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenderingSession>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RenderingSession)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRenderingSession(document.RootElement, options);
+        }
+
+        internal static RenderingSession DeserializeRenderingSession(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +129,8 @@ namespace Azure.MixedReality.RemoteRendering
             Optional<float> teraflops = default;
             Optional<RemoteRenderingServiceError> error = default;
             Optional<DateTimeOffset> creationTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,8 +217,44 @@ namespace Azure.MixedReality.RemoteRendering
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RenderingSession(id, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), size, status, Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RenderingSession(id, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), size, status, Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RenderingSession>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenderingSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RenderingSession)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RenderingSession IPersistableModel<RenderingSession>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenderingSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRenderingSession(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RenderingSession)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RenderingSession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

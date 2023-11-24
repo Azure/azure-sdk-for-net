@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
