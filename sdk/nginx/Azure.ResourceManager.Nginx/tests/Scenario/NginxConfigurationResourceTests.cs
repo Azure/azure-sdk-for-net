@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsTrue(nginxConfiguration.HasData);
             Assert.NotNull(nginxConfiguration.Data);
             Assert.IsTrue(nginxConfiguration.Data.Name.Equals(nginxConfigurationName));
+            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProvisioningState);
+            Assert.True(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath));
+            Assert.True(nginxConfiguration.Data.Properties.Files.Count != 0);
         }
 
         [TestCase]
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource response = await nginxConfiguration.GetAsync();
 
-            ResourceDataHelper.AssertTrackedResource(nginxConfiguration.Data, response.Data);
+            ResourceDataHelper.AssertResourceData(nginxConfiguration.Data, response.Data);
         }
 
         [TestCase]
@@ -112,7 +115,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             configurationProperties.RootFile = rootConfigFile.VirtualPath;
             configurationProperties.Files.Add(rootConfigFile);
 
-            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData(Location);
+            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData();
+            nginxConfigurationData.Location = Location;
             nginxConfigurationData.Properties = configurationProperties;
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationData)).Value;
 

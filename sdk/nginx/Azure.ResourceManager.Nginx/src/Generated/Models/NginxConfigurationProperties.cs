@@ -42,19 +42,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets the protected files. </summary>
         public IList<NginxConfigurationFile> ProtectedFiles { get; }
         /// <summary> Gets or sets the package. </summary>
-        internal NginxConfigurationPackage Package { get; set; }
-        /// <summary> Gets or sets the package data. </summary>
-        public string PackageData
-        {
-            get => Package is null ? default : Package.Data;
-            set
-            {
-                if (Package is null)
-                    Package = new NginxConfigurationPackage();
-                Package.Data = value;
-            }
-        }
-
+        public NginxConfigurationPackage Package { get; set; }
         /// <summary> Gets or sets the root file. </summary>
         public string RootFile { get; set; }
     }

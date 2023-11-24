@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
