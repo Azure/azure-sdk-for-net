@@ -15,7 +15,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
         }
 
-        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task RemoveAUserCallTest()
         {
@@ -113,7 +112,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         /// 5. Cancel the add participant
         /// </summary>
         /// <returns></returns>
-        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task CancelAddParticipantTest()
         {
@@ -166,7 +164,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 await Task.Delay(3000);
 
                 // cancel add participant
-                await callConnection.CancelAddParticipantOperationAsync(addParticipantResponse.Value.InvitationId);
+                CancelAddParticipantOperationOptions cancelOption = new CancelAddParticipantOperationOptions(addParticipantResponse.Value.InvitationId)
+                {
+                    OperationContext = operationContext,
+                };
+                await callConnection.CancelAddParticipantOperationAsync(cancelOption);
 
                 // wait for cancel event
                 var CancelAddParticipantSucceededEvent = await WaitForEvent<CancelAddParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));
