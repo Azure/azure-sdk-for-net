@@ -14,10 +14,53 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of P2S Vpn connection health request. </summary>
     public partial class P2SVpnConnectionHealthContent
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionHealthContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealthContent"/>. </summary>
         public P2SVpnConnectionHealthContent()
         {
             VpnUserNamesFilter = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealthContent"/>. </summary>
+        /// <param name="vpnUserNamesFilter"> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the P2S Vpn connection health detail. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal P2SVpnConnectionHealthContent(IList<string> vpnUserNamesFilter, Uri outputBlobSasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VpnUserNamesFilter = vpnUserNamesFilter;
+            OutputBlobSasUri = outputBlobSasUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </summary>

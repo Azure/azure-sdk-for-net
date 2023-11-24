@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information gained from troubleshooting of specified resource. </summary>
     public partial class TroubleshootingDetails
     {
-        /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingDetails"/>. </summary>
         internal TroubleshootingDetails()
         {
             RecommendedActions = new ChangeTrackingList<TroubleshootingRecommendedActions>();
         }
 
-        /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingDetails"/>. </summary>
         /// <param name="id"> The id of the get troubleshoot operation. </param>
         /// <param name="reasonType"> Reason type of failure. </param>
         /// <param name="summary"> A summary of troubleshooting. </param>
         /// <param name="detail"> Details on troubleshooting results. </param>
         /// <param name="recommendedActions"> List of recommended actions. </param>
-        internal TroubleshootingDetails(string id, string reasonType, string summary, string detail, IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshootingDetails(string id, string reasonType, string summary, string detail, IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ReasonType = reasonType;
             Summary = summary;
             Detail = detail;
             RecommendedActions = recommendedActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the get troubleshoot operation. </summary>

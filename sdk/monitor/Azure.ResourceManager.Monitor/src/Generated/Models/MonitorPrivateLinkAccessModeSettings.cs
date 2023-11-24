@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Properties that define the scope private link mode settings. </summary>
     public partial class MonitorPrivateLinkAccessModeSettings
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkAccessModeSettings"/>. </summary>
         /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         public MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode, MonitorPrivateLinkAccessMode ingestionAccessMode)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Exclusions = new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>();
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkAccessModeSettings"/>. </summary>
         /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         /// <param name="exclusions"> List of exclusions that override the default access mode settings for specific private endpoint connections. </param>
-        internal MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode, MonitorPrivateLinkAccessMode ingestionAccessMode, IList<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode, MonitorPrivateLinkAccessMode ingestionAccessMode, IList<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueryAccessMode = queryAccessMode;
             IngestionAccessMode = ingestionAccessMode;
             Exclusions = exclusions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkAccessModeSettings"/> for deserialization. </summary>
+        internal MonitorPrivateLinkAccessModeSettings()
+        {
         }
 
         /// <summary> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </summary>

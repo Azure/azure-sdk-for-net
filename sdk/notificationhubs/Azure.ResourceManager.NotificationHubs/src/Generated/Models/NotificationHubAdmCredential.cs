@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub AdmCredential. </summary>
     public partial class NotificationHubAdmCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         public NotificationHubAdmCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         /// <param name="clientId"> The client identifier. </param>
         /// <param name="clientSecret"> The credential secret access key. </param>
         /// <param name="authTokenUri"> The URL of the authorization token. </param>
-        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             AuthTokenUri = authTokenUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client identifier. </summary>

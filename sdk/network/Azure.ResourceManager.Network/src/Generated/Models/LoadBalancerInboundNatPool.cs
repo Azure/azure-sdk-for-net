@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,15 +16,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Inbound NAT pool of the load balancer. </summary>
     public partial class LoadBalancerInboundNatPool : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of LoadBalancerInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPool"/>. </summary>
         public LoadBalancerInboundNatPool()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfiguration"> A reference to frontend IP addresses. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        internal LoadBalancerInboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal LoadBalancerInboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;

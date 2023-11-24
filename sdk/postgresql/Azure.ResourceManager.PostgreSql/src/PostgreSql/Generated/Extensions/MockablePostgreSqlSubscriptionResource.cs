@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         public virtual AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetPostgreSqlServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetPostgreSqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         public virtual Pageable<PostgreSqlServerResource> GetPostgreSqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetPostgreSqlServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetPostgreSqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>

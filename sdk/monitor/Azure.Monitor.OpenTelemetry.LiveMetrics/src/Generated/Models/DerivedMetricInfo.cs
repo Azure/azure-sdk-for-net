@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> A metric configuration set by UX to scope the metrics it's interested in. </summary>
     internal partial class DerivedMetricInfo
     {
-        /// <summary> Initializes a new instance of DerivedMetricInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
         internal DerivedMetricInfo()
         {
             FilterGroups = new ChangeTrackingList<FilterConjunctionGroupInfo>();
         }
 
-        /// <summary> Initializes a new instance of DerivedMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
         /// <param name="id"> metric configuration identifier. </param>
         /// <param name="telemetryType"> Telemetry type. </param>
         /// <param name="filterGroups"> A collection of filters to scope metrics that UX needs. </param>
         /// <param name="projection"> Telemetry's metric dimension whose value is to be aggregated. Example values: Duration, Count(),... </param>
         /// <param name="aggregation"> Aggregation type. </param>
-        internal DerivedMetricInfo(string id, string telemetryType, IReadOnlyList<FilterConjunctionGroupInfo> filterGroups, string projection, DerivedMetricInfoAggregation? aggregation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DerivedMetricInfo(string id, string telemetryType, IReadOnlyList<FilterConjunctionGroupInfo> filterGroups, string projection, DerivedMetricInfoAggregation? aggregation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             TelemetryType = telemetryType;
             FilterGroups = filterGroups;
             Projection = projection;
             Aggregation = aggregation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> metric configuration identifier. </summary>

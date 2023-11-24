@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,39 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Categories are used to group other metadata entities. </summary>
     internal partial class MetadataCategory
     {
-        /// <summary> Initializes a new instance of MetadataCategory. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataCategory"/>. </summary>
         /// <param name="id"> The ID of the category. </param>
         /// <param name="displayName"> The display name of the category. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="displayName"/> is null. </exception>
@@ -24,6 +57,26 @@ namespace Azure.Monitor.Query.Models
 
             Id = id;
             DisplayName = displayName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataCategory"/>. </summary>
+        /// <param name="id"> The ID of the category. </param>
+        /// <param name="displayName"> The display name of the category. </param>
+        /// <param name="description"> The description of the category. </param>
+        /// <param name="related"> The related metadata items for the category. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataCategory(string id, string displayName, string description, MetadataCategoryRelated related, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            DisplayName = displayName;
+            Description = description;
+            Related = related;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataCategory"/> for deserialization. </summary>
+        internal MetadataCategory()
+        {
         }
 
         /// <summary> The ID of the category. </summary>

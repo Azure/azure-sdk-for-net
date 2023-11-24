@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Log Settings for Firewall. </summary>
     public partial class FirewallLogSettings
     {
-        /// <summary> Initializes a new instance of FirewallLogSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallLogSettings"/>. </summary>
         public FirewallLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogSettings"/>. </summary>
         /// <param name="logType"> One of possible log type. </param>
         /// <param name="logOption"> Log option SAME/INDIVIDUAL. </param>
         /// <param name="applicationInsights"> Application Insight details. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="trafficLogDestination"> Traffic destination configurations. </param>
         /// <param name="threatLogDestination"> Threat destination configurations. </param>
         /// <param name="decryptLogDestination"> Decrypt destination configurations. </param>
-        internal FirewallLogSettings(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, FirewallLogDestination commonDestination, FirewallLogDestination trafficLogDestination, FirewallLogDestination threatLogDestination, FirewallLogDestination decryptLogDestination)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallLogSettings(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, FirewallLogDestination commonDestination, FirewallLogDestination trafficLogDestination, FirewallLogDestination threatLogDestination, FirewallLogDestination decryptLogDestination, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogType = logType;
             LogOption = logOption;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             TrafficLogDestination = trafficLogDestination;
             ThreatLogDestination = threatLogDestination;
             DecryptLogDestination = decryptLogDestination;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> One of possible log type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,22 +19,23 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualHubRouteTableV2Data : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         public VirtualHubRouteTableV2Data()
         {
             Routes = new ChangeTrackingList<VirtualHubRouteV2>();
             AttachedConnections = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="attachedConnections"> List of all connections attached to this route table v2. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
-        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Routes = routes;
