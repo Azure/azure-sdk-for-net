@@ -1,5 +1,12 @@
 # Release History
 
+## 1.0.0 (2023-12-01)
+
+### Features Added
+
+- Upgrade to Nginx API version 2023-04-01.
+- Added support for scaling.
+
 ## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
