@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -17,6 +16,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.Samples.HostedService.csproj" />
   </ItemGroup>
 
