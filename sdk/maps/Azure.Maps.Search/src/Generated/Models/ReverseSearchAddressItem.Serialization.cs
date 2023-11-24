@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,78 @@ using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchAddressItem
+    public partial class ReverseSearchAddressItem : IUtf8JsonSerializable, IJsonModel<ReverseSearchAddressItem>
     {
-        internal static ReverseSearchAddressItem DeserializeReverseSearchAddressItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseSearchAddressItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReverseSearchAddressItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchAddressItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ReverseSearchAddressItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteObjectValue(Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Position))
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteStringValue(Position);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RoadUse))
+            {
+                writer.WritePropertyName("roadUse"u8);
+                writer.WriteStartArray();
+                foreach (var item in RoadUse)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(MatchType))
+            {
+                writer.WritePropertyName("matchType"u8);
+                writer.WriteStringValue(MatchType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReverseSearchAddressItem IJsonModel<ReverseSearchAddressItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchAddressItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ReverseSearchAddressItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseSearchAddressItem(document.RootElement, options);
+        }
+
+        internal static ReverseSearchAddressItem DeserializeReverseSearchAddressItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +95,8 @@ namespace Azure.Maps.Search.Models
             Optional<string> position = default;
             Optional<IReadOnlyList<RoadKind>> roadUse = default;
             Optional<MapsSearchMatchType> matchType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -63,8 +136,44 @@ namespace Azure.Maps.Search.Models
                     matchType = new MapsSearchMatchType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReverseSearchAddressItem(address.Value, position.Value, Optional.ToList(roadUse), Optional.ToNullable(matchType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReverseSearchAddressItem(address.Value, position.Value, Optional.ToList(roadUse), Optional.ToNullable(matchType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReverseSearchAddressItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchAddressItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ReverseSearchAddressItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReverseSearchAddressItem IPersistableModel<ReverseSearchAddressItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchAddressItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReverseSearchAddressItem(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ReverseSearchAddressItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReverseSearchAddressItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

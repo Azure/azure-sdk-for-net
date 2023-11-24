@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricExternalNetworkResource(Client, NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(e)), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, "NetworkFabricExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricExternalNetworkResource(Client, NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(e)), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, "NetworkFabricExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricExternalNetworkResource(Client, NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(e)), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, "NetworkFabricExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricExternalNetworkResource(Client, NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(e)), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, "NetworkFabricExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

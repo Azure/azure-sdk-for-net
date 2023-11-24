@@ -5,12 +5,236 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataFeedDetailPatch : IUtf8JsonSerializable
+    internal partial class DataFeedDetailPatch : IUtf8JsonSerializable, IJsonModel<DataFeedDetailPatch>
     {
+        void IJsonModel<DataFeedDetailPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedDetailPatch)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("dataSourceType"u8);
+            writer.WriteStringValue(DataSourceType.ToString());
+            if (Optional.IsDefined(DataFeedName))
+            {
+                writer.WritePropertyName("dataFeedName"u8);
+                writer.WriteStringValue(DataFeedName);
+            }
+            if (Optional.IsDefined(DataFeedDescription))
+            {
+                writer.WritePropertyName("dataFeedDescription"u8);
+                writer.WriteStringValue(DataFeedDescription);
+            }
+            if (Optional.IsDefined(TimestampColumn))
+            {
+                writer.WritePropertyName("timestampColumn"u8);
+                writer.WriteStringValue(TimestampColumn);
+            }
+            if (Optional.IsDefined(DataStartFrom))
+            {
+                writer.WritePropertyName("dataStartFrom"u8);
+                writer.WriteStringValue(DataStartFrom.Value, "O");
+            }
+            if (Optional.IsDefined(StartOffsetInSeconds))
+            {
+                writer.WritePropertyName("startOffsetInSeconds"u8);
+                writer.WriteNumberValue(StartOffsetInSeconds.Value);
+            }
+            if (Optional.IsDefined(MaxConcurrency))
+            {
+                writer.WritePropertyName("maxConcurrency"u8);
+                writer.WriteNumberValue(MaxConcurrency.Value);
+            }
+            if (Optional.IsDefined(MinRetryIntervalInSeconds))
+            {
+                writer.WritePropertyName("minRetryIntervalInSeconds"u8);
+                writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
+            }
+            if (Optional.IsDefined(StopRetryAfterInSeconds))
+            {
+                writer.WritePropertyName("stopRetryAfterInSeconds"u8);
+                writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
+            }
+            if (Optional.IsDefined(NeedRollup))
+            {
+                writer.WritePropertyName("needRollup"u8);
+                writer.WriteStringValue(NeedRollup.Value.ToString());
+            }
+            if (Optional.IsDefined(RollUpMethod))
+            {
+                writer.WritePropertyName("rollUpMethod"u8);
+                writer.WriteStringValue(RollUpMethod.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(RollUpColumns))
+            {
+                writer.WritePropertyName("rollUpColumns"u8);
+                writer.WriteStartArray();
+                foreach (var item in RollUpColumns)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllUpIdentification))
+            {
+                writer.WritePropertyName("allUpIdentification"u8);
+                writer.WriteStringValue(AllUpIdentification);
+            }
+            if (Optional.IsDefined(FillMissingPointType))
+            {
+                writer.WritePropertyName("fillMissingPointType"u8);
+                writer.WriteStringValue(FillMissingPointType.Value.ToString());
+            }
+            if (Optional.IsDefined(FillMissingPointValue))
+            {
+                writer.WritePropertyName("fillMissingPointValue"u8);
+                writer.WriteNumberValue(FillMissingPointValue.Value);
+            }
+            if (Optional.IsDefined(ViewMode))
+            {
+                writer.WritePropertyName("viewMode"u8);
+                writer.WriteStringValue(ViewMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Admins))
+            {
+                writer.WritePropertyName("admins"u8);
+                writer.WriteStartArray();
+                foreach (var item in Admins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Viewers))
+            {
+                writer.WritePropertyName("viewers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Viewers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(ActionLinkTemplate))
+            {
+                writer.WritePropertyName("actionLinkTemplate"u8);
+                writer.WriteStringValue(ActionLinkTemplate);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(CredentialId))
+            {
+                writer.WritePropertyName("credentialId"u8);
+                writer.WriteStringValue(CredentialId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFeedDetailPatch IJsonModel<DataFeedDetailPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedDetailPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFeedDetailPatch(document.RootElement, options);
+        }
+
+        internal static DataFeedDetailPatch DeserializeDataFeedDetailPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("dataSourceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureApplicationInsights": return AzureApplicationInsightsDataFeedPatch.DeserializeAzureApplicationInsightsDataFeedPatch(element);
+                    case "AzureBlob": return AzureBlobDataFeedPatch.DeserializeAzureBlobDataFeedPatch(element);
+                    case "AzureCosmosDB": return AzureCosmosDBDataFeedPatch.DeserializeAzureCosmosDBDataFeedPatch(element);
+                    case "AzureDataExplorer": return AzureDataExplorerDataFeedPatch.DeserializeAzureDataExplorerDataFeedPatch(element);
+                    case "AzureDataLakeStorageGen2": return AzureDataLakeStorageGen2DataFeedPatch.DeserializeAzureDataLakeStorageGen2DataFeedPatch(element);
+                    case "AzureEventHubs": return AzureEventHubsDataFeedPatch.DeserializeAzureEventHubsDataFeedPatch(element);
+                    case "AzureLogAnalytics": return AzureLogAnalyticsDataFeedPatch.DeserializeAzureLogAnalyticsDataFeedPatch(element);
+                    case "AzureTable": return AzureTableDataFeedPatch.DeserializeAzureTableDataFeedPatch(element);
+                    case "InfluxDB": return InfluxDBDataFeedPatch.DeserializeInfluxDBDataFeedPatch(element);
+                    case "MongoDB": return MongoDBDataFeedPatch.DeserializeMongoDBDataFeedPatch(element);
+                    case "MySql": return MySqlDataFeedPatch.DeserializeMySqlDataFeedPatch(element);
+                    case "PostgreSql": return PostgreSqlDataFeedPatch.DeserializePostgreSqlDataFeedPatch(element);
+                    case "SqlServer": return SQLServerDataFeedPatch.DeserializeSQLServerDataFeedPatch(element);
+                }
+            }
+            return UnknownDataFeedDetailPatch.DeserializeUnknownDataFeedDetailPatch(element);
+        }
+
+        BinaryData IPersistableModel<DataFeedDetailPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedDetailPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFeedDetailPatch IPersistableModel<DataFeedDetailPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFeedDetailPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedDetailPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFeedDetailPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

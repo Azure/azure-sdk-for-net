@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowRunActionRequestHistoryResource(Client, LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(e)), _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics, Pipeline, "LogicWorkflowRunActionRequestHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowRunActionRequestHistoryResource(Client, LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(e)), _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics, Pipeline, "LogicWorkflowRunActionRequestHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowRunActionRequestHistoryResource(Client, LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(e)), _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics, Pipeline, "LogicWorkflowRunActionRequestHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowRunActionRequestHistoryResource(Client, LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(e)), _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics, Pipeline, "LogicWorkflowRunActionRequestHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

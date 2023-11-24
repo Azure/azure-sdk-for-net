@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Maps.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Maps.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

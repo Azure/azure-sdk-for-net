@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
@@ -12,16 +13,17 @@ namespace Azure.Maps.Search.Models
     /// <summary> The result of the query. SearchAddressReverseResponse if the query completed successfully, ErrorResponse otherwise. </summary>
     public partial class ReverseSearchAddressBatchItemResponse : ReverseSearchAddressResult
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchItemResponse"/>. </summary>
         internal ReverseSearchAddressBatchItemResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchItemResponse"/>. </summary>
         /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
         /// <param name="addresses"> Addresses array. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="errorDetail"> The error object. </param>
-        internal ReverseSearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<ReverseSearchAddressItem> addresses, ErrorDetail errorDetail) : base(summary, addresses)
+        internal ReverseSearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<ReverseSearchAddressItem> addresses, IDictionary<string, BinaryData> serializedAdditionalRawData, ErrorDetail errorDetail) : base(summary, addresses, serializedAdditionalRawData)
         {
             ErrorDetail = errorDetail;
         }

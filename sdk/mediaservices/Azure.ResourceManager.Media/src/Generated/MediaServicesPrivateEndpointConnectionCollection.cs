@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<MediaServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaServicesPrivateEndpointConnectionResource(Client, MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(e)), _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MediaServicesPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MediaServicesPrivateEndpointConnectionResource(Client, MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(e)), _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MediaServicesPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<MediaServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaServicesPrivateEndpointConnectionResource(Client, MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(e)), _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MediaServicesPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MediaServicesPrivateEndpointConnectionResource(Client, MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(e)), _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MediaServicesPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

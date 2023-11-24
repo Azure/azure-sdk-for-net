@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersCommonPropertiesStatus
+    public partial class ProvisionedClustersCommonPropertiesStatus : IUtf8JsonSerializable, IJsonModel<ProvisionedClustersCommonPropertiesStatus>
     {
-        internal static ProvisionedClustersCommonPropertiesStatus DeserializeProvisionedClustersCommonPropertiesStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClustersCommonPropertiesStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProvisionedClustersCommonPropertiesStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FeaturesStatus))
+            {
+                writer.WritePropertyName("featuresStatus"u8);
+                writer.WriteObjectValue(FeaturesStatus);
+            }
+            if (Optional.IsCollectionDefined(AddonStatus))
+            {
+                writer.WritePropertyName("addonStatus"u8);
+                writer.WriteStartObject();
+                foreach (var item in AddonStatus)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                writer.WriteObjectValue(ProvisioningStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProvisionedClustersCommonPropertiesStatus IJsonModel<ProvisionedClustersCommonPropertiesStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersCommonPropertiesStatus(document.RootElement, options);
+        }
+
+        internal static ProvisionedClustersCommonPropertiesStatus DeserializeProvisionedClustersCommonPropertiesStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<IReadOnlyDictionary<string, AddonStatus>> addonStatus = default;
             Optional<string> errorMessage = default;
             Optional<ProvisionedClustersCommonPropertiesStatusProvisioningStatus> provisioningStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featuresStatus"u8))
@@ -62,8 +136,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningStatus = ProvisionedClustersCommonPropertiesStatusProvisioningStatus.DeserializeProvisionedClustersCommonPropertiesStatusProvisioningStatus(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClustersCommonPropertiesStatus(featuresStatus.Value, Optional.ToDictionary(addonStatus), errorMessage.Value, provisioningStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProvisionedClustersCommonPropertiesStatus(featuresStatus.Value, Optional.ToDictionary(addonStatus), errorMessage.Value, provisioningStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProvisionedClustersCommonPropertiesStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProvisionedClustersCommonPropertiesStatus IPersistableModel<ProvisionedClustersCommonPropertiesStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersCommonPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProvisionedClustersCommonPropertiesStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersCommonPropertiesStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProvisionedClustersCommonPropertiesStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

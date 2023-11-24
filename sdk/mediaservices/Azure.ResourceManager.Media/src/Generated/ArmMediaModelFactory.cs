@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMediaModelFactory
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesAccountFilterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             tracks ??= new List<FilterTrackSelection>();
 
-            return new MediaServicesAccountFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value) : null, tracks?.ToList());
+            return new MediaServicesAccountFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value, serializedAdditionalRawData: null) : null, tracks?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Media.Models
             storageAccounts ??= new List<MediaServicesStorageAccount>();
             privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
 
-            return new MediaServicesAccountData(id, name, resourceType, systemData, tags, location, identity, mediaServicesAccountId, storageAccounts?.ToList(), storageAuthentication, encryption, keyDeliveryAccessControl != null ? new MediaKeyDelivery(keyDeliveryAccessControl) : null, publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList(), minimumTlsVersion);
+            return new MediaServicesAccountData(id, name, resourceType, systemData, tags, location, identity, mediaServicesAccountId, storageAccounts?.ToList(), storageAuthentication, encryption, keyDeliveryAccessControl != null ? new MediaKeyDelivery(keyDeliveryAccessControl, serializedAdditionalRawData: null) : null, publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList(), minimumTlsVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaServicesStorageAccount"/>. </summary>
         /// <param name="id"> The ID of the storage account resource. Media Services relies on tables and queues as well as blobs, so the primary storage account must be a Standard Storage account (either Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage accounts can be added as secondary storage accounts. </param>
         /// <param name="accountType"> The type of the storage account. </param>
         /// <param name="identity"> The storage account identity. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.MediaServicesStorageAccount"/> instance for mocking. </returns>
         public static MediaServicesStorageAccount MediaServicesStorageAccount(ResourceIdentifier id = null, MediaServicesStorageAccountType accountType = default, ResourceIdentity identity = null, string status = null)
         {
-            return new MediaServicesStorageAccount(id, accountType, identity, status);
+            return new MediaServicesStorageAccount(id, accountType, identity, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccountEncryption"/>. </summary>
         /// <param name="keyType"> The type of key used to encrypt the Account Key. </param>
         /// <param name="keyVaultProperties"> The properties of the key used to encrypt the account. </param>
         /// <param name="identity"> The Key Vault identity. </param>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.AccountEncryption"/> instance for mocking. </returns>
         public static AccountEncryption AccountEncryption(AccountEncryptionKeyType keyType = default, KeyVaultProperties keyVaultProperties = null, ResourceIdentity identity = null, string status = null)
         {
-            return new AccountEncryption(keyType, keyVaultProperties, identity, status);
+            return new AccountEncryption(keyType, keyVaultProperties, identity, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> The URL of the Key Vault key used to encrypt the account. The key may either be versioned (for example https://vault/keys/mykey/version1) or reference a key without a version (for example https://vault/keys/mykey). </param>
         /// <param name="currentKeyIdentifier"> The current key used to encrypt the Media Services account, including the key version. </param>
         /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
         public static KeyVaultProperties KeyVaultProperties(string keyIdentifier = null, string currentKeyIdentifier = null)
         {
-            return new KeyVaultProperties(keyIdentifier, currentKeyIdentifier);
+            return new KeyVaultProperties(keyIdentifier, currentKeyIdentifier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -102,18 +102,40 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MediaServicesPrivateEndpointConnectionData MediaServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MediaPrivateLinkServiceConnectionState connectionState = null, MediaPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new MediaServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new MediaServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaServicesAccountPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The Managed Identity for the Media Services account. </param>
+        /// <param name="mediaServiceId"> The Media Services account ID. </param>
+        /// <param name="storageAccounts"> The storage accounts for this resource. </param>
+        /// <param name="storageAuthentication"></param>
+        /// <param name="encryption"> The account encryption properties. </param>
+        /// <param name="keyDeliveryAccessControl"> The Key Delivery properties for Media Services account. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
+        /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
+        /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
+        /// <returns> A new <see cref="Models.MediaServicesAccountPatch"/> instance for mocking. </returns>
+        public static MediaServicesAccountPatch MediaServicesAccountPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, Guid? mediaServiceId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            storageAccounts ??= new List<MediaServicesStorageAccount>();
+            privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
+
+            return new MediaServicesAccountPatch(tags, identity, mediaServiceId, storageAccounts?.ToList(), storageAuthentication, encryption, keyDeliveryAccessControl != null ? new MediaKeyDelivery(keyDeliveryAccessControl, serializedAdditionalRawData: null) : null, publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList(), minimumTlsVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaServicesEdgePolicies"/>. </summary>
         /// <param name="usageDataCollectionPolicy"></param>
         /// <returns> A new <see cref="Models.MediaServicesEdgePolicies"/> instance for mocking. </returns>
         public static MediaServicesEdgePolicies MediaServicesEdgePolicies(EdgeUsageDataCollectionPolicy usageDataCollectionPolicy = null)
         {
-            return new MediaServicesEdgePolicies(usageDataCollectionPolicy);
+            return new MediaServicesEdgePolicies(usageDataCollectionPolicy, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EdgeUsageDataCollectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeUsageDataCollectionPolicy"/>. </summary>
         /// <param name="dataCollectionFrequency"> Usage data collection frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="dataReportingFrequency"> Usage data reporting frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="maxAllowedUnreportedUsageDuration"> Maximum time for which the functionality of the device will not be hampered for not reporting the usage data. </param>
@@ -121,20 +143,20 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.EdgeUsageDataCollectionPolicy"/> instance for mocking. </returns>
         public static EdgeUsageDataCollectionPolicy EdgeUsageDataCollectionPolicy(string dataCollectionFrequency = null, string dataReportingFrequency = null, TimeSpan? maxAllowedUnreportedUsageDuration = null, EdgeUsageDataEventHub eventHubDetails = null)
         {
-            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency, dataReportingFrequency, maxAllowedUnreportedUsageDuration, eventHubDetails);
+            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency, dataReportingFrequency, maxAllowedUnreportedUsageDuration, eventHubDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EdgeUsageDataEventHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeUsageDataEventHub"/>. </summary>
         /// <param name="name"> Name of the Event Hub where usage will be reported. </param>
         /// <param name="namespace"> Namespace of the Event Hub where usage will be reported. </param>
         /// <param name="token"> SAS token needed to interact with Event Hub. </param>
         /// <returns> A new <see cref="Models.EdgeUsageDataEventHub"/> instance for mocking. </returns>
         public static EdgeUsageDataEventHub EdgeUsageDataEventHub(string name = null, string @namespace = null, string token = null)
         {
-            return new EdgeUsageDataEventHub(name, @namespace, token);
+            return new EdgeUsageDataEventHub(name, @namespace, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -148,20 +170,20 @@ namespace Azure.ResourceManager.Media.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MediaServicesPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new MediaServicesPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Specifies if the name is available. </param>
         /// <param name="reason"> Specifies the reason if the name is not available. </param>
         /// <param name="message"> Specifies the detailed reason if the name is not available. </param>
         /// <returns> A new <see cref="Models.MediaServicesNameAvailabilityResult"/> instance for mocking. </returns>
         public static MediaServicesNameAvailabilityResult MediaServicesNameAvailabilityResult(bool isNameAvailable = default, string reason = null, string message = null)
         {
-            return new MediaServicesNameAvailabilityResult(isNameAvailable, reason, message);
+            return new MediaServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaAssetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaAssetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -178,10 +200,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaAssetData"/> instance for mocking. </returns>
         public static MediaAssetData MediaAssetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? assetId = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string alternateId = null, string description = null, string container = null, string storageAccountName = null, MediaAssetStorageEncryptionFormat? storageEncryptionFormat = null, string encryptionScope = null)
         {
-            return new MediaAssetData(id, name, resourceType, systemData, assetId, createdOn, lastModifiedOn, alternateId, description, container, storageAccountName, storageEncryptionFormat, encryptionScope);
+            return new MediaAssetData(id, name, resourceType, systemData, assetId, createdOn, lastModifiedOn, alternateId, description, container, storageAccountName, storageEncryptionFormat, encryptionScope, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageEncryptedAssetDecryptionInfo"/>. </summary>
         /// <param name="key"> The Asset File storage encryption key. </param>
         /// <param name="assetFileEncryptionMetadata"> Asset File encryption metadata. </param>
         /// <returns> A new <see cref="Models.StorageEncryptedAssetDecryptionInfo"/> instance for mocking. </returns>
@@ -189,20 +211,20 @@ namespace Azure.ResourceManager.Media.Models
         {
             assetFileEncryptionMetadata ??= new List<MediaAssetFileEncryptionMetadata>();
 
-            return new StorageEncryptedAssetDecryptionInfo(key, assetFileEncryptionMetadata?.ToList());
+            return new StorageEncryptedAssetDecryptionInfo(key, assetFileEncryptionMetadata?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaAssetFileEncryptionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaAssetFileEncryptionMetadata"/>. </summary>
         /// <param name="initializationVector"> The Asset File initialization vector. </param>
         /// <param name="assetFileName"> The Asset File name. </param>
         /// <param name="assetFileId"> The Asset File Id. </param>
         /// <returns> A new <see cref="Models.MediaAssetFileEncryptionMetadata"/> instance for mocking. </returns>
         public static MediaAssetFileEncryptionMetadata MediaAssetFileEncryptionMetadata(string initializationVector = null, string assetFileName = null, Guid assetFileId = default)
         {
-            return new MediaAssetFileEncryptionMetadata(initializationVector, assetFileName, assetFileId);
+            return new MediaAssetFileEncryptionMetadata(initializationVector, assetFileName, assetFileId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaAssetStreamingLocator. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaAssetStreamingLocator"/>. </summary>
         /// <param name="name"> Streaming Locator name. </param>
         /// <param name="assetName"> Asset Name. </param>
         /// <param name="createdOn"> The creation time of the Streaming Locator. </param>
@@ -214,10 +236,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.MediaAssetStreamingLocator"/> instance for mocking. </returns>
         public static MediaAssetStreamingLocator MediaAssetStreamingLocator(string name = null, string assetName = null, DateTimeOffset? createdOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, Guid? streamingLocatorId = null, string streamingPolicyName = null, string defaultContentKeyPolicyName = null)
         {
-            return new MediaAssetStreamingLocator(name, assetName, createdOn, startOn, endOn, streamingLocatorId, streamingPolicyName, defaultContentKeyPolicyName);
+            return new MediaAssetStreamingLocator(name, assetName, createdOn, startOn, endOn, streamingLocatorId, streamingPolicyName, defaultContentKeyPolicyName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaAssetFilterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -230,10 +252,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             tracks ??= new List<FilterTrackSelection>();
 
-            return new MediaAssetFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value) : null, tracks?.ToList());
+            return new MediaAssetFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value, serializedAdditionalRawData: null) : null, tracks?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaAssetTrackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaAssetTrackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -247,10 +269,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaAssetTrackData"/> instance for mocking. </returns>
         public static MediaAssetTrackData MediaAssetTrackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MediaAssetTrackBase track = null, MediaServicesProvisioningState? provisioningState = null)
         {
-            return new MediaAssetTrackData(id, name, resourceType, systemData, track, provisioningState);
+            return new MediaAssetTrackData(id, name, resourceType, systemData, track, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.ContentKeyPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -265,10 +287,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             options ??= new List<ContentKeyPolicyOption>();
 
-            return new ContentKeyPolicyData(id, name, resourceType, systemData, policyId, createdOn, lastModifiedOn, description, options?.ToList());
+            return new ContentKeyPolicyData(id, name, resourceType, systemData, policyId, createdOn, lastModifiedOn, description, options?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyProperties"/>. </summary>
         /// <param name="policyId"> The legacy Policy ID. </param>
         /// <param name="createdOn"> The creation date of the Policy. </param>
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
@@ -279,10 +301,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             options ??= new List<ContentKeyPolicyOption>();
 
-            return new ContentKeyPolicyProperties(policyId, createdOn, lastModifiedOn, description, options?.ToList());
+            return new ContentKeyPolicyProperties(policyId, createdOn, lastModifiedOn, description, options?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyOption"/>. </summary>
         /// <param name="policyOptionId"> The legacy Policy Option ID. </param>
         /// <param name="name"> The Policy Option description. </param>
         /// <param name="configuration">
@@ -298,10 +320,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.ContentKeyPolicyOption"/> instance for mocking. </returns>
         public static ContentKeyPolicyOption ContentKeyPolicyOption(Guid? policyOptionId = null, string name = null, ContentKeyPolicyConfiguration configuration = null, ContentKeyPolicyRestriction restriction = null)
         {
-            return new ContentKeyPolicyOption(policyOptionId, name, configuration, restriction);
+            return new ContentKeyPolicyOption(policyOptionId, name, configuration, restriction, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaTransformData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaTransformData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -315,10 +337,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             outputs ??= new List<MediaTransformOutput>();
 
-            return new MediaTransformData(id, name, resourceType, systemData, createdOn, description, lastModifiedOn, outputs?.ToList());
+            return new MediaTransformData(id, name, resourceType, systemData, createdOn, description, lastModifiedOn, outputs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -347,10 +369,10 @@ namespace Azure.ResourceManager.Media.Models
             outputs ??= new List<MediaJobOutput>();
             correlationData ??= new Dictionary<string, string>();
 
-            return new MediaJobData(id, name, resourceType, systemData, createdOn, state, description, input, lastModifiedOn, outputs?.ToList(), priority, correlationData, startOn, endOn);
+            return new MediaJobData(id, name, resourceType, systemData, createdOn, state, description, input, lastModifiedOn, outputs?.ToList(), priority, correlationData, startOn, endOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
@@ -366,10 +388,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.MediaJobOutput"/> instance for mocking. </returns>
         public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
-            return new UnknownJobOutput(odataType, error, presetOverride, state, progress, label, startOn, endOn);
+            return new UnknownJobOutput(odataType, error, presetOverride, state, progress, label, startOn, endOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaJobError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobError"/>. </summary>
         /// <param name="code"> Error code describing the error. </param>
         /// <param name="message"> A human-readable language-dependent representation of the error. </param>
         /// <param name="category"> Helps with categorization of errors. </param>
@@ -380,19 +402,19 @@ namespace Azure.ResourceManager.Media.Models
         {
             details ??= new List<MediaJobErrorDetail>();
 
-            return new MediaJobError(code, message, category, retry, details?.ToList());
+            return new MediaJobError(code, message, category, retry, details?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobErrorDetail"/>. </summary>
         /// <param name="code"> Code describing the error detail. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <returns> A new <see cref="Models.MediaJobErrorDetail"/> instance for mocking. </returns>
         public static MediaJobErrorDetail MediaJobErrorDetail(string code = null, string message = null)
         {
-            return new MediaJobErrorDetail(code, message);
+            return new MediaJobErrorDetail(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.StreamingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -406,10 +428,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.StreamingPolicyData"/> instance for mocking. </returns>
         public static StreamingPolicyData StreamingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, string defaultContentKeyPolicyName = null, EnvelopeEncryption envelopeEncryption = null, CommonEncryptionCenc commonEncryptionCenc = null, CommonEncryptionCbcs commonEncryptionCbcs = null, MediaEnabledProtocols noEncryptionEnabledProtocols = null)
         {
-            return new StreamingPolicyData(id, name, resourceType, systemData, createdOn, defaultContentKeyPolicyName, envelopeEncryption, commonEncryptionCenc, commonEncryptionCbcs, noEncryptionEnabledProtocols != null ? new NoEncryption(noEncryptionEnabledProtocols) : null);
+            return new StreamingPolicyData(id, name, resourceType, systemData, createdOn, defaultContentKeyPolicyName, envelopeEncryption, commonEncryptionCenc, commonEncryptionCbcs, noEncryptionEnabledProtocols != null ? new NoEncryption(noEncryptionEnabledProtocols, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.StreamingLocatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -430,10 +452,10 @@ namespace Azure.ResourceManager.Media.Models
             contentKeys ??= new List<StreamingLocatorContentKey>();
             filters ??= new List<string>();
 
-            return new StreamingLocatorData(id, name, resourceType, systemData, assetName, createdOn, startOn, endOn, streamingLocatorId, streamingPolicyName, defaultContentKeyPolicyName, contentKeys?.ToList(), alternativeMediaId, filters?.ToList());
+            return new StreamingLocatorData(id, name, resourceType, systemData, assetName, createdOn, startOn, endOn, streamingLocatorId, streamingPolicyName, defaultContentKeyPolicyName, contentKeys?.ToList(), alternativeMediaId, filters?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingLocatorContentKey"/>. </summary>
         /// <param name="id"> ID of Content Key. </param>
         /// <param name="keyType"> Encryption type of Content Key. </param>
         /// <param name="labelReferenceInStreamingPolicy"> Label of Content Key as specified in the Streaming Policy. </param>
@@ -445,10 +467,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             tracks ??= new List<MediaTrackSelection>();
 
-            return new StreamingLocatorContentKey(id, keyType, labelReferenceInStreamingPolicy, value, policyName, tracks?.ToList());
+            return new StreamingLocatorContentKey(id, keyType, labelReferenceInStreamingPolicy, value, policyName, tracks?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingPathsResult"/>. </summary>
         /// <param name="streamingPaths"> Streaming Paths supported by current Streaming Locator. </param>
         /// <param name="downloadPaths"> Download Paths supported by current Streaming Locator. </param>
         /// <returns> A new <see cref="Models.StreamingPathsResult"/> instance for mocking. </returns>
@@ -457,10 +479,10 @@ namespace Azure.ResourceManager.Media.Models
             streamingPaths ??= new List<StreamingPath>();
             downloadPaths ??= new List<string>();
 
-            return new StreamingPathsResult(streamingPaths?.ToList(), downloadPaths?.ToList());
+            return new StreamingPathsResult(streamingPaths?.ToList(), downloadPaths?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingPath"/>. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         /// <param name="paths"> Streaming paths for each protocol and encryptionScheme pair. </param>
@@ -469,10 +491,10 @@ namespace Azure.ResourceManager.Media.Models
         {
             paths ??= new List<string>();
 
-            return new StreamingPath(streamingProtocol, encryptionScheme, paths?.ToList());
+            return new StreamingPath(streamingProtocol, encryptionScheme, paths?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaLiveEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -499,10 +521,10 @@ namespace Azure.ResourceManager.Media.Models
             transcriptions ??= new List<LiveEventTranscription>();
             streamOptions ??= new List<StreamOptionsFlag>();
 
-            return new MediaLiveEventData(id, name, resourceType, systemData, tags, location, description, input, preview, encoding, transcriptions?.ToList(), provisioningState, resourceState, crossSiteAccessPolicies, useStaticHostname, hostnamePrefix, streamOptions?.ToList(), createdOn, lastModifiedOn);
+            return new MediaLiveEventData(id, name, resourceType, systemData, tags, location, description, input, preview, encoding, transcriptions?.ToList(), provisioningState, resourceState, crossSiteAccessPolicies, useStaticHostname, hostnamePrefix, streamOptions?.ToList(), createdOn, lastModifiedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MediaLiveOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaLiveOutputData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -521,10 +543,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaLiveOutputData"/> instance for mocking. </returns>
         public static MediaLiveOutputData MediaLiveOutputData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string assetName = null, TimeSpan? archiveWindowLength = null, TimeSpan? rewindWindowLength = null, string manifestName = null, int? hlsFragmentsPerTsSegment = null, long? outputSnapTime = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string provisioningState = null, LiveOutputResourceState? resourceState = null)
         {
-            return new MediaLiveOutputData(id, name, resourceType, systemData, description, assetName, archiveWindowLength, rewindWindowLength, manifestName, hlsFragmentsPerTsSegment != null ? new Hls(hlsFragmentsPerTsSegment) : null, outputSnapTime, createdOn, lastModifiedOn, provisioningState, resourceState);
+            return new MediaLiveOutputData(id, name, resourceType, systemData, description, assetName, archiveWindowLength, rewindWindowLength, manifestName, hlsFragmentsPerTsSegment != null ? new Hls(hlsFragmentsPerTsSegment, serializedAdditionalRawData: null) : null, outputSnapTime, createdOn, lastModifiedOn, provisioningState, resourceState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.StreamingEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -554,29 +576,29 @@ namespace Azure.ResourceManager.Media.Models
             tags ??= new Dictionary<string, string>();
             customHostNames ??= new List<string>();
 
-            return new StreamingEndpointData(id, name, resourceType, systemData, tags, location, sku, description, scaleUnits, availabilitySetName, accessControl, maxCacheAge, customHostNames?.ToList(), hostName, isCdnEnabled, cdnProvider, cdnProfile, provisioningState, resourceState, crossSiteAccessPolicies, freeTrialEndOn, createdOn, lastModifiedOn);
+            return new StreamingEndpointData(id, name, resourceType, systemData, tags, location, sku, description, scaleUnits, availabilitySetName, accessControl, maxCacheAge, customHostNames?.ToList(), hostName, isCdnEnabled, cdnProvider, cdnProfile, provisioningState, resourceState, crossSiteAccessPolicies, freeTrialEndOn, createdOn, lastModifiedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointCurrentSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingEndpointCurrentSku"/>. </summary>
         /// <param name="name"> The streaming endpoint sku name. </param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         /// <returns> A new <see cref="Models.StreamingEndpointCurrentSku"/> instance for mocking. </returns>
         public static StreamingEndpointCurrentSku StreamingEndpointCurrentSku(string name = null, int? capacity = null)
         {
-            return new StreamingEndpointCurrentSku(name, capacity);
+            return new StreamingEndpointCurrentSku(name, capacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingEndpointSkuInfo"/>. </summary>
         /// <param name="resourceType"></param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         /// <param name="skuName"> The streaming endpoint sku. </param>
         /// <returns> A new <see cref="Models.StreamingEndpointSkuInfo"/> instance for mocking. </returns>
         public static StreamingEndpointSkuInfo StreamingEndpointSkuInfo(ResourceType? resourceType = null, StreamingEndpointCapacity capacity = null, string skuName = null)
         {
-            return new StreamingEndpointSkuInfo(resourceType, capacity, skuName != null ? new StreamingEndpointSku(skuName) : null);
+            return new StreamingEndpointSkuInfo(resourceType, capacity, skuName != null ? new StreamingEndpointSku(skuName, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingEndpointCapacity"/>. </summary>
         /// <param name="scaleType"></param>
         /// <param name="default"> The streaming endpoint default capacity. </param>
         /// <param name="minimum"> The streaming endpoint minimum capacity. </param>
@@ -584,10 +606,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.StreamingEndpointCapacity"/> instance for mocking. </returns>
         public static StreamingEndpointCapacity StreamingEndpointCapacity(string scaleType = null, int? @default = null, int? minimum = null, int? maximum = null)
         {
-            return new StreamingEndpointCapacity(scaleType, @default, minimum, maximum);
+            return new StreamingEndpointCapacity(scaleType, @default, minimum, maximum, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AudioTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AudioTrack"/>. </summary>
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the audio track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>
         /// <param name="languageCode"> The RFC5646 language code for the audio track. </param>
@@ -598,10 +620,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.AudioTrack"/> instance for mocking. </returns>
         public static AudioTrack AudioTrack(string fileName = null, string displayName = null, string languageCode = null, HlsSettings hlsSettings = null, string dashRole = null, int? mpeg4TrackId = null, int? bitRate = null)
         {
-            return new AudioTrack("#Microsoft.Media.AudioTrack", fileName, displayName, languageCode, hlsSettings, dashRole != null ? new TrackDashSettings(dashRole) : null, mpeg4TrackId, bitRate);
+            return new AudioTrack("#Microsoft.Media.AudioTrack", serializedAdditionalRawData: null, fileName, displayName, languageCode, hlsSettings, dashRole != null ? new TrackDashSettings(dashRole, serializedAdditionalRawData: null) : null, mpeg4TrackId, bitRate);
         }
 
-        /// <summary> Initializes a new instance of TextTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TextTrack"/>. </summary>
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the text track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>
         /// <param name="languageCode"> The RFC5646 language code for the text track. </param>
@@ -610,10 +632,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.TextTrack"/> instance for mocking. </returns>
         public static TextTrack TextTrack(string fileName = null, string displayName = null, string languageCode = null, PlayerVisibility? playerVisibility = null, HlsSettings hlsSettings = null)
         {
-            return new TextTrack("#Microsoft.Media.TextTrack", fileName, displayName, languageCode, playerVisibility, hlsSettings);
+            return new TextTrack("#Microsoft.Media.TextTrack", serializedAdditionalRawData: null, fileName, displayName, languageCode, playerVisibility, hlsSettings);
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutputAsset"/>. </summary>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
@@ -629,7 +651,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.MediaJobOutputAsset"/> instance for mocking. </returns>
         public static MediaJobOutputAsset MediaJobOutputAsset(MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string assetName = null)
         {
-            return new MediaJobOutputAsset("#Microsoft.Media.JobOutputAsset", error, presetOverride, state, progress, label, startOn, endOn, assetName);
+            return new MediaJobOutputAsset("#Microsoft.Media.JobOutputAsset", error, presetOverride, state, progress, label, startOn, endOn, serializedAdditionalRawData: null, assetName);
         }
     }
 }

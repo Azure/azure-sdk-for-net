@@ -5,18 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataFeedDetail : IUtf8JsonSerializable
+    internal partial class DataFeedDetail : IUtf8JsonSerializable, IJsonModel<DataFeedDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFeedDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFeedDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedDetail)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(DataFeedId))
+            {
+                writer.WritePropertyName("dataFeedId"u8);
+                writer.WriteStringValue(DataFeedId);
+            }
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
             if (Optional.IsDefined(DataFeedDescription))
@@ -142,6 +158,26 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IsAdmin))
+            {
+                writer.WritePropertyName("isAdmin"u8);
+                writer.WriteBooleanValue(IsAdmin.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Creator))
+            {
+                writer.WritePropertyName("creator"u8);
+                writer.WriteStringValue(Creator);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedTime))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedTime.Value, "O");
+            }
             if (Optional.IsDefined(ActionLinkTemplate))
             {
                 writer.WritePropertyName("actionLinkTemplate"u8);
@@ -157,11 +193,40 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFeedDetail DeserializeDataFeedDetail(JsonElement element)
+        DataFeedDetail IJsonModel<DataFeedDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedDetail)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFeedDetail(document.RootElement, options);
+        }
+
+        internal static DataFeedDetail DeserializeDataFeedDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -187,5 +252,36 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return UnknownDataFeedDetail.DeserializeUnknownDataFeedDetail(element);
         }
+
+        BinaryData IPersistableModel<DataFeedDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedDetail)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFeedDetail IPersistableModel<DataFeedDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFeedDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedDetail)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFeedDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

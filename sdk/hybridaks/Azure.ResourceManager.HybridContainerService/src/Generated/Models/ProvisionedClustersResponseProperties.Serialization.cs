@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersResponseProperties : IUtf8JsonSerializable
+    public partial class ProvisionedClustersResponseProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClustersResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClustersResponseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProvisionedClustersResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersResponseProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableRbac))
             {
@@ -77,6 +88,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
             if (Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
@@ -92,11 +113,40 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersResponseProperties DeserializeProvisionedClustersResponseProperties(JsonElement element)
+        ProvisionedClustersResponseProperties IJsonModel<ProvisionedClustersResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProvisionedClustersResponseProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersResponseProperties(document.RootElement, options);
+        }
+
+        internal static ProvisionedClustersResponseProperties DeserializeProvisionedClustersResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +166,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<AADProfileResponse> aadProfile = default;
             Optional<WindowsProfileResponse> windowsProfile = default;
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRbac"u8))
@@ -255,8 +307,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     httpProxyConfig = HttpProxyConfigResponse.DeserializeHttpProxyConfigResponse(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, serializedAdditionalRawData, Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
         }
+
+        BinaryData IPersistableModel<ProvisionedClustersResponseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersResponseProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProvisionedClustersResponseProperties IPersistableModel<ProvisionedClustersResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClustersResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProvisionedClustersResponseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProvisionedClustersResponseProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProvisionedClustersResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

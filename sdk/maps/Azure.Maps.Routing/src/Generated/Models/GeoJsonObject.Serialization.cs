@@ -5,19 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class GeoJsonObject : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownGeoJsonObject))]
+    internal partial class GeoJsonObject : IUtf8JsonSerializable, IJsonModel<GeoJsonObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonObject>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GeoJsonObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GeoJsonObject)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        GeoJsonObject IJsonModel<GeoJsonObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GeoJsonObject)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonObject(document.RootElement, options);
+        }
+
+        internal static GeoJsonObject DeserializeGeoJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
+                    case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
+                    case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
+                    case "MultiLineString": return GeoJsonMultiLineString.DeserializeGeoJsonMultiLineString(element);
+                    case "MultiPolygon": return GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(element);
+                    case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element);
+                    case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
+                    case "GeometryCollection": return GeoJsonGeometryCollection.DeserializeGeoJsonGeometryCollection(element);
+                    case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);
+                    case "MultiPoint": return GeoJsonMultiPoint.DeserializeGeoJsonMultiPoint(element);
+                }
+            }
+            return UnknownGeoJsonObject.DeserializeUnknownGeoJsonObject(element);
+        }
+
+        BinaryData IPersistableModel<GeoJsonObject>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GeoJsonObject)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GeoJsonObject IPersistableModel<GeoJsonObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGeoJsonObject(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GeoJsonObject)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GeoJsonObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

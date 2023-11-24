@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Export Route Policy Configuration. </summary>
     public partial class ExportRoutePolicyInformation
     {
-        /// <summary> Initializes a new instance of ExportRoutePolicyInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicyInformation"/>. </summary>
         public ExportRoutePolicyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRoutePolicyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicyInformation"/>. </summary>
         /// <param name="exportIPv4RoutePolicyId"> Export IPv4 Route Policy Id. </param>
         /// <param name="exportIPv6RoutePolicyId"> Export IPv6 Route Policy Id. </param>
-        internal ExportRoutePolicyInformation(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRoutePolicyInformation(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportIPv4RoutePolicyId = exportIPv4RoutePolicyId;
             ExportIPv6RoutePolicyId = exportIPv6RoutePolicyId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Export IPv4 Route Policy Id. </summary>

@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Rendering
 {
-    public partial class CopyrightCaption
+    public partial class CopyrightCaption : IUtf8JsonSerializable, IJsonModel<CopyrightCaption>
     {
-        internal static CopyrightCaption DeserializeCopyrightCaption(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyrightCaption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CopyrightCaption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyrightCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CopyrightCaption)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(FormatVersion))
+            {
+                writer.WritePropertyName("formatVersion"u8);
+                writer.WriteStringValue(FormatVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Copyright))
+            {
+                writer.WritePropertyName("copyrightsCaption"u8);
+                writer.WriteStringValue(Copyright);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CopyrightCaption IJsonModel<CopyrightCaption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyrightCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CopyrightCaption)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyrightCaption(document.RootElement, options);
+        }
+
+        internal static CopyrightCaption DeserializeCopyrightCaption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> formatVersion = default;
             Optional<string> copyrightsCaption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -32,8 +91,44 @@ namespace Azure.Maps.Rendering
                     copyrightsCaption = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CopyrightCaption(formatVersion.Value, copyrightsCaption.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CopyrightCaption(formatVersion.Value, copyrightsCaption.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CopyrightCaption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyrightCaption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CopyrightCaption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CopyrightCaption IPersistableModel<CopyrightCaption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyrightCaption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopyrightCaption(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CopyrightCaption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyrightCaption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

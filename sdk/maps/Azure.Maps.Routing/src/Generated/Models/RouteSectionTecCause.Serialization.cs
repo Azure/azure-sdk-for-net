@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteSectionTecCause
+    public partial class RouteSectionTecCause : IUtf8JsonSerializable, IJsonModel<RouteSectionTecCause>
     {
-        internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteSectionTecCause>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteSectionTecCause>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSectionTecCause>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteSectionTecCause)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MainCauseCode))
+            {
+                writer.WritePropertyName("mainCauseCode"u8);
+                writer.WriteNumberValue(MainCauseCode.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubCauseCode))
+            {
+                writer.WritePropertyName("subCauseCode"u8);
+                writer.WriteNumberValue(SubCauseCode.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteSectionTecCause IJsonModel<RouteSectionTecCause>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSectionTecCause>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteSectionTecCause)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteSectionTecCause(document.RootElement, options);
+        }
+
+        internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> mainCauseCode = default;
             Optional<int> subCauseCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mainCauseCode"u8))
@@ -40,8 +99,44 @@ namespace Azure.Maps.Routing.Models
                     subCauseCode = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteSectionTecCause>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSectionTecCause>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteSectionTecCause)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteSectionTecCause IPersistableModel<RouteSectionTecCause>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteSectionTecCause>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteSectionTecCause(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteSectionTecCause)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteSectionTecCause>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

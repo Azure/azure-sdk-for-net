@@ -6,15 +6,96 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ArcAgentStatus
+    public partial class ArcAgentStatus : IUtf8JsonSerializable, IJsonModel<ArcAgentStatus>
     {
-        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcAgentStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArcAgentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcAgentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArcAgentStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeploymentState))
+            {
+                writer.WritePropertyName("deploymentState"u8);
+                writer.WriteStringValue(DeploymentState.Value.ToString());
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(OnboardingPublicKey))
+            {
+                writer.WritePropertyName("onboardingPublicKey"u8);
+                writer.WriteStringValue(OnboardingPublicKey);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+            {
+                writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
+                writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastConnectivityOn))
+            {
+                writer.WritePropertyName("lastConnectivityTime"u8);
+                writer.WriteStringValue(LastConnectivityOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArcAgentStatus IJsonModel<ArcAgentStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcAgentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArcAgentStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcAgentStatus(document.RootElement, options);
+        }
+
+        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +107,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<long> coreCount = default;
             Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
             Optional<DateTimeOffset> lastConnectivityTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentState"u8))
@@ -79,8 +162,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     lastConnectivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArcAgentStatus(Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Optional.ToNullable(coreCount), Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArcAgentStatus(Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Optional.ToNullable(coreCount), Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArcAgentStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcAgentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArcAgentStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArcAgentStatus IPersistableModel<ArcAgentStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcAgentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArcAgentStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArcAgentStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArcAgentStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
