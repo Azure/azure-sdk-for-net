@@ -76,7 +76,7 @@ Open the `appsettings.Development.json` file and replace the Storage and EventHu
 #### From the dotnet CLI
 
 1. Open a terminal in the root of the HostedService sample project folder.
-2. Run the following dotnet command: ```dotnet run --framework net8.0```
+2. Run the following dotnet command: ```dotnet run --framework net7.0```
 
 #### Publish an Event
 
