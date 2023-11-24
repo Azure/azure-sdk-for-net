@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
@@ -12,10 +15,18 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class MediaComposition : IUtf8JsonSerializable
+    public partial class MediaComposition : IUtf8JsonSerializable, IJsonModel<MediaComposition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaComposition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaComposition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaComposition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaComposition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -54,11 +65,40 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("streamState"u8);
                 writer.WriteObjectValue(StreamState);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaComposition DeserializeMediaComposition(JsonElement element)
+        MediaComposition IJsonModel<MediaComposition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaComposition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaComposition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaComposition(document.RootElement, options);
+        }
+
+        internal static MediaComposition DeserializeMediaComposition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +108,8 @@ namespace Azure.Communication.MediaComposition
             Optional<IDictionary<string, MediaInput>> inputs = default;
             Optional<IDictionary<string, MediaOutput>> outputs = default;
             Optional<CompositionStreamState> streamState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -121,8 +163,44 @@ namespace Azure.Communication.MediaComposition
                     streamState = CompositionStreamState.DeserializeCompositionStreamState(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaComposition(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), streamState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaComposition(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), streamState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaComposition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaComposition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaComposition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaComposition IPersistableModel<MediaComposition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaComposition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaComposition(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaComposition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaComposition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

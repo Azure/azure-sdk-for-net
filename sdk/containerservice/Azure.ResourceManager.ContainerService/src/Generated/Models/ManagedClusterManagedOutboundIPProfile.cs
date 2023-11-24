@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
     internal partial class ManagedClusterManagedOutboundIPProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterManagedOutboundIPProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
         public ManagedClusterManagedOutboundIPProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterManagedOutboundIPProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
         /// <param name="count"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
-        internal ManagedClusterManagedOutboundIPProfile(int? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterManagedOutboundIPProfile(int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>

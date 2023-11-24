@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.Sms;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class SendMessageRequest : IUtf8JsonSerializable
+    internal partial class SendMessageRequest : IUtf8JsonSerializable, IJsonModel<SendMessageRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SendMessageRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SendMessageRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SendMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SendMessageRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From);
@@ -31,7 +44,119 @@ namespace Azure.Communication.Sms.Models
                 writer.WritePropertyName("smsSendOptions"u8);
                 writer.WriteObjectValue(SmsSendOptions);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SendMessageRequest IJsonModel<SendMessageRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SendMessageRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSendMessageRequest(document.RootElement, options);
+        }
+
+        internal static SendMessageRequest DeserializeSendMessageRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string @from = default;
+            IList<SmsRecipient> smsRecipients = default;
+            string message = default;
+            Optional<SmsSendOptions> smsSendOptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("from"u8))
+                {
+                    @from = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("smsRecipients"u8))
+                {
+                    List<SmsRecipient> array = new List<SmsRecipient>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SmsRecipient.DeserializeSmsRecipient(item));
+                    }
+                    smsRecipients = array;
+                    continue;
+                }
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("smsSendOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smsSendOptions = SmsSendOptions.DeserializeSmsSendOptions(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SendMessageRequest(@from, smsRecipients, message, smsSendOptions.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SendMessageRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendMessageRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SendMessageRequest IPersistableModel<SendMessageRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSendMessageRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendMessageRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SendMessageRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

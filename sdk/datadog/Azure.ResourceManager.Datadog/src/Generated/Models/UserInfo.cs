@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> User info. </summary>
     public partial class UserInfo
     {
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         public UserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         /// <param name="name"> Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Datadog for contacting them if needed. </param>
         /// <param name="phoneNumber"> Phone number of the user used by Datadog for contacting them if needed. </param>
-        internal UserInfo(string name, string emailAddress, string phoneNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserInfo(string name, string emailAddress, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EmailAddress = emailAddress;
             PhoneNumber = phoneNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the user. </summary>

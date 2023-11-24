@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> HDInsight Pig activity type. </summary>
     public partial class HDInsightPigActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightPigActivity(string name) : base(name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "HDInsightPig";
         }
 
-        /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ScriptLinkedService = scriptLinkedService;
             Defines = defines;
             ActivityType = activityType ?? "HDInsightPig";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

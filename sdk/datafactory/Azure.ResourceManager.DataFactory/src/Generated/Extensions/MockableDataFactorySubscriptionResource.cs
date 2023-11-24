@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "MockableDataFactorySubscriptionResource.GetDataFactories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "MockableDataFactorySubscriptionResource.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "MockableDataFactorySubscriptionResource.GetDataFactories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "MockableDataFactorySubscriptionResource.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

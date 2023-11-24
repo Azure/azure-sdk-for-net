@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class IntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/>. </summary>
         internal IntegrationRuntimeStatus()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

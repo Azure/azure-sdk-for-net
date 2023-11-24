@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,5 +14,57 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The PhoneNumberOperation. </summary>
     internal partial class PhoneNumberOperation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/>. </summary>
+        /// <param name="operationType"> The type of operation, e.g. Search. </param>
+        /// <param name="status"> Status of operation. </param>
+        /// <param name="resourceLocation"> URL for retrieving the result of the operation, if any. </param>
+        /// <param name="createdDateTime"> The date that the operation was created. </param>
+        /// <param name="error"> The Communication Services error. </param>
+        /// <param name="id"> Id of operation. </param>
+        /// <param name="lastActionDateTime"> The most recent date that the operation was changed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberOperation(PhoneNumberOperationType operationType, PhoneNumberOperationStatus status, string resourceLocation, DateTimeOffset createdDateTime, CommunicationError error, string id, DateTimeOffset? lastActionDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OperationType = operationType;
+            Status = status;
+            ResourceLocation = resourceLocation;
+            CreatedDateTime = createdDateTime;
+            Error = error;
+            Id = id;
+            LastActionDateTime = lastActionDateTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

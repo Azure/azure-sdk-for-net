@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
@@ -16,16 +18,17 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class SharedGalleryData : PirSharedGalleryResourceData
     {
-        /// <summary> Initializes a new instance of SharedGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         internal SharedGalleryData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        internal SharedGalleryData(string name, AzureLocation? location, string uniqueId) : base(name, location, uniqueId)
+        internal SharedGalleryData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId) : base(name, location, serializedAdditionalRawData, uniqueId)
         {
         }
 

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,10 +17,18 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(DatasetSchemaDataElementConverter))]
-    public partial class DatasetSchemaDataElement : IUtf8JsonSerializable
+    public partial class DatasetSchemaDataElement : IUtf8JsonSerializable, IJsonModel<DatasetSchemaDataElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetSchemaDataElement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetSchemaDataElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatasetSchemaDataElement)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaColumnName))
             {
@@ -30,23 +40,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 JsonSerializer.Serialize(writer, SchemaColumnType);
             }
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element)
+        DatasetSchemaDataElement IJsonModel<DatasetSchemaDataElement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatasetSchemaDataElement)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetSchemaDataElement(document.RootElement, options);
+        }
+
+        internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +107,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetSchemaDataElement(name.Value, type.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetSchemaDataElement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatasetSchemaDataElement IPersistableModel<DatasetSchemaDataElement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetSchemaDataElement(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetSchemaDataElement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DatasetSchemaDataElementConverter : JsonConverter<DatasetSchemaDataElement>
         {

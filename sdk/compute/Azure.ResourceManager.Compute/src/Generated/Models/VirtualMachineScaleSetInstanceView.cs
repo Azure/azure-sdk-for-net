@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine scale set. </summary>
     public partial class VirtualMachineScaleSetInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetInstanceView"/>. </summary>
         internal VirtualMachineScaleSetInstanceView()
         {
             Extensions = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>();
@@ -21,17 +54,19 @@ namespace Azure.ResourceManager.Compute.Models
             OrchestrationServices = new ChangeTrackingList<OrchestrationServiceSummary>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetInstanceView"/>. </summary>
         /// <param name="virtualMachine"> The instance view status summary for the virtual machine scale set. </param>
         /// <param name="extensions"> The extensions information. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="orchestrationServices"> The orchestration services information. </param>
-        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> extensions, IReadOnlyList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> extensions, IReadOnlyList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachine = virtualMachine;
             Extensions = extensions;
             Statuses = statuses;
             OrchestrationServices = orchestrationServices;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The instance view status summary for the virtual machine scale set. </summary>

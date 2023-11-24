@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ManagedClusterSnapshotData : IUtf8JsonSerializable
+    public partial class ManagedClusterSnapshotData : IUtf8JsonSerializable, IJsonModel<ManagedClusterSnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagedClusterSnapshotData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,6 +42,26 @@ namespace Azure.ResourceManager.ContainerService
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreationData))
@@ -43,12 +74,46 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagedClusterPropertiesReadOnly))
+            {
+                writer.WritePropertyName("managedClusterPropertiesReadOnly"u8);
+                writer.WriteObjectValue(ManagedClusterPropertiesReadOnly);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterSnapshotData DeserializeManagedClusterSnapshotData(JsonElement element)
+        ManagedClusterSnapshotData IJsonModel<ManagedClusterSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagedClusterSnapshotData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterSnapshotData(document.RootElement, options);
+        }
+
+        internal static ManagedClusterSnapshotData DeserializeManagedClusterSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +127,8 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServiceCreationData> creationData = default;
             Optional<SnapshotType> snapshotType = default;
             Optional<ManagedClusterPropertiesForSnapshot> managedClusterPropertiesReadOnly = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -146,8 +213,44 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), managedClusterPropertiesReadOnly.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), managedClusterPropertiesReadOnly.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterSnapshotData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagedClusterSnapshotData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterSnapshotData IPersistableModel<ManagedClusterSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterSnapshotData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagedClusterSnapshotData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

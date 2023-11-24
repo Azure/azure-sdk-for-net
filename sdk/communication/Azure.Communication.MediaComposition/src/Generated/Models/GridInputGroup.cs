@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure grid-based input group to be used in custom layouts. </summary>
     public partial class GridInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of GridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/>. </summary>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
@@ -31,22 +31,28 @@ namespace Azure.Communication.MediaComposition
             Kind = InputGroupType.GridBased;
         }
 
-        /// <summary> Initializes a new instance of GridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
-        internal GridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IList<IList<string>> inputIds, int rows, int columns) : base(kind, position, width, height, layer, scalingMode)
+        internal GridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<string>> inputIds, int rows, int columns) : base(kind, position, width, height, layer, scalingMode, serializedAdditionalRawData)
         {
             InputIds = inputIds;
             Rows = rows;
             Columns = columns;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/> for deserialization. </summary>
+        internal GridInputGroup()
+        {
         }
 
         /// <summary> Input and input group ids to be included in this input group. </summary>

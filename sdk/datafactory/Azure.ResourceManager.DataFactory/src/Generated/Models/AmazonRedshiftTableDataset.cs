@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Amazon Redshift table dataset. </summary>
     public partial class AmazonRedshiftTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AmazonRedshiftTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonRedshiftTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AmazonRedshiftTable";
         }
 
-        /// <summary> Initializes a new instance of AmazonRedshiftTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             DatasetType = datasetType ?? "AmazonRedshiftTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/> for deserialization. </summary>
+        internal AmazonRedshiftTableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
