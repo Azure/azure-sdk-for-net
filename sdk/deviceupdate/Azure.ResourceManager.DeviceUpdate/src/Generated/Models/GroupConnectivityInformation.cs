@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="internalFqdn"> Internal FQDN. </param>
         /// <param name="redirectMapId"> Redirect map ID. </param>
         /// <param name="privateLinkServiceArmRegion"> PrivateLinkService ARM region. </param>
-        internal GroupConnectivityInformation(string groupId, string memberName, IList<string> customerVisibleFqdns, string internalFqdn, string redirectMapId, string privateLinkServiceArmRegion)
+        internal GroupConnectivityInformation(string groupId, string memberName, IList<string> customerVisibleFqdns, string internalFqdn, string redirectMapId, AzureLocation? privateLinkServiceArmRegion)
         {
             GroupId = groupId;
             MemberName = memberName;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Redirect map ID. </summary>
         public string RedirectMapId { get; set; }
         /// <summary> PrivateLinkService ARM region. </summary>
-        public string PrivateLinkServiceArmRegion { get; set; }
+        public AzureLocation? PrivateLinkServiceArmRegion { get; set; }
     }
 }
