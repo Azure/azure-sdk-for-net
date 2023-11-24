@@ -5,15 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class PlayCompleted
+    public partial class PlayCompleted : IUtf8JsonSerializable, IJsonModel<PlayCompleted>
     {
-        internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlayCompleted>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PlayCompleted>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PlayCompleted>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PlayCompleted)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicEventType))
+            {
+                writer.WritePropertyName("publicEventType"u8);
+                writer.WriteStringValue(PublicEventType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PlayCompleted IJsonModel<PlayCompleted>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlayCompleted>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PlayCompleted)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlayCompleted(document.RootElement, options);
+        }
+
+        internal static PlayCompleted DeserializePlayCompleted(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +107,8 @@ namespace Azure.Communication.CallingServer
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> publicEventType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))
@@ -66,8 +150,44 @@ namespace Azure.Communication.CallingServer
                     publicEventType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PlayCompleted(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PlayCompleted(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PlayCompleted>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlayCompleted>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PlayCompleted)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PlayCompleted IPersistableModel<PlayCompleted>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlayCompleted>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePlayCompleted(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PlayCompleted)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PlayCompleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

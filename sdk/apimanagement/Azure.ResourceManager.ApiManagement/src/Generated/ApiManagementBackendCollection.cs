@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

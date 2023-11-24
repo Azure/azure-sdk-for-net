@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHciModelFactory
     {
-        /// <summary> Initializes a new instance of ArcSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.Hci.Models
         {
             perNodeDetails ??= new List<PerNodeArcState>();
 
-            return new ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails?.ToList(), connectivityProperties);
+            return new ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails?.ToList(), connectivityProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PerNodeArcState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerNodeArcState"/>. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="state"> State of Arc agent in this node. </param>
         /// <returns> A new <see cref="Models.PerNodeArcState"/> instance for mocking. </returns>
         public static PerNodeArcState PerNodeArcState(string name = null, string arcInstance = null, NodeArcState? state = null)
         {
-            return new PerNodeArcState(name, arcInstance, state);
+            return new PerNodeArcState(name, arcInstance, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArcPasswordCredential"/>. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
         /// <param name="startOn"></param>
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ArcPasswordCredential"/> instance for mocking. </returns>
         public static ArcPasswordCredential ArcPasswordCredential(string secretText = null, string keyId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
-            return new ArcPasswordCredential(secretText, keyId, startOn, endOn);
+            return new ArcPasswordCredential(secretText, keyId, startOn, endOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ArcIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArcIdentityResult"/>. </summary>
         /// <param name="arcApplicationClientId"></param>
         /// <param name="arcApplicationTenantId"></param>
         /// <param name="arcServicePrincipalObjectId"></param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ArcIdentityResult"/> instance for mocking. </returns>
         public static ArcIdentityResult ArcIdentityResult(Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null)
         {
-            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId);
+            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -106,20 +106,20 @@ namespace Azure.ResourceManager.Hci.Models
             tags ??= new Dictionary<string, string>();
             userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
-            return new HciClusterData(id, name, resourceType, systemData, tags, location, provisioningState, status, cloudId, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, desiredProperties, reportedProperties, trialDaysRemaining, billingModel, registrationTimestamp, lastSyncTimestamp, lastBillingTimestamp, serviceEndpoint, resourceProviderObjectId, principalId, tenantId, typeIdentityType, userAssignedIdentities);
+            return new HciClusterData(id, name, resourceType, systemData, tags, location, provisioningState, status, cloudId, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, desiredProperties, reportedProperties, trialDaysRemaining, billingModel, registrationTimestamp, lastSyncTimestamp, lastBillingTimestamp, serviceEndpoint, resourceProviderObjectId, principalId, tenantId, typeIdentityType, userAssignedIdentities, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SoftwareAssuranceProperties"/>. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
         /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
         /// <returns> A new <see cref="Models.SoftwareAssuranceProperties"/> instance for mocking. </returns>
         public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = null, SoftwareAssuranceIntent? softwareAssuranceIntent = null, DateTimeOffset? lastUpdated = null)
         {
-            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
         /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
         /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
         /// <param name="clusterVersion"> Version of the cluster software. </param>
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Hci.Models
             nodes ??= new List<HciClusterNode>();
             supportedCapabilities ??= new List<string>();
 
-            return new HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes?.ToList(), lastUpdatedOn, imdsAttestation, diagnosticLevel, supportedCapabilities?.ToList());
+            return new HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes?.ToList(), lastUpdatedOn, imdsAttestation, diagnosticLevel, supportedCapabilities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterNode"/>. </summary>
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
@@ -155,10 +155,29 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciClusterNode"/> instance for mocking. </returns>
         public static HciClusterNode HciClusterNode(string name = null, float? id = null, WindowsServerSubscription? windowsServerSubscription = null, ClusterNodeType? nodeType = null, string ehcResourceId = null, string manufacturer = null, string model = null, string osName = null, string osVersion = null, string osDisplayVersion = null, string serialNumber = null, float? coreCount = null, float? memoryInGiB = null, DateTimeOffset? lastLicensingTimestamp = null)
         {
-            return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp);
+            return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, HciClusterDesiredProperties desiredProperties = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? managedServiceIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new HciClusterPatch(tags, cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, principalId, tenantId, managedServiceIdentityType, userAssignedIdentities, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterIdentityResult"/>. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>
         /// <param name="aadServicePrincipalObjectId"></param>
@@ -166,10 +185,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciClusterIdentityResult"/> instance for mocking. </returns>
         public static HciClusterIdentityResult HciClusterIdentityResult(Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadServicePrincipalObjectId = null, Guid? aadApplicationObjectId = null)
         {
-            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId);
+            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.ArcExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -190,10 +209,10 @@ namespace Azure.ResourceManager.Hci.Models
         {
             perNodeExtensionDetails ??= new List<PerNodeExtensionState>();
 
-            return new ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails?.ToList(), forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
+            return new ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails?.ToList(), forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PerNodeExtensionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
         /// <param name="name"> Name of the node in HCI Cluster. </param>
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
@@ -202,10 +221,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
         public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, HciExtensionInstanceView instanceView = null)
         {
-            return new PerNodeExtensionState(name, extension, typeHandlerVersion, state, instanceView);
+            return new PerNodeExtensionState(name, extension, typeHandlerVersion, state, instanceView, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciExtensionInstanceView"/>. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
@@ -213,10 +232,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
         public static HciExtensionInstanceView HciExtensionInstanceView(string name = null, string extensionInstanceViewType = null, string typeHandlerVersion = null, ExtensionInstanceViewStatus status = null)
         {
-            return new HciExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status);
+            return new HciExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ExtensionInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExtensionInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
@@ -225,10 +244,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ExtensionInstanceViewStatus"/> instance for mocking. </returns>
         public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
-            return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time);
+            return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.OfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -243,10 +262,10 @@ namespace Azure.ResourceManager.Hci.Models
         {
             skuMappings ??= new List<HciSkuMappings>();
 
-            return new OfferData(id, name, resourceType, systemData, provisioningState, publisherId, content, contentVersion, skuMappings?.ToList());
+            return new OfferData(id, name, resourceType, systemData, provisioningState, publisherId, content, contentVersion, skuMappings?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -255,10 +274,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Hci.PublisherData"/> instance for mocking. </returns>
         public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null)
         {
-            return new PublisherData(id, name, resourceType, systemData, provisioningState);
+            return new PublisherData(id, name, resourceType, systemData, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HciSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -274,10 +293,10 @@ namespace Azure.ResourceManager.Hci.Models
         {
             skuMappings ??= new List<HciSkuMappings>();
 
-            return new HciSkuData(id, name, resourceType, systemData, provisioningState, publisherId, offerId, content, contentVersion, skuMappings?.ToList());
+            return new HciSkuData(id, name, resourceType, systemData, provisioningState, publisherId, offerId, content, contentVersion, skuMappings?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.UpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -301,10 +320,10 @@ namespace Azure.ResourceManager.Hci.Models
         {
             steps ??= new List<HciUpdateStep>();
 
-            return new UpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startTimeUtc, endTimeUtc, lastUpdatedTimeUtc, steps?.ToList());
+            return new UpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startTimeUtc, endTimeUtc, lastUpdatedTimeUtc, steps?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.UpdateSummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -327,10 +346,10 @@ namespace Azure.ResourceManager.Hci.Models
             packageVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
 
-            return new UpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, hardwareModel, packageVersions?.ToList(), currentVersion, lastUpdated, lastChecked, healthState, healthCheckResult?.ToList(), healthCheckOn, state);
+            return new UpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, hardwareModel, packageVersions?.ToList(), currentVersion, lastUpdated, lastChecked, healthState, healthCheckResult?.ToList(), healthCheckOn, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of UpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.UpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -364,7 +383,7 @@ namespace Azure.ResourceManager.Hci.Models
             componentVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
 
-            return new UpdateData(id, name, resourceType, systemData, location, provisioningState, installedOn, description, state, prerequisites?.ToList(), componentVersions?.ToList(), rebootRequired, healthState, healthCheckResult?.ToList(), healthCheckOn, packagePath, packageSizeInMb, displayName, version, publisher, releaseLink, availabilityType, packageType, additionalProperties, progressPercentage, notifyMessage);
+            return new UpdateData(id, name, resourceType, systemData, location, provisioningState, installedOn, description, state, prerequisites?.ToList(), componentVersions?.ToList(), rebootRequired, healthState, healthCheckResult?.ToList(), healthCheckOn, packagePath, packageSizeInMb, displayName, version, publisher, releaseLink, availabilityType, packageType, additionalProperties, progressPercentage, notifyMessage, serializedAdditionalRawData: null);
         }
     }
 }

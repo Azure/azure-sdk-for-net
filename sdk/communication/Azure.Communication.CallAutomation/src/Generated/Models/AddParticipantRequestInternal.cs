@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for adding participant to the call. </summary>
     internal partial class AddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
         /// <param name="participantToAdd"> The participant to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)
@@ -22,6 +55,41 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(participantToAdd, nameof(participantToAdd));
 
             ParticipantToAdd = participantToAdd;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
+        /// <param name="sourceCallerIdNumber">
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
+        /// Required only when inviting a PSTN participant.
+        /// </param>
+        /// <param name="sourceDisplayName">
+        /// (Optional) The display name of the source that is associated with this invite operation when
+        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
+        /// </param>
+        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="invitationTimeoutInSeconds">
+        /// Gets or sets the timeout to wait for the invited participant to pickup.
+        /// The maximum value of this is 180 seconds
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, CustomContextInternal customContext, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceCallerIdNumber = sourceCallerIdNumber;
+            SourceDisplayName = sourceDisplayName;
+            ParticipantToAdd = participantToAdd;
+            InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            OperationContext = operationContext;
+            CustomContext = customContext;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/> for deserialization. </summary>
+        internal AddParticipantRequestInternal()
+        {
         }
 
         /// <summary>

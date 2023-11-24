@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,45 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Remote Private Endpoint Connection resource. </summary>
     public partial class RemotePrivateEndpointConnectionWrapper
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         public RemotePrivateEndpointConnectionWrapper()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         /// <param name="id"> Private Endpoint connection resource id. </param>
         /// <param name="name"> Private Endpoint Connection Name. </param>
         /// <param name="resourceType"> Private Endpoint Connection Resource Type. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> All the Group ids. </param>
-        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -37,6 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private Endpoint connection resource id. </summary>

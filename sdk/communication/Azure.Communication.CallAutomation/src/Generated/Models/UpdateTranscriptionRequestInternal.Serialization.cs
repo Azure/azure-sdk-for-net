@@ -5,19 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class UpdateTranscriptionRequestInternal : IUtf8JsonSerializable
+    internal partial class UpdateTranscriptionRequestInternal : IUtf8JsonSerializable, IJsonModel<UpdateTranscriptionRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateTranscriptionRequestInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpdateTranscriptionRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateTranscriptionRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UpdateTranscriptionRequestInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        UpdateTranscriptionRequestInternal IJsonModel<UpdateTranscriptionRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateTranscriptionRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UpdateTranscriptionRequestInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateTranscriptionRequestInternal(document.RootElement, options);
+        }
+
+        internal static UpdateTranscriptionRequestInternal DeserializeUpdateTranscriptionRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string locale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("locale"u8))
+                {
+                    locale = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateTranscriptionRequestInternal(locale, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<UpdateTranscriptionRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateTranscriptionRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UpdateTranscriptionRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UpdateTranscriptionRequestInternal IPersistableModel<UpdateTranscriptionRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateTranscriptionRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpdateTranscriptionRequestInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UpdateTranscriptionRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpdateTranscriptionRequestInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

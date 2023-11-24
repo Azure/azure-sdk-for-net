@@ -5,22 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AcsCallParticipantInternal
+    internal partial class AcsCallParticipantInternal : IUtf8JsonSerializable, IJsonModel<AcsCallParticipantInternal>
     {
-        internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsCallParticipantInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsCallParticipantInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsCallParticipantInternal)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Identifier))
+            {
+                writer.WritePropertyName("identifier"u8);
+                writer.WriteObjectValue(Identifier);
+            }
+            if (Optional.IsDefined(IsMuted))
+            {
+                writer.WritePropertyName("isMuted"u8);
+                writer.WriteBooleanValue(IsMuted.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsCallParticipantInternal IJsonModel<AcsCallParticipantInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsCallParticipantInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsCallParticipantInternal(document.RootElement, options);
+        }
+
+        internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -41,8 +100,44 @@ namespace Azure.Communication.CallingServer
                     isMuted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsCallParticipantInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsCallParticipantInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsCallParticipantInternal IPersistableModel<AcsCallParticipantInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsCallParticipantInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsCallParticipantInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsCallParticipantInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Network Status details. </summary>
     public partial class NetworkStatusContract
     {
-        /// <summary> Initializes a new instance of NetworkStatusContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServers"/> or <paramref name="connectivityStatus"/> is null. </exception>
@@ -28,13 +60,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ConnectivityStatus = connectivityStatus.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
-        internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsServers = dnsServers;
             ConnectivityStatus = connectivityStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/> for deserialization. </summary>
+        internal NetworkStatusContract()
+        {
         }
 
         /// <summary> Gets the list of DNS servers IPV4 addresses. </summary>

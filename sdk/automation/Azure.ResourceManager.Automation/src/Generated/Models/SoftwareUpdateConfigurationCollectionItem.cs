@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration collection item properties. </summary>
     public partial class SoftwareUpdateConfigurationCollectionItem
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
         internal SoftwareUpdateConfigurationCollectionItem()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
         /// <param name="name"> Name of the software update configuration. </param>
         /// <param name="id"> Resource Id of the software update configuration. </param>
         /// <param name="updateConfiguration"> Update specific properties of the software update configuration. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Last time software update configuration was modified, which only appears in the response. </param>
         /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
         /// <param name="nextRunOn"> ext run time of the update. </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -41,6 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             NextRunOn = nextRunOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the software update configuration. </summary>

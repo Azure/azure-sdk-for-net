@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Details about connectivity to a resource. </summary>
     public partial class ConnectivityStatusContract
     {
-        /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="lastUpdatedOn">
@@ -40,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IsOptional = isOptional;
         }
 
-        /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="error"> Error details of the connectivity to the resource. </param>
@@ -54,7 +87,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="isOptional"> Whether this is optional. </param>
-        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, string error, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, string error, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
@@ -63,6 +97,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             LastStatusChangedOn = lastStatusChangedOn;
             ResourceType = resourceType;
             IsOptional = isOptional;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/> for deserialization. </summary>
+        internal ConnectivityStatusContract()
+        {
         }
 
         /// <summary> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </summary>

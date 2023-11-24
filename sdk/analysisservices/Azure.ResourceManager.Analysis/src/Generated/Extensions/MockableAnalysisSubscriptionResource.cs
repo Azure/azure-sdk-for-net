@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetAnalysisServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual Pageable<AnalysisServerResource> GetAnalysisServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetAnalysisServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationPrivateLinkResource(Client, AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(e)), _appConfigurationPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AppConfigurationPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationPrivateLinkResource(Client, AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(e)), _appConfigurationPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AppConfigurationPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationPrivateLinkResource(Client, AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(e)), _appConfigurationPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AppConfigurationPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationPrivateLinkResource(Client, AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(e)), _appConfigurationPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AppConfigurationPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

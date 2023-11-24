@@ -6,15 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiTagDescriptionCreateOrUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
         public ApiTagDescriptionCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
+        /// <param name="description"> Description of the Tag. </param>
+        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
+        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiTagDescriptionCreateOrUpdateContent(string description, Uri externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Description = description;
+            ExternalDocsUri = externalDocsUri;
+            ExternalDocsDescription = externalDocsDescription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the Tag. </summary>

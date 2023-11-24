@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

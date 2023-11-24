@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentOperationRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentOperationRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

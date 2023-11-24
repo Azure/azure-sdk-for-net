@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
