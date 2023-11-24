@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExtensionTopicResource"/> object. </returns>
         public static ExtensionTopicResource GetExtensionTopic(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CaCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CaCertificateResource"/> object. </returns>
         public static CaCertificateResource GetCaCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerNamespaceChannelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerNamespaceChannelResource"/> object. </returns>
         public static PartnerNamespaceChannelResource GetPartnerNamespaceChannelResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridNamespaceClientGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridNamespaceClientGroupResource"/> object. </returns>
         public static EventGridNamespaceClientGroupResource GetEventGridNamespaceClientGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridNamespaceClientResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridNamespaceClientResource"/> object. </returns>
         public static EventGridNamespaceClientResource GetEventGridNamespaceClientResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridDomainResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
         public static EventGridDomainResource GetEventGridDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DomainTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DomainTopicResource"/> object. </returns>
         public static DomainTopicResource GetDomainTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource"/> object. </returns>
         public static DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TopicEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TopicEventSubscriptionResource"/> object. </returns>
         public static TopicEventSubscriptionResource GetTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DomainEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DomainEventSubscriptionResource"/> object. </returns>
         public static DomainEventSubscriptionResource GetDomainEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventSubscriptionResource"/> object. </returns>
         public static EventSubscriptionResource GetEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SystemTopicEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SystemTopicEventSubscriptionResource"/> object. </returns>
         public static SystemTopicEventSubscriptionResource GetSystemTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerTopicEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerTopicEventSubscriptionResource"/> object. </returns>
         public static PartnerTopicEventSubscriptionResource GetPartnerTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource"/> object. </returns>
         public static NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridNamespaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridNamespaceResource"/> object. </returns>
         public static EventGridNamespaceResource GetEventGridNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NamespaceTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NamespaceTopicResource"/> object. </returns>
         public static NamespaceTopicResource GetNamespaceTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public static PartnerConfigurationResource GetPartnerConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerDestinationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerDestinationResource"/> object. </returns>
         public static PartnerDestinationResource GetPartnerDestinationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerNamespaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerNamespaceResource"/> object. </returns>
         public static PartnerNamespaceResource GetPartnerNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerRegistrationResource"/> object. </returns>
         public static PartnerRegistrationResource GetPartnerRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerTopicResource"/> object. </returns>
         public static PartnerTopicResource GetPartnerTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridNamespacePermissionBindingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridNamespacePermissionBindingResource"/> object. </returns>
         public static EventGridNamespacePermissionBindingResource GetEventGridNamespacePermissionBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
         public static EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
         public static EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> object. </returns>
         public static EventGridPartnerNamespacePrivateEndpointConnectionResource GetEventGridPartnerNamespacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridTopicPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridTopicPrivateLinkResource"/> object. </returns>
         public static EventGridTopicPrivateLinkResource GetEventGridTopicPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridDomainPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridDomainPrivateLinkResource"/> object. </returns>
         public static EventGridDomainPrivateLinkResource GetEventGridDomainPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerNamespacePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerNamespacePrivateLinkResource"/> object. </returns>
         public static PartnerNamespacePrivateLinkResource GetPartnerNamespacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SystemTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SystemTopicResource"/> object. </returns>
         public static SystemTopicResource GetSystemTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
         public static EventGridTopicResource GetEventGridTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExtensionTopicResource"/> object. </returns>
         public static ExtensionTopicResource GetExtensionTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TopicSpaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TopicSpaceResource"/> object. </returns>
         public static TopicSpaceResource GetTopicSpaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TopicTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TopicTypeResource"/> object. </returns>
         public static TopicTypeResource GetTopicTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VerifiedPartnerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VerifiedPartnerResource"/> object. </returns>
         public static VerifiedPartnerResource GetVerifiedPartnerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventGridDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventGridDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridDomainResource> GetEventGridDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventGridNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridNamespaceResource> GetEventGridNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventGridNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridNamespaceResource> GetEventGridNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerConfigurationResource> GetPartnerConfigurationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerConfigurationResource> GetPartnerConfigurations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PartnerDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerDestinationResource> GetPartnerDestinationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PartnerDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerDestinationResource> GetPartnerDestinations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerNamespaceResource> GetPartnerNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerNamespaceResource> GetPartnerNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1720,7 +1720,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerRegistrationResource> GetPartnerRegistrationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerRegistrationResource> GetPartnerRegistrations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PartnerTopicResource> GetPartnerTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PartnerTopicResource> GetPartnerTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SystemTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SystemTopicResource> GetSystemTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1870,7 +1870,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SystemTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SystemTopicResource> GetSystemTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventGridTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventGridTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapacityReservationGroupResource" /> and their operations.
-    /// Each <see cref="CapacityReservationGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CapacityReservationGroupCollection" /> instance call the GetCapacityReservationGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CapacityReservationGroupResource"/> and their operations.
+    /// Each <see cref="CapacityReservationGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CapacityReservationGroupCollection"/> instance call the GetCapacityReservationGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CapacityReservationGroupCollection : ArmCollection, IEnumerable<CapacityReservationGroupResource>, IAsyncEnumerable<CapacityReservationGroupResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityReservationGroupResource> GetAllAsync(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityReservationGroupResource> GetAll(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);

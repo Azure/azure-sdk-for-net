@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridComputeMachineExtensionResource" /> and their operations.
-    /// Each <see cref="HybridComputeMachineExtensionResource" /> in the collection will belong to the same instance of <see cref="HybridComputeMachineResource" />.
-    /// To get a <see cref="HybridComputeMachineExtensionCollection" /> instance call the GetHybridComputeMachineExtensions method from an instance of <see cref="HybridComputeMachineResource" />.
+    /// A class representing a collection of <see cref="HybridComputeMachineExtensionResource"/> and their operations.
+    /// Each <see cref="HybridComputeMachineExtensionResource"/> in the collection will belong to the same instance of <see cref="HybridComputeMachineResource"/>.
+    /// To get a <see cref="HybridComputeMachineExtensionCollection"/> instance call the GetHybridComputeMachineExtensions method from an instance of <see cref="HybridComputeMachineResource"/>.
     /// </summary>
     public partial class HybridComputeMachineExtensionCollection : ArmCollection, IEnumerable<HybridComputeMachineExtensionResource>, IAsyncEnumerable<HybridComputeMachineExtensionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridComputeMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputeMachineExtensionResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridComputeMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputeMachineExtensionResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);

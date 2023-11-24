@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceFleetUpdateRunResource" /> and their operations.
-    /// Each <see cref="ContainerServiceFleetUpdateRunResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceFleetResource" />.
-    /// To get a <see cref="ContainerServiceFleetUpdateRunCollection" /> instance call the GetContainerServiceFleetUpdateRuns method from an instance of <see cref="ContainerServiceFleetResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceFleetUpdateRunResource"/> and their operations.
+    /// Each <see cref="ContainerServiceFleetUpdateRunResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceFleetResource"/>.
+    /// To get a <see cref="ContainerServiceFleetUpdateRunCollection"/> instance call the GetContainerServiceFleetUpdateRuns method from an instance of <see cref="ContainerServiceFleetResource"/>.
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunCollection : ArmCollection, IEnumerable<ContainerServiceFleetUpdateRunResource>, IAsyncEnumerable<ContainerServiceFleetUpdateRunResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceFleetUpdateRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

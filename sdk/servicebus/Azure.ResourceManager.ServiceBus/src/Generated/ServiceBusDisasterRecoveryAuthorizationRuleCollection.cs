@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="ServiceBusDisasterRecoveryResource" />.
-    /// To get a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleCollection" /> instance call the GetServiceBusDisasterRecoveryAuthorizationRules method from an instance of <see cref="ServiceBusDisasterRecoveryResource" />.
+    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusDisasterRecoveryResource"/>.
+    /// To get a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleCollection"/> instance call the GetServiceBusDisasterRecoveryAuthorizationRules method from an instance of <see cref="ServiceBusDisasterRecoveryResource"/>.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusDisasterRecoveryAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusDisasterRecoveryAuthorizationRuleResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusDisasterRecoveryAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusDisasterRecoveryAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

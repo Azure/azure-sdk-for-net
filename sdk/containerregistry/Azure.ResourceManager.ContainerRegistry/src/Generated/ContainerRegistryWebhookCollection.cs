@@ -21,9 +21,9 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryWebhookResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryWebhookResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ContainerRegistryWebhookCollection" /> instance call the GetContainerRegistryWebhooks method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ContainerRegistryWebhookResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryWebhookResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ContainerRegistryWebhookCollection"/> instance call the GetContainerRegistryWebhooks method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ContainerRegistryWebhookCollection : ArmCollection, IEnumerable<ContainerRegistryWebhookResource>, IAsyncEnumerable<ContainerRegistryWebhookResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryWebhookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerRegistryWebhookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryWebhookResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryWebhookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryWebhookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryWebhookResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

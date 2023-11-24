@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource" /> using the GetSynapseSqlPoolTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource"/> using the GetSynapseSqlPoolTable method.
     /// </summary>
     public partial class SynapseSqlPoolTableResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolTableResource(ArmClient client, SynapseSqlPoolTableData data) : this(client, data.Id)

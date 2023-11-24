@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementCertificate method.
     /// </summary>
     public partial class ApiManagementCertificateResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementCertificateResource(ArmClient client, ApiManagementCertificateData data) : this(client, data.Id)

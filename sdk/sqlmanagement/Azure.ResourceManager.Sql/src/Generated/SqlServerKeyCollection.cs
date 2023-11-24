@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerKeyResource" /> and their operations.
-    /// Each <see cref="SqlServerKeyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerKeyCollection" /> instance call the GetSqlServerKeys method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerKeyResource"/> and their operations.
+    /// Each <see cref="SqlServerKeyResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerKeyCollection"/> instance call the GetSqlServerKeys method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerKeyCollection : ArmCollection, IEnumerable<SqlServerKeyResource>, IAsyncEnumerable<SqlServerKeyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerKeyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerKeyServerKeysRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerKeyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerKeyServerKeysRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

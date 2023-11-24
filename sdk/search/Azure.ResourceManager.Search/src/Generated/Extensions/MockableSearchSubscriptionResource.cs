@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaUsageResult> GetUsagesBySubscription(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A Class representing a BatchAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBatchAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBatchAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBatchAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBatchAccount method.
     /// </summary>
     public partial class BatchAccountResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BatchAccountResource(ArmClient client, BatchAccountData data) : this(client, data.Id)
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

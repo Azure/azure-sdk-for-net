@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="UpdateResource" /> and their operations.
-    /// Each <see cref="UpdateResource" /> in the collection will belong to the same instance of <see cref="HciClusterResource" />.
-    /// To get an <see cref="UpdateCollection" /> instance call the GetUpdates method from an instance of <see cref="HciClusterResource" />.
+    /// A class representing a collection of <see cref="UpdateResource"/> and their operations.
+    /// Each <see cref="UpdateResource"/> in the collection will belong to the same instance of <see cref="HciClusterResource"/>.
+    /// To get an <see cref="UpdateCollection"/> instance call the GetUpdates method from an instance of <see cref="HciClusterResource"/>.
     /// </summary>
     public partial class UpdateCollection : ArmCollection, IEnumerable<UpdateResource>, IAsyncEnumerable<UpdateResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UpdateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="UpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UpdateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

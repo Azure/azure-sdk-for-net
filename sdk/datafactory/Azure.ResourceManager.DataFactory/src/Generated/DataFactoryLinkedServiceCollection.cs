@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryLinkedServiceResource" /> and their operations.
-    /// Each <see cref="DataFactoryLinkedServiceResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryLinkedServiceCollection" /> instance call the GetDataFactoryLinkedServices method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryLinkedServiceResource"/> and their operations.
+    /// Each <see cref="DataFactoryLinkedServiceResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryLinkedServiceCollection"/> instance call the GetDataFactoryLinkedServices method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryLinkedServiceCollection : ArmCollection, IEnumerable<DataFactoryLinkedServiceResource>, IAsyncEnumerable<DataFactoryLinkedServiceResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryLinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryLinkedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryLinkedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryLinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryLinkedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryLinkedServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GlobalRulestackResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>
         public static GlobalRulestackResource GetGlobalRulestackResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource"/> object. </returns>
         public static GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GlobalRulestackFqdnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GlobalRulestackFqdnResource"/> object. </returns>
         public static GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PostRulestackRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostRulestackRuleResource"/> object. </returns>
         public static PostRulestackRuleResource GetPostRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
         public static GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PreRulestackRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PreRulestackRuleResource"/> object. </returns>
         public static PreRulestackRuleResource GetPreRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource"/> object. </returns>
         public static PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LocalRulestackResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LocalRulestackResource"/> object. </returns>
         public static LocalRulestackResource GetLocalRulestackResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public static PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource"/> object. </returns>
         public static LocalRulestackCertificateObjectResource GetLocalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LocalRulestackFqdnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LocalRulestackFqdnResource"/> object. </returns>
         public static LocalRulestackFqdnResource GetLocalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LocalRulestackRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LocalRulestackRuleResource"/> object. </returns>
         public static LocalRulestackRuleResource GetLocalRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LocalRulestackPrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LocalRulestackPrefixResource"/> object. </returns>
         public static LocalRulestackPrefixResource GetLocalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LocalRulestackResource> GetLocalRulestacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

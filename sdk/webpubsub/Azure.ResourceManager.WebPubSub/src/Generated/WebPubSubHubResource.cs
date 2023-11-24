@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
     /// A Class representing a WebPubSubHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebPubSubHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebPubSubHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource" /> using the GetWebPubSubHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubHub method.
     /// </summary>
     public partial class WebPubSubHubResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebPubSubHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebPubSubHubResource(ArmClient client, WebPubSubHubData data) : this(client, data.Id)

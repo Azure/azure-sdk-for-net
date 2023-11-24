@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProfileResourceFormatResource" /> and their operations.
-    /// Each <see cref="ProfileResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="ProfileResourceFormatCollection" /> instance call the GetProfileResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="ProfileResourceFormatResource"/> and their operations.
+    /// Each <see cref="ProfileResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="ProfileResourceFormatCollection"/> instance call the GetProfileResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class ProfileResourceFormatCollection : ArmCollection, IEnumerable<ProfileResourceFormatResource>, IAsyncEnumerable<ProfileResourceFormatResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProfileResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProfileResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProfileResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProfileResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);

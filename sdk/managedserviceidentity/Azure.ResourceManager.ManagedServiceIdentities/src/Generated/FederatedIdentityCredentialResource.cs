@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary>
     /// A Class representing a FederatedIdentityCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FederatedIdentityCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFederatedIdentityCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="UserAssignedIdentityResource" /> using the GetFederatedIdentityCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FederatedIdentityCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFederatedIdentityCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="UserAssignedIdentityResource"/> using the GetFederatedIdentityCredential method.
     /// </summary>
     public partial class FederatedIdentityCredentialResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FederatedIdentityCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FederatedIdentityCredentialResource(ArmClient client, FederatedIdentityCredentialData data) : this(client, data.Id)

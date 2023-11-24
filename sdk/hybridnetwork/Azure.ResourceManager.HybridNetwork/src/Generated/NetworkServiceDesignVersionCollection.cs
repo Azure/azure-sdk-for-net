@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkServiceDesignVersionResource" /> and their operations.
-    /// Each <see cref="NetworkServiceDesignVersionResource" /> in the collection will belong to the same instance of <see cref="NetworkServiceDesignGroupResource" />.
-    /// To get a <see cref="NetworkServiceDesignVersionCollection" /> instance call the GetNetworkServiceDesignVersions method from an instance of <see cref="NetworkServiceDesignGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkServiceDesignVersionResource"/> and their operations.
+    /// Each <see cref="NetworkServiceDesignVersionResource"/> in the collection will belong to the same instance of <see cref="NetworkServiceDesignGroupResource"/>.
+    /// To get a <see cref="NetworkServiceDesignVersionCollection"/> instance call the GetNetworkServiceDesignVersions method from an instance of <see cref="NetworkServiceDesignGroupResource"/>.
     /// </summary>
     public partial class NetworkServiceDesignVersionCollection : ArmCollection, IEnumerable<NetworkServiceDesignVersionResource>, IAsyncEnumerable<NetworkServiceDesignVersionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkServiceDesignVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkServiceDesignVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkServiceDesignVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkServiceDesignVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkServiceDesignVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkServiceDesignVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

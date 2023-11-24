@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotSecuritySolutionResource" /> and their operations.
-    /// Each <see cref="IotSecuritySolutionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="IotSecuritySolutionCollection" /> instance call the GetIotSecuritySolutions method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="IotSecuritySolutionResource"/> and their operations.
+    /// Each <see cref="IotSecuritySolutionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="IotSecuritySolutionCollection"/> instance call the GetIotSecuritySolutions method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class IotSecuritySolutionCollection : ArmCollection, IEnumerable<IotSecuritySolutionResource>, IAsyncEnumerable<IotSecuritySolutionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecuritySolutionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecuritySolutionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);

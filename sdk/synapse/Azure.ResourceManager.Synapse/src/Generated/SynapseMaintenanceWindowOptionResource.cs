@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseMaintenanceWindowOption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseMaintenanceWindowOptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseMaintenanceWindowOptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseMaintenanceWindowOption method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseMaintenanceWindowOptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseMaintenanceWindowOptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseMaintenanceWindowOption method.
     /// </summary>
     public partial class SynapseMaintenanceWindowOptionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseMaintenanceWindowOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseMaintenanceWindowOptionResource(ArmClient client, SynapseMaintenanceWindowOptionData data) : this(client, data.Id)

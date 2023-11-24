@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureDevOpsConnectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsConnectorResource"/> object. </returns>
         public static AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureDevOpsRepoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsRepoResource"/> object. </returns>
         public static AzureDevOpsRepoResource GetAzureDevOpsRepoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureDevOpsOrgResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
         public static AzureDevOpsOrgResource GetAzureDevOpsOrgResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureDevOpsProjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
         public static AzureDevOpsProjectResource GetAzureDevOpsProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GitHubConnectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubConnectorResource"/> object. </returns>
         public static GitHubConnectorResource GetGitHubConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GitHubRepoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubRepoResource"/> object. </returns>
         public static GitHubRepoResource GetGitHubRepoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GitHubOwnerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
         public static GitHubOwnerResource GetGitHubOwnerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

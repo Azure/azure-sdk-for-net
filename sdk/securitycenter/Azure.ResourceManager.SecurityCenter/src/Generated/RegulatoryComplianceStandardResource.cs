@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a RegulatoryComplianceStandard along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RegulatoryComplianceStandardResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRegulatoryComplianceStandardResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetRegulatoryComplianceStandard method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegulatoryComplianceStandardResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRegulatoryComplianceStandardResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetRegulatoryComplianceStandard method.
     /// </summary>
     public partial class RegulatoryComplianceStandardResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RegulatoryComplianceStandardResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceStandardResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RegulatoryComplianceStandardResource(ArmClient client, RegulatoryComplianceStandardData data) : this(client, data.Id)

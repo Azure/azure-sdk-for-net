@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DiskEncryptionSetResource" /> and their operations.
-    /// Each <see cref="DiskEncryptionSetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DiskEncryptionSetCollection" /> instance call the GetDiskEncryptionSets method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DiskEncryptionSetResource"/> and their operations.
+    /// Each <see cref="DiskEncryptionSetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiskEncryptionSetCollection"/> instance call the GetDiskEncryptionSets method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiskEncryptionSetCollection : ArmCollection, IEnumerable<DiskEncryptionSetResource>, IAsyncEnumerable<DiskEncryptionSetResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskEncryptionSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskEncryptionSetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

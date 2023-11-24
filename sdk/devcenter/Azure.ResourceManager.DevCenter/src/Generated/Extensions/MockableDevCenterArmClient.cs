@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterResource"/> object. </returns>
         public virtual DevCenterResource GetDevCenterResource(ResourceIdentifier id)
         {
             DevCenterResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterProjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterProjectResource"/> object. </returns>
         public virtual DevCenterProjectResource GetDevCenterProjectResource(ResourceIdentifier id)
         {
             DevCenterProjectResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
         public virtual ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(ResourceIdentifier id)
         {
             ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource"/> object. </returns>
         public virtual AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(ResourceIdentifier id)
         {
             AttachedNetworkConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterGalleryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterGalleryResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterGalleryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterGalleryResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterGalleryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterGalleryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterGalleryResource"/> object. </returns>
         public virtual DevCenterGalleryResource GetDevCenterGalleryResource(ResourceIdentifier id)
         {
             DevCenterGalleryResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterImageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
         public virtual DevCenterImageResource GetDevCenterImageResource(ResourceIdentifier id)
         {
             DevCenterImageResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ImageVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ImageVersionResource"/> object. </returns>
         public virtual ImageVersionResource GetImageVersionResource(ResourceIdentifier id)
         {
             ImageVersionResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterCatalogResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterCatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterCatalogResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
         public virtual DevCenterCatalogResource GetDevCenterCatalogResource(ResourceIdentifier id)
         {
             DevCenterCatalogResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterEnvironmentTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterEnvironmentTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource"/> object. </returns>
         public virtual DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(ResourceIdentifier id)
         {
             DevCenterEnvironmentTypeResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AllowedEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AllowedEnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="AllowedEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AllowedEnvironmentTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AllowedEnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="AllowedEnvironmentTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource"/> object. </returns>
         public virtual AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(ResourceIdentifier id)
         {
             AllowedEnvironmentTypeResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource"/> object. </returns>
         public virtual DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(ResourceIdentifier id)
         {
             DevCenterProjectEnvironmentResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevBoxDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevBoxDefinitionResource"/> object. </returns>
         public virtual DevBoxDefinitionResource GetDevBoxDefinitionResource(ResourceIdentifier id)
         {
             DevBoxDefinitionResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
         public virtual ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(ResourceIdentifier id)
         {
             ProjectDevBoxDefinitionResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterPoolResource"/> object. </returns>
         public virtual DevCenterPoolResource GetDevCenterPoolResource(ResourceIdentifier id)
         {
             DevCenterPoolResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterScheduleResource"/> object. </returns>
         public virtual DevCenterScheduleResource GetDevCenterScheduleResource(ResourceIdentifier id)
         {
             DevCenterScheduleResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterNetworkConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource"/> object. </returns>
         public virtual DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(ResourceIdentifier id)
         {
             DevCenterNetworkConnectionResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthCheckStatusDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthCheckStatusDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public virtual HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(ResourceIdentifier id)
         {
             HealthCheckStatusDetailResource.ValidateResourceId(id);

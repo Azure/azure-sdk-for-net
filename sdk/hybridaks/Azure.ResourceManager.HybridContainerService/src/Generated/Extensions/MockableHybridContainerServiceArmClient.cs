@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
             }
         }
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProvisionedClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public virtual ProvisionedClusterResource GetProvisionedClusterResource(ResourceIdentifier id)
         {
             ProvisionedClusterResource.ValidateResourceId(id);
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
             ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
         {
             HybridIdentityMetadataResource.ValidateResourceId(id);
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridContainerServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource"/> object. </returns>
         public virtual HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(ResourceIdentifier id)
         {
             HybridContainerServiceAgentPoolResource.ValidateResourceId(id);
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSpaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSpaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSpaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSpaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSpaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSpaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSpaceResource"/> object. </returns>
         public virtual StorageSpaceResource GetStorageSpaceResource(ResourceIdentifier id)
         {
             StorageSpaceResource.ValidateResourceId(id);
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
         public virtual HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier id)
         {
             HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);

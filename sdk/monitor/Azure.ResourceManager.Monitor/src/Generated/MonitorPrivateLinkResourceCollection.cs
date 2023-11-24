@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MonitorPrivateLinkResource" /> and their operations.
-    /// Each <see cref="MonitorPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource" />.
-    /// To get a <see cref="MonitorPrivateLinkResourceCollection" /> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource" />.
+    /// A class representing a collection of <see cref="MonitorPrivateLinkResource"/> and their operations.
+    /// Each <see cref="MonitorPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource"/>.
+    /// To get a <see cref="MonitorPrivateLinkResourceCollection"/> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
     /// </summary>
     public partial class MonitorPrivateLinkResourceCollection : ArmCollection, IEnumerable<MonitorPrivateLinkResource>, IAsyncEnumerable<MonitorPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

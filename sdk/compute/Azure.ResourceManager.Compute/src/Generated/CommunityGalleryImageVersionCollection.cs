@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CommunityGalleryImageVersionResource" /> and their operations.
-    /// Each <see cref="CommunityGalleryImageVersionResource" /> in the collection will belong to the same instance of <see cref="CommunityGalleryImageResource" />.
-    /// To get a <see cref="CommunityGalleryImageVersionCollection" /> instance call the GetCommunityGalleryImageVersions method from an instance of <see cref="CommunityGalleryImageResource" />.
+    /// A class representing a collection of <see cref="CommunityGalleryImageVersionResource"/> and their operations.
+    /// Each <see cref="CommunityGalleryImageVersionResource"/> in the collection will belong to the same instance of <see cref="CommunityGalleryImageResource"/>.
+    /// To get a <see cref="CommunityGalleryImageVersionCollection"/> instance call the GetCommunityGalleryImageVersions method from an instance of <see cref="CommunityGalleryImageResource"/>.
     /// </summary>
     public partial class CommunityGalleryImageVersionCollection : ArmCollection, IEnumerable<CommunityGalleryImageVersionResource>, IAsyncEnumerable<CommunityGalleryImageVersionResource>
     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunityGalleryImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommunityGalleryImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunityGalleryImageVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communityGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunityGalleryImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunityGalleryImageVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communityGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);

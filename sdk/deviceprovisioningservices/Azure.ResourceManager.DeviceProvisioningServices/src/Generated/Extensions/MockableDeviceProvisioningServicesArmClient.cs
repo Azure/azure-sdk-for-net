@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource"/> object. </returns>
         public virtual DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier id)
         {
             DeviceProvisioningServicesCertificateResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceProvisioningServiceResource"/> object. </returns>
         public virtual DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(ResourceIdentifier id)
         {
             DeviceProvisioningServiceResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier id)
         {
             DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);

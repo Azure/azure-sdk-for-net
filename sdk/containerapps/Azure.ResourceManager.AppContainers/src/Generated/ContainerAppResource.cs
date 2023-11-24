@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerApp method.
     /// </summary>
     public partial class ContainerAppResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppResource(ArmClient client, ContainerAppData data) : this(client, data.Id)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets an object representing a ContainerAppDetectorPropertyResource along with the instance operations that can be performed on it in the ContainerApp. </summary>
-        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty()
         {
             return new ContainerAppDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

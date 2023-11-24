@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource"/> object. </returns>
         public static KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource"/> object. </returns>
         public static KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource"/> object. </returns>
         public static KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

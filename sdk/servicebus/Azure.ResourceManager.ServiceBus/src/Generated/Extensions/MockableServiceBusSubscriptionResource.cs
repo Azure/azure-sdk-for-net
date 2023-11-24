@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceBusNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceBusNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);

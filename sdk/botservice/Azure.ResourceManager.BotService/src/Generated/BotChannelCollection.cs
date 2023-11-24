@@ -21,9 +21,9 @@ using Azure.ResourceManager.BotService.Models;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BotChannelResource" /> and their operations.
-    /// Each <see cref="BotChannelResource" /> in the collection will belong to the same instance of <see cref="BotResource" />.
-    /// To get a <see cref="BotChannelCollection" /> instance call the GetBotChannels method from an instance of <see cref="BotResource" />.
+    /// A class representing a collection of <see cref="BotChannelResource"/> and their operations.
+    /// Each <see cref="BotChannelResource"/> in the collection will belong to the same instance of <see cref="BotResource"/>.
+    /// To get a <see cref="BotChannelCollection"/> instance call the GetBotChannels method from an instance of <see cref="BotResource"/>.
     /// </summary>
     public partial class BotChannelCollection : ArmCollection, IEnumerable<BotChannelResource>, IAsyncEnumerable<BotChannelResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotChannelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotChannelResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

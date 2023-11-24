@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesAccountFilterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesAccountFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesAccountFilterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesAccountFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountFilterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesAccountFilterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaServicesAccountFilterResource"/> object. </returns>
         public virtual MediaServicesAccountFilterResource GetMediaServicesAccountFilterResource(ResourceIdentifier id)
         {
             MediaServicesAccountFilterResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaServicesAccountResource"/> object. </returns>
         public virtual MediaServicesAccountResource GetMediaServicesAccountResource(ResourceIdentifier id)
         {
             MediaServicesAccountResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource"/> object. </returns>
         public virtual MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(ResourceIdentifier id)
         {
             MediaServicesPrivateLinkResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             MediaServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaAssetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaAssetResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaAssetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaAssetResource"/> object. </returns>
         public virtual MediaAssetResource GetMediaAssetResource(ResourceIdentifier id)
         {
             MediaAssetResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaAssetFilterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaAssetFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetFilterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetFilterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaAssetFilterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaAssetFilterResource"/> object. </returns>
         public virtual MediaAssetFilterResource GetMediaAssetFilterResource(ResourceIdentifier id)
         {
             MediaAssetFilterResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaAssetTrackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetTrackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetTrackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetTrackResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaAssetTrackResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaAssetTrackResource"/> object. </returns>
         public virtual MediaAssetTrackResource GetMediaAssetTrackResource(ResourceIdentifier id)
         {
             MediaAssetTrackResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContentKeyPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContentKeyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ContentKeyPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContentKeyPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContentKeyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ContentKeyPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContentKeyPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ContentKeyPolicyResource"/> object. </returns>
         public virtual ContentKeyPolicyResource GetContentKeyPolicyResource(ResourceIdentifier id)
         {
             ContentKeyPolicyResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaTransformResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaTransformResource.CreateResourceIdentifier" /> to create a <see cref="MediaTransformResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaTransformResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaTransformResource.CreateResourceIdentifier" /> to create a <see cref="MediaTransformResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaTransformResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaTransformResource"/> object. </returns>
         public virtual MediaTransformResource GetMediaTransformResource(ResourceIdentifier id)
         {
             MediaTransformResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaJobResource.CreateResourceIdentifier" /> to create a <see cref="MediaJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaJobResource.CreateResourceIdentifier" /> to create a <see cref="MediaJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaJobResource"/> object. </returns>
         public virtual MediaJobResource GetMediaJobResource(ResourceIdentifier id)
         {
             MediaJobResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StreamingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StreamingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingPolicyResource"/> object. </returns>
         public virtual StreamingPolicyResource GetStreamingPolicyResource(ResourceIdentifier id)
         {
             StreamingPolicyResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingLocatorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingLocatorResource.CreateResourceIdentifier" /> to create a <see cref="StreamingLocatorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingLocatorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingLocatorResource.CreateResourceIdentifier" /> to create a <see cref="StreamingLocatorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingLocatorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingLocatorResource"/> object. </returns>
         public virtual StreamingLocatorResource GetStreamingLocatorResource(ResourceIdentifier id)
         {
             StreamingLocatorResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaLiveEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaLiveEventResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaLiveEventResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaLiveEventResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveEventResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaLiveEventResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaLiveEventResource"/> object. </returns>
         public virtual MediaLiveEventResource GetMediaLiveEventResource(ResourceIdentifier id)
         {
             MediaLiveEventResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MediaLiveOutputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaLiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaLiveOutputResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaLiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveOutputResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaLiveOutputResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MediaLiveOutputResource"/> object. </returns>
         public virtual MediaLiveOutputResource GetMediaLiveOutputResource(ResourceIdentifier id)
         {
             MediaLiveOutputResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Media.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamingEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamingEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingEndpointResource"/> object. </returns>
         public virtual StreamingEndpointResource GetStreamingEndpointResource(ResourceIdentifier id)
         {
             StreamingEndpointResource.ValidateResourceId(id);

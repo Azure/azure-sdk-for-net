@@ -21,9 +21,9 @@ using Azure.ResourceManager.Batch.Models;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountCertificateResource" /> and their operations.
-    /// Each <see cref="BatchAccountCertificateResource" /> in the collection will belong to the same instance of <see cref="BatchAccountResource" />.
-    /// To get a <see cref="BatchAccountCertificateCollection" /> instance call the GetBatchAccountCertificates method from an instance of <see cref="BatchAccountResource" />.
+    /// A class representing a collection of <see cref="BatchAccountCertificateResource"/> and their operations.
+    /// Each <see cref="BatchAccountCertificateResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchAccountCertificateCollection"/> instance call the GetBatchAccountCertificates method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchAccountCertificateCollection : ArmCollection, IEnumerable<BatchAccountCertificateResource>, IAsyncEnumerable<BatchAccountCertificateResource>
     {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "properties/provisioningState", "properties/provisioningStateTransitionTime", "name". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "properties/provisioningState", "properties/provisioningStateTransitionTime", "name". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountCertificateResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);

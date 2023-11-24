@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConsumptionBudgetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConsumptionBudgetResource"/> object. </returns>
         public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingAccountConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingAccountConsumptionResource"/> object. </returns>
         public static BillingAccountConsumptionResource GetBillingAccountConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingProfileConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingProfileConsumptionResource"/> object. </returns>
         public static BillingProfileConsumptionResource GetBillingProfileConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantBillingPeriodConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantBillingPeriodConsumptionResource"/> object. </returns>
         public static TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubscriptionBillingPeriodConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionBillingPeriodConsumptionResource"/> object. </returns>
         public static SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> object. </returns>
         public static ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingCustomerConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingCustomerConsumptionResource"/> object. </returns>
         public static BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReservationConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReservationConsumptionResource"/> object. </returns>
         public static ReservationConsumptionResource GetReservationConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReservationOrderConsumptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReservationOrderConsumptionResource"/> object. </returns>
         public static ReservationOrderConsumptionResource GetReservationOrderConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
