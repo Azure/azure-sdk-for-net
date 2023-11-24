@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFileSystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFileSystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
     }
 }

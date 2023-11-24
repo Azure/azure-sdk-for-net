@@ -6,15 +6,69 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class HandleItem
+    internal partial class HandleItem : IXmlSerializable, IPersistableModel<HandleItem>
     {
-        internal static HandleItem DeserializeHandleItem(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Handle");
+            writer.WriteStartElement("HandleId");
+            writer.WriteValue(HandleId);
+            writer.WriteEndElement();
+            writer.WriteObjectValue(Path, "Path");
+            writer.WriteStartElement("FileId");
+            writer.WriteValue(FileId);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ParentId))
+            {
+                writer.WriteStartElement("ParentId");
+                writer.WriteValue(ParentId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("SessionId");
+            writer.WriteValue(SessionId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ClientIp");
+            writer.WriteValue(ClientIp);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ClientName");
+            writer.WriteValue(ClientName);
+            writer.WriteEndElement();
+            writer.WriteStartElement("OpenTime");
+            writer.WriteValue(OpenTime, "R");
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LastReconnectTime))
+            {
+                writer.WriteStartElement("LastReconnectTime");
+                writer.WriteValue(LastReconnectTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(AccessRightList))
+            {
+                writer.WriteStartElement("AccessRightList");
+                foreach (var item in AccessRightList)
+                {
+                    writer.WriteStartElement("AccessRight");
+                    writer.WriteValue(item.ToSerialString());
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static HandleItem DeserializeHandleItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string handleId = default;
             StringEncoded path = default;
@@ -71,7 +125,48 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 accessRightList = array;
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, clientName, openTime, lastReconnectTime, accessRightList);
+            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, clientName, openTime, lastReconnectTime, accessRightList, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<HandleItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HandleItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HandleItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HandleItem IPersistableModel<HandleItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HandleItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeHandleItem(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HandleItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HandleItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

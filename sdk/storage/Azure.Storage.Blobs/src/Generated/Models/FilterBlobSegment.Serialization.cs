@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobSegment
+    internal partial class FilterBlobSegment : IXmlSerializable, IPersistableModel<FilterBlobSegment>
     {
-        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartElement("Where");
+            writer.WriteValue(Where);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Blobs");
+            foreach (var item in Blobs)
+            {
+                writer.WriteObjectValue(item, "Blob");
+            }
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string @where = default;
@@ -39,7 +71,48 @@ namespace Azure.Storage.Blobs.Models
                 }
                 blobs = array;
             }
-            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<FilterBlobSegment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterBlobSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FilterBlobSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FilterBlobSegment IPersistableModel<FilterBlobSegment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterBlobSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeFilterBlobSegment(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FilterBlobSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilterBlobSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

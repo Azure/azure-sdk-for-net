@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonCountEvent : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonCountEvent : IUtf8JsonSerializable, IJsonModel<SpatialAnalysisPersonCountEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnalysisPersonCountEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpatialAnalysisPersonCountEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonCountEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonCountEvent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Trigger))
             {
@@ -35,11 +47,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonCountEvent DeserializeSpatialAnalysisPersonCountEvent(JsonElement element)
+        SpatialAnalysisPersonCountEvent IJsonModel<SpatialAnalysisPersonCountEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonCountEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonCountEvent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonCountEvent(document.RootElement, options);
+        }
+
+        internal static SpatialAnalysisPersonCountEvent DeserializeSpatialAnalysisPersonCountEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +89,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> outputFrequency = default;
             Optional<string> threshold = default;
             Optional<SpatialAnalysisOperationFocus> focus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
@@ -78,8 +121,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpatialAnalysisPersonCountEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpatialAnalysisPersonCountEvent(threshold.Value, Optional.ToNullable(focus), serializedAdditionalRawData, Optional.ToNullable(trigger), outputFrequency.Value);
         }
+
+        BinaryData IPersistableModel<SpatialAnalysisPersonCountEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonCountEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonCountEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpatialAnalysisPersonCountEvent IPersistableModel<SpatialAnalysisPersonCountEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonCountEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpatialAnalysisPersonCountEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonCountEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpatialAnalysisPersonCountEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

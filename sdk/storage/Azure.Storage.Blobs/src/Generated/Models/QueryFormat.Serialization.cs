@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable, IPersistableModel<QueryFormat>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueryFormat");
             writer.WriteStartElement("Type");
@@ -36,5 +41,78 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueryFormat DeserializeQueryFormat(XElement element, ModelReaderWriterOptions options = null)
+        {
+            QueryFormatType type = default;
+            DelimitedTextConfigurationInternal delimitedTextConfiguration = default;
+            JsonTextConfigurationInternal jsonTextConfiguration = default;
+            ArrowTextConfigurationInternal arrowConfiguration = default;
+            object parquetTextConfiguration = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = typeElement.Value.ToQueryFormatType();
+            }
+            if (element.Element("DelimitedTextConfiguration") is XElement delimitedTextConfigurationElement)
+            {
+                delimitedTextConfiguration = DelimitedTextConfigurationInternal.DeserializeDelimitedTextConfigurationInternal(delimitedTextConfigurationElement);
+            }
+            if (element.Element("JsonTextConfiguration") is XElement jsonTextConfigurationElement)
+            {
+                jsonTextConfiguration = JsonTextConfigurationInternal.DeserializeJsonTextConfigurationInternal(jsonTextConfigurationElement);
+            }
+            if (element.Element("ArrowConfiguration") is XElement arrowConfigurationElement)
+            {
+                arrowConfiguration = ArrowTextConfigurationInternal.DeserializeArrowTextConfigurationInternal(arrowConfigurationElement);
+            }
+            if (element.Element("ParquetTextConfiguration") is XElement parquetTextConfigurationElement)
+            {
+                parquetTextConfiguration = parquetTextConfigurationElement.GetObjectValue(null);
+            }
+            return new QueryFormat(type, delimitedTextConfiguration, jsonTextConfiguration, arrowConfiguration, parquetTextConfiguration, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<QueryFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryFormat IPersistableModel<QueryFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueryFormat(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> BMP image encoding. </summary>
     public partial class ImageFormatBmp : ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatBmp. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatBmp"/>. </summary>
         public ImageFormatBmp()
         {
             Type = "#Microsoft.VideoAnalyzer.ImageFormatBmp";
         }
 
-        /// <summary> Initializes a new instance of ImageFormatBmp. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatBmp"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal ImageFormatBmp(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageFormatBmp(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatBmp";
         }

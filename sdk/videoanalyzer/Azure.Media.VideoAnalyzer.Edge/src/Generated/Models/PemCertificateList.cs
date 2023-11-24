@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A list of PEM formatted certificates. </summary>
     public partial class PemCertificateList : CertificateSource
     {
-        /// <summary> Initializes a new instance of PemCertificateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PemCertificateList"/>. </summary>
         /// <param name="certificates"> PEM formatted public certificates. One certificate per entry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificates"/> is null. </exception>
         public PemCertificateList(IEnumerable<string> certificates)
@@ -26,13 +26,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
-        /// <summary> Initializes a new instance of PemCertificateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PemCertificateList"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificates"> PEM formatted public certificates. One certificate per entry. </param>
-        internal PemCertificateList(string type, IList<string> certificates) : base(type)
+        internal PemCertificateList(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> certificates) : base(type, serializedAdditionalRawData)
         {
             Certificates = certificates;
             Type = type ?? "#Microsoft.VideoAnalyzer.PemCertificateList";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PemCertificateList"/> for deserialization. </summary>
+        internal PemCertificateList()
+        {
         }
 
         /// <summary> PEM formatted public certificates. One certificate per entry. </summary>

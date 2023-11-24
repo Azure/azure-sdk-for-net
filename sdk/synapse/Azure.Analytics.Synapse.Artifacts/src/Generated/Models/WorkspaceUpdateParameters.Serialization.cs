@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WorkspaceUpdateParametersConverter))]
-    public partial class WorkspaceUpdateParameters : IUtf8JsonSerializable
+    public partial class WorkspaceUpdateParameters : IUtf8JsonSerializable, IJsonModel<WorkspaceUpdateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceUpdateParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkspaceUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WorkspaceUpdateParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -35,17 +45,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceUpdateParameters DeserializeWorkspaceUpdateParameters(JsonElement element)
+        WorkspaceUpdateParameters IJsonModel<WorkspaceUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WorkspaceUpdateParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkspaceUpdateParameters(document.RootElement, options);
+        }
+
+        internal static WorkspaceUpdateParameters DeserializeWorkspaceUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, string>> tags = default;
             Optional<WorkspaceIdentity> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -71,9 +112,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     identity = WorkspaceIdentity.DeserializeWorkspaceIdentity(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkspaceUpdateParameters(Optional.ToDictionary(tags), identity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkspaceUpdateParameters(Optional.ToDictionary(tags), identity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkspaceUpdateParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WorkspaceUpdateParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WorkspaceUpdateParameters IPersistableModel<WorkspaceUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkspaceUpdateParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WorkspaceUpdateParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkspaceUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class WorkspaceUpdateParametersConverter : JsonConverter<WorkspaceUpdateParameters>
         {

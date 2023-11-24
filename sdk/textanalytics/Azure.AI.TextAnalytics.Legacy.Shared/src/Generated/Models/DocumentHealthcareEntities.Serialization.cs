@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class DocumentHealthcareEntities
+    internal partial class DocumentHealthcareEntities : IUtf8JsonSerializable, IJsonModel<DocumentHealthcareEntities>
     {
-        internal static DocumentHealthcareEntities DeserializeDocumentHealthcareEntities(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentHealthcareEntities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentHealthcareEntities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentHealthcareEntities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentHealthcareEntities)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("entities"u8);
+            writer.WriteStartArray();
+            foreach (var item in Entities)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("relations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Relations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("warnings"u8);
+            writer.WriteStartArray();
+            foreach (var item in Warnings)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentHealthcareEntities IJsonModel<DocumentHealthcareEntities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentHealthcareEntities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentHealthcareEntities)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentHealthcareEntities(document.RootElement, options);
+        }
+
+        internal static DocumentHealthcareEntities DeserializeDocumentHealthcareEntities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +98,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             IReadOnlyList<HealthcareRelation> relations = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,8 +146,44 @@ namespace Azure.AI.TextAnalytics.Legacy
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentHealthcareEntities(id, entities, relations, warnings, statistics.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentHealthcareEntities(id, entities, relations, warnings, statistics.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentHealthcareEntities>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentHealthcareEntities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentHealthcareEntities)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DocumentHealthcareEntities IPersistableModel<DocumentHealthcareEntities>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentHealthcareEntities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentHealthcareEntities(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentHealthcareEntities)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentHealthcareEntities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

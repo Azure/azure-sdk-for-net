@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueServiceProperties : IXmlSerializable
+    public partial class QueueServiceProperties : IXmlSerializable, IPersistableModel<QueueServiceProperties>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Optional.IsDefined(Logging))
@@ -41,7 +45,9 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueServiceProperties DeserializeQueueServiceProperties(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueServiceProperties DeserializeQueueServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             QueueAnalyticsLogging logging = default;
             QueueMetrics hourMetrics = default;
@@ -68,7 +74,48 @@ namespace Azure.Storage.Queues.Models
                 }
                 cors = array;
             }
-            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<QueueServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueueServiceProperties IPersistableModel<QueueServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueueServiceProperties(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

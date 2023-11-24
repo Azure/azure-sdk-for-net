@@ -17,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class Trigger
     {
-        /// <summary> Initializes a new instance of Trigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
         public Trigger()
         {
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Trigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

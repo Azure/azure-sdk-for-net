@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSqlVirtualMachineModelFactory
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.AvailabilityGroupListenerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             multiSubnetIPConfigurations ??= new List<MultiSubnetIPConfiguration>();
             availabilityGroupReplicas ??= new List<AvailabilityGroupReplica>();
 
-            return new AvailabilityGroupListenerData(id, name, resourceType, systemData, provisioningState, availabilityGroupName, loadBalancerConfigurations?.ToList(), multiSubnetIPConfigurations?.ToList(), createDefaultAvailabilityGroupIfNotExist, port, availabilityGroupReplicas != null ? new AvailabilityGroupConfiguration(availabilityGroupReplicas?.ToList()) : null);
+            return new AvailabilityGroupListenerData(id, name, resourceType, systemData, provisioningState, availabilityGroupName, loadBalancerConfigurations?.ToList(), multiSubnetIPConfigurations?.ToList(), createDefaultAvailabilityGroupIfNotExist, port, availabilityGroupReplicas != null ? new AvailabilityGroupConfiguration(availabilityGroupReplicas?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SqlVmGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.SqlVmGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlVmGroupData(id, name, resourceType, systemData, tags, location, provisioningState, sqlImageOffer, sqlImageSku, scaleType, clusterManagerType, clusterConfiguration, windowsServerFailoverClusterDomainProfile);
+            return new SqlVmGroupData(id, name, resourceType, systemData, tags, location, provisioningState, sqlImageOffer, sqlImageSku, scaleType, clusterManagerType, clusterConfiguration, windowsServerFailoverClusterDomainProfile, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SqlVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.SqlVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlVmData(id, name, resourceType, systemData, tags, location, identity, virtualMachineResourceId, provisioningState, sqlImageOffer, sqlServerLicenseType, sqlManagement, sqlImageSku, sqlVmGroupResourceId, windowsServerFailoverClusterDomainCredentials, windowsServerFailoverClusterStaticIP, autoPatchingSettings, autoBackupSettings, keyVaultCredentialSettings, serverConfigurationsManagementSettings, storageConfigurationSettings, assessmentSettings);
+            return new SqlVmData(id, name, resourceType, systemData, tags, location, identity, virtualMachineResourceId, provisioningState, sqlImageOffer, sqlServerLicenseType, sqlManagement, sqlImageSku, sqlVmGroupResourceId, windowsServerFailoverClusterDomainCredentials, windowsServerFailoverClusterStaticIP, autoPatchingSettings, autoBackupSettings, keyVaultCredentialSettings, serverConfigurationsManagementSettings, storageConfigurationSettings, assessmentSettings, serializedAdditionalRawData: null);
         }
     }
 }

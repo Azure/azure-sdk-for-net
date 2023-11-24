@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableSignedIdentifier : IXmlSerializable
+    public partial class TableSignedIdentifier : IXmlSerializable, IPersistableModel<TableSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -26,7 +30,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             TableAccessPolicy accessPolicy = default;
@@ -38,7 +44,48 @@ namespace Azure.Data.Tables.Models
             {
                 accessPolicy = TableAccessPolicy.DeserializeTableAccessPolicy(accessPolicyElement);
             }
-            return new TableSignedIdentifier(id, accessPolicy);
+            return new TableSignedIdentifier(id, accessPolicy, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<TableSignedIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableSignedIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TableSignedIdentifier IPersistableModel<TableSignedIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableSignedIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeTableSignedIdentifier(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableSignedIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

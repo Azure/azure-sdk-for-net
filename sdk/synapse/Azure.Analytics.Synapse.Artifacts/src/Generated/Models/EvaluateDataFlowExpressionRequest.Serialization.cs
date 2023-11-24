@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EvaluateDataFlowExpressionRequestConverter))]
-    public partial class EvaluateDataFlowExpressionRequest : IUtf8JsonSerializable
+    public partial class EvaluateDataFlowExpressionRequest : IUtf8JsonSerializable, IJsonModel<EvaluateDataFlowExpressionRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluateDataFlowExpressionRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EvaluateDataFlowExpressionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluateDataFlowExpressionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
@@ -43,11 +54,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EvaluateDataFlowExpressionRequest DeserializeEvaluateDataFlowExpressionRequest(JsonElement element)
+        EvaluateDataFlowExpressionRequest IJsonModel<EvaluateDataFlowExpressionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluateDataFlowExpressionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement, options);
+        }
+
+        internal static EvaluateDataFlowExpressionRequest DeserializeEvaluateDataFlowExpressionRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +97,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> streamName = default;
             Optional<int> rowLimits = default;
             Optional<string> expression = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -88,9 +130,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     expression = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits), expression.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits), expression.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EvaluateDataFlowExpressionRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluateDataFlowExpressionRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EvaluateDataFlowExpressionRequest IPersistableModel<EvaluateDataFlowExpressionRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluateDataFlowExpressionRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EvaluateDataFlowExpressionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class EvaluateDataFlowExpressionRequestConverter : JsonConverter<EvaluateDataFlowExpressionRequest>
         {

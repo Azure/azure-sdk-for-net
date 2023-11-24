@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -12,9 +16,9 @@ using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAnalyticsLoggingSettings : IXmlSerializable
+    public partial class TableAnalyticsLoggingSettings : IXmlSerializable, IPersistableModel<TableAnalyticsLoggingSettings>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");
@@ -33,7 +37,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;
@@ -60,7 +66,48 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
-            return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy);
+            return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<TableAnalyticsLoggingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableAnalyticsLoggingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableAnalyticsLoggingSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TableAnalyticsLoggingSettings IPersistableModel<TableAnalyticsLoggingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableAnalyticsLoggingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeTableAnalyticsLoggingSettings(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableAnalyticsLoggingSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableAnalyticsLoggingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

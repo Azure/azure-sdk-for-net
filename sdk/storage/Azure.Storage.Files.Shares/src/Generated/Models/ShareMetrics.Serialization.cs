@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareMetrics : IXmlSerializable
+    public partial class ShareMetrics : IXmlSerializable, IPersistableModel<ShareMetrics>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
             writer.WriteStartElement("Version");
@@ -35,7 +39,9 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareMetrics DeserializeShareMetrics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareMetrics DeserializeShareMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;
@@ -57,7 +63,48 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 retentionPolicy = ShareRetentionPolicy.DeserializeShareRetentionPolicy(retentionPolicyElement);
             }
-            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
+            return new ShareMetrics(version, enabled, includeApis, retentionPolicy, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ShareMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareMetrics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareMetrics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareMetrics IPersistableModel<ShareMetrics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareMetrics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeShareMetrics(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareMetrics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Translation.Document;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class StartTranslationDetails : IUtf8JsonSerializable
+    internal partial class StartTranslationDetails : IUtf8JsonSerializable, IJsonModel<StartTranslationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartTranslationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StartTranslationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StartTranslationDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
@@ -22,7 +35,97 @@ namespace Azure.AI.Translation.Document.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        StartTranslationDetails IJsonModel<StartTranslationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StartTranslationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStartTranslationDetails(document.RootElement, options);
+        }
+
+        internal static StartTranslationDetails DeserializeStartTranslationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<DocumentTranslationInput> inputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("inputs"u8))
+                {
+                    List<DocumentTranslationInput> array = new List<DocumentTranslationInput>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentTranslationInput.DeserializeDocumentTranslationInput(item));
+                    }
+                    inputs = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StartTranslationDetails(inputs, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<StartTranslationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StartTranslationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StartTranslationDetails IPersistableModel<StartTranslationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartTranslationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStartTranslationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StartTranslationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StartTranslationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

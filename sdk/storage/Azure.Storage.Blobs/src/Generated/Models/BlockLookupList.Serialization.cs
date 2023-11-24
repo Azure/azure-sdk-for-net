@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlockLookupList : IXmlSerializable
+    internal partial class BlockLookupList : IXmlSerializable, IPersistableModel<BlockLookupList>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "BlockList");
             if (Optional.IsCollectionDefined(Committed))
@@ -44,5 +50,74 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlockLookupList DeserializeBlockLookupList(XElement element, ModelReaderWriterOptions options = null)
+        {
+            IList<string> committed = default;
+            IList<string> uncommitted = default;
+            IList<string> latest = default;
+            var array = new List<string>();
+            foreach (var e in element.Elements("Committed"))
+            {
+                array.Add((string)e);
+            }
+            committed = array;
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("Uncommitted"))
+            {
+                array0.Add((string)e);
+            }
+            uncommitted = array0;
+            var array1 = new List<string>();
+            foreach (var e in element.Elements("Latest"))
+            {
+                array1.Add((string)e);
+            }
+            latest = array1;
+            return new BlockLookupList(committed, uncommitted, latest, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<BlockLookupList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlockLookupList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlockLookupList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlockLookupList IPersistableModel<BlockLookupList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlockLookupList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlockLookupList(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlockLookupList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlockLookupList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

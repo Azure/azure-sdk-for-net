@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsSynapseManagedPrivateEndpointsModelFactory
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpoint"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <returns> A new <see cref="Models.ManagedPrivateEndpoint"/> instance for mocking. </returns>
         public static ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, ManagedPrivateEndpointProperties properties = null)
         {
-            return new ManagedPrivateEndpoint(id, name, type, properties);
+            return new ManagedPrivateEndpoint(id, name, type, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointProperties"/>. </summary>
         /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
@@ -38,17 +38,17 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         {
             fqdns ??= new List<string>();
 
-            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant);
+            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> The approval status. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
         public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
-            return new ManagedPrivateEndpointConnectionState(status, description, actionsRequired);
+            return new ManagedPrivateEndpointConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
     }
 }

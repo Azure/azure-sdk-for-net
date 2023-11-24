@@ -5,13 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResponse : IXmlSerializable, IPersistableModel<ListBlobsHierarchySegmentResponse>
     {
-        internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(Prefix))
+            {
+                writer.WriteStartElement("Prefix");
+                writer.WriteValue(Prefix);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Delimiter))
+            {
+                writer.WriteStartElement("Delimiter");
+                writer.WriteValue(Delimiter);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Segment, "Blobs");
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string containerName = default;
@@ -53,7 +104,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 nextMarker = (string)nextMarkerElement;
             }
-            return new ListBlobsHierarchySegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, delimiter, segment, nextMarker);
+            return new ListBlobsHierarchySegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, delimiter, segment, nextMarker, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ListBlobsHierarchySegmentResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListBlobsHierarchySegmentResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ListBlobsHierarchySegmentResponse IPersistableModel<ListBlobsHierarchySegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeListBlobsHierarchySegmentResponse(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListBlobsHierarchySegmentResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListBlobsHierarchySegmentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

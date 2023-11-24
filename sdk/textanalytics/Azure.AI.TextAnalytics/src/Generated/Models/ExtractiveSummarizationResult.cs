@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ExtractiveSummarizationResult. </summary>
     internal partial class ExtractiveSummarizationResult : PreBuiltResult
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
@@ -30,14 +30,20 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> Response by document. </param>
-        internal ExtractiveSummarizationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<ExtractedSummaryDocumentResult> documents) : base(errors, statistics, modelVersion)
+        internal ExtractiveSummarizationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ExtractedSummaryDocumentResult> documents) : base(errors, statistics, modelVersion, serializedAdditionalRawData)
         {
             Documents = documents;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationResult"/> for deserialization. </summary>
+        internal ExtractiveSummarizationResult()
+        {
         }
 
         /// <summary> Response by document. </summary>

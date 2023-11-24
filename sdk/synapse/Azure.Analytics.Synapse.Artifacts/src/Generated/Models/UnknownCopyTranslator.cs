@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownCopyTranslator. </summary>
     internal partial class UnknownCopyTranslator : CopyTranslator
     {
-        /// <summary> Initializes a new instance of UnknownCopyTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCopyTranslator"/>. </summary>
         /// <param name="type"> Copy translator type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownCopyTranslator(string type, IDictionary<string, object> additionalProperties) : base(type, additionalProperties)
