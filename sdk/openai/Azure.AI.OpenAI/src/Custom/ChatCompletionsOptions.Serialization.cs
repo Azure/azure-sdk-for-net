@@ -109,6 +109,15 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndObject();
             }
+            // CUSTOM: serialize JsonMode to "response_format": { "type": "json_object" },
+            if (JsonMode == true)
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStartObject();
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue("json_object");
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);

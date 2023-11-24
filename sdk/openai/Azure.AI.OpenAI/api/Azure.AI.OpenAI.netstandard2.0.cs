@@ -237,6 +237,7 @@ namespace Azure.AI.OpenAI
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } set { } }
+        public bool? JsonMode { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
@@ -332,6 +333,7 @@ namespace Azure.AI.OpenAI
         public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public int? GenerationSampleCount { get { throw null; } set { } }
+        public bool? JsonMode { get { throw null; } set { } }
         public int? LogProbabilityCount { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }

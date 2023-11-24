@@ -34,6 +34,9 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.FrequencyPenalty"/>
         public float? FrequencyPenalty { get; set; }
 
+        /// <inheritdoc cref="CompletionsOptions.JsonMode"/>
+        public bool? JsonMode { get; set; }
+
         /// <inheritdoc cref="CompletionsOptions.MaxTokens"/>
         public int? MaxTokens { get; set; }
 
