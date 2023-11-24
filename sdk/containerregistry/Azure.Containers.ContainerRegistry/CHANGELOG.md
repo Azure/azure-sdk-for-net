@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0 (2023-11-21)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0-beta.1 (2023-07-12)
 
