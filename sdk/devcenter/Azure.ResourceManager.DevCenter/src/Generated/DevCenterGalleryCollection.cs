@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

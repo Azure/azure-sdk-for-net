@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a lab's support banner. </summary>
     public partial class DevTestLabSupport
     {
-        /// <summary> Initializes a new instance of DevTestLabSupport. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSupport"/>. </summary>
         public DevTestLabSupport()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSupport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSupport"/>. </summary>
         /// <param name="enabled"> Is the lab support banner active/enabled at this time?. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
-        internal DevTestLabSupport(DevTestLabEnableStatus? enabled, string markdown)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabSupport(DevTestLabEnableStatus? enabled, string markdown, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Markdown = markdown;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is the lab support banner active/enabled at this time?. </summary>

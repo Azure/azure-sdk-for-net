@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberLessThan Advanced Filter. </summary>
     public partial class NumberLessThanAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of NumberLessThanAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanAdvancedFilter"/>. </summary>
         public NumberLessThanAdvancedFilter()
         {
             OperatorType = AdvancedFilterOperatorType.NumberLessThan;
         }
 
-        /// <summary> Initializes a new instance of NumberLessThanAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The filter value. </param>
-        internal NumberLessThanAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, double? value) : base(operatorType, key)
+        internal NumberLessThanAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value) : base(operatorType, key, serializedAdditionalRawData)
         {
             Value = value;
             OperatorType = operatorType;

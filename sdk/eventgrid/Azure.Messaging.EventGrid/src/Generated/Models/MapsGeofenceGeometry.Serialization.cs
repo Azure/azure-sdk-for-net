@@ -5,15 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MapsGeofenceGeometry
+    public partial class MapsGeofenceGeometry : IUtf8JsonSerializable, IJsonModel<MapsGeofenceGeometry>
     {
-        internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsGeofenceGeometry>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapsGeofenceGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapsGeofenceGeometry)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(Distance))
+            {
+                writer.WritePropertyName("distance"u8);
+                writer.WriteNumberValue(Distance.Value);
+            }
+            if (Optional.IsDefined(GeometryId))
+            {
+                writer.WritePropertyName("geometryId"u8);
+                writer.WriteStringValue(GeometryId);
+            }
+            if (Optional.IsDefined(NearestLat))
+            {
+                writer.WritePropertyName("nearestLat"u8);
+                writer.WriteNumberValue(NearestLat.Value);
+            }
+            if (Optional.IsDefined(NearestLon))
+            {
+                writer.WritePropertyName("nearestLon"u8);
+                writer.WriteNumberValue(NearestLon.Value);
+            }
+            if (Optional.IsDefined(UdId))
+            {
+                writer.WritePropertyName("udId"u8);
+                writer.WriteStringValue(UdId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MapsGeofenceGeometry IJsonModel<MapsGeofenceGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapsGeofenceGeometry)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsGeofenceGeometry(document.RootElement, options);
+        }
+
+        internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +101,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<float> nearestLat = default;
             Optional<float> nearestLon = default;
             Optional<string> udId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -68,8 +147,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     udId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapsGeofenceGeometry>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceGeometry>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapsGeofenceGeometry)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MapsGeofenceGeometry IPersistableModel<MapsGeofenceGeometry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceGeometry>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapsGeofenceGeometry(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapsGeofenceGeometry)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapsGeofenceGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

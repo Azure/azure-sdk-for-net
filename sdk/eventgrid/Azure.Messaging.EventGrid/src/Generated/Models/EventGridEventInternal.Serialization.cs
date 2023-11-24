@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Models
 {
     [JsonConverter(typeof(EventGridEventInternalConverter))]
-    internal partial class EventGridEventInternal : IUtf8JsonSerializable
+    internal partial class EventGridEventInternal : IUtf8JsonSerializable, IJsonModel<EventGridEventInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridEventInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridEventInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EventGridEventInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -33,13 +44,47 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStringValue(EventType);
             writer.WritePropertyName("eventTime"u8);
             writer.WriteStringValue(EventTime, "O");
+            if (options.Format != "W" && Optional.IsDefined(MetadataVersion))
+            {
+                writer.WritePropertyName("metadataVersion"u8);
+                writer.WriteStringValue(MetadataVersion);
+            }
             writer.WritePropertyName("dataVersion"u8);
             writer.WriteStringValue(DataVersion);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element)
+        EventGridEventInternal IJsonModel<EventGridEventInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EventGridEventInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridEventInternal(document.RootElement, options);
+        }
+
+        internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +97,8 @@ namespace Azure.Messaging.EventGrid.Models
             DateTimeOffset eventTime = default;
             Optional<string> metadataVersion = default;
             string dataVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,9 +141,45 @@ namespace Azure.Messaging.EventGrid.Models
                     dataVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventGridEventInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EventGridEventInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridEventInternal IPersistableModel<EventGridEventInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridEventInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EventGridEventInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridEventInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>
         {

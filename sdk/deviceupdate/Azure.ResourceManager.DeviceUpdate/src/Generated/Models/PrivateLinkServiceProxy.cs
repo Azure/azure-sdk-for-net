@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,23 +15,57 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private link service proxy details. </summary>
     public partial class PrivateLinkServiceProxy
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceProxy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceProxy"/>. </summary>
         public PrivateLinkServiceProxy()
         {
             GroupConnectivityInformation = new ChangeTrackingList<GroupConnectivityInformation>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceProxy"/>. </summary>
         /// <param name="id"> NRP resource ID. </param>
         /// <param name="remotePrivateLinkServiceConnectionState"> Remote private link service connection state. </param>
         /// <param name="remotePrivateEndpointConnection"> Remote private endpoint connection details. </param>
         /// <param name="groupConnectivityInformation"> Group connectivity information. </param>
-        internal PrivateLinkServiceProxy(string id, DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, SubResource remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServiceProxy(string id, DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, SubResource remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             RemotePrivateLinkServiceConnectionState = remotePrivateLinkServiceConnectionState;
             RemotePrivateEndpointConnection = remotePrivateEndpointConnection;
             GroupConnectivityInformation = groupConnectivityInformation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NRP resource ID. </summary>

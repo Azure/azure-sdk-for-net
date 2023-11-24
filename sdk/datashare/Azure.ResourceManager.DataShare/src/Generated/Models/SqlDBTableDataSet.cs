@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,24 +16,25 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DB table data set. </summary>
     public partial class SqlDBTableDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSet"/>. </summary>
         public SqlDBTableDataSet()
         {
             Kind = DataSetKind.SqlDBTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Database name of the source data set. </param>
         /// <param name="dataSetId"> Unique id for identifying a data set resource. </param>
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DB table name. </param>
-        internal SqlDBTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string databaseName, Guid? dataSetId, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDBTableDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, Guid? dataSetId, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             DataSetId = dataSetId;

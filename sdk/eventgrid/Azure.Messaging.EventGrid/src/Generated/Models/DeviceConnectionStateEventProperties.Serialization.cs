@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceConnectionStateEventProperties
+    public partial class DeviceConnectionStateEventProperties : IUtf8JsonSerializable, IJsonModel<DeviceConnectionStateEventProperties>
     {
-        internal static DeviceConnectionStateEventProperties DeserializeDeviceConnectionStateEventProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceConnectionStateEventProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceConnectionStateEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceConnectionStateEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceConnectionStateEventProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(ModuleId))
+            {
+                writer.WritePropertyName("moduleId"u8);
+                writer.WriteStringValue(ModuleId);
+            }
+            if (Optional.IsDefined(HubName))
+            {
+                writer.WritePropertyName("hubName"u8);
+                writer.WriteStringValue(HubName);
+            }
+            if (Optional.IsDefined(DeviceConnectionStateEventInfo))
+            {
+                writer.WritePropertyName("deviceConnectionStateEventInfo"u8);
+                writer.WriteObjectValue(DeviceConnectionStateEventInfo);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeviceConnectionStateEventProperties IJsonModel<DeviceConnectionStateEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceConnectionStateEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceConnectionStateEventProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceConnectionStateEventProperties(document.RootElement, options);
+        }
+
+        internal static DeviceConnectionStateEventProperties DeserializeDeviceConnectionStateEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +89,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> moduleId = default;
             Optional<string> hubName = default;
             Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -48,8 +117,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceConnectionStateEventProperties(deviceId.Value, moduleId.Value, hubName.Value, deviceConnectionStateEventInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceConnectionStateEventProperties(deviceId.Value, moduleId.Value, hubName.Value, deviceConnectionStateEventInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceConnectionStateEventProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceConnectionStateEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceConnectionStateEventProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeviceConnectionStateEventProperties IPersistableModel<DeviceConnectionStateEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceConnectionStateEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceConnectionStateEventProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceConnectionStateEventProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceConnectionStateEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

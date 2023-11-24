@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response for the operation to get regional billingSpecs for a subscription. </summary>
     public partial class HDInsightBillingSpecsListResult
     {
-        /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingSpecsListResult"/>. </summary>
         internal HDInsightBillingSpecsListResult()
         {
             VmSizes = new ChangeTrackingList<string>();
@@ -23,19 +56,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             BillingResources = new ChangeTrackingList<HDInsightBillingResources>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingSpecsListResult"/>. </summary>
         /// <param name="vmSizes"> The virtual machine sizes to include or exclude. </param>
         /// <param name="vmSizesWithEncryptionAtHost"> The vm sizes which enable encryption at host. </param>
         /// <param name="vmSizeFilters"> The virtual machine filtering mode. Effectively this can enabling or disabling the virtual machine sizes in a particular set. </param>
         /// <param name="vmSizeProperties"> The vm size properties. </param>
         /// <param name="billingResources"> The billing and managed disk billing resources for a region. </param>
-        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSizes = vmSizes;
             VmSizesWithEncryptionAtHost = vmSizesWithEncryptionAtHost;
             VmSizeFilters = vmSizeFilters;
             VmSizeProperties = vmSizeProperties;
             BillingResources = billingResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The virtual machine sizes to include or exclude. </summary>

@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

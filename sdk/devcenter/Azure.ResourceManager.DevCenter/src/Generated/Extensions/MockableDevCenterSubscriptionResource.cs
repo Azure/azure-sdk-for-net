@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
         }
     }
 }
