@@ -5,16 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class TasksStateTasks
+    internal partial class TasksStateTasks : IUtf8JsonSerializable, IJsonModel<TasksStateTasks>
     {
-        internal static TasksStateTasks DeserializeTasksStateTasks(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TasksStateTasks>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TasksStateTasks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TasksStateTasks)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("completed"u8);
+            writer.WriteNumberValue(Completed);
+            writer.WritePropertyName("failed"u8);
+            writer.WriteNumberValue(Failed);
+            writer.WritePropertyName("inProgress"u8);
+            writer.WriteNumberValue(InProgress);
+            writer.WritePropertyName("total"u8);
+            writer.WriteNumberValue(Total);
+            if (Optional.IsCollectionDefined(EntityRecognitionTasks))
+            {
+                writer.WritePropertyName("entityRecognitionTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityRecognitionTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
+            {
+                writer.WritePropertyName("entityRecognitionPiiTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityRecognitionPiiTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
+            {
+                writer.WritePropertyName("keyPhraseExtractionTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in KeyPhraseExtractionTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(EntityLinkingTasks))
+            {
+                writer.WritePropertyName("entityLinkingTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityLinkingTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
+            {
+                writer.WritePropertyName("sentimentAnalysisTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in SentimentAnalysisTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TasksStateTasks IJsonModel<TasksStateTasks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TasksStateTasks)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTasksStateTasks(document.RootElement, options);
+        }
+
+        internal static TasksStateTasks DeserializeTasksStateTasks(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +132,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             Optional<IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<TasksStateTasksEntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"u8))
@@ -120,8 +226,44 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     sentimentAnalysisTasks = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TasksStateTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TasksStateTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TasksStateTasks>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TasksStateTasks)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TasksStateTasks IPersistableModel<TasksStateTasks>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TasksStateTasks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTasksStateTasks(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TasksStateTasks)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TasksStateTasks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownSinkNodeBase : IUtf8JsonSerializable
+    internal partial class UnknownSinkNodeBase : IUtf8JsonSerializable, IJsonModel<SinkNodeBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SinkNodeBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SinkNodeBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SinkNodeBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SinkNodeBase)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
@@ -27,11 +38,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSinkNodeBase DeserializeUnknownSinkNodeBase(JsonElement element)
+        SinkNodeBase IJsonModel<SinkNodeBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SinkNodeBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SinkNodeBase)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSinkNodeBase(document.RootElement, options);
+        }
+
+        internal static UnknownSinkNodeBase DeserializeUnknownSinkNodeBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = "Unknown";
             string name = default;
             IList<NodeInput> inputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@type"u8))
@@ -61,8 +103,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownSinkNodeBase(type, name, inputs);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownSinkNodeBase(type, name, inputs, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SinkNodeBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SinkNodeBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SinkNodeBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SinkNodeBase IPersistableModel<SinkNodeBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SinkNodeBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownSinkNodeBase(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SinkNodeBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SinkNodeBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

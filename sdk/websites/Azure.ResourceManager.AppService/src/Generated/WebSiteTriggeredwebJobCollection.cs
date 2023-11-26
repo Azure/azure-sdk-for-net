@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

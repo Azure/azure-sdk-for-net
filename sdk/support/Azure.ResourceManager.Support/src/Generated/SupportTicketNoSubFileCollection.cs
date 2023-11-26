@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

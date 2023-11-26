@@ -6,14 +6,41 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class SendReceipt
+    public partial class SendReceipt : IXmlSerializable, IPersistableModel<SendReceipt>
     {
-        internal static SendReceipt DeserializeSendReceipt(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static SendReceipt DeserializeSendReceipt(XElement element, ModelReaderWriterOptions options = null)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;
@@ -40,7 +67,48 @@ namespace Azure.Storage.Queues.Models
             {
                 timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
             }
-            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
+            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<SendReceipt>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendReceipt>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendReceipt)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SendReceipt IPersistableModel<SendReceipt>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SendReceipt>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeSendReceipt(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SendReceipt)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SendReceipt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

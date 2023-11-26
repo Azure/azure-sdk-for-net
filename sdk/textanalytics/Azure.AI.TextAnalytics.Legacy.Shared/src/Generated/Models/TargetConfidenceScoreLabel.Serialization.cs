@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class TargetConfidenceScoreLabel
+    internal partial class TargetConfidenceScoreLabel : IUtf8JsonSerializable, IJsonModel<TargetConfidenceScoreLabel>
     {
-        internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetConfidenceScoreLabel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TargetConfidenceScoreLabel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfidenceScoreLabel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TargetConfidenceScoreLabel)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("positive"u8);
+            writer.WriteNumberValue(Positive);
+            writer.WritePropertyName("negative"u8);
+            writer.WriteNumberValue(Negative);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TargetConfidenceScoreLabel IJsonModel<TargetConfidenceScoreLabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfidenceScoreLabel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TargetConfidenceScoreLabel)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetConfidenceScoreLabel(document.RootElement, options);
+        }
+
+        internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             double positive = default;
             double negative = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("positive"u8))
@@ -31,8 +85,44 @@ namespace Azure.AI.TextAnalytics.Legacy
                     negative = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TargetConfidenceScoreLabel(positive, negative);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TargetConfidenceScoreLabel(positive, negative, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TargetConfidenceScoreLabel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfidenceScoreLabel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TargetConfidenceScoreLabel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TargetConfidenceScoreLabel IPersistableModel<TargetConfidenceScoreLabel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfidenceScoreLabel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTargetConfidenceScoreLabel(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TargetConfidenceScoreLabel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TargetConfidenceScoreLabel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

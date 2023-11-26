@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Spark job definition resource type. </summary>
     public partial class SparkJobDefinitionResource : SubResource
     {
-        /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinitionResource"/>. </summary>
         /// <param name="properties"> Properties of spark job definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SparkJobDefinitionResource(SparkJobDefinition properties)
@@ -23,15 +24,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinitionResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of spark job definition. </param>
-        internal SparkJobDefinitionResource(string id, string name, string type, string etag, SparkJobDefinition properties) : base(id, name, type, etag)
+        internal SparkJobDefinitionResource(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string etag, SparkJobDefinition properties) : base(id, name, type, serializedAdditionalRawData, etag)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinitionResource"/> for deserialization. </summary>
+        internal SparkJobDefinitionResource()
+        {
         }
 
         /// <summary> Properties of spark job definition. </summary>

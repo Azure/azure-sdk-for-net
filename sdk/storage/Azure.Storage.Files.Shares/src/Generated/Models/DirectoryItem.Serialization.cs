@@ -5,13 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class DirectoryItem
+    internal partial class DirectoryItem : IXmlSerializable, IPersistableModel<DirectoryItem>
     {
-        internal static DirectoryItem DeserializeDirectoryItem(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Directory");
+            writer.WriteObjectValue(Name, "Name");
+            if (Optional.IsDefined(FileId))
+            {
+                writer.WriteStartElement("FileId");
+                writer.WriteValue(FileId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WriteObjectValue(Properties, "Properties");
+            }
+            if (Optional.IsDefined(Attributes))
+            {
+                writer.WriteStartElement("Attributes");
+                writer.WriteValue(Attributes);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PermissionKey))
+            {
+                writer.WriteStartElement("PermissionKey");
+                writer.WriteValue(PermissionKey);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static DirectoryItem DeserializeDirectoryItem(XElement element, ModelReaderWriterOptions options = null)
         {
             StringEncoded name = default;
             string fileId = default;
@@ -38,7 +75,48 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 permissionKey = (string)permissionKeyElement;
             }
-            return new DirectoryItem(name, fileId, properties, attributes, permissionKey);
+            return new DirectoryItem(name, fileId, properties, attributes, permissionKey, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<DirectoryItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectoryItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DirectoryItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DirectoryItem IPersistableModel<DirectoryItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectoryItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeDirectoryItem(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DirectoryItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DirectoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

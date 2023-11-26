@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Avro dataset. </summary>
     public partial class AvroDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AvroDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AvroDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Avro";
         }
 
-        /// <summary> Initializes a new instance of AvroDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AvroCompressionCodec = avroCompressionCodec;
             AvroCompressionLevel = avroCompressionLevel;
             Type = type ?? "Avro";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvroDataset"/> for deserialization. </summary>
+        internal AvroDataset()
+        {
         }
 
         /// <summary>

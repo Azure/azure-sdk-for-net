@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonZoneCrossingEvent : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonZoneCrossingEvent : IUtf8JsonSerializable, IJsonModel<SpatialAnalysisPersonZoneCrossingEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnalysisPersonZoneCrossingEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpatialAnalysisPersonZoneCrossingEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonZoneCrossingEvent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventType))
             {
@@ -30,11 +42,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonZoneCrossingEvent DeserializeSpatialAnalysisPersonZoneCrossingEvent(JsonElement element)
+        SpatialAnalysisPersonZoneCrossingEvent IJsonModel<SpatialAnalysisPersonZoneCrossingEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonZoneCrossingEvent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonZoneCrossingEvent(document.RootElement, options);
+        }
+
+        internal static SpatialAnalysisPersonZoneCrossingEvent DeserializeSpatialAnalysisPersonZoneCrossingEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +83,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<SpatialAnalysisPersonZoneCrossingEventType> eventType = default;
             Optional<string> threshold = default;
             Optional<SpatialAnalysisOperationFocus> focus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -67,8 +110,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpatialAnalysisPersonZoneCrossingEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(eventType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpatialAnalysisPersonZoneCrossingEvent(threshold.Value, Optional.ToNullable(focus), serializedAdditionalRawData, Optional.ToNullable(eventType));
         }
+
+        BinaryData IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonZoneCrossingEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpatialAnalysisPersonZoneCrossingEvent IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpatialAnalysisPersonZoneCrossingEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonZoneCrossingEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpatialAnalysisPersonZoneCrossingEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

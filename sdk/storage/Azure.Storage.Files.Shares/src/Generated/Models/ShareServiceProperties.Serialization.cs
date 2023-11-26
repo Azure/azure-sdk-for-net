@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareServiceProperties : IXmlSerializable
+    public partial class ShareServiceProperties : IXmlSerializable, IPersistableModel<ShareServiceProperties>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Optional.IsDefined(HourMetrics))
@@ -41,7 +45,9 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             ShareMetrics hourMetrics = default;
             ShareMetrics minuteMetrics = default;
@@ -68,7 +74,48 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 cors = array;
             }
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ShareServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareServiceProperties IPersistableModel<ShareServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeShareServiceProperties(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

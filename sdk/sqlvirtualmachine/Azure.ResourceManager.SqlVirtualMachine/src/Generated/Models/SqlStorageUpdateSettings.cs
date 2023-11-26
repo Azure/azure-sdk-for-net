@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set disk storage settings for SQL Server. </summary>
     public partial class SqlStorageUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlStorageUpdateSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlStorageUpdateSettings"/>. </summary>
         public SqlStorageUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlStorageUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStorageUpdateSettings"/>. </summary>
         /// <param name="diskCount"> Virtual machine disk count. </param>
         /// <param name="startingDeviceId"> Device id of the first disk to be updated. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
-        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, SqlVmDiskConfigurationType? diskConfigurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, SqlVmDiskConfigurationType? diskConfigurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskCount = diskCount;
             StartingDeviceId = startingDeviceId;
             DiskConfigurationType = diskConfigurationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Virtual machine disk count. </summary>

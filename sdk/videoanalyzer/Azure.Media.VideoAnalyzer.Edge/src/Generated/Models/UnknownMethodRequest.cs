@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownMethodRequest. </summary>
     internal partial class UnknownMethodRequest : MethodRequest
     {
-        /// <summary> Initializes a new instance of UnknownMethodRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal UnknownMethodRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMethodRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             MethodName = methodName ?? "Unknown";
         }

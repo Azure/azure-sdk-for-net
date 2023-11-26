@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobStaticWebsite : IXmlSerializable
+    public partial class BlobStaticWebsite : IXmlSerializable, IPersistableModel<BlobStaticWebsite>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StaticWebsite");
             writer.WriteStartElement("Enabled");
@@ -40,7 +44,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             string indexDocument = default;
@@ -62,7 +68,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 defaultIndexDocumentPath = (string)defaultIndexDocumentPathElement;
             }
-            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobStaticWebsite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobStaticWebsite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobStaticWebsite IPersistableModel<BlobStaticWebsite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobStaticWebsite(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobStaticWebsite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobStaticWebsite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

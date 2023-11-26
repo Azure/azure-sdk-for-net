@@ -5,14 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ShareFileRangeList
+    internal partial class ShareFileRangeList : IXmlSerializable, IPersistableModel<ShareFileRangeList>
     {
-        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Ranges");
+            if (Optional.IsCollectionDefined(Ranges))
+            {
+                foreach (var item in Ranges)
+                {
+                    writer.WriteObjectValue(item, "Range");
+                }
+            }
+            if (Optional.IsCollectionDefined(ClearRanges))
+            {
+                foreach (var item in ClearRanges)
+                {
+                    writer.WriteObjectValue(item, "ClearRange");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<FileRange> ranges = default;
             IReadOnlyList<ClearRange> clearRanges = default;
@@ -28,7 +56,48 @@ namespace Azure.Storage.Files.Shares.Models
                 array0.Add(ClearRange.DeserializeClearRange(e));
             }
             clearRanges = array0;
-            return new ShareFileRangeList(ranges, clearRanges);
+            return new ShareFileRangeList(ranges, clearRanges, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ShareFileRangeList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareFileRangeList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareFileRangeList IPersistableModel<ShareFileRangeList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeShareFileRangeList(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareFileRangeList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareFileRangeList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

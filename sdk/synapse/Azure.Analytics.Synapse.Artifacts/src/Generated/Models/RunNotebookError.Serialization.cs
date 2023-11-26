@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,73 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookErrorConverter))]
-    public partial class RunNotebookError
+    public partial class RunNotebookError : IUtf8JsonSerializable, IJsonModel<RunNotebookError>
     {
-        internal static RunNotebookError DeserializeRunNotebookError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunNotebookError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RunNotebookError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RunNotebookError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RunNotebookError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Ename))
+            {
+                writer.WritePropertyName("ename"u8);
+                writer.WriteStringValue(Ename);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Evalue))
+            {
+                writer.WritePropertyName("evalue"u8);
+                writer.WriteStringValue(Evalue);
+            }
+            if (Optional.IsCollectionDefined(Traceback))
+            {
+                writer.WritePropertyName("traceback"u8);
+                writer.WriteStartArray();
+                foreach (var item in Traceback)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RunNotebookError IJsonModel<RunNotebookError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunNotebookError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RunNotebookError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunNotebookError(document.RootElement, options);
+        }
+
+        internal static RunNotebookError DeserializeRunNotebookError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +90,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> ename = default;
             Optional<string> evalue = default;
             Optional<IReadOnlyList<string>> traceback = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ename"u8))
@@ -51,15 +118,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     traceback = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RunNotebookError(ename.Value, evalue.Value, Optional.ToList(traceback));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RunNotebookError(ename.Value, evalue.Value, Optional.ToList(traceback), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RunNotebookError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunNotebookError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RunNotebookError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RunNotebookError IPersistableModel<RunNotebookError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunNotebookError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRunNotebookError(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RunNotebookError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RunNotebookError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class RunNotebookErrorConverter : JsonConverter<RunNotebookError>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookError model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override RunNotebookError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

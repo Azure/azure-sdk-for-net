@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Azure SQL Managed Instance dataset. </summary>
     public partial class AzureSqlMITableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AzureSqlMITableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMITableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureSqlMITableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureSqlMITable";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlMITableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMITableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             Type = type ?? "AzureSqlMITable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMITableDataset"/> for deserialization. </summary>
+        internal AzureSqlMITableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

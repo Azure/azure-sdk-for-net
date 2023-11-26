@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,22 +16,71 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExposureControlResponseConverter))]
-    public partial class ExposureControlResponse : IUtf8JsonSerializable
+    public partial class ExposureControlResponse : IUtf8JsonSerializable, IJsonModel<ExposureControlResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExposureControlResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExposureControlResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExposureControlResponse)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(FeatureName))
+            {
+                writer.WritePropertyName("featureName"u8);
+                writer.WriteStringValue(FeatureName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExposureControlResponse DeserializeExposureControlResponse(JsonElement element)
+        ExposureControlResponse IJsonModel<ExposureControlResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExposureControlResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExposureControlResponse(document.RootElement, options);
+        }
+
+        internal static ExposureControlResponse DeserializeExposureControlResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> featureName = default;
             Optional<string> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -41,9 +93,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExposureControlResponse(featureName.Value, value.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExposureControlResponse(featureName.Value, value.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExposureControlResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExposureControlResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExposureControlResponse IPersistableModel<ExposureControlResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExposureControlResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExposureControlResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExposureControlResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ExposureControlResponseConverter : JsonConverter<ExposureControlResponse>
         {

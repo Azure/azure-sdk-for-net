@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +16,88 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryResourcePropertiesConverter))]
-    public partial class LibraryResourceProperties : IUtf8JsonSerializable
+    public partial class LibraryResourceProperties : IUtf8JsonSerializable, IJsonModel<LibraryResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LibraryResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LibraryResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LibraryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LibraryResourceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UploadedTimestamp))
+            {
+                writer.WritePropertyName("uploadedTimestamp"u8);
+                writer.WriteStringValue(UploadedTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                writer.WriteStringValue(ProvisioningStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatorId))
+            {
+                writer.WritePropertyName("creatorId"u8);
+                writer.WriteStringValue(CreatorId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LibraryResourceProperties DeserializeLibraryResourceProperties(JsonElement element)
+        LibraryResourceProperties IJsonModel<LibraryResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LibraryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LibraryResourceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLibraryResourceProperties(document.RootElement, options);
+        }
+
+        internal static LibraryResourceProperties DeserializeLibraryResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +109,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> type = default;
             Optional<string> provisioningStatus = default;
             Optional<string> creatorId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -71,9 +148,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     creatorId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LibraryResourceProperties(name.Value, path.Value, containerName.Value, uploadedTimestamp.Value, type.Value, provisioningStatus.Value, creatorId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LibraryResourceProperties(name.Value, path.Value, containerName.Value, uploadedTimestamp.Value, type.Value, provisioningStatus.Value, creatorId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LibraryResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LibraryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LibraryResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LibraryResourceProperties IPersistableModel<LibraryResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LibraryResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLibraryResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LibraryResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LibraryResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class LibraryResourcePropertiesConverter : JsonConverter<LibraryResourceProperties>
         {

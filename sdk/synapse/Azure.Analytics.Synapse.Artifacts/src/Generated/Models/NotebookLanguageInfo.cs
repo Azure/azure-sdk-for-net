@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Language info. </summary>
     public partial class NotebookLanguageInfo
     {
-        /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookLanguageInfo"/>. </summary>
         /// <param name="name"> The programming language which this kernel runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NotebookLanguageInfo(string name)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookLanguageInfo"/>. </summary>
         /// <param name="name"> The programming language which this kernel runs. </param>
         /// <param name="codemirrorMode"> The codemirror mode to use for code in this language. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -34,6 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Name = name;
             CodemirrorMode = codemirrorMode;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotebookLanguageInfo"/> for deserialization. </summary>
+        internal NotebookLanguageInfo()
+        {
         }
 
         /// <summary> The programming language which this kernel runs. </summary>
