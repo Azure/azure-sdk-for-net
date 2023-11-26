@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<string> accountName = default;
-            Optional<IList<DeviceUpdateIotHubSettings>> iotHubs = default;
+            Optional<IList<IotHubSettings>> iotHubs = default;
             Optional<bool> enableDiagnostics = default;
             Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            provisioningState = new DeviceUpdateProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accountName"u8))
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            List<DeviceUpdateIotHubSettings> array = new List<DeviceUpdateIotHubSettings>();
+                            List<IotHubSettings> array = new List<IotHubSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdateIotHubSettings.DeserializeDeviceUpdateIotHubSettings(item));
+                                array.Add(IotHubSettings.DeserializeIotHubSettings(item));
                             }
                             iotHubs = array;
                             continue;

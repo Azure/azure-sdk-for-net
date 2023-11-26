@@ -1,17 +1,12 @@
 # Release History
 
-## 1.0.0 (2023-11-27)
-
-This package is the first stable release of the Device Update Management client library.
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
-
-- Upgraded api version to 2023-07-01, enable encryption at rest feature.
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Encryption at rest feature
 
 ### Other Changes
-
-- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+- Upgraded api version to 2023-07-01
 
 ## 1.0.0-beta.9 (2023-05-29)
 

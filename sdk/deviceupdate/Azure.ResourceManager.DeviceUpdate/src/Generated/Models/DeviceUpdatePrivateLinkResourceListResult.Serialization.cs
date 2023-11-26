@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceUpdatePrivateLinkData>> value = default;
+            Optional<IReadOnlyList<PrivateLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    List<DeviceUpdatePrivateLinkData> array = new List<DeviceUpdatePrivateLinkData>();
+                    List<PrivateLinkData> array = new List<PrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item));
+                        array.Add(PrivateLinkData.DeserializePrivateLinkData(item));
                     }
                     value = array;
                     continue;

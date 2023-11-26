@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="sku"> Device Update Sku. </param>
         /// <param name="encryption"> CMK encryption at rest properties. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DeviceUpdateProvisioningState? provisioningState, string hostName, DeviceUpdatePublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, DeviceUpdateEncryption encryption, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, DeviceUpdateEncryption encryption, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state. </summary>
-        public DeviceUpdateProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> API host name. </summary>
         public string HostName { get; }
         /// <summary> Whether or not public network access is allowed for the account. </summary>
-        public DeviceUpdatePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections associated with the account. </summary>
         public IList<DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Device Update Sku. </summary>

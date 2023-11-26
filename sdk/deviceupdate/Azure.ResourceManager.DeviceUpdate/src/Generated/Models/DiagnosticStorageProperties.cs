@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public DiagnosticStorageProperties(DiagnosticStorageAuthenticationType authenticationType, ResourceIdentifier resourceId)
+        public DiagnosticStorageProperties(AuthenticationType authenticationType, string resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="connectionString"> ConnectionString of the diagnostic storage account. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
-        internal DiagnosticStorageProperties(DiagnosticStorageAuthenticationType authenticationType, string connectionString, ResourceIdentifier resourceId)
+        internal DiagnosticStorageProperties(AuthenticationType authenticationType, string connectionString, string resourceId)
         {
             AuthenticationType = authenticationType;
             ConnectionString = connectionString;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         }
 
         /// <summary> Authentication Type. </summary>
-        public DiagnosticStorageAuthenticationType AuthenticationType { get; set; }
+        public AuthenticationType AuthenticationType { get; set; }
         /// <summary> ConnectionString of the diagnostic storage account. </summary>
         public string ConnectionString { get; set; }
         /// <summary> ResourceId of the diagnostic storage account. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; set; }
     }
 }

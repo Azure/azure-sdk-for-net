@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="location"> The location. </param>
         public DeviceUpdateInstanceData(AzureLocation location) : base(location)
         {
-            IotHubs = new ChangeTrackingList<DeviceUpdateIotHubSettings>();
+            IotHubs = new ChangeTrackingList<IotHubSettings>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="iotHubs"> List of IoT Hubs associated with the account. </param>
         /// <param name="enableDiagnostics"> Enables or Disables the diagnostic logs collection. </param>
         /// <param name="diagnosticStorageProperties"> Customer-initiated diagnostic log collection storage properties. </param>
-        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceUpdateProvisioningState? provisioningState, string accountName, IList<DeviceUpdateIotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AccountName = accountName;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary> Provisioning state. </summary>
-        public DeviceUpdateProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Parent Device Update Account name which Instance belongs to. </summary>
         public string AccountName { get; }
         /// <summary> List of IoT Hubs associated with the account. </summary>
-        public IList<DeviceUpdateIotHubSettings> IotHubs { get; }
+        public IList<IotHubSettings> IotHubs { get; }
         /// <summary> Enables or Disables the diagnostic logs collection. </summary>
         public bool? EnableDiagnostics { get; set; }
         /// <summary> Customer-initiated diagnostic log collection storage properties. </summary>
