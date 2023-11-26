@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareResourcePoolResourcePoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), VMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareDatastores", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareDatastores", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVCenterVCentersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVCenterVCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareVCenterResource(Client, VMwareVCenterData.DeserializeVMwareVCenterData(e)), VMwareVCenterVCentersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVCenters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVCenterResource(Client, VMwareVCenterData.DeserializeVMwareVCenterData(e)), VMwareVCenterVCentersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVCenterVCentersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVCenterVCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareVCenterResource(Client, VMwareVCenterData.DeserializeVMwareVCenterData(e)), VMwareVCenterVCentersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVCenters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVCenterResource(Client, VMwareVCenterData.DeserializeVMwareVCenterData(e)), VMwareVCenterVCentersClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareVmTemplateResource(Client, VMwareVmTemplateData.DeserializeVMwareVmTemplateData(e)), VMwareVmTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVmTemplates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVmTemplateResource(Client, VMwareVmTemplateData.DeserializeVMwareVmTemplateData(e)), VMwareVmTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVmTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareVmTemplateResource(Client, VMwareVmTemplateData.DeserializeVMwareVmTemplateData(e)), VMwareVmTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVmTemplates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVmTemplateResource(Client, VMwareVmTemplateData.DeserializeVMwareVmTemplateData(e)), VMwareVmTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVmTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareVirtualNetworkResource(Client, VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(e)), VMwareVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVirtualNetworkResource(Client, VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(e)), VMwareVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareVirtualNetworkResource(Client, VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(e)), VMwareVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareVirtualNetworkResource(Client, VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(e)), VMwareVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableConnectedVMwarevSphereSubscriptionResource.GetVMwareVirtualNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

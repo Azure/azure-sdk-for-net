@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity source for Microsoft Fabric LakeHouse Table. </summary>
     public partial class LakeHouseTableSource : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of LakeHouseTableSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableSource"/>. </summary>
         public LakeHouseTableSource()
         {
             CopySourceType = "LakeHouseTableSource";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseTableSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionListAddressResource(Client, SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(e)), _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics, Pipeline, "SuppressionListAddressResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SuppressionListAddressResource(Client, SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(e)), _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics, Pipeline, "SuppressionListAddressResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionListAddressResource(Client, SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(e)), _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics, Pipeline, "SuppressionListAddressResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SuppressionListAddressResource(Client, SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(e)), _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics, Pipeline, "SuppressionListAddressResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

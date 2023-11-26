@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFirewallRuleResource(Client, CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(e)), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, "CosmosDBFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CosmosDBFirewallRuleResource(Client, CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(e)), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, "CosmosDBFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFirewallRuleResource(Client, CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(e)), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, "CosmosDBFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CosmosDBFirewallRuleResource(Client, CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(e)), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, "CosmosDBFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

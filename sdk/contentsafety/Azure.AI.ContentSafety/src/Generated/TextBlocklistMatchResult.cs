@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -13,7 +14,39 @@ namespace Azure.AI.ContentSafety
     /// <summary> The result of blocklist match. </summary>
     public partial class TextBlocklistMatchResult
     {
-        /// <summary> Initializes a new instance of TextBlocklistMatchResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/>. </summary>
         /// <param name="blocklistName"> The name of matched blocklist. </param>
         /// <param name="blockItemId"> The id of matched item. </param>
         /// <param name="blockItemText"> The content of matched item. </param>
@@ -31,6 +64,29 @@ namespace Azure.AI.ContentSafety
             BlockItemText = blockItemText;
             Offset = offset;
             Length = length;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/>. </summary>
+        /// <param name="blocklistName"> The name of matched blocklist. </param>
+        /// <param name="blockItemId"> The id of matched item. </param>
+        /// <param name="blockItemText"> The content of matched item. </param>
+        /// <param name="offset"> The character offset of matched text in original input. </param>
+        /// <param name="length"> The length of matched text in original input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextBlocklistMatchResult(string blocklistName, string blockItemId, string blockItemText, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BlocklistName = blocklistName;
+            BlockItemId = blockItemId;
+            BlockItemText = blockItemText;
+            Offset = offset;
+            Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/> for deserialization. </summary>
+        internal TextBlocklistMatchResult()
+        {
         }
 
         /// <summary> The name of matched blocklist. </summary>

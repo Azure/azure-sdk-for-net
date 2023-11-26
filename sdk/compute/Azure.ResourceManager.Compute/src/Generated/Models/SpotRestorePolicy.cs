@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the Spot-Try-Restore properties for the virtual machine scale set. With this property customer can enable or disable automatic restore of the evicted Spot VMSS VM instances opportunistically based on capacity availability and pricing constraint. </summary>
     public partial class SpotRestorePolicy
     {
-        /// <summary> Initializes a new instance of SpotRestorePolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpotRestorePolicy"/>. </summary>
         public SpotRestorePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of SpotRestorePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpotRestorePolicy"/>. </summary>
         /// <param name="enabled"> Enables the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints. </param>
         /// <param name="restoreTimeout"> Timeout value expressed as an ISO 8601 time duration after which the platform will not try to restore the VMSS SPOT instances. </param>
-        internal SpotRestorePolicy(bool? enabled, string restoreTimeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpotRestorePolicy(bool? enabled, string restoreTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             RestoreTimeout = restoreTimeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enables the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints. </summary>

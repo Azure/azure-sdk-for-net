@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -12,11 +14,26 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the availability for scheduling data box orders orders. </summary>
     public partial class DataBoxScheduleAvailabilityContent : ScheduleAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataBoxScheduleAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         public DataBoxScheduleAvailabilityContent(AzureLocation storageLocation) : base(storageLocation)
         {
             SkuName = DataBoxSkuName.DataBox;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(storageLocation, skuName, country, serializedAdditionalRawData)
+        {
+            SkuName = skuName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxScheduleAvailabilityContent"/> for deserialization. </summary>
+        internal DataBoxScheduleAvailabilityContent()
+        {
         }
     }
 }

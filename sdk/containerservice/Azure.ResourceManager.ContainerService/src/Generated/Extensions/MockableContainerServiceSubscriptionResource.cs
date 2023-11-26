@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterSnapshotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedClusterSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), ManagedClusterSnapshotClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), ManagedClusterSnapshotClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterSnapshotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedClusterSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), ManagedClusterSnapshotClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), ManagedClusterSnapshotClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosCassandraDataTransferDataSourceSink : IUtf8JsonSerializable
+    public partial class CosmosCassandraDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<CosmosCassandraDataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosCassandraDataTransferDataSourceSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyspaceName"u8);
             writer.WriteStringValue(KeyspaceName);
@@ -26,11 +38,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("component"u8);
             writer.WriteStringValue(Component.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosCassandraDataTransferDataSourceSink DeserializeCosmosCassandraDataTransferDataSourceSink(JsonElement element)
+        CosmosCassandraDataTransferDataSourceSink IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosCassandraDataTransferDataSourceSink(document.RootElement, options);
+        }
+
+        internal static CosmosCassandraDataTransferDataSourceSink DeserializeCosmosCassandraDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +80,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string tableName = default;
             Optional<string> remoteAccountName = default;
             DataTransferComponent component = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyspaceName"u8))
@@ -61,8 +104,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     component = new DataTransferComponent(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosCassandraDataTransferDataSourceSink(component, keyspaceName, tableName, remoteAccountName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosCassandraDataTransferDataSourceSink(component, serializedAdditionalRawData, keyspaceName, tableName, remoteAccountName.Value);
         }
+
+        BinaryData IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CosmosCassandraDataTransferDataSourceSink IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosCassandraDataTransferDataSourceSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

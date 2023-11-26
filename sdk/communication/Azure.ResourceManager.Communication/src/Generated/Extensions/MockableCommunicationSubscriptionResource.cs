@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetEmailServiceResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetEmailServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetEmailServiceResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetEmailServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
     }
 }

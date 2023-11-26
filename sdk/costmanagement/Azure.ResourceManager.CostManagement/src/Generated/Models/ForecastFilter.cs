@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,58 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The filter expression to be used in the export. </summary>
     public partial class ForecastFilter
     {
-        /// <summary> Initializes a new instance of ForecastFilter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastFilter"/>. </summary>
         public ForecastFilter()
         {
             And = new ChangeTrackingList<ForecastFilter>();
             Or = new ChangeTrackingList<ForecastFilter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastFilter"/>. </summary>
+        /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
+        /// <param name="or"> The logical "OR" expression. Must have at least 2 items. </param>
+        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
+        /// <param name="tags"> Has comparison expression for a tag. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastFilter(IList<ForecastFilter> and, IList<ForecastFilter> or, ForecastComparisonExpression dimensions, ForecastComparisonExpression tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            And = and;
+            Or = or;
+            Dimensions = dimensions;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>

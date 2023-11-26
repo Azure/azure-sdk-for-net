@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Azure SQL Data Warehouse dataset. </summary>
     public partial class AzureSqlDWTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureSqlDWTable";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "AzureSqlDWTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/> for deserialization. </summary>
+        internal AzureSqlDWTableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

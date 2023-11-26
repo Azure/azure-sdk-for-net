@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,20 +15,21 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The secrets related to customer disk job. </summary>
     public partial class CustomerDiskJobSecrets : JobSecrets
     {
-        /// <summary> Initializes a new instance of CustomerDiskJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerDiskJobSecrets"/>. </summary>
         internal CustomerDiskJobSecrets()
         {
             DiskSecrets = new ChangeTrackingList<DataBoxDiskSecret>();
             JobSecretsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
-        /// <summary> Initializes a new instance of CustomerDiskJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerDiskJobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
-        internal CustomerDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
+        internal CustomerDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
         {
             DiskSecrets = diskSecrets;
             CarrierAccountNumber = carrierAccountNumber;
