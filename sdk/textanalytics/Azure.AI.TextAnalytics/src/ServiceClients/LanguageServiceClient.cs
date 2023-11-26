@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput
                 {
                     AnalysisInput = batchInput,
-                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                    Parameters = new LanguageDetectionTaskParameters(loggingOptOut: options.DisableServiceLogs, modelVersion: options.ModelVersion, serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -211,7 +211,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput
                 {
                     AnalysisInput = batchInput,
-                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                    Parameters = new LanguageDetectionTaskParameters(loggingOptOut: options.DisableServiceLogs, modelVersion: options.ModelVersion, serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
@@ -379,9 +379,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     AnalysisInput = multiLanguageInput,
                     Parameters = new EntitiesTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        Constants.DefaultStringIndexType)
+                                        loggingOptOut: options.DisableServiceLogs,
+                                        modelVersion: options.ModelVersion,
+                                        stringIndexType: Constants.DefaultStringIndexType,
+                                        serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -416,9 +417,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     AnalysisInput = multiLanguageInput,
                     Parameters = new EntitiesTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        Constants.DefaultStringIndexType)
+                                        loggingOptOut: options.DisableServiceLogs,
+                                        modelVersion: options.ModelVersion,
+                                        stringIndexType: Constants.DefaultStringIndexType,
+                                        serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
@@ -1113,7 +1115,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextKeyPhraseExtractionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                    Parameters = new KeyPhraseTaskParameters(loggingOptOut: options.DisableServiceLogs, modelVersion: options.ModelVersion, serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -1147,7 +1149,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextKeyPhraseExtractionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                    Parameters = new KeyPhraseTaskParameters(loggingOptOut: options.DisableServiceLogs, modelVersion: options.ModelVersion, serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
@@ -1298,9 +1300,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     AnalysisInput = multiLanguageInput,
                     Parameters = new EntityLinkingTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        Constants.DefaultStringIndexType)
+                                        loggingOptOut: options.DisableServiceLogs,
+                                        modelVersion: options.ModelVersion,
+                                        stringIndexType: Constants.DefaultStringIndexType,
+                                        serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -1335,9 +1338,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     AnalysisInput = multiLanguageInput,
                     Parameters = new EntityLinkingTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        Constants.DefaultStringIndexType)
+                                        loggingOptOut: options.DisableServiceLogs,
+                                        modelVersion: options.ModelVersion,
+                                        stringIndexType: Constants.DefaultStringIndexType,
+                                        serializedAdditionalRawData: null)
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
@@ -1457,7 +1461,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
                 {
                     DisplayName = options.DisplayName,
                 };

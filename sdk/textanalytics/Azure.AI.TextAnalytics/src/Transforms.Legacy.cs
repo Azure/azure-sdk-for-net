@@ -44,7 +44,8 @@ namespace Azure.AI.TextAnalytics
                 error.Message,
                 errorDetails,
                 error.Target,
-                ConvertToLanguageError(error.Innererror));
+                ConvertToLanguageError(error.Innererror),
+                serializedAdditionalRawData: null);
         }
 
         internal static Models.Error ConvertToLanguageError(Legacy.TextAnalyticsError error)
@@ -102,12 +103,12 @@ namespace Azure.AI.TextAnalytics
 
         internal static TextDocumentStatistics ConvertToDocumentStatistics(Legacy.DocumentStatistics legacyStatistics) =>
             (legacyStatistics != null)
-                ? new TextDocumentStatistics(legacyStatistics.CharactersCount, legacyStatistics.TransactionsCount)
+                ? new TextDocumentStatistics(legacyStatistics.CharactersCount, legacyStatistics.TransactionsCount, serializedAdditionalRawData: null)
                 : default;
 
         internal static TextDocumentBatchStatistics ConvertToBatchStatistics(Legacy.RequestStatistics legacyStatistics) =>
             (legacyStatistics != null)
-                ? new TextDocumentBatchStatistics(legacyStatistics.DocumentsCount, legacyStatistics.ValidDocumentsCount, legacyStatistics.ErroneousDocumentsCount, legacyStatistics.TransactionsCount)
+                ? new TextDocumentBatchStatistics(legacyStatistics.DocumentsCount, legacyStatistics.ValidDocumentsCount, legacyStatistics.ErroneousDocumentsCount, legacyStatistics.TransactionsCount, serializedAdditionalRawData: null)
                 : default;
 
         internal static TextAnalyticsOperationStatus ConvertToTextAnalyticsOperationStatus(Legacy.Models.State legacyState) =>
@@ -635,7 +636,8 @@ namespace Azure.AI.TextAnalytics
             return new HealthcareEntityAssertion(
                 ConvertToEntityConditionality(assertion.Conditionality),
                 ConvertToEntityCertainty(assertion.Certainty),
-                ConvertToEntityAssociation(assertion.Association));
+                ConvertToEntityAssociation(assertion.Association),
+                serializedAdditionalRawData: null);
         }
 
         internal static EntityConditionality? ConvertToEntityConditionality(Legacy.Models.Conditionality? legacyConditionality) =>

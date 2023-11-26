@@ -139,13 +139,18 @@ namespace Azure.Maps.Routing
         public double? VehicleWidthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
     }
-    public partial class RouteDirectionParameters
+    public partial class RouteDirectionParameters : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteDirectionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteDirectionParameters>
     {
         public RouteDirectionParameters() { }
         public System.Collections.Generic.IList<string> AllowVignette { get { throw null; } }
         public Azure.Core.GeoJson.GeoPolygonCollection AvoidAreas { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AvoidVignette { get { throw null; } }
         public Azure.Core.GeoJson.GeoCollection SupportingPoints { get { throw null; } set { } }
+        Azure.Maps.Routing.RouteDirectionParameters System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteDirectionParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteDirectionParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.RouteDirectionParameters System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteDirectionParameters>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteDirectionParameters>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteDirectionParameters>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RouteDirectionQuery
     {
@@ -196,11 +201,16 @@ namespace Azure.Maps.Routing
         public double? VehicleWidthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
     }
-    public partial class RouteMatrixQuery
+    public partial class RouteMatrixQuery : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteMatrixQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteMatrixQuery>
     {
         public RouteMatrixQuery() { }
         public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Destinations { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Origins { get { throw null; } set { } }
+        Azure.Maps.Routing.RouteMatrixQuery System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteMatrixQuery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.RouteMatrixQuery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.RouteMatrixQuery System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteMatrixQuery>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteMatrixQuery>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.RouteMatrixQuery>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RouteRangeOptions
     {
@@ -465,11 +475,16 @@ namespace Azure.Maps.Routing
 }
 namespace Azure.Maps.Routing.Models
 {
-    public partial class BatchResult
+    public partial class BatchResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.BatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.BatchResult>
     {
         internal BatchResult() { }
         public int? SuccessfulRequests { get { throw null; } }
         public int? TotalRequests { get { throw null; } }
+        Azure.Maps.Routing.Models.BatchResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.BatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.BatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.BatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.BatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.BatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.BatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DelayMagnitude : System.IEquatable<Azure.Maps.Routing.Models.DelayMagnitude>
@@ -510,11 +525,16 @@ namespace Azure.Maps.Routing.Models
         public static bool operator !=(Azure.Maps.Routing.Models.DrivingSide left, Azure.Maps.Routing.Models.DrivingSide right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EffectiveSetting
+    public partial class EffectiveSetting : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.EffectiveSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.EffectiveSetting>
     {
         internal EffectiveSetting() { }
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.Maps.Routing.Models.EffectiveSetting System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.EffectiveSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.EffectiveSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.EffectiveSetting System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.EffectiveSetting>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.EffectiveSetting>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.EffectiveSetting>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class GetDirectionsOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
     {
@@ -708,39 +728,64 @@ namespace Azure.Maps.Routing.Models
         public static bool operator !=(Azure.Maps.Routing.Models.ResponseTravelMode left, Azure.Maps.Routing.Models.ResponseTravelMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RouteData
+    public partial class RouteData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteData>
     {
         internal RouteData() { }
         public Azure.Maps.Routing.Models.RouteGuidance Guidance { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteLeg> Legs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteSection> Sections { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteSummary Summary { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteDirections
+    public partial class RouteDirections : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirections>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirections>
     {
         internal RouteDirections() { }
         public string FormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteOptimizedWaypoint> OptimizedWaypoints { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteReport Report { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteData> Routes { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteDirections System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirections>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirections>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteDirections System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirections>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirections>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirections>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteDirectionsBatchItemResponse : Azure.Maps.Routing.Models.RouteDirections
+    public partial class RouteDirectionsBatchItemResponse : Azure.Maps.Routing.Models.RouteDirections, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>
     {
         internal RouteDirectionsBatchItemResponse() { }
         public Azure.ResponseError ResponseError { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteDirectionsBatchResult : Azure.Maps.Routing.Models.BatchResult
+    public partial class RouteDirectionsBatchResult : Azure.Maps.Routing.Models.BatchResult, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
     {
         internal RouteDirectionsBatchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteDirectionsBatchItemResponse> Results { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteDirectionsBatchResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteDirectionsBatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteGuidance
+    public partial class RouteGuidance : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteGuidance>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteGuidance>
     {
         internal RouteGuidance() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteInstructionGroup> InstructionGroups { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteInstruction> Instructions { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteGuidance System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteGuidance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteGuidance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteGuidance System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteGuidance>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteGuidance>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteGuidance>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteInstruction
+    public partial class RouteInstruction : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstruction>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstruction>
     {
         internal RouteInstruction() { }
         public string CombinedMessage { get { throw null; } }
@@ -762,22 +807,37 @@ namespace Azure.Maps.Routing.Models
         public string Street { get { throw null; } }
         public int? TravelTimeInSeconds { get { throw null; } }
         public int? TurnAngleInDegrees { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteInstruction System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstruction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstruction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteInstruction System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstruction>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstruction>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstruction>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteInstructionGroup
+    public partial class RouteInstructionGroup : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstructionGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstructionGroup>
     {
         internal RouteInstructionGroup() { }
         public int? FirstInstructionIndex { get { throw null; } }
         public int? GroupLengthInMeters { get { throw null; } }
         public string GroupMessage { get { throw null; } }
         public int? LastInstructionIndex { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteInstructionGroup System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstructionGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteInstructionGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteInstructionGroup System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstructionGroup>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstructionGroup>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteInstructionGroup>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteLeg
+    public partial class RouteLeg : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLeg>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLeg>
     {
         internal RouteLeg() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPosition> Points { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteLegSummary Summary { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteLeg System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLeg>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLeg>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteLeg System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLeg>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLeg>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLeg>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteLegSummary
+    public partial class RouteLegSummary : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLegSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLegSummary>
     {
         internal RouteLegSummary() { }
         public System.DateTimeOffset? ArrivalTime { get { throw null; } }
@@ -790,51 +850,91 @@ namespace Azure.Maps.Routing.Models
         public int? NoTrafficTravelTimeInSeconds { get { throw null; } }
         public int? TrafficDelayInSeconds { get { throw null; } }
         public int? TravelTimeInSeconds { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteLegSummary System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLegSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteLegSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteLegSummary System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLegSummary>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLegSummary>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteLegSummary>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteMatrix
+    public partial class RouteMatrix : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrix>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrix>
     {
         internal RouteMatrix() { }
         public int? StatusCode { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteLegSummary Summary { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteMatrix System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrix>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrix>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteMatrix System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrix>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrix>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrix>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteMatrixResult
+    public partial class RouteMatrixResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixResult>
     {
         internal RouteMatrixResult() { }
         public string FormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteMatrix>> Matrix { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteMatrixSummary Summary { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteMatrixResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteMatrixResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteMatrixSummary
+    public partial class RouteMatrixSummary : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixSummary>
     {
         internal RouteMatrixSummary() { }
         public int? SuccessfulRoutes { get { throw null; } }
         public int? TotalRoutes { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteMatrixSummary System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteMatrixSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteMatrixSummary System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixSummary>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixSummary>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteMatrixSummary>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteOptimizedWaypoint
+    public partial class RouteOptimizedWaypoint : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>
     {
         internal RouteOptimizedWaypoint() { }
         public int? OptimizedIndex { get { throw null; } }
         public int? ProvidedIndex { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteOptimizedWaypoint System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteOptimizedWaypoint System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteOptimizedWaypoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteRange
+    public partial class RouteRange : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRange>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRange>
     {
         internal RouteRange() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPosition> Boundary { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition Center { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteRange System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteRange System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRange>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRange>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRange>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteRangeResult
+    public partial class RouteRangeResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRangeResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRangeResult>
     {
         internal RouteRangeResult() { }
         public string FormatVersion { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteRange ReachableRange { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteReport Report { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteRangeResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRangeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteRangeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteRangeResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRangeResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRangeResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteRangeResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteReport
+    public partial class RouteReport : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteReport>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteReport>
     {
         internal RouteReport() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.EffectiveSetting> EffectiveSettings { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteReport System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteReport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteReport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteReport System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteReport>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteReport>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteReport>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteSection
+    public partial class RouteSection : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSection>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSection>
     {
         internal RouteSection() { }
         public int? DelayInSeconds { get { throw null; } }
@@ -846,20 +946,35 @@ namespace Azure.Maps.Routing.Models
         public int? StartPointIndex { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteSectionTec Tec { get { throw null; } }
         public Azure.Maps.Routing.Models.ResponseTravelMode? TravelMode { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteSection System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteSection System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSection>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSection>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSection>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteSectionTec
+    public partial class RouteSectionTec : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTec>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTec>
     {
         internal RouteSectionTec() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteSectionTecCause> Causes { get { throw null; } }
         public int? EffectCode { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteSectionTec System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteSectionTec System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTec>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTec>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTec>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteSectionTecCause
+    public partial class RouteSectionTecCause : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTecCause>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTecCause>
     {
         internal RouteSectionTecCause() { }
         public int? MainCauseCode { get { throw null; } }
         public int? SubCauseCode { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteSectionTecCause System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTecCause>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSectionTecCause>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteSectionTecCause System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTecCause>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTecCause>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSectionTecCause>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteSummary
+    public partial class RouteSummary : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSummary>
     {
         internal RouteSummary() { }
         public System.DateTimeOffset? ArrivalTime { get { throw null; } }
@@ -867,6 +982,11 @@ namespace Azure.Maps.Routing.Models
         public int? LengthInMeters { get { throw null; } }
         public System.TimeSpan? TravelTimeDuration { get { throw null; } }
         public int? TravelTimeInSeconds { get { throw null; } }
+        Azure.Maps.Routing.Models.RouteSummary System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Routing.Models.RouteSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Routing.Models.RouteSummary System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSummary>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSummary>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Routing.Models.RouteSummary>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficIncidentCategory : System.IEquatable<Azure.Maps.Routing.Models.TrafficIncidentCategory>

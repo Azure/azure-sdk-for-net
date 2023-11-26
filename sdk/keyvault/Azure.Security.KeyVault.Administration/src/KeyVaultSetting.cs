@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
@@ -37,13 +38,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name">The name of the account setting.</param>
         /// <param name="value">The string value of the account setting.</param>
         /// <param name="settingType">The type specifier of the value.</param>
-        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Value = new KeyVaultSettingValue(value, settingType);
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

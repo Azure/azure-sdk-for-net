@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +17,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value passed through. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator): this(QueueSelectorAttachmentKind.PassThrough, key, labelOperator)
+        public PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator): this(QueueSelectorAttachmentKind.PassThrough, new Dictionary<string, BinaryData>(), key, labelOperator)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
             Argument.AssertNotNull(labelOperator, nameof(labelOperator));
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);

@@ -109,7 +109,8 @@ namespace Azure.Communication.CallAutomation
         {
             DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(
                 startDialogOptions.BotAppId,
-                startDialogOptions.DialogContext);
+                startDialogOptions.DialogContext,
+                new Dictionary<string, BinaryData>());
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
             {
                 OperationContext = startDialogOptions.OperationContext == default ? Guid.NewGuid().ToString() : startDialogOptions.OperationContext

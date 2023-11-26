@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class WebhookRouterRule : IUtf8JsonSerializable, IJsonModel<WebhookRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookRouterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<WebhookRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebhookRouterRule>)this).GetFormatFromOptions(options) : options.Format;

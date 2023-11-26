@@ -11,10 +11,15 @@ namespace Azure.Security.KeyVault.Administration
         public string RoleName { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleScope RoleScope { get { throw null; } }
     }
-    public partial class GetSettingsResult
+    public partial class GetSettingsResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.GetSettingsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>
     {
         internal GetSettingsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultSetting> Settings { get { throw null; } }
+        Azure.Security.KeyVault.Administration.GetSettingsResult System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.GetSettingsResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultAccessControlClient
     {
@@ -157,13 +162,18 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultDataAction left, Azure.Security.KeyVault.Administration.KeyVaultDataAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultPermission
+    public partial class KeyVaultPermission : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>
     {
         public KeyVaultPermission() { }
         public System.Collections.Generic.IList<string> Actions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultDataAction> DataActions { get { throw null; } }
         public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultDataAction> NotDataActions { get { throw null; } }
+        Azure.Security.KeyVault.Administration.KeyVaultPermission System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultPermission System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultRestoreResult>
     {
@@ -187,22 +197,32 @@ namespace Azure.Security.KeyVault.Administration
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }
-    public partial class KeyVaultRoleAssignment
+    public partial class KeyVaultRoleAssignment : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>
     {
         internal KeyVaultRoleAssignment() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties Properties { get { throw null; } }
         public string Type { get { throw null; } }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultRoleAssignmentProperties
+    public partial class KeyVaultRoleAssignmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>
     {
         internal KeyVaultRoleAssignmentProperties() { }
         public string PrincipalId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleScope? Scope { get { throw null; } }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultRoleDefinition
+    public partial class KeyVaultRoleDefinition : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>
     {
         public KeyVaultRoleDefinition() { }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> AssignableScopes { get { throw null; } }
@@ -213,6 +233,11 @@ namespace Azure.Security.KeyVault.Administration
         public string RoleName { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleType? RoleType { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? Type { get { throw null; } }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultRoleDefinitionType : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType>
@@ -290,12 +315,17 @@ namespace Azure.Security.KeyVault.Administration
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }
-    public partial class KeyVaultSetting
+    public partial class KeyVaultSetting : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>
     {
         public KeyVaultSetting(string name, bool value) { }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultSettingType? SettingType { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultSettingValue Value { get { throw null; } }
+        void global::System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultSetting System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.KeyVaultSetting System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KeyVaultSettingsClient

@@ -47,6 +47,12 @@ namespace Azure.Communication.PhoneNumbers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberCountries"/>. </summary>
+        internal PhoneNumberCountries()
+        {
+            Countries = new ChangeTrackingList<PhoneNumberCountry>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCountries"/>. </summary>
         /// <param name="countries"> Represents the underlying list of countries. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -56,5 +62,10 @@ namespace Azure.Communication.PhoneNumbers
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Represents the underlying list of countries. </summary>
+        public IReadOnlyList<PhoneNumberCountry> Countries { get; }
+        /// <summary> Represents the URL link to the next page. </summary>
+        public string NextLink { get; }
     }
 }

@@ -5,9 +5,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("MachineLearningPartialManagedServiceIdentity")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -25,7 +26,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Managed service identity (system assigned and/or user assigned identities)
         /// Serialized Name: PartialManagedServiceIdentity.type
         /// </summary>
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteManagedServiceIdentityType), DeserializationValueHook = nameof(ReadManagedServiceIdentityType))]
         public Azure.ResourceManager.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteManagedServiceIdentityType(Utf8JsonWriter writer)
+        {
+            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadManagedServiceIdentityType(JsonProperty property, ref Optional<Azure.ResourceManager.Models.ManagedServiceIdentityType> managedServiceIdentityType)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+
+            managedServiceIdentityType = new Azure.ResourceManager.Models.ManagedServiceIdentityType(property.Value.GetString());
+        }
+
         /// <summary>
         /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
         /// Serialized Name: PartialManagedServiceIdentity.userAssignedIdentities

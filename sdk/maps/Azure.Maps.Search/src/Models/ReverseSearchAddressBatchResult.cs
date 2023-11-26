@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,7 +15,8 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
         /// <param name="batchSummary"> Summary of the results for the batch request. </param>
         /// <param name="batchItems"> Array containing the batch results. </param>
-        internal ReverseSearchAddressBatchResult(BatchResultSummary batchSummary, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems) : base(batchSummary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseSearchAddressBatchResult(BatchResultSummary batchSummary, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(batchSummary, serializedAdditionalRawData)
         {
             BatchItems = batchItems;
             var results = new List<ReverseSearchAddressBatchItemResponse>();

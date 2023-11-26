@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.CosmosDB
 
         private static DatabaseRestoreResourceInfo ConvertFromRestorableMongoDBResourceData(RestorableMongoDBResourceData value)
         {
-            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData: null);
         }
 
         private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value)
         {
-            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable, IJsonModel<QueueLengthExceptionTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueLengthExceptionTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<QueueLengthExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueueLengthExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;

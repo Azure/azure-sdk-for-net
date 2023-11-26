@@ -89,11 +89,7 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("geometryData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    geometryData = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    ReadGeometryData(property, ref geometryData);
                     continue;
                 }
                 if (options.Format != "W")

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,7 +16,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="summary"> Summary object for a Search API response. </param>
         /// <param name="results"> A list of Search API results. </param>
         /// <param name="error"> The error object. </param>
-        internal SearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, ErrorDetail error) : base(summary, results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, ErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(summary, results, serializedAdditionalRawData)
         {
             Summary = summary;
             ErrorDetail = error;

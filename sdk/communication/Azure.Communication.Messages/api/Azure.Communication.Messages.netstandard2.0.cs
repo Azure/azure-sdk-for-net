@@ -49,11 +49,16 @@ namespace Azure.Communication.Messages
         public static bool operator !=(Azure.Communication.Messages.CommunicationMessageType left, Azure.Communication.Messages.CommunicationMessageType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageReceipt
+    public partial class MessageReceipt : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageReceipt>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>
     {
         internal MessageReceipt() { }
         public string MessageId { get { throw null; } }
         public string To { get { throw null; } }
+        Azure.Communication.Messages.MessageReceipt System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageReceipt>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageReceipt>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.MessageReceipt System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MessageTemplate
     {
@@ -212,10 +217,15 @@ namespace Azure.Communication.Messages
         public Azure.Communication.Messages.MessageTemplate Template { get { throw null; } }
         public System.Collections.Generic.IEnumerable<string> To { get { throw null; } }
     }
-    public partial class SendMessageResult
+    public partial class SendMessageResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendMessageResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>
     {
         internal SendMessageResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Messages.MessageReceipt> Receipts { get { throw null; } }
+        Azure.Communication.Messages.SendMessageResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendMessageResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendMessageResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.SendMessageResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TemplateStatus : System.IEquatable<Azure.Communication.Messages.TemplateStatus>

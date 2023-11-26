@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class BestWorkerMode : IUtf8JsonSerializable, IJsonModel<BestWorkerMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BestWorkerMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<BestWorkerMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BestWorkerMode>)this).GetFormatFromOptions(options) : options.Format;

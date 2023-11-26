@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Text.Json;
 
 namespace Azure.AI.DocumentIntelligence
 {
     internal static class DeserializationHelpers
     {
-        internal static T FromOperationResponse<T>(Response response, Func<JsonElement, T> deserializationFunc, string resultPropertyName)
+        internal static T FromOperationResponse<T>(Response response, Func<JsonElement, ModelReaderWriterOptions, T> deserializationFunc, string resultPropertyName)
         {
             using var document = JsonDocument.Parse(response.Content);
 
@@ -18,11 +19,11 @@ namespace Azure.AI.DocumentIntelligence
 
             if (document.RootElement.TryGetProperty(resultPropertyName, out var result))
             {
-                return deserializationFunc(result);
+                return deserializationFunc(result, null);
             }
             else
             {
-                return deserializationFunc(document.RootElement);
+                return deserializationFunc(document.RootElement, null);
             }
         }
     }

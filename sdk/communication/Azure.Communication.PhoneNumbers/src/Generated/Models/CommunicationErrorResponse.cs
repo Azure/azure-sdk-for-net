@@ -48,6 +48,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
         /// <param name="error"> The Communication Services error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
+        internal CommunicationErrorResponse(CommunicationError error)
+        {
+            Argument.AssertNotNull(error, nameof(error));
+
+            Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
+        /// <param name="error"> The Communication Services error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CommunicationErrorResponse(CommunicationError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,5 +69,8 @@ namespace Azure.Communication.PhoneNumbers
         internal CommunicationErrorResponse()
         {
         }
+
+        /// <summary> The Communication Services error. </summary>
+        public CommunicationError Error { get; }
     }
 }

@@ -540,7 +540,8 @@ namespace Azure.Storage.Files.Shares
                             r.Deleted,
                             r.Version,
                             r.Properties,
-                            metadata: null))
+                            metadata: null,
+                            serializedAdditionalRawData: null))
                             .ToList();
 
                         listSharesResponse = new ListSharesResponse(
@@ -549,7 +550,8 @@ namespace Azure.Storage.Files.Shares
                             response.Value.Marker,
                             response.Value.MaxResults,
                             shareItemInternals.AsReadOnly(),
-                            response.Value.NextMarker);
+                            response.Value.NextMarker,
+                            serializedAdditionalRawData: null);
                     }
                     return Response.FromValue(
                         listSharesResponse,
