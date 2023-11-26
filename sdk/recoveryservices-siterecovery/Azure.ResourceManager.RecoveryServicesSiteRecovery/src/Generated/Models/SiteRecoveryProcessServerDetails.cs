@@ -15,14 +15,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Process server details. </summary>
     public partial class SiteRecoveryProcessServerDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServerDetails"/>. </summary>
         internal SiteRecoveryProcessServerDetails()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServerDetails"/>. </summary>
         /// <param name="id"> The process server Id. </param>
         /// <param name="name"> The process server name. </param>
         /// <param name="biosId"> The process server Bios Id. </param>
@@ -52,7 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
-        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -83,6 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             HistoricHealth = historicHealth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The process server Id. </summary>

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

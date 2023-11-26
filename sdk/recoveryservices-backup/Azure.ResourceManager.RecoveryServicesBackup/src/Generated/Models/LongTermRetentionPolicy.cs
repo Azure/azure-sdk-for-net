@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Long term retention policy. </summary>
     public partial class LongTermRetentionPolicy : BackupRetentionPolicy
     {
-        /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         public LongTermRetentionPolicy()
         {
             RetentionPolicyType = "LongTermRetentionPolicy";
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dailySchedule"> Daily retention schedule of the protection policy. </param>
         /// <param name="weeklySchedule"> Weekly retention schedule of the protection policy. </param>
         /// <param name="monthlySchedule"> Monthly retention schedule of the protection policy. </param>
         /// <param name="yearlySchedule"> Yearly retention schedule of the protection policy. </param>
-        internal LongTermRetentionPolicy(string retentionPolicyType, DailyRetentionSchedule dailySchedule, WeeklyRetentionSchedule weeklySchedule, MonthlyRetentionSchedule monthlySchedule, YearlyRetentionSchedule yearlySchedule) : base(retentionPolicyType)
+        internal LongTermRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, DailyRetentionSchedule dailySchedule, WeeklyRetentionSchedule weeklySchedule, MonthlyRetentionSchedule monthlySchedule, YearlyRetentionSchedule yearlySchedule) : base(retentionPolicyType, serializedAdditionalRawData)
         {
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;

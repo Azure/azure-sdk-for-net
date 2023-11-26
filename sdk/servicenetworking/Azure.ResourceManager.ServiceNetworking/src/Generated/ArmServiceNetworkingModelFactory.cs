@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceNetworkingModelFactory
     {
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.TrafficControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             frontends ??= new List<SubResource>();
             associations ??= new List<SubResource>();
 
-            return new TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints?.ToList(), frontends?.ToList(), associations?.ToList(), provisioningState);
+            return new TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints?.ToList(), frontends?.ToList(), associations?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AssociationData(id, name, resourceType, systemData, tags, location, associationType, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState);
+            return new AssociationData(id, name, resourceType, systemData, tags, location, associationType, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FrontendData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.FrontendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontendData(id, name, resourceType, systemData, tags, location, fqdn, provisioningState);
+            return new FrontendData(id, name, resourceType, systemData, tags, location, fqdn, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

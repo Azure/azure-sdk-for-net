@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a topquery metric in one interval. </summary>
     public partial class QueryMetricProperties
     {
-        /// <summary> Initializes a new instance of QueryMetricProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryMetricProperties"/>. </summary>
         public QueryMetricProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryMetricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricProperties"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="displayName"> The UI appropriate name for the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="avg"> Metric value when avg() aggregate function is used over the interval. </param>
         /// <param name="sum"> Metric value when sum() aggregate function is used over the interval. </param>
         /// <param name="stdev"> Metric value when stdev aggregate function is used over the interval. </param>
-        internal QueryMetricProperties(string name, string displayName, QueryMetricUnitType? unit, double? value, double? min, double? max, double? avg, double? sum, double? stdev)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryMetricProperties(string name, string displayName, QueryMetricUnitType? unit, double? value, double? min, double? max, double? avg, double? sum, double? stdev, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
             Avg = avg;
             Sum = sum;
             Stdev = stdev;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name information for the metric. </summary>

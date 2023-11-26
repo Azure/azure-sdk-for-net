@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,55 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Parameters for Node type action. If nodes are not specified on the parameters, the operation will be performed in all nodes of the node type one upgrade domain at a time. </summary>
     public partial class NodeTypeActionContent
     {
-        /// <summary> Initializes a new instance of NodeTypeActionContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeActionContent"/>. </summary>
         public NodeTypeActionContent()
         {
             Nodes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeActionContent"/>. </summary>
+        /// <param name="nodes"> List of node names from the node type. </param>
+        /// <param name="isForced"> Force the action to go through. </param>
+        /// <param name="updateType"> Specifies the way the operation will be performed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeActionContent(IList<string> nodes, bool? isForced, ServiceFabricManagedClusterUpdateType? updateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Nodes = nodes;
+            IsForced = isForced;
+            UpdateType = updateType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of node names from the node type. </summary>

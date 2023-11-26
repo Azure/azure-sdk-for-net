@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,21 +15,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
     public partial class AtaExternalSecuritySolution : ExternalSecuritySolution
     {
-        /// <summary> Initializes a new instance of AtaExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
         public AtaExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.Ata;
         }
 
-        /// <summary> Initializes a new instance of AtaExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The external security solution properties for ATA solutions. </param>
-        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location)
+        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location, serializedAdditionalRawData)
         {
             Properties = properties;
             Kind = kind;

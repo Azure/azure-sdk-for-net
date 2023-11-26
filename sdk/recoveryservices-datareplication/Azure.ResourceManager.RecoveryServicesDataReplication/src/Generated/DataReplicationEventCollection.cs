@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

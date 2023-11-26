@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
     public partial class VectorizedQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of VectorizedQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="vector"> The vector representation of a search query. </param>
         public VectorizedQuery(ReadOnlyMemory<float> vector)
         {
@@ -20,16 +21,22 @@ namespace Azure.Search.Documents.Models
             Kind = VectorQueryKind.Vector;
         }
 
-        /// <summary> Initializes a new instance of VectorizedQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
-        internal VectorizedQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, ReadOnlyMemory<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
+        internal VectorizedQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IDictionary<string, BinaryData> serializedAdditionalRawData, ReadOnlyMemory<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, serializedAdditionalRawData)
         {
             Vector = vector;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/> for deserialization. </summary>
+        internal VectorizedQuery()
+        {
         }
     }
 }

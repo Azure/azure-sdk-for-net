@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +16,126 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class ResourceHealthEventImpactedResourceData
+    public partial class ResourceHealthEventImpactedResourceData : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventImpactedResourceData>
     {
-        internal static ResourceHealthEventImpactedResourceData DeserializeResourceHealthEventImpactedResourceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceHealthEventImpactedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
+            {
+                writer.WritePropertyName("targetResourceType"u8);
+                writer.WriteStringValue(TargetResourceType.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            {
+                writer.WritePropertyName("targetResourceId"u8);
+                writer.WriteStringValue(TargetResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetRegion))
+            {
+                writer.WritePropertyName("targetRegion"u8);
+                writer.WriteStringValue(TargetRegion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceStartTime))
+            {
+                writer.WritePropertyName("maintenanceStartTime"u8);
+                writer.WriteStringValue(MaintenanceStartTime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndTime))
+            {
+                writer.WritePropertyName("maintenanceEndTime"u8);
+                writer.WriteStringValue(MaintenanceEndTime);
+            }
+            if (Optional.IsCollectionDefined(Info))
+            {
+                writer.WritePropertyName("info"u8);
+                writer.WriteStartArray();
+                foreach (var item in Info)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthEventImpactedResourceData(document.RootElement, options);
+        }
+
+        internal static ResourceHealthEventImpactedResourceData DeserializeResourceHealthEventImpactedResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +153,8 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<string> maintenanceStartTime = default;
             Optional<string> maintenanceEndTime = default;
             Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,8 +255,44 @@ namespace Azure.ResourceManager.ResourceHealth
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceHealthEventImpactedResourceData IPersistableModel<ResourceHealthEventImpactedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceHealthEventImpactedResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

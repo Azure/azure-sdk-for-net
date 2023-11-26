@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

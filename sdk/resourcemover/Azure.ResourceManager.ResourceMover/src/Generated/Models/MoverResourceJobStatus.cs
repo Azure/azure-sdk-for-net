@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the job status. </summary>
     public partial class MoverResourceJobStatus
     {
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         internal MoverResourceJobStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         /// <param name="jobName"> Defines the job name. </param>
         /// <param name="jobProgress"> Gets or sets the monitoring job percentage. </param>
-        internal MoverResourceJobStatus(MoverResourceJobName? jobName, string jobProgress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceJobStatus(MoverResourceJobName? jobName, string jobProgress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobName = jobName;
             JobProgress = jobProgress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the job name. </summary>
