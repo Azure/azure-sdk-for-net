@@ -15,7 +15,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeOptions. </summary>
     internal partial class RecognizeOptionsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
@@ -24,6 +56,34 @@ namespace Azure.Communication.CallAutomation
 
             TargetParticipant = targetParticipant;
             Choices = new ChangeTrackingList<RecognizeChoice>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
+        /// <param name="interruptPrompt"> Determines if we interrupt the prompt and start recognizing. </param>
+        /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
+        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
+        /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
+        /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
+        /// <param name="choices"> Defines Ivr choices for recognize. </param>
+        /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognizeChoice> choices, SpeechOptionsInternal speechOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InterruptPrompt = interruptPrompt;
+            InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;
+            TargetParticipant = targetParticipant;
+            SpeechLanguage = speechLanguage;
+            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
+            DtmfOptions = dtmfOptions;
+            Choices = choices;
+            SpeechOptions = speechOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/> for deserialization. </summary>
+        internal RecognizeOptionsInternal()
+        {
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>

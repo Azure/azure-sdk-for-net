@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

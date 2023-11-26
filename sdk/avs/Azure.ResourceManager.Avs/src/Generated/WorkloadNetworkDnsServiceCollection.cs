@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

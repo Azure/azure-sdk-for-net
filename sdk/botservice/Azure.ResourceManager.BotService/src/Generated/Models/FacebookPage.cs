@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A Facebook page for Facebook channel registration. </summary>
     public partial class FacebookPage
     {
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public FacebookPage(string id)
@@ -23,13 +56,20 @@ namespace Azure.ResourceManager.BotService.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <param name="accessToken"> Facebook application access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        internal FacebookPage(string id, string accessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FacebookPage(string id, string accessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             AccessToken = accessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/> for deserialization. </summary>
+        internal FacebookPage()
+        {
         }
 
         /// <summary> Page id. </summary>

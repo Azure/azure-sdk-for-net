@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for getting participants of the call. </summary>
     internal partial class GetParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         internal GetParticipantsResponseInternal()
         {
             Values = new ChangeTrackingList<CallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         /// <param name="values"> List of the current participants in the call. </param>
         /// <param name="nextLink"> Continue of the list of participants. </param>
-        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the current participants in the call. </summary>

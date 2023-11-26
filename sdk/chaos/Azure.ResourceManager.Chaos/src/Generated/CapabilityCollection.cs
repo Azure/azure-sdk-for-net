@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

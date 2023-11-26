@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class AnswerSpan
+    public partial class AnswerSpan : IUtf8JsonSerializable, IJsonModel<AnswerSpan>
     {
-        internal static AnswerSpan DeserializeAnswerSpan(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnswerSpan>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnswerSpan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerSpan>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswerSpan)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Text))
+            {
+                writer.WritePropertyName("text"u8);
+                writer.WriteStringValue(Text);
+            }
+            if (Optional.IsDefined(Confidence))
+            {
+                writer.WritePropertyName("confidenceScore"u8);
+                writer.WriteNumberValue(Confidence.Value);
+            }
+            if (Optional.IsDefined(Offset))
+            {
+                writer.WritePropertyName("offset"u8);
+                writer.WriteNumberValue(Offset.Value);
+            }
+            if (Optional.IsDefined(Length))
+            {
+                writer.WritePropertyName("length"u8);
+                writer.WriteNumberValue(Length.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnswerSpan IJsonModel<AnswerSpan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerSpan>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswerSpan)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswerSpan(document.RootElement, options);
+        }
+
+        internal static AnswerSpan DeserializeAnswerSpan(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +89,8 @@ namespace Azure.AI.Language.QuestionAnswering
             Optional<double> confidenceScore = default;
             Optional<int> offset = default;
             Optional<int> length = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -56,8 +125,44 @@ namespace Azure.AI.Language.QuestionAnswering
                     length = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnswerSpan(text.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(offset), Optional.ToNullable(length));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnswerSpan(text.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(offset), Optional.ToNullable(length), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnswerSpan>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerSpan>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswerSpan)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnswerSpan IPersistableModel<AnswerSpan>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerSpan>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnswerSpan(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswerSpan)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnswerSpan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

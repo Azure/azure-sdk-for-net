@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetLogAnalyticsMetricsOptions. </summary>
     public partial class ProfileResourceGetLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsMetricsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/>. </summary>
         /// <param name="metrics"> The metrics. </param>
         /// <param name="dateTimeBegin"> The dateTimeBegin. </param>
         /// <param name="dateTimeEnd"> The dateTimeEnd. </param>
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Cdn.Models
             GroupBy = new ChangeTrackingList<LogMetricsGroupBy>();
             Continents = new ChangeTrackingList<string>();
             CountryOrRegions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The metrics. </summary>

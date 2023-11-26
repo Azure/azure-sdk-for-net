@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

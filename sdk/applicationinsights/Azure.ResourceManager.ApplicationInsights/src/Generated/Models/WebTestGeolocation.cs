@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -12,16 +14,50 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from. </summary>
     public partial class WebTestGeolocation
     {
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         public WebTestGeolocation()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         /// <param name="location"> Location ID for the WebTest to run from. </param>
-        internal WebTestGeolocation(AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestGeolocation(AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location ID for the WebTest to run from. </summary>

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class DtmfOptionsInternal : IUtf8JsonSerializable
+    public partial class DtmfOptionsInternal : IUtf8JsonSerializable, IJsonModel<DtmfOptionsInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DtmfOptionsInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DtmfOptionsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DtmfOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DtmfOptionsInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
@@ -35,7 +47,121 @@ namespace Azure.Communication.CallingServer
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DtmfOptionsInternal IJsonModel<DtmfOptionsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DtmfOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DtmfOptionsInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDtmfOptionsInternal(document.RootElement, options);
+        }
+
+        internal static DtmfOptionsInternal DeserializeDtmfOptionsInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> interToneTimeoutInSeconds = default;
+            Optional<int> maxTonesToCollect = default;
+            Optional<IReadOnlyList<DtmfTone>> stopTones = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("interToneTimeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interToneTimeoutInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxTonesToCollect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxTonesToCollect = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("stopTones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DtmfTone> array = new List<DtmfTone>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new DtmfTone(item.GetString()));
+                    }
+                    stopTones = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DtmfOptionsInternal(Optional.ToNullable(interToneTimeoutInSeconds), Optional.ToNullable(maxTonesToCollect), Optional.ToList(stopTones), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DtmfOptionsInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DtmfOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DtmfOptionsInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DtmfOptionsInternal IPersistableModel<DtmfOptionsInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DtmfOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDtmfOptionsInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DtmfOptionsInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DtmfOptionsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
