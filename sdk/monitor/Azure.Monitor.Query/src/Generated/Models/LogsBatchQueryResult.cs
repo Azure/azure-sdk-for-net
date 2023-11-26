@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsBatchQueryResult : LogsQueryResult
     {
-        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
@@ -23,12 +23,18 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(allTables, nameof(allTables));
         }
 
-        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(allTables, statistics, visualization, error, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/> for deserialization. </summary>
+        internal LogsBatchQueryResult()
         {
         }
     }

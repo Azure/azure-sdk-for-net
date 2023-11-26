@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

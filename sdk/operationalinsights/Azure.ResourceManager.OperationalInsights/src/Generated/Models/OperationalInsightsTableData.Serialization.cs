@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,11 +16,39 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsTableData : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(OperationalInsightsTableData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionInDays))
@@ -29,6 +61,11 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ArchiveRetentionInDays))
+            {
+                writer.WritePropertyName("archiveRetentionInDays"u8);
+                writer.WriteNumberValue(ArchiveRetentionInDays.Value);
+            }
             if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
@@ -39,22 +76,76 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
+            {
+                writer.WritePropertyName("resultStatistics"u8);
+                writer.WriteObjectValue(ResultStatistics);
+            }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastPlanModifiedDate))
+            {
+                writer.WritePropertyName("lastPlanModifiedDate"u8);
+                writer.WriteStringValue(LastPlanModifiedDate);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RetentionInDaysAsDefault))
+            {
+                writer.WritePropertyName("retentionInDaysAsDefault"u8);
+                writer.WriteStringValue(RetentionInDaysAsDefault.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalRetentionInDaysAsDefault))
+            {
+                writer.WritePropertyName("totalRetentionInDaysAsDefault"u8);
+                writer.WriteStringValue(TotalRetentionInDaysAsDefault.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element)
+        OperationalInsightsTableData IJsonModel<OperationalInsightsTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(OperationalInsightsTableData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTableData(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +166,8 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
             Optional<RetentionInDaysAsDefaultState> retentionInDaysAsDefault = default;
             Optional<TotalRetentionInDaysAsDefaultState> totalRetentionInDaysAsDefault = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -217,8 +310,44 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsTableData IPersistableModel<OperationalInsightsTableData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsTableData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

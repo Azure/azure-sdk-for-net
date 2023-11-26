@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,51 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VpnServerConfigurations list associated with VirtualWan Response. </summary>
     public partial class VpnServerConfigurationsResponse
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationsResponse"/>. </summary>
         internal VpnServerConfigurationsResponse()
         {
             VpnServerConfigurationResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationsResponse"/>. </summary>
         /// <param name="vpnServerConfigurationResourceIds"> List of VpnServerConfigurations associated with VirtualWan. </param>
-        internal VpnServerConfigurationsResponse(IReadOnlyList<string> vpnServerConfigurationResourceIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigurationsResponse(IReadOnlyList<string> vpnServerConfigurationResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VpnServerConfigurationResourceIds = vpnServerConfigurationResourceIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VpnServerConfigurations associated with VirtualWan. </summary>

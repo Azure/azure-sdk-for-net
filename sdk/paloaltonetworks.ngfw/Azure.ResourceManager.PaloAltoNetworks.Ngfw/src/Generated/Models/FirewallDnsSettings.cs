@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> DNS Proxy settings for Firewall. </summary>
     public partial class FirewallDnsSettings
     {
-        /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallDnsSettings"/>. </summary>
         public FirewallDnsSettings()
         {
             DnsServers = new ChangeTrackingList<IPAddressInfo>();
         }
 
-        /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallDnsSettings"/>. </summary>
         /// <param name="enableDnsProxy"> Enable DNS proxy, disabled by default. </param>
         /// <param name="enabledDnsType"> Enabled DNS proxy type, disabled by default. </param>
         /// <param name="dnsServers"> List of IPs associated with the Firewall. </param>
-        internal FirewallDnsSettings(AllowDnsProxyType? enableDnsProxy, EnabledDnsType? enabledDnsType, IList<IPAddressInfo> dnsServers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallDnsSettings(AllowDnsProxyType? enableDnsProxy, EnabledDnsType? enabledDnsType, IList<IPAddressInfo> dnsServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDnsProxy = enableDnsProxy;
             EnabledDnsType = enabledDnsType;
             DnsServers = dnsServers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable DNS proxy, disabled by default. </summary>

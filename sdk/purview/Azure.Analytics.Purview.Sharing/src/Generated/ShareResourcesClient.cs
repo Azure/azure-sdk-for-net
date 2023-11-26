@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Sharing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllShareResourcesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllShareResourcesNextPageRequest(nextLink, filter, orderby, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ShareResourcesClient.GetAllShareResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ShareResourcesClient.GetAllShareResources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Purview.Sharing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllShareResourcesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllShareResourcesNextPageRequest(nextLink, filter, orderby, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ShareResourcesClient.GetAllShareResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ShareResourcesClient.GetAllShareResources", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAllShareResourcesRequest(string filter, string orderby, RequestContext context)

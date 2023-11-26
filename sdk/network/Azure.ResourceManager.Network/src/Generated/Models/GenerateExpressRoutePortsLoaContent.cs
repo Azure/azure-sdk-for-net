@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The customer name to be printed on a letter of authorization. </summary>
     public partial class GenerateExpressRoutePortsLoaContent
     {
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/>. </summary>
         /// <param name="customerName"> The customer name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         public GenerateExpressRoutePortsLoaContent(string customerName)
@@ -21,6 +54,20 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(customerName, nameof(customerName));
 
             CustomerName = customerName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/>. </summary>
+        /// <param name="customerName"> The customer name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateExpressRoutePortsLoaContent(string customerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CustomerName = customerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/> for deserialization. </summary>
+        internal GenerateExpressRoutePortsLoaContent()
+        {
         }
 
         /// <summary> The customer name. </summary>

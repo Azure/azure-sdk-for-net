@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Daily Schedule properties. </summary>
     public partial class SnapshotPolicyDailySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyDailySchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyDailySchedule"/>. </summary>
         public SnapshotPolicyDailySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyDailySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyDailySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Daily snapshot count to keep. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        internal SnapshotPolicyDailySchedule(int? snapshotsToKeep, int? hour, int? minute, long? usedBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyDailySchedule(int? snapshotsToKeep, int? hour, int? minute, long? usedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Hour = hour;
             Minute = minute;
             UsedBytes = usedBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Daily snapshot count to keep. </summary>

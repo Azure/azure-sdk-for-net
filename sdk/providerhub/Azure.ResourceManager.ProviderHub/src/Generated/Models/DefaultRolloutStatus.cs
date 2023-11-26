@@ -14,18 +14,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The DefaultRolloutStatus. </summary>
     public partial class DefaultRolloutStatus : RolloutStatusBase
     {
-        /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutStatus"/>. </summary>
         public DefaultRolloutStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutStatus"/>. </summary>
         /// <param name="completedRegions"></param>
         /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="nextTrafficRegion"></param>
         /// <param name="nextTrafficRegionScheduledOn"></param>
         /// <param name="subscriptionReregistrationResult"></param>
-        internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions)
+        internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions, serializedAdditionalRawData)
         {
             NextTrafficRegion = nextTrafficRegion;
             NextTrafficRegionScheduledOn = nextTrafficRegionScheduledOn;
