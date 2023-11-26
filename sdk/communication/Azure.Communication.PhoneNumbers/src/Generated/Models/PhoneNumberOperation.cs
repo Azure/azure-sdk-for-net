@@ -49,6 +49,22 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/>. </summary>
         /// <param name="operationType"> The type of operation, e.g. Search. </param>
         /// <param name="status"> Status of operation. </param>
+        /// <param name="createdDateTime"> The date that the operation was created. </param>
+        /// <param name="id"> Id of operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal PhoneNumberOperation(PhoneNumberOperationType operationType, PhoneNumberOperationStatus status, DateTimeOffset createdDateTime, string id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            OperationType = operationType;
+            Status = status;
+            CreatedDateTime = createdDateTime;
+            Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/>. </summary>
+        /// <param name="operationType"> The type of operation, e.g. Search. </param>
+        /// <param name="status"> Status of operation. </param>
         /// <param name="resourceLocation"> URL for retrieving the result of the operation, if any. </param>
         /// <param name="createdDateTime"> The date that the operation was created. </param>
         /// <param name="error"> The Communication Services error. </param>
@@ -66,5 +82,25 @@ namespace Azure.Communication.PhoneNumbers
             LastActionDateTime = lastActionDateTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/> for deserialization. </summary>
+        internal PhoneNumberOperation()
+        {
+        }
+
+        /// <summary> The type of operation, e.g. Search. </summary>
+        public PhoneNumberOperationType OperationType { get; }
+        /// <summary> Status of operation. </summary>
+        public PhoneNumberOperationStatus Status { get; }
+        /// <summary> URL for retrieving the result of the operation, if any. </summary>
+        public string ResourceLocation { get; }
+        /// <summary> The date that the operation was created. </summary>
+        public DateTimeOffset CreatedDateTime { get; }
+        /// <summary> The Communication Services error. </summary>
+        public CommunicationError Error { get; }
+        /// <summary> Id of operation. </summary>
+        public string Id { get; }
+        /// <summary> The most recent date that the operation was changed. </summary>
+        public DateTimeOffset? LastActionDateTime { get; }
     }
 }

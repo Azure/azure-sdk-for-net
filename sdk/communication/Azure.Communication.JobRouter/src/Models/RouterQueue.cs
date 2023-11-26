@@ -77,7 +77,7 @@ namespace Azure.Communication.JobRouter
             _labels = new ChangeTrackingDictionary<string, object>();
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))

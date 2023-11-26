@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ExceptionPolicy : IUtf8JsonSerializable, IJsonModel<ExceptionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExceptionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<ExceptionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExceptionPolicy>)this).GetFormatFromOptions(options) : options.Format;

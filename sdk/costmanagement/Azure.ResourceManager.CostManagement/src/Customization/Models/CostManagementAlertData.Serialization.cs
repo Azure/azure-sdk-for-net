@@ -4,18 +4,20 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementAlertData : IUtf8JsonSerializable
     {
-        internal static CostManagementAlertData DeserializeCostManagementAlertData(JsonElement element)
+        internal static CostManagementAlertData DeserializeCostManagementAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +38,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<DateTimeOffset> modificationTime = default;
             Optional<string> statusModificationUserName = default;
             Optional<DateTimeOffset> statusModificationTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -49,7 +53,8 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
+                    var idString = property.Value.GetString();
+                    id = idString.StartsWith("/") ? new ResourceIdentifier(idString) : new ResourceIdentifier($"/{idString}");
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -170,8 +175,13 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
     }
 }

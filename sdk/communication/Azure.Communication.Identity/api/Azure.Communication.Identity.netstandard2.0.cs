@@ -56,13 +56,18 @@ namespace Azure.Communication.Identity
         public static bool operator !=(Azure.Communication.Identity.CommunicationTokenScope left, Azure.Communication.Identity.CommunicationTokenScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommunicationUserIdentifierAndToken
+    public partial class CommunicationUserIdentifierAndToken : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>
     {
         internal CommunicationUserIdentifierAndToken() { }
         public Azure.Core.AccessToken AccessToken { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
+        Azure.Communication.Identity.CommunicationUserIdentifierAndToken System.ClientModel.Primitives.IJsonModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Identity.CommunicationUserIdentifierAndToken System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Identity.CommunicationUserIdentifierAndToken>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class GetTokenForTeamsUserOptions
     {

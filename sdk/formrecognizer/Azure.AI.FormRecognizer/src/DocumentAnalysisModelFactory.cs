@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AddressValue AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress)
         {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit: null, cityDistrict: null, stateDistrict: null, suburb: null, house: null, level: null);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit: null, cityDistrict: null, stateDistrict: null, suburb: null, house: null, level: null, serializedAdditionalRawData: new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of AddressValue. </summary>
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
         public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null)
         {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             spans ??= new List<DocumentSpan>();
             fields ??= new Dictionary<string, DocumentField>();
 
-            return new AnalyzedDocument(documentType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
+            return new AnalyzedDocument(documentType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             languages ??= new List<DocumentLanguage>();
             documents ??= new List<AnalyzedDocument>();
 
-            return new AnalyzeResult(serviceVersion: default, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs: default, tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
+            return new AnalyzeResult(serviceVersion: default, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs: default, tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
@@ -112,7 +112,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             documents ??= new List<AnalyzedDocument>();
             paragraphs ??= new List<DocumentParagraph>();
 
-            return new AnalyzeResult(serviceVersion, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
+            return new AnalyzeResult(serviceVersion, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
             fieldConfidence ??= new Dictionary<string, float>();
 
-            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentBarcode. </summary>
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
-            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, serviceVersion, documentTypes);
+            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, serviceVersion, documentTypes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -230,7 +230,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             properties ??= new Dictionary<string, DocumentFieldSchema>();
 
-            return new DocumentFieldSchema(type, description, example, items, properties);
+            return new DocumentFieldSchema(type, description, example, items, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
@@ -375,7 +375,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
@@ -385,7 +385,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
         public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence)
         {
-            return new DocumentKeyValuePair(key, value, confidence);
+            return new DocumentKeyValuePair(key, value, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -541,7 +541,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
             documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, expiresOn: null, serviceVersion: null, tags, documentTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, expiresOn: null, serviceVersion: null, tags, documentTypes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
@@ -558,7 +558,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
             documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, expiresOn, serviceVersion, tags, documentTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, expiresOn, serviceVersion, tags, documentTypes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -572,7 +572,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelSummary(modelId, description, createdOn, expiresOn: null, serviceVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, expiresOn: null, serviceVersion: null, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -587,7 +587,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelSummary(modelId, description, createdOn, expiresOn, serviceVersion, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, expiresOn, serviceVersion, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -651,7 +651,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
@@ -684,7 +684,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentStyle(isHandwritten, similarFontFamily: null, fontStyle: null, fontWeight: null, color: null, backgroundColor: null, spans?.ToList(), confidence);
+            return new DocumentStyle(isHandwritten, similarFontFamily: null, fontStyle: null, fontWeight: null, color: null, backgroundColor: null, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentStyle. </summary>
@@ -701,7 +701,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
+            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentTable. </summary>
@@ -717,7 +717,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
@@ -735,7 +735,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of DocumentWord. </summary>
@@ -802,7 +802,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion: null, tags);
+            return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion: null, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of OperationSummary. </summary>
@@ -820,7 +820,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags);
+            return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of ResourceDetails. </summary>

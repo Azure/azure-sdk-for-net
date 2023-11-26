@@ -6,22 +6,47 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenSuppress(nameof(BoundingRegion), typeof(int), typeof(IEnumerable<float>))]
-    [CodeGenSuppress("Polygon")]
+    [CodeGenSuppress(nameof(BoundingRegion), typeof(int), typeof(IEnumerable<float>), typeof(IDictionary<string, BinaryData>))]
+    //[CodeGenSuppress("Polygon")]
     public readonly partial struct BoundingRegion : IEquatable<BoundingRegion>
     {
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
-        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon)
-        {
-            PageNumber = pageNumber;
-            BoundingPolygon = ClientCommon.ConvertToListOfPointF(polygon);
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary>
         /// Initializes a new instance of BoundingRegion. Used by the <see cref="DocumentAnalysisModelFactory"/>.
@@ -41,7 +66,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// The bounding polygon that outlines this region. Units are in pixels for images and inches for
         /// PDF. The <see cref="DocumentPageLengthUnit"/> type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteBoundingPolygon), DeserializationValueHook = nameof(ReadBoundingPolygon))]
+        [CodeGenMember("Polygon")]
         public IReadOnlyList<PointF> BoundingPolygon { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteBoundingPolygon(Utf8JsonWriter writer)
+        {
+            writer.WriteStartArray();
+            foreach (var item in BoundingPolygon)
+            {
+                writer.WriteNumberValue(item.X);
+                writer.WriteNumberValue(item.Y);
+            }
+            writer.WriteEndArray();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadBoundingPolygon(JsonProperty property, ref IReadOnlyList<PointF> boundingPolygon)
+        {
+            List<float> array = new List<float>();
+            foreach (var item in property.Value.EnumerateArray())
+            {
+                array.Add(item.GetSingle());
+            }
+            boundingPolygon = ClientCommon.ConvertToListOfPointF(array);
+        }
 
         /// <summary>
         /// Indicates whether the current <see cref="BoundingRegion"/> is equal to another object of the same type.

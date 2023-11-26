@@ -116,30 +116,12 @@ namespace Azure.DigitalTwins.Core
             {
                 if (property.NameEquals("displayName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    displayName = dictionary;
+                    ReadLanguageDisplayNames(property, ref displayName);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    description = dictionary;
+                    ReadLanguageDescriptions(property, ref description);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

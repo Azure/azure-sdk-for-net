@@ -23,9 +23,14 @@ namespace Azure.Communication.AlphaIds
 }
 namespace Azure.Communication.AlphaIds.Models
 {
-    public partial class AlphaIdConfiguration
+    public partial class AlphaIdConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>
     {
         public AlphaIdConfiguration(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
+        Azure.Communication.AlphaIds.Models.AlphaIdConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.AlphaIds.Models.AlphaIdConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

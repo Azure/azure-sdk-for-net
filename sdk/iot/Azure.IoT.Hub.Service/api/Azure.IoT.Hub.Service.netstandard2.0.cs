@@ -158,12 +158,17 @@ namespace Azure.IoT.Hub.Service.Authentication
 }
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class AuthenticationMechanism
+    public partial class AuthenticationMechanism : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>
     {
         public AuthenticationMechanism() { }
         public Azure.IoT.Hub.Service.Models.SymmetricKey SymmetricKey { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.AuthenticationMechanismType? Type { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.X509Thumbprint X509Thumbprint { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.AuthenticationMechanism System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.AuthenticationMechanism System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.AuthenticationMechanism>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AuthenticationMechanismType : System.IEquatable<Azure.IoT.Hub.Service.Models.AuthenticationMechanismType>
@@ -185,56 +190,96 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.AuthenticationMechanismType left, Azure.IoT.Hub.Service.Models.AuthenticationMechanismType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BulkRegistryOperationResponse
+    public partial class BulkRegistryOperationResponse : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>
     {
         internal BulkRegistryOperationResponse() { }
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError> Errors { get { throw null; } }
         public bool? IsSuccessful { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning> Warnings { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CloudToDeviceMethodRequest
+    public partial class CloudToDeviceMethodRequest : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>
     {
         public CloudToDeviceMethodRequest() { }
         public int? ConnectTimeoutInSeconds { get { throw null; } set { } }
         public string MethodName { get { throw null; } set { } }
         public object Payload { get { throw null; } set { } }
         public int? ResponseTimeoutInSeconds { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CloudToDeviceMethodResponse
+    public partial class CloudToDeviceMethodResponse : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>
     {
         internal CloudToDeviceMethodResponse() { }
         public object Payload { get { throw null; } }
         public int? Status { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationContent
+    public partial class ConfigurationContent : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>
     {
         public ConfigurationContent() { }
         public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, object>> ModulesContent { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.ConfigurationContent System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ConfigurationContent System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationContent>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationMetrics
+    public partial class ConfigurationMetrics : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>
     {
         public ConfigurationMetrics() { }
         public System.Collections.Generic.IDictionary<string, string> Queries { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, long> Results { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.ConfigurationMetrics System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ConfigurationMetrics System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationMetrics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationQueriesTestInput
+    public partial class ConfigurationQueriesTestInput : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>
     {
         public ConfigurationQueriesTestInput() { }
         public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } }
         public string TargetCondition { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestInput>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationQueriesTestResponse
+    public partial class ConfigurationQueriesTestResponse : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>
     {
         internal ConfigurationQueriesTestResponse() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomMetricQueryErrors { get { throw null; } }
         public string TargetConditionError { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceCapabilities
+    public partial class DeviceCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>
     {
         public DeviceCapabilities() { }
         public bool? IsIotEdgeDevice { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.DeviceCapabilities System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DeviceCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceCapabilities>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceConnectionState : System.IEquatable<Azure.IoT.Hub.Service.Models.DeviceConnectionState>
@@ -254,7 +299,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.DeviceConnectionState left, Azure.IoT.Hub.Service.Models.DeviceConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeviceIdentity
+    public partial class DeviceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>
     {
         public DeviceIdentity() { }
         public Azure.IoT.Hub.Service.Models.AuthenticationMechanism Authentication { get { throw null; } set { } }
@@ -270,8 +315,13 @@ namespace Azure.IoT.Hub.Service.Models
         public Azure.IoT.Hub.Service.Models.DeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdatedTime { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.DeviceIdentity System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DeviceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceIdentity>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceJobStatistics
+    public partial class DeviceJobStatistics : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>
     {
         internal DeviceJobStatistics() { }
         public int? DeviceCount { get { throw null; } }
@@ -279,8 +329,13 @@ namespace Azure.IoT.Hub.Service.Models
         public int? PendingCount { get { throw null; } }
         public int? RunningCount { get { throw null; } }
         public int? SucceededCount { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.DeviceJobStatistics System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DeviceJobStatistics System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceJobStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceRegistryOperationError
+    public partial class DeviceRegistryOperationError : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>
     {
         internal DeviceRegistryOperationError() { }
         public string DeviceId { get { throw null; } }
@@ -288,6 +343,11 @@ namespace Azure.IoT.Hub.Service.Models
         public string ErrorStatus { get { throw null; } }
         public string ModuleId { get { throw null; } }
         public string Operation { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceRegistryOperationErrorCode : System.IEquatable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode>
@@ -521,12 +581,17 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeviceRegistryOperationWarning
+    public partial class DeviceRegistryOperationWarning : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>
     {
         internal DeviceRegistryOperationWarning() { }
         public string DeviceId { get { throw null; } }
         public Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode? WarningCode { get { throw null; } }
         public string WarningStatus { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceRegistryOperationWarningCode : System.IEquatable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode>
@@ -545,12 +610,17 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevicesStatistics
+    public partial class DevicesStatistics : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>
     {
         internal DevicesStatistics() { }
         public long? DisabledDeviceCount { get { throw null; } }
         public long? EnabledDeviceCount { get { throw null; } }
         public long? TotalDeviceCount { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.DevicesStatistics System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.DevicesStatistics System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.DevicesStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceStatus : System.IEquatable<Azure.IoT.Hub.Service.Models.DeviceStatus>
@@ -570,7 +640,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.DeviceStatus left, Azure.IoT.Hub.Service.Models.DeviceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExportImportDevice
+    public partial class ExportImportDevice : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>
     {
         public ExportImportDevice() { }
         public Azure.IoT.Hub.Service.Models.AuthenticationMechanism Authentication { get { throw null; } set { } }
@@ -585,6 +655,11 @@ namespace Azure.IoT.Hub.Service.Models
         public string StatusReason { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public string TwinETag { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.ExportImportDevice System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ExportImportDevice System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ExportImportDevice>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportImportDeviceImportMode : System.IEquatable<Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode>
@@ -652,7 +727,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.QueryResult QueryResult(Azure.IoT.Hub.Service.Models.QueryResultType? type = default(Azure.IoT.Hub.Service.Models.QueryResultType?), System.Collections.Generic.IEnumerable<object> items = null, string continuationToken = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.ServiceStatistics ServiceStatistics(long? connectedDeviceCount = default(long?)) { throw null; }
     }
-    public partial class JobProperties
+    public partial class JobProperties : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobProperties>
     {
         public JobProperties() { }
         public string ConfigurationsBlobName { get { throw null; } set { } }
@@ -670,6 +745,11 @@ namespace Azure.IoT.Hub.Service.Models
         public Azure.IoT.Hub.Service.Models.JobPropertiesStatus? Status { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType? StorageAuthenticationType { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.JobPropertiesType? Type { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.JobProperties System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.JobProperties System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobPropertiesStatus : System.IEquatable<Azure.IoT.Hub.Service.Models.JobPropertiesStatus>
@@ -743,7 +823,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.JobPropertiesType left, Azure.IoT.Hub.Service.Models.JobPropertiesType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JobRequest
+    public partial class JobRequest : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobRequest>
     {
         public JobRequest() { }
         public Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest CloudToDeviceMethod { get { throw null; } set { } }
@@ -753,6 +833,11 @@ namespace Azure.IoT.Hub.Service.Models
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.JobRequestType? Type { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.TwinData UpdateTwin { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.JobRequest System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.JobRequest System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobRequest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobRequest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobRequest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class JobRequestOptions
     {
@@ -789,7 +874,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.JobRequestType left, Azure.IoT.Hub.Service.Models.JobRequestType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JobResponse
+    public partial class JobResponse : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobResponse>
     {
         internal JobResponse() { }
         public Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest CloudToDeviceMethod { get { throw null; } }
@@ -805,6 +890,11 @@ namespace Azure.IoT.Hub.Service.Models
         public string StatusMessage { get { throw null; } }
         public Azure.IoT.Hub.Service.Models.JobResponseType? Type { get { throw null; } }
         public Azure.IoT.Hub.Service.Models.TwinData UpdateTwin { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.JobResponse System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.JobResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.JobResponse System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.JobResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobResponseStatus : System.IEquatable<Azure.IoT.Hub.Service.Models.JobResponseStatus>
@@ -878,7 +968,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.ModuleConnectionState left, Azure.IoT.Hub.Service.Models.ModuleConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ModuleIdentity
+    public partial class ModuleIdentity : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>
     {
         public ModuleIdentity() { }
         public Azure.IoT.Hub.Service.Models.AuthenticationMechanism Authentication { get { throw null; } set { } }
@@ -891,26 +981,46 @@ namespace Azure.IoT.Hub.Service.Models
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.ModuleIdentity System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ModuleIdentity System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ModuleIdentity>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PropertyContainer
+    public partial class PropertyContainer : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PropertyContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PropertyContainer>
     {
         public PropertyContainer() { }
         public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.PropertyContainer System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PropertyContainer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PropertyContainer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.PropertyContainer System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PropertyContainer>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PropertyContainer>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PropertyContainer>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PurgeMessageQueueResult
+    public partial class PurgeMessageQueueResult : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>
     {
         internal PurgeMessageQueueResult() { }
         public string DeviceId { get { throw null; } }
         public string ModuleId { get { throw null; } }
         public int? TotalMessagesPurged { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryResult
+    public partial class QueryResult : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QueryResult>
     {
         internal QueryResult() { }
         public string ContinuationToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<object> Items { get { throw null; } }
         public Azure.IoT.Hub.Service.Models.QueryResultType? Type { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.QueryResult System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.QueryResult System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QueryResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QueryResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QueryResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryResultType : System.IEquatable<Azure.IoT.Hub.Service.Models.QueryResultType>
@@ -936,21 +1046,36 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.QueryResultType left, Azure.IoT.Hub.Service.Models.QueryResultType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QuerySpecification
+    public partial class QuerySpecification : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QuerySpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QuerySpecification>
     {
         public QuerySpecification() { }
         public string Query { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.QuerySpecification System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QuerySpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.QuerySpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.QuerySpecification System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QuerySpecification>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QuerySpecification>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.QuerySpecification>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceStatistics
+    public partial class ServiceStatistics : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>
     {
         internal ServiceStatistics() { }
         public long? ConnectedDeviceCount { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.ServiceStatistics System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.ServiceStatistics System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.ServiceStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SymmetricKey
+    public partial class SymmetricKey : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.SymmetricKey>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.SymmetricKey>
     {
         public SymmetricKey() { }
         public string PrimaryKey { get { throw null; } set { } }
         public string SecondaryKey { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.SymmetricKey System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.SymmetricKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.SymmetricKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.SymmetricKey System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.SymmetricKey>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.SymmetricKey>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.SymmetricKey>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TwinAuthenticationType : System.IEquatable<Azure.IoT.Hub.Service.Models.TwinAuthenticationType>
@@ -972,7 +1097,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.TwinAuthenticationType left, Azure.IoT.Hub.Service.Models.TwinAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TwinConfiguration
+    public partial class TwinConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>
     {
         public TwinConfiguration() { }
         public Azure.IoT.Hub.Service.Models.ConfigurationContent Content { get { throw null; } set { } }
@@ -986,6 +1111,11 @@ namespace Azure.IoT.Hub.Service.Models
         public string SchemaVersion { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.ConfigurationMetrics SystemMetrics { get { throw null; } set { } }
         public string TargetCondition { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.TwinConfiguration System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.TwinConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinConfiguration>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TwinConnectionState : System.IEquatable<Azure.IoT.Hub.Service.Models.TwinConnectionState>
@@ -1005,7 +1135,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.TwinConnectionState left, Azure.IoT.Hub.Service.Models.TwinConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TwinData
+    public partial class TwinData : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinData>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinData>
     {
         public TwinData() { }
         public Azure.IoT.Hub.Service.Models.TwinAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -1025,12 +1155,22 @@ namespace Azure.IoT.Hub.Service.Models
         public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public long? Version { get { throw null; } set { } }
         public Azure.IoT.Hub.Service.Models.X509Thumbprint X509Thumbprint { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.TwinData System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.TwinData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TwinProperties
+    public partial class TwinProperties : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinProperties>
     {
         public TwinProperties() { }
         public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
+        Azure.IoT.Hub.Service.Models.TwinProperties System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.TwinProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.TwinProperties System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.TwinProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TwinStatus : System.IEquatable<Azure.IoT.Hub.Service.Models.TwinStatus>
@@ -1050,10 +1190,15 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator !=(Azure.IoT.Hub.Service.Models.TwinStatus left, Azure.IoT.Hub.Service.Models.TwinStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class X509Thumbprint
+    public partial class X509Thumbprint : System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>
     {
         public X509Thumbprint() { }
         public string PrimaryThumbprint { get { throw null; } set { } }
         public string SecondaryThumbprint { get { throw null; } set { } }
+        Azure.IoT.Hub.Service.Models.X509Thumbprint System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.IoT.Hub.Service.Models.X509Thumbprint System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.Hub.Service.Models.X509Thumbprint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

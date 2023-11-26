@@ -46,17 +46,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BlobContentSource"/>. </summary>
-        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
-        /// <param name="prefix"> Blob name prefix. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobContentSource(Uri containerUri, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ContainerUri = containerUri;
-            Prefix = prefix;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
         /// <summary> Initializes a new instance of <see cref="BlobContentSource"/> for deserialization. </summary>
         internal BlobContentSource()
         {

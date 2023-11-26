@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -16,8 +17,10 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class CostManagementDimension
     {
-        internal static CostManagementDimension DeserializeCostManagementDimension(JsonElement element)
+        internal static CostManagementDimension DeserializeCostManagementDimension(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,14 +34,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceType type = default;
             Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<bool> IsFilterEnabled = default;
-            Optional<bool> IsGroupingEnabled = default;
+            Optional<bool> filterEnabled = default;
+            Optional<bool> groupingEnabled = default;
             Optional<IReadOnlyList<string>> data = default;
             Optional<int> total = default;
             Optional<string> category = default;
             Optional<DateTimeOffset> usageStart = default;
             Optional<DateTimeOffset> usageEnd = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -80,7 +85,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
+                    var idString = property.Value.GetString();
+                    id = idString.StartsWith("/") ? new ResourceIdentifier(idString) : new ResourceIdentifier($"/{idString}");
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            IsFilterEnabled = property0.Value.GetBoolean();
+                            filterEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("groupingEnabled"u8))
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            IsGroupingEnabled = property0.Value.GetBoolean();
+                            groupingEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("data"u8))
@@ -188,8 +194,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(IsFilterEnabled), Optional.ToNullable(IsGroupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
     }
 }

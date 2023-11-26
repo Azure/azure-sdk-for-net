@@ -364,11 +364,16 @@ namespace Azure.AI.TextAnalytics
         Hypothetical = 0,
         Conditional = 1,
     }
-    public partial class EntityDataSource
+    public partial class EntityDataSource : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.EntityDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.EntityDataSource>
     {
         internal EntityDataSource() { }
         public string EntityId { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.AI.TextAnalytics.EntityDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.EntityDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.EntityDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.EntityDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.EntityDataSource>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.EntityDataSource>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.EntityDataSource>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExtractiveSummarizeAction
     {
@@ -491,12 +496,17 @@ namespace Azure.AI.TextAnalytics
         public string SubCategory { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class HealthcareEntityAssertion
+    public partial class HealthcareEntityAssertion : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>
     {
         internal HealthcareEntityAssertion() { }
         public Azure.AI.TextAnalytics.EntityAssociation? Association { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityCertainty? Certainty { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityConditionality? Conditionality { get { throw null; } }
+        Azure.AI.TextAnalytics.HealthcareEntityAssertion System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.HealthcareEntityAssertion System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.HealthcareEntityAssertion>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -627,10 +637,11 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinkedEntity
+    public readonly partial struct LinkedEntity : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntity>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntity>, System.ClientModel.Primitives.IPersistableModel<object>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public LinkedEntity() { throw null; }
         public string BingEntitySearchApiId { get { throw null; } }
         public string DataSource { get { throw null; } }
         public string DataSourceEntityId { get { throw null; } }
@@ -638,6 +649,16 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> Matches { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Uri Url { get { throw null; } }
+        Azure.AI.TextAnalytics.LinkedEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<System.Object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<System.Object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.LinkedEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntity>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntity>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntity>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<System.Object>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<System.Object>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<System.Object>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LinkedEntityCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.LinkedEntity>
     {
@@ -645,14 +666,25 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinkedEntityMatch
+    public readonly partial struct LinkedEntityMatch : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntityMatch>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntityMatch>, System.ClientModel.Primitives.IPersistableModel<object>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public LinkedEntityMatch() { throw null; }
         public double ConfidenceScore { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public string Text { get { throw null; } }
+        Azure.AI.TextAnalytics.LinkedEntityMatch System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntityMatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.LinkedEntityMatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<System.Object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<System.Object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.LinkedEntityMatch System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntityMatch>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntityMatch>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.LinkedEntityMatch>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<System.Object>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<System.Object>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<System.Object>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MultiLabelClassifyAction
     {
@@ -1037,12 +1069,17 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class SentimentConfidenceScores
+    public partial class SentimentConfidenceScores : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>
     {
         internal SentimentConfidenceScores() { }
         public double Negative { get { throw null; } }
         public double Neutral { get { throw null; } }
         public double Positive { get { throw null; } }
+        Azure.AI.TextAnalytics.SentimentConfidenceScores System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.SentimentConfidenceScores System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.SentimentConfidenceScores>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SingleLabelClassifyAction
     {
@@ -1507,13 +1544,18 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.TextAnalyticsWarningCode left, Azure.AI.TextAnalytics.TextAnalyticsWarningCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TextDocumentBatchStatistics
+    public partial class TextDocumentBatchStatistics : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>
     {
         internal TextDocumentBatchStatistics() { }
         public int DocumentCount { get { throw null; } }
         public int InvalidDocumentCount { get { throw null; } }
         public long TransactionCount { get { throw null; } }
         public int ValidDocumentCount { get { throw null; } }
+        Azure.AI.TextAnalytics.TextDocumentBatchStatistics System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.TextDocumentBatchStatistics System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentBatchStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TextDocumentInput : Azure.AI.TextAnalytics.TextAnalyticsInput
     {
@@ -1521,11 +1563,23 @@ namespace Azure.AI.TextAnalytics
         public string Language { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TextDocumentStatistics
+    public readonly partial struct TextDocumentStatistics : System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentStatistics>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentStatistics>, System.ClientModel.Primitives.IPersistableModel<object>
     {
+        private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public TextDocumentStatistics() { throw null; }
         public int CharacterCount { get { throw null; } }
         public int TransactionCount { get { throw null; } }
+        Azure.AI.TextAnalytics.TextDocumentStatistics System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.TextAnalytics.TextDocumentStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<System.Object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<System.Object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.TextAnalytics.TextDocumentStatistics System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.TextAnalytics.TextDocumentStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<System.Object>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<System.Object>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<System.Object>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum TextSentiment
     {

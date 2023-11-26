@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("LuceneStandardTokenizerV2")]
-    [CodeGenSuppress(nameof(LuceneStandardTokenizer), typeof(string), typeof(string), typeof(int?))]
+    [CodeGenSuppress(nameof(LuceneStandardTokenizer), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(string), typeof(int?))]
     public partial class LuceneStandardTokenizer : IUtf8JsonSerializable
     {
         /// <summary>
@@ -31,42 +34,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public int? MaxTokenLength { get; set; }
 
-        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static LuceneStandardTokenizer DeserializeLuceneStandardTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            writer.WriteStartObject();
-            if (MaxTokenLength != null)
-            {
-                writer.WritePropertyName("maxTokenLength");
-                writer.WriteNumberValue(MaxTokenLength.Value);
-            }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WriteEndObject();
-        }
+            options ??= new ModelReaderWriterOptions("W");
 
-        internal static LuceneStandardTokenizer DeserializeLuceneStandardTokenizer(JsonElement element)
-        {
-            int? maxTokenLength = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> maxTokenLength = default;
             string odataType = default;
             string name = default;
-
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-
-                if (property.NameEquals("maxTokenLength"))
+                if (property.NameEquals("maxTokenLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,12 +58,26 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LuceneStandardTokenizer(name)
             {
                 ODataType = odataType,
-                MaxTokenLength = maxTokenLength,
+                MaxTokenLength = Optional.ToNullable(maxTokenLength),
             };
         }
     }

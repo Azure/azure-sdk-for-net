@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
   </ItemGroup>
 

@@ -75,14 +75,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     case "#Microsoft.Azure.Search.ClassicTokenizer": return ClassicTokenizer.DeserializeClassicTokenizer(element);
                     case "#Microsoft.Azure.Search.EdgeNGramTokenizer": return EdgeNGramTokenizer.DeserializeEdgeNGramTokenizer(element);
-                    case "#Microsoft.Azure.Search.KeywordTokenizer": return KeywordTokenizer.DeserializeKeywordTokenizer(element);
+                    case "#Microsoft.Azure.Search.KeywordTokenizer": return KeywordTokenizerV1.DeserializeKeywordTokenizerV1(element);
                     case "#Microsoft.Azure.Search.KeywordTokenizerV2": return KeywordTokenizer.DeserializeKeywordTokenizer(element);
                     case "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer": return MicrosoftLanguageStemmingTokenizer.DeserializeMicrosoftLanguageStemmingTokenizer(element);
                     case "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer": return MicrosoftLanguageTokenizer.DeserializeMicrosoftLanguageTokenizer(element);
                     case "#Microsoft.Azure.Search.NGramTokenizer": return NGramTokenizer.DeserializeNGramTokenizer(element);
                     case "#Microsoft.Azure.Search.PathHierarchyTokenizerV2": return PathHierarchyTokenizer.DeserializePathHierarchyTokenizer(element);
                     case "#Microsoft.Azure.Search.PatternTokenizer": return PatternTokenizer.DeserializePatternTokenizer(element);
-                    case "#Microsoft.Azure.Search.StandardTokenizer": return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element);
+                    case "#Microsoft.Azure.Search.StandardTokenizer": return LuceneStandardTokenizerV1.DeserializeLuceneStandardTokenizerV1(element);
                     case "#Microsoft.Azure.Search.StandardTokenizerV2": return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element);
                     case "#Microsoft.Azure.Search.UaxUrlEmailTokenizer": return UaxUrlEmailTokenizer.DeserializeUaxUrlEmailTokenizer(element);
                 }

@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Client secret for Contoso Authorization server. </summary>
         internal string ClientSecret { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))

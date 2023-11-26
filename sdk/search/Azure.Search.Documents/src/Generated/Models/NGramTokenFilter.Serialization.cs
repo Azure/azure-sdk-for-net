@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class NGramTokenFilter : IUtf8JsonSerializable, IJsonModel<NGramTokenFilter>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NGramTokenFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<NGramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -66,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return NGramTokenFilter.DeserializeNGramTokenFilter(document.RootElement, options);
+            return DeserializeNGramTokenFilter(document.RootElement, options);
         }
 
         internal static NGramTokenFilter DeserializeNGramTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -144,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return NGramTokenFilter.DeserializeNGramTokenFilter(document.RootElement, options);
+                        return DeserializeNGramTokenFilter(document.RootElement, options);
                     }
                 default:
                     throw new InvalidOperationException($"The model {nameof(NGramTokenFilter)} does not support '{options.Format}' format.");

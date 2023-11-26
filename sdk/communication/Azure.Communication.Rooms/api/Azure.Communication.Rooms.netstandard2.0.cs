@@ -1,6 +1,6 @@
 namespace Azure.Communication.Rooms
 {
-    public partial class CommunicationRoom
+    public partial class CommunicationRoom : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.CommunicationRoom>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.CommunicationRoom>
     {
         internal CommunicationRoom() { }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
@@ -8,6 +8,11 @@ namespace Azure.Communication.Rooms
         public bool PstnDialOutEnabled { get { throw null; } }
         public System.DateTimeOffset ValidFrom { get { throw null; } }
         public System.DateTimeOffset ValidUntil { get { throw null; } }
+        Azure.Communication.Rooms.CommunicationRoom System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.CommunicationRoom>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.CommunicationRoom>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Rooms.CommunicationRoom System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.CommunicationRoom>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.CommunicationRoom>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.CommunicationRoom>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CreateRoomOptions
     {
@@ -36,11 +41,16 @@ namespace Azure.Communication.Rooms
         public static bool operator !=(Azure.Communication.Rooms.ParticipantRole left, Azure.Communication.Rooms.ParticipantRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RoomParticipant
+    public partial class RoomParticipant : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.RoomParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.RoomParticipant>
     {
         public RoomParticipant(Azure.Communication.CommunicationIdentifier communicationIdentifier) { }
         public Azure.Communication.CommunicationIdentifier CommunicationIdentifier { get { throw null; } }
         public Azure.Communication.Rooms.ParticipantRole Role { get { throw null; } set { } }
+        Azure.Communication.Rooms.RoomParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.RoomParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Rooms.RoomParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Rooms.RoomParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.RoomParticipant>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.RoomParticipant>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Rooms.RoomParticipant>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RoomsClient
     {

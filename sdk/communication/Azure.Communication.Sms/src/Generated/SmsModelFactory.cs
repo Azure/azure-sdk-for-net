@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.Communication.Sms
+using Azure.Communication.Sms;
+
+namespace Azure.Communication.Sms.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class CommunicationSmsModelFactory
+    public static partial class SmsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Sms.SmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>

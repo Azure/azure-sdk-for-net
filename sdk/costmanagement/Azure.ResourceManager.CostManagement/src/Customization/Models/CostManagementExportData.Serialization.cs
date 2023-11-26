@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,8 +18,10 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementExportData : IUtf8JsonSerializable
     {
-        internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element)
+        internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +38,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<bool> partitionData = default;
             Optional<DateTimeOffset> nextRunTimeEstimate = default;
             Optional<ExportSchedule> schedule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -47,7 +53,8 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
+                    var idString = property.Value.GetString();
+                    id = idString.StartsWith("/") ? new ResourceIdentifier(idString) : new ResourceIdentifier($"/{idString}");
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -144,8 +151,13 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
     }
 }

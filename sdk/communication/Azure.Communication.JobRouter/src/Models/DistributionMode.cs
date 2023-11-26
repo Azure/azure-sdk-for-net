@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public bool? BypassSelectors { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);

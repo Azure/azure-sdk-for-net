@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -11,11 +12,11 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
         public WebhookRouterRule(Uri authorizationServerUri, OAuth2WebhookClientCredential clientCredential, Uri webhookUri)
-            : this(RouterRuleKind.Webhook, authorizationServerUri, clientCredential, webhookUri)
+            : this(RouterRuleKind.Webhook, new Dictionary<string, BinaryData>(), authorizationServerUri, clientCredential, webhookUri)
         {
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationServerUri))

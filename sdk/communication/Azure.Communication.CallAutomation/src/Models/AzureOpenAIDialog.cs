@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             Context = context;
         }
 
-        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context) : base(new DialogInputType("AzureOpenAIDialog"), context)
+        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(new DialogInputType("AzureOpenAIDialog"), context, serializedAdditionalRawData)
         {
         }
     }

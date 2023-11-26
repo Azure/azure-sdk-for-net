@@ -430,30 +430,50 @@ namespace Azure.Maps.Search
 }
 namespace Azure.Maps.Search.Models
 {
-    public partial class AddressRanges
+    public partial class AddressRanges : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.AddressRanges>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.AddressRanges>
     {
         internal AddressRanges() { }
         public Azure.Core.GeoJson.GeoPosition From { get { throw null; } }
         public string RangeLeft { get { throw null; } }
         public string RangeRight { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition To { get { throw null; } }
+        Azure.Maps.Search.Models.AddressRanges System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.AddressRanges>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.AddressRanges>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.AddressRanges System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.AddressRanges>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.AddressRanges>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.AddressRanges>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BatchResult
+    public partial class BatchResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BatchResult>
     {
         internal BatchResult() { }
         public int? SuccessfulRequests { get { throw null; } }
         public int? TotalRequests { get { throw null; } }
+        Azure.Maps.Search.Models.BatchResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.BatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BrandName
+    public partial class BrandName : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BrandName>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BrandName>
     {
         internal BrandName() { }
         public string Name { get { throw null; } }
+        Azure.Maps.Search.Models.BrandName System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BrandName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.BrandName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.BrandName System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BrandName>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BrandName>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.BrandName>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClassificationName
+    public partial class ClassificationName : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ClassificationName>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ClassificationName>
     {
         internal ClassificationName() { }
         public string Name { get { throw null; } }
         public string NameLocale { get { throw null; } }
+        Azure.Maps.Search.Models.ClassificationName System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ClassificationName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ClassificationName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ClassificationName System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ClassificationName>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ClassificationName>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ClassificationName>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntryPointType : System.IEquatable<Azure.Maps.Search.Models.EntryPointType>
@@ -473,11 +493,16 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.EntryPointType left, Azure.Maps.Search.Models.EntryPointType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FacilityEntryPoint
+    public partial class FacilityEntryPoint : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.FacilityEntryPoint>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.FacilityEntryPoint>
     {
         internal FacilityEntryPoint() { }
         public Azure.Maps.Search.Models.EntryPointType? EntryPointType { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } }
+        Azure.Maps.Search.Models.FacilityEntryPoint System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.FacilityEntryPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.FacilityEntryPoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.FacilityEntryPoint System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.FacilityEntryPoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.FacilityEntryPoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.FacilityEntryPoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FuzzySearchQuery
     {
@@ -485,29 +510,54 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.FuzzySearchOptions FuzzySearchOptions { get { throw null; } }
         public string Query { get { throw null; } }
     }
-    public partial class GeoJsonLineStringData
+    public partial class GeoJsonLineStringData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonLineStringData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonLineStringData>
     {
         public GeoJsonLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonLineStringData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonLineStringData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonLineStringData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonLineStringData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonLineStringData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonLineStringData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonLineStringData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GeoJsonMultiLineStringData
+    public partial class GeoJsonMultiLineStringData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>
     {
         public GeoJsonMultiLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonMultiLineStringData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonMultiLineStringData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiLineStringData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GeoJsonMultiPointData
+    public partial class GeoJsonMultiPointData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>
     {
         public GeoJsonMultiPointData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonMultiPointData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonMultiPointData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPointData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GeoJsonMultiPolygonData
+    public partial class GeoJsonMultiPolygonData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>
     {
         public GeoJsonMultiPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonMultiPolygonData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonMultiPolygonData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonMultiPolygonData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class GeoJsonObject
+    public abstract partial class GeoJsonObject : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonObject>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonObject>
     {
         protected GeoJsonObject() { }
+        Azure.Maps.Search.Models.GeoJsonObject System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonObject System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonObject>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonObject>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonObject>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum GeoJsonObjectType
     {
@@ -521,22 +571,37 @@ namespace Azure.Maps.Search.Models
         GeoJsonFeature = 7,
         GeoJsonFeatureCollection = 8,
     }
-    public partial class GeoJsonPointData
+    public partial class GeoJsonPointData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPointData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPointData>
     {
         public GeoJsonPointData(System.Collections.Generic.IEnumerable<double> coordinates) { }
         public System.Collections.Generic.IList<double> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonPointData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonPointData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPointData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPointData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPointData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GeoJsonPolygonData
+    public partial class GeoJsonPolygonData : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPolygonData>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPolygonData>
     {
         public GeoJsonPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
+        Azure.Maps.Search.Models.GeoJsonPolygonData System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPolygonData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeoJsonPolygonData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeoJsonPolygonData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPolygonData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPolygonData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeoJsonPolygonData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GeometryIdentifier
+    public partial class GeometryIdentifier : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeometryIdentifier>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeometryIdentifier>
     {
         internal GeometryIdentifier() { }
         public string Id { get { throw null; } }
+        Azure.Maps.Search.Models.GeometryIdentifier System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeometryIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.GeometryIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.GeometryIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeometryIdentifier>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeometryIdentifier>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.GeometryIdentifier>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MapsAddress
+    public partial class MapsAddress : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsAddress>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsAddress>
     {
         internal MapsAddress() { }
         public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
@@ -560,11 +625,21 @@ namespace Azure.Maps.Search.Models
         public string StreetName { get { throw null; } }
         public string StreetNameAndNumber { get { throw null; } }
         public string StreetNumber { get { throw null; } }
+        Azure.Maps.Search.Models.MapsAddress System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.MapsAddress System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsAddress>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsAddress>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsAddress>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MapsDataSource
+    public partial class MapsDataSource : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsDataSource>
     {
         internal MapsDataSource() { }
         public Azure.Maps.Search.Models.GeometryIdentifier Geometry { get { throw null; } }
+        Azure.Maps.Search.Models.MapsDataSource System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.MapsDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.MapsDataSource System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsDataSource>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsDataSource>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.MapsDataSource>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MapsEntityType : System.IEquatable<Azure.Maps.Search.Models.MapsEntityType>
@@ -636,19 +711,29 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.ReverseSearchAddressItem ReverseSearchAddressItem(Azure.Maps.Search.Models.MapsAddress address = null, string position = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.RoadKind> roadUse = null, Azure.Maps.Search.Models.MapsSearchMatchType? matchType = default(Azure.Maps.Search.Models.MapsSearchMatchType?)) { throw null; }
         public static Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(Azure.Maps.Search.Models.MapsAddress address = null, string position = null) { throw null; }
     }
-    public partial class OperatingHours
+    public partial class OperatingHours : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHours>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHours>
     {
         internal OperatingHours() { }
         public string Mode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.OperatingHoursTimeRange> TimeRanges { get { throw null; } }
+        Azure.Maps.Search.Models.OperatingHours System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHours>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHours>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.OperatingHours System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHours>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHours>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHours>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperatingHoursTimeRange
+    public partial class OperatingHoursTimeRange : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>
     {
         internal OperatingHoursTimeRange() { }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+        Azure.Maps.Search.Models.OperatingHoursTimeRange System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.OperatingHoursTimeRange System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.OperatingHoursTimeRange>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PointOfInterest
+    public partial class PointOfInterest : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterest>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterest>
     {
         internal PointOfInterest() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.BrandName> Brands { get { throw null; } }
@@ -659,93 +744,168 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.Models.OperatingHours OperatingHours { get { throw null; } }
         public string Phone { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        Azure.Maps.Search.Models.PointOfInterest System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PointOfInterest System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PointOfInterestCategory
+    public partial class PointOfInterestCategory : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategory>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategory>
     {
         internal PointOfInterestCategory() { }
         public System.Collections.Generic.IReadOnlyList<int> ChildIds { get { throw null; } }
         public int? Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Synonyms { get { throw null; } }
+        Azure.Maps.Search.Models.PointOfInterestCategory System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PointOfInterestCategory System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategory>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategory>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategory>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PointOfInterestCategorySet
+    public partial class PointOfInterestCategorySet : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>
     {
         internal PointOfInterestCategorySet() { }
         public int? Id { get { throw null; } }
+        Azure.Maps.Search.Models.PointOfInterestCategorySet System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PointOfInterestCategorySet System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategorySet>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PointOfInterestCategoryTreeResult
+    public partial class PointOfInterestCategoryTreeResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>
     {
         internal PointOfInterestCategoryTreeResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PointOfInterestCategory> Categories { get { throw null; } }
+        Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PointOfInterestClassification
+    public partial class PointOfInterestClassification : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestClassification>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestClassification>
     {
         internal PointOfInterestClassification() { }
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ClassificationName> Names { get { throw null; } }
+        Azure.Maps.Search.Models.PointOfInterestClassification System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestClassification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PointOfInterestClassification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PointOfInterestClassification System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestClassification>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestClassification>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PointOfInterestClassification>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolygonObject
+    public partial class PolygonObject : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonObject>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonObject>
     {
         internal PolygonObject() { }
         public Azure.Core.GeoJson.GeoObject GeometryData { get { throw null; } }
         public string ProviderId { get { throw null; } }
+        Azure.Maps.Search.Models.PolygonObject System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PolygonObject System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonObject>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonObject>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonObject>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolygonResult
+    public partial class PolygonResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonResult>
     {
         internal PolygonResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PolygonObject> Polygons { get { throw null; } }
+        Azure.Maps.Search.Models.PolygonResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.PolygonResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.PolygonResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.PolygonResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchAddressBatchItemResponse : Azure.Maps.Search.Models.ReverseSearchAddressResult
+    public partial class ReverseSearchAddressBatchItemResponse : Azure.Maps.Search.Models.ReverseSearchAddressResult, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>
     {
         internal ReverseSearchAddressBatchItemResponse() { }
         public Azure.ResponseError ResponseError { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchAddressBatchResult : Azure.Maps.Search.Models.BatchResult
+    public partial class ReverseSearchAddressBatchResult : Azure.Maps.Search.Models.BatchResult, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>
     {
         internal ReverseSearchAddressBatchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse> Results { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchAddressBatchResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchAddressBatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchAddressItem
+    public partial class ReverseSearchAddressItem : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>
     {
         internal ReverseSearchAddressItem() { }
         public Azure.Maps.Search.Models.MapsAddress Address { get { throw null; } }
         public Azure.Maps.Search.Models.MapsSearchMatchType? MatchType { get { throw null; } }
         public string Position { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.RoadKind> RoadUse { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchAddressItem System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchAddressItem System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchAddressResult
+    public partial class ReverseSearchAddressResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>
     {
         internal ReverseSearchAddressResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ReverseSearchAddressItem> Addresses { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
         public Azure.Maps.Search.Models.MapsQueryType? QueryType { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchAddressResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchAddressResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchAddressResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchCrossStreetAddressResult
+    public partial class ReverseSearchCrossStreetAddressResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>
     {
         internal ReverseSearchCrossStreetAddressResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem> Addresses { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
         public Azure.Maps.Search.Models.MapsQueryType? QueryType { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseSearchCrossStreetAddressResultItem
+    public partial class ReverseSearchCrossStreetAddressResultItem : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>
     {
         internal ReverseSearchCrossStreetAddressResultItem() { }
         public Azure.Maps.Search.Models.MapsAddress Address { get { throw null; } }
         public string Position { get { throw null; } }
+        Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SearchAddressBatchItemResponse : Azure.Maps.Search.Models.SearchAddressResult
+    public partial class SearchAddressBatchItemResponse : Azure.Maps.Search.Models.SearchAddressResult, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>
     {
         internal SearchAddressBatchItemResponse() { }
         public Azure.ResponseError ResponseError { get { throw null; } }
+        Azure.Maps.Search.Models.SearchAddressBatchItemResponse System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.SearchAddressBatchItemResponse System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchItemResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SearchAddressBatchResult : Azure.Maps.Search.Models.BatchResult
+    public partial class SearchAddressBatchResult : Azure.Maps.Search.Models.BatchResult, System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchResult>
     {
         internal SearchAddressBatchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.SearchAddressBatchItemResponse> Results { get { throw null; } }
+        Azure.Maps.Search.Models.SearchAddressBatchResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressBatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.SearchAddressBatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressBatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SearchAddressResult
+    public partial class SearchAddressResult : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResult>
     {
         internal SearchAddressResult() { }
         public int? FuzzyLevel { get { throw null; } }
@@ -758,8 +918,13 @@ namespace Azure.Maps.Search.Models
         public int? Skip { get { throw null; } }
         public int? Top { get { throw null; } }
         public int? TotalResults { get { throw null; } }
+        Azure.Maps.Search.Models.SearchAddressResult System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.SearchAddressResult System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SearchAddressResultItem
+    public partial class SearchAddressResultItem : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResultItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResultItem>
     {
         internal SearchAddressResultItem() { }
         public Azure.Maps.Search.Models.MapsAddress Address { get { throw null; } }
@@ -777,6 +942,11 @@ namespace Azure.Maps.Search.Models
         public double? Score { get { throw null; } }
         public Azure.Maps.Search.Models.SearchAddressResultType? SearchAddressResultType { get { throw null; } }
         public Azure.Core.GeoJson.GeoBoundingBox Viewport { get { throw null; } }
+        Azure.Maps.Search.Models.SearchAddressResultItem System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResultItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Search.Models.SearchAddressResultItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Search.Models.SearchAddressResultItem System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResultItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResultItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Search.Models.SearchAddressResultItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SearchAddressResultType : System.IEquatable<Azure.Maps.Search.Models.SearchAddressResultType>

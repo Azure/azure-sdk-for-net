@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Security.Attestation
@@ -135,7 +134,8 @@ namespace Azure.Security.Attestation
                 deprecatedTee,
                 deprecatedPolicySignerJwk,
                 deprecatedPolicyHash != null ? Base64Url.Encode(deprecatedPolicyHash.ToArray()) : null,
-                deprecatedRpData);
+                deprecatedRpData,
+                new Dictionary<string, BinaryData>());
         }
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.
@@ -144,7 +144,7 @@ namespace Azure.Security.Attestation
         /// <param name="certificateResolution">The modification which was performed.</param>
         /// <returns>A <see cref="Attestation.PolicyCertificatesModificationResult"/> object.</returns>
         public static PolicyCertificatesModificationResult PolicyCertificatesModificationResult(PolicyCertificateResolution certificateResolution, string certificateThumbprint) =>
-            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution);
+            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution, serializedAdditionalRawData: null);
 
         /// <summary>
         /// Create a PolicyModificationResult type for mocking purposes.
@@ -156,7 +156,7 @@ namespace Azure.Security.Attestation
         public static PolicyModificationResult PolicyModificationResult(PolicyModification policyModification, string policyHash, AttestationSigner signer)
         {
             JsonWebKey jwk = JwkFromAttestationSigner(signer);
-            return new PolicyModificationResult(policyModification, policyHash, jwk, null);
+            return new PolicyModificationResult(policyModification, policyHash, jwk, null, serializedAdditionalRawData: null);
         }
 
         private static JsonWebKey JwkFromAttestationSigner(AttestationSigner signer)

@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
             Rule = rule;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rule"u8);

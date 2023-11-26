@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EdgeNGramTokenFilter : IUtf8JsonSerializable, IJsonModel<EdgeNGramTokenFilter>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeNGramTokenFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<EdgeNGramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeNGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -71,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+            return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
         }
 
         internal static EdgeNGramTokenFilter DeserializeEdgeNGramTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -159,7 +161,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+                        return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
                     }
                 default:
                     throw new InvalidOperationException($"The model {nameof(EdgeNGramTokenFilter)} does not support '{options.Format}' format.");

@@ -1,9 +1,14 @@
 namespace Azure.Communication.Chat
 {
-    public partial class AddChatParticipantsResult
+    public partial class AddChatParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.AddChatParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.AddChatParticipantsResult>
     {
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
+        Azure.Communication.Chat.AddChatParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.AddChatParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.AddChatParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Chat.AddChatParticipantsResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.AddChatParticipantsResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.AddChatParticipantsResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.AddChatParticipantsResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatAttachment
     {
@@ -53,7 +58,7 @@ namespace Azure.Communication.Chat
             V2023_11_07 = 3,
         }
     }
-    public partial class ChatError
+    public partial class ChatError : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatError>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatError>
     {
         internal ChatError() { }
         public string Code { get { throw null; } }
@@ -61,6 +66,11 @@ namespace Azure.Communication.Chat
         public Azure.Communication.Chat.ChatError InnerError { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
+        Azure.Communication.Chat.ChatError System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Chat.ChatError System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatError>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatError>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatError>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatMessage
     {
@@ -181,13 +191,18 @@ namespace Azure.Communication.Chat
         public virtual Azure.Response UpdateTopic(string topic, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTopicAsync(string topic, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ChatThreadItem
+    public partial class ChatThreadItem : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatThreadItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatThreadItem>
     {
         internal ChatThreadItem() { }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset? LastMessageReceivedOn { get { throw null; } }
         public string Topic { get { throw null; } }
+        Azure.Communication.Chat.ChatThreadItem System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatThreadItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Chat.ChatThreadItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.Chat.ChatThreadItem System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatThreadItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatThreadItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Chat.ChatThreadItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatThreadProperties
     {
