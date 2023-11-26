@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "MockableFluidRelaySubscriptionResource.GetFluidRelayServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "MockableFluidRelaySubscriptionResource.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "MockableFluidRelaySubscriptionResource.GetFluidRelayServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "MockableFluidRelaySubscriptionResource.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
     }
 }

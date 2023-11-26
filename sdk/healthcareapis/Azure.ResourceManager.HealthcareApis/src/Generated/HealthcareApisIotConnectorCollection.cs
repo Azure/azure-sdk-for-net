@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

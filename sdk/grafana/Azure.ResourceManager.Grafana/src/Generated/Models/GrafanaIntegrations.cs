@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,51 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </summary>
     internal partial class GrafanaIntegrations
     {
-        /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrations"/>. </summary>
         public GrafanaIntegrations()
         {
             MonitorWorkspaceIntegrations = new ChangeTrackingList<MonitorWorkspaceIntegration>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrations"/>. </summary>
         /// <param name="monitorWorkspaceIntegrations"></param>
-        internal GrafanaIntegrations(IList<MonitorWorkspaceIntegration> monitorWorkspaceIntegrations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaIntegrations(IList<MonitorWorkspaceIntegration> monitorWorkspaceIntegrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MonitorWorkspaceIntegrations = monitorWorkspaceIntegrations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the monitor workspace integrations. </summary>

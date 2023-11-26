@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A kusto cluster data set. </summary>
     public partial class KustoClusterDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterDataSet"/>. </summary>
         /// <param name="kustoClusterResourceId"> Resource id of the kusto cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
         public KustoClusterDataSet(ResourceIdentifier kustoClusterResourceId)
@@ -26,23 +27,29 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.KustoCluster;
         }
 
-        /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSetId"> Unique id for identifying a data set resource. </param>
         /// <param name="kustoClusterResourceId"> Resource id of the kusto cluster. </param>
         /// <param name="location"> Location of the kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the kusto cluster data set. </param>
-        internal KustoClusterDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoClusterResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        internal KustoClusterDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? dataSetId, ResourceIdentifier kustoClusterResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             KustoClusterResourceId = kustoClusterResourceId;
             Location = location;
             ProvisioningState = provisioningState;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterDataSet"/> for deserialization. </summary>
+        internal KustoClusterDataSet()
+        {
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>

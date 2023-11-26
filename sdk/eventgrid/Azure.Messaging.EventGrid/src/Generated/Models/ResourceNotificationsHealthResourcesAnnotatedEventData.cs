@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ResourceNotifications.HealthResources.ResourceAnnotated event. </summary>
     public partial class ResourceNotificationsHealthResourcesAnnotatedEventData : ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAnnotatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAnnotatedEventData"/>. </summary>
         internal ResourceNotificationsHealthResourcesAnnotatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAnnotatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAnnotatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        internal ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion) : base(resourceDetails, operationalDetails, apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData)
         {
         }
     }

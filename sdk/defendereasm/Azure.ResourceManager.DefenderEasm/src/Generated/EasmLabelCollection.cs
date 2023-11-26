@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmLabelLabelsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmLabelLabelsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EasmLabelResource(Client, EasmLabelData.DeserializeEasmLabelData(e)), _easmLabelLabelsClientDiagnostics, Pipeline, "EasmLabelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EasmLabelResource(Client, EasmLabelData.DeserializeEasmLabelData(e)), _easmLabelLabelsClientDiagnostics, Pipeline, "EasmLabelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmLabelLabelsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmLabelLabelsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EasmLabelResource(Client, EasmLabelData.DeserializeEasmLabelData(e)), _easmLabelLabelsClientDiagnostics, Pipeline, "EasmLabelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EasmLabelResource(Client, EasmLabelData.DeserializeEasmLabelData(e)), _easmLabelLabelsClientDiagnostics, Pipeline, "EasmLabelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

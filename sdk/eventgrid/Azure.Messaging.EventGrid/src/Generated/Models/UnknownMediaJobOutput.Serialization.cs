@@ -5,16 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    internal partial class UnknownMediaJobOutput
+    internal partial class UnknownMediaJobOutput : IUtf8JsonSerializable, IJsonModel<MediaJobOutput>
     {
-        internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (Optional.IsDefined(Label))
+            {
+                writer.WritePropertyName("label"u8);
+                writer.WriteStringValue(Label);
+            }
+            writer.WritePropertyName("progress"u8);
+            writer.WriteNumberValue(Progress);
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaJobOutput IJsonModel<MediaJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMediaJobOutput(document.RootElement, options);
+        }
+
+        internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +87,8 @@ namespace Azure.Messaging.EventGrid.Models
             Optional<string> label = default;
             long progress = default;
             MediaJobState state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -55,8 +120,44 @@ namespace Azure.Messaging.EventGrid.Models
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownMediaJobOutput(odataType, error.Value, label.Value, progress, state);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownMediaJobOutput(odataType, error.Value, label.Value, progress, state, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaJobOutput IPersistableModel<MediaJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownMediaJobOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,95 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsRouterJobEventDataConverter))]
-    public partial class AcsRouterJobEventData
+    public partial class AcsRouterJobEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobEventData>
     {
-        internal static AcsRouterJobEventData DeserializeAcsRouterJobEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsRouterJobEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsRouterJobEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRouterJobEventData IJsonModel<AcsRouterJobEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsRouterJobEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRouterJobEventData(document.RootElement, options);
+        }
+
+        internal static AcsRouterJobEventData DeserializeAcsRouterJobEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +115,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -78,15 +167,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     channelId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRouterJobEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRouterJobEventData(jobId.Value, channelReference.Value, channelId.Value, serializedAdditionalRawData, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags));
         }
+
+        BinaryData IPersistableModel<AcsRouterJobEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsRouterJobEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsRouterJobEventData IPersistableModel<AcsRouterJobEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsRouterJobEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsRouterJobEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsRouterJobEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRouterJobEventDataConverter : JsonConverter<AcsRouterJobEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsRouterJobEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

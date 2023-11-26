@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Pageable<GuestConfigurationVmAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

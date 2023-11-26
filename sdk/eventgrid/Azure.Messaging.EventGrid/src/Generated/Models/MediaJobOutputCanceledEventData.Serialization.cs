@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,74 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaJobOutputCanceledEventDataConverter))]
-    public partial class MediaJobOutputCanceledEventData
+    public partial class MediaJobOutputCanceledEventData : IUtf8JsonSerializable, IJsonModel<MediaJobOutputCanceledEventData>
     {
-        internal static MediaJobOutputCanceledEventData DeserializeMediaJobOutputCanceledEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutputCanceledEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaJobOutputCanceledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutputCanceledEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaJobOutputCanceledEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            {
+                writer.WritePropertyName("previousState"u8);
+                writer.WriteStringValue(PreviousState.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output);
+            }
+            if (Optional.IsCollectionDefined(JobCorrelationData))
+            {
+                writer.WritePropertyName("jobCorrelationData"u8);
+                writer.WriteStartObject();
+                foreach (var item in JobCorrelationData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaJobOutputCanceledEventData IJsonModel<MediaJobOutputCanceledEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutputCanceledEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaJobOutputCanceledEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobOutputCanceledEventData(document.RootElement, options);
+        }
+
+        internal static MediaJobOutputCanceledEventData DeserializeMediaJobOutputCanceledEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobOutput> output = default;
             Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("previousState"u8))
@@ -59,15 +127,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     jobCorrelationData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaJobOutputCanceledEventData(Optional.ToNullable(previousState), output.Value, Optional.ToDictionary(jobCorrelationData));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaJobOutputCanceledEventData(Optional.ToNullable(previousState), output.Value, Optional.ToDictionary(jobCorrelationData), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaJobOutputCanceledEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutputCanceledEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaJobOutputCanceledEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaJobOutputCanceledEventData IPersistableModel<MediaJobOutputCanceledEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutputCanceledEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaJobOutputCanceledEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaJobOutputCanceledEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaJobOutputCanceledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MediaJobOutputCanceledEventDataConverter : JsonConverter<MediaJobOutputCanceledEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobOutputCanceledEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaJobOutputCanceledEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

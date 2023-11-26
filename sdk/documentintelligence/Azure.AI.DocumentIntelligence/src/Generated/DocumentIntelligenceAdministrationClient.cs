@@ -706,7 +706,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -732,7 +732,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary> Lists all operations. </summary>
@@ -780,7 +780,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -806,7 +806,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -854,7 +854,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary> Builds a custom document classifier. </summary>

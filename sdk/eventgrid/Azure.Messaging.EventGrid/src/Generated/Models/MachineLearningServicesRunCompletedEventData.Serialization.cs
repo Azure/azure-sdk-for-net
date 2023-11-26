@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,83 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MachineLearningServicesRunCompletedEventDataConverter))]
-    public partial class MachineLearningServicesRunCompletedEventData
+    public partial class MachineLearningServicesRunCompletedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesRunCompletedEventData>
     {
-        internal static MachineLearningServicesRunCompletedEventData DeserializeMachineLearningServicesRunCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesRunCompletedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningServicesRunCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExperimentId))
+            {
+                writer.WritePropertyName("experimentId"u8);
+                writer.WriteStringValue(ExperimentId);
+            }
+            if (Optional.IsDefined(ExperimentName))
+            {
+                writer.WritePropertyName("experimentName"u8);
+                writer.WriteStringValue(ExperimentName);
+            }
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(RunType))
+            {
+                writer.WritePropertyName("runType"u8);
+                writer.WriteStringValue(RunType);
+            }
+            if (Optional.IsDefined(RunTags))
+            {
+                writer.WritePropertyName("runTags"u8);
+                writer.WriteObjectValue(RunTags);
+            }
+            if (Optional.IsDefined(RunProperties))
+            {
+                writer.WritePropertyName("runProperties"u8);
+                writer.WriteObjectValue(RunProperties);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningServicesRunCompletedEventData IJsonModel<MachineLearningServicesRunCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement, options);
+        }
+
+        internal static MachineLearningServicesRunCompletedEventData DeserializeMachineLearningServicesRunCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +103,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> runType = default;
             Optional<object> runTags = default;
             Optional<object> runProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentId"u8))
@@ -67,15 +145,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     runProperties = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningServicesRunCompletedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningServicesRunCompletedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningServicesRunCompletedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningServicesRunCompletedEventData IPersistableModel<MachineLearningServicesRunCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningServicesRunCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MachineLearningServicesRunCompletedEventDataConverter : JsonConverter<MachineLearningServicesRunCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MachineLearningServicesRunCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,109 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsChatMessageReceivedInThreadEventDataConverter))]
-    public partial class AcsChatMessageReceivedInThreadEventData
+    public partial class AcsChatMessageReceivedInThreadEventData : IUtf8JsonSerializable, IJsonModel<AcsChatMessageReceivedInThreadEventData>
     {
-        internal static AcsChatMessageReceivedInThreadEventData DeserializeAcsChatMessageReceivedInThreadEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageReceivedInThreadEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsChatMessageReceivedInThreadEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageReceivedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsChatMessageReceivedInThreadEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MessageBody))
+            {
+                writer.WritePropertyName("messageBody"u8);
+                writer.WriteStringValue(MessageBody);
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(SenderCommunicationIdentifier))
+            {
+                writer.WritePropertyName("senderCommunicationIdentifier"u8);
+                writer.WriteObjectValue(SenderCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(SenderDisplayName))
+            {
+                writer.WritePropertyName("senderDisplayName"u8);
+                writer.WriteStringValue(SenderDisplayName);
+            }
+            if (Optional.IsDefined(ComposeTime))
+            {
+                writer.WritePropertyName("composeTime"u8);
+                writer.WriteStringValue(ComposeTime.Value, "O");
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(TransactionId))
+            {
+                writer.WritePropertyName("transactionId"u8);
+                writer.WriteStringValue(TransactionId);
+            }
+            if (Optional.IsDefined(ThreadId))
+            {
+                writer.WritePropertyName("threadId"u8);
+                writer.WriteStringValue(ThreadId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsChatMessageReceivedInThreadEventData IJsonModel<AcsChatMessageReceivedInThreadEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageReceivedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsChatMessageReceivedInThreadEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsChatMessageReceivedInThreadEventData(document.RootElement, options);
+        }
+
+        internal static AcsChatMessageReceivedInThreadEventData DeserializeAcsChatMessageReceivedInThreadEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +133,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> version = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageBody"u8))
@@ -105,15 +208,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     threadId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, serializedAdditionalRawData, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata));
         }
+
+        BinaryData IPersistableModel<AcsChatMessageReceivedInThreadEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageReceivedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsChatMessageReceivedInThreadEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsChatMessageReceivedInThreadEventData IPersistableModel<AcsChatMessageReceivedInThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageReceivedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsChatMessageReceivedInThreadEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsChatMessageReceivedInThreadEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsChatMessageReceivedInThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatMessageReceivedInThreadEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsChatMessageReceivedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

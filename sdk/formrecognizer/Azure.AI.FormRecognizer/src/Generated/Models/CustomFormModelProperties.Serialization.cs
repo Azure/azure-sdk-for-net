@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class CustomFormModelProperties
+    public partial class CustomFormModelProperties : IUtf8JsonSerializable, IJsonModel<CustomFormModelProperties>
     {
-        internal static CustomFormModelProperties DeserializeCustomFormModelProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomFormModelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomFormModelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomFormModelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomFormModelProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsComposedModel))
+            {
+                writer.WritePropertyName("isComposed"u8);
+                writer.WriteBooleanValue(IsComposedModel);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CustomFormModelProperties IJsonModel<CustomFormModelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomFormModelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomFormModelProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomFormModelProperties(document.RootElement, options);
+        }
+
+        internal static CustomFormModelProperties DeserializeCustomFormModelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isComposed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isComposed"u8))
@@ -30,8 +84,44 @@ namespace Azure.AI.FormRecognizer.Training
                     isComposed = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomFormModelProperties(isComposed);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomFormModelProperties(isComposed, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomFormModelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomFormModelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomFormModelProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomFormModelProperties IPersistableModel<CustomFormModelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomFormModelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomFormModelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomFormModelProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomFormModelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

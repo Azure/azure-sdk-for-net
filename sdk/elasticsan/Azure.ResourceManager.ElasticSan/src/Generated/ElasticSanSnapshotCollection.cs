@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
