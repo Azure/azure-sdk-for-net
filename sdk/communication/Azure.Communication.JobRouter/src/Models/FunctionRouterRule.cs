@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="functionAppUri"> URL for custom azure function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRouterRule(Uri functionAppUri)
-            : this(RouterRuleKind.Function, functionAppUri, null)
+            : this(RouterRuleKind.Function, new Dictionary<string, BinaryData>(), functionAppUri, null)
         {
             Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
         }
@@ -21,7 +22,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Credentials used to access Azure function rule. </summary>
         public FunctionRouterRuleCredential Credential { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri"u8);

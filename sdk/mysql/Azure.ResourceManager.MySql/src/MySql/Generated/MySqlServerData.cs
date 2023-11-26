@@ -136,8 +136,6 @@ namespace Azure.ResourceManager.MySql
         public MySqlStorageProfile StorageProfile { get; set; }
         /// <summary> The replication role of the server. </summary>
         public string ReplicationRole { get; set; }
-        /// <summary> The master server id of a replica server. </summary>
-        public ResourceIdentifier MasterServerId { get; set; }
         /// <summary> The maximum number of replicas that a master server can have. </summary>
         public int? ReplicaCapacity { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>

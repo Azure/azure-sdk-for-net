@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RuleEngineQueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<RuleEngineQueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleEngineQueueSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<RuleEngineQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RuleEngineQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;

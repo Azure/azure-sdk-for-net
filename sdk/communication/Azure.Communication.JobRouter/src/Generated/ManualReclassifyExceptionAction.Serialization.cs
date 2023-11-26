@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ManualReclassifyExceptionAction : IUtf8JsonSerializable, IJsonModel<ManualReclassifyExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManualReclassifyExceptionAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<ManualReclassifyExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;

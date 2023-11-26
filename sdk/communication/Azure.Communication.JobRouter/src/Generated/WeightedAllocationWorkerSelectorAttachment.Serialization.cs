@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class WeightedAllocationWorkerSelectorAttachment : IUtf8JsonSerializable, IJsonModel<WeightedAllocationWorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeightedAllocationWorkerSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<WeightedAllocationWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;

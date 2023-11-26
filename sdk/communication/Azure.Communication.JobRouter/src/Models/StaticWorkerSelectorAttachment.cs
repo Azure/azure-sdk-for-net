@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
             WorkerSelector = workerSelector;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("workerSelector"u8);

@@ -104,7 +104,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Queues))

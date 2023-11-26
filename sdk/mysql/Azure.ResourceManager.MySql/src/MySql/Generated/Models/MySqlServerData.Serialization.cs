@@ -375,11 +375,7 @@ namespace Azure.ResourceManager.MySql
                         }
                         if (property0.NameEquals("masterServerId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            masterServerId = new ResourceIdentifier(property0.Value.GetString());
+                            ReadMasterServerId(property0, ref masterServerId);
                             continue;
                         }
                         if (property0.NameEquals("replicaCapacity"u8))

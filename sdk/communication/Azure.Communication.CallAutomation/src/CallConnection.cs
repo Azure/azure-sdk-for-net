@@ -688,7 +688,7 @@ namespace Azure.Communication.CallAutomation
                     request,
                     cancellationToken);
 
-                return Response.FromValue(new MuteParticipantResult(response.Value.OperationContext), response.GetRawResponse());
+                return Response.FromValue(new MuteParticipantResult(response.Value.OperationContext, serializedAdditionalRawData: null), response.GetRawResponse());
             }
             catch (Exception ex)
             {

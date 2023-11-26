@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentStatistics"/> for mocking purposes.</returns>
         public static TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount)
         {
-            return new TextDocumentStatistics(characterCount, transactionCount);
+            return new TextDocumentStatistics(characterCount, transactionCount, serializedAdditionalRawData: null);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentBatchStatistics"/> for mocking purposes.</returns>
         public static TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount)
         {
-            return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+            return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount, serializedAdditionalRawData: null);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
+            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score, serializedAdditionalRawData: null));
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
+            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score, serializedAdditionalRawData: null));
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.PiiEntity"/> for mocking purposes.</returns>
         public static PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            return new PiiEntity(new Entity(text, category, subCategory, offset, length, score));
+            return new PiiEntity(new Entity(text, category, subCategory, offset, length, score, serializedAdditionalRawData: null));
         }
 
         /// <summary>
@@ -1563,7 +1563,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns> A new <see cref="TextAnalytics.HealthcareEntityAssertion"/> instance for mocking. </returns>
         public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = null, EntityCertainty? certainty = null, EntityAssociation? association = null)
         {
-            return new HealthcareEntityAssertion(conditionality, certainty, association);
+            return new HealthcareEntityAssertion(conditionality, certainty, association, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of EntityDataSource. </summary>
@@ -1727,7 +1727,7 @@ namespace Azure.AI.TextAnalytics
                 internalContexts.Add(new SummaryContextInternal(context.Offset, context.Length));
             }
 
-            return new AbstractiveSummary(new AbstractiveSummaryInternal(text, internalContexts));
+            return new AbstractiveSummary(new AbstractiveSummaryInternal(text, internalContexts, serializedAdditionalRawData: null));
         }
 
         #endregion

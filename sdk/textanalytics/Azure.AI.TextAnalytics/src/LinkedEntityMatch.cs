@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -13,15 +15,40 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("Match")]
     public readonly partial struct LinkedEntityMatch
     {
-        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
-        {
-            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
-            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
-            Text = text ?? string.Empty;
-            ConfidenceScore = confidenceScore;
-            Offset = offset;
-            Length = length;
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length) : this(confidenceScore, text, offset, length, null)
+        { }
 
         /// <summary>
         /// Gets the entity text as it appears in the document.

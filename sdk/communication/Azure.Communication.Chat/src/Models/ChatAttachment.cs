@@ -55,7 +55,7 @@ namespace Azure.Communication.Chat
 
         internal ChatAttachmentInternal ToChatAttachmentInternal()
         {
-            return new ChatAttachmentInternal(Id, AttachmentType, Name, Uri, PreviewUri);
+            return new ChatAttachmentInternal(Id, AttachmentType, Name, Uri, PreviewUri, serializedAdditionalRawData: null);
         }
     }
 }

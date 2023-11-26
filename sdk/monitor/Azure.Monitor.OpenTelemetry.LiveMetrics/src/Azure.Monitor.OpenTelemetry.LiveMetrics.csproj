@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" VersionOverride="1.6.0" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" VersionOverride="7.0.0" />
@@ -35,5 +36,5 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
   </ItemGroup>
-  
+
 </Project>

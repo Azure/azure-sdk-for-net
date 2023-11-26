@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> The maximum number of jobs that can be supported concurrently for this channel. </summary>
         public int? MaxNumberOfJobs { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("channelId"u8);

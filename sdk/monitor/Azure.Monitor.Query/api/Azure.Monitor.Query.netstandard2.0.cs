@@ -113,10 +113,15 @@ namespace Azure.Monitor.Query
 }
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult
+    public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult, System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>
     {
         internal LogsBatchQueryResult() { }
         public string Id { get { throw null; } }
+        Azure.Monitor.Query.Models.LogsBatchQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.LogsBatchQueryResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsBatchQueryResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LogsBatchQueryResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.Monitor.Query.Models.LogsBatchQueryResult>
     {
@@ -150,15 +155,24 @@ namespace Azure.Monitor.Query.Models
         public static bool operator !=(Azure.Monitor.Query.Models.LogsColumnType left, Azure.Monitor.Query.Models.LogsColumnType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogsQueryResult
+    public partial class LogsQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsQueryResult>
     {
         internal LogsQueryResult() { }
+        protected internal readonly System.Text.Json.JsonElement _error;
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
+        protected internal readonly System.Text.Json.JsonElement _statistics;
+        protected internal readonly System.Text.Json.JsonElement _visualization;
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTable> AllTables { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsQueryResultStatus Status { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsTable Table { get { throw null; } }
         public System.BinaryData GetStatistics() { throw null; }
         public System.BinaryData GetVisualization() { throw null; }
+        Azure.Monitor.Query.Models.LogsQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsQueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.LogsQueryResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsQueryResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsQueryResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsQueryResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LogsQueryResultStatus
     {
@@ -166,19 +180,29 @@ namespace Azure.Monitor.Query.Models
         PartialFailure = 1,
         Failure = 2,
     }
-    public partial class LogsTable
+    public partial class LogsTable : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTable>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTable>
     {
         internal LogsTable() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableColumn> Columns { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableRow> Rows { get { throw null; } }
+        Azure.Monitor.Query.Models.LogsTable System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.LogsTable System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTable>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTable>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTable>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogsTableColumn
+    public partial class LogsTableColumn : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTableColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTableColumn>
     {
         internal LogsTableColumn() { }
         public string Name { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
+        Azure.Monitor.Query.Models.LogsTableColumn System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTableColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.LogsTableColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.LogsTableColumn System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTableColumn>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTableColumn>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.LogsTableColumn>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LogsTableRow : System.Collections.Generic.IEnumerable<object>, System.Collections.Generic.IReadOnlyCollection<object>, System.Collections.Generic.IReadOnlyList<object>, System.Collections.IEnumerable
@@ -220,11 +244,16 @@ namespace Azure.Monitor.Query.Models
         Maximum = 4,
         Total = 5,
     }
-    public partial class MetricAvailability
+    public partial class MetricAvailability : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricAvailability>
     {
         internal MetricAvailability() { }
         public System.TimeSpan? Granularity { get { throw null; } }
         public System.TimeSpan? Retention { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricAvailability System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricAvailability System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricAvailability>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricAvailability>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricAvailability>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricClass : System.IEquatable<Azure.Monitor.Query.Models.MetricClass>
@@ -247,7 +276,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator !=(Azure.Monitor.Query.Models.MetricClass left, Azure.Monitor.Query.Models.MetricClass right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MetricDefinition
+    public partial class MetricDefinition : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricDefinition>
     {
         internal MetricDefinition() { }
         public string Category { get { throw null; } }
@@ -263,8 +292,13 @@ namespace Azure.Monitor.Query.Models
         public string ResourceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricAggregationType> SupportedAggregationTypes { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricUnit? Unit { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricDefinition System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricDefinition System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricDefinition>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricDefinition>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricDefinition>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetricNamespace
+    public partial class MetricNamespace : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricNamespace>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricNamespace>
     {
         internal MetricNamespace() { }
         public Azure.Monitor.Query.Models.MetricNamespaceClassification? Classification { get { throw null; } }
@@ -272,6 +306,11 @@ namespace Azure.Monitor.Query.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricNamespace System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricNamespace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricNamespace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricNamespace System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricNamespace>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricNamespace>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricNamespace>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricNamespaceClassification : System.IEquatable<Azure.Monitor.Query.Models.MetricNamespaceClassification>
@@ -292,7 +331,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator !=(Azure.Monitor.Query.Models.MetricNamespaceClassification left, Azure.Monitor.Query.Models.MetricNamespaceClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MetricResult
+    public partial class MetricResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricResult>
     {
         internal MetricResult() { }
         public string Description { get { throw null; } }
@@ -302,13 +341,23 @@ namespace Azure.Monitor.Query.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricTimeSeriesElement> TimeSeries { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricUnit Unit { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetricsBatchResult
+    public partial class MetricsBatchResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResult>
     {
         internal MetricsBatchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricsBatchResultValues> Values { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricsBatchResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricsBatchResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetricsBatchResultValues
+    public partial class MetricsBatchResultValues : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>
     {
         internal MetricsBatchResultValues() { }
         public System.DateTimeOffset EndTime { get { throw null; } }
@@ -318,8 +367,13 @@ namespace Azure.Monitor.Query.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.AzureLocation ResourceRegion { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricsBatchResultValues System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricsBatchResultValues System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsBatchResultValues>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetricsQueryResult
+    public partial class MetricsQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsQueryResult>
     {
         internal MetricsQueryResult() { }
         public int? Cost { get { throw null; } }
@@ -329,12 +383,22 @@ namespace Azure.Monitor.Query.Models
         public string ResourceRegion { get { throw null; } }
         public Azure.Monitor.Query.QueryTimeRange TimeSpan { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricResult GetMetricByName(string name) { throw null; }
+        Azure.Monitor.Query.Models.MetricsQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricsQueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricsQueryResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsQueryResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsQueryResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricsQueryResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetricTimeSeriesElement
+    public partial class MetricTimeSeriesElement : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>
     {
         internal MetricTimeSeriesElement() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricValue> Values { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricTimeSeriesElement System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricTimeSeriesElement System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricTimeSeriesElement>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricUnit : System.IEquatable<Azure.Monitor.Query.Models.MetricUnit>
@@ -365,7 +429,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator !=(Azure.Monitor.Query.Models.MetricUnit left, Azure.Monitor.Query.Models.MetricUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MetricValue
+    public partial class MetricValue : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricValue>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricValue>
     {
         internal MetricValue() { }
         public double? Average { get { throw null; } }
@@ -374,6 +438,11 @@ namespace Azure.Monitor.Query.Models
         public double? Minimum { get { throw null; } }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double? Total { get { throw null; } }
+        Azure.Monitor.Query.Models.MetricValue System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Models.MetricValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Monitor.Query.Models.MetricValue System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricValue>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricValue>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Models.MetricValue>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class MonitorQueryModelFactory

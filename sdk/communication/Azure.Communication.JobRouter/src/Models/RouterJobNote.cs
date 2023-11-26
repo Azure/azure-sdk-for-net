@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public DateTimeOffset? AddedAt { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);

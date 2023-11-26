@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownJobMatchingMode))]
     public partial class JobMatchingMode : IUtf8JsonSerializable, IJsonModel<JobMatchingMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobMatchingMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<JobMatchingMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;

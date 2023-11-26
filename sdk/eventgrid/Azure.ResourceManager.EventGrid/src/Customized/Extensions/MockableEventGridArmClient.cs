@@ -5,10 +5,10 @@
 
 using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, scope.ResourceType.Namespace, resourceTypeName, scope.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridResourceGroupMockingExtension.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridResourceGroupMockingExtension.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, scope.ResourceType.Namespace, resourceTypeName, scope.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridResourceGroupMockingExtension.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridResourceGroupMockingExtension.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

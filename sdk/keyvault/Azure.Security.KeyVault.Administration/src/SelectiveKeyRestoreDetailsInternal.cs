@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class SelectiveKeyRestoreDetailsInternal
     {
         public SelectiveKeyRestoreDetailsInternal(RestoreDetailsInternal restoreDetails) :
-            this(restoreDetails.Status, restoreDetails.StatusDetails, restoreDetails.Error, restoreDetails.JobId, restoreDetails.StartTime, restoreDetails.EndTime)
+            this(restoreDetails.Status, restoreDetails.StatusDetails, restoreDetails.Error, restoreDetails.JobId, restoreDetails.StartTime, restoreDetails.EndTime, serializedAdditionalRawData: null)
         { }
     }
 }

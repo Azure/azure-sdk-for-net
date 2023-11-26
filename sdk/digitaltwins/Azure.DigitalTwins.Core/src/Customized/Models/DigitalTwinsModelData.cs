@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
@@ -33,11 +35,35 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary> A language dictionary that contains the localized display names as specified in the model definition. </summary>
         [CodeGenMember("DisplayName")]
+        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadLanguageDisplayNames))]
         public IReadOnlyDictionary<string, string> LanguageDisplayNames { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadLanguageDisplayNames(JsonProperty property, ref Optional<IReadOnlyDictionary<string, string>> languageDisplayNames)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            // manual change: deserialize as a dictionary
+            languageDisplayNames = JsonSerializer.Deserialize<Dictionary<string, string>>(property.Value.GetRawText());
+        }
 
         /// <summary> A language dictionary that contains the localized descriptions as specified in the model definition. </summary>
         [CodeGenMember("Description")]
+        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadLanguageDescriptions))]
         public IReadOnlyDictionary<string, string> LanguageDescriptions { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadLanguageDescriptions(JsonProperty property, ref Optional<IReadOnlyDictionary<string, string>> languageDescriptions)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            // manual change: deserialize as a dictionary
+            languageDescriptions = JsonSerializer.Deserialize<Dictionary<string, string>>(property.Value.GetRawText());
+        }
 
         #region null overrides
 

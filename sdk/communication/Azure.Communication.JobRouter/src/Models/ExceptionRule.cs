@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> A collection of actions to perform once the exception is triggered. </summary>
         public IList<ExceptionAction> Actions { get; } = new List<ExceptionAction>();
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);

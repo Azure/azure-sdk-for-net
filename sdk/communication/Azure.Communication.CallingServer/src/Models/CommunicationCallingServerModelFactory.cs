@@ -93,7 +93,8 @@ namespace Azure.Communication.CallingServer
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new AddParticipantsFailed(internalObject);
@@ -113,7 +114,8 @@ namespace Azure.Communication.CallingServer
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new AddParticipantsSucceeded(internalObject);
@@ -133,7 +135,8 @@ namespace Azure.Communication.CallingServer
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(ParticipantsUpdated)
+                CallAutomationEventParser.EventPrefix + nameof(ParticipantsUpdated),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new ParticipantsUpdated(internalObject);

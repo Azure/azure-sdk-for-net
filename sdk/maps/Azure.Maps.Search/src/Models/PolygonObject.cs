@@ -17,54 +17,47 @@ namespace Azure.Maps.Search.Models
         public string ProviderId { get; }
         /// <summary> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </summary>
         [CodeGenMember("GeometryData")]
+        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadGeometryData))]
         public GeoObject GeometryData { get; }
 
-        internal static PolygonObject DeserializePolygonObject(JsonElement element)
+        internal static void ReadGeometryData(JsonProperty property, ref Optional<GeoObject> geometryData)
         {
-            Optional<string> providerID = default;
-            Optional<GeoObject> geometryData = default;
-            foreach (var property in element.EnumerateObject())
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                if (property.NameEquals("providerID"))
+                return;
+            }
+            foreach (var geoProperty in property.Value.EnumerateObject())
+            {
+                if (geoProperty.NameEquals("type"))
                 {
-                    providerID = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("geometryData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    string type = geoProperty.Value.GetString();
+                    if (type == "FeatureCollection")
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
+                        geometryData = DeserializeFeatureCollection(property);
                     }
-                    foreach (var geoProperty in property.Value.EnumerateObject())
+                    else
                     {
-                        if (geoProperty.NameEquals("type"))
-                        {
-                            string type = geoProperty.Value.GetString();
-                            if (type == "FeatureCollection") {
-                                geometryData = DeserializeFeatureCollection(property);
-                            } else {
-                                geometryData = DeserializeObject(property.Value);
-                            }
-                            continue;
-                        }
+                        geometryData = DeserializeObject(property.Value);
                     }
                     continue;
                 }
             }
-            return new PolygonObject(providerID.Value, geometryData.Value);
         }
 
-        private static Optional<GeoObject> DeserializeFeatureCollection(JsonProperty property) {
+        private static Optional<GeoObject> DeserializeFeatureCollection(JsonProperty property)
+        {
             Optional<GeoObject> result = default;
-            foreach (var geoProperty in property.Value.EnumerateObject()) {
-                if (geoProperty.NameEquals("features")) {
+            foreach (var geoProperty in property.Value.EnumerateObject())
+            {
+                if (geoProperty.NameEquals("features"))
+                {
                     List<GeoObject> array = new List<GeoObject>();
                     foreach (var item in geoProperty.Value.EnumerateArray())
                     {
-                        foreach (var featureProperty in item.EnumerateObject()) {
-                            if (featureProperty.NameEquals("geometry")) {
+                        foreach (var featureProperty in item.EnumerateObject())
+                        {
+                            if (featureProperty.NameEquals("geometry"))
+                            {
                                 array.Add(DeserializeObject(featureProperty.Value));
                             }
                         }
@@ -76,19 +69,20 @@ namespace Azure.Maps.Search.Models
             return result;
         }
 
-        private static Optional<GeoObject> DeserializeObject(JsonElement value) {
+        private static Optional<GeoObject> DeserializeObject(JsonElement value)
+        {
             Optional<GeoObject> geometryData = default;
             // The fastest path is .NET 6+ with no custom serializer
-            #if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER
             geometryData = JsonSerializer.Deserialize<GeoObject>(value);
-            #else
+#else
             // Copy the document so we can parse the data again
             ArrayBufferWriter<byte> buffer = new();
             Utf8JsonWriter writer = new(buffer);
             value.WriteTo(writer);
             writer.Flush();
             geometryData = JsonSerializer.Deserialize<GeoObject>(buffer.WrittenSpan);
-            #endif
+#endif
             return geometryData;
         }
     }

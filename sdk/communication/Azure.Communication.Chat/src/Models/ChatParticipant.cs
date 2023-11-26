@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Chat
 {
@@ -40,7 +41,7 @@ namespace Azure.Communication.Chat
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime, new Dictionary<string, BinaryData>());
         }
     }
 }

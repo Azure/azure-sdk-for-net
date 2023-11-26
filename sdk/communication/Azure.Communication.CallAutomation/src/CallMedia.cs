@@ -881,7 +881,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
-                var result = new SendDtmfTonesResult(response.Value.OperationContext);
+                var result = new SendDtmfTonesResult(response.Value.OperationContext, serializedAdditionalRawData: null);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -911,7 +911,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
-                var result = new SendDtmfTonesResult(response.Value.OperationContext);
+                var result = new SendDtmfTonesResult(response.Value.OperationContext, serializedAdditionalRawData: null);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -943,7 +943,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
 
-                var result = new SendDtmfTonesResult(response.Value.OperationContext);
+                var result = new SendDtmfTonesResult(response.Value.OperationContext, serializedAdditionalRawData: null);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -973,7 +973,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
 
-                var result = new SendDtmfTonesResult(response.Value.OperationContext);
+                var result = new SendDtmfTonesResult(response.Value.OperationContext, serializedAdditionalRawData: null);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());

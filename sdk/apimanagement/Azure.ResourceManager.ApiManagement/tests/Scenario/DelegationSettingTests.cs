@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var portalDelegationSettingsParams = new ApiManagementPortalDelegationSettingData()
             {
-                Subscriptions = new SubscriptionDelegationSettingProperties(true),
-                UserRegistration = new RegistrationDelegationSettingProperties(true),
+                IsSubscriptionDelegationEnabled = true,
+                IsUserRegistrationDelegationEnabled = true,
                 Uri = new Uri(urlParameter),
                 ValidationKey = "Sanitized"
             };

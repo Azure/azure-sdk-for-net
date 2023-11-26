@@ -131,12 +131,17 @@ namespace Azure.DigitalTwins.Core
             V2023_06_30 = 3,
         }
     }
-    public partial class DigitalTwinsEventRoute
+    public partial class DigitalTwinsEventRoute : System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>, System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>
     {
         public DigitalTwinsEventRoute(string endpointName, string filter) { }
         public string EndpointName { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Id { get { throw null; } }
+        Azure.DigitalTwins.Core.DigitalTwinsEventRoute System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.DigitalTwins.Core.DigitalTwinsEventRoute System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DigitalTwinsJsonPropertyNames
     {
@@ -152,7 +157,7 @@ namespace Azure.DigitalTwins.Core
         public const string RelationshipSourceId = "$sourceId";
         public const string RelationshipTargetId = "$targetId";
     }
-    public partial class DigitalTwinsModelData
+    public partial class DigitalTwinsModelData : System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>, System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>
     {
         internal DigitalTwinsModelData() { }
         public bool? Decommissioned { get { throw null; } }
@@ -161,6 +166,11 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IReadOnlyDictionary<string, string> LanguageDescriptions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> LanguageDisplayNames { get { throw null; } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } }
+        Azure.DigitalTwins.Core.DigitalTwinsModelData System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.DigitalTwins.Core.DigitalTwinsModelData System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.DigitalTwinsModelData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DigitalTwinsModelFactory
     {
@@ -175,7 +185,7 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IEnumerable<string> DependenciesFor { get { throw null; } set { } }
         public bool IncludeModelDefinition { get { throw null; } set { } }
     }
-    public partial class ImportJob
+    public partial class ImportJob : System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.ImportJob>, System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.ImportJob>
     {
         public ImportJob(System.Uri inputBlobUri, System.Uri outputBlobUri) { }
         public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
@@ -187,6 +197,11 @@ namespace Azure.DigitalTwins.Core
         public System.Uri OutputBlobUri { get { throw null; } set { } }
         public System.DateTimeOffset? PurgeDateTime { get { throw null; } }
         public Azure.DigitalTwins.Core.ImportJobStatus? Status { get { throw null; } }
+        Azure.DigitalTwins.Core.ImportJob System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.ImportJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.ImportJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.DigitalTwins.Core.ImportJob System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.ImportJob>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.ImportJob>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.ImportJob>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImportJobStatus : System.IEquatable<Azure.DigitalTwins.Core.ImportJobStatus>
@@ -210,13 +225,18 @@ namespace Azure.DigitalTwins.Core
         public static bool operator !=(Azure.DigitalTwins.Core.ImportJobStatus left, Azure.DigitalTwins.Core.ImportJobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IncomingRelationship
+    public partial class IncomingRelationship : System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.IncomingRelationship>, System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.IncomingRelationship>
     {
         internal IncomingRelationship() { }
         public string RelationshipId { get { throw null; } }
         public string RelationshipLink { get { throw null; } }
         public string RelationshipName { get { throw null; } }
         public string SourceId { get { throw null; } }
+        Azure.DigitalTwins.Core.IncomingRelationship System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.IncomingRelationship>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.DigitalTwins.Core.IncomingRelationship>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.DigitalTwins.Core.IncomingRelationship System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.IncomingRelationship>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.IncomingRelationship>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.DigitalTwins.Core.IncomingRelationship>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class QueryChargeHelper
     {

@@ -32,9 +32,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of PowerVirtualAgentsDialog. </summary>
         /// <param name="kind"> Determines the type of the dialog. </param>
         /// <param name="context"> Dialog context. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="botAppId"> Bot identifier. </param>
         /// <param name="language"> Language. </param>
-        internal PowerVirtualAgentsDialog(DialogInputType kind, IDictionary<string, object> context, string botAppId, string language) : base(DialogInputType.PowerVirtualAgents, context)
+        internal PowerVirtualAgentsDialog(DialogInputType kind, IDictionary<string, object> context, IDictionary<string, BinaryData> serializedAdditionalRawData, string botAppId, string language) : base(DialogInputType.PowerVirtualAgents, context, serializedAdditionalRawData)
         {
             BotAppId = botAppId;
             Language = language;

@@ -35,14 +35,19 @@ namespace Azure.Containers.ContainerRegistry
         LastUpdatedOnDescending = 1,
         LastUpdatedOnAscending = 2,
     }
-    public partial class ArtifactManifestPlatform
+    public partial class ArtifactManifestPlatform : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>
     {
         internal ArtifactManifestPlatform() { }
         public Azure.Containers.ContainerRegistry.ArtifactArchitecture? Architecture { get { throw null; } }
         public string Digest { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? OperatingSystem { get { throw null; } }
+        Azure.Containers.ContainerRegistry.ArtifactManifestPlatform System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.ArtifactManifestPlatform System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArtifactManifestProperties
+    public partial class ArtifactManifestProperties : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>
     {
         public ArtifactManifestProperties() { }
         public Azure.Containers.ContainerRegistry.ArtifactArchitecture? Architecture { get { throw null; } }
@@ -59,6 +64,11 @@ namespace Azure.Containers.ContainerRegistry
         public string RepositoryName { get { throw null; } }
         public long? SizeInBytes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
+        Azure.Containers.ContainerRegistry.ArtifactManifestProperties System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.ArtifactManifestProperties System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArtifactOperatingSystem : System.IEquatable<Azure.Containers.ContainerRegistry.ArtifactOperatingSystem>
@@ -96,7 +106,7 @@ namespace Azure.Containers.ContainerRegistry
         LastUpdatedOnDescending = 1,
         LastUpdatedOnAscending = 2,
     }
-    public partial class ArtifactTagProperties
+    public partial class ArtifactTagProperties : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>
     {
         public ArtifactTagProperties() { }
         public bool? CanDelete { get { throw null; } set { } }
@@ -109,6 +119,11 @@ namespace Azure.Containers.ContainerRegistry
         public string Name { get { throw null; } }
         public string RegistryLoginServer { get { throw null; } }
         public string RepositoryName { get { throw null; } }
+        Azure.Containers.ContainerRegistry.ArtifactTagProperties System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.ArtifactTagProperties System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ArtifactTagProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryAudience : System.IEquatable<Azure.Containers.ContainerRegistry.ContainerRegistryAudience>
@@ -215,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties> UpdateProperties(Azure.Containers.ContainerRegistry.ContainerRepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>> UpdatePropertiesAsync(Azure.Containers.ContainerRegistry.ContainerRepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ContainerRepositoryProperties
+    public partial class ContainerRepositoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>
     {
         public ContainerRepositoryProperties() { }
         public bool? CanDelete { get { throw null; } set { } }
@@ -228,6 +243,11 @@ namespace Azure.Containers.ContainerRegistry
         public string Name { get { throw null; } }
         public string RegistryLoginServer { get { throw null; } }
         public int TagCount { get { throw null; } }
+        Azure.Containers.ContainerRegistry.ContainerRepositoryProperties System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.ContainerRepositoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DownloadRegistryBlobResult
     {
@@ -267,7 +287,7 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ManifestMediaType left, Azure.Containers.ContainerRegistry.ManifestMediaType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OciAnnotations
+    public partial class OciAnnotations : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciAnnotations>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciAnnotations>
     {
         public OciAnnotations() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
@@ -283,22 +303,37 @@ namespace Azure.Containers.ContainerRegistry
         public System.Uri Url { get { throw null; } set { } }
         public string Vendor { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.Containers.ContainerRegistry.OciAnnotations System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciAnnotations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciAnnotations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.OciAnnotations System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciAnnotations>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciAnnotations>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciAnnotations>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OciDescriptor
+    public partial class OciDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciDescriptor>
     {
         public OciDescriptor() { }
         public Azure.Containers.ContainerRegistry.OciAnnotations Annotations { get { throw null; } set { } }
         public string Digest { get { throw null; } set { } }
         public string MediaType { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } set { } }
+        Azure.Containers.ContainerRegistry.OciDescriptor System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.OciDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciDescriptor>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciDescriptor>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciDescriptor>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OciImageManifest
+    public partial class OciImageManifest : System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciImageManifest>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciImageManifest>
     {
         public OciImageManifest(int schemaVersion) { }
         public Azure.Containers.ContainerRegistry.OciAnnotations Annotations { get { throw null; } set { } }
         public Azure.Containers.ContainerRegistry.OciDescriptor Configuration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.OciDescriptor> Layers { get { throw null; } }
         public int SchemaVersion { get { throw null; } set { } }
+        Azure.Containers.ContainerRegistry.OciImageManifest System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciImageManifest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.ContainerRegistry.OciImageManifest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Containers.ContainerRegistry.OciImageManifest System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciImageManifest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciImageManifest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.ContainerRegistry.OciImageManifest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RegistryArtifact
     {

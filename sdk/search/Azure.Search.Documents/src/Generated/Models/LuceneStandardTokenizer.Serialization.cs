@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LuceneStandardTokenizer : IUtf8JsonSerializable, IJsonModel<LuceneStandardTokenizer>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LuceneStandardTokenizer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<LuceneStandardTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
@@ -61,50 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(document.RootElement, options);
-        }
-
-        internal static LuceneStandardTokenizer DeserializeLuceneStandardTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<int> maxTokenLength = default;
-            string odataType = default;
-            string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("maxTokenLength"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxTokenLength = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LuceneStandardTokenizer(odataType, name, serializedAdditionalRawData, Optional.ToNullable(maxTokenLength));
+            return DeserializeLuceneStandardTokenizer(document.RootElement, options);
         }
 
         BinaryData IPersistableModel<LuceneStandardTokenizer>.Write(ModelReaderWriterOptions options)
@@ -129,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(document.RootElement, options);
+                        return DeserializeLuceneStandardTokenizer(document.RootElement, options);
                     }
                 default:
                     throw new InvalidOperationException($"The model {nameof(LuceneStandardTokenizer)} does not support '{options.Format}' format.");

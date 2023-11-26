@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -23,11 +24,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of BlobContentSource. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="prefix"> Blob name prefix. </param>
-        internal BlobContentSource(Uri containerUri, string prefix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobContentSource(Uri containerUri, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
             : base(DocumentContentSourceKind.Blob)
         {
             ContainerUri = containerUri;
             Prefix = prefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class PassThroughQueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<PassThroughQueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PassThroughQueueSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<PassThroughQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PassThroughQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;

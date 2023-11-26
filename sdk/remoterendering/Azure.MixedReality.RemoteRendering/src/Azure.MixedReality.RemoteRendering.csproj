@@ -14,9 +14,10 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
-  
+
   <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />

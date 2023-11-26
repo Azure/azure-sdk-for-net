@@ -21,6 +21,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>

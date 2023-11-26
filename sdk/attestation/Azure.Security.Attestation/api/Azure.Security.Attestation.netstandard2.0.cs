@@ -71,7 +71,7 @@ namespace Azure.Security.Attestation
         public override T Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
     }
-    public partial class AttestationResult
+    public partial class AttestationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>
     {
         internal AttestationResult() { }
         public object Confirmation { get { throw null; } }
@@ -134,6 +134,11 @@ namespace Azure.Security.Attestation
         public string UniqueIdentifier { get { throw null; } }
         public string VerifierType { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.Security.Attestation.AttestationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.AttestationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AttestationSigner
     {
@@ -241,11 +246,16 @@ namespace Azure.Security.Attestation
         public static bool operator !=(Azure.Security.Attestation.PolicyCertificateResolution left, Azure.Security.Attestation.PolicyCertificateResolution right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PolicyCertificatesModificationResult
+    public partial class PolicyCertificatesModificationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>
     {
         public PolicyCertificatesModificationResult() { }
         public Azure.Security.Attestation.PolicyCertificateResolution? CertificateResolution { get { throw null; } set { } }
         public string CertificateThumbprint { get { throw null; } set { } }
+        Azure.Security.Attestation.PolicyCertificatesModificationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.PolicyCertificatesModificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyModification : System.IEquatable<Azure.Security.Attestation.PolicyModification>
@@ -265,26 +275,48 @@ namespace Azure.Security.Attestation
         public static bool operator !=(Azure.Security.Attestation.PolicyModification left, Azure.Security.Attestation.PolicyModification right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PolicyModificationResult
+    public partial class PolicyModificationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyModificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>
     {
         public PolicyModificationResult() { }
         public Azure.Security.Attestation.PolicyModification PolicyResolution { get { throw null; } }
         public Azure.Security.Attestation.AttestationSigner PolicySigner { get { throw null; } }
         public System.BinaryData PolicyTokenHash { get { throw null; } }
+        Azure.Security.Attestation.PolicyModificationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyModificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.PolicyModificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.PolicyModificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StoredAttestationPolicy
     {
         public StoredAttestationPolicy() { }
         public string AttestationPolicy { get { throw null; } set { } }
     }
-    public partial class TpmAttestationRequest
+    public partial class TpmAttestationRequest : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>
     {
         public TpmAttestationRequest() { }
         public System.BinaryData Data { get { throw null; } set { } }
+        Azure.Security.Attestation.TpmAttestationRequest System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.TpmAttestationRequest System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TpmAttestationResponse
+    public partial class TpmAttestationResponse : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationResponse>
     {
         internal TpmAttestationResponse() { }
         public System.BinaryData Data { get { throw null; } }
+        Azure.Security.Attestation.TpmAttestationResponse System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.TpmAttestationResponse System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Azure.Security.Attestation.Models
+{
+    public static partial class SecurityAttestationModelFactory
+    {
+        public static Azure.Security.Attestation.StoredAttestationPolicy StoredAttestationPolicy(string attestationPolicy = null) { throw null; }
     }
 }

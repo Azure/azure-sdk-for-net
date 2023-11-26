@@ -14,13 +14,5 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Azure Open AI Dialog. </summary>
     public partial class AzureOpenAIDialog : BaseDialog
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIDialog"/>. </summary>
-        /// <param name="kind"> Determines the type of the dialog. </param>
-        /// <param name="context"> Dialog context. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, context, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
     }
 }

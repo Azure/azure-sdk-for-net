@@ -49,6 +49,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCodes"/>. </summary>
         /// <param name="areaCodes"> Represents a list of available toll-free area codes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="areaCodes"/> is null. </exception>
+        internal PhoneNumberAreaCodes(IEnumerable<PhoneNumberAreaCode> areaCodes)
+        {
+            Argument.AssertNotNull(areaCodes, nameof(areaCodes));
+
+            AreaCodes = areaCodes.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCodes"/>. </summary>
+        /// <param name="areaCodes"> Represents a list of available toll-free area codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PhoneNumberAreaCodes(IReadOnlyList<PhoneNumberAreaCode> areaCodes, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -62,5 +72,10 @@ namespace Azure.Communication.PhoneNumbers
         internal PhoneNumberAreaCodes()
         {
         }
+
+        /// <summary> Represents a list of available toll-free area codes. </summary>
+        public IReadOnlyList<PhoneNumberAreaCode> AreaCodes { get; }
+        /// <summary> Represents the URL link to the next page. </summary>
+        public string NextLink { get; }
     }
 }

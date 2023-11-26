@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,12 +16,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of an expression rule. </summary>
         /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public ExpressionRouterRule(string expression) : this(RouterRuleKind.Expression, ExpressionRouterRuleLanguage.PowerFx.ToString(), expression)
+        public ExpressionRouterRule(string expression) : this(RouterRuleKind.Expression, new Dictionary<string, BinaryData>(), ExpressionRouterRuleLanguage.PowerFx.ToString(), expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))

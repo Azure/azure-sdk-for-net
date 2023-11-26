@@ -34,18 +34,28 @@ namespace Azure.Quantum.Jobs
 }
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class BlobDetails
+    public partial class BlobDetails : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.BlobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.BlobDetails>
     {
         public BlobDetails(string containerName) { }
         public string BlobName { get { throw null; } set { } }
         public string ContainerName { get { throw null; } }
+        Azure.Quantum.Jobs.Models.BlobDetails System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.BlobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.BlobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.BlobDetails System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.BlobDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.BlobDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.BlobDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CostEstimate
+    public partial class CostEstimate : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.CostEstimate>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.CostEstimate>
     {
         internal CostEstimate() { }
         public string CurrencyCode { get { throw null; } }
         public float? EstimatedTotal { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.UsageEvent> Events { get { throw null; } }
+        Azure.Quantum.Jobs.Models.CostEstimate System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.CostEstimate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.CostEstimate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.CostEstimate System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.CostEstimate>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.CostEstimate>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.CostEstimate>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DimensionScope : System.IEquatable<Azure.Quantum.Jobs.Models.DimensionScope>
@@ -65,13 +75,18 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator !=(Azure.Quantum.Jobs.Models.DimensionScope left, Azure.Quantum.Jobs.Models.DimensionScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ErrorData
+    public partial class ErrorData : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ErrorData>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ErrorData>
     {
         internal ErrorData() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.Quantum.Jobs.Models.ErrorData System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ErrorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ErrorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.ErrorData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ErrorData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ErrorData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ErrorData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JobDetails
+    public partial class JobDetails : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JobDetails>
     {
         public JobDetails(string containerUri, string inputDataFormat, string providerId, string target) { }
         public System.DateTimeOffset? BeginExecutionTime { get { throw null; } }
@@ -93,6 +108,11 @@ namespace Azure.Quantum.Jobs.Models
         public Azure.Quantum.Jobs.Models.JobStatus? Status { get { throw null; } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
+        Azure.Quantum.Jobs.Models.JobDetails System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.JobDetails System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JobDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JobDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JobDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStatus : System.IEquatable<Azure.Quantum.Jobs.Models.JobStatus>
@@ -115,13 +135,18 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator !=(Azure.Quantum.Jobs.Models.JobStatus left, Azure.Quantum.Jobs.Models.JobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JsonPatchDocument
+    public partial class JsonPatchDocument : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>
     {
         public JsonPatchDocument(Azure.Quantum.Jobs.Models.JsonPatchOperation op, string path) { }
         public string From { get { throw null; } set { } }
         public Azure.Quantum.Jobs.Models.JsonPatchOperation Op { get { throw null; } }
         public string Path { get { throw null; } }
         public object Value { get { throw null; } set { } }
+        Azure.Quantum.Jobs.Models.JsonPatchDocument System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.JsonPatchDocument System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.JsonPatchDocument>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JsonPatchOperation : System.IEquatable<Azure.Quantum.Jobs.Models.JsonPatchOperation>
@@ -182,14 +207,19 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator !=(Azure.Quantum.Jobs.Models.ProviderAvailability left, Azure.Quantum.Jobs.Models.ProviderAvailability right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProviderStatus
+    public partial class ProviderStatus : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ProviderStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ProviderStatus>
     {
         internal ProviderStatus() { }
         public Azure.Quantum.Jobs.Models.ProviderAvailability? CurrentAvailability { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.TargetStatus> Targets { get { throw null; } }
+        Azure.Quantum.Jobs.Models.ProviderStatus System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ProviderStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.ProviderStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.ProviderStatus System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ProviderStatus>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ProviderStatus>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.ProviderStatus>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuantumJobQuota
+    public partial class QuantumJobQuota : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>
     {
         internal QuantumJobQuota() { }
         public string Dimension { get { throw null; } }
@@ -199,18 +229,30 @@ namespace Azure.Quantum.Jobs.Models
         public string ProviderId { get { throw null; } }
         public Azure.Quantum.Jobs.Models.DimensionScope? Scope { get { throw null; } }
         public float? Utilization { get { throw null; } }
+        Azure.Quantum.Jobs.Models.QuantumJobQuota System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.QuantumJobQuota System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuota>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuantumJobQuotaList
+    public partial class QuantumJobQuotaList : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>
     {
         internal QuantumJobQuotaList() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.QuantumJobQuota> Value { get { throw null; } }
+        Azure.Quantum.Jobs.Models.QuantumJobQuotaList System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.QuantumJobQuotaList System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.QuantumJobQuotaList>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class QuantumJobsModelFactory
     {
+        public static Azure.Quantum.Jobs.Models.BlobDetails BlobDetails(string containerName = null, string blobName = null) { throw null; }
         public static Azure.Quantum.Jobs.Models.CostEstimate CostEstimate(string currencyCode = null, System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.UsageEvent> events = null, float? estimatedTotal = default(float?)) { throw null; }
         public static Azure.Quantum.Jobs.Models.ErrorData ErrorData(string code = null, string message = null) { throw null; }
         public static Azure.Quantum.Jobs.Models.JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, System.Collections.Generic.IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, Azure.Quantum.Jobs.Models.JobStatus? status = default(Azure.Quantum.Jobs.Models.JobStatus?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? beginExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? endExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? cancellationTime = default(System.DateTimeOffset?), Azure.Quantum.Jobs.Models.CostEstimate costEstimate = null, Azure.Quantum.Jobs.Models.ErrorData errorData = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.JsonPatchDocument JsonPatchDocument(Azure.Quantum.Jobs.Models.JsonPatchOperation op = default(Azure.Quantum.Jobs.Models.JsonPatchOperation), string path = null, object value = null, string from = null) { throw null; }
         public static Azure.Quantum.Jobs.Models.ProviderStatus ProviderStatus(string id = null, Azure.Quantum.Jobs.Models.ProviderAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.ProviderAvailability?), System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.TargetStatus> targets = null) { throw null; }
         public static Azure.Quantum.Jobs.Models.QuantumJobQuota QuantumJobQuota(string dimension = null, Azure.Quantum.Jobs.Models.DimensionScope? scope = default(Azure.Quantum.Jobs.Models.DimensionScope?), string providerId = null, float? utilization = default(float?), float? holds = default(float?), float? limit = default(float?), Azure.Quantum.Jobs.Models.MeterPeriod? period = default(Azure.Quantum.Jobs.Models.MeterPeriod?)) { throw null; }
         public static Azure.Quantum.Jobs.Models.QuantumJobQuotaList QuantumJobQuotaList(System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.QuantumJobQuota> value = null, string nextLink = null) { throw null; }
@@ -218,10 +260,15 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.TargetStatus TargetStatus(string id = null, Azure.Quantum.Jobs.Models.TargetAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.TargetAvailability?), long? averageQueueTime = default(long?), string statusPage = null) { throw null; }
         public static Azure.Quantum.Jobs.Models.UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = default(float?), float? amountConsumed = default(float?), float? unitPrice = default(float?)) { throw null; }
     }
-    public partial class SasUriResponse
+    public partial class SasUriResponse : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.SasUriResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.SasUriResponse>
     {
         internal SasUriResponse() { }
         public string SasUri { get { throw null; } }
+        Azure.Quantum.Jobs.Models.SasUriResponse System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.SasUriResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.SasUriResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.SasUriResponse System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.SasUriResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.SasUriResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.SasUriResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetAvailability : System.IEquatable<Azure.Quantum.Jobs.Models.TargetAvailability>
@@ -242,15 +289,20 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator !=(Azure.Quantum.Jobs.Models.TargetAvailability left, Azure.Quantum.Jobs.Models.TargetAvailability right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TargetStatus
+    public partial class TargetStatus : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.TargetStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.TargetStatus>
     {
         internal TargetStatus() { }
         public long? AverageQueueTime { get { throw null; } }
         public Azure.Quantum.Jobs.Models.TargetAvailability? CurrentAvailability { get { throw null; } }
         public string Id { get { throw null; } }
         public string StatusPage { get { throw null; } }
+        Azure.Quantum.Jobs.Models.TargetStatus System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.TargetStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.TargetStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.TargetStatus System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.TargetStatus>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.TargetStatus>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.TargetStatus>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UsageEvent
+    public partial class UsageEvent : System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.UsageEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.UsageEvent>
     {
         internal UsageEvent() { }
         public float? AmountBilled { get { throw null; } }
@@ -259,5 +311,10 @@ namespace Azure.Quantum.Jobs.Models
         public string DimensionName { get { throw null; } }
         public string MeasureUnit { get { throw null; } }
         public float? UnitPrice { get { throw null; } }
+        Azure.Quantum.Jobs.Models.UsageEvent System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.UsageEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Quantum.Jobs.Models.UsageEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Quantum.Jobs.Models.UsageEvent System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.UsageEvent>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.UsageEvent>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Quantum.Jobs.Models.UsageEvent>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

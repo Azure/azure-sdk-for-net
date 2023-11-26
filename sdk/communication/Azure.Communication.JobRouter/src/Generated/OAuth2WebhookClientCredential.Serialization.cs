@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class OAuth2WebhookClientCredential : IUtf8JsonSerializable, IJsonModel<OAuth2WebhookClientCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OAuth2WebhookClientCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<OAuth2WebhookClientCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OAuth2WebhookClientCredential>)this).GetFormatFromOptions(options) : options.Format;

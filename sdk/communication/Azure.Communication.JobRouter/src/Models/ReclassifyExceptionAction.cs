@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public string ClassificationPolicyId { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))

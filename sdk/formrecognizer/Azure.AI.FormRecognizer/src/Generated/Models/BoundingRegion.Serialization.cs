@@ -9,6 +9,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,12 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WritePropertyName("pageNumber"u8);
             writer.WriteNumberValue(PageNumber);
             writer.WritePropertyName("polygon"u8);
-            writer.WriteStartArray();
-            foreach (var item in Polygon)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
+            WriteBoundingPolygon(writer);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,7 +71,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             options ??= new ModelReaderWriterOptions("W");
 
             int pageNumber = default;
-            IReadOnlyList<float> polygon = default;
+            IReadOnlyList<PointF> polygon = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,12 +83,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("polygon"u8))
                 {
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    polygon = array;
+                    ReadBoundingPolygon(property, ref polygon);
                     continue;
                 }
                 if (options.Format != "W")
