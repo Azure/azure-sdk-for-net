@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveOutputLiveOutputsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveOutputLiveOutputsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

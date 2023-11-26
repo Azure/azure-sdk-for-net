@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The CustomSeasonality. </summary>
     public partial class CustomSeasonality : ForecastingSeasonality
     {
-        /// <summary> Initializes a new instance of CustomSeasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/>. </summary>
         /// <param name="value"> [Required] Seasonality value. </param>
         public CustomSeasonality(int value)
         {
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Mode = SeasonalityMode.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomSeasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Seasonality value. </param>
-        internal CustomSeasonality(SeasonalityMode mode, int value) : base(mode)
+        internal CustomSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, int value) : base(mode, serializedAdditionalRawData)
         {
             Value = value;
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/> for deserialization. </summary>
+        internal CustomSeasonality()
+        {
         }
 
         /// <summary> [Required] Seasonality value. </summary>

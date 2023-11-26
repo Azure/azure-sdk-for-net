@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAssistEnabledConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningAssistEnabledConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningAssistEnabledConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAssistEnabledConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningAssistEnabledConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistEnabledConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningAssistEnabledConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("inferencingComputeBinding"u8);
             writer.WriteStringValue(InferencingComputeBinding);
@@ -21,11 +33,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(TrainingComputeBinding);
             writer.WritePropertyName("mlAssist"u8);
             writer.WriteStringValue(MlAssist.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAssistEnabledConfiguration DeserializeMachineLearningAssistEnabledConfiguration(JsonElement element)
+        MachineLearningAssistEnabledConfiguration IJsonModel<MachineLearningAssistEnabledConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistEnabledConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MachineLearningAssistEnabledConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAssistEnabledConfiguration(document.RootElement, options);
+        }
+
+        internal static MachineLearningAssistEnabledConfiguration DeserializeMachineLearningAssistEnabledConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string inferencingComputeBinding = default;
             string trainingComputeBinding = default;
             MLAssistConfigurationType mlAssist = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inferencingComputeBinding"u8))
@@ -50,8 +93,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mlAssist = new MLAssistConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningAssistEnabledConfiguration(mlAssist, inferencingComputeBinding, trainingComputeBinding);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningAssistEnabledConfiguration(mlAssist, serializedAdditionalRawData, inferencingComputeBinding, trainingComputeBinding);
         }
+
+        BinaryData IPersistableModel<MachineLearningAssistEnabledConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistEnabledConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningAssistEnabledConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningAssistEnabledConfiguration IPersistableModel<MachineLearningAssistEnabledConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistEnabledConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningAssistEnabledConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MachineLearningAssistEnabledConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningAssistEnabledConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,12 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable
+    internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable, IJsonModel<WholeMetricConfigurationPatch>
     {
+        void IJsonModel<WholeMetricConfigurationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WholeMetricConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WholeMetricConfigurationPatch)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConditionOperator))
+            {
+                writer.WritePropertyName("conditionOperator"u8);
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
+            }
+            if (Optional.IsDefined(SmartDetectionCondition))
+            {
+                writer.WritePropertyName("smartDetectionCondition"u8);
+                writer.WriteObjectValue(SmartDetectionCondition);
+            }
+            if (Optional.IsDefined(HardThresholdCondition))
+            {
+                writer.WritePropertyName("hardThresholdCondition"u8);
+                writer.WriteObjectValue(HardThresholdCondition);
+            }
+            if (Optional.IsDefined(ChangeThresholdCondition))
+            {
+                writer.WritePropertyName("changeThresholdCondition"u8);
+                writer.WriteObjectValue(ChangeThresholdCondition);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WholeMetricConfigurationPatch IJsonModel<WholeMetricConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WholeMetricConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WholeMetricConfigurationPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWholeMetricConfigurationPatch(document.RootElement, options);
+        }
+
+        internal static WholeMetricConfigurationPatch DeserializeWholeMetricConfigurationPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DetectionConditionOperator> conditionOperator = default;
+            Optional<SmartDetectionConditionPatch> smartDetectionCondition = default;
+            Optional<HardThresholdConditionPatch> hardThresholdCondition = default;
+            Optional<ChangeThresholdConditionPatch> changeThresholdCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("conditionOperator"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    conditionOperator = new DetectionConditionOperator(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("smartDetectionCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smartDetectionCondition = SmartDetectionConditionPatch.DeserializeSmartDetectionConditionPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("hardThresholdCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardThresholdCondition = HardThresholdConditionPatch.DeserializeHardThresholdConditionPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("changeThresholdCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    changeThresholdCondition = ChangeThresholdConditionPatch.DeserializeChangeThresholdConditionPatch(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WholeMetricConfigurationPatch(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<WholeMetricConfigurationPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WholeMetricConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WholeMetricConfigurationPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WholeMetricConfigurationPatch IPersistableModel<WholeMetricConfigurationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WholeMetricConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWholeMetricConfigurationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WholeMetricConfigurationPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WholeMetricConfigurationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

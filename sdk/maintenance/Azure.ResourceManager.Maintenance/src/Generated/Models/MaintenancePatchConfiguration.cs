@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Input configuration for a patch run. </summary>
     public partial class MaintenancePatchConfiguration
     {
-        /// <summary> Initializes a new instance of MaintenancePatchConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenancePatchConfiguration"/>. </summary>
         public MaintenancePatchConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenancePatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenancePatchConfiguration"/>. </summary>
         /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
         /// <param name="windowsParameters"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
         /// <param name="linuxParameters"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
-        internal MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting, MaintenanceWindowsPatchSettings windowsParameters, MaintenanceLinuxPatchSettings linuxParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting, MaintenanceWindowsPatchSettings windowsParameters, MaintenanceLinuxPatchSettings linuxParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RebootSetting = rebootSetting;
             WindowsParameters = windowsParameters;
             LinuxParameters = linuxParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </summary>

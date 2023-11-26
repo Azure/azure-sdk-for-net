@@ -14,13 +14,45 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The configuration for Iot Hub device and module twins. </summary>
     public partial class TwinConfiguration
     {
-        /// <summary> Initializes a new instance of TwinConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TwinConfiguration"/>. </summary>
         public TwinConfiguration()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TwinConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinConfiguration"/>. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="schemaVersion"> The schema version of the configuration. </param>
         /// <param name="labels"> The key-value pairs used to describe the configuration. </param>
@@ -32,7 +64,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="systemMetrics"> The system metrics computed by the IoT Hub that cannot be customized. </param>
         /// <param name="metrics"> The custom metrics specified by the developer as queries against twin reported properties. </param>
         /// <param name="etag"> The ETag of the configuration. </param>
-        internal TwinConfiguration(string id, string schemaVersion, IDictionary<string, string> labels, ConfigurationContent content, string targetCondition, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, int? priority, ConfigurationMetrics systemMetrics, ConfigurationMetrics metrics, string etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TwinConfiguration(string id, string schemaVersion, IDictionary<string, string> labels, ConfigurationContent content, string targetCondition, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, int? priority, ConfigurationMetrics systemMetrics, ConfigurationMetrics metrics, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SchemaVersion = schemaVersion;
@@ -45,6 +78,7 @@ namespace Azure.IoT.Hub.Service.Models
             SystemMetrics = systemMetrics;
             Metrics = metrics;
             Etag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the configuration. </summary>

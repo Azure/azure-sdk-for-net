@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,19 +15,53 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The MediaAccessControl. </summary>
     public partial class MediaAccessControl
     {
-        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaAccessControl"/>. </summary>
         public MediaAccessControl()
         {
             IPAllowList = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAccessControl"/>. </summary>
         /// <param name="defaultAction"> The behavior for IP access control in Key Delivery. </param>
         /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to 'Allow', the IP allow list must be empty. </param>
-        internal MediaAccessControl(IPAccessControlDefaultAction? defaultAction, IList<IPAddress> ipAllowList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaAccessControl(IPAccessControlDefaultAction? defaultAction, IList<IPAddress> ipAllowList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             IPAllowList = ipAllowList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The behavior for IP access control in Key Delivery. </summary>

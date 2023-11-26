@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetLogicWorkflows", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetLogicWorkflows", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "MockableLogicSubscriptionResource.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

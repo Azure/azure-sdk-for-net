@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetIotCentralApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetIotCentralApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

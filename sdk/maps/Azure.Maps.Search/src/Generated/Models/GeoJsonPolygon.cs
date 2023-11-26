@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> A valid `GeoJSON Polygon` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.6) for details. </summary>
     internal partial class GeoJsonPolygon : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of GeoJsonPolygon. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates)
@@ -26,13 +26,19 @@ namespace Azure.Maps.Search.Models
             Type = GeoJsonObjectType.GeoJsonPolygon;
         }
 
-        /// <summary> Initializes a new instance of GeoJsonPolygon. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
-        internal GeoJsonPolygon(GeoJsonObjectType type, IList<IList<IList<double>>> coordinates) : base(type)
+        internal GeoJsonPolygon(GeoJsonObjectType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<IList<double>>> coordinates) : base(type, serializedAdditionalRawData)
         {
             Coordinates = coordinates;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/> for deserialization. </summary>
+        internal GeoJsonPolygon()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>

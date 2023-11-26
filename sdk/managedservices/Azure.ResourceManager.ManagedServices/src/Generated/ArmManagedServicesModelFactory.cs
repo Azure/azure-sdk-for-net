@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmManagedServicesModelFactory
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationData ManagedServicesRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationData(id, name, resourceType, systemData, properties, plan, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
+            return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentData ManagedServicesRegistrationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentProperties properties = null)
         {
-            return new ManagedServicesRegistrationAssignmentData(id, name, resourceType, systemData, properties);
+            return new ManagedServicesRegistrationAssignmentData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <param name="provisioningState"> The current provisioning state of the registration assignment. </param>
         /// <param name="registrationDefinition"> The registration definition associated with the registration assignment. </param>
         /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentProperties ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId = null, ManagedServicesProvisioningState? provisioningState = null, ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = null)
         {
-            return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentRegistrationData ManagedServicesRegistrationAssignmentRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, resourceType, systemData, properties, plan, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesMarketplaceRegistrationData ManagedServicesMarketplaceRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesMarketplaceRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesMarketplaceRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesMarketplaceRegistrationData(id, name, resourceType, systemData, properties, plan, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations?.ToList(), eligibleAuthorizations?.ToList(), offerDisplayName, publisherDisplayName, planDisplayName);
+            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations?.ToList(), eligibleAuthorizations?.ToList(), offerDisplayName, publisherDisplayName, planDisplayName, serializedAdditionalRawData: null);
         }
     }
 }
