@@ -52,8 +52,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -92,8 +92,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -842,8 +842,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -882,8 +882,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
