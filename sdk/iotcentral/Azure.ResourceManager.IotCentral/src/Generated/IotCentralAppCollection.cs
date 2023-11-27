@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotCentralAppResource" /> and their operations.
-    /// Each <see cref="IotCentralAppResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="IotCentralAppCollection" /> instance call the GetIotCentralApps method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="IotCentralAppResource"/> and their operations.
+    /// Each <see cref="IotCentralAppResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="IotCentralAppCollection"/> instance call the GetIotCentralApps method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class IotCentralAppCollection : ArmCollection, IEnumerable<IotCentralAppResource>, IAsyncEnumerable<IotCentralAppResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotCentralAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotCentralAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

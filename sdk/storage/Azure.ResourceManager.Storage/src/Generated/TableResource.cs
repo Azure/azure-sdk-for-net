@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a Table along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TableServiceResource" /> using the GetTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TableServiceResource"/> using the GetTable method.
     /// </summary>
     public partial class TableResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TableResource(ArmClient client, TableData data) : this(client, data.Id)

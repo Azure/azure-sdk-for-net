@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> and their operations.
-    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentCollection" /> instance call the GetAutomanageVmConfigurationProfileAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> and their operations.
+    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentCollection"/> instance call the GetAutomanageVmConfigurationProfileAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class AutomanageVmConfigurationProfileAssignmentCollection : ArmCollection, IEnumerable<AutomanageVmConfigurationProfileAssignmentResource>, IAsyncEnumerable<AutomanageVmConfigurationProfileAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageVmConfigurationProfileAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageVmConfigurationProfileAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

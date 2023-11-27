@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBLocation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBLocationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBLocationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCosmosDBLocation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBLocationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBLocationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCosmosDBLocation method.
     /// </summary>
     public partial class CosmosDBLocationResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBLocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBLocationResource(ArmClient client, CosmosDBLocationData data) : this(client, data.Id)

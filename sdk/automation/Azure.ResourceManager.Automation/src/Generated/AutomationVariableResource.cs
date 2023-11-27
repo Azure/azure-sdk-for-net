@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationVariable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationVariableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationVariableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationVariable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationVariableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationVariableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationVariable method.
     /// </summary>
     public partial class AutomationVariableResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationVariableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationVariableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationVariableResource(ArmClient client, AutomationVariableData data) : this(client, data.Id)

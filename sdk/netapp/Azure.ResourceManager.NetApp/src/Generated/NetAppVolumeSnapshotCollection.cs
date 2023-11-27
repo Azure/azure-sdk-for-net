@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppVolumeSnapshotResource" /> and their operations.
-    /// Each <see cref="NetAppVolumeSnapshotResource" /> in the collection will belong to the same instance of <see cref="NetAppVolumeResource" />.
-    /// To get a <see cref="NetAppVolumeSnapshotCollection" /> instance call the GetNetAppVolumeSnapshots method from an instance of <see cref="NetAppVolumeResource" />.
+    /// A class representing a collection of <see cref="NetAppVolumeSnapshotResource"/> and their operations.
+    /// Each <see cref="NetAppVolumeSnapshotResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
+    /// To get a <see cref="NetAppVolumeSnapshotCollection"/> instance call the GetNetAppVolumeSnapshots method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
     public partial class NetAppVolumeSnapshotCollection : ArmCollection, IEnumerable<NetAppVolumeSnapshotResource>, IAsyncEnumerable<NetAppVolumeSnapshotResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppVolumeSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

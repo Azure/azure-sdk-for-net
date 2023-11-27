@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningRegistryDataVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningRegistryDataVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningRegistryDataContainerResource" />.
-    /// To get a <see cref="MachineLearningRegistryDataVersionCollection" /> instance call the GetMachineLearningRegistryDataVersions method from an instance of <see cref="MachineLearningRegistryDataContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningRegistryDataVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningRegistryDataVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryDataContainerResource"/>.
+    /// To get a <see cref="MachineLearningRegistryDataVersionCollection"/> instance call the GetMachineLearningRegistryDataVersions method from an instance of <see cref="MachineLearningRegistryDataContainerResource"/>.
     /// </summary>
     public partial class MachineLearningRegistryDataVersionCollection : ArmCollection, IEnumerable<MachineLearningRegistryDataVersionResource>, IAsyncEnumerable<MachineLearningRegistryDataVersionResource>
     {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningRegistryDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningRegistryDataVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningRegistryDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningRegistryDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningRegistryDataVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);

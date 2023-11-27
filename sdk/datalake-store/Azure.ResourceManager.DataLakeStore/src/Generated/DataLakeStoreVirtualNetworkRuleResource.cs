@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
     /// A Class representing a DataLakeStoreVirtualNetworkRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeStoreVirtualNetworkRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeStoreVirtualNetworkRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeStoreAccountResource" /> using the GetDataLakeStoreVirtualNetworkRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeStoreVirtualNetworkRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeStoreVirtualNetworkRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeStoreAccountResource"/> using the GetDataLakeStoreVirtualNetworkRule method.
     /// </summary>
     public partial class DataLakeStoreVirtualNetworkRuleResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreVirtualNetworkRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeStoreVirtualNetworkRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeStoreVirtualNetworkRuleResource(ArmClient client, DataLakeStoreVirtualNetworkRuleData data) : this(client, data.Id)

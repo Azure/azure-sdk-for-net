@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
     /// A Class representing an AttestationPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttestationPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttestationPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AttestationProviderResource" /> using the GetAttestationPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttestationPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAttestationPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AttestationProviderResource"/> using the GetAttestationPrivateEndpointConnection method.
     /// </summary>
     public partial class AttestationPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Attestation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttestationPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AttestationPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttestationPrivateEndpointConnectionResource(ArmClient client, AttestationPrivateEndpointConnectionData data) : this(client, data.Id)

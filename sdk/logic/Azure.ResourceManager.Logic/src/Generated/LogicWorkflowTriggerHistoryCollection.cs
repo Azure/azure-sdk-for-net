@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowTriggerHistoryResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowTriggerHistoryResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowTriggerResource" />.
-    /// To get a <see cref="LogicWorkflowTriggerHistoryCollection" /> instance call the GetLogicWorkflowTriggerHistories method from an instance of <see cref="LogicWorkflowTriggerResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowTriggerHistoryResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowTriggerHistoryResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowTriggerResource"/>.
+    /// To get a <see cref="LogicWorkflowTriggerHistoryCollection"/> instance call the GetLogicWorkflowTriggerHistories method from an instance of <see cref="LogicWorkflowTriggerResource"/>.
     /// </summary>
     public partial class LogicWorkflowTriggerHistoryCollection : ArmCollection, IEnumerable<LogicWorkflowTriggerHistoryResource>, IAsyncEnumerable<LogicWorkflowTriggerHistoryResource>
     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowTriggerHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowTriggerHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowTriggerHistoryResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowTriggerHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowTriggerHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowTriggerHistoryResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);

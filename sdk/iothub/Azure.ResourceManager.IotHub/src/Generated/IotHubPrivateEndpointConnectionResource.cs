@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A Class representing an IotHubPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotHubPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotHubPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource" /> using the GetIotHubPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotHubPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotHubPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubPrivateEndpointConnection method.
     /// </summary>
     public partial class IotHubPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotHubPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotHubPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotHubPrivateEndpointConnectionResource(ArmClient client, IotHubPrivateEndpointConnectionData data) : this(client, data.Id)

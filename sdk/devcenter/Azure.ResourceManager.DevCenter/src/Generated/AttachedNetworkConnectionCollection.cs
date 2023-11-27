@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AttachedNetworkConnectionResource" /> and their operations.
-    /// Each <see cref="AttachedNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="DevCenterResource" />.
-    /// To get an <see cref="AttachedNetworkConnectionCollection" /> instance call the GetAttachedNetworkConnections method from an instance of <see cref="DevCenterResource" />.
+    /// A class representing a collection of <see cref="AttachedNetworkConnectionResource"/> and their operations.
+    /// Each <see cref="AttachedNetworkConnectionResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
+    /// To get an <see cref="AttachedNetworkConnectionCollection"/> instance call the GetAttachedNetworkConnections method from an instance of <see cref="DevCenterResource"/>.
     /// </summary>
     public partial class AttachedNetworkConnectionCollection : ArmCollection, IEnumerable<AttachedNetworkConnectionResource>, IAsyncEnumerable<AttachedNetworkConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttachedNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttachedNetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttachedNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttachedNetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

@@ -10,7 +10,7 @@
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
-    <PackageIconPath>..\$(PackageIcon)</PackageIconPath>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>
 
   <ItemGroup>

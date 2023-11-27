@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningComponentContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningComponentContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningComponentContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningComponentContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningComponentContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningComponentContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningComponentContainer method.
     /// </summary>
     public partial class MachineLearningComponentContainerResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningComponentContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningComponentContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningComponentContainerResource(ArmClient client, MachineLearningComponentContainerData data) : this(client, data.Id)

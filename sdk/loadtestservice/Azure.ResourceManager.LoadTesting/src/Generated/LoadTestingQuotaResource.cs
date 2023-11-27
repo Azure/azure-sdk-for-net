@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
     /// A Class representing a LoadTestingQuota along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LoadTestingQuotaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLoadTestingQuotaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetLoadTestingQuota method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadTestingQuotaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLoadTestingQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLoadTestingQuota method.
     /// </summary>
     public partial class LoadTestingQuotaResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LoadTestingQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadTestingQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LoadTestingQuotaResource(ArmClient client, LoadTestingQuotaData data) : this(client, data.Id)

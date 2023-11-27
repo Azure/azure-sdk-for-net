@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)

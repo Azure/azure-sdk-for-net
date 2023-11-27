@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningFeatureStoreEntityContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningFeatureStoreEntityContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningFeatureStoreEntityContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningFeatureStoreEntityContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningFeatureStoreEntityContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningFeatureStoreEntityContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningFeatureStoreEntityContainer method.
     /// </summary>
     public partial class MachineLearningFeatureStoreEntityContainerResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningFeatureStoreEntityContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureStoreEntityContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningFeatureStoreEntityContainerResource(ArmClient client, MachineLearningFeatureStoreEntityContainerData data) : this(client, data.Id)

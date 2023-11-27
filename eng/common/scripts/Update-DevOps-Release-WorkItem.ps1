@@ -13,6 +13,8 @@ param(
   [string]$packageRepoPath = "NA",
   [string]$packageType = "client",
   [string]$packageNewLibrary = "true",
+  [string]$relatedWorkItemId = $null,
+  [string]$tag = $null,
   [string]$devops_pat = $env:DEVOPS_PAT
 )
 #Requires -Version 6.0
@@ -23,24 +25,29 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
   exit 1
 }
 
-az account show *> $null
-if (!$?) {
-  Write-Host 'Running az login...'
-  az login *> $null
+. (Join-Path $PSScriptRoot SemVer.ps1)
+. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
+
+if (!$devops_pat) {
+  az account show *> $null
+  if (!$?) {
+    Write-Host 'Running az login...'
+    az login *> $null
+  }
+}
+else {
+  # Login using PAT
+  LoginToAzureDevops $devops_pat
 }
 
 az extension show -n azure-devops *> $null
 if (!$?){
-  Write-Host 'Installing azure-devops extension'
   az extension add --name azure-devops
 } else {
   # Force update the extension to the latest version if it was already installed
   # this is needed to ensure we have the authentication issue fixed from earlier versions
   az extension update -n azure-devops *> $null
 }
-
-. (Join-Path $PSScriptRoot SemVer.ps1)
-. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
 CheckDevOpsAccess
 
@@ -69,8 +76,12 @@ $plannedVersions = @(
     Date = $plannedDate
   }
 )
+$ignoreReleasePlannerTests = $true
+if ($tag -and  $tag.Contains("Release Planner App Test")) {
+  $ignoreReleasePlannerTests = $false
+}
 
-$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false
+$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
 
 if (!$workItem) {
   Write-Host "Something failed as we don't have a work-item so exiting."

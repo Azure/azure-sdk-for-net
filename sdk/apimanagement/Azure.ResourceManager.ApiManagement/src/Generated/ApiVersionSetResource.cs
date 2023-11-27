@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiVersionSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiVersionSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiVersionSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiVersionSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiVersionSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiVersionSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiVersionSet method.
     /// </summary>
     public partial class ApiVersionSetResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiVersionSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiVersionSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiVersionSetResource(ArmClient client, ApiVersionSetData data) : this(client, data.Id)

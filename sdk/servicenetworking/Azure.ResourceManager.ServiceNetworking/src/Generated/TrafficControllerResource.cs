@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// A Class representing a TrafficController along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficControllerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficControllerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetTrafficController method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficControllerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficControllerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTrafficController method.
     /// </summary>
     public partial class TrafficControllerResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficControllerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficControllerResource(ArmClient client, TrafficControllerData data) : this(client, data.Id)

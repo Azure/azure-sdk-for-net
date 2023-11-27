@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an ExtendedDatabaseBlobAuditingPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtendedDatabaseBlobAuditingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetExtendedDatabaseBlobAuditingPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtendedDatabaseBlobAuditingPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetExtendedDatabaseBlobAuditingPolicy method.
     /// </summary>
     public partial class ExtendedDatabaseBlobAuditingPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtendedDatabaseBlobAuditingPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtendedDatabaseBlobAuditingPolicyResource(ArmClient client, ExtendedDatabaseBlobAuditingPolicyData data) : this(client, data.Id)

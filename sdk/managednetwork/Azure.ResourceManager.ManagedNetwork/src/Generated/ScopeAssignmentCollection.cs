@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScopeAssignmentResource" /> and their operations.
-    /// Each <see cref="ScopeAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ScopeAssignmentCollection" /> instance call the GetScopeAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ScopeAssignmentResource"/> and their operations.
+    /// Each <see cref="ScopeAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ScopeAssignmentCollection"/> instance call the GetScopeAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ScopeAssignmentCollection : ArmCollection, IEnumerable<ScopeAssignmentResource>, IAsyncEnumerable<ScopeAssignmentResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScopeAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScopeAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);

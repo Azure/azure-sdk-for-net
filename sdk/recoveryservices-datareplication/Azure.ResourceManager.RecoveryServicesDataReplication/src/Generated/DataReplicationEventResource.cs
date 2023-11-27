@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource" /> using the GetDataReplicationEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationEvent method.
     /// </summary>
     public partial class DataReplicationEventResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationEventResource(ArmClient client, DataReplicationEventData data) : this(client, data.Id)

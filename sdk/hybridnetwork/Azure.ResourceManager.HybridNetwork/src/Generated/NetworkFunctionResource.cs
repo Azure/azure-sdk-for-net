@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing a NetworkFunction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFunctionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFunctionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFunction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFunctionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFunctionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFunction method.
     /// </summary>
     public partial class NetworkFunctionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFunctionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFunctionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFunctionResource(ArmClient client, NetworkFunctionData data) : this(client, data.Id)

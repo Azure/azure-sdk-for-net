@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoScriptResource" /> and their operations.
-    /// Each <see cref="KustoScriptResource" /> in the collection will belong to the same instance of <see cref="KustoDatabaseResource" />.
-    /// To get a <see cref="KustoScriptCollection" /> instance call the GetKustoScripts method from an instance of <see cref="KustoDatabaseResource" />.
+    /// A class representing a collection of <see cref="KustoScriptResource"/> and their operations.
+    /// Each <see cref="KustoScriptResource"/> in the collection will belong to the same instance of <see cref="KustoDatabaseResource"/>.
+    /// To get a <see cref="KustoScriptCollection"/> instance call the GetKustoScripts method from an instance of <see cref="KustoDatabaseResource"/>.
     /// </summary>
     public partial class KustoScriptCollection : ArmCollection, IEnumerable<KustoScriptResource>, IAsyncEnumerable<KustoScriptResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

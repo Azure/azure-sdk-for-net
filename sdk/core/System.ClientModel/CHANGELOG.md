@@ -1,7 +1,7 @@
 # Release History
 
-## 1.0.0-beta.1 (2023-10-16)
+## 1.0.0-beta.1 (2023-11-22)
 
 ### Features Added
 
-- Initial release of preview package containing building blocks for clients that call cloud services.
+- ModelReaderWriter APIs for reading and writing models in different formats.

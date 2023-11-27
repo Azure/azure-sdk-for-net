@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExperimentExecutionDetailResource" /> and their operations.
-    /// Each <see cref="ExperimentExecutionDetailResource" /> in the collection will belong to the same instance of <see cref="ExperimentResource" />.
-    /// To get an <see cref="ExperimentExecutionDetailCollection" /> instance call the GetExperimentExecutionDetails method from an instance of <see cref="ExperimentResource" />.
+    /// A class representing a collection of <see cref="ExperimentExecutionDetailResource"/> and their operations.
+    /// Each <see cref="ExperimentExecutionDetailResource"/> in the collection will belong to the same instance of <see cref="ExperimentResource"/>.
+    /// To get an <see cref="ExperimentExecutionDetailCollection"/> instance call the GetExperimentExecutionDetails method from an instance of <see cref="ExperimentResource"/>.
     /// </summary>
     public partial class ExperimentExecutionDetailCollection : ArmCollection, IEnumerable<ExperimentExecutionDetailResource>, IAsyncEnumerable<ExperimentExecutionDetailResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentExecutionDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentExecutionDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentExecutionDetailResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentExecutionDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentExecutionDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentExecutionDetailResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
