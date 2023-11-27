@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Pipeline policy to buffer response content or add a timeout to response content managed by the client
+/// Pipeline policy to buffer response content or add a timeout to response content
+/// managed by the client.
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
@@ -237,5 +238,4 @@ public class ResponseBufferingPolicy : PipelinePolicy
     private struct NetworkTimeoutPropertyKey { }
 
     #endregion
-
 }
