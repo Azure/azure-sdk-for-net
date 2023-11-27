@@ -9,13 +9,13 @@ namespace Azure.Core
 {
     /// <summary>
     /// Decorates an operation whose invocation should potentially be audited
-    /// by Azure service implementations.  Auditing could be recommended
+    /// by Azure service implementations. Auditing could be recommended
     /// because the operation changes critical service state, creates delegated
     /// access to a resource, affects data retention, etc.  It's a best guess
     /// from the service team that the operation should be audited to mitigate
     /// any potential future issues.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method)]
     internal class CallerShouldAuditAttribute : Attribute
     {
         /// <summary>
