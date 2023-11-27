@@ -175,7 +175,6 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
                 GetNewObjectName(),
             };
-            Console.WriteLine($"files: {string.Join(", ", files)}");
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await SetupDirectoryAsync(

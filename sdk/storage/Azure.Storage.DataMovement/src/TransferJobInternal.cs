@@ -346,8 +346,6 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus jobPartStatus = args.TransferStatus;
             DataTransferState jobState = _dataTransfer._state.GetTransferStatus().State;
 
-            Console.WriteLine($"JobPartEvent - {jobPartStatus.State}, {jobPartStatus.HasSkippedItems}, {jobPartStatus.HasFailedItems} | Job {jobState}");
-
             // Keep track of paused, failed, and skipped which we will use to determine final job status
             // Since this is each Job Part coming in, the state of skipped or failed is mutually exclusive.
             if (jobPartStatus.State == DataTransferState.Paused)
@@ -388,7 +386,6 @@ namespace Azure.Storage.DataMovement
                     jobState == DataTransferState.Pausing ||
                     jobState == DataTransferState.Stopping))
             {
-                Console.WriteLine($"Decrementing job part count - {_pendingJobParts}");
                 Interlocked.Decrement(ref _pendingJobParts);
 
                 if (_enumerationComplete)
@@ -400,10 +397,8 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStateChangedAsync(DataTransferState state)
         {
-            Console.WriteLine($"Job status change - {state}");
             if (_dataTransfer._state.TrySetTransferState(state))
             {
-                Console.WriteLine($"Job status actually changed - {state}");
                 // If we are in a final state, dispose the JobPartEvent handlers
                 if (state == DataTransferState.Completed ||
                     state == DataTransferState.Paused)
@@ -445,7 +440,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected async Task OnEnumerationComplete()
         {
-            Console.WriteLine("Enumeration complete called.");
             _enumerationComplete = true;
 
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
@@ -492,7 +486,6 @@ namespace Azure.Storage.DataMovement
             }
 
             // If there are no more pending job parts, complete the job
-            Console.WriteLine($"Checking completion. Job part count - {_pendingJobParts}");
             if (_pendingJobParts == 0)
             {
                 if (_jobPartPaused)
@@ -514,7 +507,6 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status = jobPart.JobPartStatus;
             if (status.State != DataTransferState.Completed)
             {
-                Console.WriteLine($"Incrementing job part count - {_pendingJobParts}");
                 Interlocked.Increment(ref _pendingJobParts);
             }
         }
