@@ -44,18 +44,17 @@ public partial class ClientPipeline
 
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
-        if (options.PerTryPolicies != null)
-        {
-            pipelineLength += options.PerTryPolicies.Length;
-        }
-
         if (options.PerCallPolicies != null)
         {
             pipelineLength += options.PerCallPolicies.Length;
         }
 
-        pipelineLength += options.RetryPolicy is null ? 0 : 1;
+        if (options.PerTryPolicies != null)
+        {
+            pipelineLength += options.PerTryPolicies.Length;
+        }
 
+        pipelineLength++; // for retry policy
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
@@ -77,6 +76,10 @@ public partial class ClientPipeline
         if (options.RetryPolicy != null)
         {
             pipeline[index++] = options.RetryPolicy;
+        }
+        else
+        {
+            pipeline[index++] = new RequestRetryPolicy();
         }
 
         perTryPolicies.CopyTo(pipeline.AsSpan(index));

@@ -102,16 +102,6 @@ namespace Azure.Core.Pipeline
             => new(ShouldRetry(message, exception));
 
         /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <returns>The amount of time to delay before retrying.</returns>
-        private TimeSpan GetNextDelay(HttpMessage message)
-             => _delayStrategy.GetNextDelay(
-                    message.HasResponse ? message.Response : default,
-                    message.RetryNumber);
-
-        /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
         /// This method will only be called for sync methods.
         /// </summary>
@@ -138,5 +128,15 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
+
+        /// <summary>
+        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
+        /// </summary>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <returns>The amount of time to delay before retrying.</returns>
+        private TimeSpan GetNextDelay(HttpMessage message)
+             => _delayStrategy.GetNextDelay(
+                    message.HasResponse ? message.Response : default,
+                    message.RetryNumber);
     }
 }
