@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing the content and location of a field value. </summary>
     public partial class DocumentField
     {
-        /// <summary> Initializes a new instance of DocumentField. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentField"/>. </summary>
         /// <param name="type"> Data type of the field value. </param>
         internal DocumentField(DocumentFieldType type)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence
             Spans = new ChangeTrackingList<DocumentSpan>();
         }
 
-        /// <summary> Initializes a new instance of DocumentField. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentField"/>. </summary>
         /// <param name="type"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>

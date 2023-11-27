@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DigitalTwins
     /// </summary>
     public partial class DigitalTwinsDescriptionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DigitalTwinsDescriptionData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

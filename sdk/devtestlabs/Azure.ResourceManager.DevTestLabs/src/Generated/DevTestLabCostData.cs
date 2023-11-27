@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabCostData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabCostData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceCosts = new ChangeTrackingList<DevTestLabResourceCost>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

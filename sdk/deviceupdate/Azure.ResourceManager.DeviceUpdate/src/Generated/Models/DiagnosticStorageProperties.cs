@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Customer-initiated diagnostic log collection storage properties. </summary>
     public partial class DiagnosticStorageProperties
     {
-        /// <summary> Initializes a new instance of DiagnosticStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticStorageProperties"/>. </summary>
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DiagnosticStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticStorageProperties"/>. </summary>
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="connectionString"> ConnectionString of the diagnostic storage account. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>

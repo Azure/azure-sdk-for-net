@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareTriggerData"/>. </summary>
         public DataShareTriggerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

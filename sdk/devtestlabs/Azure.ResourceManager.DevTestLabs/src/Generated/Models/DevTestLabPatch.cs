@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A lab. </summary>
     public partial class DevTestLabPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPatch"/>. </summary>
         public DevTestLabPatch()
         {
         }

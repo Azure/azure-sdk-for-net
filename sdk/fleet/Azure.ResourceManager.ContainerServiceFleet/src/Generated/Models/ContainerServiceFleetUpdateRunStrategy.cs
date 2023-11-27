@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// </summary>
     internal partial class ContainerServiceFleetUpdateRunStrategy
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStrategy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStrategy"/>. </summary>
         /// <param name="stages"> The list of stages that compose this update run. Min size: 1. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stages"/> is null. </exception>
         public ContainerServiceFleetUpdateRunStrategy(IEnumerable<ContainerServiceFleetUpdateStage> stages)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Stages = stages.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStrategy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStrategy"/>. </summary>
         /// <param name="stages"> The list of stages that compose this update run. Min size: 1. </param>
         internal ContainerServiceFleetUpdateRunStrategy(IList<ContainerServiceFleetUpdateStage> stages)
         {

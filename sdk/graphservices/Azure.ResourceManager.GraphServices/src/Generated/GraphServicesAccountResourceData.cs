@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.GraphServices
     /// </summary>
     public partial class GraphServicesAccountResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Property bag from billing account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GraphServices
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

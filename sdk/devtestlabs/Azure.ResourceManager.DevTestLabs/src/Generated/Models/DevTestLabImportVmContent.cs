@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> This represents the payload required to import a virtual machine from a different lab into the current one. </summary>
     public partial class DevTestLabImportVmContent
     {
-        /// <summary> Initializes a new instance of DevTestLabImportVmContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabImportVmContent"/>. </summary>
         public DevTestLabImportVmContent()
         {
         }

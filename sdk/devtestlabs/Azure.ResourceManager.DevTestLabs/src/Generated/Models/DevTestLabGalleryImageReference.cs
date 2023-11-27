@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The reference information for an Azure Marketplace image. </summary>
     public partial class DevTestLabGalleryImageReference
     {
-        /// <summary> Initializes a new instance of DevTestLabGalleryImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImageReference"/>. </summary>
         public DevTestLabGalleryImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGalleryImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImageReference"/>. </summary>
         /// <param name="offer"> The offer of the gallery image. </param>
         /// <param name="publisher"> The publisher of the gallery image. </param>
         /// <param name="sku"> The SKU of the gallery image. </param>

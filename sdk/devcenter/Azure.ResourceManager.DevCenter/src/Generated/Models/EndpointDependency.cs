@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> A domain name and connection details used to access a dependency. </summary>
     public partial class EndpointDependency
     {
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         internal EndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<DevCenterEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>

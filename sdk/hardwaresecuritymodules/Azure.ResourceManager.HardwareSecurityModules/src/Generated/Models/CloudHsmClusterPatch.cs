@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
         public CloudHsmClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

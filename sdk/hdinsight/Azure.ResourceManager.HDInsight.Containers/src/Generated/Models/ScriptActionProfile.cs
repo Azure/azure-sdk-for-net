@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The script action profile. </summary>
     public partial class ScriptActionProfile
     {
-        /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionProfile"/>. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
         /// <param name="uriString"> Url of the script file. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Services = services.ToList();
         }
 
-        /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionProfile"/>. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
         /// <param name="uriString"> Url of the script file. </param>
