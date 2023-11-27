@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Output of check resource usage API. </summary>
     internal partial class ResourceUsageListResult
     {
-        /// <summary> Initializes a new instance of ResourceUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/>. </summary>
         internal ResourceUsageListResult()
         {
             Value = new ChangeTrackingList<CdnUsage>();
         }
 
-        /// <summary> Initializes a new instance of ResourceUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/>. </summary>
         /// <param name="value"> List of resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of custom domain objects if there are any. </param>
         internal ResourceUsageListResult(IReadOnlyList<CdnUsage> value, string nextLink)

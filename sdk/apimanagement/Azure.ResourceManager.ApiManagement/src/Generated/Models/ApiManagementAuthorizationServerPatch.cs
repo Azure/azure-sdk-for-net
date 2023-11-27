@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> External OAuth authorization server settings. </summary>
     public partial class ApiManagementAuthorizationServerPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerPatch"/>. </summary>
         public ApiManagementAuthorizationServerPatch()
         {
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             GrantTypes = new ChangeTrackingList<GrantType>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Url signing key. </summary>
     public partial class UriSigningKey
     {
-        /// <summary> Initializes a new instance of UriSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriSigningKey"/>. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="keySourceParameters"> Defines the parameters for using customer key vault for Url Signing Key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="keySourceParameters"/> is null. </exception>

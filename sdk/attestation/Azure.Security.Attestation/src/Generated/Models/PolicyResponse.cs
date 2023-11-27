@@ -10,12 +10,12 @@ namespace Azure.Security.Attestation
     /// <summary> The response to an attestation policy operation. </summary>
     internal partial class PolicyResponse
     {
-        /// <summary> Initializes a new instance of PolicyResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyResponse"/>. </summary>
         internal PolicyResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyResponse"/>. </summary>
         /// <param name="token"> An RFC7519 JSON Web Token structure whose body is an PolicyResult object. </param>
         internal PolicyResponse(string token)
         {

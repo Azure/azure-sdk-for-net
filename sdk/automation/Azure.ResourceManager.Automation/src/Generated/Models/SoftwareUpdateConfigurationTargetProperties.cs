@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Group specific to the update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTargetProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTargetProperties"/>. </summary>
         public SoftwareUpdateConfigurationTargetProperties()
         {
             AzureQueries = new ChangeTrackingList<AzureQueryProperties>();
             NonAzureQueries = new ChangeTrackingList<NonAzureQueryProperties>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTargetProperties"/>. </summary>
         /// <param name="azureQueries"> List of Azure queries in the software update configuration. </param>
         /// <param name="nonAzureQueries"> List of non Azure queries in the software update configuration. </param>
         internal SoftwareUpdateConfigurationTargetProperties(IList<AzureQueryProperties> azureQueries, IList<NonAzureQueryProperties> nonAzureQueries)

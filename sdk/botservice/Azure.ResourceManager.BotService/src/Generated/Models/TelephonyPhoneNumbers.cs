@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A telephone number for the Telephony channel. </summary>
     public partial class TelephonyPhoneNumbers
     {
-        /// <summary> Initializes a new instance of TelephonyPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         public TelephonyPhoneNumbers()
         {
         }
 
-        /// <summary> Initializes a new instance of TelephonyPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         /// <param name="id"> The element id. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="acsEndpoint"> The endpoint of ACS. </param>

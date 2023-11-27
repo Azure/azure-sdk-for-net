@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The properties of a payment method projection. </summary>
     public partial class PaymentMethodProjectionProperties
     {
-        /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
         public PaymentMethodProjectionProperties()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
         /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="family"> The family of payment method. </param>
         /// <param name="paymentMethodProjectionPropertiesType"> The type of payment method. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WorkbookTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkbookTemplateData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             LocalizedGalleries = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

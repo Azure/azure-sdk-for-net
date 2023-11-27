@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the DirectLine Speech channel. </summary>
     public partial class DirectLineSpeechChannelProperties
     {
-        /// <summary> Initializes a new instance of DirectLineSpeechChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineSpeechChannelProperties"/>. </summary>
         public DirectLineSpeechChannelProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DirectLineSpeechChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineSpeechChannelProperties"/>. </summary>
         /// <param name="cognitiveServiceResourceId"> The cognitive service id with this channel registration. </param>
         /// <param name="cognitiveServiceRegion"> The cognitive service region with this channel registration. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key to use with this channel registration. </param>

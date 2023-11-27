@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The list of Advisor suppressions. </summary>
     internal partial class SuppressionContractListResult
     {
-        /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractListResult"/>. </summary>
         internal SuppressionContractListResult()
         {
             Value = new ChangeTrackingList<SuppressionContractData>();
         }
 
-        /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of suppressions. </param>
         /// <param name="value"> The list of suppressions. </param>
         internal SuppressionContractListResult(string nextLink, IReadOnlyList<SuppressionContractData> value)

@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     /// <summary> Details of the message to send. </summary>
     internal partial class SendChatMessageRequest
     {
-        /// <summary> Initializes a new instance of SendChatMessageRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendChatMessageRequest"/>. </summary>
         /// <param name="content"> Chat message content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SendChatMessageRequest(string content)

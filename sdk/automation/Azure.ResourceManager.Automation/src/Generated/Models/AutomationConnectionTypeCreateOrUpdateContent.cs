@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update connection type operation. </summary>
     public partial class AutomationConnectionTypeCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationConnectionTypeCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
         /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="fieldDefinitions"/> is null. </exception>

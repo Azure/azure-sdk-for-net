@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for PostArgs match conditions. </summary>
     public partial class PostArgsMatchCondition
     {
-        /// <summary> Initializes a new instance of PostArgsMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>
         public PostArgsMatchCondition(PostArgsMatchConditionType conditionType, PostArgsOperator postArgsOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of PostArgsMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of PostArg to be matched. </param>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>

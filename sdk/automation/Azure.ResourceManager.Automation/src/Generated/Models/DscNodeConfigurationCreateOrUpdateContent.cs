@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update node configuration operation. </summary>
     public partial class DscNodeConfigurationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DscNodeConfigurationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationCreateOrUpdateContent"/>. </summary>
         public DscNodeConfigurationCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

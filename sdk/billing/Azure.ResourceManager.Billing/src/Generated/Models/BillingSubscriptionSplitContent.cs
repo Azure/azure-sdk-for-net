@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Request to split a billing subscription. </summary>
     public partial class BillingSubscriptionSplitContent
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionSplitContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitContent"/>. </summary>
         public BillingSubscriptionSplitContent()
         {
         }

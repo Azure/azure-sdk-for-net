@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// </summary>
     public abstract partial class ServiceAlertMetadataProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/>. </summary>
         protected ServiceAlertMetadataProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/>. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
         internal ServiceAlertMetadataProperties(ServiceAlertMetadataIdentifier metadataIdentifier)
         {

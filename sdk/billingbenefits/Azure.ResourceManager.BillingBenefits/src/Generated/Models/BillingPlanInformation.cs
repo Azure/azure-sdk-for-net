@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Information describing the type of billing plan for this savings plan. </summary>
     public partial class BillingPlanInformation
     {
-        /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
         public BillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
         }
 
-        /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>

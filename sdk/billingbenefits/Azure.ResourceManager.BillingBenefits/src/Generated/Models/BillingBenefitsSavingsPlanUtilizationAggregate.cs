@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The aggregate values of savings plan utilization. </summary>
     public partial class BillingBenefitsSavingsPlanUtilizationAggregate
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilizationAggregate. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilizationAggregate"/>. </summary>
         internal BillingBenefitsSavingsPlanUtilizationAggregate()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilizationAggregate. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilizationAggregate"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Capability Type resources and a link for pagination. </summary>
     internal partial class CapabilityTypeListResult
     {
-        /// <summary> Initializes a new instance of CapabilityTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
         internal CapabilityTypeListResult()
         {
             Value = new ChangeTrackingList<CapabilityTypeData>();
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
         /// <param name="value"> List of Capability Type resources. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Capability Type resources. </param>
         internal CapabilityTypeListResult(IReadOnlyList<CapabilityTypeData> value, string nextLink)
