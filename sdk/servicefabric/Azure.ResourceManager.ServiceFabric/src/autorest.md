@@ -9,6 +9,7 @@ csharp: true
 library-name: ServiceFabric
 namespace: Azure.ResourceManager.ServiceFabric
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/servicefabric/resource-manager/readme.md
+#tag: package-2021-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

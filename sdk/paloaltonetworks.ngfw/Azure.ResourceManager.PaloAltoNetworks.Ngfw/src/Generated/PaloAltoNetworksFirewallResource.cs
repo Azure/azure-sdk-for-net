@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SaveLogProfileAsync(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SaveLogProfile(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
