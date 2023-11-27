@@ -14,13 +14,13 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Response to the list custom models operation. </summary>
     internal partial class Models
     {
-        /// <summary> Initializes a new instance of Models. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models"/>. </summary>
         internal Models()
         {
             ModelList = new ChangeTrackingList<CustomFormModelInfo>();
         }
 
-        /// <summary> Initializes a new instance of Models. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models"/>. </summary>
         /// <param name="summary"> Summary of all trained custom models. </param>
         /// <param name="modelList"> Collection of trained custom models. </param>
         /// <param name="nextLink"> Link to the next page of custom models. </param>

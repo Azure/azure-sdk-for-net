@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private link service connection details. </summary>
     public partial class PrivateLinkServiceConnection
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnection"/>. </summary>
         public PrivateLinkServiceConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnection"/>. </summary>
         /// <param name="name"> Private link service connection name. </param>
         /// <param name="groupIds"> List of group IDs. </param>
         /// <param name="requestMessage"> Request message. </param>

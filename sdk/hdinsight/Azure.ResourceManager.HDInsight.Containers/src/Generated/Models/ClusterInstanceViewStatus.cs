@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Status of the instance view. </summary>
     public partial class ClusterInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ClusterInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewStatus"/>. </summary>
         /// <param name="ready"> The cluster ready status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ready"/> is null. </exception>
         internal ClusterInstanceViewStatus(string ready)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Ready = ready;
         }
 
-        /// <summary> Initializes a new instance of ClusterInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewStatus"/>. </summary>
         /// <param name="ready"> The cluster ready status. </param>
         /// <param name="reason"> The status reason. </param>
         /// <param name="message"> The additional message. </param>

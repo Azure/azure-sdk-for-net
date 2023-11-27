@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class QueryOptions
     {
-        /// <summary> Initializes a new instance of QueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryOptions"/>. </summary>
         public QueryOptions()
         {
         }

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The billing resources. </summary>
     public partial class HDInsightBillingResources
     {
-        /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingResources"/>. </summary>
         internal HDInsightBillingResources()
         {
             BillingMeters = new ChangeTrackingList<HDInsightBillingMeters>();
             DiskBillingMeters = new ChangeTrackingList<HDInsightDiskBillingMeters>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingResources"/>. </summary>
         /// <param name="region"> The region or location. </param>
         /// <param name="billingMeters"> The billing meter information. </param>
         /// <param name="diskBillingMeters"> The managed disk billing information. </param>

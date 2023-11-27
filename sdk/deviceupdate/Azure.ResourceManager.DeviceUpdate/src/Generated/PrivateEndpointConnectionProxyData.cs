@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class PrivateEndpointConnectionProxyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyData"/>. </summary>
         public PrivateEndpointConnectionProxyData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

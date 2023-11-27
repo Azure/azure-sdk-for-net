@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Payload for the synchronizing the data. </summary>
     public partial class DataShareSynchronizeContent
     {
-        /// <summary> Initializes a new instance of DataShareSynchronizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizeContent"/>. </summary>
         public DataShareSynchronizeContent()
         {
         }

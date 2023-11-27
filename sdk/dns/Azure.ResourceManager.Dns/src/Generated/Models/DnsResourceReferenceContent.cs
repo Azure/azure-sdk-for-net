@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Represents the properties of the Dns Resource Reference Request. </summary>
     public partial class DnsResourceReferenceContent
     {
-        /// <summary> Initializes a new instance of DnsResourceReferenceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceContent"/>. </summary>
         public DnsResourceReferenceContent()
         {
             TargetResources = new ChangeTrackingList<WritableSubResource>();

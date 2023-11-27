@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties of a DigitalTwinsInstance. </summary>
     internal partial class DigitalTwinsPatchProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPatchProperties"/>. </summary>
         public DigitalTwinsPatchProperties()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Table level sharing properties dto for kusto data set properties. </summary>
     public partial class TableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         public TableLevelSharingProperties()
         {
             ExternalTablesToExclude = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataShare.Models
             TablesToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         /// <param name="externalTablesToExclude"> External tables to be excluded in the data set. </param>
         /// <param name="externalTablesToInclude"> External tables to be included in the data set. </param>
         /// <param name="materializedViewsToExclude"> Materialized views to be excluded in the data set. </param>

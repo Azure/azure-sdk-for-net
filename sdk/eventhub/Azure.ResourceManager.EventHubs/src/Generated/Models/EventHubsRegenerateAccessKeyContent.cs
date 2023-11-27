@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
     public partial class EventHubsRegenerateAccessKeyContent
     {
-        /// <summary> Initializes a new instance of EventHubsRegenerateAccessKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsRegenerateAccessKeyContent"/>. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         public EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType keyType)
         {

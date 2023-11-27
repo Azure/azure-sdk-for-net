@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class PrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkData"/>. </summary>
         public PrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabScheduleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabScheduleData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

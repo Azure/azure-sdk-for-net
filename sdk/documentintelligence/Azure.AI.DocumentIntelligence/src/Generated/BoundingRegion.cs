@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Bounding polygon on a specific page of the input. </summary>
     public partial class BoundingRegion
     {
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon">
         /// Bounding polygon on the page, or the entire page if not specified.
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             Polygon = polygon.ToList();
         }
 
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon">
         /// Bounding polygon on the page, or the entire page if not specified.

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Properties for a Git repository catalog. </summary>
     public partial class DevCenterGitCatalog
     {
-        /// <summary> Initializes a new instance of DevCenterGitCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterGitCatalog"/>. </summary>
         public DevCenterGitCatalog()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterGitCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterGitCatalog"/>. </summary>
         /// <param name="uri"> Git URI. </param>
         /// <param name="branch"> Git branch. </param>
         /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>

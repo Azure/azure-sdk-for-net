@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The result returned from a database check name availability request. </summary>
     public partial class DigitalTwinsNameContent
     {
-        /// <summary> Initializes a new instance of DigitalTwinsNameContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsNameContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DigitalTwinsNameContent(string name)

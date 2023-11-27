@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Cloud Hsm Cluster SKU information. </summary>
     public partial class CloudHsmClusterSku
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
         /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
         /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
         public CloudHsmClusterSku(CloudHsmClusterSkuFamily family, CloudHsmClusterSkuName name)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
         /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
         /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
         /// <param name="capacity"> Sku capacity. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Remote private endpoint details. </summary>
     public partial class RemotePrivateEndpoint
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
         public RemotePrivateEndpoint()
         {
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ConnectionDetails = new ChangeTrackingList<ConnectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
         /// <param name="id"> Remote endpoint resource ID. </param>
         /// <param name="location"> ARM location of the remote private endpoint. </param>
         /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>

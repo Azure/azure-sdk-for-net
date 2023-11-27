@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> The check availability request body. </summary>
     public partial class CheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
         public CheckNameAvailabilityContent()
         {
         }

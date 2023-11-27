@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataShareModelFactory
     {
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareAccountData(id, name, resourceType, systemData, tags, location, identity, createdOn, provisioningState, userEmail, userName);
         }
 
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataShareOperationResult"/>. </summary>
         /// <param name="endOn"> start time. </param>
         /// <param name="error"> The error property when status is failed. </param>
         /// <param name="startOn"> start time. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareOperationResult(endOn, error, startOn, status);
         }
 
-        /// <summary> Initializes a new instance of DataShareConsumerInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareConsumerInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareConsumerInvitationData(id, name, resourceType, systemData, dataSetCount, description, expireOn, invitationId, invitationStatus, location, providerEmail, providerName, providerTenantName, respondedOn, sentOn, shareName, termsOfUse, userEmail, userName);
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareDataSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ShareDataSetData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareDataSetMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ShareDataSetMappingData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataShareEmailRegistration"/>. </summary>
         /// <param name="activationCode"> Activation code for the registration. </param>
         /// <param name="activationExpireOn"> Date of the activation expiration. </param>
         /// <param name="email"> The email to register. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareEmailRegistration(activationCode, activationExpireOn, email, registrationStatus, tenantId);
         }
 
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareInvitationData(id, name, resourceType, systemData, expireOn, invitationId, invitationStatus, respondedOn, sentOn, targetActiveDirectoryId, targetEmail, targetObjectId, userEmail, userName);
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShareSynchronization"/>. </summary>
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ShareSynchronization(consumerEmail, consumerName, consumerTenantName, durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode);
         }
 
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynchronizationDetails"/>. </summary>
         /// <param name="dataSetId"> Id of data set. </param>
         /// <param name="dataSetType"> Type of the data set. </param>
         /// <param name="durationInMilliSeconds"> Duration of data set level copy. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SynchronizationDetails(dataSetId, dataSetType, durationInMilliSeconds, endOn, filesRead, filesWritten, message, name, rowsCopied, rowsRead, sizeRead, sizeWritten, startOn, status, vCore);
         }
 
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ProviderShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ProviderShareSubscriptionData(id, name, resourceType, systemData, consumerEmail, consumerName, consumerTenantName, createdOn, expireOn, providerEmail, providerName, sharedOn, shareSubscriptionObjectId, shareSubscriptionStatus);
         }
 
-        /// <summary> Initializes a new instance of DataShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareData(id, name, resourceType, systemData, createdOn, description, provisioningState, shareKind, terms, userEmail, userName);
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="durationInMilliSeconds"> Synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of Synchronization. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ShareSubscriptionSynchronization(durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode);
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumerSourceDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ConsumerSourceDataSet(id, name, resourceType, systemData, dataSetId, dataSetLocation, dataSetName, dataSetPath, dataSetType);
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ShareSubscriptionData(id, name, resourceType, systemData, createdOn, expireOn, invitationId, providerEmail, providerName, providerTenantName, provisioningState, shareDescription, shareKind, shareName, shareSubscriptionStatus, shareTerms, sourceShareLocation, userEmail, userName);
         }
 
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareSynchronizationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareSynchronizationSettingData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new DataShareTriggerData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen1FileDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen1FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1File, accountName, dataSetId, fileName, folderPath, resourceGroup, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen1FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen1FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen1FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1Folder, accountName, dataSetId, folderPath, resourceGroup, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2File, dataSetId, filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FileDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2File, dataSetId, dataSetMappingStatus, filePath, fileSystem, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileSystemDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FileSystemDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2FileSystem, dataSetId, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileSystemDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FileSystemDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2FileSystem, dataSetId, dataSetMappingStatus, fileSystem, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2Folder, dataSetId, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new AdlsGen2FolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2Folder, dataSetId, dataSetMappingStatus, fileSystem, folderPath, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobContainerDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobContainerDataSet(id, name, resourceType, systemData, DataSetKind.Container, containerName, dataSetId, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobContainerDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobContainerDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Container, containerName, dataSetId, dataSetMappingStatus, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobDataSet(id, name, resourceType, systemData, DataSetKind.Blob, containerName, dataSetId, filePath, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Blob, containerName, dataSetId, dataSetMappingStatus, filePath, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobFolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobFolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobFolderDataSet(id, name, resourceType, systemData, DataSetKind.BlobFolder, containerName, dataSetId, prefix, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobFolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobFolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new BlobFolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.BlobFolder, containerName, dataSetId, dataSetMappingStatus, prefix, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoClusterDataSet(id, name, resourceType, systemData, DataSetKind.KustoCluster, dataSetId, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoClusterDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoClusterDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoCluster, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabaseDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoDatabaseDataSet(id, name, resourceType, systemData, DataSetKind.KustoDatabase, dataSetId, kustoDatabaseResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabaseDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoDatabaseDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoDatabase, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoTableDataSet(id, name, resourceType, systemData, DataSetKind.KustoTable, dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
         }
 
-        /// <summary> Initializes a new instance of KustoTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new KustoTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoTable, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ScheduledSourceSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledSourceSynchronizationSetting"/>. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         /// <returns> A new <see cref="Models.ScheduledSourceSynchronizationSetting"/> instance for mocking. </returns>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind.ScheduleBased, recurrenceInterval, synchronizeOn);
         }
 
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ScheduledSynchronizationSetting(id, name, resourceType, systemData, SynchronizationSettingKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizeOn, userName);
         }
 
-        /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledTrigger"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new ScheduledTrigger(id, name, resourceType, systemData, TriggerKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizationMode, synchronizeOn, triggerStatus, userName);
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDBTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SqlDBTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDBTable, databaseName, dataSetId, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SqlDBTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDBTable, databaseName, dataSetId, dataSetMappingStatus, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDWTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SqlDWTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDWTable, dataSetId, dataWarehouseName, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SqlDWTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDWTable, dataSetId, dataSetMappingStatus, dataWarehouseName, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspaceSqlPoolTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SynapseWorkspaceSqlPoolTableDataSet(id, name, resourceType, systemData, DataSetKind.SynapseWorkspaceSqlPoolTable, dataSetId, synapseWorkspaceSqlPoolTableResourceId);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspaceSqlPoolTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

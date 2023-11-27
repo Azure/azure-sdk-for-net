@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Device Update account integration with IoT Hub settings. </summary>
     public partial class IotHubSettings
     {
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/>. </summary>
         /// <param name="resourceId"> IoTHub resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public IotHubSettings(string resourceId)
