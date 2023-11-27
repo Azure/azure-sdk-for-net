@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletions
     {
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlQueryStatisticData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryStatisticData"/>. </summary>
         public MySqlQueryStatisticData()
         {
             DatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryStatisticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

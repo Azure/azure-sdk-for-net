@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> PAN Rulestack Describe Object. </summary>
     public partial class GlobalRulestackInfo
     {
-        /// <summary> Initializes a new instance of GlobalRulestackInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackInfo"/>. </summary>
         /// <param name="azureId"> rulestack description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureId"/> is null. </exception>
         internal GlobalRulestackInfo(string azureId)

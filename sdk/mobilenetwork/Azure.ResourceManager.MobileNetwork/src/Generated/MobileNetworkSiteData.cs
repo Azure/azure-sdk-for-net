@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSiteData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSiteData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MobileNetworkSiteData(AzureLocation location) : base(location)
         {
             NetworkFunctions = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

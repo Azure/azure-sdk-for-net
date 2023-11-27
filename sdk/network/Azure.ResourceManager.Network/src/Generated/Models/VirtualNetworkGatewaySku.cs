@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualNetworkGatewaySku details. </summary>
     public partial class VirtualNetworkGatewaySku
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewaySku"/>. </summary>
         public VirtualNetworkGatewaySku()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewaySku"/>. </summary>
         /// <param name="name"> Gateway SKU name. </param>
         /// <param name="tier"> Gateway SKU tier. </param>
         /// <param name="capacity"> The capacity. </param>

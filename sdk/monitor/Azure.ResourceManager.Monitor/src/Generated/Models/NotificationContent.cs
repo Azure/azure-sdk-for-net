@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The request body which contain contact detail metadata. </summary>
     public partial class NotificationContent
     {
-        /// <summary> Initializes a new instance of NotificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationContent(string alertType)

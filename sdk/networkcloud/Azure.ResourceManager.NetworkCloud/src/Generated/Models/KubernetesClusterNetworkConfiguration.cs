@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> NetworkConfiguration specifies the Kubernetes cluster network related configuration. </summary>
     public partial class KubernetesClusterNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of KubernetesClusterNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/>. </summary>
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>
         /// <param name="cniNetworkId"> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkId"/> or <paramref name="cniNetworkId"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ServiceCidrs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/>. </summary>
         /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the cluster for use by the workloads that run on this Kubernetes cluster. </param>
         /// <param name="bgpServiceLoadBalancerConfiguration"> The configuration of the BGP service load balancer for this Kubernetes cluster. </param>
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
     public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         internal DataCollectionRuleBcdrFailoverConfigurationSpec()
         {
             Locations = new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
         internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a Configuration. </summary>
     public partial class MySqlFlexibleServerConfigurationForBatchUpdate
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationForBatchUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
         public MySqlFlexibleServerConfigurationForBatchUpdate()
         {
         }

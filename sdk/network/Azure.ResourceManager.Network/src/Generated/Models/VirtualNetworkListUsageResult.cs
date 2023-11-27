@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the virtual networks GetUsage API service call. </summary>
     internal partial class VirtualNetworkListUsageResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkListUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListUsageResult"/>. </summary>
         internal VirtualNetworkListUsageResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkUsage>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkListUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListUsageResult"/>. </summary>
         /// <param name="value"> VirtualNetwork usage stats. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal VirtualNetworkListUsageResult(IReadOnlyList<VirtualNetworkUsage> value, string nextLink)

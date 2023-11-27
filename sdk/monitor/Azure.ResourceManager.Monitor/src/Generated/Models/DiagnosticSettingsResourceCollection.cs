@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class DiagnosticSettingsResourceCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsResourceCollection"/>. </summary>
         internal DiagnosticSettingsResourceCollection()
         {
             Value = new ChangeTrackingList<DiagnosticSettingData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsResourceCollection"/>. </summary>
         /// <param name="value"> The collection of diagnostic settings resources;. </param>
         internal DiagnosticSettingsResourceCollection(IReadOnlyList<DiagnosticSettingData> value)
         {

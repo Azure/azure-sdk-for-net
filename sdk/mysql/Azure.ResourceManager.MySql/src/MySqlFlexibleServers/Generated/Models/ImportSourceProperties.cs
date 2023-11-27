@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Import source related properties. </summary>
     public partial class ImportSourceProperties
     {
-        /// <summary> Initializes a new instance of ImportSourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSourceProperties"/>. </summary>
         public ImportSourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImportSourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSourceProperties"/>. </summary>
         /// <param name="storageType"> Storage type of import source. </param>
         /// <param name="storageUri"> Uri of the import source storage. </param>
         /// <param name="sasToken"> Sas token for accessing source storage. Read and list permissions are required for sas token. </param>

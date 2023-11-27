@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Monitoring account destination. </summary>
     public partial class MonitoringAccountDestination
     {
-        /// <summary> Initializes a new instance of MonitoringAccountDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringAccountDestination"/>. </summary>
         public MonitoringAccountDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringAccountDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringAccountDestination"/>. </summary>
         /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
         /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">

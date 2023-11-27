@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListPrivateDnsZoneGroups API service call. </summary>
     internal partial class PrivateDnsZoneGroupListResult
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupListResult"/>. </summary>
         internal PrivateDnsZoneGroupListResult()
         {
             Value = new ChangeTrackingList<PrivateDnsZoneGroupData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupListResult"/>. </summary>
         /// <param name="value"> A list of private dns zone group resources in a private endpoint. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PrivateDnsZoneGroupListResult(IReadOnlyList<PrivateDnsZoneGroupData> value, string nextLink)

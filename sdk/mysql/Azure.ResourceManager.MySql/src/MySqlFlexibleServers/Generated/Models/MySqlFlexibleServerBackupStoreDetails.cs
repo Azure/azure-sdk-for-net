@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// </summary>
     public abstract partial class MySqlFlexibleServerBackupStoreDetails
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupStoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
         protected MySqlFlexibleServerBackupStoreDetails()
         {
         }

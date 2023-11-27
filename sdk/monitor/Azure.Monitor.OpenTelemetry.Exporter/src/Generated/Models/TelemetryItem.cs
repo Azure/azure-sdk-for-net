@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> System variables for a telemetry item. </summary>
     internal partial class TelemetryItem
     {
-        /// <summary> Initializes a new instance of TelemetryItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryItem"/>. </summary>
         /// <param name="name"> Type name of telemetry data item. </param>
         /// <param name="time"> Event date time when telemetry item was created. This is the wall clock time on the client when the event was generated. There is no guarantee that the client's time is accurate. This field must be formatted in UTC ISO 8601 format, with a trailing 'Z' character, as described publicly on https://en.wikipedia.org/wiki/ISO_8601#UTC. Note: the number of decimal seconds digits provided are variable (and unspecified). Consumers should handle this, i.e. managed code consumers should not use format 'O' for parsing as it specifies a fixed length. Example: 2009-06-15T13:45:30.0000000Z. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

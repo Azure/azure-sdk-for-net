@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Trace type name. </summary>
     internal partial class TraceDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of TraceDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceDocumentIngress"/>. </summary>
         public TraceDocumentIngress()
         {
         }

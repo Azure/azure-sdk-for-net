@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of get metrics Operation. </summary>
     public partial class NewRelicMetricsContent
     {
-        /// <summary> Initializes a new instance of NewRelicMetricsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsContent(string userEmail)

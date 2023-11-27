@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         public ExpressRouteCircuitData()
         {
             Authorizations = new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
             Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

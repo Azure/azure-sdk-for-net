@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuSetting. </summary>
     public partial class ResourceTypeSkuSetting
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceTypeSkuSetting(string name)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
         /// <param name="name"></param>
         /// <param name="tier"></param>
         /// <param name="size"></param>

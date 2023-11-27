@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The SIMs to upload. </summary>
     public partial class SimUploadList
     {
-        /// <summary> Initializes a new instance of SimUploadList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
         /// <param name="sims"> A list of SIMs to upload. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimUploadList(IEnumerable<SimNameAndProperties> sims)
