@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </summary>
     public partial class SecurityCenterFileProtectionMode
     {
-        /// <summary> Initializes a new instance of SecurityCenterFileProtectionMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterFileProtectionMode"/>. </summary>
         public SecurityCenterFileProtectionMode()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterFileProtectionMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterFileProtectionMode"/>. </summary>
         /// <param name="exe"> The application control policy enforcement/protection mode of the machine group. </param>
         /// <param name="msi"> The application control policy enforcement/protection mode of the machine group. </param>
         /// <param name="script"> The application control policy enforcement/protection mode of the machine group. </param>

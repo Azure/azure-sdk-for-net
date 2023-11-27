@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HyperVReplicaAzure specific enable protection input. </summary>
     public partial class HyperVReplicaAzureEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureEnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEnableProtectionContent"/>. </summary>
         public HyperVReplicaAzureEnableProtectionContent()
         {
             DisksToInclude = new ChangeTrackingList<string>();

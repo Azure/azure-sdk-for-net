@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> error details. </summary>
     public partial class ReservationRefundPolicyError
     {
-        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyError"/>. </summary>
         internal ReservationRefundPolicyError()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyError"/>. </summary>
         /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
         /// <param name="message"></param>
         internal ReservationRefundPolicyError(ReservationErrorResponseCode? code, string message)

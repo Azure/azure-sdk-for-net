@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMWare Azure specific policy Input. </summary>
     public partial class InMageAzureV2PolicyContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2PolicyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2PolicyContent"/>. </summary>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         public InMageAzureV2PolicyContent(SetMultiVmSyncStatus multiVmSyncStatus)
         {

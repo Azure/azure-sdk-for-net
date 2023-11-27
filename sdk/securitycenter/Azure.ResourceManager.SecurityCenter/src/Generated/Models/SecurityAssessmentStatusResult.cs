@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The result of the assessment. </summary>
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         public SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code) : base(code)
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>

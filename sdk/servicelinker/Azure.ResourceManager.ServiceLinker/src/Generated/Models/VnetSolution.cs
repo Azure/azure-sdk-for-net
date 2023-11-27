@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The VNet solution for linker. </summary>
     internal partial class VnetSolution
     {
-        /// <summary> Initializes a new instance of VnetSolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         public VnetSolution()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetSolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         /// <param name="solutionType"> Type of VNet solution. </param>
         internal VnetSolution(VnetSolutionType? solutionType)
         {

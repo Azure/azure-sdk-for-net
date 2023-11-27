@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the exhaustive KNN algorithm used during querying, which will perform brute-force search across the entire vector index. </summary>
     public partial class ExhaustiveKnnAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of ExhaustiveKnnAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ExhaustiveKnnAlgorithmConfiguration(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = VectorSearchAlgorithmKind.ExhaustiveKnn;
         }
 
-        /// <summary> Initializes a new instance of ExhaustiveKnnAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
         /// <param name="parameters"> Contains the parameters specific to exhaustive KNN algorithm. </param>

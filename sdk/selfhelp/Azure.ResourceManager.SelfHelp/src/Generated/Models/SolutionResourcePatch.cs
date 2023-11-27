@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution response. </summary>
     public partial class SolutionResourcePatch
     {
-        /// <summary> Initializes a new instance of SolutionResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourcePatch"/>. </summary>
         public SolutionResourcePatch()
         {
         }

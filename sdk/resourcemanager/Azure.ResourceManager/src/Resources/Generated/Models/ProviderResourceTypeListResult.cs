@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of resource types of a resource provider. </summary>
     internal partial class ProviderResourceTypeListResult
     {
-        /// <summary> Initializes a new instance of ProviderResourceTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceTypeListResult"/>. </summary>
         internal ProviderResourceTypeListResult()
         {
             Value = new ChangeTrackingList<ProviderResourceType>();
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceTypeListResult"/>. </summary>
         /// <param name="value"> An array of resource types. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ProviderResourceTypeListResult(IReadOnlyList<ProviderResourceType> value, string nextLink)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of secure scores. </summary>
     internal partial class SecureScoresList
     {
-        /// <summary> Initializes a new instance of SecureScoresList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoresList"/>. </summary>
         internal SecureScoresList()
         {
             Value = new ChangeTrackingList<SecureScoreData>();
         }
 
-        /// <summary> Initializes a new instance of SecureScoresList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoresList"/>. </summary>
         /// <param name="value"> Collection of secure scores in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecureScoresList(IReadOnlyList<SecureScoreData> value, string nextLink)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The GCP project connector environment data. </summary>
     public partial class GcpProjectEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
         public GcpProjectEnvironment()
         {
             EnvironmentType = EnvironmentType.GcpProject;
         }
 
-        /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="organizationalData">
         /// The Gcp project's organizational data

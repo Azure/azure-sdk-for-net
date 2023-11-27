@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents parameters for indexer execution. </summary>
     public partial class IndexingParameters
     {
-        /// <summary> Initializes a new instance of IndexingParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingParameters"/>. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
         /// <param name="maxFailedItems"> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="maxFailedItemsPerBatch"> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </param>

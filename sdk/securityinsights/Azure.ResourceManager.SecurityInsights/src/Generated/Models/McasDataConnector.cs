@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
     public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of McasDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
         public McasDataConnector()
         {
             Kind = DataConnectorKind.MicrosoftCloudAppSecurity;
         }
 
-        /// <summary> Initializes a new instance of McasDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

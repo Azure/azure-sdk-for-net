@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class GitHubOwnerData : ResourceData
     {
-        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerData"/>. </summary>
         public GitHubOwnerData()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

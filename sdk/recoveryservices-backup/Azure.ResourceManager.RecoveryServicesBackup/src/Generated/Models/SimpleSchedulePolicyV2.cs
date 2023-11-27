@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The V2 policy schedule for IaaS that supports hourly backups. </summary>
     public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of SimpleSchedulePolicyV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         public SimpleSchedulePolicyV2()
         {
             SchedulePolicyType = "SimpleSchedulePolicyV2";
         }
 
-        /// <summary> Initializes a new instance of SimpleSchedulePolicyV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
         /// <param name="hourlySchedule"> hourly schedule of this policy. </param>

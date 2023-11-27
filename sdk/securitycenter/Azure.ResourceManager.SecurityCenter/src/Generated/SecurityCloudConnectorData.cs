@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCloudConnectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityCloudConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCloudConnectorData"/>. </summary>
         public SecurityCloudConnectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCloudConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCloudConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

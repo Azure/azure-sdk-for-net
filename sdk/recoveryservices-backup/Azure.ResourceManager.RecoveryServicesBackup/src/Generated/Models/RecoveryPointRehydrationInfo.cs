@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> RP Rehydration Info. </summary>
     public partial class RecoveryPointRehydrationInfo
     {
-        /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointRehydrationInfo"/>. </summary>
         public RecoveryPointRehydrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointRehydrationInfo"/>. </summary>
         /// <param name="rehydrationRetentionDuration">
         /// How long the rehydrated RP should be kept
         /// Should be ISO8601 Duration format e.g. "P7D"

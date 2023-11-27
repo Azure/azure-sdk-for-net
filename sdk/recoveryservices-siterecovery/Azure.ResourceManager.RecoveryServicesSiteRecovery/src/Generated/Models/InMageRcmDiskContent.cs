@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDiskContent
     {
-        /// <summary> Initializes a new instance of InMageRcmDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>

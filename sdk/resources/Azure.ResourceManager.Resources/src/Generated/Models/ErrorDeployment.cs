@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment on error behavior. </summary>
     public partial class ErrorDeployment
     {
-        /// <summary> Initializes a new instance of ErrorDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDeployment"/>. </summary>
         public ErrorDeployment()
         {
         }

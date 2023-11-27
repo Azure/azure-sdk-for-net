@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for switch provider input properties. </summary>
     public partial class SwitchProviderProperties
     {
-        /// <summary> Initializes a new instance of SwitchProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderProperties"/>. </summary>
         public SwitchProviderProperties()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
     public partial class SignalRFeature
     {
-        /// <summary> Initializes a new instance of SignalRFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/>. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SignalRFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/>. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.

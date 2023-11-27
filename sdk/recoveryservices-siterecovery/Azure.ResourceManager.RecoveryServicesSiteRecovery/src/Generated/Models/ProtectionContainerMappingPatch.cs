@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Container pairing update input. </summary>
     public partial class ProtectionContainerMappingPatch
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingPatch"/>. </summary>
         public ProtectionContainerMappingPatch()
         {
         }

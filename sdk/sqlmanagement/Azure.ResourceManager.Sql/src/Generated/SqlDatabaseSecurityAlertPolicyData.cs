@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlDatabaseSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlDatabaseSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseSecurityAlertPolicyData"/>. </summary>
         public SqlDatabaseSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

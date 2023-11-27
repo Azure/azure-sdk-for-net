@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware to AzStackHCI Replication extension model custom properties. </summary>
     public partial class VMwareToAzStackHciReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareFabricArmId"/> or <paramref name="azStackHciFabricArmId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
