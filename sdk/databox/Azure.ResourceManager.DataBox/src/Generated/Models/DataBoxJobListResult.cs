@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job Resource Collection. </summary>
     internal partial class DataBoxJobListResult
     {
-        /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobListResult"/>. </summary>
         internal DataBoxJobListResult()
         {
             Value = new ChangeTrackingList<DataBoxJobData>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobListResult"/>. </summary>
         /// <param name="value"> List of job resources. </param>
         /// <param name="nextLink"> Link for the next set of job resources. </param>
         internal DataBoxJobListResult(IReadOnlyList<DataBoxJobData> value, string nextLink)

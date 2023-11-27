@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of a forecast. </summary>
     public partial class ForecastDefinition
     {
-        /// <summary> Initializes a new instance of ForecastDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/>. </summary>
         /// <param name="forecastType"> The type of the forecast. </param>
         /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
         /// <param name="dataset"> Has definition for data in this forecast. </param>

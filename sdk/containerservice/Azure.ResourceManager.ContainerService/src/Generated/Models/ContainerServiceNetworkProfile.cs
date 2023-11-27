@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of network configuration. </summary>
     public partial class ContainerServiceNetworkProfile
     {
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfile"/>. </summary>
         public ContainerServiceNetworkProfile()
         {
             PodCidrs = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IPFamilies = new ChangeTrackingList<IPFamily>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfile"/>. </summary>
         /// <param name="networkPlugin"> Network plugin used for building the Kubernetes network. </param>
         /// <param name="networkPluginMode"> Network plugin mode used for building the Kubernetes network. </param>
         /// <param name="networkPolicy"> Network policy used for building the Kubernetes network. </param>

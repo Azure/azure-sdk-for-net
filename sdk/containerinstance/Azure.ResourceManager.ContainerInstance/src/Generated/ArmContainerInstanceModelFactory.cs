@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerInstanceModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics) : null, subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), extensions?.ToList(), confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy) : null, priority);
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupPatch(id, name, resourceType, systemData, tags, location, zones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceContainer(name, image, command?.ToList(), ports?.ToList(), environmentVariables?.ToList(), instanceView, resources, volumeMounts?.ToList(), livenessProbe, readinessProbe, securityContext);
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
         /// <param name="currentState"> Current container instance state. </param>
         /// <param name="previousState"> Previous container instance state. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceView(restartCount, currentState, previousState, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerState"/>. </summary>
         /// <param name="state"> The state of the container instance. </param>
         /// <param name="startOn"> The date-time when the container instance state started. </param>
         /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerState(state, startOn, exitCode, finishOn, detailStatus);
         }
 
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerEvent"/>. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerEvent(count, firstTimestamp, lastTimestamp, name, message, eventType);
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupIPAddress"/>. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupIPAddress(ports?.ToList(), addressType, ip, dnsNameLabel, autoGeneratedDomainNameLabelScope, fqdn);
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
         /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupInstanceView(events?.ToList(), state);
         }
 
-        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="image"> The image of the init container. </param>
         /// <param name="command"> The command to execute within the init container in exec form. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new InitContainerDefinitionContent(name, image, command?.ToList(), environmentVariables?.ToList(), instanceView, volumeMounts?.ToList(), securityContext);
         }
 
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsage"/>. </summary>
         /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceUsage(id, unit, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceUsageName"/> instance for mocking. </returns>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of ContainerLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerLogs"/>. </summary>
         /// <param name="content"> The content of the log. </param>
         /// <returns> A new <see cref="Models.ContainerLogs"/> instance for mocking. </returns>
         public static ContainerLogs ContainerLogs(string content = null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerLogs(content);
         }
 
-        /// <summary> Initializes a new instance of ContainerExecResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerExecResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
         /// <returns> A new <see cref="Models.ContainerExecResult"/> instance for mocking. </returns>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerExecResult(webSocketUri, password);
         }
 
-        /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAttachResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
         /// <returns> A new <see cref="Models.ContainerAttachResult"/> instance for mocking. </returns>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerAttachResult(webSocketUri, password);
         }
 
-        /// <summary> Initializes a new instance of CachedImages. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new CachedImages(osType, image);
         }
 
-        /// <summary> Initializes a new instance of ContainerCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerCapabilities"/>. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerCapabilities(resourceType, osType, location, ipAddressType, gpu, capabilities);
         }
 
-        /// <summary> Initializes a new instance of ContainerSupportedCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerSupportedCapabilities"/>. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>

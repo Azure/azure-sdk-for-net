@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to list replications for a container registry. </summary>
     internal partial class ContainerRegistryReplicationListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationListResult"/>. </summary>
         internal ContainerRegistryReplicationListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryReplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationListResult"/>. </summary>
         /// <param name="value"> The list of replications. Since this list may be incomplete, the nextLink field should be used to request the next list of replications. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of replications. </param>
         internal ContainerRegistryReplicationListResult(IReadOnlyList<ContainerRegistryReplicationData> value, string nextLink)

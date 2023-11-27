@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes an available DMS SKU. </summary>
     public partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         internal ResourceSku()
         {
             Locations = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of DMS in a scale set. </param>

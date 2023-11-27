@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareResourcePoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareResourcePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareResourcePoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareResourcePoolData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareResourcePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareResourcePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

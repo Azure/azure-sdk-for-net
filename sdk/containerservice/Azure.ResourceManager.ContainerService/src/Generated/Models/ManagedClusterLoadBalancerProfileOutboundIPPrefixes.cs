@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Desired outbound IP Prefix resources for the cluster load balancer. </summary>
     internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPPrefixes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPPrefixes"/>. </summary>
         public ManagedClusterLoadBalancerProfileOutboundIPPrefixes()
         {
             PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPPrefixes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPPrefixes"/>. </summary>
         /// <param name="publicIPPrefixes"> A list of public IP prefix resources. </param>
         internal ManagedClusterLoadBalancerProfileOutboundIPPrefixes(IList<WritableSubResource> publicIPPrefixes)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class encapsulating restore target parameters. </summary>
     public partial class RestoreTargetInfo : RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of RestoreTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfo"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="dataSourceInfo"> Information of target DS. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/> is null. </exception>

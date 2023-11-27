@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Represents key wrap metadata that a key wrapping provider can use to wrap/unwrap a client encryption key. </summary>
     public partial class CosmosDBKeyWrapMetadata
     {
-        /// <summary> Initializes a new instance of CosmosDBKeyWrapMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBKeyWrapMetadata"/>. </summary>
         public CosmosDBKeyWrapMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBKeyWrapMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBKeyWrapMetadata"/>. </summary>
         /// <param name="name"> The name of associated KeyEncryptionKey (aka CustomerManagedKey). </param>
         /// <param name="cosmosDBKeyWrapMetadataType"> ProviderName of KeyStoreProvider. </param>
         /// <param name="value"> Reference / link to the KeyEncryptionKey. </param>

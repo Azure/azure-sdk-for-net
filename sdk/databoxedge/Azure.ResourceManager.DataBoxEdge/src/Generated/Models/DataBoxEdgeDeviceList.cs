@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of Data Box Edge/Gateway devices. </summary>
     internal partial class DataBoxEdgeDeviceList
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
         internal DataBoxEdgeDeviceList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeDeviceData>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
         /// <param name="value"> The list of Data Box Edge/Gateway devices. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal DataBoxEdgeDeviceList(IReadOnlyList<DataBoxEdgeDeviceData> value, string nextLink)

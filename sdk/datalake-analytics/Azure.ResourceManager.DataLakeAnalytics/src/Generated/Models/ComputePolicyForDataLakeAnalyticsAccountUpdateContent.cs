@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class ComputePolicyForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of ComputePolicyForDataLakeAnalyticsAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePolicyForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the compute policy to update.
         /// Serialized Name: UpdateComputePolicyWithAccountParameters.name

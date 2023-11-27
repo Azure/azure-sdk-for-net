@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The metadata related to each access key for the given Cosmos DB database account. </summary>
     public partial class DatabaseAccountKeysMetadata
     {
-        /// <summary> Initializes a new instance of DatabaseAccountKeysMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountKeysMetadata"/>. </summary>
         internal DatabaseAccountKeysMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountKeysMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountKeysMetadata"/>. </summary>
         /// <param name="primaryMasterKey"> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="secondaryMasterKey"> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="primaryReadonlyMasterKey"> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </param>

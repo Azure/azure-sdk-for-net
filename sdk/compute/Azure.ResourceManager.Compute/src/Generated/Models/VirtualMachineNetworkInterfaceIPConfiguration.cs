@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine network profile's IP configuration. </summary>
     public partial class VirtualMachineNetworkInterfaceIPConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineNetworkInterfaceIPConfiguration(string name)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>

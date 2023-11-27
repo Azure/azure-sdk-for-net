@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogAgreementResourceProperties. </summary>
     public partial class DatadogAgreementResourceProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of DatadogAgreementResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceProperties"/>. </summary>
         public DatadogAgreementResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

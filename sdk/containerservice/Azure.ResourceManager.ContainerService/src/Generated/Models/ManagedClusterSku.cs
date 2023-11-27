@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The SKU of a Managed Cluster. </summary>
     public partial class ManagedClusterSku
     {
-        /// <summary> Initializes a new instance of ManagedClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSku"/>. </summary>
         public ManagedClusterSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSku"/>. </summary>
         /// <param name="name"> The name of a managed cluster SKU. </param>
         /// <param name="tier"> If not specified, the default is 'Free'. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </param>
         internal ManagedClusterSku(ManagedClusterSkuName? name, ManagedClusterSkuTier? tier)

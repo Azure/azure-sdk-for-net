@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSsisTaskOutputProjectLevel. </summary>
     public partial class MigrateSsisTaskOutputProjectLevel : MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         internal MigrateSsisTaskOutputProjectLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "SsisProjectLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="folderName"> Name of the folder. </param>

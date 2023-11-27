@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class ContainerServicePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionListResult"/>. </summary>
         internal ContainerServicePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         internal ContainerServicePrivateEndpointConnectionListResult(IReadOnlyList<ContainerServicePrivateEndpointConnectionData> value)
         {

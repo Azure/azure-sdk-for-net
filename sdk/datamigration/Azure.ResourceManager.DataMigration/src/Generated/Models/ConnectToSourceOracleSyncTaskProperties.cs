@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates Oracle database connection. </summary>
     public partial class ConnectToSourceOracleSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskProperties"/>. </summary>
         public ConnectToSourceOracleSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceOracleSyncTaskOutput>();
             TaskType = TaskType.ConnectToSourceOracleSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

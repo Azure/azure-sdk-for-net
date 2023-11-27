@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         protected MigrateOracleAzureDBPostgreSqlSyncTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal MigrateOracleAzureDBPostgreSqlSyncTaskOutput(string id, string resultType)

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a restore point. </summary>
     public partial class RestorePointInstanceView
     {
-        /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointInstanceView"/>. </summary>
         internal RestorePointInstanceView()
         {
             DiskRestorePoints = new ChangeTrackingList<DiskRestorePointInstanceView>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointInstanceView"/>. </summary>
         /// <param name="diskRestorePoints"> The disk restore points information. </param>
         /// <param name="statuses"> The resource status information. </param>
         internal RestorePointInstanceView(IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints, IReadOnlyList<InstanceViewStatus> statuses)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
     public partial class RestorePointSourceMetadata
     {
-        /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceMetadata"/>. </summary>
         public RestorePointSourceMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceMetadata"/>. </summary>
         /// <param name="hardwareProfile"> Gets the hardware profile. </param>
         /// <param name="storageProfile"> Gets the storage profile. </param>
         /// <param name="osProfile"> Gets the OS profile. </param>

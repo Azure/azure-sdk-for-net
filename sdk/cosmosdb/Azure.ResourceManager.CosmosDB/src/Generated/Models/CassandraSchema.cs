@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table schema. </summary>
     public partial class CassandraSchema
     {
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         public CassandraSchema()
         {
             Columns = new ChangeTrackingList<CassandraColumn>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ClusterKeys = new ChangeTrackingList<CassandraClusterKey>();
         }
 
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         /// <param name="columns"> List of Cassandra table columns. </param>
         /// <param name="partitionKeys"> List of partition key. </param>
         /// <param name="clusterKeys"> List of cluster key. </param>

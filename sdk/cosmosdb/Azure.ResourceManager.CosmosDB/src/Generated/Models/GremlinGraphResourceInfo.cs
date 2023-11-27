@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Gremlin graph resource object. </summary>
     public partial class GremlinGraphResourceInfo
     {
-        /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphResourceInfo"/>. </summary>
         /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public GremlinGraphResourceInfo(string graphName)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             GraphName = graphName;
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphResourceInfo"/>. </summary>
         /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>

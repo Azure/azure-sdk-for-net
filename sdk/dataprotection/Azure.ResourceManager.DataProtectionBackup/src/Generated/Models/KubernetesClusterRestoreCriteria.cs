@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> kubernetes Cluster Backup target info for restore operation. </summary>
     public partial class KubernetesClusterRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesClusterRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestoreCriteria"/>. </summary>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
         public KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded)
         {

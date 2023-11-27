@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow debug settings. </summary>
     public partial class DataFlowDebugPackageDebugSettings
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();

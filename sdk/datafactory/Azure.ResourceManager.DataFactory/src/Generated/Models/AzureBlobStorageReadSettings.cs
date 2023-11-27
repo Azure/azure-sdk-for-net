@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure blob read settings. </summary>
     public partial class AzureBlobStorageReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageReadSettings"/>. </summary>
         public AzureBlobStorageReadSettings()
         {
             StoreReadSettingsType = "AzureBlobStorageReadSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

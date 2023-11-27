@@ -12,12 +12,12 @@ namespace Azure.AI.ContentSafety
     /// <summary> The content or blob url of image, could be base64 encoding bytes or blob url. If both are given, the request will be refused. The maximum size of image is 2048 pixels * 2048 pixels, no larger than 4MB at the same time. The minimum size of image is 50 pixels * 50 pixels. </summary>
     public partial class ContentSafetyImageData
     {
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
         public ContentSafetyImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
         /// <param name="content"> Base64 encoding of image. </param>
         /// <param name="blobUrl"> The blob url of image. </param>
         internal ContentSafetyImageData(BinaryData content, Uri blobUrl)

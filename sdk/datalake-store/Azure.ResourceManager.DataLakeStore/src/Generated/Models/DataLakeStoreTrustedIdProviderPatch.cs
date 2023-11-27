@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a trusted identity provider. </summary>
     public partial class DataLakeStoreTrustedIdProviderPatch
     {
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderPatch"/>. </summary>
         public DataLakeStoreTrustedIdProviderPatch()
         {
         }

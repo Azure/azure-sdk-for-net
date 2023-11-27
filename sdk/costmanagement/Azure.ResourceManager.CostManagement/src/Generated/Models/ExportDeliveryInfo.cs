@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The delivery information associated with a export. </summary>
     public partial class ExportDeliveryInfo
     {
-        /// <summary> Initializes a new instance of ExportDeliveryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDeliveryInfo"/>. </summary>
         /// <param name="destination"> Has destination for the export being delivered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
         public ExportDeliveryInfo(ExportDeliveryDestination destination)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes Compute Resource Usage. </summary>
     public partial class ComputeUsage
     {
-        /// <summary> Initializes a new instance of ComputeUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeUsage"/>. </summary>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ComputeUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>

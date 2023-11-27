@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Billing meter. </summary>
     public partial class ContainerAppBillingMeter : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeter"/>. </summary>
         public ContainerAppBillingMeter()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeter"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

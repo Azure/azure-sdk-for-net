@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Represents a single status change. </summary>
     public partial class DataBoxEdgeOrderStatus
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderStatus"/>. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AdditionalOrderDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderStatus"/>. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         /// <param name="updateOn"> Time of status update. </param>
         /// <param name="comments"> Comments related to this status change. </param>

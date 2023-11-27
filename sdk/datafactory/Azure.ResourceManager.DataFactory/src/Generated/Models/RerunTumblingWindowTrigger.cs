@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
     public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>
         /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "RerunTumblingWindowTrigger";
         }
 
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

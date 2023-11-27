@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlDBTaskOutputError. </summary>
     public partial class MigrateSqlServerSqlDBTaskOutputError : MigrateSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputError"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="error"> Migration error. </param>

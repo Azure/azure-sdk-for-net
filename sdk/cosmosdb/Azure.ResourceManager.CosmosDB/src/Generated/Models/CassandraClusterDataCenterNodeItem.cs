@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
     public partial class CassandraClusterDataCenterNodeItem
     {
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         internal CassandraClusterDataCenterNodeItem()
         {
             Tokens = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>

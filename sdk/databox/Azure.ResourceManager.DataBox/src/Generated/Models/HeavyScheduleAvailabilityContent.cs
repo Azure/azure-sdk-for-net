@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the availability for scheduling heavy orders. </summary>
     public partial class HeavyScheduleAvailabilityContent : ScheduleAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HeavyScheduleAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeavyScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         public HeavyScheduleAvailabilityContent(AzureLocation storageLocation) : base(storageLocation)
         {

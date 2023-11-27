@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Map a field of profile to its corresponding StrongId in Related Profile. </summary>
     public partial class RelationshipTypeFieldMapping
     {
-        /// <summary> Initializes a new instance of RelationshipTypeFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeFieldMapping"/>. </summary>
         /// <param name="profileFieldName"> Specifies the fieldName in profile. </param>
         /// <param name="relatedProfileKeyProperty"> Specifies the KeyProperty (from StrongId) of the related profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileFieldName"/> or <paramref name="relatedProfileKeyProperty"/> is null. </exception>

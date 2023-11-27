@@ -13,14 +13,14 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The MessageDetails. </summary>
     public partial class MessageDetails
     {
-        /// <summary> Initializes a new instance of MessageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageDetails"/>. </summary>
         public MessageDetails()
         {
             SupportedProtocols = new ChangeTrackingList<MessageProtocol>();
             UseCases = new ChangeTrackingList<UseCase>();
         }
 
-        /// <summary> Initializes a new instance of MessageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageDetails"/>. </summary>
         /// <param name="supportedProtocols"> Applicable message protocols used in the program e.g. SMS, MMS. </param>
         /// <param name="recurrence"> Indicates the nature of the messaging associated with the program e.g. 'subscription', 'transaction'. </param>
         /// <param name="helpMessage">

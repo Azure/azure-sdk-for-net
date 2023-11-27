@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel()
         {
             ActiveBackupSets = new ChangeTrackingList<BackupSetInfo>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="sourceDatabaseName"> Name of the database. </param>

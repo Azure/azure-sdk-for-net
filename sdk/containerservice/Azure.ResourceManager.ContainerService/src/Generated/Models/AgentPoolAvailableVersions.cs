@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list of available versions for an agent pool. </summary>
     public partial class AgentPoolAvailableVersions : ResourceData
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
         internal AgentPoolAvailableVersions()
         {
             AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

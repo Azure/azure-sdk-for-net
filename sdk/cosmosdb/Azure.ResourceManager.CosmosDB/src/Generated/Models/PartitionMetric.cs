@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The metric values for a single partition. </summary>
     public partial class PartitionMetric : CosmosDBBaseMetric
     {
-        /// <summary> Initializes a new instance of PartitionMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionMetric"/>. </summary>
         internal PartitionMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of PartitionMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>

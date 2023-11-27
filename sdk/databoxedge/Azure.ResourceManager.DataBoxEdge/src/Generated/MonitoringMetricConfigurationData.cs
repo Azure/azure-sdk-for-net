@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class MonitoringMetricConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationData"/>. </summary>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
         public MonitoringMetricConfigurationData(IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             MetricConfigurations = metricConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

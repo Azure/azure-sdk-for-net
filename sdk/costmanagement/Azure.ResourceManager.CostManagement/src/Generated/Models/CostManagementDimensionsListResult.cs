@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing dimensions. It contains a list of available dimensions. </summary>
     internal partial class CostManagementDimensionsListResult
     {
-        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimensionsListResult"/>. </summary>
         internal CostManagementDimensionsListResult()
         {
             Value = new ChangeTrackingList<CostManagementDimension>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimensionsListResult"/>. </summary>
         /// <param name="value"> The list of dimensions. </param>
         internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value)
         {

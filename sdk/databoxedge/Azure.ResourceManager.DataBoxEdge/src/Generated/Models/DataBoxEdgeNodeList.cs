@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of Nodes. </summary>
     internal partial class DataBoxEdgeNodeList
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeList"/>. </summary>
         internal DataBoxEdgeNodeList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeNode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeList"/>. </summary>
         /// <param name="value"> The list of Nodes. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal DataBoxEdgeNodeList(IReadOnlyList<DataBoxEdgeNode> value, string nextLink)
