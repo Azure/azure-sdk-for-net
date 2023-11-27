@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
     public class ModelReaderWriterOptionsTests
     {
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
+
         [Test]
         public void MapAndStaticPropertySameObject()
         {
-            Assert.IsTrue(ReferenceEquals(ModelWriterTests.WireOptions, ModelWriterTests.WireOptions));
             Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Json, ModelReaderWriterOptions.Json));
             Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Xml, ModelReaderWriterOptions.Xml));
         }
@@ -19,7 +19,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void MapShouldHaveRightValues()
         {
-            var options = ModelWriterTests.WireOptions;
+            var options = _wireOptions;
             Assert.AreEqual("W", options.Format);
 
             options = ModelReaderWriterOptions.Json;

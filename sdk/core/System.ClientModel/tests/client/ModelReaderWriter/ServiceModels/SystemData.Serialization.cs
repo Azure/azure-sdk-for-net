@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Globalization;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TestHelpers.Internal;

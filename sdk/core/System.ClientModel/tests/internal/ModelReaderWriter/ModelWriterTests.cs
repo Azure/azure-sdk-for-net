@@ -2,15 +2,16 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.IO;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
@@ -20,8 +21,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
     /// </summary>
     public class ModelWriterTests
     {
-        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
-
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
         private const int _modelSize = 156000;
         private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData.json"));
         private static readonly ResourceProviderData _resourceProviderData = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(_json))!;
@@ -43,7 +43,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task HappyPath()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(_modelSize, length);
 
@@ -61,7 +61,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task DisposeWhileConvertToBinaryData()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
@@ -97,7 +97,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task DisposeWhileCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
@@ -145,7 +145,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task DisposeWhileCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
@@ -181,7 +181,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task DisposeWhileGettingLength()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
@@ -231,7 +231,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void UseAfterDispose()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             writer.Dispose();
 
             Assert.Throws<ObjectDisposedException>(() => writer.TryComputeLength(out var length));
@@ -244,7 +244,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void DisposeWithLoad()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
             writer.TryComputeLength(out var length);
             Assert.AreEqual(_modelSize, length);
 
@@ -261,7 +261,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void DisposeWithoutLoad()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             writer.Dispose();
 
@@ -288,7 +288,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelComputLength()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 1000000, i =>
             {
@@ -300,7 +300,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, i =>
             {
@@ -313,7 +313,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelWriterTests.WireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, async i =>
             {
@@ -321,6 +321,54 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
                 await writer.CopyToAsync(stream, default);
                 Assert.AreEqual(_modelSize, stream.Length);
             });
+        }
+
+        [Test]
+        public async Task CancellationToken()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyTo(stream, tokenSource.Token));
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
+        }
+
+        [Test]
+        public async Task CancellationTokenAsync()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyToAsync(stream, tokenSource.Token));
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
         }
 
         private class ExplodingModel : IJsonModel<ExplodingModel>

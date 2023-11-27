@@ -3,11 +3,12 @@
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using System.IO;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models;
-using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
@@ -15,8 +16,7 @@ namespace System.ClientModel.Tests.Internal.Perf
     public abstract class JsonModelBenchmark<T>
         where T : class, IJsonModel<T>
     {
-        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
-
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
         private string _json;
         protected T _model;
         protected ModelReaderWriterOptions _options;
@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.Internal.Perf
             _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelReaderWriter.Read<T>(_data);
-            _options = WireOptions;
+            _options = _wireOptions;
             _jsonSerializerResult = BinaryData.FromString(JsonSerializer.Serialize(_model));
         }
 
@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         public string Write_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(WireOptions));
+            options.Converters.Add(new ModelJsonConverter(_wireOptions));
             return JsonSerializer.Serialize(_model, options);
         }
 
@@ -121,7 +121,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         public T Read_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(WireOptions));
+            options.Converters.Add(new ModelJsonConverter(_wireOptions));
             return JsonSerializer.Deserialize<T>(_json, options);
         }
 

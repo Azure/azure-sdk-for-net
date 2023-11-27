@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace TestHelpers.Internal;
 
-public class OptionalList<T>: IList<T>, IReadOnlyList<T>
+internal class OptionalList<T> : IList<T>, IReadOnlyList<T>
 {
     private IList<T>? _innerList;
 

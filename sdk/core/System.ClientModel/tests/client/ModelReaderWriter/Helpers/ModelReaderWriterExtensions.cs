@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Primitives;
+#nullable enable
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-
-#nullable enable
+using System;
 
 namespace TestHelpers.Internal;
 
-public static class ModelReaderWriterExtensions
+internal static class ModelReaderWriterExtensions
 {
     // TODO: These are copied from shared source files. If they become
     // public we need to refactor and consolidate to a single place.
@@ -260,5 +260,5 @@ public static class ModelReaderWriterExtensions
         }
     }
 
-    #endregion
+#endregion
 }

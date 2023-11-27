@@ -5,10 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using TestHelpers.Internal;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace OpenAI;
 

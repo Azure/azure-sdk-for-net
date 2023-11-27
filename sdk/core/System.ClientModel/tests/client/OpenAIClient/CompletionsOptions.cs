@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
-using TestHelpers.Internal;
+using System.ClientModel.Tests.Client;
 using System.Collections.Generic;
 using System.Linq;
+using TestHelpers.Internal;
 
 namespace OpenAI;
 

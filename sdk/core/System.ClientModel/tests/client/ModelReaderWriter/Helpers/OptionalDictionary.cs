@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace TestHelpers.Internal;
 
-public class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
+internal class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
 {
     private IDictionary<TKey, TValue>? _innerDictionary;
 

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// TODO: remove this?
 #nullable disable
 
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Text.Json;
 
 namespace TestHelpers.Internal;
 
-public static class OptionalProperty
+internal static class OptionalProperty
 {
     public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
     {
@@ -26,7 +25,7 @@ public static class OptionalProperty
         return !(collection is OptionalDictionary<TKey, TValue> changeTrackingList && changeTrackingList.IsUndefined);
     }
 
-    public static bool IsDefined<T>(T? value) where T: struct
+    public static bool IsDefined<T>(T? value) where T : struct
     {
         return value.HasValue;
     }
@@ -79,7 +78,7 @@ public static class OptionalProperty
         return new OptionalList<T>(optional);
     }
 
-    public static T? ToNullable<T>(OptionalProperty<T> optional) where T: struct
+    public static T? ToNullable<T>(OptionalProperty<T> optional) where T : struct
     {
         if (optional.HasValue)
         {
@@ -88,7 +87,7 @@ public static class OptionalProperty
         return default;
     }
 
-    public static T? ToNullable<T>(OptionalProperty<T?> optional) where T: struct
+    public static T? ToNullable<T>(OptionalProperty<T?> optional) where T : struct
     {
         return optional.Value;
     }

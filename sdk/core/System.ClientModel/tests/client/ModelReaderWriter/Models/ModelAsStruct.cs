@@ -3,10 +3,10 @@
 
 #nullable disable
 
-using TestHelpers.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {

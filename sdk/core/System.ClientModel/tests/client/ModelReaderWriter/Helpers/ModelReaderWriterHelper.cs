@@ -6,11 +6,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 
-#nullable enable
-
 namespace TestHelpers.Internal;
 
-public static class ModelReaderWriterHelper
+internal static class ModelReaderWriterHelper
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ValidateFormat<T>(IPersistableModel<T> model, string format)
@@ -26,6 +24,6 @@ public static class ModelReaderWriterHelper
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ValidateFormat(IPersistableModel<object> model, string format) => ValidateFormat<object>(model, format);
 
-    private static ModelReaderWriterOptions? _wireOptions;
+    private static ModelReaderWriterOptions _wireOptions;
     public static ModelReaderWriterOptions WireOptions => _wireOptions ??= new ModelReaderWriterOptions("W");
 }
