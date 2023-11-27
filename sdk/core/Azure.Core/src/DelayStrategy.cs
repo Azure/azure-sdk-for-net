@@ -12,6 +12,7 @@ namespace Azure.Core
     public abstract class DelayStrategy
     {
         private const double DefaultJitterFactor = 0.2;
+
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
         private readonly double _maxJitterFactor;
@@ -25,9 +26,10 @@ namespace Azure.Core
         /// delay used will be a random double between 0.8 and 1.2. If set to 0, no jitter will be applied.</param>
         protected DelayStrategy(TimeSpan? maxDelay = default, double jitterFactor = DefaultJitterFactor)
         {
-            // use same defaults as RetryOptions
             _minJitterFactor = 1.0 - jitterFactor;
             _maxJitterFactor = 1.0 + jitterFactor;
+
+            // use same defaults as RetryOptions
             _maxDelay = maxDelay ?? RetryOptions.DefaultMaxDelay;
         }
 
@@ -95,7 +97,8 @@ namespace Azure.Core
         /// <param name="val1">The first value.</param>
         /// <param name="val2">The second value.</param>
         /// <returns>The maximum of the two <see cref="TimeSpan"/> values.</returns>
-        protected static TimeSpan Max(TimeSpan val1, TimeSpan val2) => val1 > val2 ? val1 : val2;
+        protected static TimeSpan Max(TimeSpan val1, TimeSpan val2)
+            => val1 > val2 ? val1 : val2;
 
         /// <summary>
         /// Gets the minimum of two <see cref="TimeSpan"/> values.
@@ -103,6 +106,7 @@ namespace Azure.Core
         /// <param name="val1">The first value.</param>
         /// <param name="val2">The second value.</param>
         /// <returns>The minimum of the two <see cref="TimeSpan"/> values.</returns>
-        protected static TimeSpan Min(TimeSpan val1, TimeSpan val2) => val1 < val2 ? val1 : val2;
+        protected static TimeSpan Min(TimeSpan val1, TimeSpan val2)
+            => val1 < val2 ? val1 : val2;
     }
 }
