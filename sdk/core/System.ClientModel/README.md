@@ -1,4 +1,4 @@
-# System.ClientModel shared client library for .NET
+# System.ClientModel library for .NET
 
 `System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
 
@@ -12,6 +12,10 @@ it will be installed for you when you install one of the client libraries using 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/).
+
+```dotnetcli
+dotnet add package System.ClientModel --prerelease
+```
 
 ### Prerequisites
 
@@ -47,6 +51,28 @@ uri.Reset(new Uri("https://www.example.com/"));
 request.Uri = uri.ToUri();
 pipeline.Send(message);
 Console.WriteLine(message.Response.Status);
+```
+
+### Read and write persistable models
+
+As a library author you can implement `IPersistableModel<T>` or `IJsonModel<T>` which will give library users the ability to read and write your models.
+
+Example writing an instance of a model.
+
+```C# Snippet:Readme_Write_Simple
+InputModel model = new InputModel();
+BinaryData data = ModelReaderWriter.Write(model);
+```
+
+Example reading a model from json
+
+```C# Snippet:Readme_Read_Simple
+string json = @"{
+  ""x"": 1,
+  ""y"": 2,
+  ""z"": 3
+}";
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json));
 ```
 
 ## Troubleshooting

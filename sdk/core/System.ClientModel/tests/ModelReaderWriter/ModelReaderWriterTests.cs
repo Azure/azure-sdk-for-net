@@ -10,7 +10,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     public class ModelReaderWriterTests
     {
-        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
 
         [Test]
         public void ArgumentExceptions()
@@ -21,11 +21,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!));
 
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, WireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), WireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, WireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, WireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, WireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, _wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), _wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, _wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, _wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, _wireOptions));
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
-using TestHelpers.Internal;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources

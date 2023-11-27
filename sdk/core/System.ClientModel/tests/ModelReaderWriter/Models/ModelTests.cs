@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
 
@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class ModelTests<T> where T : IPersistableModel<T>
     {
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
+
         private T? _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();
 
@@ -40,15 +42,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("W")]
         public void RoundTripWithModelReaderWriterNonGeneric(string format)
             => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>());
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithModelReaderWriterFormatOverload(string format)
-        {
-            //if we only pass in the format we can't test BYOM
-            if (!typeof(T).IsGenericType)
-                RoundTripTest(format, new ModelReaderWriterFormatOverloadStrategy<T>());
-        }
 
         [TestCase("J")]
         [TestCase("W")]
@@ -137,12 +130,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
-                Assert.Throws<FormatException>(() => (jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
                 bool gotException = false;
                 try
                 {
@@ -180,12 +173,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterTests.WireOptions));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), _wireOptions));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Create(ref reader, ModelReaderWriterTests.WireOptions);
+                    jsonModel.Create(ref reader, _wireOptions);
                 }
                 catch (InvalidOperationException)
                 {

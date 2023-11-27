@@ -5,11 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.Collections.Generic;
 using System.Text.Json;
-using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {

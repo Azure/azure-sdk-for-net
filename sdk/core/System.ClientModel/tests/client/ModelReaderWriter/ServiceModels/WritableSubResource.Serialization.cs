@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using TestHelpers.Internal;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
