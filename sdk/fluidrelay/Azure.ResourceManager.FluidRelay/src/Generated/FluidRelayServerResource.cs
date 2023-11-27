@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.FluidRelay
 {
     /// <summary>
     /// A Class representing a FluidRelayServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FluidRelayServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFluidRelayServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFluidRelayServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FluidRelayServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFluidRelayServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFluidRelayServer method.
     /// </summary>
     public partial class FluidRelayServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FluidRelayServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroup"> The resourceGroup. </param>
+        /// <param name="fluidRelayServerName"> The fluidRelayServerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroup, string fluidRelayServerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FluidRelayServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FluidRelayServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FluidRelayServerResource(ArmClient client, FluidRelayServerData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An object representing collection of FluidRelayContainerResources and their operations over a FluidRelayContainerResource. </returns>
         public virtual FluidRelayContainerCollection GetFluidRelayContainers()
         {
-            return GetCachedClient(Client => new FluidRelayContainerCollection(Client, Id));
+            return GetCachedClient(client => new FluidRelayContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FluidRelayContainerResource>> GetFluidRelayContainerAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FluidRelayContainerResource> GetFluidRelayContainer(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {

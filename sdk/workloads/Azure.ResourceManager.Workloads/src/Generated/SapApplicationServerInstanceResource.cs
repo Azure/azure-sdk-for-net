@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapApplicationServerInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapApplicationServerInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapApplicationServerInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource" /> using the GetSapApplicationServerInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapApplicationServerInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapApplicationServerInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource"/> using the GetSapApplicationServerInstance method.
     /// </summary>
     public partial class SapApplicationServerInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapApplicationServerInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sapVirtualInstanceName"> The sapVirtualInstanceName. </param>
+        /// <param name="applicationInstanceName"> The applicationInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}";
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapApplicationServerInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapApplicationServerInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapApplicationServerInstanceResource(ArmClient client, SapApplicationServerInstanceData data) : this(client, data.Id)

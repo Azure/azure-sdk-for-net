@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkVmGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkVmGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkVmGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkVmGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkVmGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkVmGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkVmGroup method.
     /// </summary>
     public partial class WorkloadNetworkVmGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkVmGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="vmGroupId"> The vmGroupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkVmGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkVmGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkVmGroupResource(ArmClient client, WorkloadNetworkVmGroupData data) : this(client, data.Id)

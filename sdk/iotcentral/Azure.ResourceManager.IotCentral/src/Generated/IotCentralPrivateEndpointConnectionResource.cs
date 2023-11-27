@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
     /// A Class representing an IotCentralPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotCentralPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotCentralPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotCentralAppResource" /> using the GetIotCentralPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotCentralPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotCentralPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotCentralAppResource"/> using the GetIotCentralPrivateEndpointConnection method.
     /// </summary>
     public partial class IotCentralPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotCentralPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.IotCentral
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotCentralPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotCentralPrivateEndpointConnectionResource(ArmClient client, IotCentralPrivateEndpointConnectionData data) : this(client, data.Id)

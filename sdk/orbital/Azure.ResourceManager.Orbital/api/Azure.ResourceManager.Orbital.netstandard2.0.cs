@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Orbital
     }
     public partial class OrbitalContactProfileData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OrbitalContactProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OrbitalContactProfileData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Orbital.Models.AutoTrackingConfiguration? AutoTrackingConfiguration { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Uri EventHubUri { get { throw null; } set { } }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Orbital
     }
     public partial class OrbitalSpacecraftData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OrbitalSpacecraftData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OrbitalSpacecraftData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink> Links { get { throw null; } }
         public string NoradId { get { throw null; } set { } }
@@ -207,6 +207,38 @@ namespace Azure.ResourceManager.Orbital
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Orbital.Mocking
+{
+    public partial class MockableOrbitalArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableOrbitalArmClient() { }
+        public virtual Azure.ResourceManager.Orbital.AvailableGroundStationResource GetAvailableGroundStationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.OrbitalContactProfileResource GetOrbitalContactProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.OrbitalContactResource GetOrbitalContactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.OrbitalSpacecraftResource GetOrbitalSpacecraftResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableOrbitalResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableOrbitalResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactProfileResource> GetOrbitalContactProfile(string contactProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(string contactProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.OrbitalContactProfileCollection GetOrbitalContactProfiles() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> GetOrbitalSpacecraft(string spacecraftName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(string spacecraftName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.OrbitalSpacecraftCollection GetOrbitalSpacecrafts() { throw null; }
+    }
+    public partial class MockableOrbitalSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableOrbitalSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Orbital.AvailableGroundStationResource> GetAvailableGroundStation(string groundStationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.AvailableGroundStationResource>> GetAvailableGroundStationAsync(string groundStationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Orbital.AvailableGroundStationCollection GetAvailableGroundStations() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Orbital.OrbitalContactProfileResource> GetOrbitalContactProfiles(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Orbital.OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> GetOrbitalSpacecrafts(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Orbital.Models

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceDtc along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDtcResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDtcResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceDtc method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceDtcResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceDtcResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceDtc method.
     /// </summary>
     public partial class ManagedInstanceDtcResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDtcResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="dtcName"> The dtcName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, DtcName dtcName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceDtcResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDtcResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceDtcResource(ArmClient client, ManagedInstanceDtcData data) : this(client, data.Id)

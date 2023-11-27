@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementGatewayHostnameConfigurationResource" /> and their operations.
-    /// Each <see cref="ApiManagementGatewayHostnameConfigurationResource" /> in the collection will belong to the same instance of <see cref="ApiManagementGatewayResource" />.
-    /// To get an <see cref="ApiManagementGatewayHostnameConfigurationCollection" /> instance call the GetApiManagementGatewayHostnameConfigurations method from an instance of <see cref="ApiManagementGatewayResource" />.
+    /// A class representing a collection of <see cref="ApiManagementGatewayHostnameConfigurationResource"/> and their operations.
+    /// Each <see cref="ApiManagementGatewayHostnameConfigurationResource"/> in the collection will belong to the same instance of <see cref="ApiManagementGatewayResource"/>.
+    /// To get an <see cref="ApiManagementGatewayHostnameConfigurationCollection"/> instance call the GetApiManagementGatewayHostnameConfigurations method from an instance of <see cref="ApiManagementGatewayResource"/>.
     /// </summary>
     public partial class ApiManagementGatewayHostnameConfigurationCollection : ArmCollection, IEnumerable<ApiManagementGatewayHostnameConfigurationResource>, IAsyncEnumerable<ApiManagementGatewayHostnameConfigurationResource>
     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
-        /// <param name="data"> The ApiManagementGatewayHostnameConfiguration to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayHostnameConfigurationData"/> to use. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hcId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
-        /// <param name="data"> The ApiManagementGatewayHostnameConfiguration to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayHostnameConfigurationData"/> to use. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hcId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementGatewayHostnameConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementGatewayHostnameConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementGatewayHostnameConfigurationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGatewayHostnameConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementGatewayHostnameConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementGatewayHostnameConfigurationResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);

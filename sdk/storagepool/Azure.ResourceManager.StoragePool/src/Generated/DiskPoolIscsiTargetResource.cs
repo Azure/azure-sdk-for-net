@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StoragePool
 {
     /// <summary>
     /// A Class representing a DiskPoolIscsiTarget along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskPoolIscsiTargetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskPoolIscsiTargetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiskPoolResource" /> using the GetDiskPoolIscsiTarget method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskPoolIscsiTargetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskPoolIscsiTargetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DiskPoolResource"/> using the GetDiskPoolIscsiTarget method.
     /// </summary>
     public partial class DiskPoolIscsiTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskPoolIscsiTargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskPoolName"> The diskPoolName. </param>
+        /// <param name="iscsiTargetName"> The iscsiTargetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskPoolIscsiTargetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskPoolIscsiTargetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskPoolIscsiTargetResource(ArmClient client, DiskPoolIscsiTargetData data) : this(client, data.Id)

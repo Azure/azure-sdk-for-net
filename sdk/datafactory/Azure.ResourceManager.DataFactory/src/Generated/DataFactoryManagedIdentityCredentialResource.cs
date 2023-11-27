@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryManagedIdentityCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryManagedIdentityCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryManagedIdentityCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryManagedIdentityCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryManagedIdentityCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryManagedIdentityCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryManagedIdentityCredential method.
     /// </summary>
     public partial class DataFactoryManagedIdentityCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryManagedIdentityCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="credentialName"> The credentialName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string credentialName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryManagedIdentityCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedIdentityCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryManagedIdentityCredentialResource(ArmClient client, DataFactoryManagedIdentityCredentialData data) : this(client, data.Id)

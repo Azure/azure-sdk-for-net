@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningOnlineEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningOnlineEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningOnlineEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningOnlineEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningOnlineEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningOnlineEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningOnlineEndpoint method.
     /// </summary>
     public partial class MachineLearningOnlineEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningOnlineEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningOnlineEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningOnlineEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningOnlineEndpointResource(ArmClient client, MachineLearningOnlineEndpointData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningOnlineDeploymentResources and their operations over a MachineLearningOnlineDeploymentResource. </returns>
         public virtual MachineLearningOnlineDeploymentCollection GetMachineLearningOnlineDeployments()
         {
-            return GetCachedClient(Client => new MachineLearningOnlineDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningOnlineDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningOnlineDeploymentResource>> GetMachineLearningOnlineDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningOnlineDeploymentResource> GetMachineLearningOnlineDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {

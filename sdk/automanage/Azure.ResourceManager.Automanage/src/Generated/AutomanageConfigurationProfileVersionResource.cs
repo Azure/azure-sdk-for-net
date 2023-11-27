@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageConfigurationProfileVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageConfigurationProfileResource" /> using the GetAutomanageConfigurationProfileVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageConfigurationProfileVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageConfigurationProfileVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageConfigurationProfileResource"/> using the GetAutomanageConfigurationProfileVersion method.
     /// </summary>
     public partial class AutomanageConfigurationProfileVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageConfigurationProfileVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configurationProfileName"> The configurationProfileName. </param>
+        /// <param name="versionName"> The versionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configurationProfileName, string versionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageConfigurationProfileVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageConfigurationProfileVersionResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)

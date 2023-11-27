@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// A Class representing a PolicyMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPolicyMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetPolicyMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPolicyMetadata method.
     /// </summary>
     public partial class PolicyMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyMetadataResource"/> instance. </summary>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceName)
         {
             var resourceId = $"/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyMetadataResource(ArmClient client, PolicyMetadataData data) : this(client, data.Id)

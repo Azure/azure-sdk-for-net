@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a ShareDataSetMapping along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ShareDataSetMappingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetShareDataSetMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource" /> using the GetShareDataSetMapping method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ShareDataSetMappingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetShareDataSetMappingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource"/> using the GetShareDataSetMapping method.
     /// </summary>
     public partial class ShareDataSetMappingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ShareDataSetMappingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareSubscriptionName"> The shareSubscriptionName. </param>
+        /// <param name="dataSetMappingName"> The dataSetMappingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.DataShare
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ShareDataSetMappingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ShareDataSetMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ShareDataSetMappingResource(ArmClient client, ShareDataSetMappingData data) : this(client, data.Id)

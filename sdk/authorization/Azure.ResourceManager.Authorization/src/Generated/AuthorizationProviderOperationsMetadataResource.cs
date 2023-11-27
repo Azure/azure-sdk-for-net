@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing an AuthorizationProviderOperationsMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AuthorizationProviderOperationsMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAuthorizationProviderOperationsMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAuthorizationProviderOperationsMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AuthorizationProviderOperationsMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAuthorizationProviderOperationsMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAuthorizationProviderOperationsMetadata method.
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AuthorizationProviderOperationsMetadataResource"/> instance. </summary>
+        /// <param name="resourceProviderNamespace"> The resourceProviderNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceProviderNamespace)
         {
             var resourceId = $"/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthorizationProviderOperationsMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationProviderOperationsMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AuthorizationProviderOperationsMetadataResource(ArmClient client, AuthorizationProviderOperationsMetadataData data) : this(client, data.Id)

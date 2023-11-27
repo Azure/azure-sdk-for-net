@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a WidgetTypeResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WidgetTypeResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWidgetTypeResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetWidgetTypeResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WidgetTypeResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWidgetTypeResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetWidgetTypeResourceFormat method.
     /// </summary>
     public partial class WidgetTypeResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WidgetTypeResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="widgetTypeName"> The widgetTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string widgetTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/widgetTypes/{widgetTypeName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WidgetTypeResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WidgetTypeResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WidgetTypeResourceFormatResource(ArmClient client, WidgetTypeResourceFormatData data) : this(client, data.Id)

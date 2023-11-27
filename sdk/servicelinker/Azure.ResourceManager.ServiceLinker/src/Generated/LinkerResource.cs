@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
     /// A Class representing a LinkerResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LinkerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLinkerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetLinkerResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LinkerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLinkerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLinkerResource method.
     /// </summary>
     public partial class LinkerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LinkerResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="linkerName"> The linkerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string linkerName)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LinkerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LinkerResource(ArmClient client, LinkerResourceData data) : this(client, data.Id)

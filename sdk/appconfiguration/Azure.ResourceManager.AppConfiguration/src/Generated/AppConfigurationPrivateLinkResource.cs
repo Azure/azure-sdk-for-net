@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetAppConfigurationPrivateLinkResource method.
     /// </summary>
     public partial class AppConfigurationPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppConfigurationPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configStoreName"> The configStoreName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationPrivateLinkResource(ArmClient client, AppConfigurationPrivateLinkResourceData data) : this(client, data.Id)

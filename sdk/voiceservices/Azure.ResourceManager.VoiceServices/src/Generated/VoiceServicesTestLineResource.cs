@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.VoiceServices
 {
     /// <summary>
     /// A Class representing a VoiceServicesTestLine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VoiceServicesTestLineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVoiceServicesTestLineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VoiceServicesCommunicationsGatewayResource" /> using the GetVoiceServicesTestLine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VoiceServicesTestLineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVoiceServicesTestLineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VoiceServicesCommunicationsGatewayResource"/> using the GetVoiceServicesTestLine method.
     /// </summary>
     public partial class VoiceServicesTestLineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VoiceServicesTestLineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationsGatewayName"> The communicationsGatewayName. </param>
+        /// <param name="testLineName"> The testLineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VoiceServicesTestLineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VoiceServicesTestLineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VoiceServicesTestLineResource(ArmClient client, VoiceServicesTestLineData data) : this(client, data.Id)

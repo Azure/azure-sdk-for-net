@@ -18,11 +18,8 @@ namespace Azure.ResourceManager.Redis.Models
     {
         /// <summary> Initializes a new instance of RedisOperationStatus. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal RedisOperationStatus(string status) : base(status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

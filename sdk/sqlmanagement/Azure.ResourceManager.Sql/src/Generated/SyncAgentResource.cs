@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SyncAgent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SyncAgentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSyncAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSyncAgent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SyncAgentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSyncAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSyncAgent method.
     /// </summary>
     public partial class SyncAgentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SyncAgentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="syncAgentName"> The syncAgentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string syncAgentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SyncAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SyncAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SyncAgentResource(ArmClient client, SyncAgentData data) : this(client, data.Id)
@@ -370,7 +374,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncAgentLinkedDatabase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SyncAgentLinkedDatabase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncAgentLinkedDatabase> GetLinkedDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -392,7 +396,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncAgentLinkedDatabase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncAgentLinkedDatabase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncAgentLinkedDatabase> GetLinkedDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

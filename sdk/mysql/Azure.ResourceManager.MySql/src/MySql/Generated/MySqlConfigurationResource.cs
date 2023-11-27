@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlConfiguration method.
     /// </summary>
     public partial class MySqlConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations/{configurationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MySql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlConfigurationResource(ArmClient client, MySqlConfigurationData data) : this(client, data.Id)

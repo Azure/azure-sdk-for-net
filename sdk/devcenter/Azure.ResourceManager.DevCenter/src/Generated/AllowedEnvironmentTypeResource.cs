@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing an AllowedEnvironmentType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AllowedEnvironmentTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAllowedEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetAllowedEnvironmentType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AllowedEnvironmentTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAllowedEnvironmentTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetAllowedEnvironmentType method.
     /// </summary>
     public partial class AllowedEnvironmentTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AllowedEnvironmentTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AllowedEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AllowedEnvironmentTypeResource(ArmClient client, AllowedEnvironmentTypeData data) : this(client, data.Id)

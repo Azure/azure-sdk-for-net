@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a RecoverableManagedDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecoverableManagedDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecoverableManagedDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetRecoverableManagedDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoverableManagedDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRecoverableManagedDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetRecoverableManagedDatabase method.
     /// </summary>
     public partial class RecoverableManagedDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecoverableManagedDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="recoverableDatabaseName"> The recoverableDatabaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string recoverableDatabaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/recoverableDatabases/{recoverableDatabaseName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecoverableManagedDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoverableManagedDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoverableManagedDatabaseResource(ArmClient client, RecoverableManagedDatabaseData data) : this(client, data.Id)

@@ -1,14 +1,29 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.1 (2023-11-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0 (2023-10-26)
+
+### Features Added
+
+- Private Link Support
+- Scaling Plan Personal Schedules
+
+### Breaking Changes
+
+- Scaling Parameter "rampDownCapacityThresholdPct" minimum value changed from 0 to 1.
+
+### Other Changes
+
+- Upgraded API version to 2023-09-05
 
 ## 1.1.0 (2023-05-12)
 

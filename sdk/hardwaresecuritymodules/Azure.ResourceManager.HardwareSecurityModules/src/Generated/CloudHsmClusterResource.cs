@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A Class representing a CloudHsmCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudHsmClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCloudHsmClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCloudHsmCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudHsmClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCloudHsmClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCloudHsmCluster method.
     /// </summary>
     public partial class CloudHsmClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudHsmClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudHsmClusterName"> The cloudHsmClusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}";
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CloudHsmClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CloudHsmClusterResource(ArmClient client, CloudHsmClusterData data) : this(client, data.Id)
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An object representing collection of HardwareSecurityModulesPrivateEndpointConnectionResources and their operations over a HardwareSecurityModulesPrivateEndpointConnectionResource. </returns>
         public virtual HardwareSecurityModulesPrivateEndpointConnectionCollection GetHardwareSecurityModulesPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HardwareSecurityModulesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HardwareSecurityModulesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HardwareSecurityModulesPrivateEndpointConnectionResource>> GetHardwareSecurityModulesPrivateEndpointConnectionAsync(string peConnectionName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HardwareSecurityModulesPrivateEndpointConnectionResource> GetHardwareSecurityModulesPrivateEndpointConnection(string peConnectionName, CancellationToken cancellationToken = default)
         {
@@ -369,7 +372,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -390,7 +393,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

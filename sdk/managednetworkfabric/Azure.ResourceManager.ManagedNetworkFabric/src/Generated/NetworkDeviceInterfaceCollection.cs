@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkDeviceInterfaceResource" /> and their operations.
-    /// Each <see cref="NetworkDeviceInterfaceResource" /> in the collection will belong to the same instance of <see cref="NetworkDeviceResource" />.
-    /// To get a <see cref="NetworkDeviceInterfaceCollection" /> instance call the GetNetworkDeviceInterfaces method from an instance of <see cref="NetworkDeviceResource" />.
+    /// A class representing a collection of <see cref="NetworkDeviceInterfaceResource"/> and their operations.
+    /// Each <see cref="NetworkDeviceInterfaceResource"/> in the collection will belong to the same instance of <see cref="NetworkDeviceResource"/>.
+    /// To get a <see cref="NetworkDeviceInterfaceCollection"/> instance call the GetNetworkDeviceInterfaces method from an instance of <see cref="NetworkDeviceResource"/>.
     /// </summary>
     public partial class NetworkDeviceInterfaceCollection : ArmCollection, IEnumerable<NetworkDeviceInterfaceResource>, IAsyncEnumerable<NetworkDeviceInterfaceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkDeviceInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkDeviceInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkDeviceInterfaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkDeviceInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkDeviceInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkDeviceInterfaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

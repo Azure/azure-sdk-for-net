@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing a ContainerServiceFleetMember along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerServiceFleetMemberResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerServiceFleetMemberResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource" /> using the GetContainerServiceFleetMember method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceFleetMemberResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceFleetMemberResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetContainerServiceFleetMember method.
     /// </summary>
     public partial class ContainerServiceFleetMemberResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceFleetMemberResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fleetName"> The fleetName. </param>
+        /// <param name="fleetMemberName"> The fleetMemberName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerServiceFleetMemberResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetMemberResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceFleetMemberResource(ArmClient client, ContainerServiceFleetMemberData data) : this(client, data.Id)

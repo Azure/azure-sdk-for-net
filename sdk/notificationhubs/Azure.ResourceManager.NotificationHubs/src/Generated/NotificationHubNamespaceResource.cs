@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A Class representing a NotificationHubNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationHubNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationHubNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNotificationHubNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationHubNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNotificationHubNamespace method.
     /// </summary>
     public partial class NotificationHubNamespaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NotificationHubNamespaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationHubNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationHubNamespaceResource(ArmClient client, NotificationHubNamespaceData data) : this(client, data.Id)
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubNamespaceAuthorizationRuleResources and their operations over a NotificationHubNamespaceAuthorizationRuleResource. </returns>
         public virtual NotificationHubNamespaceAuthorizationRuleCollection GetNotificationHubNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new NotificationHubNamespaceAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new NotificationHubNamespaceAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> Authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetNotificationHubNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> Authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> GetNotificationHubNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubResources and their operations over a NotificationHubResource. </returns>
         public virtual NotificationHubCollection GetNotificationHubs()
         {
-            return GetCachedClient(Client => new NotificationHubCollection(Client, Id));
+            return GetCachedClient(client => new NotificationHubCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +171,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="notificationHubName"> The notification hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubResource>> GetNotificationHubAsync(string notificationHubName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +194,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="notificationHubName"> The notification hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationHubResource> GetNotificationHub(string notificationHubName, CancellationToken cancellationToken = default)
         {

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a BandwidthSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BandwidthScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBandwidthScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetBandwidthSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BandwidthScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBandwidthScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetBandwidthSchedule method.
     /// </summary>
     public partial class BandwidthScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BandwidthScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BandwidthScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BandwidthScheduleResource(ArmClient client, BandwidthScheduleData data) : this(client, data.Id)

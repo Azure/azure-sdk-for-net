@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A Class representing an EndpointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetEndpointResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEndpointResource method.
     /// </summary>
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string endpointName)
         {
             var resourceId = $"{scope}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EndpointResource(ArmClient client, EndpointResourceData data) : this(client, data.Id)

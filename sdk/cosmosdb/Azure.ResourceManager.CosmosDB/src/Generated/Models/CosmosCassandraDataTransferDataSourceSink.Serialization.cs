@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(KeyspaceName);
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
+            if (Optional.IsDefined(RemoteAccountName))
+            {
+                writer.WritePropertyName("remoteAccountName"u8);
+                writer.WriteStringValue(RemoteAccountName);
+            }
             writer.WritePropertyName("component"u8);
             writer.WriteStringValue(Component.ToString());
             writer.WriteEndObject();
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string keyspaceName = default;
             string tableName = default;
+            Optional<string> remoteAccountName = default;
             DataTransferComponent component = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,13 +51,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tableName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("remoteAccountName"u8))
+                {
+                    remoteAccountName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("component"u8))
                 {
                     component = new DataTransferComponent(property.Value.GetString());
                     continue;
                 }
             }
-            return new CosmosCassandraDataTransferDataSourceSink(component, keyspaceName, tableName);
+            return new CosmosCassandraDataTransferDataSourceSink(component, keyspaceName, tableName, remoteAccountName.Value);
         }
     }
 }

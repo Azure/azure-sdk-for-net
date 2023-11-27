@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgFoodPlatformPrivateLinkResource" /> and their operations.
-    /// Each <see cref="AgFoodPlatformPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="FarmBeatResource" />.
-    /// To get an <see cref="AgFoodPlatformPrivateLinkResourceCollection" /> instance call the GetAgFoodPlatformPrivateLinkResources method from an instance of <see cref="FarmBeatResource" />.
+    /// A class representing a collection of <see cref="AgFoodPlatformPrivateLinkResource"/> and their operations.
+    /// Each <see cref="AgFoodPlatformPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="FarmBeatResource"/>.
+    /// To get an <see cref="AgFoodPlatformPrivateLinkResourceCollection"/> instance call the GetAgFoodPlatformPrivateLinkResources method from an instance of <see cref="FarmBeatResource"/>.
     /// </summary>
     public partial class AgFoodPlatformPrivateLinkResourceCollection : ArmCollection, IEnumerable<AgFoodPlatformPrivateLinkResource>, IAsyncEnumerable<AgFoodPlatformPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgFoodPlatformPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AgFoodPlatformPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgFoodPlatformPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgFoodPlatformPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AgFoodPlatformPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgFoodPlatformPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

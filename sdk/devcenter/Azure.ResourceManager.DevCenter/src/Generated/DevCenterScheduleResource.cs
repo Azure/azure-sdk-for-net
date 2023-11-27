@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterPoolResource" /> using the GetDevCenterSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterPoolResource"/> using the GetDevCenterSchedule method.
     /// </summary>
     public partial class DevCenterScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="scheduleName"> The scheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterScheduleResource(ArmClient client, DevCenterScheduleData data) : this(client, data.Id)

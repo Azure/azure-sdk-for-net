@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformSupportedBuildpack along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformSupportedBuildpackResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformSupportedBuildpackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource" /> using the GetAppPlatformSupportedBuildpack method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformSupportedBuildpackResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformSupportedBuildpackResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource"/> using the GetAppPlatformSupportedBuildpack method.
     /// </summary>
     public partial class AppPlatformSupportedBuildpackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformSupportedBuildpackResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="buildpackName"> The buildpackName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildpackName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformSupportedBuildpackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformSupportedBuildpackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformSupportedBuildpackResource(ArmClient client, AppPlatformSupportedBuildpackData data) : this(client, data.Id)

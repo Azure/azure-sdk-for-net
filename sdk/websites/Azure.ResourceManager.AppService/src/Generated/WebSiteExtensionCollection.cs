@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteExtensionResource" /> and their operations.
-    /// Each <see cref="WebSiteExtensionResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSiteExtensionCollection" /> instance call the GetWebSiteExtensions method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSiteExtensionResource"/> and their operations.
+    /// Each <see cref="WebSiteExtensionResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WebSiteExtensionCollection"/> instance call the GetWebSiteExtensions method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WebSiteExtensionCollection : ArmCollection, IEnumerable<WebSiteExtensionResource>, IAsyncEnumerable<WebSiteExtensionResource>
     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

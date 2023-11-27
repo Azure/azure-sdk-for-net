@@ -9,8 +9,23 @@ using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
-    internal partial class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
+        internal static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
+        {
+            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
+            {
+                return new LocalTransferCheckpointer(options.CheckpointerPath);
+            }
+            else
+            {
+                // Default TransferCheckpointer
+                return new LocalTransferCheckpointer(default);
+            }
+        }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
+
         internal static async Task<DataTransferStatus> GetJobStatusAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
@@ -54,30 +69,23 @@ namespace Azure.Storage.DataMovement
                 header = JobPlanHeader.Deserialize(stream);
             }
 
-            (string sourceResourceId, string destResourceId) = await checkpointer.GetResourceIdsAsync(
-                    transferId,
-                    cancellationToken).ConfigureAwait(false);
-
-            bool isContainer =
-                (await checkpointer.CurrentJobPartCountAsync(transferId, cancellationToken).ConfigureAwait(false)) > 1;
-
             return new DataTransferProperties
             {
                 TransferId = transferId,
-                SourceTypeId = sourceResourceId,
-                SourcePath = header.ParentSourcePath,
+                SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
-                DestinationTypeId = destResourceId,
-                DestinationPath = header.ParentDestinationPath,
+                SourceCheckpointData = header.SourceCheckpointData,
+                DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
-                IsContainer = isContainer,
+                DestinationCheckpointData = header.DestinationCheckpointData,
+                IsContainer = header.IsContainer,
             };
         }
 
         internal static async Task<bool> IsEnumerationCompleteAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
                 transferId,
@@ -92,7 +100,7 @@ namespace Azure.Storage.DataMovement
         internal static async Task OnEnumerationCompleteAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             byte[] enumerationComplete = { Convert.ToByte(true) };
             await checkpointer.WriteToJobPlanFileAsync(

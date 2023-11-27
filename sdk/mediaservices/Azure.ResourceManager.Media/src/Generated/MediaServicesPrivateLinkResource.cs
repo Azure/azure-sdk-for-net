@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaServicesPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaServicesPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaServicesPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetMediaServicesPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaServicesPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaServicesPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetMediaServicesPrivateLinkResource method.
     /// </summary>
     public partial class MediaServicesPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaServicesPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaServicesPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaServicesPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaServicesPrivateLinkResource(ArmClient client, MediaServicesPrivateLinkResourceData data) : this(client, data.Id)

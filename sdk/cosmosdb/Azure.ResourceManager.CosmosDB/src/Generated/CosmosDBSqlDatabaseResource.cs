@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBSqlDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBSqlDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBSqlDatabase method.
     /// </summary>
     public partial class CosmosDBSqlDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlDatabaseResource(ArmClient client, CosmosDBSqlDatabaseData data) : this(client, data.Id)
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets an object representing a CosmosDBSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the CosmosDBSqlDatabase. </summary>
-        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSetting()
         {
             return new CosmosDBSqlDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBSqlClientEncryptionKeyResources and their operations over a CosmosDBSqlClientEncryptionKeyResource. </returns>
         public virtual CosmosDBSqlClientEncryptionKeyCollection GetCosmosDBSqlClientEncryptionKeys()
         {
-            return GetCachedClient(Client => new CosmosDBSqlClientEncryptionKeyCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBSqlClientEncryptionKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +121,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBSqlClientEncryptionKeyResource>> GetCosmosDBSqlClientEncryptionKeyAsync(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +144,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBSqlClientEncryptionKeyResource> GetCosmosDBSqlClientEncryptionKey(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBSqlContainerResources and their operations over a CosmosDBSqlContainerResource. </returns>
         public virtual CosmosDBSqlContainerCollection GetCosmosDBSqlContainers()
         {
-            return GetCachedClient(Client => new CosmosDBSqlContainerCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBSqlContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +174,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBSqlContainerResource>> GetCosmosDBSqlContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +197,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBSqlContainerResource> GetCosmosDBSqlContainer(string containerName, CancellationToken cancellationToken = default)
         {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterPoolResource" /> and their operations.
-    /// Each <see cref="DevCenterPoolResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
-    /// To get a <see cref="DevCenterPoolCollection" /> instance call the GetDevCenterPools method from an instance of <see cref="DevCenterProjectResource" />.
+    /// A class representing a collection of <see cref="DevCenterPoolResource"/> and their operations.
+    /// Each <see cref="DevCenterPoolResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get a <see cref="DevCenterPoolCollection"/> instance call the GetDevCenterPools method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
     public partial class DevCenterPoolCollection : ArmCollection, IEnumerable<DevCenterPoolResource>, IAsyncEnumerable<DevCenterPoolResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterPoolResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterPoolPoolsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterPoolResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterPoolPoolsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

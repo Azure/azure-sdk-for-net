@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a ManagementGroupNetworkManagerConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupNetworkManagerConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupNetworkManagerConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupNetworkManagerConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupNetworkManagerConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupNetworkManagerConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupNetworkManagerConnection method.
     /// </summary>
     public partial class ManagementGroupNetworkManagerConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupNetworkManagerConnectionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string networkManagerConnectionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data) : this(client, data.Id)

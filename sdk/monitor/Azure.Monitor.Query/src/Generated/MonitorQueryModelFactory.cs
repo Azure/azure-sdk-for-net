@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -34,6 +37,92 @@ namespace Azure.Monitor.Query.Models
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
             return new MetricAvailability(granularity, retention);
+        }
+
+        /// <summary> Initializes a new instance of MetricResultsResponse. </summary>
+        /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
+        /// <returns> A new <see cref="Models.MetricResultsResponse"/> instance for mocking. </returns>
+        public static MetricResultsResponse MetricResultsResponse(IEnumerable<MetricResultsResponseValuesItem> values = null)
+        {
+            values ??= new List<MetricResultsResponseValuesItem>();
+
+            return new MetricResultsResponse(values?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="namespace"> The namespace of the metrics been queried. </param>
+        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
+        /// <param name="resourceId"> The resource that has been queried for metrics. </param>
+        /// <param name="value"> The value of the collection. </param>
+        /// <returns> A new <see cref="Models.MetricResultsResponseValuesItem"/> instance for mocking. </returns>
+        public static MetricResultsResponseValuesItem MetricResultsResponseValuesItem(DateTimeOffset startTime = default, DateTimeOffset endTime = default, TimeSpan? interval = null, string @namespace = null, string resourceRegion = null, ResourceIdentifier resourceId = null, IEnumerable<QueryBatchMetric> value = null)
+        {
+            value ??= new List<QueryBatchMetric>();
+
+            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <param name="id"> The metric Id. </param>
+        /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="displayDescription"> Description of this metric. </param>
+        /// <param name="type"> The resource type of the metric resource. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="timeseries"> The time series returned when a data query is performed. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
+        /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
+        /// <returns> A new <see cref="Models.QueryBatchMetric"/> instance for mocking. </returns>
+        public static QueryBatchMetric QueryBatchMetric(string id = null, QueryBatchLocalizableString name = null, string displayDescription = null, string type = null, QueryBatchMetricUnit unit = default, IEnumerable<QueryBatchTimeSeriesElement> timeseries = null, string errorCode = null, string errorMessage = null)
+        {
+            timeseries ??= new List<QueryBatchTimeSeriesElement>();
+
+            return new QueryBatchMetric(id, name, displayDescription, type, unit, timeseries?.ToList(), errorCode, errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <param name="value"> The invariant value. </param>
+        /// <param name="localizedValue"> The display name. </param>
+        /// <returns> A new <see cref="Models.QueryBatchLocalizableString"/> instance for mocking. </returns>
+        public static QueryBatchLocalizableString QueryBatchLocalizableString(string value = null, string localizedValue = null)
+        {
+            return new QueryBatchLocalizableString(value, localizedValue);
+        }
+
+        /// <summary> Initializes a new instance of QueryBatchTimeSeriesElement. </summary>
+        /// <param name="metadatavalues"> The metadata values returned if filter was specified in the call. </param>
+        /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
+        /// <returns> A new <see cref="Models.QueryBatchTimeSeriesElement"/> instance for mocking. </returns>
+        public static QueryBatchTimeSeriesElement QueryBatchTimeSeriesElement(IEnumerable<QueryBatchMetadataValue> metadatavalues = null, IEnumerable<QueryBatchMetricValue> data = null)
+        {
+            metadatavalues ??= new List<QueryBatchMetadataValue>();
+            data ??= new List<QueryBatchMetricValue>();
+
+            return new QueryBatchTimeSeriesElement(metadatavalues?.ToList(), data?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of QueryBatchMetadataValue. </summary>
+        /// <param name="name"> The name of the metadata. </param>
+        /// <param name="value"> The value of the metadata. </param>
+        /// <returns> A new <see cref="Models.QueryBatchMetadataValue"/> instance for mocking. </returns>
+        public static QueryBatchMetadataValue QueryBatchMetadataValue(QueryBatchLocalizableString name = null, string value = null)
+        {
+            return new QueryBatchMetadataValue(name, value);
+        }
+
+        /// <summary> Initializes a new instance of QueryBatchMetricValue. </summary>
+        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
+        /// <param name="average"> The average value in the time range. </param>
+        /// <param name="minimum"> The least value in the time range. </param>
+        /// <param name="maximum"> The greatest value in the time range. </param>
+        /// <param name="total"> The sum of all of the values in the time range. </param>
+        /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
+        /// <returns> A new <see cref="Models.QueryBatchMetricValue"/> instance for mocking. </returns>
+        public static QueryBatchMetricValue QueryBatchMetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
+        {
+            return new QueryBatchMetricValue(timeStamp, average, minimum, maximum, total, count);
         }
     }
 }

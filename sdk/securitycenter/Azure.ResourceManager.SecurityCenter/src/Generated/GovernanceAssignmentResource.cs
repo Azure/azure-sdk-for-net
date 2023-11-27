@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a GovernanceAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GovernanceAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGovernanceAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource" /> using the GetGovernanceAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GovernanceAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGovernanceAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource"/> using the GetGovernanceAssignment method.
     /// </summary>
     public partial class GovernanceAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GovernanceAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="assignmentKey"> The assignmentKey. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string assignmentKey)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GovernanceAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GovernanceAssignmentResource(ArmClient client, GovernanceAssignmentData data) : this(client, data.Id)

@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRoutePortsLocation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRoutePortsLocationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRoutePortsLocationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetExpressRoutePortsLocation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRoutePortsLocationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRoutePortsLocationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetExpressRoutePortsLocation method.
     /// </summary>
     public partial class ExpressRoutePortsLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRoutePortsLocationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRoutePortsLocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortsLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRoutePortsLocationResource(ArmClient client, ExpressRoutePortsLocationData data) : this(client, data.Id)

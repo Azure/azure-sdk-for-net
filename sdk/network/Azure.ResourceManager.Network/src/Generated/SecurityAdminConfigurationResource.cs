@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a SecurityAdminConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAdminConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAdminConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource" /> using the GetSecurityAdminConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAdminConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAdminConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetSecurityAdminConfiguration method.
     /// </summary>
     public partial class SecurityAdminConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityAdminConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAdminConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAdminConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAdminConfigurationResource(ArmClient client, SecurityAdminConfigurationData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AdminRuleGroupResources and their operations over a AdminRuleGroupResource. </returns>
         public virtual AdminRuleGroupCollection GetAdminRuleGroups()
         {
-            return GetCachedClient(Client => new AdminRuleGroupCollection(Client, Id));
+            return GetCachedClient(client => new AdminRuleGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AdminRuleGroupResource>> GetAdminRuleGroupAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AdminRuleGroupResource> GetAdminRuleGroup(string ruleCollectionName, CancellationToken cancellationToken = default)
         {

@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
@@ -240,37 +240,15 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter,
             SearchResourceCounter skillsetCounter) =>
-            SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+            SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
 
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="aliasCounter"> Total number of aliases. </param>
-        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
-        /// <param name="indexCounter"> Total number of indexes. </param>
-        /// <param name="indexerCounter"> Total number of indexers. </param>
-        /// <param name="dataSourceCounter"> Total number of data sources. </param>
-        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
-        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceCounters SearchServiceCounters(
-            SearchResourceCounter aliasCounter,
-            SearchResourceCounter documentCounter,
-            SearchResourceCounter indexCounter,
-            SearchResourceCounter indexerCounter,
-            SearchResourceCounter dataSourceCounter,
-            SearchResourceCounter storageSizeCounter,
-            SearchResourceCounter synonymMapCounter,
-            SearchResourceCounter skillsetCounter) =>
-            new(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
-
-        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
-        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
-        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
-        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
-        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
-        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
-        public static SearchServiceLimits SearchServiceLimits(
+            /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+            /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+            /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+            /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+            /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+            /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+            public static SearchServiceLimits SearchServiceLimits(
             int? maxFieldsPerIndex,
             int? maxFieldNestingDepthPerIndex,
             int? maxComplexCollectionFieldsPerIndex,
@@ -365,54 +343,5 @@ namespace Azure.Search.Documents.Models
             bool succeeded,
             int status) =>
             new IndexingResult(key, errorMessage, succeeded, status);
-
-        /// <summary> Initializes a new instance of IndexerState. </summary>
-        /// <param name="mode"> The mode the indexer is running in. </param>
-        /// <param name="allDocumentsInitialChangeTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
-        /// <param name="allDocumentsFinalChangeTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
-        /// <param name="resetDocumentsInitialChangeTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
-        /// <param name="resetDocumentsFinalChangeTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
-        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document&apos;s unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
-        /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
-        /// <returns> A new <see cref="Indexes.Models.IndexerState"/> instance for mocking. </returns>
-        public static IndexerState IndexerState(
-            IndexingMode? mode = null,
-            string allDocumentsInitialChangeTrackingState = null,
-            string allDocumentsFinalChangeTrackingState = null,
-            string resetDocumentsInitialChangeTrackingState = null,
-            string resetDocumentsFinalChangeTrackingState = null,
-            IEnumerable<string> resetDocumentKeys = null,
-            IEnumerable<string> resetDataSourceDocumentIds = null)
-        {
-            resetDocumentKeys ??= new List<string>();
-            resetDataSourceDocumentIds ??= new List<string>();
-
-            return new IndexerState(
-                mode,
-                allDocumentsInitialChangeTrackingState,
-                allDocumentsFinalChangeTrackingState,
-                resetDocumentsInitialChangeTrackingState,
-                resetDocumentsFinalChangeTrackingState,
-                resetDocumentKeys?.ToList(),
-                resetDataSourceDocumentIds?.ToList());
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IndexerChangeTrackingState"/> class.
-        /// </summary>
-        /// <param name="allDocumentsInitialState">Change tracking state used when indexing starts on all documents in the datasource.</param>
-        /// <param name="allDocumentsFinalState">Change tracking state value when indexing finishes on all documents in the datasource.</param>
-        /// <param name="resetDocumentsInitialState">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
-        /// <param name="resetDocumentsFinalState">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
-        public static IndexerChangeTrackingState IndexerChangeTrackingState(
-            string allDocumentsInitialState,
-            string allDocumentsFinalState,
-            string resetDocumentsInitialState,
-            string resetDocumentsFinalState) =>
-                new IndexerChangeTrackingState(
-                    allDocumentsInitialState,
-                    allDocumentsFinalState,
-                    resetDocumentsInitialState,
-                    resetDocumentsFinalState);
     }
 }

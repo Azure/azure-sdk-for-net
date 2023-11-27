@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// A Class representing a DataProtectionBackupVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionBackupVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionBackupVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataProtectionBackupVault method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupVaultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataProtectionBackupVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataProtectionBackupVault method.
     /// </summary>
     public partial class DataProtectionBackupVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupVaultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}";
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProtectionBackupVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProtectionBackupVaultResource(ArmClient client, DataProtectionBackupVaultData data) : this(client, data.Id)
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupPolicyResources and their operations over a DataProtectionBackupPolicyResource. </returns>
         public virtual DataProtectionBackupPolicyCollection GetDataProtectionBackupPolicies()
         {
-            return GetCachedClient(Client => new DataProtectionBackupPolicyCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -118,10 +121,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"> The String to use. </param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupPolicyResource>> GetDataProtectionBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -141,10 +144,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"> The String to use. </param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupPolicyResource> GetDataProtectionBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupInstanceResources and their operations over a DataProtectionBackupInstanceResource. </returns>
         public virtual DataProtectionBackupInstanceCollection GetDataProtectionBackupInstances()
         {
-            return GetCachedClient(Client => new DataProtectionBackupInstanceCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +176,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> GetDataProtectionBackupInstanceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +199,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="backupInstanceName"> The name of the backup instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstance(string backupInstanceName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupJobResources and their operations over a DataProtectionBackupJobResource. </returns>
         public virtual DataProtectionBackupJobCollection GetDataProtectionBackupJobs()
         {
-            return GetCachedClient(Client => new DataProtectionBackupJobCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupJobCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +229,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="jobId"> The Job ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupJobResource>> GetDataProtectionBackupJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
@@ -249,8 +252,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="jobId"> The Job ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupJobResource> GetDataProtectionBackupJob(string jobId, CancellationToken cancellationToken = default)
         {
@@ -261,7 +264,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DeletedDataProtectionBackupInstanceResources and their operations over a DeletedDataProtectionBackupInstanceResource. </returns>
         public virtual DeletedDataProtectionBackupInstanceCollection GetDeletedDataProtectionBackupInstances()
         {
-            return GetCachedClient(Client => new DeletedDataProtectionBackupInstanceCollection(Client, Id));
+            return GetCachedClient(client => new DeletedDataProtectionBackupInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -279,8 +282,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedDataProtectionBackupInstanceResource>> GetDeletedDataProtectionBackupInstanceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
@@ -302,8 +305,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeletedDataProtectionBackupInstanceResource> GetDeletedDataProtectionBackupInstance(string backupInstanceName, CancellationToken cancellationToken = default)
         {
@@ -314,7 +317,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of ResourceGuardProxyBaseResources and their operations over a ResourceGuardProxyBaseResource. </returns>
         public virtual ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources()
         {
-            return GetCachedClient(Client => new ResourceGuardProxyBaseResourceCollection(Client, Id));
+            return GetCachedClient(client => new ResourceGuardProxyBaseResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -332,8 +335,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGuardProxyBaseResource>> GetResourceGuardProxyBaseResourceAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
@@ -355,8 +358,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceGuardProxyBaseResource> GetResourceGuardProxyBaseResource(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
