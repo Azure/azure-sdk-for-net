@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Resource log category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class ResourceLogCategory
     {
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLogCategory"/>. </summary>
         public ResourceLogCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLogCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.

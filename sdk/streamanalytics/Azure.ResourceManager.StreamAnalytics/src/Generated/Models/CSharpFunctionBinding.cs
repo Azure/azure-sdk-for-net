@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The binding to a CSharp function. </summary>
     public partial class CSharpFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionBinding"/>. </summary>
         public CSharpFunctionBinding()
         {
             FunctionBindingType = "Microsoft.StreamAnalytics/CLRUdf";
         }
 
-        /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         /// <param name="dllPath"> The Csharp code containing a single function definition. </param>
         /// <param name="class"> The Csharp code containing a single function definition. </param>

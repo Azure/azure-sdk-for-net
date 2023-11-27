@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Key Vault linked service. </summary>
     public partial class AzureKeyVaultLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="baseUrl"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseUrl"/> is null. </exception>
         public AzureKeyVaultLinkedService(object baseUrl)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureKeyVault";
         }
 
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

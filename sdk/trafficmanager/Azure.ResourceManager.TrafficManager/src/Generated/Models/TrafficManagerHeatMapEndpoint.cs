@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class which is a sparse representation of a Traffic Manager endpoint. </summary>
     public partial class TrafficManagerHeatMapEndpoint
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
         public TrafficManagerHeatMapEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
         /// <param name="resourceId"> The ARM Resource ID of this Traffic Manager endpoint. </param>
         /// <param name="endpointId"> A number uniquely identifying this endpoint in query experiences. </param>
         internal TrafficManagerHeatMapEndpoint(ResourceIdentifier resourceId, int? endpointId)

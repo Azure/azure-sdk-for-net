@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseWorkspaceData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The Entity. </summary>
     internal partial class Entity
     {
-        /// <summary> Initializes a new instance of Entity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Entity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of Entity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Entity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>

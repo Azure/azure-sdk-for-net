@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The KqlScriptResource. </summary>
     public partial class KqlScriptResource
     {
-        /// <summary> Initializes a new instance of KqlScriptResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptResource"/>. </summary>
         public KqlScriptResource()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptResource"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableResource. </summary>
     public partial class LinkTableResource
     {
-        /// <summary> Initializes a new instance of LinkTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableResource"/>. </summary>
         internal LinkTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableResource"/>. </summary>
         /// <param name="id"> Link table id. </param>
         /// <param name="name"> Link table name. </param>
         /// <param name="source"> Source table properties for link table request. </param>

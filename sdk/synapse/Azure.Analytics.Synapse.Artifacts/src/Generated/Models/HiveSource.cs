@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity Hive Server source. </summary>
     public partial class HiveSource : TabularSource
     {
-        /// <summary> Initializes a new instance of HiveSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveSource"/>. </summary>
         public HiveSource()
         {
             Type = "HiveSource";
         }
 
-        /// <summary> Initializes a new instance of HiveSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

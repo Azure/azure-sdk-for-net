@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class JobDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
         /// <param name="copyMode"> Strategy to use for copy. </param>
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="targetName"> The name of the target Endpoint. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover
             TargetName = targetName;
         }
 
-        /// <summary> Initializes a new instance of JobDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

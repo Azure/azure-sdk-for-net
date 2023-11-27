@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Amazon Marketplace Web Service linked service. </summary>
     public partial class AmazonMWSLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AmazonMWSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMWSLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
         /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
         /// <param name="sellerID"> The Amazon seller ID. </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AmazonMWS";
         }
 
-        /// <summary> Initializes a new instance of AmazonMWSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMWSLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

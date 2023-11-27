@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The properties of Azure Storage SMB file share endpoint to update. </summary>
     public partial class AzureStorageSmbFileShareEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>. </summary>
         public AzureStorageSmbFileShareEndpointUpdateProperties()
         {
             EndpointType = EndpointType.AzureStorageSmbFileShare;

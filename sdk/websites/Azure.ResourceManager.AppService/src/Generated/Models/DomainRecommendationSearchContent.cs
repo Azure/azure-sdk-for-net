@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Domain recommendation search parameters. </summary>
     public partial class DomainRecommendationSearchContent
     {
-        /// <summary> Initializes a new instance of DomainRecommendationSearchContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainRecommendationSearchContent"/>. </summary>
         public DomainRecommendationSearchContent()
         {
         }

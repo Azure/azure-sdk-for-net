@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a server endpoint. </summary>
     public partial class StorageSyncServerEndpointCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         public StorageSyncServerEndpointCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

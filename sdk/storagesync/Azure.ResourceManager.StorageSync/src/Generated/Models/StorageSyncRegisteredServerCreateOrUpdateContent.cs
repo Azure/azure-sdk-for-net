@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a registered server. </summary>
     public partial class StorageSyncRegisteredServerCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
         public StorageSyncRegisteredServerCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

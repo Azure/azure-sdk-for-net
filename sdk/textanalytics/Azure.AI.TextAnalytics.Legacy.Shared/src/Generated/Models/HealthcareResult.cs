@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareResult. </summary>
     internal partial class HealthcareResult
     {
-        /// <summary> Initializes a new instance of HealthcareResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of HealthcareResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>

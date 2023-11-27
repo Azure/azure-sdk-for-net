@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A principal assignment check name availability request. </summary>
     public partial class KustoPoolPrincipalAssignmentNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolPrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolPrincipalAssignmentNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Principal Assignment resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolPrincipalAssignmentNameAvailabilityContent(string name)
