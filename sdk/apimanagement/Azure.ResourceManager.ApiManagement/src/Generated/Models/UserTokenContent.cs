@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Get User Token parameters. </summary>
     public partial class UserTokenContent
     {
-        /// <summary> Initializes a new instance of UserTokenContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserTokenContent"/>. </summary>
         public UserTokenContent()
         {
         }

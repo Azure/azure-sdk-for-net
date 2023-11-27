@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of AvailabilitySets. </summary>
     internal partial class AvailabilitySetListResult
     {
-        /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
         internal AvailabilitySetListResult()
         {
             Value = new ChangeTrackingList<ScVmmAvailabilitySetData>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
         /// <param name="value"> List of AvailabilitySets. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal AvailabilitySetListResult(IReadOnlyList<ScVmmAvailabilitySetData> value, string nextLink)

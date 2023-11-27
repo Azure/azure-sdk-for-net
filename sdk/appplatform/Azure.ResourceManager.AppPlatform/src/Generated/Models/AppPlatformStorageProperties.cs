@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppPlatformStorageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         protected AppPlatformStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
         internal AppPlatformStorageProperties(StorageType storageType)
         {

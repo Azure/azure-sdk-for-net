@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the url rewrite action. </summary>
     public partial class UriRewriteActionProperties
     {
-        /// <summary> Initializes a new instance of UriRewriteActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Destination = destination;
         }
 
-        /// <summary> Initializes a new instance of UriRewriteActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>

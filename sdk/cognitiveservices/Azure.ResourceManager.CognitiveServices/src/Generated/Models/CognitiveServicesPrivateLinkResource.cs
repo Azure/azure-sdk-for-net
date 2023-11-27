@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A private link resource. </summary>
     public partial class CognitiveServicesPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResource"/>. </summary>
         public CognitiveServicesPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

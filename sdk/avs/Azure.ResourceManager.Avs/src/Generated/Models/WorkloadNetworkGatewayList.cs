@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX Gateways. </summary>
     internal partial class WorkloadNetworkGatewayList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkGatewayList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayList"/>. </summary>
         internal WorkloadNetworkGatewayList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkGatewayList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkGatewayList(IReadOnlyList<WorkloadNetworkGatewayData> value, string nextLink)

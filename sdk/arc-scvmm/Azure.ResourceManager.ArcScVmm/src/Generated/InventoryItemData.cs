@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class InventoryItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         public InventoryItemData(InventoryType inventoryType)
         {
             InventoryType = inventoryType;
         }
 
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> The detail of firewall rule. </summary>
     public partial class AnalysisIPv4FirewallRule
     {
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallRule"/>. </summary>
         public AnalysisIPv4FirewallRule()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallRule"/>. </summary>
         /// <param name="firewallRuleName"> The rule name. </param>
         /// <param name="rangeStart"> The start range of IPv4. </param>
         /// <param name="rangeEnd"> The end range of IPv4. </param>

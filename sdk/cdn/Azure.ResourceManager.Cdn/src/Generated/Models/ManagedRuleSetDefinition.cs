@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes a managed rule set definition. </summary>
     public partial class ManagedRuleSetDefinition : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         public ManagedRuleSetDefinition()
         {
             RuleGroups = new ChangeTrackingList<ManagedRuleGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

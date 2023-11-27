@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
     internal partial class AttestationServicePatchSpecificParams
     {
-        /// <summary> Initializes a new instance of AttestationServicePatchSpecificParams. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
         public AttestationServicePatchSpecificParams()
         {
         }

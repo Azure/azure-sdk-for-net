@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for muting participants from the call. </summary>
     internal partial class MuteParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of MuteParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants">
         /// Participants to be muted from the call.
         /// Only ACS Users are supported.

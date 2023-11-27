@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleData"/>. </summary>
         public FrontDoorRuleData()
         {
             Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
             Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

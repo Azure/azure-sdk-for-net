@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Configuration for HTTP or HTTPS requests. </summary>
     public partial class ConnectivityCheckRequestHttpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestHttpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestHttpConfiguration"/>. </summary>
         public ConnectivityCheckRequestHttpConfiguration()
         {
             ValidStatusCodes = new ChangeTrackingList<long>();

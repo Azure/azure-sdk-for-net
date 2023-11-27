@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update webhook operation. </summary>
     public partial class AutomationWebhookPatch
     {
-        /// <summary> Initializes a new instance of AutomationWebhookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookPatch"/>. </summary>
         public AutomationWebhookPatch()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();

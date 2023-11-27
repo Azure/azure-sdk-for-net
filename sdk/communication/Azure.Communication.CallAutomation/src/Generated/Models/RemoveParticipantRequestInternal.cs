@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The remove participant by identifier request. </summary>
     internal partial class RemoveParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantRequestInternal"/>. </summary>
         /// <param name="participantToRemove"> The participants to be removed from the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
         public RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines how to identify a parameter for a specific purpose e.g. expires. </summary>
     public partial class UriSigningParamIdentifier
     {
-        /// <summary> Initializes a new instance of UriSigningParamIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriSigningParamIdentifier"/>. </summary>
         /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>
         /// <param name="paramName"> Parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="paramName"/> is null. </exception>

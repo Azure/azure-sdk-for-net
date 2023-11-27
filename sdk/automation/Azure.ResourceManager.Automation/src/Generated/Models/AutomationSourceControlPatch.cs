@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update source control operation. </summary>
     public partial class AutomationSourceControlPatch
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlPatch"/>. </summary>
         public AutomationSourceControlPatch()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ChoiceResult. </summary>
     public partial class ChoiceResult
     {
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         internal ChoiceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
         /// Phrases are set to the value if choice is selected via phrase detection.

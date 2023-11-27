@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
         public BatchAccountPoolData()
         {
             UserAccounts = new ChangeTrackingList<BatchUserAccount>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch
             MountConfiguration = new ChangeTrackingList<BatchMountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

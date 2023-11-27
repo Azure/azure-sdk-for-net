@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Instance view status. </summary>
     public partial class ExtensionInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ExtensionInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionInstanceViewStatus"/>. </summary>
         internal ExtensionInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtensionInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>

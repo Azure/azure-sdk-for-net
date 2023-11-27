@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateData"/>. </summary>
         public BatchAccountCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

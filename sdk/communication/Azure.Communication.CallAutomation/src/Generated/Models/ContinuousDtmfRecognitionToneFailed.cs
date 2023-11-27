@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionToneFailed. </summary>
     public partial class ContinuousDtmfRecognitionToneFailed
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneFailed"/>. </summary>
         internal ContinuousDtmfRecognitionToneFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
