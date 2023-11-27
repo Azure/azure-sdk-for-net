@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementIdentityProviderResource" /> and their operations.
-    /// Each <see cref="ApiManagementIdentityProviderResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementIdentityProviderCollection" /> instance call the GetApiManagementIdentityProviders method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementIdentityProviderResource"/> and their operations.
+    /// Each <see cref="ApiManagementIdentityProviderResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementIdentityProviderCollection"/> instance call the GetApiManagementIdentityProviders method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementIdentityProviderCollection : ArmCollection, IEnumerable<ApiManagementIdentityProviderResource>, IAsyncEnumerable<ApiManagementIdentityProviderResource>
     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementIdentityProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementIdentityProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementIdentityProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

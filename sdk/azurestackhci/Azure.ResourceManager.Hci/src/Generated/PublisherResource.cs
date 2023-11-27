@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublisherResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetPublisher method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetPublisher method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)

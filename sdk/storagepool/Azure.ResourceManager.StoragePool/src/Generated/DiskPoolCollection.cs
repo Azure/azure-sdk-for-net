@@ -22,9 +22,9 @@ using Azure.ResourceManager.StoragePool.Models;
 namespace Azure.ResourceManager.StoragePool
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DiskPoolResource" /> and their operations.
-    /// Each <see cref="DiskPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DiskPoolCollection" /> instance call the GetDiskPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DiskPoolResource"/> and their operations.
+    /// Each <see cref="DiskPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiskPoolCollection"/> instance call the GetDiskPools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiskPoolCollection : ArmCollection, IEnumerable<DiskPoolResource>, IAsyncEnumerable<DiskPoolResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

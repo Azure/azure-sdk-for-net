@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraViewThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraViewThroughputSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraViewThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CassandraViewGetResultResource" /> using the GetCassandraViewThroughputSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraViewThroughputSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraViewThroughputSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraViewGetResultResource"/> using the GetCassandraViewThroughputSetting method.
     /// </summary>
     public partial class CassandraViewThroughputSettingResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraViewThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraViewThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraViewThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)

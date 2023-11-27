@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlDatabaseTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseSchemaResource" /> using the GetSqlDatabaseTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseSchemaResource"/> using the GetSqlDatabaseTable method.
     /// </summary>
     public partial class SqlDatabaseTableResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseTableResource(ArmClient client, DatabaseTableData data) : this(client, data.Id)

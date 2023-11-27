@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotConfigSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotConfigSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotConfigSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotConfigResource" /> using the GetSiteSlotConfigSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotConfigSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotConfigSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotConfigResource"/> using the GetSiteSlotConfigSnapshot method.
     /// </summary>
     public partial class SiteSlotConfigSnapshotResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotConfigSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotConfigSnapshotResource(ArmClient client, SiteConfigData data) : this(client, data.Id)

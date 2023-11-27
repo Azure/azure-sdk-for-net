@@ -122,20 +122,13 @@ namespace Azure.Core.Pipeline
 
             if (message.Response.IsError)
             {
-                if (isActivitySourceEnabled)
-                {
-                    scope.AddAttribute("error.type", statusCodeStr);
-                }
-                else
-                {
-                    scope.AddAttribute("otel.status_code", "ERROR");
-                }
                 scope.Failed(statusCodeStr);
             }
-            else if (!isActivitySourceEnabled)
+
+            if (!isActivitySourceEnabled)
             {
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-                scope.AddAttribute("otel.status_code",  "UNSET");
+                scope.AddAttribute("otel.status_code", message.Response.IsError ? "ERROR" : "UNSET");
             }
         }
 
@@ -206,7 +199,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
 #else
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource;
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
 #endif
     }
 }

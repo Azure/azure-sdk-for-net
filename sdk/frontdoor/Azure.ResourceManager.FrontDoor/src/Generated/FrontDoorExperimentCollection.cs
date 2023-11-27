@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorExperimentResource" /> and their operations.
-    /// Each <see cref="FrontDoorExperimentResource" /> in the collection will belong to the same instance of <see cref="FrontDoorNetworkExperimentProfileResource" />.
-    /// To get a <see cref="FrontDoorExperimentCollection" /> instance call the GetFrontDoorExperiments method from an instance of <see cref="FrontDoorNetworkExperimentProfileResource" />.
+    /// A class representing a collection of <see cref="FrontDoorExperimentResource"/> and their operations.
+    /// Each <see cref="FrontDoorExperimentResource"/> in the collection will belong to the same instance of <see cref="FrontDoorNetworkExperimentProfileResource"/>.
+    /// To get a <see cref="FrontDoorExperimentCollection"/> instance call the GetFrontDoorExperiments method from an instance of <see cref="FrontDoorNetworkExperimentProfileResource"/>.
     /// </summary>
     public partial class FrontDoorExperimentCollection : ArmCollection, IEnumerable<FrontDoorExperimentResource>, IAsyncEnumerable<FrontDoorExperimentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorExperimentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorExperimentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

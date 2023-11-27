@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaAssetFilter along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaAssetFilterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaAssetFilterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaAssetResource" /> using the GetMediaAssetFilter method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaAssetFilterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaAssetFilterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaAssetResource"/> using the GetMediaAssetFilter method.
     /// </summary>
     public partial class MediaAssetFilterResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaAssetFilterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaAssetFilterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaAssetFilterResource(ArmClient client, MediaAssetFilterData data) : this(client, data.Id)

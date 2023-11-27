@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementDeletedServiceResource" /> and their operations.
-    /// Each <see cref="ApiManagementDeletedServiceResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ApiManagementDeletedServiceCollection" /> instance call the GetApiManagementDeletedServices method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ApiManagementDeletedServiceResource"/> and their operations.
+    /// Each <see cref="ApiManagementDeletedServiceResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ApiManagementDeletedServiceCollection"/> instance call the GetApiManagementDeletedServices method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ApiManagementDeletedServiceCollection : ArmCollection
     {

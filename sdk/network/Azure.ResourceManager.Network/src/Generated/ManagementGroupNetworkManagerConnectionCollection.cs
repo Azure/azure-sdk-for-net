@@ -21,9 +21,9 @@ using Azure.ResourceManager.ManagementGroups;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagementGroupNetworkManagerConnectionResource" /> and their operations.
-    /// Each <see cref="ManagementGroupNetworkManagerConnectionResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
-    /// To get a <see cref="ManagementGroupNetworkManagerConnectionCollection" /> instance call the GetManagementGroupNetworkManagerConnections method from an instance of <see cref="ManagementGroupResource" />.
+    /// A class representing a collection of <see cref="ManagementGroupNetworkManagerConnectionResource"/> and their operations.
+    /// Each <see cref="ManagementGroupNetworkManagerConnectionResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="ManagementGroupNetworkManagerConnectionCollection"/> instance call the GetManagementGroupNetworkManagerConnections method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class ManagementGroupNetworkManagerConnectionCollection : ArmCollection, IEnumerable<ManagementGroupNetworkManagerConnectionResource>, IAsyncEnumerable<ManagementGroupNetworkManagerConnectionResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupNetworkManagerConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagementGroupNetworkManagerConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagementGroupNetworkManagerConnectionResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupNetworkManagerConnectionRestClient.CreateListRequest(Id.Name, top, skipToken);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupNetworkManagerConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagementGroupNetworkManagerConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagementGroupNetworkManagerConnectionResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupNetworkManagerConnectionRestClient.CreateListRequest(Id.Name, top, skipToken);

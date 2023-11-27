@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource"/> object. </returns>
         public static DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeDeviceResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeAlertResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeAlertResource"/> object. </returns>
         public static DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeAlertResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BandwidthScheduleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BandwidthScheduleResource"/> object. </returns>
         public static BandwidthScheduleResource GetBandwidthScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetBandwidthScheduleResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public static DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDiagnosticProactiveLogCollectionSettingResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public static DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDiagnosticRemoteSupportSettingResource(id);
         }
 
@@ -125,9 +140,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeJobResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeJobResource"/> object. </returns>
         public static DataBoxEdgeJobResource GetDataBoxEdgeJobResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeJobResource(id);
         }
 
@@ -141,9 +159,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public static DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeOrderResource(id);
         }
 
@@ -157,9 +178,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeRoleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeRoleResource"/> object. </returns>
         public static DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeRoleResource(id);
         }
 
@@ -173,9 +197,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource"/> object. </returns>
         public static DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeRoleAddonResource(id);
         }
 
@@ -189,9 +216,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public static MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetMonitoringMetricConfigurationResource(id);
         }
 
@@ -205,9 +235,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeShareResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeShareResource"/> object. </returns>
         public static DataBoxEdgeShareResource GetDataBoxEdgeShareResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeShareResource(id);
         }
 
@@ -221,9 +254,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> object. </returns>
         public static DataBoxEdgeStorageAccountCredentialResource GetDataBoxEdgeStorageAccountCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeStorageAccountCredentialResource(id);
         }
 
@@ -237,9 +273,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource"/> object. </returns>
         public static DataBoxEdgeStorageAccountResource GetDataBoxEdgeStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeStorageAccountResource(id);
         }
 
@@ -253,9 +292,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource"/> object. </returns>
         public static DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeStorageContainerResource(id);
         }
 
@@ -269,9 +311,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource"/> object. </returns>
         public static DataBoxEdgeTriggerResource GetDataBoxEdgeTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeTriggerResource(id);
         }
 
@@ -285,9 +330,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeUserResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataBoxEdgeUserResource"/> object. </returns>
         public static DataBoxEdgeUserResource GetDataBoxEdgeUserResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataBoxEdgeArmClient(client).GetDataBoxEdgeUserResource(id);
         }
 
@@ -299,9 +347,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DataBoxEdgeDeviceResources and their operations over a DataBoxEdgeDeviceResource. </returns>
         public static DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataBoxEdgeResourceGroupResource(resourceGroupResource).GetDataBoxEdgeDevices();
         }
 
@@ -325,11 +376,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(this ResourceGroupResource resourceGroupResource, string deviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDataBoxEdgeResourceGroupResource(resourceGroupResource).GetDataBoxEdgeDeviceAsync(deviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -353,11 +406,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(this ResourceGroupResource resourceGroupResource, string deviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataBoxEdgeResourceGroupResource(resourceGroupResource).GetDataBoxEdgeDevice(deviceName, cancellationToken);
         }
 
@@ -380,9 +435,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDataBoxEdgeSku> GetAvailableSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataBoxEdgeSubscriptionResource(subscriptionResource).GetAvailableSkusAsync(cancellationToken);
         }
 
@@ -405,9 +463,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDataBoxEdgeSku> GetAvailableSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataBoxEdgeSubscriptionResource(subscriptionResource).GetAvailableSkus(cancellationToken);
         }
 
@@ -431,9 +492,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataBoxEdgeSubscriptionResource(subscriptionResource).GetDataBoxEdgeDevicesAsync(expand, cancellationToken);
         }
 
@@ -457,9 +521,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataBoxEdgeSubscriptionResource(subscriptionResource).GetDataBoxEdgeDevices(expand, cancellationToken);
         }
     }

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiResource"/> object. </returns>
         public virtual ApiResource GetApiResource(ResourceIdentifier id)
         {
             ApiResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiReleaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiReleaseResource.CreateResourceIdentifier" /> to create an <see cref="ApiReleaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiReleaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiReleaseResource.CreateResourceIdentifier" /> to create an <see cref="ApiReleaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiReleaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiReleaseResource"/> object. </returns>
         public virtual ApiReleaseResource GetApiReleaseResource(ResourceIdentifier id)
         {
             ApiReleaseResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiOperationResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiOperationResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiOperationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationResource"/> object. </returns>
         public virtual ApiOperationResource GetApiOperationResource(ResourceIdentifier id)
         {
             ApiOperationResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiOperationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiOperationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiOperationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiOperationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiOperationPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
         public virtual ApiOperationPolicyResource GetApiOperationPolicyResource(ResourceIdentifier id)
         {
             ApiOperationPolicyResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiPolicyResource"/> object. </returns>
         public virtual ApiPolicyResource GetApiPolicyResource(ResourceIdentifier id)
         {
             ApiPolicyResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPolicyResource"/> object. </returns>
         public virtual ApiManagementPolicyResource GetApiManagementPolicyResource(ResourceIdentifier id)
         {
             ApiManagementPolicyResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementProductPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementProductPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementProductPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductPolicyResource"/> object. </returns>
         public virtual ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(ResourceIdentifier id)
         {
             ApiManagementProductPolicyResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiOperationTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiOperationTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiOperationTagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiOperationTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationTagResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiOperationTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationTagResource"/> object. </returns>
         public virtual ApiOperationTagResource GetApiOperationTagResource(ResourceIdentifier id)
         {
             ApiOperationTagResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiTagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiTagResource"/> object. </returns>
         public virtual ApiTagResource GetApiTagResource(ResourceIdentifier id)
         {
             ApiTagResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementProductTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementProductTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductTagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductTagResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementProductTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductTagResource"/> object. </returns>
         public virtual ApiManagementProductTagResource GetApiManagementProductTagResource(ResourceIdentifier id)
         {
             ApiManagementProductTagResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementTagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTagResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementTagResource"/> object. </returns>
         public virtual ApiManagementTagResource GetApiManagementTagResource(ResourceIdentifier id)
         {
             ApiManagementTagResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiSchemaResource"/> object. </returns>
         public virtual ApiSchemaResource GetApiSchemaResource(ResourceIdentifier id)
         {
             ApiSchemaResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiDiagnosticResource"/> object. </returns>
         public virtual ApiDiagnosticResource GetApiDiagnosticResource(ResourceIdentifier id)
         {
             ApiDiagnosticResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementDiagnosticResource"/> object. </returns>
         public virtual ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(ResourceIdentifier id)
         {
             ApiManagementDiagnosticResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiIssueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiIssueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiIssueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueResource"/> object. </returns>
         public virtual ApiIssueResource GetApiIssueResource(ResourceIdentifier id)
         {
             ApiIssueResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementIssueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementIssueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIssueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementIssueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementIssueResource"/> object. </returns>
         public virtual ApiManagementIssueResource GetApiManagementIssueResource(ResourceIdentifier id)
         {
             ApiManagementIssueResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiIssueCommentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiIssueCommentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiIssueCommentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiIssueCommentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueCommentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiIssueCommentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueCommentResource"/> object. </returns>
         public virtual ApiIssueCommentResource GetApiIssueCommentResource(ResourceIdentifier id)
         {
             ApiIssueCommentResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiIssueAttachmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiIssueAttachmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueAttachmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiIssueAttachmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiIssueAttachmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueAttachmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiIssueAttachmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueAttachmentResource"/> object. </returns>
         public virtual ApiIssueAttachmentResource GetApiIssueAttachmentResource(ResourceIdentifier id)
         {
             ApiIssueAttachmentResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiTagDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiTagDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiTagDescriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiTagDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagDescriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiTagDescriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiTagDescriptionResource"/> object. </returns>
         public virtual ApiTagDescriptionResource GetApiTagDescriptionResource(ResourceIdentifier id)
         {
             ApiTagDescriptionResource.ValidateResourceId(id);
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiVersionSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiVersionSetResource.CreateResourceIdentifier" /> to create an <see cref="ApiVersionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiVersionSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiVersionSetResource.CreateResourceIdentifier" /> to create an <see cref="ApiVersionSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiVersionSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiVersionSetResource"/> object. </returns>
         public virtual ApiVersionSetResource GetApiVersionSetResource(ResourceIdentifier id)
         {
             ApiVersionSetResource.ValidateResourceId(id);
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementAuthorizationServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementAuthorizationServerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementAuthorizationServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementAuthorizationServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementAuthorizationServerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementAuthorizationServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource"/> object. </returns>
         public virtual ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(ResourceIdentifier id)
         {
             ApiManagementAuthorizationServerResource.ValidateResourceId(id);
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementBackendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementBackendResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementBackendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementBackendResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementBackendResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementBackendResource"/> object. </returns>
         public virtual ApiManagementBackendResource GetApiManagementBackendResource(ResourceIdentifier id)
         {
             ApiManagementBackendResource.ValidateResourceId(id);
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementCacheResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementCacheResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementCacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementCacheResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementCacheResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementCacheResource"/> object. </returns>
         public virtual ApiManagementCacheResource GetApiManagementCacheResource(ResourceIdentifier id)
         {
             ApiManagementCacheResource.ValidateResourceId(id);
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementCertificateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementCertificateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementCertificateResource"/> object. </returns>
         public virtual ApiManagementCertificateResource GetApiManagementCertificateResource(ResourceIdentifier id)
         {
             ApiManagementCertificateResource.ValidateResourceId(id);
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementDeletedServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementDeletedServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDeletedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementDeletedServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDeletedServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
         public virtual ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(ResourceIdentifier id)
         {
             ApiManagementDeletedServiceResource.ValidateResourceId(id);
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementServiceResource"/> object. </returns>
         public virtual ApiManagementServiceResource GetApiManagementServiceResource(ResourceIdentifier id)
         {
             ApiManagementServiceResource.ValidateResourceId(id);
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementEmailTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementEmailTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementEmailTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementEmailTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementEmailTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementEmailTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource"/> object. </returns>
         public virtual ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(ResourceIdentifier id)
         {
             ApiManagementEmailTemplateResource.ValidateResourceId(id);
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGatewayResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayResource"/> object. </returns>
         public virtual ApiManagementGatewayResource GetApiManagementGatewayResource(ResourceIdentifier id)
         {
             ApiManagementGatewayResource.ValidateResourceId(id);
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGatewayHostnameConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGatewayHostnameConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayHostnameConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGatewayHostnameConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGatewayHostnameConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayHostnameConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource"/> object. </returns>
         public virtual ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(ResourceIdentifier id)
         {
             ApiManagementGatewayHostnameConfigurationResource.ValidateResourceId(id);
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGatewayCertificateAuthorityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGatewayCertificateAuthorityResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayCertificateAuthorityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGatewayCertificateAuthorityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGatewayCertificateAuthorityResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayCertificateAuthorityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource"/> object. </returns>
         public virtual ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(ResourceIdentifier id)
         {
             ApiManagementGatewayCertificateAuthorityResource.ValidateResourceId(id);
@@ -397,11 +397,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGroupResource"/> object. </returns>
         public virtual ApiManagementGroupResource GetApiManagementGroupResource(ResourceIdentifier id)
         {
             ApiManagementGroupResource.ValidateResourceId(id);
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementIdentityProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementIdentityProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIdentityProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementIdentityProviderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementIdentityProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIdentityProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource"/> object. </returns>
         public virtual ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(ResourceIdentifier id)
         {
             ApiManagementIdentityProviderResource.ValidateResourceId(id);
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementLoggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementLoggerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementLoggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementLoggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementLoggerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementLoggerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementLoggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementLoggerResource"/> object. </returns>
         public virtual ApiManagementLoggerResource GetApiManagementLoggerResource(ResourceIdentifier id)
         {
             ApiManagementLoggerResource.ValidateResourceId(id);
@@ -433,11 +433,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementNamedValueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementNamedValueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNamedValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementNamedValueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementNamedValueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNamedValueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementNamedValueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementNamedValueResource"/> object. </returns>
         public virtual ApiManagementNamedValueResource GetApiManagementNamedValueResource(ResourceIdentifier id)
         {
             ApiManagementNamedValueResource.ValidateResourceId(id);
@@ -445,11 +445,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementNotificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementNotificationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNotificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementNotificationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementNotificationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNotificationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementNotificationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementNotificationResource"/> object. </returns>
         public virtual ApiManagementNotificationResource GetApiManagementNotificationResource(ResourceIdentifier id)
         {
             ApiManagementNotificationResource.ValidateResourceId(id);
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementOpenIdConnectProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementOpenIdConnectProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementOpenIdConnectProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementOpenIdConnectProviderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementOpenIdConnectProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementOpenIdConnectProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource"/> object. </returns>
         public virtual ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(ResourceIdentifier id)
         {
             ApiManagementOpenIdConnectProviderResource.ValidateResourceId(id);
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPortalRevisionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPortalRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource"/> object. </returns>
         public virtual ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(ResourceIdentifier id)
         {
             ApiManagementPortalRevisionResource.ValidateResourceId(id);
@@ -481,11 +481,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPortalSignInSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPortalSignInSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignInSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalSignInSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalSignInSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignInSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(ResourceIdentifier id)
         {
             ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPortalSignUpSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPortalSignUpSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignUpSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalSignUpSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalSignUpSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignUpSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(ResourceIdentifier id)
         {
             ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPortalDelegationSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPortalDelegationSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalDelegationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalDelegationSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalDelegationSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalDelegationSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(ResourceIdentifier id)
         {
             ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
@@ -517,11 +517,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             ApiManagementPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
         public virtual ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(ResourceIdentifier id)
         {
             ApiManagementPrivateLinkResource.ValidateResourceId(id);
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementProductResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementProductResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementProductResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductResource"/> object. </returns>
         public virtual ApiManagementProductResource GetApiManagementProductResource(ResourceIdentifier id)
         {
             ApiManagementProductResource.ValidateResourceId(id);
@@ -553,11 +553,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGlobalSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGlobalSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGlobalSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGlobalSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGlobalSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGlobalSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource"/> object. </returns>
         public virtual ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(ResourceIdentifier id)
         {
             ApiManagementGlobalSchemaResource.ValidateResourceId(id);
@@ -565,11 +565,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementTenantSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementTenantSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTenantSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementTenantSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementTenantSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTenantSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementTenantSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementTenantSettingResource"/> object. </returns>
         public virtual ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(ResourceIdentifier id)
         {
             ApiManagementTenantSettingResource.ValidateResourceId(id);
@@ -577,11 +577,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementSubscriptionResource"/> object. </returns>
         public virtual ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(ResourceIdentifier id)
         {
             ApiManagementSubscriptionResource.ValidateResourceId(id);
@@ -589,11 +589,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementUserSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementUserSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementUserSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementUserSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource"/> object. </returns>
         public virtual ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(ResourceIdentifier id)
         {
             ApiManagementUserSubscriptionResource.ValidateResourceId(id);
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantAccessInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantAccessInfoResource.CreateResourceIdentifier" /> to create a <see cref="TenantAccessInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantAccessInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantAccessInfoResource.CreateResourceIdentifier" /> to create a <see cref="TenantAccessInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantAccessInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
         public virtual TenantAccessInfoResource GetTenantAccessInfoResource(ResourceIdentifier id)
         {
             TenantAccessInfoResource.ValidateResourceId(id);
@@ -613,11 +613,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementUserResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementUserResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementUserResource"/> object. </returns>
         public virtual ApiManagementUserResource GetApiManagementUserResource(ResourceIdentifier id)
         {
             ApiManagementUserResource.ValidateResourceId(id);

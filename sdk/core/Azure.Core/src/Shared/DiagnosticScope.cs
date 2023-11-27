@@ -102,7 +102,10 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            if (_suppressNestedClientActivities)
+            {
+                started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            }
         }
 
         public void SetDisplayName(string displayName)
@@ -157,6 +160,8 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed with low-cardinality error.type attribute.
         /// </summary>
         /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when " +
+            "preserving all public properties. Since we do not use this property, and neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(string errorCode)
         {
             _activityAdapter?.MarkFailed((Exception?)null, errorCode);
@@ -261,7 +266,7 @@ namespace Azure.Core.Pipeline
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
 #else
                     _tagCollection ??= new ActivityTagsCollection();
-                    _tagCollection.Add(name, value!);
+                    _tagCollection[name] = value!;
 #endif
                 }
                 else
@@ -550,7 +555,7 @@ namespace Azure.Core.Pipeline
 #else
                 if (_activitySource?.HasListeners() == true)
                 {
-                    _currentActivity?.AddTag(name, value);
+                    _currentActivity?.SetTag(name, value);
                 }
                 else
                 {

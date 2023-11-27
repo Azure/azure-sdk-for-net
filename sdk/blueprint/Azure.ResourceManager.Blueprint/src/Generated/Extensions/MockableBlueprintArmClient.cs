@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BlueprintResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlueprintResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BlueprintResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlueprintResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlueprintResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BlueprintResource"/> object. </returns>
         public virtual BlueprintResource GetBlueprintResource(ResourceIdentifier id)
         {
             BlueprintResource.ValidateResourceId(id);
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BlueprintArtifactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlueprintArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BlueprintArtifactResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlueprintArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintArtifactResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlueprintArtifactResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BlueprintArtifactResource"/> object. </returns>
         public virtual BlueprintArtifactResource GetBlueprintArtifactResource(ResourceIdentifier id)
         {
             BlueprintArtifactResource.ValidateResourceId(id);
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BlueprintVersionArtifactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlueprintVersionArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintVersionArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BlueprintVersionArtifactResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlueprintVersionArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintVersionArtifactResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlueprintVersionArtifactResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BlueprintVersionArtifactResource"/> object. </returns>
         public virtual BlueprintVersionArtifactResource GetBlueprintVersionArtifactResource(ResourceIdentifier id)
         {
             BlueprintVersionArtifactResource.ValidateResourceId(id);
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublishedBlueprintResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublishedBlueprintResource.CreateResourceIdentifier" /> to create a <see cref="PublishedBlueprintResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PublishedBlueprintResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublishedBlueprintResource.CreateResourceIdentifier" /> to create a <see cref="PublishedBlueprintResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublishedBlueprintResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PublishedBlueprintResource"/> object. </returns>
         public virtual PublishedBlueprintResource GetPublishedBlueprintResource(ResourceIdentifier id)
         {
             PublishedBlueprintResource.ValidateResourceId(id);
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
         public virtual AssignmentResource GetAssignmentResource(ResourceIdentifier id)
         {
             AssignmentResource.ValidateResourceId(id);
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssignmentOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssignmentOperationResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AssignmentOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AssignmentOperationResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssignmentOperationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AssignmentOperationResource"/> object. </returns>
         public virtual AssignmentOperationResource GetAssignmentOperationResource(ResourceIdentifier id)
         {
             AssignmentOperationResource.ValidateResourceId(id);

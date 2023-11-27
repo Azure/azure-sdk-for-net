@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
+    [NonParallelizable]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
         private string _accessKey;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        private async Task<DataFactoryLinkedServiceResource> CreateDefaultAzureKeyVaultLinkedService(DataFactoryResource dataFactory,string linkedServiceName)
+        private async Task<DataFactoryLinkedServiceResource> CreateDefaultAzureKeyVaultLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
             DataFactoryLinkedServiceData lkAzureKeyVault = new DataFactoryLinkedServiceData(new AzureKeyVaultLinkedService("https://Test.vault.azure.net/"));
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureKeyVault);
@@ -236,13 +237,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
             ServicePrincipalCredential servicePrincipalCredential = new ServicePrincipalCredential()
             {
-                Tenant = BinaryData.FromString("72f988bf-86f1-41af-91ab-2d7cd011db47"),
-                ServicePrincipalId = BinaryData.FromString("9c8b1ab1-a894-4639-8fb9-75f98a36e9ab"),
+                Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
                 ServicePrincipalKey = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret")
             };
 
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
@@ -417,7 +418,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;"))
             {
@@ -447,7 +448,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
             {
@@ -480,7 +481,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;")))
             {
@@ -550,7 +551,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
             {
                 Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
@@ -619,7 +620,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
             {
@@ -662,7 +663,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLServiceLinkedService("1e42591f-0000-0000-0000-a268f6105ec5", "MyResourceGroupName", "MyMLWorkspaceName")
             {
@@ -766,7 +767,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory,linkedServiceAzureBlobName);
+            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
             {
                 UserName = "MyUserName",
@@ -792,8 +793,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string linkedServiceLogName2 = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
 
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory,linkedServiceLogName1);
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory,linkedServiceLogName2);
+            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName1);
+            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName2);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
             {
@@ -849,7 +850,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory,linkedServiceAzureBlobName);
+            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBatchLinkedService(DataFactoryElement<string>.FromSecretString("parameters"), "myaccount.region.batch.windows.com", "myPoolname", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceAzureBlobName))
             {
                 AccessKey = new DataFactorySecretString("fakeAccesskey")
@@ -872,7 +873,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;Uid=myUsername;"))
             {
@@ -902,7 +903,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("Data Source = MyOracleDB; User Id = myUsername; Password = myPassword; Integrated Security = no;"))
             {
@@ -932,8 +933,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
             {
@@ -963,7 +964,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("Host=10.10.10.10;Port=1234;Sid=fakeSid;User Id=fakeUsername;Password=fakePassword"))
             {
@@ -993,8 +994,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
             {
@@ -1025,8 +1026,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new FileServerLinkedService(DataFactoryElement<string>.FromSecretString("Myhost"))
             {
@@ -1103,7 +1104,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
             {
@@ -1157,8 +1158,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new TeradataLinkedService()
             {
@@ -1191,12 +1192,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new TeradataLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"connectstring\""),
+                ConnectionString = "connectstring",
                 Username = "microsoft",
                 Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
             })
@@ -1223,7 +1224,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OdbcLinkedService(DataFactoryElement<string>.FromSecretString("Driver={ODBC Driver 17 for SQL Server};Server=myServerAddress;Database=myDataBase;Uid=myUsername;Pwd=myPassword;"))
             {
@@ -1256,7 +1257,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new InformixLinkedService(DataFactoryElement<string>.FromSecretString("Database=TestDB;Host=192.168.10.10;Server=db_engine_tcp;Service=1492;Protocol=onsoctcp;UID=fakeUsername;Password=fakePassword;"))
             {
@@ -1289,7 +1290,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MicrosoftAccessLinkedService(DataFactoryElement<string>.FromSecretString("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\myFolder\\myAccessFile.accdb;Persist Security Info=False;\r\n"))
             {
@@ -1322,7 +1323,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HdfsLinkedService("http://myhost:50070/webhdfs/v1")
             {
@@ -1399,7 +1400,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CassandraLinkedService("http://localhost/webhdfs/v1/")
             {
@@ -1434,8 +1435,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
             {
@@ -1465,7 +1466,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
             {
@@ -1497,8 +1498,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
             {
@@ -1583,7 +1584,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
             {
@@ -1615,8 +1616,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
             {
@@ -1647,7 +1648,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
             {
@@ -1679,8 +1680,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
             {
@@ -1791,7 +1792,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceLinkedService()
             {
@@ -1920,7 +1921,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MongoDBLinkedService("fakeserver.com", "fakedb")
             {
@@ -2264,7 +2265,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("fakestring"))
             {
@@ -2314,7 +2315,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
             {
@@ -2338,7 +2339,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
             {
@@ -2410,7 +2411,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
             {
@@ -2457,7 +2458,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DrillLinkedService()
             {
@@ -2540,7 +2541,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"SecureString\"")
+                ConnectionString = "SecureString"
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
@@ -2560,11 +2561,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"SecureString\""),
+                ConnectionString = "SecureString",
                 Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
@@ -2807,7 +2808,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MariaDBLinkedService()
             {
@@ -2965,7 +2966,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
 
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ServiceNowLinkedService(BinaryData.FromString("\"http://instance.service-now.com\""), ServiceNowAuthenticationType.Basic)
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ServiceNowLinkedService("http://instance.service-now.com", ServiceNowAuthenticationType.Basic)
             {
                 Username = "admin",
                 Password = new DataFactorySecretString("some secret")
@@ -3013,7 +3014,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SparkLinkedService("myserver", 443, SparkAuthenticationType.WindowsAzureHDInsightService)
             {
@@ -3255,7 +3256,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new NetezzaLinkedService()
             {
@@ -3302,7 +3303,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new VerticaLinkedService()
             {
@@ -3437,7 +3438,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory,integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new Db2LinkedService()
             {
@@ -3639,7 +3640,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
             {
@@ -3686,7 +3687,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
             {
@@ -3923,7 +3924,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
             {
@@ -3966,7 +3967,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory,linkedServiceKeyVaultName);
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
             {

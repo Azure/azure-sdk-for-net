@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSqlDatabaseSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetSqlDatabaseSecurityAlertPolicy method.
     /// </summary>
     public partial class SqlDatabaseSecurityAlertPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseSecurityAlertPolicyResource(ArmClient client, SqlDatabaseSecurityAlertPolicyData data) : this(client, data.Id)

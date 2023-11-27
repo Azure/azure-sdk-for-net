@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceManagedClusterResource" /> and their operations.
-    /// Each <see cref="ContainerServiceManagedClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ContainerServiceManagedClusterCollection" /> instance call the GetContainerServiceManagedClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceManagedClusterResource"/> and their operations.
+    /// Each <see cref="ContainerServiceManagedClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ContainerServiceManagedClusterCollection"/> instance call the GetContainerServiceManagedClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ContainerServiceManagedClusterCollection : ArmCollection, IEnumerable<ContainerServiceManagedClusterResource>, IAsyncEnumerable<ContainerServiceManagedClusterResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceManagedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceManagedClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

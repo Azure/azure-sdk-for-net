@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="NetworkPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="PrivateLinkServiceResource" />.
-    /// To get a <see cref="NetworkPrivateEndpointConnectionCollection" /> instance call the GetNetworkPrivateEndpointConnections method from an instance of <see cref="PrivateLinkServiceResource" />.
+    /// A class representing a collection of <see cref="NetworkPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="NetworkPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="PrivateLinkServiceResource"/>.
+    /// To get a <see cref="NetworkPrivateEndpointConnectionCollection"/> instance call the GetNetworkPrivateEndpointConnections method from an instance of <see cref="PrivateLinkServiceResource"/>.
     /// </summary>
     public partial class NetworkPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<NetworkPrivateEndpointConnectionResource>, IAsyncEnumerable<NetworkPrivateEndpointConnectionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

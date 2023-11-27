@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a ConnectivityConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConnectivityConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConnectivityConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource" /> using the GetConnectivityConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectivityConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConnectivityConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetConnectivityConfiguration method.
     /// </summary>
     public partial class ConnectivityConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConnectivityConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectivityConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectivityConfigurationResource(ArmClient client, ConnectivityConfigurationData data) : this(client, data.Id)

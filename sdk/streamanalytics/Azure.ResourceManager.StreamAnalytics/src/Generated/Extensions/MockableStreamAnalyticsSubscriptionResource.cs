@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetStreamingJobs(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KeyVaultResource" /> and their operations.
-    /// Each <see cref="KeyVaultResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="KeyVaultCollection" /> instance call the GetKeyVaults method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="KeyVaultResource"/> and their operations.
+    /// Each <see cref="KeyVaultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="KeyVaultCollection"/> instance call the GetKeyVaults method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class KeyVaultCollection : ArmCollection, IEnumerable<KeyVaultResource>, IAsyncEnumerable<KeyVaultResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);

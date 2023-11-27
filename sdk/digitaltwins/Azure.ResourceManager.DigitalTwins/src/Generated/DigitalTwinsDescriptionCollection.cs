@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DigitalTwinsDescriptionResource" /> and their operations.
-    /// Each <see cref="DigitalTwinsDescriptionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DigitalTwinsDescriptionCollection" /> instance call the GetDigitalTwinsDescriptions method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DigitalTwinsDescriptionResource"/> and their operations.
+    /// Each <see cref="DigitalTwinsDescriptionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DigitalTwinsDescriptionCollection"/> instance call the GetDigitalTwinsDescriptions method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DigitalTwinsDescriptionCollection : ArmCollection, IEnumerable<DigitalTwinsDescriptionResource>, IAsyncEnumerable<DigitalTwinsDescriptionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

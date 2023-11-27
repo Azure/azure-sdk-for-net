@@ -18,11 +18,8 @@ namespace Azure.ResourceManager.Redis.Models
     {
         /// <summary> Initializes a new instance of RedisOperationStatus. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal RedisOperationStatus(string status) : base(status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A Class representing a BatchPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBatchPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource" /> using the GetBatchPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBatchPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource"/> using the GetBatchPrivateLinkResource method.
     /// </summary>
     public partial class BatchPrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BatchPrivateLinkResource(ArmClient client, BatchPrivateLinkResourceData data) : this(client, data.Id)

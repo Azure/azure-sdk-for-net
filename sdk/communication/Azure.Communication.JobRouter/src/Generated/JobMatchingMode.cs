@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of JobMatchingMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
-        internal JobMatchingMode(string kind)
+        internal JobMatchingMode(JobMatchingModeKind kind)
         {
             Kind = kind;
         }

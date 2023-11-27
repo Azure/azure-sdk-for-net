@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
     /// A Class representing a DataLakeAnalyticsAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataLakeAnalyticsAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeAnalyticsAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeAnalyticsAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataLakeAnalyticsAccount method.
     /// </summary>
     public partial class DataLakeAnalyticsAccountResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeAnalyticsAccountResource(ArmClient client, DataLakeAnalyticsAccountData data) : this(client, data.Id)

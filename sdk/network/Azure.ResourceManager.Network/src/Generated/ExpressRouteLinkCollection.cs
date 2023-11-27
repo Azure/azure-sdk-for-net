@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteLinkResource" /> and their operations.
-    /// Each <see cref="ExpressRouteLinkResource" /> in the collection will belong to the same instance of <see cref="ExpressRoutePortResource" />.
-    /// To get an <see cref="ExpressRouteLinkCollection" /> instance call the GetExpressRouteLinks method from an instance of <see cref="ExpressRoutePortResource" />.
+    /// A class representing a collection of <see cref="ExpressRouteLinkResource"/> and their operations.
+    /// Each <see cref="ExpressRouteLinkResource"/> in the collection will belong to the same instance of <see cref="ExpressRoutePortResource"/>.
+    /// To get an <see cref="ExpressRouteLinkCollection"/> instance call the GetExpressRouteLinks method from an instance of <see cref="ExpressRoutePortResource"/>.
     /// </summary>
     public partial class ExpressRouteLinkCollection : ArmCollection, IEnumerable<ExpressRouteLinkResource>, IAsyncEnumerable<ExpressRouteLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

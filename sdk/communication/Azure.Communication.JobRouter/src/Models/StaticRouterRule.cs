@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
         /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
-        public StaticRouterRule(RouterValue value) : this("static-rule", BinaryData.FromObjectAsJson(value.Value))
+        public StaticRouterRule(RouterValue value) : this(RouterRuleKind.Static, BinaryData.FromObjectAsJson(value.Value))
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteObjectValue(_value.ToObjectFromJson<object>());
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>
         internal PrivateEndpointConnectionProxyListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionProxyData>();
+            Value = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionProxyData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>
         /// <param name="value"> The list of available private endpoint connection proxies for an Account. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private endpoint connection proxies. </param>
-        internal PrivateEndpointConnectionProxyListResult(IReadOnlyList<PrivateEndpointConnectionProxyData> value, string nextLink)
+        internal PrivateEndpointConnectionProxyListResult(IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of available private endpoint connection proxies for an Account. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionProxyData> Value { get; }
+        public IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData> Value { get; }
         /// <summary> The URI that can be used to request the next list of private endpoint connection proxies. </summary>
         public string NextLink { get; }
     }

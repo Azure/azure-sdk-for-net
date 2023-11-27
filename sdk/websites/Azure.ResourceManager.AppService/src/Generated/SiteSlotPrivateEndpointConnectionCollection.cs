@@ -21,9 +21,9 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="SiteSlotPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="SiteSlotPrivateEndpointConnectionCollection" /> instance call the GetSiteSlotPrivateEndpointConnections method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="SiteSlotPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteSlotPrivateEndpointConnectionCollection"/> instance call the GetSiteSlotPrivateEndpointConnections method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteSlotPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SiteSlotPrivateEndpointConnectionResource>, IAsyncEnumerable<SiteSlotPrivateEndpointConnectionResource>
     {
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="info"> The PrivateLinkConnectionApprovalRequestInfo to use. </param>
+        /// <param name="privateEndpointConnectionName"> The <see cref="string"/> to use. </param>
+        /// <param name="info"> The <see cref="PrivateLinkConnectionApprovalRequestInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="info"> The PrivateLinkConnectionApprovalRequestInfo to use. </param>
+        /// <param name="privateEndpointConnectionName"> The <see cref="string"/> to use. </param>
+        /// <param name="info"> The <see cref="PrivateLinkConnectionApprovalRequestInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotPrivateEndpointConnectionWebAppsRestClient.CreateGetPrivateEndpointConnectionListSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotPrivateEndpointConnectionWebAppsRestClient.CreateGetPrivateEndpointConnectionListSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

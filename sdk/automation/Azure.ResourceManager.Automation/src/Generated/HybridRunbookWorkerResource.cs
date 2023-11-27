@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing a HybridRunbookWorker along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridRunbookWorkerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridRunbookWorkerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridRunbookWorkerGroupResource" /> using the GetHybridRunbookWorker method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridRunbookWorkerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridRunbookWorkerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridRunbookWorkerGroupResource"/> using the GetHybridRunbookWorker method.
     /// </summary>
     public partial class HybridRunbookWorkerResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridRunbookWorkerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridRunbookWorkerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridRunbookWorkerResource(ArmClient client, HybridRunbookWorkerData data) : this(client, data.Id)

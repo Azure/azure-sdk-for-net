@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementSubscription method.
     /// </summary>
     public partial class ApiManagementSubscriptionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementSubscriptionResource(ArmClient client, SubscriptionContractData data) : this(client, data.Id)

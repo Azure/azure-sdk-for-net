@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformConfigurationService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformConfigurationServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformConfigurationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformConfigurationService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformConfigurationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformConfigurationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformConfigurationService method.
     /// </summary>
     public partial class AppPlatformConfigurationServiceResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformConfigurationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformConfigurationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformConfigurationServiceResource(ArmClient client, AppPlatformConfigurationServiceData data) : this(client, data.Id)

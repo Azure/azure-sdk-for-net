@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoPrivateLinkResource" /> and their operations.
-    /// Each <see cref="KustoPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoPrivateLinkResourceCollection" /> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoPrivateLinkResource"/> and their operations.
+    /// Each <see cref="KustoPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoPrivateLinkResourceCollection"/> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoPrivateLinkResourceCollection : ArmCollection, IEnumerable<KustoPrivateLinkResource>, IAsyncEnumerable<KustoPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

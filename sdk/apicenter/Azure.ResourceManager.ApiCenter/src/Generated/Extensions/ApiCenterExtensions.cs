@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiCenterServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApiCenterServiceResource"/> object. </returns>
         public static ApiCenterServiceResource GetApiCenterServiceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableApiCenterArmClient(client).GetApiCenterServiceResource(id);
         }
 
@@ -58,9 +61,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
         public static ApiCenterServiceCollection GetApiCenterServices(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServices();
         }
 
@@ -84,11 +90,13 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -112,11 +120,13 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ApiCenterServiceResource> GetApiCenterService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterService(serviceName, cancellationToken);
         }
 
@@ -139,9 +149,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServicesAsync(cancellationToken);
         }
 
@@ -164,9 +177,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiCenterServiceResource> GetApiCenterServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServices(cancellationToken);
         }
     }

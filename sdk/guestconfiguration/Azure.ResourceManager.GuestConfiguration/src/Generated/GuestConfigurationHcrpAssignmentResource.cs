@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A Class representing a GuestConfigurationHcrpAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestConfigurationHcrpAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGuestConfigurationHcrpAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetGuestConfigurationHcrpAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationHcrpAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGuestConfigurationHcrpAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationHcrpAssignment method.
     /// </summary>
     public partial class GuestConfigurationHcrpAssignmentResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationHcrpAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationHcrpAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GuestConfigurationHcrpAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, data.Id)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

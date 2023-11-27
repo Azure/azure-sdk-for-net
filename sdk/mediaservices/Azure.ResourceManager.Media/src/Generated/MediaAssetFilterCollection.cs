@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaAssetFilterResource" /> and their operations.
-    /// Each <see cref="MediaAssetFilterResource" /> in the collection will belong to the same instance of <see cref="MediaAssetResource" />.
-    /// To get a <see cref="MediaAssetFilterCollection" /> instance call the GetMediaAssetFilters method from an instance of <see cref="MediaAssetResource" />.
+    /// A class representing a collection of <see cref="MediaAssetFilterResource"/> and their operations.
+    /// Each <see cref="MediaAssetFilterResource"/> in the collection will belong to the same instance of <see cref="MediaAssetResource"/>.
+    /// To get a <see cref="MediaAssetFilterCollection"/> instance call the GetMediaAssetFilters method from an instance of <see cref="MediaAssetResource"/>.
     /// </summary>
     public partial class MediaAssetFilterCollection : ArmCollection, IEnumerable<MediaAssetFilterResource>, IAsyncEnumerable<MediaAssetFilterResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaAssetFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaAssetFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetFilterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetFilterAssetFiltersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaAssetFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaAssetFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetFilterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetFilterAssetFiltersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

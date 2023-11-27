@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScVmmServerResource" /> and their operations.
-    /// Each <see cref="ScVmmServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ScVmmServerCollection" /> instance call the GetScVmmServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ScVmmServerResource"/> and their operations.
+    /// Each <see cref="ScVmmServerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScVmmServerCollection"/> instance call the GetScVmmServers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ScVmmServerCollection : ArmCollection, IEnumerable<ScVmmServerResource>, IAsyncEnumerable<ScVmmServerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

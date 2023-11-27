@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a GeoBackupPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GeoBackupPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGeoBackupPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetGeoBackupPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GeoBackupPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGeoBackupPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetGeoBackupPolicy method.
     /// </summary>
     public partial class GeoBackupPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GeoBackupPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GeoBackupPolicyResource(ArmClient client, GeoBackupPolicyData data) : this(client, data.Id)

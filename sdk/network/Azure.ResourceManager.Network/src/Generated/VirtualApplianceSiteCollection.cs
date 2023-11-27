@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualApplianceSiteResource" /> and their operations.
-    /// Each <see cref="VirtualApplianceSiteResource" /> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource" />.
-    /// To get a <see cref="VirtualApplianceSiteCollection" /> instance call the GetVirtualApplianceSites method from an instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// A class representing a collection of <see cref="VirtualApplianceSiteResource"/> and their operations.
+    /// Each <see cref="VirtualApplianceSiteResource"/> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource"/>.
+    /// To get a <see cref="VirtualApplianceSiteCollection"/> instance call the GetVirtualApplianceSites method from an instance of <see cref="NetworkVirtualApplianceResource"/>.
     /// </summary>
     public partial class VirtualApplianceSiteCollection : ArmCollection, IEnumerable<VirtualApplianceSiteResource>, IAsyncEnumerable<VirtualApplianceSiteResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualApplianceSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualApplianceSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualApplianceSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplianceSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualApplianceSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualApplianceSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualApplianceSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplianceSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

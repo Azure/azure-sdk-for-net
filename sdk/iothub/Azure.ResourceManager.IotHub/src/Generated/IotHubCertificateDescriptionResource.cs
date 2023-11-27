@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A Class representing an IotHubCertificateDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotHubCertificateDescriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotHubCertificateDescriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource" /> using the GetIotHubCertificateDescription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotHubCertificateDescriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotHubCertificateDescriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubCertificateDescription method.
     /// </summary>
     public partial class IotHubCertificateDescriptionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotHubCertificateDescriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotHubCertificateDescriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotHubCertificateDescriptionResource(ArmClient client, IotHubCertificateDescriptionData data) : this(client, data.Id)

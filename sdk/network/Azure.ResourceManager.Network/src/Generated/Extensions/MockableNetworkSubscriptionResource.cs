@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayResource> GetApplicationGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDelegation> GetAvailableDelegations(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliases(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallResource> GetAzureFirewallsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallResource> GetAzureFirewalls(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BastionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BastionHostResource> GetBastionHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BastionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BastionHostResource> GetBastionHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1414,7 +1414,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscpConfigurationResource> GetDscpConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EndpointServiceResult> GetAvailableEndpointServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1482,7 +1482,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1504,7 +1504,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRoutePortResource> GetExpressRoutePorts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirewallPolicyResource> GetFirewallPolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1702,7 +1702,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IPAllocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPAllocationResource> GetIPAllocationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1724,7 +1724,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IPAllocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPAllocationResource> GetIPAllocations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1746,7 +1746,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPGroupResource> GetIPGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPGroupResource> GetIPGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadBalancerResource> GetLoadBalancers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1934,7 +1934,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NatGatewayResource> GetNatGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1978,7 +1978,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
@@ -2048,7 +2048,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2070,7 +2070,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkProfileResource> GetNetworkProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2092,7 +2092,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2136,7 +2136,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2158,7 +2158,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2180,7 +2180,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2201,7 +2201,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkWatcherResource> GetNetworkWatchers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2222,7 +2222,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -2244,7 +2244,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointResource> GetPrivateEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -2267,7 +2267,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -2290,7 +2290,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -2312,7 +2312,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -2334,7 +2334,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -2435,7 +2435,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
@@ -2458,7 +2458,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
@@ -2480,7 +2480,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddressResource> GetPublicIPAddressesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2502,7 +2502,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddressResource> GetPublicIPAddresses(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2524,7 +2524,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublicIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2546,7 +2546,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPPrefixResource> GetPublicIPPrefixes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2568,7 +2568,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RouteFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilterResource> GetRouteFiltersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2590,7 +2590,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RouteFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilterResource> GetRouteFilters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2612,7 +2612,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RouteTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteTableResource> GetRouteTablesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2634,7 +2634,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RouteTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteTableResource> GetRouteTables(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2656,7 +2656,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityPartnerProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2678,7 +2678,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityPartnerProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityPartnerProviderResource> GetSecurityPartnerProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2700,7 +2700,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2722,7 +2722,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BgpServiceCommunity> GetBgpServiceCommunities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2744,7 +2744,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2766,7 +2766,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2853,7 +2853,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
         /// <param name="tagName"> Return tag information for a particular tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceTagInformation> GetAllServiceTagInformationAsync(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
@@ -2878,7 +2878,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
         /// <param name="tagName"> Return tag information for a particular tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceTagInformation> GetAllServiceTagInformation(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
@@ -2901,7 +2901,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -2924,7 +2924,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -2946,7 +2946,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2968,7 +2968,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2990,7 +2990,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualNetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -3012,7 +3012,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkTapResource> GetVirtualNetworkTaps(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -3034,7 +3034,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualRouterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterResource> GetVirtualRoutersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3056,7 +3056,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualRouterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterResource> GetVirtualRouters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3078,7 +3078,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualWanResource> GetVirtualWansAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3100,7 +3100,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualWanResource> GetVirtualWans(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3122,7 +3122,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VpnSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSiteResource> GetVpnSitesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3144,7 +3144,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSiteResource> GetVpnSites(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3166,7 +3166,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VpnServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3188,7 +3188,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnServerConfigurationResource> GetVpnServerConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3210,7 +3210,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHubResource> GetVirtualHubsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3232,7 +3232,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHubResource> GetVirtualHubs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3254,7 +3254,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnGatewayResource> GetVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3276,7 +3276,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnGatewayResource> GetVpnGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3298,7 +3298,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3320,7 +3320,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
@@ -3342,7 +3342,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -3363,7 +3363,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -3384,7 +3384,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -3406,7 +3406,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);

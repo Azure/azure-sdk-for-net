@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobStepResource" /> and their operations.
-    /// Each <see cref="SqlServerJobStepResource" /> in the collection will belong to the same instance of <see cref="SqlServerJobResource" />.
-    /// To get a <see cref="SqlServerJobStepCollection" /> instance call the GetSqlServerJobSteps method from an instance of <see cref="SqlServerJobResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobStepResource"/> and their operations.
+    /// Each <see cref="SqlServerJobStepResource"/> in the collection will belong to the same instance of <see cref="SqlServerJobResource"/>.
+    /// To get a <see cref="SqlServerJobStepCollection"/> instance call the GetSqlServerJobSteps method from an instance of <see cref="SqlServerJobResource"/>.
     /// </summary>
     public partial class SqlServerJobStepCollection : ArmCollection, IEnumerable<SqlServerJobStepResource>, IAsyncEnumerable<SqlServerJobStepResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobStepResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobStepResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobStepResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobStepJobStepsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobStepResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobStepResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobStepResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobStepJobStepsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

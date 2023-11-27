@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformSupportedStackResource" /> and their operations.
-    /// Each <see cref="AppPlatformSupportedStackResource" /> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource" />.
-    /// To get an <see cref="AppPlatformSupportedStackCollection" /> instance call the GetAppPlatformSupportedStacks method from an instance of <see cref="AppPlatformBuildServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformSupportedStackResource"/> and their operations.
+    /// Each <see cref="AppPlatformSupportedStackResource"/> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource"/>.
+    /// To get an <see cref="AppPlatformSupportedStackCollection"/> instance call the GetAppPlatformSupportedStacks method from an instance of <see cref="AppPlatformBuildServiceResource"/>.
     /// </summary>
     public partial class AppPlatformSupportedStackCollection : ArmCollection, IEnumerable<AppPlatformSupportedStackResource>, IAsyncEnumerable<AppPlatformSupportedStackResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformSupportedStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformSupportedStackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformSupportedStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformSupportedStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformSupportedStackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformSupportedStackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -21,9 +21,9 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsAlertRuleActionResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsAlertRuleActionResource" /> in the collection will belong to the same instance of <see cref="SecurityInsightsAlertRuleResource" />.
-    /// To get a <see cref="SecurityInsightsAlertRuleActionCollection" /> instance call the GetSecurityInsightsAlertRuleActions method from an instance of <see cref="SecurityInsightsAlertRuleResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsAlertRuleActionResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsAlertRuleActionResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsAlertRuleResource"/>.
+    /// To get a <see cref="SecurityInsightsAlertRuleActionCollection"/> instance call the GetSecurityInsightsAlertRuleActions method from an instance of <see cref="SecurityInsightsAlertRuleResource"/>.
     /// </summary>
     public partial class SecurityInsightsAlertRuleActionCollection : ArmCollection, IEnumerable<SecurityInsightsAlertRuleActionResource>, IAsyncEnumerable<SecurityInsightsAlertRuleActionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsAlertRuleActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsAlertRuleActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsAlertRuleActionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

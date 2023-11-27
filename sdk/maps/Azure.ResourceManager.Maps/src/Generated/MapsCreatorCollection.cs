@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Maps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MapsCreatorResource" /> and their operations.
-    /// Each <see cref="MapsCreatorResource" /> in the collection will belong to the same instance of <see cref="MapsAccountResource" />.
-    /// To get a <see cref="MapsCreatorCollection" /> instance call the GetMapsCreators method from an instance of <see cref="MapsAccountResource" />.
+    /// A class representing a collection of <see cref="MapsCreatorResource"/> and their operations.
+    /// Each <see cref="MapsCreatorResource"/> in the collection will belong to the same instance of <see cref="MapsAccountResource"/>.
+    /// To get a <see cref="MapsCreatorCollection"/> instance call the GetMapsCreators method from an instance of <see cref="MapsAccountResource"/>.
     /// </summary>
     public partial class MapsCreatorCollection : ArmCollection, IEnumerable<MapsCreatorResource>, IAsyncEnumerable<MapsCreatorResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MapsCreatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MapsCreatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MapsCreatorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MapsCreatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MapsCreatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MapsCreatorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

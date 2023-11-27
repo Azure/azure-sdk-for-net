@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.2 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2023-11-16)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.35.0 to 1.36.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.9.0
 
 ## 1.7.0-beta.1 (2023-08-14)
 
