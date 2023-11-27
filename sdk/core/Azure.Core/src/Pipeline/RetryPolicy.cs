@@ -113,7 +113,7 @@ namespace Azure.Core.Pipeline
                 // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
                 // or modify the ResponseClassifier.
 
-                if (lastException != null ||
+                if (lastException is not null ||
                     (message.HasResponse && message.Response.IsError))
                 {
                     shouldRetry = async ?
@@ -166,7 +166,7 @@ namespace Azure.Core.Pipeline
                 }
 
                 // ShouldRetry returned false this iteration and
-                // the last sent request didn't result in an exception.
+                // the last request sent didn't cause an exception.
                 break;
             }
         }
@@ -189,19 +189,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected internal virtual bool ShouldRetry(HttpMessage message, Exception? exception) => ShouldRetryInternal(message, exception);
-
-        /// <summary>
-        /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
-        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
-        /// This method will only be called for async methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
-        /// <returns>Whether or not to retry.</returns>
-        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception) => new(ShouldRetryInternal(message, exception));
-
-        private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
+        protected virtual bool ShouldRetry(HttpMessage message, Exception? exception)
         {
             if (message.RetryNumber < _maxRetries)
             {
@@ -219,12 +207,25 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
+        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
+        /// This method will only be called for async methods.
+        /// </summary>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
+        /// <returns>Whether or not to retry.</returns>
+        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception)
+            => new(ShouldRetry(message, exception));
+
+        /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
         internal TimeSpan GetNextDelay(HttpMessage message)
-            => GetNextDelayInternal(message);
+             => _delayStrategy.GetNextDelay(
+                    message.HasResponse ? message.Response : default,
+                    message.RetryNumber);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
@@ -232,45 +233,34 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
         internal ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message)
-            => new(GetNextDelayInternal(message));
+            => new(GetNextDelay(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnSendingRequest(HttpMessage message)
-        {
-        }
+        protected internal virtual void OnSendingRequest(HttpMessage message) { }
 
         /// <summary>
         /// This method can be overriden to introduce logic that runs before the request is sent. This will run even for the first attempt.
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message)
-            => default;
+        protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
         /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
         /// policy. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnRequestSent(HttpMessage message)
-        {
-        }
+        protected internal virtual void OnRequestSent(HttpMessage message) { }
 
         /// <summary>
         /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
         /// policy. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message)
-            => default;
-
-        private TimeSpan GetNextDelayInternal(HttpMessage message)
-            => _delayStrategy.GetNextDelay(
-                message.HasResponse ? message.Response : default,
-                message.RetryNumber);
+        protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
     }
 }

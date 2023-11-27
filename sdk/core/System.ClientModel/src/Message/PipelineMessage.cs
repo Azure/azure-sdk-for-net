@@ -35,7 +35,11 @@ public class PipelineMessage : IDisposable
         protected internal set => _response = value;
     }
 
-    public bool HasResponse => _response is not null;
+    public bool TryGetResponse(out PipelineResponse response)
+    {
+        response = _response!;
+        return _response is not null;
+    }
 
     #region Pipeline invocation options
 

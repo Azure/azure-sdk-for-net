@@ -149,7 +149,6 @@ namespace System.ClientModel.Primitives
     {
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public bool HasResponse { get { throw null; } }
         public System.ClientModel.Primitives.MessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public virtual System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public virtual System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
@@ -158,6 +157,7 @@ namespace System.ClientModel.Primitives
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+        public bool TryGetResponse(out System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
     public abstract partial class PipelinePolicy
     {
@@ -209,6 +209,15 @@ namespace System.ClientModel.Primitives
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+    }
+    public partial class RequestRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public RequestRetryPolicy() { }
+        public RequestRetryPolicy(int maxRetries) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+        protected virtual bool ShouldRetry(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-internal class RequestRetryPolicy : PipelinePolicy
+public class RequestRetryPolicy : PipelinePolicy
 {
     private const int DefaultMaxRetries = 3;
 
@@ -73,7 +73,7 @@ internal class RequestRetryPolicy : PipelinePolicy
     /// <param name="message">The message containing the request and response.</param>
     /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
     /// <returns>Whether or not to retry.</returns>
-    protected internal virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
+    protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
         => ShouldRetrySyncOrAsync(message, exception);
 
     /// <summary>
@@ -84,7 +84,7 @@ internal class RequestRetryPolicy : PipelinePolicy
     /// <param name="message">The message containing the request and response.</param>
     /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
     /// <returns>Whether or not to retry.</returns>
-    protected internal virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+    protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetrySyncOrAsync(message, exception));
 
     private bool ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception)
