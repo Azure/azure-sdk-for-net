@@ -1,11 +1,13 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.0.0-beta.10 (2023-11-27)
 
 ### Features Added
+
 - Encryption at rest feature
 
 ### Other Changes
+
 - Upgraded api version to 2023-07-01
 
 ## 1.0.0-beta.9 (2023-05-29)
