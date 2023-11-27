@@ -16,9 +16,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SelfHelpDiagnosticResource" /> and their operations.
-    /// Each <see cref="SelfHelpDiagnosticResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="SelfHelpDiagnosticCollection" /> instance call the GetSelfHelpDiagnostics method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="SelfHelpDiagnosticResource"/> and their operations.
+    /// Each <see cref="SelfHelpDiagnosticResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SelfHelpDiagnosticCollection"/> instance call the GetSelfHelpDiagnostics method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SelfHelpDiagnosticCollection : ArmCollection
     {

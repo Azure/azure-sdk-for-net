@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a SubscriptionPacketCoreControlPlaneVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionPacketCoreControlPlaneVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPacketCoreControlPlaneVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionPacketCoreControlPlaneVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionPacketCoreControlPlaneVersion method.
     /// </summary>
     public partial class SubscriptionPacketCoreControlPlaneVersionResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionPacketCoreControlPlaneVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionPacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data) : this(client, data.Id)

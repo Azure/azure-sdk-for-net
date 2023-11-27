@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningComputeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningComputeResource"/> object. </returns>
         public static MachineLearningComputeResource GetMachineLearningComputeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryCodeContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryCodeContainerResource"/> object. </returns>
         public static MachineLearningRegistryCodeContainerResource GetMachineLearningRegistryCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource"/> object. </returns>
         public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryCodeVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryCodeVersionResource"/> object. </returns>
         public static MachineLearningRegistryCodeVersionResource GetMachineLearningRegistryCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningCodeVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningCodeVersionResource"/> object. </returns>
         public static MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
         public static MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningComponentContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningComponentContainerResource"/> object. </returns>
         public static MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
         public static MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningComponentVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningComponentVersionResource"/> object. </returns>
         public static MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryDataContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryDataContainerResource"/> object. </returns>
         public static MachineLearningRegistryDataContainerResource GetMachineLearningRegistryDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningDataContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningDataContainerResource"/> object. </returns>
         public static MachineLearningDataContainerResource GetMachineLearningDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryDataVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryDataVersionResource"/> object. </returns>
         public static MachineLearningRegistryDataVersionResource GetMachineLearningRegistryDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningDataVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningDataVersionResource"/> object. </returns>
         public static MachineLearningDataVersionResource GetMachineLearningDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentContainerResource"/> object. </returns>
         public static MachineLearningRegistryEnvironmentContainerResource GetMachineLearningRegistryEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource"/> object. </returns>
         public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryEnvironmentVersionResource"/> object. </returns>
         public static MachineLearningRegistryEnvironmentVersionResource GetMachineLearningRegistryEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource"/> object. </returns>
         public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryModelContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryModelContainerResource"/> object. </returns>
         public static MachineLearningRegistryModelContainerResource GetMachineLearningRegistryModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningModelContainerResource"/> object. </returns>
         public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryModelVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryModelVersionResource"/> object. </returns>
         public static MachineLearningRegistryModelVersionResource GetMachineLearningRegistryModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningModelVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningModelVersionResource"/> object. </returns>
         public static MachineLearningModelVersionResource GetMachineLearningModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningBatchEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningBatchEndpointResource"/> object. </returns>
         public static MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningBatchDeploymentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningBatchDeploymentResource"/> object. </returns>
         public static MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningDatastoreResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningDatastoreResource"/> object. </returns>
         public static MachineLearningDatastoreResource GetMachineLearningDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningFeatureSetContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningFeatureSetContainerResource"/> object. </returns>
         public static MachineLearningFeatureSetContainerResource GetMachineLearningFeatureSetContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningFeatureResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningFeatureResource"/> object. </returns>
         public static MachineLearningFeatureResource GetMachineLearningFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningFeatureSetVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningFeatureSetVersionResource"/> object. </returns>
         public static MachineLearningFeatureSetVersionResource GetMachineLearningFeatureSetVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningFeatureStoreEntityContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningFeatureStoreEntityContainerResource"/> object. </returns>
         public static MachineLearningFeatureStoreEntityContainerResource GetMachineLearningFeatureStoreEntityContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningFeaturestoreEntityVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningFeaturestoreEntityVersionResource"/> object. </returns>
         public static MachineLearningFeaturestoreEntityVersionResource GetMachineLearningFeaturestoreEntityVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningJobResource"/> object. </returns>
         public static MachineLearningJobResource GetMachineLearningJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource"/> object. </returns>
         public static MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningOnlineEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningOnlineEndpointResource"/> object. </returns>
         public static MachineLearningOnlineEndpointResource GetMachineLearningOnlineEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningOnlineDeploymentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningOnlineDeploymentResource"/> object. </returns>
         public static MachineLearningOnlineDeploymentResource GetMachineLearningOnlineDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningScheduleResource"/> object. </returns>
         public static MachineLearningScheduleResource GetMachineLearningScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningRegistryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningRegistryResource"/> object. </returns>
         public static MachineLearningRegistryResource GetMachineLearningRegistryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource"/> object. </returns>
         public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource"/> object. </returns>
         public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
         public static MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource"/> object. </returns>
         public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningVmSize"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningVmSize"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningResourceQuota"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningResourceQuota"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningRegistryResource> GetMachineLearningRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningRegistryResource> GetMachineLearningRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="kind"> Kind of workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="kind"> Kind of workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

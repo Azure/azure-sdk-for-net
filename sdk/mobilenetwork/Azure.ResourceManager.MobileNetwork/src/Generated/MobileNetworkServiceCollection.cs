@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkServiceResource" /> and their operations.
-    /// Each <see cref="MobileNetworkServiceResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkResource" />.
-    /// To get a <see cref="MobileNetworkServiceCollection" /> instance call the GetMobileNetworkServices method from an instance of <see cref="MobileNetworkResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkServiceResource"/> and their operations.
+    /// Each <see cref="MobileNetworkServiceResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkResource"/>.
+    /// To get a <see cref="MobileNetworkServiceCollection"/> instance call the GetMobileNetworkServices method from an instance of <see cref="MobileNetworkResource"/>.
     /// </summary>
     public partial class MobileNetworkServiceCollection : ArmCollection, IEnumerable<MobileNetworkServiceResource>, IAsyncEnumerable<MobileNetworkServiceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkServiceServicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkServiceServicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

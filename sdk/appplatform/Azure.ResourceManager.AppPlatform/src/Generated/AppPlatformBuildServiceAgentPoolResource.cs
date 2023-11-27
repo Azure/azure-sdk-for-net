@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildServiceAgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildServiceAgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildServiceAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource" /> using the GetAppPlatformBuildServiceAgentPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildServiceAgentPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildServiceAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource"/> using the GetAppPlatformBuildServiceAgentPool method.
     /// </summary>
     public partial class AppPlatformBuildServiceAgentPoolResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildServiceAgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildServiceAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildServiceAgentPoolResource(ArmClient client, AppPlatformBuildServiceAgentPoolData data) : this(client, data.Id)

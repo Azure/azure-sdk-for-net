@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a ProtectionContainerMapping along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProtectionContainerMappingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProtectionContainerMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetProtectionContainerMapping method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProtectionContainerMappingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProtectionContainerMappingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetProtectionContainerMapping method.
     /// </summary>
     public partial class ProtectionContainerMappingResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProtectionContainerMappingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProtectionContainerMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProtectionContainerMappingResource(ArmClient client, ProtectionContainerMappingData data) : this(client, data.Id)

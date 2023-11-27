@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuestConfigurationVmAssignmentResource" /> and their operations.
-    /// Each <see cref="GuestConfigurationVmAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="GuestConfigurationVmAssignmentCollection" /> instance call the GetGuestConfigurationVmAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="GuestConfigurationVmAssignmentResource"/> and their operations.
+    /// Each <see cref="GuestConfigurationVmAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GuestConfigurationVmAssignmentCollection"/> instance call the GetGuestConfigurationVmAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class GuestConfigurationVmAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationVmAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

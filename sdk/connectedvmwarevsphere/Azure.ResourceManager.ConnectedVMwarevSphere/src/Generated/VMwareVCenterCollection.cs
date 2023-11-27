@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VMwareVCenterResource" /> and their operations.
-    /// Each <see cref="VMwareVCenterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="VMwareVCenterCollection" /> instance call the GetVMwareVCenters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="VMwareVCenterResource"/> and their operations.
+    /// Each <see cref="VMwareVCenterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="VMwareVCenterCollection"/> instance call the GetVMwareVCenters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class VMwareVCenterCollection : ArmCollection, IEnumerable<VMwareVCenterResource>, IAsyncEnumerable<VMwareVCenterResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareVCenterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareVCenterVCentersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareVCenterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareVCenterVCentersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteExtension method.
     /// </summary>
     public partial class SiteExtensionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteExtensionResource(ArmClient client, MSDeployStatusData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedClusterSnapshotResource" /> and their operations.
-    /// Each <see cref="ManagedClusterSnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedClusterSnapshotCollection" /> instance call the GetManagedClusterSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedClusterSnapshotResource"/> and their operations.
+    /// Each <see cref="ManagedClusterSnapshotResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedClusterSnapshotCollection"/> instance call the GetManagedClusterSnapshots method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedClusterSnapshotCollection : ArmCollection, IEnumerable<ManagedClusterSnapshotResource>, IAsyncEnumerable<ManagedClusterSnapshotResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedClusterSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedClusterSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

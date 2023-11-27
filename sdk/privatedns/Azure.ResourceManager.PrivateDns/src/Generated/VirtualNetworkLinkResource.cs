@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
     /// A Class representing a VirtualNetworkLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource" /> using the GetVirtualNetworkLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualNetworkLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualNetworkLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource"/> using the GetVirtualNetworkLink method.
     /// </summary>
     public partial class VirtualNetworkLinkResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualNetworkLinkResource(ArmClient client, VirtualNetworkLinkData data) : this(client, data.Id)

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubResource" /> and their operations.
-    /// Each <see cref="EventHubResource" /> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource" />.
-    /// To get an <see cref="EventHubCollection" /> instance call the GetEventHubs method from an instance of <see cref="EventHubsNamespaceResource" />.
+    /// A class representing a collection of <see cref="EventHubResource"/> and their operations.
+    /// Each <see cref="EventHubResource"/> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource"/>.
+    /// To get an <see cref="EventHubCollection"/> instance call the GetEventHubs method from an instance of <see cref="EventHubsNamespaceResource"/>.
     /// </summary>
     public partial class EventHubCollection : ArmCollection, IEnumerable<EventHubResource>, IAsyncEnumerable<EventHubResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubResource> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubResource> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);

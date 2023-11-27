@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> and their operations.
-    /// Each <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get an <see cref="ExtendedDatabaseBlobAuditingPolicyCollection" /> instance call the GetExtendedDatabaseBlobAuditingPolicies method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> and their operations.
+    /// Each <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get an <see cref="ExtendedDatabaseBlobAuditingPolicyCollection"/> instance call the GetExtendedDatabaseBlobAuditingPolicies method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class ExtendedDatabaseBlobAuditingPolicyCollection : ArmCollection, IEnumerable<ExtendedDatabaseBlobAuditingPolicyResource>, IAsyncEnumerable<ExtendedDatabaseBlobAuditingPolicyResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExtendedDatabaseBlobAuditingPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExtendedDatabaseBlobAuditingPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityContactResource" /> and their operations.
-    /// Each <see cref="SecurityContactResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityContactCollection" /> instance call the GetSecurityContacts method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityContactResource"/> and their operations.
+    /// Each <see cref="SecurityContactResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityContactCollection"/> instance call the GetSecurityContacts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityContactCollection : ArmCollection, IEnumerable<SecurityContactResource>, IAsyncEnumerable<SecurityContactResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityContactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityContactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityContactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityContactRestClient.CreateListRequest(Id.SubscriptionId);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityContactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityContactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityContactResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityContactRestClient.CreateListRequest(Id.SubscriptionId);

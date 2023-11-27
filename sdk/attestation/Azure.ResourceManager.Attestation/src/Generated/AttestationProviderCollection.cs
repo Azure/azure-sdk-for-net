@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AttestationProviderResource" /> and their operations.
-    /// Each <see cref="AttestationProviderResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AttestationProviderCollection" /> instance call the GetAttestationProviders method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AttestationProviderResource"/> and their operations.
+    /// Each <see cref="AttestationProviderResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AttestationProviderCollection"/> instance call the GetAttestationProviders method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AttestationProviderCollection : ArmCollection, IEnumerable<AttestationProviderResource>, IAsyncEnumerable<AttestationProviderResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationProviderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationProviderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

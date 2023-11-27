@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJobOutput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobOutputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobOutputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource" /> using the GetStreamingJobOutput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobOutputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobOutputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource"/> using the GetStreamingJobOutput method.
     /// </summary>
     public partial class StreamingJobOutputResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobOutputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobOutputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobOutputResource(ArmClient client, StreamingJobOutputData data) : this(client, data.Id)

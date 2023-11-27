@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudAddon along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudAddonResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudAddonResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetAvsPrivateCloudAddon method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudAddonResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudAddonResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudAddon method.
     /// </summary>
     public partial class AvsPrivateCloudAddonResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudAddonResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudAddonResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudAddonResource(ArmClient client, AvsPrivateCloudAddonData data) : this(client, data.Id)

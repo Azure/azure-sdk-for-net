@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a PostgreSqlFlexibleServerConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlFlexibleServerConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlFlexibleServerConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlFlexibleServerConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlFlexibleServerConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlFlexibleServerConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlFlexibleServerConfiguration method.
     /// </summary>
     public partial class PostgreSqlFlexibleServerConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlFlexibleServerConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerConfigurationResource(ArmClient client, PostgreSqlFlexibleServerConfigurationData data) : this(client, data.Id)

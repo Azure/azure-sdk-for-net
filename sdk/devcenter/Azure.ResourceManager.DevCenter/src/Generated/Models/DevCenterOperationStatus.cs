@@ -18,10 +18,8 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal DevCenterOperationStatus(string status) : base(status)
         {
-            Argument.AssertNotNull(status, nameof(status));
         }
 
         /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>

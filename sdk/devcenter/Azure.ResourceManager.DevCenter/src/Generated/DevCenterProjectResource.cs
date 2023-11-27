@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterProject along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterProjectResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterProjectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDevCenterProject method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterProjectResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevCenterProject method.
     /// </summary>
     public partial class DevCenterProjectResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterProjectResource(ArmClient client, DevCenterProjectData data) : this(client, data.Id)

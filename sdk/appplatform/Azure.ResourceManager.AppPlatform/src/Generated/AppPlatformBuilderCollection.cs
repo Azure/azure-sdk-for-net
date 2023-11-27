@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformBuilderResource" /> and their operations.
-    /// Each <see cref="AppPlatformBuilderResource" /> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource" />.
-    /// To get an <see cref="AppPlatformBuilderCollection" /> instance call the GetAppPlatformBuilders method from an instance of <see cref="AppPlatformBuildServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformBuilderResource"/> and their operations.
+    /// Each <see cref="AppPlatformBuilderResource"/> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource"/>.
+    /// To get an <see cref="AppPlatformBuilderCollection"/> instance call the GetAppPlatformBuilders method from an instance of <see cref="AppPlatformBuildServiceResource"/>.
     /// </summary>
     public partial class AppPlatformBuilderCollection : ArmCollection, IEnumerable<AppPlatformBuilderResource>, IAsyncEnumerable<AppPlatformBuilderResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformBuilderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformBuilderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformBuilderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformBuilderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformBuilderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformBuilderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

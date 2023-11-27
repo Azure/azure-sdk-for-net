@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GlobalRulestackResource" /> and their operations.
-    /// Each <see cref="GlobalRulestackResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="GlobalRulestackCollection" /> instance call the GetGlobalRulestacks method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="GlobalRulestackResource"/> and their operations.
+    /// Each <see cref="GlobalRulestackResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="GlobalRulestackCollection"/> instance call the GetGlobalRulestacks method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class GlobalRulestackCollection : ArmCollection, IEnumerable<GlobalRulestackResource>, IAsyncEnumerable<GlobalRulestackResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GlobalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GlobalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GlobalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GlobalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();

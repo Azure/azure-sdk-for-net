@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
         public static SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
         public static SolutionResource GetSolutionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TroubleshooterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TroubleshooterResource"/> object. </returns>
         public static TroubleshooterResource GetTroubleshooterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MarketplaceAdminApprovalRequestResource" /> and their operations.
-    /// Each <see cref="MarketplaceAdminApprovalRequestResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
-    /// To get a <see cref="MarketplaceAdminApprovalRequestCollection" /> instance call the GetMarketplaceAdminApprovalRequests method from an instance of <see cref="PrivateStoreResource" />.
+    /// A class representing a collection of <see cref="MarketplaceAdminApprovalRequestResource"/> and their operations.
+    /// Each <see cref="MarketplaceAdminApprovalRequestResource"/> in the collection will belong to the same instance of <see cref="PrivateStoreResource"/>.
+    /// To get a <see cref="MarketplaceAdminApprovalRequestCollection"/> instance call the GetMarketplaceAdminApprovalRequests method from an instance of <see cref="PrivateStoreResource"/>.
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestCollection : ArmCollection, IEnumerable<MarketplaceAdminApprovalRequestResource>, IAsyncEnumerable<MarketplaceAdminApprovalRequestResource>
     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceAdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceAdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceAdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));

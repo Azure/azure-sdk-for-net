@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
     /// A Class representing a TrafficManagerUserMetrics along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficManagerUserMetricsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficManagerUserMetricsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetTrafficManagerUserMetrics method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerUserMetricsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerUserMetricsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTrafficManagerUserMetrics method.
     /// </summary>
     public partial class TrafficManagerUserMetricsResource : ArmResource
     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficManagerUserMetricsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerUserMetricsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerUserMetricsResource(ArmClient client, TrafficManagerUserMetricData data) : this(client, data.Id)

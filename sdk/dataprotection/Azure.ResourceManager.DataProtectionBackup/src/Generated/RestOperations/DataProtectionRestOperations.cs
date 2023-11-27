@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Validates if a feature is supported. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Validates if a feature is supported. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>

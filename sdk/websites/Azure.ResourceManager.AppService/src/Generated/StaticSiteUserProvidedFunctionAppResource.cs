@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a StaticSiteUserProvidedFunctionApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteUserProvidedFunctionAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteUserProvidedFunctionAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource" /> using the GetStaticSiteUserProvidedFunctionApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteUserProvidedFunctionAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteUserProvidedFunctionAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource"/> using the GetStaticSiteUserProvidedFunctionApp method.
     /// </summary>
     public partial class StaticSiteUserProvidedFunctionAppResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StaticSiteUserProvidedFunctionAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteUserProvidedFunctionAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteUserProvidedFunctionAppResource(ArmClient client, StaticSiteUserProvidedFunctionAppData data) : this(client, data.Id)

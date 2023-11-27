@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
     /// A Class representing a DynatraceTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DynatraceTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDynatraceTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource" /> using the GetDynatraceTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DynatraceTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDynatraceTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource"/> using the GetDynatraceTagRule method.
     /// </summary>
     public partial class DynatraceTagRuleResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DynatraceTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DynatraceTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DynatraceTagRuleResource(ArmClient client, DynatraceTagRuleData data) : this(client, data.Id)

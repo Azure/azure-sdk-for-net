@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

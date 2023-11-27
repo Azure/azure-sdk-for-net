@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityWorkspaceSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityWorkspaceSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityWorkspaceSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityWorkspaceSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityWorkspaceSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityWorkspaceSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityWorkspaceSetting method.
     /// </summary>
     public partial class SecurityWorkspaceSettingResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityWorkspaceSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityWorkspaceSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityWorkspaceSettingResource(ArmClient client, SecurityWorkspaceSettingData data) : this(client, data.Id)

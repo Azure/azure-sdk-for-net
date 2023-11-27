@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryTriggerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryTrigger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryTriggerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryTriggerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryTrigger method.
     /// </summary>
     public partial class DataFactoryTriggerResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryTriggerResource(ArmClient client, DataFactoryTriggerData data) : this(client, data.Id)

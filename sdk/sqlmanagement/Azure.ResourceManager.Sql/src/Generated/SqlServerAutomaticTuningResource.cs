@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerAutomaticTuning along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerAutomaticTuningResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerAutomaticTuningResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerAutomaticTuning method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerAutomaticTuningResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerAutomaticTuningResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerAutomaticTuning method.
     /// </summary>
     public partial class SqlServerAutomaticTuningResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerAutomaticTuningResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerAutomaticTuningResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerAutomaticTuningResource(ArmClient client, SqlServerAutomaticTuningData data) : this(client, data.Id)

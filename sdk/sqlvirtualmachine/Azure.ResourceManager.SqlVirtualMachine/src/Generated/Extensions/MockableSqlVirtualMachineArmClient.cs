@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvailabilityGroupListenerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvailabilityGroupListenerResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilityGroupListenerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvailabilityGroupListenerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvailabilityGroupListenerResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilityGroupListenerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource"/> object. </returns>
         public virtual AvailabilityGroupListenerResource GetAvailabilityGroupListenerResource(ResourceIdentifier id)
         {
             AvailabilityGroupListenerResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlVmGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlVmGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVmGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlVmGroupResource"/> object. </returns>
         public virtual SqlVmGroupResource GetSqlVmGroupResource(ResourceIdentifier id)
         {
             SqlVmGroupResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlVmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVmResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlVmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVmResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlVmResource"/> object. </returns>
         public virtual SqlVmResource GetSqlVmResource(ResourceIdentifier id)
         {
             SqlVmResource.ValidateResourceId(id);

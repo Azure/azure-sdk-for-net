@@ -21,9 +21,9 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReplicationProtectedItemResource" /> and their operations.
-    /// Each <see cref="ReplicationProtectedItemResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
-    /// To get a <see cref="ReplicationProtectedItemCollection" /> instance call the GetReplicationProtectedItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// A class representing a collection of <see cref="ReplicationProtectedItemResource"/> and their operations.
+    /// Each <see cref="ReplicationProtectedItemResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
+    /// To get a <see cref="ReplicationProtectedItemCollection"/> instance call the GetReplicationProtectedItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
     /// </summary>
     public partial class ReplicationProtectedItemCollection : ArmCollection, IEnumerable<ReplicationProtectedItemResource>, IAsyncEnumerable<ReplicationProtectedItemResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectedItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectedItemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

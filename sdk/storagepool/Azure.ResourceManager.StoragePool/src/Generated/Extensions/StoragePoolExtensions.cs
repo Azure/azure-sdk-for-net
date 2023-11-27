@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiskPoolResource"/> object. </returns>
         public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource"/> object. </returns>
         public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

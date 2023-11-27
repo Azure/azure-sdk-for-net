@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource"/> object. </returns>
         public static CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
         public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> object. </returns>
         public static CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
         public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> object. </returns>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> object. </returns>
         public static CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

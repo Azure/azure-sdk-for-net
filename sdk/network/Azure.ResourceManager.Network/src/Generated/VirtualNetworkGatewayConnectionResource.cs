@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualNetworkGatewayConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkGatewayConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkGatewayConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualNetworkGatewayConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualNetworkGatewayConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualNetworkGatewayConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVirtualNetworkGatewayConnection method.
     /// </summary>
     public partial class VirtualNetworkGatewayConnectionResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGatewayConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualNetworkGatewayConnectionResource(ArmClient client, VirtualNetworkGatewayConnectionData data) : this(client, data.Id)

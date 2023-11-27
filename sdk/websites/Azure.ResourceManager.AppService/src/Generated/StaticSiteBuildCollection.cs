@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StaticSiteBuildResource" /> and their operations.
-    /// Each <see cref="StaticSiteBuildResource" /> in the collection will belong to the same instance of <see cref="StaticSiteResource" />.
-    /// To get a <see cref="StaticSiteBuildCollection" /> instance call the GetStaticSiteBuilds method from an instance of <see cref="StaticSiteResource" />.
+    /// A class representing a collection of <see cref="StaticSiteBuildResource"/> and their operations.
+    /// Each <see cref="StaticSiteBuildResource"/> in the collection will belong to the same instance of <see cref="StaticSiteResource"/>.
+    /// To get a <see cref="StaticSiteBuildCollection"/> instance call the GetStaticSiteBuilds method from an instance of <see cref="StaticSiteResource"/>.
     /// </summary>
     public partial class StaticSiteBuildCollection : ArmCollection, IEnumerable<StaticSiteBuildResource>, IAsyncEnumerable<StaticSiteBuildResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteBuildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSiteBuildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteBuildResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteBuildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteBuildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteBuildResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

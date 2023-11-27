@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkWatcherResource" /> and their operations.
-    /// Each <see cref="NetworkWatcherResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="NetworkWatcherCollection" /> instance call the GetNetworkWatchers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkWatcherResource"/> and their operations.
+    /// Each <see cref="NetworkWatcherResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkWatcherCollection"/> instance call the GetNetworkWatchers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class NetworkWatcherCollection : ArmCollection, IEnumerable<NetworkWatcherResource>, IAsyncEnumerable<NetworkWatcherResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkWatcherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkWatcherResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);

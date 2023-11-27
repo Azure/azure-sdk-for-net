@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a RecoverableDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecoverableDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecoverableDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetRecoverableDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoverableDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRecoverableDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetRecoverableDatabase method.
     /// </summary>
     public partial class RecoverableDatabaseResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecoverableDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoverableDatabaseResource(ArmClient client, RecoverableDatabaseData data) : this(client, data.Id)

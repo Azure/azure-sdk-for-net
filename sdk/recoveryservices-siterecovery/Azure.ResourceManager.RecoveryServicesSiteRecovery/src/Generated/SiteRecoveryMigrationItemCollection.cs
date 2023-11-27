@@ -21,9 +21,9 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryMigrationItemResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryMigrationItemResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
-    /// To get a <see cref="SiteRecoveryMigrationItemCollection" /> instance call the GetSiteRecoveryMigrationItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryMigrationItemResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryMigrationItemResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
+    /// To get a <see cref="SiteRecoveryMigrationItemCollection"/> instance call the GetSiteRecoveryMigrationItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
     /// </summary>
     public partial class SiteRecoveryMigrationItemCollection : ArmCollection, IEnumerable<SiteRecoveryMigrationItemResource>, IAsyncEnumerable<SiteRecoveryMigrationItemResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="takeToken"> The page size. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryMigrationItemResource> GetAllAsync(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="takeToken"> The page size. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryMigrationItemResource> GetAll(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);

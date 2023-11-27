@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an AdminRuleGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AdminRuleGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAdminRuleGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAdminConfigurationResource" /> using the GetAdminRuleGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdminRuleGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAdminRuleGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAdminConfigurationResource"/> using the GetAdminRuleGroup method.
     /// </summary>
     public partial class AdminRuleGroupResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AdminRuleGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdminRuleGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdminRuleGroupResource(ArmClient client, AdminRuleGroupData data) : this(client, data.Id)

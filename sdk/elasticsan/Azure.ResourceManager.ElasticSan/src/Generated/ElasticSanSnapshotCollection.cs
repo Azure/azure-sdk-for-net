@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanSnapshotResource" /> and their operations.
-    /// Each <see cref="ElasticSanSnapshotResource" /> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource" />.
-    /// To get an <see cref="ElasticSanSnapshotCollection" /> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticSanSnapshotResource"/> and their operations.
+    /// Each <see cref="ElasticSanSnapshotResource"/> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource"/>.
+    /// To get an <see cref="ElasticSanSnapshotCollection"/> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource"/>.
     /// </summary>
     public partial class ElasticSanSnapshotCollection : ArmCollection, IEnumerable<ElasticSanSnapshotResource>, IAsyncEnumerable<ElasticSanSnapshotResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanSnapshotResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanSnapshotResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
