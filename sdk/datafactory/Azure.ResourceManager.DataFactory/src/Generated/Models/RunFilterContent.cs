@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Query parameters for listing runs. </summary>
     public partial class RunFilterContent
     {
-        /// <summary> Initializes a new instance of RunFilterContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/>. </summary>
         /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
         /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
         public RunFilterContent(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)

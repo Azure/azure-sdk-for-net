@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
     public partial class ContainerAppAzureActiveDirectoryValidationConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryValidationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryValidationConfiguration"/>. </summary>
         public ContainerAppAzureActiveDirectoryValidationConfiguration()
         {
             AllowedAudiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryValidationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryValidationConfiguration"/>. </summary>
         /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
         /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
         /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>

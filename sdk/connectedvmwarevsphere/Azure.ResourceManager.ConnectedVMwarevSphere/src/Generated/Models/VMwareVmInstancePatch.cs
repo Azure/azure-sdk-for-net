@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtualMachineInstanceUpdate. </summary>
     public partial class VMwareVmInstancePatch
     {
-        /// <summary> Initializes a new instance of VMwareVmInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
         public VMwareVmInstancePatch()
         {
         }

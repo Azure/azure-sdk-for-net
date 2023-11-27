@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Extended Information about the job. </summary>
     public partial class BackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         internal BackupJobExtendedInfo()
         {
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             SubTasks = new ChangeTrackingList<BackupJobSubTask>();
         }
 
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         /// <param name="additionalDetails"> Job's Additional Details. </param>
         /// <param name="backupInstanceState"> State of the Backup Instance. </param>
         /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>

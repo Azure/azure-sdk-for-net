@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A CosmosDB No Sql API data source/sink. </summary>
     public partial class CosmosSqlDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosSqlDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBSql;
         }
 
-        /// <summary> Initializes a new instance of CosmosSqlDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>

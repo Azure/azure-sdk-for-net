@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Parameters for updating a factory resource. </summary>
     public partial class DataFactoryPatch
     {
-        /// <summary> Initializes a new instance of DataFactoryPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
         public DataFactoryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

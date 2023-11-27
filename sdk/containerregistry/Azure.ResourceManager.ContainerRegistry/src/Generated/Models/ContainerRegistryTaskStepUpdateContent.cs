@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepUpdateContent"/>. </summary>
         protected ContainerRegistryTaskStepUpdateContent()
         {
         }

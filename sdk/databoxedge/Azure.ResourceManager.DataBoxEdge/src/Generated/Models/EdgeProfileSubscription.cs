@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Subscription details for the Edge Profile. </summary>
     public partial class EdgeProfileSubscription
     {
-        /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeProfileSubscription"/>. </summary>
         internal EdgeProfileSubscription()
         {
             RegisteredFeatures = new ChangeTrackingList<SubscriptionRegisteredFeatures>();
         }
 
-        /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeProfileSubscription"/>. </summary>
         /// <param name="registrationId"> Edge Subscription Registration ID. </param>
         /// <param name="id"> ARM ID of the subscription. </param>
         /// <param name="state"></param>

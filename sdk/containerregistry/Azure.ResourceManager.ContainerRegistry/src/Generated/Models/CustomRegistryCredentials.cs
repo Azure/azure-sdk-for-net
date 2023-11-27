@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Describes the credentials that will be used to access a custom registry during a run. </summary>
     public partial class CustomRegistryCredentials
     {
-        /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRegistryCredentials"/>. </summary>
         public CustomRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRegistryCredentials"/>. </summary>
         /// <param name="userName"> The username for logging into the custom registry. </param>
         /// <param name="password">
         /// The password for logging into the custom registry. The password is a secret

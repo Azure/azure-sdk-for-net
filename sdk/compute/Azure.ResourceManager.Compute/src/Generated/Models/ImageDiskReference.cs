@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source image used for creating the disk. </summary>
     public partial class ImageDiskReference
     {
-        /// <summary> Initializes a new instance of ImageDiskReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDiskReference"/>. </summary>
         public ImageDiskReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageDiskReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDiskReference"/>. </summary>
         /// <param name="id"> A relative uri containing either a Platform Image Repository, user image, or Azure Compute Gallery image reference. </param>
         /// <param name="sharedGalleryImageId"> A relative uri containing a direct shared Azure Compute Gallery image reference. </param>
         /// <param name="communityGalleryImageId"> A relative uri containing a community Azure Compute Gallery image reference. </param>

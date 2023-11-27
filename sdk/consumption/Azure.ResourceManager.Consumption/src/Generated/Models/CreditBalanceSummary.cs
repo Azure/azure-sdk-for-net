@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Summary of credit balances. </summary>
     public partial class CreditBalanceSummary
     {
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
         internal CreditBalanceSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>

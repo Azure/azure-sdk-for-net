@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB location metadata. </summary>
     public partial class CosmosDBLocationProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         public CosmosDBLocationProperties()
         {
             BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>

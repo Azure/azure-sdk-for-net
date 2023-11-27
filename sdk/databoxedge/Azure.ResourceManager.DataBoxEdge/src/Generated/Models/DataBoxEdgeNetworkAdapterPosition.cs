@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The network adapter position. </summary>
     public partial class DataBoxEdgeNetworkAdapterPosition
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapterPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterPosition"/>. </summary>
         internal DataBoxEdgeNetworkAdapterPosition()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapterPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterPosition"/>. </summary>
         /// <param name="networkGroup"> The network group. </param>
         /// <param name="port"> The port. </param>
         internal DataBoxEdgeNetworkAdapterPosition(DataBoxEdgeNetworkGroup? networkGroup, int? port)

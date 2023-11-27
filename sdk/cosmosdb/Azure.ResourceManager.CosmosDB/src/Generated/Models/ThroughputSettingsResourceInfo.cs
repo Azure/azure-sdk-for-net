@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB resource throughput object. Either throughput is required or autoscaleSettings is required, but not both. </summary>
     public partial class ThroughputSettingsResourceInfo
     {
-        /// <summary> Initializes a new instance of ThroughputSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
         public ThroughputSettingsResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ThroughputSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>

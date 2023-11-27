@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class DeletedDataProtectionBackupInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceData"/>. </summary>
         public DeletedDataProtectionBackupInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

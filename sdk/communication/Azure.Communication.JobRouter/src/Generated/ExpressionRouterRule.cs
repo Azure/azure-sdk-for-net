@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing inline expression rules. </summary>
     public partial class ExpressionRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>
         /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>

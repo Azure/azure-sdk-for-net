@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class ComputeResourceSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictionInfo"/>. </summary>
         internal ComputeResourceSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         internal ComputeResourceSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a token. </summary>
     public partial class ContainerRegistryTokenPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPatch"/>. </summary>
         public ContainerRegistryTokenPatch()
         {
         }

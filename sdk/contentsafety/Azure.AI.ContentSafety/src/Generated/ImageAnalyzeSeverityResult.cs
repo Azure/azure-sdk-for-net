@@ -10,7 +10,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> Image analysis result. </summary>
     public partial class ImageAnalyzeSeverityResult
     {
-        /// <summary> Initializes a new instance of ImageAnalyzeSeverityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalyzeSeverityResult"/>. </summary>
         /// <param name="category"> The image category. </param>
         /// <param name="severity"> The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6. </param>
         internal ImageAnalyzeSeverityResult(ImageCategory category, int severity)

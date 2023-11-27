@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Detailed errors. </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfoDetailsItem
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> CheckNameAvailability Result. </summary>
     public partial class DataProtectionBackupNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityResult"/>. </summary>
         internal DataProtectionBackupNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Gets or sets the message. </param>
         /// <param name="isNameAvailable"> Gets or sets a value indicating whether [name available]. </param>
         /// <param name="reason"> Gets or sets the reason. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Dataset debug resource. </summary>
     public partial class DataFactoryDatasetDebugInfo : DataFactoryDebugInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryDatasetDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetDebugInfo"/>. </summary>
         /// <param name="properties">
         /// Dataset properties.
         /// Please note <see cref="DataFactoryDatasetProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

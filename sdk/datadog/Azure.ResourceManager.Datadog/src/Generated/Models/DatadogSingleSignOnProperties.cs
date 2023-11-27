@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogSingleSignOnProperties. </summary>
     public partial class DatadogSingleSignOnProperties
     {
-        /// <summary> Initializes a new instance of DatadogSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnProperties"/>. </summary>
         public DatadogSingleSignOnProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>

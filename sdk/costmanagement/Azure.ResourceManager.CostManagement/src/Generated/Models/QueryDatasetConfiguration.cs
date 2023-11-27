@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the query. </summary>
     internal partial class QueryDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of QueryDatasetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDatasetConfiguration"/>. </summary>
         public QueryDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();

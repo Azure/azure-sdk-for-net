@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class RelationshipResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipResourceFormatData"/>. </summary>
         public RelationshipResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights
             LookupMappings = new ChangeTrackingList<RelationshipTypeMapping>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

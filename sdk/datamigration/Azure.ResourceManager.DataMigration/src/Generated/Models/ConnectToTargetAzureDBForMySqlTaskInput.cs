@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure Database for MySQL and target server requirements. </summary>
     public partial class ConnectToTargetAzureDBForMySqlTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetConnectionInfo = targetConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL server. </param>
         /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>

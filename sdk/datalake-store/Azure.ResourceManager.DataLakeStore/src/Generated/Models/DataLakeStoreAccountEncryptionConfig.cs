@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The encryption configuration for the account. </summary>
     public partial class DataLakeStoreAccountEncryptionConfig
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountEncryptionConfig"/>. </summary>
         /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are 'UserManaged' and 'ServiceManaged'. </param>
         public DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType)
         {
             ConfigType = configType;
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountEncryptionConfig"/>. </summary>
         /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are 'UserManaged' and 'ServiceManaged'. </param>
         /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
         internal DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo)

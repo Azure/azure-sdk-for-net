@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes how a MongoDB data migration should be performed. </summary>
     public partial class MongoDBMigrationSettings
     {
-        /// <summary> Initializes a new instance of MongoDBMigrationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBMigrationSettings"/>. </summary>
         /// <param name="databases"> The databases on the source cluster to migrate to the target. The keys are the names of the databases. </param>
         /// <param name="source"> Settings used to connect to the source cluster. </param>
         /// <param name="target"> Settings used to connect to the target cluster. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Target = target;
         }
 
-        /// <summary> Initializes a new instance of MongoDBMigrationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBMigrationSettings"/>. </summary>
         /// <param name="boostRUs"> The RU limit on a CosmosDB target that collections will be temporarily increased to (if lower) during the initial copy of a migration, from 10,000 to 1,000,000, or 0 to use the default boost (which is generally the maximum), or null to not boost the RUs. This setting has no effect on non-CosmosDB targets. </param>
         /// <param name="databases"> The databases on the source cluster to migrate to the target. The keys are the names of the databases. </param>
         /// <param name="replication"> Describes how changes will be replicated from the source to the target. The default is OneTime. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Detailed status of current migration. </summary>
     public partial class MigrationStatusDetails
     {
-        /// <summary> Initializes a new instance of MigrationStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationStatusDetails"/>. </summary>
         internal MigrationStatusDetails()
         {
             ActiveBackupSets = new ChangeTrackingList<SqlBackupSetInfo>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             FileUploadBlockingErrors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrationStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="fullBackupSetInfo"> Details of full backup set. </param>
         /// <param name="lastRestoredBackupSetInfo"> Last applied backup set information. </param>

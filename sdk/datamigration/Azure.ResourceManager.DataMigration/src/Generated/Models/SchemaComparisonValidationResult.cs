@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Results for schema comparison between the source and target. </summary>
     public partial class SchemaComparisonValidationResult
     {
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResult"/>. </summary>
         internal SchemaComparisonValidationResult()
         {
             SourceDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
             TargetDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
         }
 
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResult"/>. </summary>
         /// <param name="schemaDifferences"> List of schema differences between the source and target databases. </param>
         /// <param name="validationErrors"> List of errors that happened while performing schema compare validation. </param>
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>

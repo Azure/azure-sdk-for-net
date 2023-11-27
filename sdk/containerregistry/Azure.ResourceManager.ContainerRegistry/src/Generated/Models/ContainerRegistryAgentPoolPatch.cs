@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating an agent pool. </summary>
     public partial class ContainerRegistryAgentPoolPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolPatch"/>. </summary>
         public ContainerRegistryAgentPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

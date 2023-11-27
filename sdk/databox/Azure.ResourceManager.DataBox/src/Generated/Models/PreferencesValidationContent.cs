@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request to validate preference of transport and data center. </summary>
     public partial class PreferencesValidationContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of PreferencesValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationContent"/>. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         public PreferencesValidationContent(DataBoxSkuName deviceType)
         {
