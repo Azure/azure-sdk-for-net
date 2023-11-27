@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform import operation for existing database. </summary>
     public partial class ImportExistingDatabaseDefinition
     {
-        /// <summary> Initializes a new instance of ImportExistingDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportExistingDatabaseDefinition"/>. </summary>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>

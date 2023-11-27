@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of a connected resource. </summary>
     public partial class ConnectedResourceInfo
     {
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         internal ConnectedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
         /// <param name="tcpPorts"> The allowed tcp ports. </param>
         /// <param name="udpPorts"> The allowed udp ports. </param>

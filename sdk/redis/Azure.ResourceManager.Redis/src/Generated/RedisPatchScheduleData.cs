@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisPatchScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisPatchScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleData"/>. </summary>
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleEntries"/> is null. </exception>
         public RedisPatchScheduleData(IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis
             ScheduleEntries = scheduleEntries.ToList();
         }
 
-        /// <summary> Initializes a new instance of RedisPatchScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

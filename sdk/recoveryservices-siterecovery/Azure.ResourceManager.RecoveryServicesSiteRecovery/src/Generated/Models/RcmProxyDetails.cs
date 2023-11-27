@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> RCM proxy details. </summary>
     public partial class RcmProxyDetails
     {
-        /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RcmProxyDetails"/>. </summary>
         internal RcmProxyDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RcmProxyDetails"/>. </summary>
         /// <param name="id"> The RCM proxy Id. </param>
         /// <param name="name"> The RCM proxy name. </param>
         /// <param name="biosId"> The RCM proxy Bios Id. </param>

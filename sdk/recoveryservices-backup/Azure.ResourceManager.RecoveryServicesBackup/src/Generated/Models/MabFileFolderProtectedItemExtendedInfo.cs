@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on the backed up item. </summary>
     public partial class MabFileFolderProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of MabFileFolderProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItemExtendedInfo"/>. </summary>
         public MabFileFolderProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MabFileFolderProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItemExtendedInfo"/>. </summary>
         /// <param name="lastRefreshedOn"> Last time when the agent data synced to service. </param>
         /// <param name="oldestRecoverOn"> The oldest backup copy available. </param>
         /// <param name="recoveryPointCount"> Number of backup copies associated with the backup item. </param>

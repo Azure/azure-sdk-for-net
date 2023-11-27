@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Base class to define the health summary of the resources contained under an Arm resource. </summary>
     public partial class ResourceHealthSummary
     {
-        /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthSummary"/>. </summary>
         internal ResourceHealthSummary()
         {
             Issues = new ChangeTrackingList<HealthErrorSummary>();
             CategorizedResourceCounts = new ChangeTrackingDictionary<string, int>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthSummary"/>. </summary>
         /// <param name="resourceCount"> The count of total resources under the container. </param>
         /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
         /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Specifies which Redis node(s) to reboot. </summary>
     public partial class RedisRebootContent
     {
-        /// <summary> Initializes a new instance of RedisRebootContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisRebootContent"/>. </summary>
         public RedisRebootContent()
         {
             Ports = new ChangeTrackingList<int>();

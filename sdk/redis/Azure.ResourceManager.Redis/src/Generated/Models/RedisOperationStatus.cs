@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Asynchronous operation status. </summary>
     public partial class RedisOperationStatus : OperationStatusResult
     {
-        /// <summary> Initializes a new instance of RedisOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal RedisOperationStatus(string status) : base(status)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RedisOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>

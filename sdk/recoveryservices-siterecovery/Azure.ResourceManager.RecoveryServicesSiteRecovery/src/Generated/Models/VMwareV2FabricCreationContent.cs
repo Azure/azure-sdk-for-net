@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareV2 fabric provider specific settings. </summary>
     public partial class VMwareV2FabricCreationContent : FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of VMwareV2FabricCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/>. </summary>
         /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareV2FabricCreationContent(ResourceIdentifier migrationSolutionId)

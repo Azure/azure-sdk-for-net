@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of the Failover Process Server request. </summary>
     public partial class FailoverProcessServerProperties
     {
-        /// <summary> Initializes a new instance of FailoverProcessServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerProperties"/>. </summary>
         public FailoverProcessServerProperties()
         {
             VmsToMigrate = new ChangeTrackingList<string>();

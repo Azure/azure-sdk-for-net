@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> The response of the list WCF relay operation. </summary>
     internal partial class WcfRelaysListResult
     {
-        /// <summary> Initializes a new instance of WcfRelaysListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelaysListResult"/>. </summary>
         internal WcfRelaysListResult()
         {
             Value = new ChangeTrackingList<WcfRelayData>();
         }
 
-        /// <summary> Initializes a new instance of WcfRelaysListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelaysListResult"/>. </summary>
         /// <param name="value"> Result of the list WCF relay operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of WCF relays. </param>
         internal WcfRelaysListResult(IReadOnlyList<WcfRelayData> value, string nextLink)

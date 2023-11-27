@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains a batch of document write actions to send to the index. </summary>
     internal partial class IndexBatch
     {
-        /// <summary> Initializes a new instance of IndexBatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public IndexBatch(IEnumerable<IndexAction> actions)

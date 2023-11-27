@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Partner server information for the failover group. </summary>
     public partial class PartnerServerInfo
     {
-        /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerServerInfo"/>. </summary>
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PartnerServerInfo(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerServerInfo"/>. </summary>
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <param name="location"> Geo location of the partner server. </param>
         /// <param name="replicationRole"> Replication role of the partner server. </param>

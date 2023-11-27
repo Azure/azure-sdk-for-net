@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDatabaseReplicationLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
         public SqlServerDatabaseReplicationLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

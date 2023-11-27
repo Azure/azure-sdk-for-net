@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Only for AutomatedStep type. </summary>
     public partial class AutomatedCheckResult
     {
-        /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
         internal AutomatedCheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
         /// <param name="result"> Insight Article Content. </param>
         /// <param name="resultType"> Type of Result. </param>
         internal AutomatedCheckResult(string result, AutomatedCheckResultType? resultType)

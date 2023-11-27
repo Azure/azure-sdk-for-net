@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Projection definition for what data to store in Azure Blob. </summary>
     public partial class KnowledgeStoreObjectProjectionSelector : KnowledgeStoreStorageProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreObjectProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreObjectProjectionSelector"/>. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreObjectProjectionSelector(string storageContainer) : base(storageContainer)
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(storageContainer, nameof(storageContainer));
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreObjectProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreObjectProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ClaimSphereDevicesContent
     {
-        /// <summary> Initializes a new instance of ClaimSphereDevicesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
         /// <param name="deviceIdentifiers">
         /// Device identifiers of the devices to be claimed.
         /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers

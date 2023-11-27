@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Migration item recovery point properties. </summary>
     public partial class MigrationRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationRecoveryPointProperties"/>. </summary>
         internal MigrationRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         internal MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn, MigrationRecoveryPointType? recoveryPointType)

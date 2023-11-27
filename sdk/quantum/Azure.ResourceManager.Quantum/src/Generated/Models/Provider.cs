@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a Provider. A Provider is an entity that offers Targets to run Azure Quantum Jobs. </summary>
     public partial class Provider
     {
-        /// <summary> Initializes a new instance of Provider. </summary>
+        /// <summary> Initializes a new instance of <see cref="Provider"/>. </summary>
         public Provider()
         {
         }
 
-        /// <summary> Initializes a new instance of Provider. </summary>
+        /// <summary> Initializes a new instance of <see cref="Provider"/>. </summary>
         /// <param name="providerId"> Unique id of this provider. </param>
         /// <param name="providerSku"> The sku associated with pricing information for this provider. </param>
         /// <param name="instanceUri"> A Uri identifying the specific instance of this provider. </param>

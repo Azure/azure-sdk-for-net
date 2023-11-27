@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The details of a management group used during creation. </summary>
     public partial class CreateManagementGroupDetails
     {
-        /// <summary> Initializes a new instance of CreateManagementGroupDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateManagementGroupDetails"/>. </summary>
         public CreateManagementGroupDetails()
         {
         }

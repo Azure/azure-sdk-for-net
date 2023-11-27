@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Parameters for Node type action. If nodes are not specified on the parameters, the operation will be performed in all nodes of the node type one upgrade domain at a time. </summary>
     public partial class NodeTypeActionContent
     {
-        /// <summary> Initializes a new instance of NodeTypeActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeActionContent"/>. </summary>
         public NodeTypeActionContent()
         {
             Nodes = new ChangeTrackingList<string>();

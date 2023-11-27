@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The resource storage details. </summary>
     public partial class BackupResourceConfigProperties
     {
-        /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceConfigProperties"/>. </summary>
         public BackupResourceConfigProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceConfigProperties"/>. </summary>
         /// <param name="storageModelType"> Storage type. </param>
         /// <param name="storageType"> Storage type. </param>
         /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>

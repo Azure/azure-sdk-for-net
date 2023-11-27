@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Parameter group. </summary>
     public partial class SearchManagementRequestOptions
     {
-        /// <summary> Initializes a new instance of SearchManagementRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
         public SearchManagementRequestOptions()
         {
         }

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific settings. </summary>
     public partial class A2ACrossClusterMigrationReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationReplicationDetails"/>. </summary>
         internal A2ACrossClusterMigrationReplicationDetails()
         {
             InstanceType = "A2ACrossClusterMigration";
         }
 
-        /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Org onboarding info. </summary>
     public partial class AzureDevOpsOrgMetadata
     {
-        /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgMetadata"/>. </summary>
         public AzureDevOpsOrgMetadata()
         {
             Projects = new ChangeTrackingList<AzureDevOpsProjectMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgMetadata"/>. </summary>
         /// <param name="name"> Gets or sets name of the AzureDevOps Org. </param>
         /// <param name="autoDiscovery"></param>
         /// <param name="projects"></param>

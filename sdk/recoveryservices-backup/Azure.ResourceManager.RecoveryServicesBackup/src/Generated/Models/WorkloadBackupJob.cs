@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific job. </summary>
     public partial class WorkloadBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of WorkloadBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJob"/>. </summary>
         public WorkloadBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "AzureWorkloadJob";
         }
 
-        /// <summary> Initializes a new instance of WorkloadBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input for add disk(s) operation. </summary>
     public partial class SiteRecoveryAddDisksContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAddDisksContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddDisksContent"/>. </summary>
         public SiteRecoveryAddDisksContent()
         {
         }
