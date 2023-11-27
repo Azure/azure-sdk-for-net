@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ContainerizedNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionTemplate"/>. </summary>
         protected ContainerizedNetworkFunctionTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
         internal ContainerizedNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType)
         {

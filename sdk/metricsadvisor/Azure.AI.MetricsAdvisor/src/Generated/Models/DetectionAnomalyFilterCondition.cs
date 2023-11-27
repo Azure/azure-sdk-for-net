@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionAnomalyFilterCondition. </summary>
     internal partial class DetectionAnomalyFilterCondition
     {
-        /// <summary> Initializes a new instance of DetectionAnomalyFilterCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyFilterCondition"/>. </summary>
         public DetectionAnomalyFilterCondition()
         {
             DimensionFilter = new ChangeTrackingList<DimensionKey>();

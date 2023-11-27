@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class PendingUploadCredentialDto
     {
-        /// <summary> Initializes a new instance of PendingUploadCredentialDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadCredentialDto"/>. </summary>
         protected PendingUploadCredentialDto()
         {
         }
 
-        /// <summary> Initializes a new instance of PendingUploadCredentialDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadCredentialDto"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
         internal PendingUploadCredentialDto(PendingUploadCredentialType credentialType)
         {

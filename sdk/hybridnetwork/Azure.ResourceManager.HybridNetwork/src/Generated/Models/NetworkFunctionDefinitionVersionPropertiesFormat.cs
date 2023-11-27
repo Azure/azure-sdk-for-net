@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NetworkFunctionDefinitionVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
         protected NetworkFunctionDefinitionVersionPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>

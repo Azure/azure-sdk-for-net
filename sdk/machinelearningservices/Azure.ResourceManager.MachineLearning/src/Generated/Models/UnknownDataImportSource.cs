@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownDataImportSource. </summary>
     internal partial class UnknownDataImportSource : DataImportSource
     {
-        /// <summary> Initializes a new instance of UnknownDataImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataImportSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
         internal UnknownDataImportSource(string connection, DataImportSourceType sourceType) : base(connection, sourceType)

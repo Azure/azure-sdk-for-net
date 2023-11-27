@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact store properties. </summary>
     public partial class ArtifactStorePropertiesFormat
     {
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         public ArtifactStorePropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
         /// <param name="replicationStrategy"> The replication strategy. </param>

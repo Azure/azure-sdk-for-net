@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownBaseEnvironmentSource. </summary>
     internal partial class UnknownBaseEnvironmentSource : BaseEnvironmentSource
     {
-        /// <summary> Initializes a new instance of UnknownBaseEnvironmentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseEnvironmentSource"/>. </summary>
         /// <param name="baseEnvironmentSourceType"> [Required] Base environment type. </param>
         internal UnknownBaseEnvironmentSource(BaseEnvironmentSourceType baseEnvironmentSourceType) : base(baseEnvironmentSourceType)
         {

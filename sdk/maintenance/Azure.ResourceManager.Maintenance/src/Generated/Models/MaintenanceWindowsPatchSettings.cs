@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Input properties for patching a Windows machine. </summary>
     public partial class MaintenanceWindowsPatchSettings
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsPatchSettings"/>. </summary>
         public MaintenanceWindowsPatchSettings()
         {
             KbNumbersToExclude = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             ClassificationsToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsPatchSettings"/>. </summary>
         /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
         /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
         /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>

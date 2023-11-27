@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model performance signal definition. </summary>
     public partial class ModelPerformanceSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of ModelPerformanceSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceSignal"/>. </summary>
         /// <param name="metricThreshold">
         /// [Required] A list of metrics to calculate and their associated thresholds.
         /// Please note <see cref="ModelPerformanceMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.ModelPerformance;
         }
 
-        /// <summary> Initializes a new instance of ModelPerformanceSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

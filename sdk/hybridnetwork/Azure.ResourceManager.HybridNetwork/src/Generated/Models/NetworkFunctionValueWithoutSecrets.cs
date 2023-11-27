@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> NetworkFunction with no secrets. </summary>
     public partial class NetworkFunctionValueWithoutSecrets : NetworkFunctionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionValueWithoutSecrets"/>. </summary>
         public NetworkFunctionValueWithoutSecrets()
         {
             ConfigurationType = NetworkFunctionConfigurationType.Open;
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionValueWithoutSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

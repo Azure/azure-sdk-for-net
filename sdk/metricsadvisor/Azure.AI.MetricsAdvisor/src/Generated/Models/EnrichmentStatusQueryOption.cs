@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EnrichmentStatusQueryOption. </summary>
     internal partial class EnrichmentStatusQueryOption
     {
-        /// <summary> Initializes a new instance of EnrichmentStatusQueryOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatusQueryOption"/>. </summary>
         /// <param name="startTime"> the start point of time range to query anomaly detection status. </param>
         /// <param name="endTime"> the end point of time range to query anomaly detection status. </param>
         public EnrichmentStatusQueryOption(DateTimeOffset startTime, DateTimeOffset endTime)

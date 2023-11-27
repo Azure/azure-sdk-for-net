@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The set trigger state action definition. </summary>
     public partial class LogicWorkflowTriggerStateActionContent
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerStateActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerStateActionContent"/>. </summary>
         /// <param name="source"> The source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public LogicWorkflowTriggerStateActionContent(LogicWorkflowTriggerReference source)

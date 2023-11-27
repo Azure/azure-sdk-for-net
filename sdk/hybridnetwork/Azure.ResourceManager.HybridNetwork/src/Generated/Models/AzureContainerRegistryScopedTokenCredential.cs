@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The azure container registry scoped token credential definition. </summary>
     public partial class AzureContainerRegistryScopedTokenCredential : ArtifactAccessCredential
     {
-        /// <summary> Initializes a new instance of AzureContainerRegistryScopedTokenCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
         internal AzureContainerRegistryScopedTokenCredential()
         {
             Repositories = new ChangeTrackingList<string>();
             CredentialType = CredentialType.AzureContainerRegistryScopedToken;
         }
 
-        /// <summary> Initializes a new instance of AzureContainerRegistryScopedTokenCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>

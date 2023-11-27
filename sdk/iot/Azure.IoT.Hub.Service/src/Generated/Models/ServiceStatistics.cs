@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ServiceStatistics. </summary>
     public partial class ServiceStatistics
     {
-        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceStatistics"/>. </summary>
         internal ServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceStatistics"/>. </summary>
         /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
         internal ServiceStatistics(long? connectedDeviceCount)
         {

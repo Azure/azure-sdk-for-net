@@ -14,7 +14,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A patient record, including their clinical information and data. </summary>
     public partial class PatientRecord
     {
-        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PatientRecord(string id)
@@ -25,7 +25,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Data = new ChangeTrackingList<PatientDocument>();
         }
 
-        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
         /// <param name="data"> Patient unstructured clinical data, given as documents. </param>

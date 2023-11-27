@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class InferencingServer
     {
-        /// <summary> Initializes a new instance of InferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferencingServer"/>. </summary>
         protected InferencingServer()
         {
         }
 
-        /// <summary> Initializes a new instance of InferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         internal InferencingServer(InferencingServerType serverType)
         {

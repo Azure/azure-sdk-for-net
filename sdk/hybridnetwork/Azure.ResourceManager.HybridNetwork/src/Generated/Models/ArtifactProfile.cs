@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact profile properties. </summary>
     public partial class ArtifactProfile
     {
-        /// <summary> Initializes a new instance of ArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         public ArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
         internal ArtifactProfile(WritableSubResource artifactStore)
         {

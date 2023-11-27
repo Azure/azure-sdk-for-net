@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricRoutePolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricId = networkFabricId;
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

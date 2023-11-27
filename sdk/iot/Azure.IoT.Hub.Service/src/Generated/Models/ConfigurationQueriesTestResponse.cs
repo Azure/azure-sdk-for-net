@@ -13,13 +13,13 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ConfigurationQueriesTestResponse. </summary>
     public partial class ConfigurationQueriesTestResponse
     {
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestResponse"/>. </summary>
         internal ConfigurationQueriesTestResponse()
         {
             CustomMetricQueryErrors = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestResponse"/>. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
         internal ConfigurationQueriesTestResponse(string targetConditionError, IReadOnlyDictionary<string, string> customMetricQueryErrors)

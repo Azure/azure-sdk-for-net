@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Body for a user invite request. </summary>
     public partial class LabUserInviteRequestContent
     {
-        /// <summary> Initializes a new instance of LabUserInviteRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserInviteRequestContent"/>. </summary>
         public LabUserInviteRequestContent()
         {
         }

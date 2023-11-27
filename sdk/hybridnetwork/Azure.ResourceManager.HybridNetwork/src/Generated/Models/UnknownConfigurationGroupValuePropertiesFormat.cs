@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The UnknownConfigurationGroupValuePropertiesFormat. </summary>
     internal partial class UnknownConfigurationGroupValuePropertiesFormat : ConfigurationGroupValuePropertiesFormat
     {
-        /// <summary> Initializes a new instance of UnknownConfigurationGroupValuePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConfigurationGroupValuePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

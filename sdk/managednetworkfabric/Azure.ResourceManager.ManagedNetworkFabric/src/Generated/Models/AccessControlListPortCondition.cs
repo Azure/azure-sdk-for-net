@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the port condition that needs to be matched. </summary>
     public partial class AccessControlListPortCondition : NetworkFabricPortCondition
     {
-        /// <summary> Initializes a new instance of AccessControlListPortCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListPortCondition"/>. </summary>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         public AccessControlListPortCondition(Layer4Protocol layer4Protocol) : base(layer4Protocol)
         {
             Flags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListPortCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListPortCondition"/>. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>

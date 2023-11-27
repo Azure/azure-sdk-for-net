@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A data connection check name availability request. </summary>
     public partial class KustoDataConnectionNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoDataConnectionNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoDataConnectionNameAvailabilityContent(string name)
