@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Active Directory settings used to join a cache to a domain. </summary>
     public partial class StorageCacheActiveDirectorySettings
     {
-        /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettings"/>. </summary>
         /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
         /// <param name="domainNetBiosName"> The Active Directory domain's NetBIOS name. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             CacheNetBiosName = cacheNetBiosName;
         }
 
-        /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettings"/>. </summary>
         /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Describes scaling information of a sku. </summary>
     public partial class WebPubSubSkuCapacity
     {
-        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSkuCapacity"/>. </summary>
         internal WebPubSubSkuCapacity()
         {
             AllowedValues = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSkuCapacity"/>. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>

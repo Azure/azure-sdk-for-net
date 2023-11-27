@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Key information. </summary>
     internal partial class KeyInfo
     {
-        /// <summary> Initializes a new instance of KeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
         public KeyInfo(string expiry)

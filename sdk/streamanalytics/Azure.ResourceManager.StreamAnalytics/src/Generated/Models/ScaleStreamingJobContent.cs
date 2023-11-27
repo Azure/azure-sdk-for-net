@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Parameters supplied to the Scale Streaming Job operation. </summary>
     public partial class ScaleStreamingJobContent
     {
-        /// <summary> Initializes a new instance of ScaleStreamingJobContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleStreamingJobContent"/>. </summary>
         public ScaleStreamingJobContent()
         {
         }

@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> Base type for List return in our api. </summary>
     internal partial class SupportedFileFormats
     {
-        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
         internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value)
         {

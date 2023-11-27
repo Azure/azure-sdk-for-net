@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List of encryption scopes requested, and if paging is required, a URL to the next page of encryption scopes. </summary>
     internal partial class EncryptionScopeListResult
     {
-        /// <summary> Initializes a new instance of EncryptionScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
         internal EncryptionScopeListResult()
         {
             Value = new ChangeTrackingList<EncryptionScopeData>();
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
         /// <param name="value"> List of encryption scopes requested. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of encryption scopes. Returned when total number of requested encryption scopes exceeds the maximum page size. </param>
         internal EncryptionScopeListResult(IReadOnlyList<EncryptionScopeData> value, string nextLink)

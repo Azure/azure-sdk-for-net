@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The LanguageInput. </summary>
     internal partial class LanguageInput
     {
-        /// <summary> Initializes a new instance of LanguageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageInput"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="text"></param>
         public LanguageInput(string id, string text)
