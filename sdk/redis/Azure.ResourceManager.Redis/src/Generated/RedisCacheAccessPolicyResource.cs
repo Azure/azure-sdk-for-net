@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// A Class representing a RedisCacheAccessPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RedisCacheAccessPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRedisCacheAccessPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisResource" /> using the GetRedisCacheAccessPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisCacheAccessPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRedisCacheAccessPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisCacheAccessPolicy method.
     /// </summary>
     public partial class RedisCacheAccessPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RedisCacheAccessPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cacheName"> The cacheName. </param>
+        /// <param name="accessPolicyName"> The accessPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicies/{accessPolicyName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Redis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RedisCacheAccessPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisCacheAccessPolicyResource(ArmClient client, RedisCacheAccessPolicyData data) : this(client, data.Id)

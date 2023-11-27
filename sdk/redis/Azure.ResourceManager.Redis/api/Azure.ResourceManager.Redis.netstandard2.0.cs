@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>> GetAsync(string accessPolicyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource> GetIfExists(string accessPolicyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>> GetIfExistsAsync(string accessPolicyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -48,6 +50,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource>> GetAsync(string accessPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource> GetIfExists(string accessPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource>> GetIfExistsAsync(string accessPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -355,6 +359,8 @@ namespace Azure.ResourceManager.Redis.Mocking
     public partial class MockableRedisArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableRedisArmClient() { }
+        public virtual Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource GetRedisCacheAccessPolicyAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Redis.RedisCacheAccessPolicyResource GetRedisCacheAccessPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Redis.RedisFirewallRuleResource GetRedisFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Redis.RedisPatchScheduleResource GetRedisPatchScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }

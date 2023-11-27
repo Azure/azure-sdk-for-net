@@ -95,5 +95,29 @@ namespace Azure.ResourceManager.Redis.Mocking
             RedisPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new RedisPrivateEndpointConnectionResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisCacheAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisCacheAccessPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RedisCacheAccessPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisCacheAccessPolicyResource"/> object. </returns>
+        public virtual RedisCacheAccessPolicyResource GetRedisCacheAccessPolicyResource(ResourceIdentifier id)
+        {
+            RedisCacheAccessPolicyResource.ValidateResourceId(id);
+            return new RedisCacheAccessPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisCacheAccessPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisCacheAccessPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RedisCacheAccessPolicyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisCacheAccessPolicyAssignmentResource"/> object. </returns>
+        public virtual RedisCacheAccessPolicyAssignmentResource GetRedisCacheAccessPolicyAssignmentResource(ResourceIdentifier id)
+        {
+            RedisCacheAccessPolicyAssignmentResource.ValidateResourceId(id);
+            return new RedisCacheAccessPolicyAssignmentResource(Client, id);
+        }
     }
 }

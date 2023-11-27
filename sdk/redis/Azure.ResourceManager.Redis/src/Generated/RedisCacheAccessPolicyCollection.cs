@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Redis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisCacheAccessPolicyResource" /> and their operations.
-    /// Each <see cref="RedisCacheAccessPolicyResource" /> in the collection will belong to the same instance of <see cref="RedisResource" />.
-    /// To get a <see cref="RedisCacheAccessPolicyCollection" /> instance call the GetRedisCacheAccessPolicies method from an instance of <see cref="RedisResource" />.
+    /// A class representing a collection of <see cref="RedisCacheAccessPolicyResource"/> and their operations.
+    /// Each <see cref="RedisCacheAccessPolicyResource"/> in the collection will belong to the same instance of <see cref="RedisResource"/>.
+    /// To get a <see cref="RedisCacheAccessPolicyCollection"/> instance call the GetRedisCacheAccessPolicies method from an instance of <see cref="RedisResource"/>.
     /// </summary>
     public partial class RedisCacheAccessPolicyCollection : ArmCollection, IEnumerable<RedisCacheAccessPolicyResource>, IAsyncEnumerable<RedisCacheAccessPolicyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisCacheAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisCacheAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisCacheAccessPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisCacheAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisCacheAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisCacheAccessPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Redis
             {
                 var response = _redisCacheAccessPolicyAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicies/{accessPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessPolicy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessPolicyName"> The name of the access policy that is being added to the Redis cache. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RedisCacheAccessPolicyResource>> GetIfExistsAsync(string accessPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+
+            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _redisCacheAccessPolicyAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RedisCacheAccessPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicies/{accessPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessPolicy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessPolicyName"> The name of the access policy that is being added to the Redis cache. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
+        public virtual NullableResponse<RedisCacheAccessPolicyResource> GetIfExists(string accessPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+
+            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _redisCacheAccessPolicyAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RedisCacheAccessPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
