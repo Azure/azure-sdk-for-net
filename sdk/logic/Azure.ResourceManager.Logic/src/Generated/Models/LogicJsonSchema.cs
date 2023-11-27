@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The JSON schema. </summary>
     public partial class LogicJsonSchema
     {
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         internal LogicJsonSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
         internal LogicJsonSchema(string title, BinaryData content)

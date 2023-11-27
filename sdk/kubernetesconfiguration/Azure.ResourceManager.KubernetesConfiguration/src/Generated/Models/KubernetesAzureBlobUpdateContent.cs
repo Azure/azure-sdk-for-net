@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
     public partial class KubernetesAzureBlobUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesAzureBlobUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobUpdateContent"/>. </summary>
         public KubernetesAzureBlobUpdateContent()
         {
         }

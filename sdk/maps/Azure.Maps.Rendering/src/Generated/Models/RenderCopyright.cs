@@ -13,7 +13,7 @@ namespace Azure.Maps.Rendering
     /// <summary> This object is returned from a successful copyright request. </summary>
     public partial class RenderCopyright
     {
-        /// <summary> Initializes a new instance of RenderCopyright. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenderCopyright"/>. </summary>
         internal RenderCopyright()
         {
             GeneralCopyrights = new ChangeTrackingList<string>();

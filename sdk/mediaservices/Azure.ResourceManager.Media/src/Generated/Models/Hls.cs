@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> HTTP Live Streaming (HLS) packing setting for the live output. </summary>
     internal partial class Hls
     {
-        /// <summary> Initializes a new instance of Hls. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hls"/>. </summary>
         public Hls()
         {
         }
 
-        /// <summary> Initializes a new instance of Hls. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hls"/>. </summary>
         /// <param name="fragmentsPerTsSegment"> The number of fragments in an HTTP Live Streaming (HLS) TS segment in the output of the live event. This value does not affect the packing ratio for HLS CMAF output. </param>
         internal Hls(int? fragmentsPerTsSegment)
         {

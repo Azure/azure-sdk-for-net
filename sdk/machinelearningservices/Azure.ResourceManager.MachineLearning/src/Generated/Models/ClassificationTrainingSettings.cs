@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Classification Training related configuration. </summary>
     public partial class ClassificationTrainingSettings : MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationTrainingSettings"/>. </summary>
         public ClassificationTrainingSettings()
         {
             AllowedTrainingAlgorithms = new ChangeTrackingList<ClassificationModel>();
             BlockedTrainingAlgorithms = new ChangeTrackingList<ClassificationModel>();
         }
 
-        /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>

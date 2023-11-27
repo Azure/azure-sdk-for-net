@@ -10,7 +10,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> This type represents the request body for the Search Inside Geometry service. </summary>
     internal partial class SearchInsideGeometryRequest
     {
-        /// <summary> Initializes a new instance of SearchInsideGeometryRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchInsideGeometryRequest"/>. </summary>
         public SearchInsideGeometryRequest()
         {
         }

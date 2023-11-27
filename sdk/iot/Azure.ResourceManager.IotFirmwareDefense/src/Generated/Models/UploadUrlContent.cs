@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Properties for generating an upload URL. </summary>
     public partial class UploadUrlContent
     {
-        /// <summary> Initializes a new instance of UploadUrlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadUrlContent"/>. </summary>
         public UploadUrlContent()
         {
         }

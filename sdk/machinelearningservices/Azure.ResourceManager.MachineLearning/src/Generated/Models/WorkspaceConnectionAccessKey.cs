@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionAccessKey. </summary>
     public partial class WorkspaceConnectionAccessKey
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionAccessKey"/>. </summary>
         public WorkspaceConnectionAccessKey()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionAccessKey"/>. </summary>
         /// <param name="accessKeyId"></param>
         /// <param name="secretAccessKey"></param>
         internal WorkspaceConnectionAccessKey(string accessKeyId, string secretAccessKey)

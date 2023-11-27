@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
     public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricL3IsolationDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         public NetworkFabricL3IsolationDomainPatch()
         {
         }

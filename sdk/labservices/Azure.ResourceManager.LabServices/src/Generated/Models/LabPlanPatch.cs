@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Contains lab configuration and default settings. This variant is used for PATCH. </summary>
     public partial class LabPlanPatch : LabServicesPatchBaseInfo
     {
-        /// <summary> Initializes a new instance of LabPlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanPatch"/>. </summary>
         public LabPlanPatch()
         {
             AllowedRegions = new ChangeTrackingList<AzureLocation>();

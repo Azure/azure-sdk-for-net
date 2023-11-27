@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for patching a secret. </summary>
     public partial class KeyVaultSecretPatch
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretPatch"/>. </summary>
         public KeyVaultSecretPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

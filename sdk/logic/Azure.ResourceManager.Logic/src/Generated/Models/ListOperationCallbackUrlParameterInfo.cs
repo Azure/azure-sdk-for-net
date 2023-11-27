@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The callback url parameters. </summary>
     public partial class ListOperationCallbackUrlParameterInfo
     {
-        /// <summary> Initializes a new instance of ListOperationCallbackUrlParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
         public ListOperationCallbackUrlParameterInfo()
         {
         }

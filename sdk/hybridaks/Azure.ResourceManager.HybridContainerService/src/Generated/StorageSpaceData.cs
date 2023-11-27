@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class StorageSpaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageSpaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageSpaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

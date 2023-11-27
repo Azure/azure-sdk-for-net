@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputePrivateLinkScopeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridComputePrivateLinkScopeData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

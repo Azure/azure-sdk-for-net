@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricSeriesQueryOptions. </summary>
     internal partial class MetricSeriesQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricSeriesQueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
         /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
         public MetricSeriesQueryOptions(DateTimeOffset activeSince)
         {

@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SmartDetectionConditionPatch. </summary>
     internal partial class SmartDetectionConditionPatch
     {
-        /// <summary> Initializes a new instance of SmartDetectionConditionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionConditionPatch"/>. </summary>
         public SmartDetectionConditionPatch()
         {
         }

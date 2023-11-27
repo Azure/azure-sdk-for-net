@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
     public partial class WindowsParameters
     {
-        /// <summary> Initializes a new instance of WindowsParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsParameters"/>. </summary>
         public WindowsParameters()
         {
             ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationWindow>();

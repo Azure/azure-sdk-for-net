@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable batch inference settings per deployment. </summary>
     internal partial class PartialBatchDeployment
     {
-        /// <summary> Initializes a new instance of PartialBatchDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialBatchDeployment"/>. </summary>
         public PartialBatchDeployment()
         {
         }

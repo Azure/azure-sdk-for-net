@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Check quota availability response object. </summary>
     public partial class LoadTestingQuotaAvailabilityResult : ResourceData
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
         public LoadTestingQuotaAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

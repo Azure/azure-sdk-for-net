@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a database check name availability request. </summary>
     public partial class KustoDatabaseNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoDatabaseNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

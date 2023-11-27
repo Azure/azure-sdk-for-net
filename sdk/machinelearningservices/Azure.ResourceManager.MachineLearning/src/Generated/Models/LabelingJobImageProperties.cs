@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties of a labeling job for image data. </summary>
     public partial class LabelingJobImageProperties : LabelingJobMediaProperties
     {
-        /// <summary> Initializes a new instance of LabelingJobImageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobImageProperties"/>. </summary>
         public LabelingJobImageProperties()
         {
             MediaType = MediaType.Image;
         }
 
-        /// <summary> Initializes a new instance of LabelingJobImageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobImageProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
         /// <param name="annotationType"> Annotation type of image labeling job. </param>
         internal LabelingJobImageProperties(MediaType mediaType, ImageAnnotationType? annotationType) : base(mediaType)

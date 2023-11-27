@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureApplicationInsightsParameterPatch. </summary>
     internal partial class AzureApplicationInsightsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureApplicationInsightsParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsParameterPatch"/>. </summary>
         public AzureApplicationInsightsParameterPatch()
         {
         }
