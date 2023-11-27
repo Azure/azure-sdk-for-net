@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Parameters for PATCH operation on an operationalization cluster. </summary>
     public partial class OperationalizationClusterPatch
     {
-        /// <summary> Initializes a new instance of OperationalizationClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterPatch"/>. </summary>
         public OperationalizationClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

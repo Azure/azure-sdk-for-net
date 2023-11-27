@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public partial class AzureArcKubernetesNetworkFunctionApplication : NetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
         public AzureArcKubernetesNetworkFunctionApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies the live event type and optional encoding settings for encoding live events. </summary>
     public partial class LiveEventEncoding
     {
-        /// <summary> Initializes a new instance of LiveEventEncoding. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventEncoding"/>. </summary>
         public LiveEventEncoding()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventEncoding. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventEncoding"/>. </summary>
         /// <param name="encodingType"> Live event type. When encodingType is set to PassthroughBasic or PassthroughStandard, the service simply passes through the incoming video and audio layer(s) to the output. When encodingType is set to Standard or Premium1080p, a live encoder transcodes the incoming stream into multiple bitrates or layers. See https://go.microsoft.com/fwlink/?linkid=2095101 for more information. This property cannot be modified after the live event is created. </param>
         /// <param name="presetName"> The optional encoding preset name, used when encodingType is not None. This value is specified at creation time and cannot be updated. If the encodingType is set to Standard, then the default preset name is ‘Default720p’. Else if the encodingType is set to Premium1080p, the default preset is ‘Default1080p’. </param>
         /// <param name="stretchMode"> Specifies how the input video will be resized to fit the desired output resolution(s). Default is None. </param>

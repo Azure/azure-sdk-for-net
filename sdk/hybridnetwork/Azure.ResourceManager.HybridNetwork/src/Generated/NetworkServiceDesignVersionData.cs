@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkServiceDesignVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkServiceDesignVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

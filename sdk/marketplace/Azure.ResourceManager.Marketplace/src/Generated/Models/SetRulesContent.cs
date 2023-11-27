@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The SetRulesContent. </summary>
     public partial class SetRulesContent
     {
-        /// <summary> Initializes a new instance of SetRulesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetRulesContent"/>. </summary>
         public SetRulesContent()
         {
             Value = new ChangeTrackingList<MarketplaceRule>();

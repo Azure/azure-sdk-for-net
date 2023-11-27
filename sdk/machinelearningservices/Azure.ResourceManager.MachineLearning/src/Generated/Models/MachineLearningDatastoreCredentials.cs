@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         protected MachineLearningDatastoreCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal MachineLearningDatastoreCredentials(CredentialsType credentialsType)
         {

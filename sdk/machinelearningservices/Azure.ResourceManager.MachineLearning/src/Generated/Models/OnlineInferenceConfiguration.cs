@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Online inference configuration options. </summary>
     public partial class OnlineInferenceConfiguration
     {
-        /// <summary> Initializes a new instance of OnlineInferenceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineInferenceConfiguration"/>. </summary>
         public OnlineInferenceConfiguration()
         {
             Configurations = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of OnlineInferenceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineInferenceConfiguration"/>. </summary>
         /// <param name="configurations"> Additional configurations. </param>
         /// <param name="entryScript"> Entry script or command to invoke. </param>
         /// <param name="livenessRoute"> The route to check the liveness of the inference server container. </param>

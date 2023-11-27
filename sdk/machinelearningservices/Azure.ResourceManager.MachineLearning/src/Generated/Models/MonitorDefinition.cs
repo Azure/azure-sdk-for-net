@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MonitorDefinition. </summary>
     public partial class MonitorDefinition
     {
-        /// <summary> Initializes a new instance of MonitorDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDefinition"/>. </summary>
         /// <param name="computeConfiguration">
         /// [Required] The ARM resource ID of the compute resource to run the monitoring job on.
         /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Signals = signals;
         }
 
-        /// <summary> Initializes a new instance of MonitorDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDefinition"/>. </summary>
         /// <param name="alertNotificationSetting">
         /// The monitor's notification settings.
         /// Please note <see cref="MonitoringAlertNotificationSettingsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

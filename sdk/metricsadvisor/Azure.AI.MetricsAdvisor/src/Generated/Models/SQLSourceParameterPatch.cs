@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SQLSourceParameterPatch. </summary>
     internal partial class SQLSourceParameterPatch
     {
-        /// <summary> Initializes a new instance of SQLSourceParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SQLSourceParameterPatch"/>. </summary>
         public SQLSourceParameterPatch()
         {
         }

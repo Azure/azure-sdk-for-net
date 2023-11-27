@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing feature entity. </summary>
     public partial class MachineLearningFeatureStoreEntityContainerProperties : MachineLearningAssetContainer
     {
-        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityContainerProperties"/>. </summary>
         public MachineLearningFeatureStoreEntityContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

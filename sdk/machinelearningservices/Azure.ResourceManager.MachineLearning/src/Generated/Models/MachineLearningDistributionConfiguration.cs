@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDistributionConfiguration"/>. </summary>
         protected MachineLearningDistributionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         internal MachineLearningDistributionConfiguration(DistributionType distributionType)
         {

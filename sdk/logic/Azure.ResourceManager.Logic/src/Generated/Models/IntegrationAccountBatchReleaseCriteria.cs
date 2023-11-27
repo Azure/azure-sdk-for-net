@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The batch release criteria. </summary>
     public partial class IntegrationAccountBatchReleaseCriteria
     {
-        /// <summary> Initializes a new instance of IntegrationAccountBatchReleaseCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchReleaseCriteria"/>. </summary>
         public IntegrationAccountBatchReleaseCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountBatchReleaseCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchReleaseCriteria"/>. </summary>
         /// <param name="messageCount"> The message count. </param>
         /// <param name="batchSize"> The batch size in bytes. </param>
         /// <param name="recurrence"> The recurrence. </param>

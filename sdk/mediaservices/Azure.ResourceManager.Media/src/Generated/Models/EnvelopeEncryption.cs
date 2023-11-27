@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for EnvelopeEncryption encryption scheme. </summary>
     public partial class EnvelopeEncryption
     {
-        /// <summary> Initializes a new instance of EnvelopeEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvelopeEncryption"/>. </summary>
         public EnvelopeEncryption()
         {
             ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of EnvelopeEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvelopeEncryption"/>. </summary>
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
         /// <param name="clearTracks"> Representing which tracks should not be encrypted. </param>
         /// <param name="contentKeys"> Representing default content key for each encryption scheme and separate content keys for specific tracks. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The connection state. </summary>
     public partial class RegistryPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         public RegistryPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>

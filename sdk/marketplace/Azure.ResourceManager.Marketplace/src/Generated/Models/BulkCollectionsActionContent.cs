@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Bulk collections action properties. </summary>
     public partial class BulkCollectionsActionContent
     {
-        /// <summary> Initializes a new instance of BulkCollectionsActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
         public BulkCollectionsActionContent()
         {
             CollectionIds = new ChangeTrackingList<Guid>();

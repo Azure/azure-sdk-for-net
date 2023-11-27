@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The RootCause. </summary>
     public partial class IncidentRootCause
     {
-        /// <summary> Initializes a new instance of IncidentRootCause. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/>. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of IncidentRootCause. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/>. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>

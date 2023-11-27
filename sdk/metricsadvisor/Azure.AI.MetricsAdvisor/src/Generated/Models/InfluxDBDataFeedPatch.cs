@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The InfluxDBDataFeedPatch. </summary>
     internal partial class InfluxDBDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of InfluxDBDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfluxDBDataFeedPatch"/>. </summary>
         public InfluxDBDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.InfluxDb;

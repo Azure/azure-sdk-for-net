@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningAssistConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAssistConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistConfiguration"/>. </summary>
         protected MachineLearningAssistConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssistConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistConfiguration"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
         internal MachineLearningAssistConfiguration(MLAssistConfigurationType mlAssist)
         {

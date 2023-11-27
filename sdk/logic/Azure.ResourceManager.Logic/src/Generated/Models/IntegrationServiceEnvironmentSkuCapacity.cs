@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration service environment sku capacity. </summary>
     public partial class IntegrationServiceEnvironmentSkuCapacity
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
         internal IntegrationServiceEnvironmentSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
