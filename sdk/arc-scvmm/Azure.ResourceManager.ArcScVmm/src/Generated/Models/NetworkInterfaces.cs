@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Network Interface model. </summary>
     public partial class NetworkInterfaces
     {
-        /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaces"/>. </summary>
         public NetworkInterfaces()
         {
             IPv4Addresses = new ChangeTrackingList<string>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaces"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
         /// <param name="ipv4Addresses"> Gets or sets the nic ipv4 addresses. </param>

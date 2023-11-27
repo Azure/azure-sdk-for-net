@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update configuration operation. </summary>
     public partial class DscConfigurationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DscConfigurationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationCreateOrUpdateContent"/>. </summary>
         /// <param name="source"> Gets or sets the source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public DscConfigurationCreateOrUpdateContent(AutomationContentSource source)

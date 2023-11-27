@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Site information for WebChat or DirectLine Channels to identify which site to regenerate keys for. </summary>
     public partial class BotChannelRegenerateKeysContent
     {
-        /// <summary> Initializes a new instance of BotChannelRegenerateKeysContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelRegenerateKeysContent"/>. </summary>
         /// <param name="siteName"> The site name. </param>
         /// <param name="key"> Determines which key is to be regenerated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>

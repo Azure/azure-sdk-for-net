@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin properties needed for origin update. </summary>
     public partial class FrontDoorOriginPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginPatch"/>. </summary>
         public FrontDoorOriginPatch()
         {
         }

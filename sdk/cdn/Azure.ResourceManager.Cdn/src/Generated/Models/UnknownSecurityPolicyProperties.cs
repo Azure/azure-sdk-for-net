@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The UnknownSecurityPolicyProperties. </summary>
     internal partial class UnknownSecurityPolicyProperties : SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of UnknownSecurityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType) : base(policyType)
         {

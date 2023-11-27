@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Credentials to connect to VMMServer. </summary>
     public partial class VmmServerPropertiesCredentials
     {
-        /// <summary> Initializes a new instance of VmmServerPropertiesCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerPropertiesCredentials"/>. </summary>
         public VmmServerPropertiesCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of VmmServerPropertiesCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerPropertiesCredentials"/>. </summary>
         /// <param name="username"> Username to use to connect to VMMServer. </param>
         /// <param name="password"> Credentials to use to connect to VMMServer. </param>
         internal VmmServerPropertiesCredentials(string username, string password)

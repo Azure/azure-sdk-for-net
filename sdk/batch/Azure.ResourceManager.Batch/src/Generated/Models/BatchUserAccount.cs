@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Properties used to create a user on an Azure Batch node. </summary>
     public partial class BatchUserAccount
     {
-        /// <summary> Initializes a new instance of BatchUserAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchUserAccount"/>. </summary>
         /// <param name="name"> The name of the user account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of BatchUserAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchUserAccount"/>. </summary>
         /// <param name="name"> The name of the user account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user account. </param>
         /// <param name="elevationLevel"> nonAdmin - The auto user is a standard user without elevated access. admin - The auto user is a user with elevated access and operates with full Administrator permissions. The default value is nonAdmin. </param>

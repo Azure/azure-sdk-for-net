@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class DenyAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of DenyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
         internal DenyAssignmentData()
         {
             Permissions = new ChangeTrackingList<DenyAssignmentPermission>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization
             ExcludePrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

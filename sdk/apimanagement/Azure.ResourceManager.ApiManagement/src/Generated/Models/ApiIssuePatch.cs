@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Issue update Parameters. </summary>
     public partial class ApiIssuePatch
     {
-        /// <summary> Initializes a new instance of ApiIssuePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiIssuePatch"/>. </summary>
         public ApiIssuePatch()
         {
         }

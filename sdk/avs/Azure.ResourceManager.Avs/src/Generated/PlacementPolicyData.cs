@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class PlacementPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PlacementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyData"/>. </summary>
         public PlacementPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

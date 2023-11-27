@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Analysis.AnalysisServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisServerData(id, name, resourceType, systemData, tags, location, asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList()) : null, backupBlobContainerUri, gatewayDetails, iPv4FirewallSettings, queryPoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServerSku, analysisSku);
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalysisGatewayDetails"/>. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
         /// <param name="dmtsClusterUri"> Uri of the DMTS cluster. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri);
         }
 
-        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalysisExistingSku"/>. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.AnalysisExistingSku"/> instance for mocking. </returns>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisExistingSku(sku, resourceType);
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalysisGatewayStatus"/>. </summary>
         /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
         /// <returns> A new <see cref="Models.AnalysisGatewayStatus"/> instance for mocking. </returns>
         public static AnalysisGatewayStatus AnalysisGatewayStatus(AnalysisStatus? status = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisGatewayStatus(status);
         }
 
-        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalysisServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicator of available of the server name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>

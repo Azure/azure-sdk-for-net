@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update automation account operation. </summary>
     public partial class AutomationAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountCreateOrUpdateContent"/>. </summary>
         public AutomationAccountCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

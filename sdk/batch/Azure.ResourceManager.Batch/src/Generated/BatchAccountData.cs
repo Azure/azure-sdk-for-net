@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
         public BatchAccountData()
         {
             PrivateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Web Chat channel definition. </summary>
     public partial class WebChatChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of WebChatChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatChannel"/>. </summary>
         public WebChatChannel()
         {
             ChannelName = "WebChatChannel";
         }
 
-        /// <summary> Initializes a new instance of WebChatChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

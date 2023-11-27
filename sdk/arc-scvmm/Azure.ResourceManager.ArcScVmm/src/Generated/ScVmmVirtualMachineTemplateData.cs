@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmVirtualMachineTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Disks = new ChangeTrackingList<VirtualDisk>();
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

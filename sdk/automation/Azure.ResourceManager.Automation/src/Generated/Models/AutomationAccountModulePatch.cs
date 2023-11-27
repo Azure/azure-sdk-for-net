@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update module operation. </summary>
     public partial class AutomationAccountModulePatch
     {
-        /// <summary> Initializes a new instance of AutomationAccountModulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModulePatch"/>. </summary>
         public AutomationAccountModulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

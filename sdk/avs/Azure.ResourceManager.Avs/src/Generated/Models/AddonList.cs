@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of addons. </summary>
     internal partial class AddonList
     {
-        /// <summary> Initializes a new instance of AddonList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonList"/>. </summary>
         internal AddonList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudAddonData>();
         }
 
-        /// <summary> Initializes a new instance of AddonList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal AddonList(IReadOnlyList<AvsPrivateCloudAddonData> value, string nextLink)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the dsc node report type. </summary>
     public partial class DscNodeReport
     {
-        /// <summary> Initializes a new instance of DscNodeReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeReport"/>. </summary>
         internal DscNodeReport()
         {
             Errors = new ChangeTrackingList<DscReportError>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             IPV6Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeReport"/>. </summary>
         /// <param name="endOn"> Gets or sets the end time of the node report. </param>
         /// <param name="lastModifiedOn"> Gets or sets the lastModifiedTime of the node report. </param>
         /// <param name="startOn"> Gets or sets the start time of the node report. </param>

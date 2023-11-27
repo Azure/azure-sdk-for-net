@@ -13,7 +13,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
-        /// <summary> Initializes a new instance of AnswersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersResult"/>. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersResult"/> instance for mocking. </returns>
         public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = null)
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswersResult(answers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswer"/>. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer);
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/>. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText);
         }
 
-        /// <summary> Initializes a new instance of AnswerSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswerSpan"/>. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswerSpan(text, confidence, offset, length);
         }
 
-        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersFromTextResult"/>. </summary>
         /// <param name="answers"> Represents the answer results. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersFromTextResult"/> instance for mocking. </returns>
         public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = null)
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswersFromTextResult(answers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TextAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.TextAnswer"/>. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>

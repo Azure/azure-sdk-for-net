@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the virtualMachineUpdate. </summary>
     public partial class ScVmmVirtualMachinePatch
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachinePatch"/>. </summary>
         public ScVmmVirtualMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
