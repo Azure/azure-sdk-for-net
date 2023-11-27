@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The VirtualMachineScaleSetConvertToSinglePlacementGroupContent. </summary>
     public partial class VirtualMachineScaleSetConvertToSinglePlacementGroupContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetConvertToSinglePlacementGroupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetConvertToSinglePlacementGroupContent"/>. </summary>
         public VirtualMachineScaleSetConvertToSinglePlacementGroupContent()
         {
         }

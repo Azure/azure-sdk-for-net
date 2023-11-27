@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB data source. </summary>
     public partial class MongoDBClusterInfo
     {
-        /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>

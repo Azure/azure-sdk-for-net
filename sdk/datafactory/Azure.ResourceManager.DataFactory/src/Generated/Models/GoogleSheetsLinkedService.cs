@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for GoogleSheets. </summary>
     public partial class GoogleSheetsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of GoogleSheetsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
         /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public GoogleSheetsLinkedService(DataFactorySecretBaseDefinition apiToken)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "GoogleSheets";
         }
 
-        /// <summary> Initializes a new instance of GoogleSheetsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyCreateOrUpdateContent"/>. </summary>
         /// <param name="objectId">
         /// The AAD object identifier for the entity to create a policy for.
         /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.objectId

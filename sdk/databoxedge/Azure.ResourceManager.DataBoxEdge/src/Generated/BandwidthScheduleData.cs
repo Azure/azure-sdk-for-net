@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class BandwidthScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
         /// <param name="startOn"> The start time of the schedule in UTC. </param>
         /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Days = days.ToList();
         }
 
-        /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

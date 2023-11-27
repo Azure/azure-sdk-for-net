@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the Shared Image Gallery that you want to update. </summary>
     public partial class GalleryPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryPatch"/>. </summary>
         public GalleryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

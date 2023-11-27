@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyData"/>. </summary>
         internal DataLakeAnalyticsComputePolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

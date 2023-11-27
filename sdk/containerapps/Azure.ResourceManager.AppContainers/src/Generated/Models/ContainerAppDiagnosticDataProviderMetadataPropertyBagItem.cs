@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Property details. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadataPropertyBagItem
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadataPropertyBagItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         /// <param name="name"> Property name. </param>
         /// <param name="value"> Property value. </param>
         internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value)

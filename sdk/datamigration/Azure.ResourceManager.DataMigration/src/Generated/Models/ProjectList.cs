@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of project resources. </summary>
     internal partial class ProjectList
     {
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         internal ProjectList()
         {
             Value = new ChangeTrackingList<ProjectData>();
         }
 
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         /// <param name="value"> List of projects. </param>
         /// <param name="nextLink"> URL to load the next page of projects. </param>
         internal ProjectList(IReadOnlyList<ProjectData> value, string nextLink)

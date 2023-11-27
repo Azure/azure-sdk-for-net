@@ -14,7 +14,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The CommunicationIdentityCreateRequest. </summary>
     internal partial class CommunicationIdentityCreateRequest
     {
-        /// <summary> Initializes a new instance of CommunicationIdentityCreateRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
         public CommunicationIdentityCreateRequest()
         {
             CreateTokenWithScopes = new ChangeTrackingList<CommunicationTokenScope>();

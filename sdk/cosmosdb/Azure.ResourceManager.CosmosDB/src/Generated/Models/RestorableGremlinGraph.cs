@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB Gremlin graph event. </summary>
     public partial class RestorableGremlinGraph : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraph"/>. </summary>
         internal RestorableGremlinGraph()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraph"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

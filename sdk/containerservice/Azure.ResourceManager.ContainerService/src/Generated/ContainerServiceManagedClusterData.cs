@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceManagedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerServiceManagedClusterData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService
             PrivateLinkResources = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

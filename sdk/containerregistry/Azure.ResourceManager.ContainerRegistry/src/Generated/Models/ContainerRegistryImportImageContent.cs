@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportImageContent. </summary>
     public partial class ContainerRegistryImportImageContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportImageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportImageContent"/>. </summary>
         /// <param name="source"> The source of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public ContainerRegistryImportImageContent(ContainerRegistryImportSource source)

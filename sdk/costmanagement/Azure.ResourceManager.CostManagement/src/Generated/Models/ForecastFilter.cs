@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The filter expression to be used in the export. </summary>
     public partial class ForecastFilter
     {
-        /// <summary> Initializes a new instance of ForecastFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastFilter"/>. </summary>
         public ForecastFilter()
         {
             And = new ChangeTrackingList<ForecastFilter>();

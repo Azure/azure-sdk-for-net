@@ -10,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Capabilities of a phone number. </summary>
     internal partial class PhoneNumberCapabilitiesRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberCapabilitiesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
         public PhoneNumberCapabilitiesRequest()
         {
         }

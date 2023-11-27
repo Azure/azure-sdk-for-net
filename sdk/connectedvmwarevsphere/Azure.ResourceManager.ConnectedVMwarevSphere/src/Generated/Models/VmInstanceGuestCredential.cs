@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Username / Password Credentials to connect to guest. </summary>
     public partial class VmInstanceGuestCredential
     {
-        /// <summary> Initializes a new instance of VmInstanceGuestCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestCredential"/>. </summary>
         public VmInstanceGuestCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of VmInstanceGuestCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestCredential"/>. </summary>
         /// <param name="username"> Gets or sets username to connect with the guest. </param>
         /// <param name="password"> Gets or sets the password to connect with the guest. </param>
         internal VmInstanceGuestCredential(string username, string password)
