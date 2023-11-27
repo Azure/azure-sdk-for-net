@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the update of the WebHook of the partner destination. </summary>
     public partial class WebhookUpdatePartnerDestinationInfo : PartnerUpdateDestinationInfo
     {
-        /// <summary> Initializes a new instance of WebhookUpdatePartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookUpdatePartnerDestinationInfo"/>. </summary>
         public WebhookUpdatePartnerDestinationInfo()
         {
             EndpointType = PartnerEndpointType.WebHook;

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The devcenter resource for partial updates. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevCenterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         public DevCenterPatch()
         {
         }

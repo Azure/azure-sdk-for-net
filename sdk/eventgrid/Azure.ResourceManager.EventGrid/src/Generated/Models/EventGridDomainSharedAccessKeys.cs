@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Shared access keys of the Domain. </summary>
     public partial class EventGridDomainSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of EventGridDomainSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
         internal EventGridDomainSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridDomainSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the domain. </param>
         /// <param name="key2"> Shared access key2 for the domain. </param>
         internal EventGridDomainSharedAccessKeys(string key1, string key2)

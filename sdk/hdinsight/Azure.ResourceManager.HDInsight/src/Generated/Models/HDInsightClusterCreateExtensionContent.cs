@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Cluster monitoring extensions. </summary>
     public partial class HDInsightClusterCreateExtensionContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateExtensionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateExtensionContent"/>. </summary>
         public HDInsightClusterCreateExtensionContent()
         {
         }

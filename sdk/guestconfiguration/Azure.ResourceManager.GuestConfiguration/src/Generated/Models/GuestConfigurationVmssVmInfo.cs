@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about VMSS VM. </summary>
     public partial class GuestConfigurationVmssVmInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationVmssVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
         public GuestConfigurationVmssVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationVmssVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
         /// <param name="vmId"> UUID of the VM. </param>
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>

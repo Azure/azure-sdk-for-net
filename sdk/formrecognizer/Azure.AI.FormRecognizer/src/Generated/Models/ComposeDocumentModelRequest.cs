@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to create a composed document model from component document models. </summary>
     internal partial class ComposeDocumentModelRequest
     {
-        /// <summary> Initializes a new instance of ComposeDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="componentModels"> List of component document models to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>

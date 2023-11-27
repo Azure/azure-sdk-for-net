@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatch
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatch"/>. </summary>
         public ManagedGrafanaPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

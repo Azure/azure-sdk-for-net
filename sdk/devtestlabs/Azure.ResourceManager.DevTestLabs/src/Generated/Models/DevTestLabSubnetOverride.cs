@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Property overrides on a subnet of a virtual network. </summary>
     public partial class DevTestLabSubnetOverride
     {
-        /// <summary> Initializes a new instance of DevTestLabSubnetOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnetOverride"/>. </summary>
         public DevTestLabSubnetOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSubnetOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnetOverride"/>. </summary>
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name given to the subnet within the lab. </param>
         /// <param name="useInVmCreationPermission"> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabVirtualNetworkData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             SubnetOverrides = new ChangeTrackingList<DevTestLabSubnetOverride>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

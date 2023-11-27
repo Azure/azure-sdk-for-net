@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document classification parameters. </summary>
     internal partial class ClassifyDocumentRequest
     {
-        /// <summary> Initializes a new instance of ClassifyDocumentRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentRequest"/>. </summary>
         public ClassifyDocumentRequest()
         {
         }

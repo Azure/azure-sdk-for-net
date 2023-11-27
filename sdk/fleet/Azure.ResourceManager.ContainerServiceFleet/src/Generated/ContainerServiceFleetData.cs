@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerServiceFleetData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

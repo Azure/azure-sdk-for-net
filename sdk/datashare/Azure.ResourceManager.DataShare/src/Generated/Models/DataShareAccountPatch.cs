@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Update parameters for accounts. </summary>
     public partial class DataShareAccountPatch
     {
-        /// <summary> Initializes a new instance of DataShareAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountPatch"/>. </summary>
         public DataShareAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

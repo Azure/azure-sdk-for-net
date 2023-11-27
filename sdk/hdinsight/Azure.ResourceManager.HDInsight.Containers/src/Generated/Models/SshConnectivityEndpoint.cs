@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> SSH connectivity endpoint details. </summary>
     public partial class SshConnectivityEndpoint
     {
-        /// <summary> Initializes a new instance of SshConnectivityEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshConnectivityEndpoint"/>. </summary>
         /// <param name="endpoint"> SSH connectivity endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal SshConnectivityEndpoint(string endpoint)

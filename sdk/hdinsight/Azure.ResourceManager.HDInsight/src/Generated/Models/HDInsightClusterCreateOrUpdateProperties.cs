@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster create parameters. </summary>
     public partial class HDInsightClusterCreateOrUpdateProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateProperties"/>. </summary>
         public HDInsightClusterCreateOrUpdateProperties()
         {
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The updatable properties of the MonitorResource. </summary>
     public partial class DynatraceMonitorPatch
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
         public DynatraceMonitorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
