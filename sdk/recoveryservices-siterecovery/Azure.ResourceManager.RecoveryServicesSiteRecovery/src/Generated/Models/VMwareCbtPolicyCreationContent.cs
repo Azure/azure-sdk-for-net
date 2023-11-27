@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware Cbt policy creation input. </summary>
     public partial class VMwareCbtPolicyCreationContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtPolicyCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyCreationContent"/>. </summary>
         public VMwareCbtPolicyCreationContent()
         {
             InstanceType = "VMwareCbt";

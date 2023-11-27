@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Prepare DataMove Request. </summary>
     public partial class PrepareDataMoveContent
     {
-        /// <summary> Initializes a new instance of PrepareDataMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrepareDataMoveContent"/>. </summary>
         /// <param name="targetResourceId"> ARM Id of target vault. </param>
         /// <param name="targetRegion"> Target Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>

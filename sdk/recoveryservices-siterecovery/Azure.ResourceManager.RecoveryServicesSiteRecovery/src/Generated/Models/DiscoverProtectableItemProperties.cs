@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Discover protectable item properties. </summary>
     public partial class DiscoverProtectableItemProperties
     {
-        /// <summary> Initializes a new instance of DiscoverProtectableItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemProperties"/>. </summary>
         public DiscoverProtectableItemProperties()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Managed instance's Start/Stop schedule list result. </summary>
     internal partial class StartStopManagedInstanceScheduleListResult
     {
-        /// <summary> Initializes a new instance of StartStopManagedInstanceScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartStopManagedInstanceScheduleListResult"/>. </summary>
         internal StartStopManagedInstanceScheduleListResult()
         {
             Value = new ChangeTrackingList<ManagedInstanceStartStopScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of StartStopManagedInstanceScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartStopManagedInstanceScheduleListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal StartStopManagedInstanceScheduleListResult(IReadOnlyList<ManagedInstanceStartStopScheduleData> value, string nextLink)

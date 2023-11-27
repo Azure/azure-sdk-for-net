@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request containing information needed for returning reservation. </summary>
     public partial class ReservationRefundContent
     {
-        /// <summary> Initializes a new instance of ReservationRefundContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundContent"/>. </summary>
         public ReservationRefundContent()
         {
         }

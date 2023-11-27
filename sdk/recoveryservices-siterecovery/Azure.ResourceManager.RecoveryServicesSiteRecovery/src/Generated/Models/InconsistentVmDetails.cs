@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class stores the monitoring details for consistency check of inconsistent Protected Entity. </summary>
     public partial class InconsistentVmDetails
     {
-        /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InconsistentVmDetails"/>. </summary>
         internal InconsistentVmDetails()
         {
             Details = new ChangeTrackingList<string>();
             ErrorIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InconsistentVmDetails"/>. </summary>
         /// <param name="vmName"> The Vm name. </param>
         /// <param name="cloudName"> The Cloud name. </param>
         /// <param name="details"> The list of details regarding state of the Protected Entity in SRS and On prem. </param>

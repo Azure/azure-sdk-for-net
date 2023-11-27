@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperVToAzStackHCI protected disk properties. </summary>
     public partial class HyperVToAzStackHciProtectedDiskProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedDiskProperties"/>. </summary>
         internal HyperVToAzStackHciProtectedDiskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedDiskProperties"/>. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>

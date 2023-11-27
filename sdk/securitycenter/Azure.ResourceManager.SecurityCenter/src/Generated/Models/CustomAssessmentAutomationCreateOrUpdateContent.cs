@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Custom Assessment Automation request. </summary>
     public partial class CustomAssessmentAutomationCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationCreateOrUpdateContent"/>. </summary>
         public CustomAssessmentAutomationCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

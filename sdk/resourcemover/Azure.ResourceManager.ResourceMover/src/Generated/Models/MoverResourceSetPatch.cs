@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for updating move collection. </summary>
     public partial class MoverResourceSetPatch
     {
-        /// <summary> Initializes a new instance of MoverResourceSetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetPatch"/>. </summary>
         public MoverResourceSetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

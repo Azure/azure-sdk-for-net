@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RelayNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RelayNamespaceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RelayNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
     public partial class DefenderCspmAwsOfferingVmScannersConfiguration
     {
-        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScannersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScannersConfiguration"/>. </summary>
         public DefenderCspmAwsOfferingVmScannersConfiguration()
         {
             ExclusionTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScannersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScannersConfiguration"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="scanningMode"> The scanning mode for the vm scan. </param>
         /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>

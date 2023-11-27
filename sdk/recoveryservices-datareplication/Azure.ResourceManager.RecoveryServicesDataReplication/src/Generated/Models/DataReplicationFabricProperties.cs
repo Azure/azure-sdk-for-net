@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Fabric model properties. </summary>
     public partial class DataReplicationFabricProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricProperties"/>. </summary>
         /// <param name="customProperties">
         /// Fabric model custom properties.
         /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the fabric. </param>
         /// <param name="serviceEndpoint"> Gets or sets the service endpoint. </param>
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>

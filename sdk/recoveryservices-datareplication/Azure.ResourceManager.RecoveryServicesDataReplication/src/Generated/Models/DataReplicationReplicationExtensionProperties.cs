@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Replication extension model properties. </summary>
     public partial class DataReplicationReplicationExtensionProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionProperties"/>. </summary>
         /// <param name="customProperties">
         /// Replication extension model custom properties.
         /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the replication extension. </param>
         /// <param name="customProperties">
         /// Replication extension model custom properties.

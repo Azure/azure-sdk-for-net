@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupProtectedItemData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectedItemData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupProtectedItemData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectedItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

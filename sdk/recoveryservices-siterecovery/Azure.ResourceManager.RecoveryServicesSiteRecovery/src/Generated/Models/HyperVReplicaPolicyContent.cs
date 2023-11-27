@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public partial class HyperVReplicaPolicyContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyContent"/>. </summary>
         public HyperVReplicaPolicyContent()
         {
             InstanceType = "HyperVReplica2012";

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Anomaly Security ML Analytics Settings. </summary>
     public partial class AnomalySecurityMLAnalyticsSettings : SecurityMLAnalyticsSettingData
     {
-        /// <summary> Initializes a new instance of AnomalySecurityMLAnalyticsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
         public AnomalySecurityMLAnalyticsSettings()
         {
             RequiredDataConnectors = new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityMLAnalyticsSettingsKind.Anomaly;
         }
 
-        /// <summary> Initializes a new instance of AnomalySecurityMLAnalyticsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

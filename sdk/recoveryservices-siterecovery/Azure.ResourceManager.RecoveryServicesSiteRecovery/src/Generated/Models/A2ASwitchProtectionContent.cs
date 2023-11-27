@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A specific switch protection input. </summary>
     public partial class A2ASwitchProtectionContent : SwitchProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2ASwitchProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
         public A2ASwitchProtectionContent()
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();

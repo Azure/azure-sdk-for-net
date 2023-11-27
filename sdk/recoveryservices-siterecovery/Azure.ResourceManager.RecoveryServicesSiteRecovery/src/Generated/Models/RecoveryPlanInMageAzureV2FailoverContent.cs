@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan InMageAzureV2 failover input. </summary>
     public partial class RecoveryPlanInMageAzureV2FailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanInMageAzureV2FailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageAzureV2FailoverContent"/>. </summary>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         public RecoveryPlanInMageAzureV2FailoverContent(InMageV2RpRecoveryPointType recoveryPointType)
         {

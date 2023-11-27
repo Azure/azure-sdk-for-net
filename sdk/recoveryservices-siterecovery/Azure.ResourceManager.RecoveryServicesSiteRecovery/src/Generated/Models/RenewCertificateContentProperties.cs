@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Renew Certificate input properties. </summary>
     internal partial class RenewCertificateContentProperties
     {
-        /// <summary> Initializes a new instance of RenewCertificateContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateContentProperties"/>. </summary>
         public RenewCertificateContentProperties()
         {
         }

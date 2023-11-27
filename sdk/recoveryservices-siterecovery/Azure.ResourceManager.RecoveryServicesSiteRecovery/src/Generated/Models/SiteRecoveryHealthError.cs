@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Health Error. </summary>
     public partial class SiteRecoveryHealthError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
         internal SiteRecoveryHealthError()
         {
             InnerHealthErrors = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
         /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>

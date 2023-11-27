@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Provider specific input for InMage test failover. </summary>
     public partial class InMageTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageTestFailoverContent"/>. </summary>
         public InMageTestFailoverContent()
         {
             InstanceType = "InMage";

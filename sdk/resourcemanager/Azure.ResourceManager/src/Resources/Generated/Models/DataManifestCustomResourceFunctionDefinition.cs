@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The custom resource function definition. </summary>
     public partial class DataManifestCustomResourceFunctionDefinition
     {
-        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataManifestCustomResourceFunctionDefinition"/>. </summary>
         internal DataManifestCustomResourceFunctionDefinition()
         {
             DefaultProperties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataManifestCustomResourceFunctionDefinition"/>. </summary>
         /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class TroubleshooterResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResourceData"/>. </summary>
         public TroubleshooterResourceData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             Steps = new ChangeTrackingList<SelfHelpStep>();
         }
 
-        /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

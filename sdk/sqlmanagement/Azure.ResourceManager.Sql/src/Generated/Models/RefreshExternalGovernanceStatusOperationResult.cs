@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An RefreshExternalGovernanceStatus operation result resource. </summary>
     public partial class RefreshExternalGovernanceStatusOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefreshExternalGovernanceStatusOperationResult"/>. </summary>
         public RefreshExternalGovernanceStatusOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefreshExternalGovernanceStatusOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

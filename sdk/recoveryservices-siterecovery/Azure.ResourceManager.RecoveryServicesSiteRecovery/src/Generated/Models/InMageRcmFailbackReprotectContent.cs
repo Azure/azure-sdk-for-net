@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback specific provider input. </summary>
     public partial class InMageRcmFailbackReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/>. </summary>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
