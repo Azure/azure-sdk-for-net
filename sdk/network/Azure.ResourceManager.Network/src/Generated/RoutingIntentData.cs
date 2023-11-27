@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class RoutingIntentData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of RoutingIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         public RoutingIntentData()
         {
             RoutingPolicies = new ChangeTrackingList<RoutingPolicy>();
         }
 
-        /// <summary> Initializes a new instance of RoutingIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

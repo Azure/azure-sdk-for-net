@@ -12,14 +12,14 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Represents a metric value. </summary>
     public partial class QueryBatchMetricValue
     {
-        /// <summary> Initializes a new instance of QueryBatchMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         internal QueryBatchMetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> The average value in the time range. </param>
         /// <param name="minimum"> The least value in the time range. </param>

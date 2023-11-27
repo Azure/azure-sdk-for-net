@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance NIC properties. </summary>
     public partial class VirtualApplianceNicProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         internal VirtualApplianceNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudAgentPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud
             VmSkuName = vmSkuName;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

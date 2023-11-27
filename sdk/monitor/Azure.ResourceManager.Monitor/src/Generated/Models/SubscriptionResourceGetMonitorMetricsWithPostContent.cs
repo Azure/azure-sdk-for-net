@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetMonitorMetricsWithPostContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostContent"/>. </summary>
         public SubscriptionResourceGetMonitorMetricsWithPostContent()
         {
         }

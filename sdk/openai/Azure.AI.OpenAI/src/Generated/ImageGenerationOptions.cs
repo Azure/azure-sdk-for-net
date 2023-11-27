@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
-        /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public ImageGenerationOptions(string prompt)
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             Prompt = prompt;
         }
 
-        /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <param name="imageCount"> The number of images to generate (defaults to 1). </param>
         /// <param name="size"> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </param>

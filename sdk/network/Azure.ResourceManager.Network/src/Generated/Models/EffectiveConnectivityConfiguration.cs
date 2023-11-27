@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network manager effective connectivity configuration. </summary>
     public partial class EffectiveConnectivityConfiguration
     {
-        /// <summary> Initializes a new instance of EffectiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveConnectivityConfiguration"/>. </summary>
         internal EffectiveConnectivityConfiguration()
         {
             ConfigurationGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
         /// <param name="description"> A description of the connectivity configuration. </param>

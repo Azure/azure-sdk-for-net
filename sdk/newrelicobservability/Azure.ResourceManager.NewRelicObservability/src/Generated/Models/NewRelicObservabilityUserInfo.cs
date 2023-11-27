@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> User Info of NewRelic Monitor resource. </summary>
     public partial class NewRelicObservabilityUserInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         public NewRelicObservabilityUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> User Email. </param>

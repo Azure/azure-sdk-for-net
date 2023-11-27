@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlServerAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerAdministratorData"/>. </summary>
         public MySqlServerAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

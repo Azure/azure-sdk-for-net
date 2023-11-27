@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Public land mobile network (PLMN) ID. </summary>
     public partial class MobileNetworkPlmnId
     {
-        /// <summary> Initializes a new instance of MobileNetworkPlmnId. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlmnId"/>. </summary>
         /// <param name="mcc"> Mobile country code (MCC). </param>
         /// <param name="mnc"> Mobile network code (MNC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>

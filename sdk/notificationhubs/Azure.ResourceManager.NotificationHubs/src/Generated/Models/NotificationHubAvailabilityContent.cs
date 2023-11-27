@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the Check Name Availability for Namespace and NotificationHubs. </summary>
     public partial class NotificationHubAvailabilityContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubAvailabilityContent(AzureLocation location) : base(location)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The usage names. </summary>
     public partial class NetworkUsageName
     {
-        /// <summary> Initializes a new instance of NetworkUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsageName"/>. </summary>
         internal NetworkUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsageName"/>. </summary>
         /// <param name="value"> A string describing the resource name. </param>
         /// <param name="localizedValue"> A localized string describing the resource name. </param>
         internal NetworkUsageName(string value, string localizedValue)

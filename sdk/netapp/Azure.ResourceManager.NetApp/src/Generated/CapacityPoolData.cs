@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class CapacityPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CapacityPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp
             ServiceLevel = serviceLevel;
         }
 
-        /// <summary> Initializes a new instance of CapacityPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

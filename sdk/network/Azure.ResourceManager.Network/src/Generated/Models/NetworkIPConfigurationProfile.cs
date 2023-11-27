@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration profile child resource. </summary>
     public partial class NetworkIPConfigurationProfile : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkIPConfigurationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationProfile"/>. </summary>
         public NetworkIPConfigurationProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkIPConfigurationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationProfile"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

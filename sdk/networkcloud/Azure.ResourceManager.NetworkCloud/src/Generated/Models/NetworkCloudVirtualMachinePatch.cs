@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VirtualMachinePatchParameters represents the body of the request to patch the virtual machine. </summary>
     public partial class NetworkCloudVirtualMachinePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudVirtualMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachinePatch"/>. </summary>
         public NetworkCloudVirtualMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualRouterData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualRouterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         public VirtualRouterData()
         {
             VirtualRouterIPs = new ChangeTrackingList<string>();
             Peerings = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
