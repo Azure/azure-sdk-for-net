@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Backup Settings. </summary>
     public partial class MySqlFlexibleServerBackupSettings
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupSettings"/>. </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public MySqlFlexibleServerBackupSettings(string backupName)

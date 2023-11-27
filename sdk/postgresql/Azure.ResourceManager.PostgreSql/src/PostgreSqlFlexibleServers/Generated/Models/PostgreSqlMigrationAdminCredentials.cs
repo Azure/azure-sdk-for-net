@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Server admin credentials. </summary>
     public partial class PostgreSqlMigrationAdminCredentials
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationAdminCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
         /// <param name="sourceServerPassword"> Password for source server. </param>
         /// <param name="targetServerPassword"> Password for target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerPassword"/> or <paramref name="targetServerPassword"/> is null. </exception>

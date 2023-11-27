@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Capacity pool patch resource. </summary>
     public partial class CapacityPoolPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CapacityPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public CapacityPoolPatch(AzureLocation location) : base(location)
         {

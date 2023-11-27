@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineKeySetList represents a list of bare metal machine key sets. </summary>
     internal partial class BareMetalMachineKeySetList
     {
-        /// <summary> Initializes a new instance of BareMetalMachineKeySetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetList"/>. </summary>
         internal BareMetalMachineKeySetList()
         {
             Value = new ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>();
         }
 
-        /// <summary> Initializes a new instance of BareMetalMachineKeySetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of bare metal machine key sets. </param>
         internal BareMetalMachineKeySetList(string nextLink, IReadOnlyList<NetworkCloudBareMetalMachineKeySetData> value)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> PrivateLinkServiceConnection resource. </summary>
     public partial class NetworkPrivateLinkServiceConnection : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         public NetworkPrivateLinkServiceConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

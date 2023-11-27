@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of Vpn-Sites. </summary>
     public partial class GetVpnSitesConfigurationContent
     {
-        /// <summary> Initializes a new instance of GetVpnSitesConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
         /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
         public GetVpnSitesConfigurationContent(Uri outputBlobSasUri)

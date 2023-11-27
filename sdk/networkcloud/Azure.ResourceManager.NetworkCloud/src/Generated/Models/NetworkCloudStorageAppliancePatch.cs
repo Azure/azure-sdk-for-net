@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageAppliancePatchParameters represents the body of the request to patch storage appliance properties. </summary>
     public partial class NetworkCloudStorageAppliancePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudStorageAppliancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageAppliancePatch"/>. </summary>
         public NetworkCloudStorageAppliancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

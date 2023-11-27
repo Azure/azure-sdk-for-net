@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The SubscriptionLifecycleNotificationSpecifications. </summary>
     public partial class SubscriptionLifecycleNotificationSpecifications
     {
-        /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionLifecycleNotificationSpecifications"/>. </summary>
         public SubscriptionLifecycleNotificationSpecifications()
         {
             SubscriptionStateOverrideActions = new ChangeTrackingList<SubscriptionStateOverrideAction>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionLifecycleNotificationSpecifications"/>. </summary>
         /// <param name="subscriptionStateOverrideActions"></param>
         /// <param name="softDeleteTtl"></param>
         internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl)

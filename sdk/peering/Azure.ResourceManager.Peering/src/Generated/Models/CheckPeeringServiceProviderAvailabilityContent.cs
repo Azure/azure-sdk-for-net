@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> Class for CheckServiceProviderAvailabilityInput. </summary>
     public partial class CheckPeeringServiceProviderAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckPeeringServiceProviderAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckPeeringServiceProviderAvailabilityContent"/>. </summary>
         public CheckPeeringServiceProviderAvailabilityContent()
         {
         }

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Request routing rule of an application gateway. </summary>
     public partial class ApplicationGatewayRequestRoutingRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRule"/>. </summary>
         public ApplicationGatewayRequestRoutingRule()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Gateway routing details. </summary>
     public partial class GatewayRoute
     {
-        /// <summary> Initializes a new instance of GatewayRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRoute"/>. </summary>
         internal GatewayRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRoute"/>. </summary>
         /// <param name="localAddress"> The gateway's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
         /// <param name="nextHop"> The route's next hop. </param>

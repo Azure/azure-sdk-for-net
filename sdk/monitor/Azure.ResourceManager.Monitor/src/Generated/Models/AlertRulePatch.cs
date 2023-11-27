@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The alert rule object for patch operations. </summary>
     public partial class AlertRulePatch
     {
-        /// <summary> Initializes a new instance of AlertRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRulePatch"/>. </summary>
         public AlertRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AudioTranscriptionSegment
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI
             Seek = seek;
         }
 
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
