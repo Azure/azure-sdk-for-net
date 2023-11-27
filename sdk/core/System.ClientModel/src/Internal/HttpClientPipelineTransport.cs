@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal.Primitives;
+namespace System.ClientModel.Internal;
 
 internal class HttpClientPipelineTransport : PipelineTransport
 {
