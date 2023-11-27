@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Tests.Client;
 using System.Collections.Generic;
 using System.Linq;
+using TestHelpers.Internal;
 
 namespace OpenAI;
 

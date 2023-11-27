@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {

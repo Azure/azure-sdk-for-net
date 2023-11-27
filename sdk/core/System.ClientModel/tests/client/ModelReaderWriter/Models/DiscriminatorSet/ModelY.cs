@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
