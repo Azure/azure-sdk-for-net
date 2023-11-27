@@ -112,6 +112,17 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         // Assignment Data
         public static AssignmentData GetAssignmentData(string blueprintId)
         {
+            ParameterValue[] owners =
+            {
+                new ParameterValue()
+                {
+                    Value = BinaryData.FromString("\"johnDoe@contoso.com\"")
+                },
+                new ParameterValue()
+                {
+                    Value = BinaryData.FromString("\"johnsteam@contoso.com\"")
+                },
+            };
             IDictionary<string, ParameterValue> parameter = new Dictionary<string, ParameterValue>()
             {
                 ["storageAccountType"] = new ParameterValue()
@@ -124,7 +135,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
                 },
                 ["owners"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("\"johnDoe@contoso.com\"")
+                    Value = BinaryData.FromString("\"johnDoe@contoso.com\", \"johnsteam@contoso.com\"")
                 }
             };
             IDictionary<string, ResourceGroupValue> resourceGroup = new Dictionary<string, ResourceGroupValue>()
