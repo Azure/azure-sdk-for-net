@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list of the SKU descriptions. </summary>
     internal partial class KustoPoolSkuDescriptionListResult
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         internal KustoPoolSkuDescriptionListResult()
         {
             Value = new ChangeTrackingList<KustoPoolSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         /// <param name="value"> SKU descriptions. </param>
         internal KustoPoolSkuDescriptionListResult(IReadOnlyList<KustoPoolSkuDescription> value)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The properties of SMB share endpoint. </summary>
     public partial class SmbMountEndpointProperties : EndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of SmbMountEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbMountEndpointProperties"/>. </summary>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="shareName"> The name of the SMB share being exported from the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="shareName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointType = EndpointType.SmbMount;
         }
 
-        /// <summary> Initializes a new instance of SmbMountEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbMountEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>

@@ -13,13 +13,13 @@ namespace Azure.Data.Tables.Models
     /// <summary> Table Service Properties. </summary>
     public partial class TableServiceProperties
     {
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceProperties"/>. </summary>
         public TableServiceProperties()
         {
             Cors = new ChangeTrackingList<TableCorsRule>();
         }
 
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceProperties"/>. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for tables. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Event Hub output data source. </summary>
     public partial class EventHubOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of EventHubOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubOutputDataSource"/>. </summary>
         public EventHubOutputDataSource()
         {
             PropertyColumns = new ChangeTrackingList<string>();
             OutputDataSourceType = "Microsoft.ServiceBus/EventHub";
         }
 
-        /// <summary> Initializes a new instance of EventHubOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>

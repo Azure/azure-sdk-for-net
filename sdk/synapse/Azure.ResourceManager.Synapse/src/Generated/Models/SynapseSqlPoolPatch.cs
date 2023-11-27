@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A SQL Analytics pool patch info. </summary>
     public partial class SynapseSqlPoolPatch
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolPatch"/>. </summary>
         public SynapseSqlPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

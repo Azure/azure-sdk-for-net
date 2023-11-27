@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.WebPubSub
     /// </summary>
     public partial class WebPubSubSharedPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
         public WebPubSubSharedPrivateLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

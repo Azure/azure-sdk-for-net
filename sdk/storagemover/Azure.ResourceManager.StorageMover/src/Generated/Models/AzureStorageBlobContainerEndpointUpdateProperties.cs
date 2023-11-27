@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The AzureStorageBlobContainerEndpointUpdateProperties. </summary>
     public partial class AzureStorageBlobContainerEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageBlobContainerEndpointUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>. </summary>
         public AzureStorageBlobContainerEndpointUpdateProperties()
         {
             EndpointType = EndpointType.AzureStorageBlobContainer;

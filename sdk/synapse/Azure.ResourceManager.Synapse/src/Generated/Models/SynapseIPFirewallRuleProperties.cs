@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> IP firewall rule properties. </summary>
     public partial class SynapseIPFirewallRuleProperties
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleProperties"/>. </summary>
         public SynapseIPFirewallRuleProperties()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A data connection check name availability request. </summary>
     public partial class KustoPoolDataConnectionNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolDataConnectionNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolDataConnectionNameAvailabilityContent(string name)

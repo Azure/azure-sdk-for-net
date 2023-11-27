@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Project resources. </summary>
     internal partial class ProjectList
     {
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         internal ProjectList()
         {
             Value = new ChangeTrackingList<StorageMoverProjectData>();
         }
 
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
         internal ProjectList(IReadOnlyList<StorageMoverProjectData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Resource name availability request content. </summary>
     public partial class ResourceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ResourceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

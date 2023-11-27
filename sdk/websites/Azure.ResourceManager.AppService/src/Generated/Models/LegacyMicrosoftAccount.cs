@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
     public partial class LegacyMicrosoftAccount
     {
-        /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
         public LegacyMicrosoftAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the legacy Microsoft Account provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The list of supported availability zone pairs which are part of SAP HA deployment. </summary>
     public partial class SapAvailabilityZoneDetailsResult
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsResult"/>. </summary>
         internal SapAvailabilityZoneDetailsResult()
         {
             AvailabilityZonePairs = new ChangeTrackingList<SapAvailabilityZonePair>();
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsResult"/>. </summary>
         /// <param name="availabilityZonePairs"> Gets the list of availability zone pairs. </param>
         internal SapAvailabilityZoneDetailsResult(IReadOnlyList<SapAvailabilityZonePair> availabilityZonePairs)
         {

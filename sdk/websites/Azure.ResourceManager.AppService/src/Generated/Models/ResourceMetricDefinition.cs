@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Metadata for the metrics. </summary>
     public partial class ResourceMetricDefinition : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         public ResourceMetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<ResourceMetricAvailability>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

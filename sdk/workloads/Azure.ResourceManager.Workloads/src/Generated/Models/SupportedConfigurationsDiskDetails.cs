@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The supported disk size details for a disk type. </summary>
     public partial class SupportedConfigurationsDiskDetails
     {
-        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
         internal SupportedConfigurationsDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
         /// <param name="sku"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
