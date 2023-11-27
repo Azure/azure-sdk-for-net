@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Add `201` to the response code of the `QueryPacks_CreateOrUpdate`.
+- Add `201` to the response code of the `QueryPacks_UpdateTags`.
+
 ### Other Changes
 
 ## 1.2.0-beta.1 (2023-05-31)

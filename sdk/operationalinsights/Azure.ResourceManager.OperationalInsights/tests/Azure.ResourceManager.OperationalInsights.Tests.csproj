@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.EventHubs" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+    <PackageReference Include="Azure.ResourceManager.Storage"/>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.OperationalInsights.csproj" />
   </ItemGroup>
 </Project>

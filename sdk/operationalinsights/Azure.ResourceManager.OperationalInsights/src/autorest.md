@@ -193,5 +193,51 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources'].get.parameters[?(@.name === '$skiptoken')]
     transform: >
       $['x-ms-client-name'] = 'skipToken';
+  - from: QueryPacks.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}'].put
+    transform: >
+      $['responses'] = {
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Successful request when creating or updating a Log Analytics QueryPack. The updated QueryPack is returned.",
+            "schema": {
+              "$ref": "#/definitions/LogAnalyticsQueryPack"
+            }
+          },
+          "201": {
+            "description": "Successful request when creating or updating a Log Analytics QueryPack. The updated QueryPack is returned.",
+            "schema": {
+              "$ref": "#/definitions/LogAnalyticsQueryPack"
+            }
+          }
+        };
+  - from: QueryPacks.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}'].patch
+    transform: >
+      $['responses'] = {
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Updating the Log Analytics QueryPack's tags was successful. QueryPack tags are updated and returned with the rest of the QueryPack's object properties.",
+            "schema": {
+              "$ref": "#/definitions/LogAnalyticsQueryPack"
+            }
+          },
+          "201": {
+            "description": "Updating the Log Analytics QueryPack's tags was successful. QueryPack tags are updated and returned with the rest of the QueryPack's object properties.",
+            "schema": {
+              "$ref": "#/definitions/LogAnalyticsQueryPack"
+            }
+          }
+        };
 
 ```
