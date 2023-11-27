@@ -36,11 +36,12 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
         _timeout = timeout;
     }
 
-    protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
+    protected override bool ShouldRetry(HttpMessage message, Exception exception)
     {
         return ShouldRetryInternalAsync(message, exception, false).EnsureCompleted();
     }
-    protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
+
+    protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
     {
         return ShouldRetryInternalAsync(message, exception, true);
     }

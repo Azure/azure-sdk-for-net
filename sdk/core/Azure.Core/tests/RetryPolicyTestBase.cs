@@ -673,36 +673,36 @@ namespace Azure.Core.Tests
 
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
-            {
-                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
-            }
+            //internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            //{
+            //    DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
+            //}
 
-            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-            {
-                return DelayGate.WaitForRelease(time);
-            }
+            //internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+            //{
+            //    return DelayGate.WaitForRelease(time);
+            //}
 
-            protected internal override void OnRequestSent(HttpMessage message)
+            protected override void OnRequestSent(HttpMessage message)
             {
                 OnRequestSentCalled = true;
                 base.OnRequestSent(message);
             }
 
-            protected internal override ValueTask OnRequestSentAsync(HttpMessage message)
+            protected override ValueTask OnRequestSentAsync(HttpMessage message)
             {
                 OnRequestSentCalled = true;
                 return base.OnRequestSentAsync(message);
             }
 
-            protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
+            protected override bool ShouldRetry(HttpMessage message, Exception exception)
             {
                 LastException = exception;
                 ShouldRetryCalled = true;
                 return base.ShouldRetry(message, exception);
             }
 
-            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
+            protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
             {
                 LastException = exception;
                 ShouldRetryCalled = true;

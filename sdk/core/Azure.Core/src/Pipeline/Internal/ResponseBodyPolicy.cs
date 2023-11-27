@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineEnumerator executor = new(message, pipeline);
+            AzureCorePipelineProcessor processor = new(message, pipeline);
 
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
@@ -47,11 +47,11 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, processor).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, executor);
+                    _policy.Process(message, processor);
                 }
 
                 if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))

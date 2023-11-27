@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,27 +35,140 @@ public class RequestRetryPolicy : PipelinePolicy
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
+    //{
+    //    if (async)
+    //    {
+    //        await pipeline.ProcessNextAsync().ConfigureAwait(false);
+    //    }
+    //    else
+    //    {
+    //        pipeline.ProcessNext();
+    //    }
+
+    //    // If "Should Retry"
+    //    //    GetNextDelay
+    //    //    Wait(Delay, CancellationToken)
+    //    //    If (message.HasRespose)
+    //    //        Dispose the content stream if applicable
+    //    //    Increment Retry Count
+    //    // If "Last Exception"
+    //    //    Throw single or Throw Aggregate
+
+    //    // There is logic to swap out the delay length algo
+    //    // There is logic to selectively retry based on the exception - ResponseClassifier
+    //}
     {
-        if (async)
-        {
-            await pipeline.ProcessNextAsync().ConfigureAwait(false);
-        }
-        else
-        {
-            pipeline.ProcessNext();
-        }
+        List<Exception>? exceptions = null;
+        TryGetRetryCount(message, out int retryCount);
 
-        // If "Should Retry"
-        //    GetNextDelay
-        //    Wait(Delay, CancellationToken)
-        //    If (message.HasRespose)
-        //        Dispose the content stream if applicable
-        //    Increment Retry Count
-        // If "Last Exception"
-        //    Throw single or Throw Aggregate
+        while (true)
+        {
+            Exception? lastException = null;
+            long before = Stopwatch.GetTimestamp();
 
-        // There is logic to swap out the delay length algo
-        // There is logic to selectively retry based on the exception - ResponseClassifier
+            if (async)
+            {
+                await OnSendingRequestAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                OnSendingRequest(message);
+            }
+
+            try
+            {
+                if (async)
+                {
+                    await pipeline.ProcessNextAsync().ConfigureAwait(false);
+                }
+                else
+                {
+                    pipeline.ProcessNext();
+                }
+            }
+            catch (Exception ex)
+            {
+                exceptions ??= new List<Exception>();
+                exceptions.Add(ex);
+
+                lastException = ex;
+            }
+
+            if (async)
+            {
+                await OnRequestSentAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                OnRequestSent(message);
+            }
+
+            long after = Stopwatch.GetTimestamp();
+            double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
+            bool shouldRetry = false;
+
+            // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
+            // or modify the ResponseClassifier.
+
+            if (lastException is not null ||
+                (message.TryGetResponse(out PipelineResponse response) && response.IsError))
+            {
+                shouldRetry = async ?
+                    await ShouldRetryAsync(message, lastException).ConfigureAwait(false) :
+                    ShouldRetry(message, lastException);
+            }
+
+            if (shouldRetry)
+            {
+                TimeSpan delay = GetDelay(message);
+
+                if (delay > TimeSpan.Zero)
+                {
+                    if (async)
+                    {
+                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Wait(delay, message.CancellationToken);
+                    }
+                }
+
+                if (message.TryGetResponse(out response))
+                {
+                    // Dispose the content stream to free up a connection if the request has any
+                    response.ContentStream?.Dispose();
+                }
+
+                SetRetryCount(message, retryCount++);
+
+                // TODO: extend
+                //AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
+
+                continue;
+            }
+
+            if (lastException != null)
+            {
+                // Rethrow if there's only one exception.
+                if (exceptions!.Count == 1)
+                {
+                    ExceptionDispatchInfo.Capture(lastException).Throw();
+                }
+
+                throw new AggregateException($"Retry failed after {retryCount} tries.", exceptions);
+
+                //throw new AggregateException(
+                //    $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
+                //    $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.",
+                //    exceptions);
+            }
+
+            // ShouldRetry returned false this iteration and
+            // the last request sent didn't cause an exception.
+            break;
+        }
     }
 
     internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
@@ -65,46 +181,33 @@ public class RequestRetryPolicy : PipelinePolicy
         cancellationToken.WaitHandle.WaitOne(time);
     }
 
-    /// <summary>
-    /// This method can be overriden to control whether a request should be retried. It will be called for any response where
-    /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
-    /// This method will only be called for sync methods.
-    /// </summary>
-    /// <param name="message">The message containing the request and response.</param>
-    /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
-    /// <returns>Whether or not to retry.</returns>
+    protected virtual void OnSendingRequest(PipelineMessage message) { }
+
+    protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message) => default;
+
+    protected virtual void OnRequestSent(PipelineMessage message) { }
+
+    protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
+
     protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
-        => ShouldRetrySyncOrAsync(message, exception);
-
-    /// <summary>
-    /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
-    /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
-    /// This method will only be called for async methods.
-    /// </summary>
-    /// <param name="message">The message containing the request and response.</param>
-    /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
-    /// <returns>Whether or not to retry.</returns>
-    protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-        => new(ShouldRetrySyncOrAsync(message, exception));
-
-    private bool ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception)
     {
-        TryGetRetryCount(message, out int retryCount);
-
-        if (retryCount >= _maxRetries)
+        if (TryGetRetryCount(message, out int retryCount) && retryCount >= _maxRetries)
         {
             // out of retries
             return false;
         }
 
-        if (message.MessageClassifier is MessageClassifier classifier)
-        {
-            return exception is null ?
-                IsRetriable(message) :
-                IsRetriable(message, exception);
-        }
+        return exception is null ?
+            IsRetriable(message) :
+            IsRetriable(message, exception);
+    }
 
-        return false;
+    protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+        => new(ShouldRetry(message, exception));
+
+    protected virtual TimeSpan GetDelay(PipelineMessage message) {
+        // TODO: implement
+        return TimeSpan.FromSeconds(1);
     }
 
     #region Retry Classifier
@@ -148,6 +251,7 @@ public class RequestRetryPolicy : PipelinePolicy
 
     #endregion
 
+    #region RetryCount Property
     private static void SetRetryCount(PipelineMessage message, int retryCount)
         => message.SetProperty(typeof(RetryCountPropertyKey), retryCount);
 
@@ -164,4 +268,5 @@ public class RequestRetryPolicy : PipelinePolicy
     }
 
     private struct RetryCountPropertyKey { }
+    #endregion
 }
