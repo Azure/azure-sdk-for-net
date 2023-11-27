@@ -3,6 +3,7 @@
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models;
 using System.IO;

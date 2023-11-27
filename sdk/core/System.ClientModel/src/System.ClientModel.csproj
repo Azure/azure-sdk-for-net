@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\TrimmingAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
