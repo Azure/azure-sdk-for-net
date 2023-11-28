@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class representing the NginxCertificate data model. </summary>
     public partial class NginxCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateData"/>. </summary>
         public NginxCertificateData()
         {
         }

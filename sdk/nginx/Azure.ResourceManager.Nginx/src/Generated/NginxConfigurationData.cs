@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class representing the NginxConfiguration data model. </summary>
     public partial class NginxConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationData"/>. </summary>
         public NginxConfigurationData()
         {
         }

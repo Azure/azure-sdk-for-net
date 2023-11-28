@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentScalingProperties. </summary>
     internal partial class NginxDeploymentScalingProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentScalingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         public NginxDeploymentScalingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentScalingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         /// <param name="capacity"></param>
         internal NginxDeploymentScalingProperties(int? capacity)
         {

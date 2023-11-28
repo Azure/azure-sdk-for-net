@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentUserProfile. </summary>
     internal partial class NginxDeploymentUserProfile
     {
-        /// <summary> Initializes a new instance of NginxDeploymentUserProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUserProfile"/>. </summary>
         public NginxDeploymentUserProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentUserProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUserProfile"/>. </summary>
         /// <param name="preferredEmail"> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </param>
         internal NginxDeploymentUserProfile(string preferredEmail)
         {
