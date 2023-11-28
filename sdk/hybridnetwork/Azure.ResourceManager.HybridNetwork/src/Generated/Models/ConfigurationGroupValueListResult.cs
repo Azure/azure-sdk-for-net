@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Response for hybrid configurationGroups API service call. </summary>
     internal partial class ConfigurationGroupValueListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupValueListResult"/>. </summary>
         internal ConfigurationGroupValueListResult()
         {
             Value = new ChangeTrackingList<ConfigurationGroupValueData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupValueListResult"/>. </summary>
         /// <param name="value"> A list of hybrid configurationGroups. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ConfigurationGroupValueListResult(IReadOnlyList<ConfigurationGroupValueData> value, string nextLink)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The DataLakeStoreAccountCreateOrUpdateContent. </summary>
     public partial class DataLakeStoreAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The resource location. </param>
         public DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location)
         {

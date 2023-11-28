@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> SSL certificate information. </summary>
     public partial class CertificateInformation
     {
-        /// <summary> Initializes a new instance of CertificateInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
         /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="subject"> Subject of the certificate. </param>

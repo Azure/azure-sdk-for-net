@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Encryption key containing details about key to encrypt different keys. </summary>
     public partial class DataBoxKeyEncryptionKey
     {
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         public DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType)
         {
             KekType = kekType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
         /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>

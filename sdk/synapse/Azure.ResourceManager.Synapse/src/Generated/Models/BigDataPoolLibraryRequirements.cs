@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Library requirements for a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolLibraryRequirements
     {
-        /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryRequirements"/>. </summary>
         public BigDataPoolLibraryRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryRequirements"/>. </summary>
         /// <param name="updatedOn"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
         /// <param name="filename"> The filename of the library requirements file. </param>

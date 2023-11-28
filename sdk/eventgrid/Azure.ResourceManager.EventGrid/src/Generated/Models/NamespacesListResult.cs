@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Namespaces operation. </summary>
     internal partial class NamespacesListResult
     {
-        /// <summary> Initializes a new instance of NamespacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespacesListResult"/>. </summary>
         internal NamespacesListResult()
         {
             Value = new ChangeTrackingList<EventGridNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of NamespacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespacesListResult"/>. </summary>
         /// <param name="value"> A collection of namespaces. </param>
         /// <param name="nextLink"> A link for the next page of namespaces. </param>
         internal NamespacesListResult(IReadOnlyList<EventGridNamespaceData> value, string nextLink)

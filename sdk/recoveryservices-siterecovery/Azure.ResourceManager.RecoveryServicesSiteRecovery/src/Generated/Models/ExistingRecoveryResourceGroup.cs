@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Existing recovery resource group input. </summary>
     public partial class ExistingRecoveryResourceGroup : RecoveryResourceGroupCustomDetails
     {
-        /// <summary> Initializes a new instance of ExistingRecoveryResourceGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExistingRecoveryResourceGroup"/>. </summary>
         public ExistingRecoveryResourceGroup()
         {
             ResourceType = "Existing";
         }
 
-        /// <summary> Initializes a new instance of ExistingRecoveryResourceGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExistingRecoveryResourceGroup"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
         internal ExistingRecoveryResourceGroup(string resourceType, ResourceIdentifier recoveryResourceGroupId) : base(resourceType)

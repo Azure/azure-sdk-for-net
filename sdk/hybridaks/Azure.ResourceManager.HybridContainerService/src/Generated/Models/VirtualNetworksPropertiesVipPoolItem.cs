@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworksPropertiesVipPoolItem. </summary>
     public partial class VirtualNetworksPropertiesVipPoolItem
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVipPoolItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesVipPoolItem"/>. </summary>
         public VirtualNetworksPropertiesVipPoolItem()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVipPoolItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesVipPoolItem"/>. </summary>
         /// <param name="endIP"> Ending IP address for the IP Pool. </param>
         /// <param name="startIP"> Starting IP address for the IP Pool. </param>
         internal VirtualNetworksPropertiesVipPoolItem(string endIP, string startIP)

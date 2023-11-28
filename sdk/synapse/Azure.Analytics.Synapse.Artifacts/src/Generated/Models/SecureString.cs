@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks '*' during Get or List API calls. </summary>
     public partial class SecureString : SecretBase
     {
-        /// <summary> Initializes a new instance of SecureString. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureString"/>. </summary>
         /// <param name="value"> Value of secure string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecureString(string value)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SecureString";
         }
 
-        /// <summary> Initializes a new instance of SecureString. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureString"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
         /// <param name="value"> Value of secure string. </param>
         internal SecureString(string type, string value) : base(type)

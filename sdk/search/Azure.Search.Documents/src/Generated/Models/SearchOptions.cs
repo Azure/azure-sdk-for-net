@@ -14,7 +14,7 @@ namespace Azure.Search.Documents
     /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
     public partial class SearchOptions
     {
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
             Facets = new ChangeTrackingList<string>();

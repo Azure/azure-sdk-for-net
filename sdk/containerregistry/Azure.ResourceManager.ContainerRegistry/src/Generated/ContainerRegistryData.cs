@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             PrivateEndpointConnections = new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

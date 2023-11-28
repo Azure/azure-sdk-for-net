@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of the disk to detach. </summary>
     public partial class DevTestLabDiskDetachContent
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskDetachContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskDetachContent"/>. </summary>
         public DevTestLabDiskDetachContent()
         {
         }

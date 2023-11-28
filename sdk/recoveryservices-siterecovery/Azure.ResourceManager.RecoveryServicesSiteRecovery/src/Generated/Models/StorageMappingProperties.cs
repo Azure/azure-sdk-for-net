@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Storage mapping input properties. </summary>
     internal partial class StorageMappingProperties
     {
-        /// <summary> Initializes a new instance of StorageMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
         public StorageMappingProperties()
         {
         }

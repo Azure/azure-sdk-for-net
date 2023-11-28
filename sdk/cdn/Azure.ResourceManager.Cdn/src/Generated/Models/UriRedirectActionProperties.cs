@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the url redirect action. </summary>
     public partial class UriRedirectActionProperties
     {
-        /// <summary> Initializes a new instance of UriRedirectActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRedirectActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
         public UriRedirectActionProperties(UriRedirectActionType actionType, RedirectType redirectType)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RedirectType = redirectType;
         }
 
-        /// <summary> Initializes a new instance of UriRedirectActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRedirectActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
         /// <param name="destinationProtocol"> Protocol to use for the redirect. The default value is MatchRequest. </param>

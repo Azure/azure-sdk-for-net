@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The response of a CommunicationsGateway list operation. </summary>
     internal partial class VoiceServicesCommunicationsGatewayListResult
     {
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayListResult"/>. </summary>
         /// <param name="value"> The CommunicationsGateway items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VoiceServicesCommunicationsGatewayListResult(IEnumerable<VoiceServicesCommunicationsGatewayData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayListResult"/>. </summary>
         /// <param name="value"> The CommunicationsGateway items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal VoiceServicesCommunicationsGatewayListResult(IReadOnlyList<VoiceServicesCommunicationsGatewayData> value, Uri nextLink)

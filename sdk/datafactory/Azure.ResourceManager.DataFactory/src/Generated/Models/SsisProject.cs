@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis project. </summary>
     public partial class SsisProject : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisProject"/>. </summary>
         internal SsisProject()
         {
             EnvironmentRefs = new ChangeTrackingList<SsisEnvironmentReference>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MetadataType = SsisObjectMetadataType.Project;
         }
 
-        /// <summary> Initializes a new instance of SsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisProject"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

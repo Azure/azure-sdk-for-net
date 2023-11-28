@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterProjectEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevCenterProjectEnvironmentData(AzureLocation location) : base(location)
         {
             UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

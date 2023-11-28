@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the azure function destination for an event subscription. </summary>
     public partial class AzureFunctionEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
         public AzureFunctionEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.AzureFunction;
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Azure Function destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class FrontDoorWebApplicationFirewallPolicyPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyPatch"/>. </summary>
         public FrontDoorWebApplicationFirewallPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

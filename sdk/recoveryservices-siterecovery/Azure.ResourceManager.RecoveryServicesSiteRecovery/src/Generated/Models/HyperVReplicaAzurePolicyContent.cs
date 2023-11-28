@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V Replica Azure specific input for creating a protection profile. </summary>
     public partial class HyperVReplicaAzurePolicyContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePolicyContent"/>. </summary>
         public HyperVReplicaAzurePolicyContent()
         {
             StorageAccounts = new ChangeTrackingList<string>();

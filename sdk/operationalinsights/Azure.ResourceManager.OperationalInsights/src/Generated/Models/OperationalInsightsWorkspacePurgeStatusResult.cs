@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Response containing status for a specific purge operation. </summary>
     public partial class OperationalInsightsWorkspacePurgeStatusResult
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeStatusResult"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         internal OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status)
         {

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Gateway key regeneration request contract properties. </summary>
     public partial class GatewayKeyRegenerateContent
     {
-        /// <summary> Initializes a new instance of GatewayKeyRegenerateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
         public GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType)
         {

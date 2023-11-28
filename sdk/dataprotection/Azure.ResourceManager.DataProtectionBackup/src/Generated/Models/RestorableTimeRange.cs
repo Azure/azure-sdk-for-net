@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The RestorableTimeRange. </summary>
     public partial class RestorableTimeRange
     {
-        /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/>. </summary>
         /// <param name="startOn"> Start time for the available restore range. </param>
         /// <param name="endOn"> End time for the available restore range. </param>
         public RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn)
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/>. </summary>
         /// <param name="startOn"> Start time for the available restore range. </param>
         /// <param name="endOn"> End time for the available restore range. </param>
         /// <param name="objectType"></param>

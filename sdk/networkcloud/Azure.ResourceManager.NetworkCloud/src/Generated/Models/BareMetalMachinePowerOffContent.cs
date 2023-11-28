@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachinePowerOffParameters represents the body of the request to power off bare metal machine. </summary>
     public partial class BareMetalMachinePowerOffContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachinePowerOffContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
         public BareMetalMachinePowerOffContent()
         {
         }

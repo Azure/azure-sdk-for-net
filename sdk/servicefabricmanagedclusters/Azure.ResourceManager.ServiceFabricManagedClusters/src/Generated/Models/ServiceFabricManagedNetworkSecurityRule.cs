@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a network security rule. </summary>
     public partial class ServiceFabricManagedNetworkSecurityRule
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedNetworkSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="access"> The network traffic is allowed or denied. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Direction = direction;
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedNetworkSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="description"> Network security rule description. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>

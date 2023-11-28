@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Represents cluster name availability. </summary>
     public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityResult"/>. </summary>
         internal CosmosDBForPostgreSqlClusterNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create Data Transfer Job. </summary>
     public partial class DataTransferJobGetResultCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of DataTransferJobGetResultCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Data Transfer Create Job Properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataTransferJobGetResultCreateOrUpdateContent(DataTransferJobProperties properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataTransferJobGetResultCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

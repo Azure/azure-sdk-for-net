@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsVirtualNetworkRule : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsVirtualNetworkRule"/>. </summary>
         internal DataLakeAnalyticsVirtualNetworkRule()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsVirtualNetworkRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

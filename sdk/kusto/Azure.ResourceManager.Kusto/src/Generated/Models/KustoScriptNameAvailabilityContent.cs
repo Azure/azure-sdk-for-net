@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A script name availability request. </summary>
     public partial class KustoScriptNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoScriptNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Script name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoScriptNameAvailabilityContent(string name)

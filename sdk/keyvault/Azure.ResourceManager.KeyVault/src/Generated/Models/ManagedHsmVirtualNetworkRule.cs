@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A rule governing the accessibility of a managed hsm pool from a specific virtual network. </summary>
     public partial class ManagedHsmVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of ManagedHsmVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
         /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)

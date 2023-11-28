@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Workflow model collection. </summary>
     internal partial class DataReplicationWorkflowListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationWorkflowListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowListResult"/>. </summary>
         internal DataReplicationWorkflowListResult()
         {
             Value = new ChangeTrackingList<DataReplicationWorkflowData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationWorkflowListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of workflows. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationWorkflowListResult(IReadOnlyList<DataReplicationWorkflowData> value, string nextLink)

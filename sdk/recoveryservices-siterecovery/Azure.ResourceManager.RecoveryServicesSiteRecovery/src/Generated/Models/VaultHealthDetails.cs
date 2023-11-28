@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Vault health details definition. </summary>
     public partial class VaultHealthDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultHealthDetails"/>. </summary>
         internal VaultHealthDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultHealthDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnServerConfigurationsResult
     {
-        /// <summary> Initializes a new instance of ListVpnServerConfigurationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnServerConfigurationsResult"/>. </summary>
         internal ListVpnServerConfigurationsResult()
         {
             Value = new ChangeTrackingList<VpnServerConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnServerConfigurationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnServerConfigurationsResult"/>. </summary>
         /// <param name="value"> List of VpnServerConfigurations. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal ListVpnServerConfigurationsResult(IReadOnlyList<VpnServerConfigurationData> value, string nextLink)

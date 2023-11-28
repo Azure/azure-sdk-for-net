@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a path that is recommended to be allowed and its properties. </summary>
     public partial class PathRecommendation
     {
-        /// <summary> Initializes a new instance of PathRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathRecommendation"/>. </summary>
         public PathRecommendation()
         {
             UserSids = new ChangeTrackingList<string>();
             Usernames = new ChangeTrackingList<UserRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of PathRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathRecommendation"/>. </summary>
         /// <param name="path"> The full path of the file, or an identifier of the application. </param>
         /// <param name="action"> The recommendation action of the machine or rule. </param>
         /// <param name="iotSecurityRecommendationType"> The type of IoT Security recommendation. </param>

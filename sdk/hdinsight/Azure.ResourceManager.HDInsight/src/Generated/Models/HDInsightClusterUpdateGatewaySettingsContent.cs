@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The update gateway settings request parameters. </summary>
     public partial class HDInsightClusterUpdateGatewaySettingsContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateGatewaySettingsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
         public HDInsightClusterUpdateGatewaySettingsContent()
         {
         }

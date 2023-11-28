@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
     public partial class VirtualMachineScaleSetIPConfiguration : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetIPConfiguration(string name)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>

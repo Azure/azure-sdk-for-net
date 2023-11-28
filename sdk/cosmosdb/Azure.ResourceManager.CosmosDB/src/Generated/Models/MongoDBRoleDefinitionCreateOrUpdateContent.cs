@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB Mongo Role Definition. </summary>
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MongoDBRoleDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionCreateOrUpdateContent"/>. </summary>
         public MongoDBRoleDefinitionCreateOrUpdateContent()
         {
             Privileges = new ChangeTrackingList<MongoDBPrivilege>();

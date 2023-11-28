@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
     internal partial class EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
     {
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink"/>. </summary>
         public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(ResourceIdentifier id)
         {

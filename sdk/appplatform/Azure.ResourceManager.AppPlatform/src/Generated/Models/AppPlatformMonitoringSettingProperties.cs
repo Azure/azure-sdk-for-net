@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Monitoring Setting properties payload. </summary>
     public partial class AppPlatformMonitoringSettingProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingProperties"/>. </summary>
         public AppPlatformMonitoringSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Monitoring Setting. </param>
         /// <param name="error"> Error when apply Monitoring Setting changes. </param>
         /// <param name="isTraceEnabled"> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </param>

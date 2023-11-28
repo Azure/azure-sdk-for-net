@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)

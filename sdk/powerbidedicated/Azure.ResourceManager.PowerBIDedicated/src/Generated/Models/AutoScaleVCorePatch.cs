@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Update request specification. </summary>
     public partial class AutoScaleVCorePatch
     {
-        /// <summary> Initializes a new instance of AutoScaleVCorePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCorePatch"/>. </summary>
         public AutoScaleVCorePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

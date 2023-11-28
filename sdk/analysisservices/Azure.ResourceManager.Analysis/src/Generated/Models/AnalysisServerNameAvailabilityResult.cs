@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> The checking result of server name availability. </summary>
     public partial class AnalysisServerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerNameAvailabilityResult"/>. </summary>
         internal AnalysisServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicator of available of the server name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>

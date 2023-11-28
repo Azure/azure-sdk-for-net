@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the appliance resource. </summary>
     public partial class ApplianceResourceDetails
     {
-        /// <summary> Initializes a new instance of ApplianceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceResourceDetails"/>. </summary>
         internal ApplianceResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceResourceDetails"/>. </summary>
         /// <param name="capacity"> A value indicating the total capacity of appliance resource. </param>
         /// <param name="processUtilization"> A value indicating the utilization percentage by gateway agent on appliance. </param>
         /// <param name="totalUtilization"> A value indicating the total utilization percentage for all processes on the appliance. </param>

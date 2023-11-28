@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ContainerEndpoint. </summary>
     public partial class ContainerEndpoint
     {
-        /// <summary> Initializes a new instance of ContainerEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEndpoint"/>. </summary>
         public ContainerEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEndpoint"/>. </summary>
         /// <param name="protocol"> Protocol over which communication will happen over this endpoint. </param>
         /// <param name="name"> Name of the Endpoint. </param>
         /// <param name="target"> Application port inside the container. </param>

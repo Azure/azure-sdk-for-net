@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A polling status update or final response payload for an image operation. </summary>
     internal partial class BatchImageGenerationOperationResponse
     {
-        /// <summary> Initializes a new instance of BatchImageGenerationOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchImageGenerationOperationResponse"/>. </summary>
         /// <param name="id"> The ID of the operation. </param>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="status"> The status of the operation. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of BatchImageGenerationOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchImageGenerationOperationResponse"/>. </summary>
         /// <param name="id"> The ID of the operation. </param>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="expires"> A timestamp when this operation and its associated images expire and will be deleted (in unix epochs). </param>

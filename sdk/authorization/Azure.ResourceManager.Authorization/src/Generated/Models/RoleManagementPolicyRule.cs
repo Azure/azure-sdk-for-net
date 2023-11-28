@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// </summary>
     public abstract partial class RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRule"/>. </summary>
         protected RoleManagementPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

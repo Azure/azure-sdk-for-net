@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure backup rule. </summary>
     public partial class DataProtectionBackupRule : DataProtectionBasePolicyRule
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="dataStore"> DataStoreInfo base. </param>
         /// <param name="trigger">
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupRule";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
         /// <param name="backupParameters">

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryOverrideTaskStepProperties. </summary>
     public partial class ContainerRegistryOverrideTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryOverrideTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryOverrideTaskStepProperties"/>. </summary>
         public ContainerRegistryOverrideTaskStepProperties()
         {
             Arguments = new ChangeTrackingList<ContainerRegistryRunArgument>();
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryOverrideTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryOverrideTaskStepProperties"/>. </summary>
         /// <param name="contextPath"> The source context against which run has to be queued. </param>
         /// <param name="file"> The file against which run has to be queued. </param>
         /// <param name="arguments">

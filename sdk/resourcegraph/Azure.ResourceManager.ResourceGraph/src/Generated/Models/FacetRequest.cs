@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> A request to compute additional statistics (facets) over the query results. </summary>
     public partial class FacetRequest
     {
-        /// <summary> Initializes a new instance of FacetRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetRequest"/>. </summary>
         /// <param name="expression"> The column or list of columns to summarize by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public FacetRequest(string expression)

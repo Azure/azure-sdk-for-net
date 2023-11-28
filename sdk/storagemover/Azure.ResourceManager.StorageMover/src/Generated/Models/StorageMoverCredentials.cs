@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// </summary>
     public abstract partial class StorageMoverCredentials
     {
-        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/>. </summary>
         protected StorageMoverCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/>. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
         internal StorageMoverCredentials(CredentialType credentialType)
         {

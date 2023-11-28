@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster pool compute profile. </summary>
     public partial class ClusterPoolComputeProfile
     {
-        /// <summary> Initializes a new instance of ClusterPoolComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolComputeProfile"/>. </summary>
         /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public ClusterPoolComputeProfile(string vmSize)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             VmSize = vmSize;
         }
 
-        /// <summary> Initializes a new instance of ClusterPoolComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolComputeProfile"/>. </summary>
         /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <param name="count"> The number of virtual machines. </param>
         internal ClusterPoolComputeProfile(string vmSize, int? count)

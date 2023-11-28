@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Shipping address where customer wishes to receive the device. </summary>
     public partial class DataBoxShippingAddress
     {
-        /// <summary> Initializes a new instance of DataBoxShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <param name="postalCode"> Postal code. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             PostalCode = postalCode;
         }
 
-        /// <summary> Initializes a new instance of DataBoxShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>

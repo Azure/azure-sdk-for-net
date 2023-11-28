@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> ResourceMoveDetails will be returned in response to GetResource call from ARM. </summary>
     public partial class BackupVaultResourceMoveDetails
     {
-        /// <summary> Initializes a new instance of BackupVaultResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveDetails"/>. </summary>
         internal BackupVaultResourceMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveDetails"/>. </summary>
         /// <param name="operationId"> CorrelationId of latest ResourceMove operation attempted. </param>
         /// <param name="startOn"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
         /// <param name="completeOn"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>

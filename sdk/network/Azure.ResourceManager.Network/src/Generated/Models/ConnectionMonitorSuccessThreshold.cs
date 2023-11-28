@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the threshold for declaring a test successful. </summary>
     public partial class ConnectionMonitorSuccessThreshold
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorSuccessThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSuccessThreshold"/>. </summary>
         public ConnectionMonitorSuccessThreshold()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorSuccessThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSuccessThreshold"/>. </summary>
         /// <param name="checksFailedPercent"> The maximum percentage of failed checks permitted for a test to evaluate as successful. </param>
         /// <param name="roundTripTimeMs"> The maximum round-trip time in milliseconds permitted for a test to evaluate as successful. </param>
         internal ConnectionMonitorSuccessThreshold(int? checksFailedPercent, float? roundTripTimeMs)

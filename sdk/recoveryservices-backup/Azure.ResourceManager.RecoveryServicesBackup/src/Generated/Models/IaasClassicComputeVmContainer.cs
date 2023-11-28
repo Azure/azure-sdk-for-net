@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup item representing a classic virtual machine. </summary>
     public partial class IaasClassicComputeVmContainer : IaasVmContainer
     {
-        /// <summary> Initializes a new instance of IaasClassicComputeVmContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmContainer"/>. </summary>
         public IaasClassicComputeVmContainer()
         {
             ContainerType = ProtectableContainerType.MicrosoftClassicComputeVirtualMachines;
         }
 
-        /// <summary> Initializes a new instance of IaasClassicComputeVmContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

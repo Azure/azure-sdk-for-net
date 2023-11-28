@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Capacity of the sku. </summary>
     public partial class DataBoxSkuCapacity
     {
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
         internal DataBoxSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
         internal DataBoxSkuCapacity(string usable, string maximum)

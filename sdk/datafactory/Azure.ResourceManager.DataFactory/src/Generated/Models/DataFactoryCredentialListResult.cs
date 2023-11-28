@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of credential resources. </summary>
     internal partial class DataFactoryCredentialListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialListResult"/>. </summary>
         /// <param name="value"> List of credentials. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryCredentialListResult(IEnumerable<DataFactoryManagedIdentityCredentialData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialListResult"/>. </summary>
         /// <param name="value"> List of credentials. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DataFactoryCredentialListResult(IReadOnlyList<DataFactoryManagedIdentityCredentialData> value, string nextLink)

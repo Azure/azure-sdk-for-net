@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SearchModelFactory
     {
-        /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryAnswerResult"/>. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
             return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of QueryCaptionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryCaptionResult"/>. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Models
             return new QueryCaptionResult(text, highlights, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of AutocompleteResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutocompleteResults"/>. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
         /// <returns> A new <see cref="Models.AutocompleteResults"/> instance for mocking. </returns>
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
             return new AutocompleteResults(coverage, results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits);
         }
 
-        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Models
             return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
         }
 
-        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
         }
 
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceCounters"/>. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
         /// <param name="indexerCounter"> Total number of indexers. </param>

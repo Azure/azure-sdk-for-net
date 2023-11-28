@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Extension Patch Request object. </summary>
     public partial class KubernetesClusterExtensionPatch
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionPatch"/>. </summary>
         public KubernetesClusterExtensionPatch()
         {
             ConfigurationSettings = new ChangeTrackingDictionary<string, string>();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan planned failover input. </summary>
     public partial class RecoveryPlanPlannedFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanPlannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanPlannedFailoverContent"/>. </summary>
         /// <param name="properties"> The recovery plan planned failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RecoveryPlanPlannedFailoverContent(RecoveryPlanPlannedFailoverProperties properties)

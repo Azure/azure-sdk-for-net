@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownContentKeyPolicyPlayReadyContentKeyLocation. </summary>
     internal partial class UnknownContentKeyPolicyPlayReadyContentKeyLocation : ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        /// <summary> Initializes a new instance of UnknownContentKeyPolicyPlayReadyContentKeyLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal UnknownContentKeyPolicyPlayReadyContentKeyLocation(string odataType) : base(odataType)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </summary>
     public partial class RecommendationUsageDetails
     {
-        /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationUsageDetails"/>. </summary>
         public RecommendationUsageDetails()
         {
             Charges = new ChangeTrackingList<decimal>();
         }
 
-        /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationUsageDetails"/>. </summary>
         /// <param name="usageGrain"> The grain of the usage. Supported values: 'Hourly'. </param>
         /// <param name="charges"> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
         internal RecommendationUsageDetails(BenefitRecommendationUsageGrain? usageGrain, IReadOnlyList<decimal> charges)

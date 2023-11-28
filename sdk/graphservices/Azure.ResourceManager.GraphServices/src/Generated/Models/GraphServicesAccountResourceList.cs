@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> The list of accounts. </summary>
     internal partial class GraphServicesAccountResourceList
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceList"/>. </summary>
         internal GraphServicesAccountResourceList()
         {
             Value = new ChangeTrackingList<GraphServicesAccountResourceData>();
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceList"/>. </summary>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="value"> The list of recommendations. </param>
         internal GraphServicesAccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value)

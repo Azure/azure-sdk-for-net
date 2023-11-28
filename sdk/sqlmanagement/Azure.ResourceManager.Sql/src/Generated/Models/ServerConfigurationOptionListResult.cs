@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server configuration options. </summary>
     internal partial class ServerConfigurationOptionListResult
     {
-        /// <summary> Initializes a new instance of ServerConfigurationOptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationOptionListResult"/>. </summary>
         internal ServerConfigurationOptionListResult()
         {
             Value = new ChangeTrackingList<ManagedInstanceServerConfigurationOptionData>();
         }
 
-        /// <summary> Initializes a new instance of ServerConfigurationOptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationOptionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ServerConfigurationOptionListResult(IReadOnlyList<ManagedInstanceServerConfigurationOptionData> value, string nextLink)

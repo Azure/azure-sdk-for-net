@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Twin reference input parameter. This is an optional parameter. </summary>
     public partial class RoutingTwin
     {
-        /// <summary> Initializes a new instance of RoutingTwin. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingTwin"/>. </summary>
         public RoutingTwin()
         {
         }

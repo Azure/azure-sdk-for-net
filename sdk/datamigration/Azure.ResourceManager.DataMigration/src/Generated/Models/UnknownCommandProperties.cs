@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownCommandProperties. </summary>
     internal partial class UnknownCommandProperties : CommandProperties
     {
-        /// <summary> Initializes a new instance of UnknownCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>

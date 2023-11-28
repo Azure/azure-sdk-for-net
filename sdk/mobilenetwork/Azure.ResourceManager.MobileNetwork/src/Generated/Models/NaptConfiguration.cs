@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The network address and port translation settings to use for the attached data network. </summary>
     public partial class NaptConfiguration
     {
-        /// <summary> Initializes a new instance of NaptConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NaptConfiguration"/>. </summary>
         public NaptConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NaptConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NaptConfiguration"/>. </summary>
         /// <param name="enabled"> Whether NAPT is enabled for connections to this attached data network. </param>
         /// <param name="portRange">
         /// Range of port numbers to use as translated ports on each translated address.

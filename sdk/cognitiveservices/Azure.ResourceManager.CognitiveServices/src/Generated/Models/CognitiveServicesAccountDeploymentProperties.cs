@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties of Cognitive Services account deployment. </summary>
     public partial class CognitiveServicesAccountDeploymentProperties
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         public CognitiveServicesAccountDeploymentProperties()
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
             RateLimits = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. </param>

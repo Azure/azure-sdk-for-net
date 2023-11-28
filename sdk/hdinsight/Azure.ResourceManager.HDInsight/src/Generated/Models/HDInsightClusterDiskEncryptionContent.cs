@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Disk Encryption Cluster request parameters. </summary>
     public partial class HDInsightClusterDiskEncryptionContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDiskEncryptionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDiskEncryptionContent"/>. </summary>
         public HDInsightClusterDiskEncryptionContent()
         {
         }

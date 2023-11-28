@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The resource of the configuration or data needed to onboard the machine to MDE. </summary>
     public partial class MdeOnboarding : ResourceData
     {
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboarding"/>. </summary>
         public MdeOnboarding()
         {
         }
 
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboarding"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

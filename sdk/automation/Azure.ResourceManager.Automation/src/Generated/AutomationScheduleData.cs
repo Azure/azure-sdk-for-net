@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleData"/>. </summary>
         public AutomationScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

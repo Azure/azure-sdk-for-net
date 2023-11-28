@@ -14,7 +14,7 @@ namespace Azure.Maps.Routing.Models
     /// </summary>
     internal abstract partial class GeoJsonObject
     {
-        /// <summary> Initializes a new instance of GeoJsonObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObject"/>. </summary>
         protected GeoJsonObject()
         {
         }

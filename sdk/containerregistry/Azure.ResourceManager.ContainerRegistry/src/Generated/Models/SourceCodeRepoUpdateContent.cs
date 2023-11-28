@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating the source code repository. </summary>
     public partial class SourceCodeRepoUpdateContent
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoUpdateContent"/>. </summary>
         public SourceCodeRepoUpdateContent()
         {
         }

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define an API key of an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentAPIKey
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKey"/>. </summary>
         internal ApplicationInsightsComponentAPIKey()
         {
             LinkedReadProperties = new ChangeTrackingList<string>();
             LinkedWriteProperties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKey"/>. </summary>
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
         /// <param name="createdDate"> The create date of this API key. </param>

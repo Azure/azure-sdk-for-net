@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input values. </summary>
     public partial class IotHubNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of IotHubNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the IoT hub to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubNameAvailabilityContent(string name)

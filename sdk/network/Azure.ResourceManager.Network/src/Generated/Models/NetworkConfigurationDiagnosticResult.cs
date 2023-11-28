@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network configuration diagnostic result corresponded to provided traffic query. </summary>
     public partial class NetworkConfigurationDiagnosticResult
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticResult"/>. </summary>
         internal NetworkConfigurationDiagnosticResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticResult"/>. </summary>
         /// <param name="profile"> Network configuration diagnostic profile. </param>
         /// <param name="networkSecurityGroupResult"> Network security group result. </param>
         internal NetworkConfigurationDiagnosticResult(NetworkConfigurationDiagnosticProfile profile, NetworkSecurityGroupResult networkSecurityGroupResult)

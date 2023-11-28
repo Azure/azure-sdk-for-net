@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Spark user plugins spec. </summary>
     internal partial class SparkUserPluginListResult
     {
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         public SparkUserPluginListResult()
         {
             Plugins = new ChangeTrackingList<SparkUserPlugin>();
         }
 
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         /// <param name="plugins"> Spark user plugins. </param>
         internal SparkUserPluginListResult(IList<SparkUserPlugin> plugins)
         {

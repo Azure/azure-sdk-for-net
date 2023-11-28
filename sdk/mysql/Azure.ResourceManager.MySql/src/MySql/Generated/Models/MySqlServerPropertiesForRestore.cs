@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The properties used to create a new server by restoring from a backup. </summary>
     public partial class MySqlServerPropertiesForRestore : MySqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of MySqlServerPropertiesForRestore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForRestore"/>. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
         /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>

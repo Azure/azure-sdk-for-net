@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
     internal partial class CosmosDBUniqueKeyPolicy
     {
-        /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKeyPolicy"/>. </summary>
         public CosmosDBUniqueKeyPolicy()
         {
             UniqueKeys = new ChangeTrackingList<CosmosDBUniqueKey>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKeyPolicy"/>. </summary>
         /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
         internal CosmosDBUniqueKeyPolicy(IList<CosmosDBUniqueKey> uniqueKeys)
         {

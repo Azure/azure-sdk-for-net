@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The group by expression to be used in the query. </summary>
     public partial class QueryGrouping
     {
-        /// <summary> Initializes a new instance of QueryGrouping. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryGrouping"/>. </summary>
         /// <param name="columnType"> Has type of the column to group. </param>
         /// <param name="name"> The name of the column to group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

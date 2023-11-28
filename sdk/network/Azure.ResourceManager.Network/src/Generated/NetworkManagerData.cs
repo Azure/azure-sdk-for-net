@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkManagerData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         public NetworkManagerData()
         {
             NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

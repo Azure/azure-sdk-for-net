@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Data Product Information. </summary>
     public partial class DataProductInformation
     {
-        /// <summary> Initializes a new instance of DataProductInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductInformation"/>. </summary>
         /// <param name="dataProductName"> Name of data product. </param>
         /// <param name="description"> Description about data product. </param>
         /// <param name="dataProductVersions"> Version information of data product. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             DataProductVersions = dataProductVersions.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProductInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductInformation"/>. </summary>
         /// <param name="dataProductName"> Name of data product. </param>
         /// <param name="description"> Description about data product. </param>
         /// <param name="dataProductVersions"> Version information of data product. </param>

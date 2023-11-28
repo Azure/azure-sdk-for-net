@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppVolumeReplication
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Dynamic delivery attribute mapping details. </summary>
     public partial class DynamicDeliveryAttributeMapping : DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of DynamicDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicDeliveryAttributeMapping"/>. </summary>
         public DynamicDeliveryAttributeMapping()
         {
             MappingType = DeliveryAttributeMappingType.Dynamic;
         }
 
-        /// <summary> Initializes a new instance of DynamicDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
         /// <param name="sourceField"> JSON path in the event which contains attribute value. </param>

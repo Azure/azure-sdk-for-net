@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check Domain availability parameter. </summary>
     public partial class CognitiveServicesDomainAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityContent"/>. </summary>
         /// <param name="subdomainName"> The subdomain name to use. </param>
         /// <param name="resourceType"> The Type of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainName"/> is null. </exception>

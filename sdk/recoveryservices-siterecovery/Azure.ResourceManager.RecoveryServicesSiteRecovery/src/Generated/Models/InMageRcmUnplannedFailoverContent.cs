@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input for unplanned failover. </summary>
     public partial class InMageRcmUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmUnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUnplannedFailoverContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public InMageRcmUnplannedFailoverContent(string performShutdown)

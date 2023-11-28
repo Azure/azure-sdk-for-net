@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Reverse replication input properties. </summary>
     public partial class ReverseReplicationProperties
     {
-        /// <summary> Initializes a new instance of ReverseReplicationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationProperties"/>. </summary>
         public ReverseReplicationProperties()
         {
         }

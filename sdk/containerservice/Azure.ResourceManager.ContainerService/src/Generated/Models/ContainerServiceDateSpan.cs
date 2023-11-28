@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For example, between '2022-12-23' and '2023-01-05'. </summary>
     public partial class ContainerServiceDateSpan
     {
-        /// <summary> Initializes a new instance of ContainerServiceDateSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/>. </summary>
         /// <param name="start"> The start date of the date span. </param>
         /// <param name="end"> The end date of the date span. </param>
         public ContainerServiceDateSpan(DateTimeOffset start, DateTimeOffset end)

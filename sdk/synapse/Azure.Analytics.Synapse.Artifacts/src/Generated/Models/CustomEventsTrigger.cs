@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Trigger that runs every time a custom event is received. </summary>
     public partial class CustomEventsTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "CustomEventsTrigger";
         }
 
-        /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

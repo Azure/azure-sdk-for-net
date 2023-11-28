@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the Azure Storage account to add.
         /// Serialized Name: AddStorageAccountWithAccountParameters.name

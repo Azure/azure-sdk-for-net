@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Details about a user assigned identity. </summary>
     public partial class ContainerServiceUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of ContainerServiceUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUserAssignedIdentity"/>. </summary>
         public ContainerServiceUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUserAssignedIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>

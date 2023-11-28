@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container exec request. </summary>
     public partial class ContainerExecContent
     {
-        /// <summary> Initializes a new instance of ContainerExecContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExecContent"/>. </summary>
         public ContainerExecContent()
         {
         }

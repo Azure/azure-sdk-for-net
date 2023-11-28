@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Shared access keys of the Topic. </summary>
     public partial class TopicSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of TopicSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSharedAccessKeys"/>. </summary>
         internal TopicSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the topic. </param>
         /// <param name="key2"> Shared access key2 for the topic. </param>
         internal TopicSharedAccessKeys(string key1, string key2)

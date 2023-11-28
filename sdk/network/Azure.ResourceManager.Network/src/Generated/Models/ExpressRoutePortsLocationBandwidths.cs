@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Real-time inventory of available ExpressRoute port bandwidths. </summary>
     public partial class ExpressRoutePortsLocationBandwidths
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortsLocationBandwidths. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationBandwidths"/>. </summary>
         public ExpressRoutePortsLocationBandwidths()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortsLocationBandwidths. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationBandwidths"/>. </summary>
         /// <param name="offerName"> Bandwidth descriptive name. </param>
         /// <param name="valueInGbps"> Bandwidth value in Gbps. </param>
         internal ExpressRoutePortsLocationBandwidths(string offerName, int? valueInGbps)

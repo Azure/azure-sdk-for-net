@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningCustomModelJobOutput. </summary>
     public partial class MachineLearningCustomModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         public MachineLearningCustomModelJobOutput()
         {
             JobOutputType = JobOutputType.CustomModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="assetName"> Output Asset Name. </param>

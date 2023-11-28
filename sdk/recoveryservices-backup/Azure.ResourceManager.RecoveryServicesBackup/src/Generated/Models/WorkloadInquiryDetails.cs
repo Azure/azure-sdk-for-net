@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details of an inquired protectable item. </summary>
     public partial class WorkloadInquiryDetails
     {
-        /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadInquiryDetails"/>. </summary>
         public WorkloadInquiryDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadInquiryDetails"/>. </summary>
         /// <param name="workloadInquiryDetailsType"> Type of the Workload such as SQL, Oracle etc. </param>
         /// <param name="itemCount"> Contains the protectable item Count inside this Container. </param>
         /// <param name="inquiryValidation"> Inquiry validation such as permissions and other backup validations. </param>

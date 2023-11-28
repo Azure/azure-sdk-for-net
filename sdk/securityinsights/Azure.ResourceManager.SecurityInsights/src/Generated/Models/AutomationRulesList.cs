@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRulesList. </summary>
     internal partial class AutomationRulesList
     {
-        /// <summary> Initializes a new instance of AutomationRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
         internal AutomationRulesList()
         {
             Value = new ChangeTrackingList<SecurityInsightsAutomationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal AutomationRulesList(IReadOnlyList<SecurityInsightsAutomationRuleData> value, string nextLink)

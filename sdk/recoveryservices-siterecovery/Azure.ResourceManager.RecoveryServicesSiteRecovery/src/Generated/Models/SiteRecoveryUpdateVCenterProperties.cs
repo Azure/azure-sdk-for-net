@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an update vCenter request. </summary>
     public partial class SiteRecoveryUpdateVCenterProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryUpdateVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryUpdateVCenterProperties"/>. </summary>
         public SiteRecoveryUpdateVCenterProperties()
         {
         }

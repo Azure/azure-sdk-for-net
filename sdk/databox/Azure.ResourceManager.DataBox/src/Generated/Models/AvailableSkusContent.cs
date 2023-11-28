@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The filters for showing the available skus. </summary>
     public partial class AvailableSkusContent
     {
-        /// <summary> Initializes a new instance of AvailableSkusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableSkusContent"/>. </summary>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>

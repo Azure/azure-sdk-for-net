@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to create or update an endpoint. </summary>
     public partial class FrontDoorEndpointPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
         public FrontDoorEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

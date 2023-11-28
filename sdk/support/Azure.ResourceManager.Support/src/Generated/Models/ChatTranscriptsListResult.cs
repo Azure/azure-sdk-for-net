@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of Chat Transcripts resources. </summary>
     internal partial class ChatTranscriptsListResult
     {
-        /// <summary> Initializes a new instance of ChatTranscriptsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptsListResult"/>. </summary>
         internal ChatTranscriptsListResult()
         {
             Value = new ChangeTrackingList<ChatTranscriptDetailData>();
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptsListResult"/>. </summary>
         /// <param name="value"> List of Chat Transcripts resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Chat Transcripts resources. </param>
         internal ChatTranscriptsListResult(IReadOnlyList<ChatTranscriptDetailData> value, string nextLink)

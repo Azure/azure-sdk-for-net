@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> PartnerNamespace regenerate shared access key request. </summary>
     public partial class PartnerNamespaceRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Key name to regenerate (key1 or key2). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public PartnerNamespaceRegenerateKeyContent(string keyName)

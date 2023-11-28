@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Long Running Git Operation Results. </summary>
     public partial class GitOperationResultContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of GitOperationResultContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitOperationResultContractData"/>. </summary>
         public GitOperationResultContractData()
         {
             ActionLog = new ChangeTrackingList<OperationResultLogItemContract>();
         }
 
-        /// <summary> Initializes a new instance of GitOperationResultContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitOperationResultContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

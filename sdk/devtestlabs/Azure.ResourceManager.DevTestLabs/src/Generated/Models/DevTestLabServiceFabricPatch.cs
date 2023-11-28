@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A Service Fabric. </summary>
     public partial class DevTestLabServiceFabricPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabServiceFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricPatch"/>. </summary>
         public DevTestLabServiceFabricPatch()
         {
         }

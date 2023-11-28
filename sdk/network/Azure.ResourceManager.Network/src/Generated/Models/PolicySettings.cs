@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class PolicySettings
     {
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         public PolicySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         /// <param name="state"> The state of the policy. </param>
         /// <param name="mode"> The mode of the policy. </param>
         /// <param name="requestBodyCheck"> Whether to allow WAF to check request Body. </param>

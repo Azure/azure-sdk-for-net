@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of name availability. </summary>
     public partial class DeviceProvisioningServicesNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
         internal DeviceProvisioningServicesNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> specifies if a name is available or not. </param>
         /// <param name="reason"> specifies the reason a name is unavailable. </param>
         /// <param name="message"> message containing a detailed reason name is unavailable. </param>

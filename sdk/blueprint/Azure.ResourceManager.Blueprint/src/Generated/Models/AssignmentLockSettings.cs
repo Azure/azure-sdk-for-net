@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Defines how resources deployed by a blueprint assignment are locked. </summary>
     public partial class AssignmentLockSettings
     {
-        /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentLockSettings"/>. </summary>
         public AssignmentLockSettings()
         {
             ExcludedPrincipals = new ChangeTrackingList<string>();
             ExcludedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentLockSettings"/>. </summary>
         /// <param name="mode"> Lock mode. </param>
         /// <param name="excludedPrincipals"> List of AAD principals excluded from blueprint locks. Up to 5 principals are permitted. </param>
         /// <param name="excludedActions"> List of management operations that are excluded from blueprint locks. Up to 200 actions are permitted. If the lock mode is set to 'AllResourcesReadOnly', then the following actions are automatically appended to 'excludedActions': '*/read', 'Microsoft.Network/virtualNetworks/subnets/join/action' and 'Microsoft.Authorization/locks/delete'. If the lock mode is set to 'AllResourcesDoNotDelete', then the following actions are automatically appended to 'excludedActions': 'Microsoft.Authorization/locks/delete'. Duplicate actions will get removed. </param>

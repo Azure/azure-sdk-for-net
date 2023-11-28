@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Flink cluster catalog options. </summary>
     internal partial class FlinkCatalogOptions
     {
-        /// <summary> Initializes a new instance of FlinkCatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkCatalogOptions"/>. </summary>
         public FlinkCatalogOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of FlinkCatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkCatalogOptions"/>. </summary>
         /// <param name="hive"> Hive Catalog Option for Flink cluster. </param>
         internal FlinkCatalogOptions(FlinkHiveCatalogOption hive)
         {

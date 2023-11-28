@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Video group detail. </summary>
     public partial class VideoGroup
     {
-        /// <summary> Initializes a new instance of VideoGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
         public VideoGroup()
         {
             Videos = new ChangeTrackingList<VideoGroupVideo>();
         }
 
-        /// <summary> Initializes a new instance of VideoGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
         internal VideoGroup(IList<VideoGroupVideo> videos, string replacementKey)

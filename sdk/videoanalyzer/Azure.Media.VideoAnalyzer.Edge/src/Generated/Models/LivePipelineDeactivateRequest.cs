@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Deactivates an existing live pipeline. </summary>
     public partial class LivePipelineDeactivateRequest : MethodRequestEmptyBodyBase
     {
-        /// <summary> Initializes a new instance of LivePipelineDeactivateRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeactivateRequest"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipelineDeactivateRequest(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "livePipelineDeactivate";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineDeactivateRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeactivateRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Resource name. </param>

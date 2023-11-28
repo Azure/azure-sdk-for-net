@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LoggingRule. </summary>
     public partial class LoggingRule
     {
-        /// <summary> Initializes a new instance of LoggingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="direction"></param>
         /// <param name="detailLevel"></param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             DetailLevel = detailLevel;
         }
 
-        /// <summary> Initializes a new instance of LoggingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="direction"></param>
         /// <param name="detailLevel"></param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         public ProcessModuleInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

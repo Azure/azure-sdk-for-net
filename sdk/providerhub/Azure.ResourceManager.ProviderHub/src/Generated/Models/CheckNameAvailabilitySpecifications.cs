@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckNameAvailabilitySpecifications. </summary>
     public partial class CheckNameAvailabilitySpecifications
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilitySpecifications"/>. </summary>
         public CheckNameAvailabilitySpecifications()
         {
             ResourceTypesWithCustomValidation = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilitySpecifications"/>. </summary>
         /// <param name="isDefaultValidationEnabled"></param>
         /// <param name="resourceTypesWithCustomValidation"></param>
         internal CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled, IList<string> resourceTypesWithCustomValidation)

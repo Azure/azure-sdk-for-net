@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a certificate for token validation. </summary>
     public partial class ContentKeyPolicyX509CertificateTokenKey : ContentKeyPolicyRestrictionTokenKey
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyX509CertificateTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyX509CertificateTokenKey"/>. </summary>
         /// <param name="rawBody"> The raw data field of a certificate in PKCS 12 format (X509Certificate2 in .NET). </param>
         public ContentKeyPolicyX509CertificateTokenKey(byte[] rawBody)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyX509CertificateTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyX509CertificateTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="rawBody"> The raw data field of a certificate in PKCS 12 format (X509Certificate2 in .NET). </param>
         internal ContentKeyPolicyX509CertificateTokenKey(string odataType, byte[] rawBody) : base(odataType)

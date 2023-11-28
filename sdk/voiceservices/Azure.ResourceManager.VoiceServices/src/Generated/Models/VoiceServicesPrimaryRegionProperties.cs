@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The configuration used in this region as primary, and other regions as backup. </summary>
     public partial class VoiceServicesPrimaryRegionProperties
     {
-        /// <summary> Initializes a new instance of VoiceServicesPrimaryRegionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesPrimaryRegionProperties"/>. </summary>
         /// <param name="operatorAddresses"> IP address to use to contact the operator network from this region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operatorAddresses"/> is null. </exception>
         public VoiceServicesPrimaryRegionProperties(IEnumerable<string> operatorAddresses)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             AllowedMediaSourceAddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesPrimaryRegionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesPrimaryRegionProperties"/>. </summary>
         /// <param name="operatorAddresses"> IP address to use to contact the operator network from this region. </param>
         /// <param name="esrpAddresses"> IP address to use to contact the ESRP from this region. </param>
         /// <param name="allowedSignalingSourceAddressPrefixes"> The allowed source IP address or CIDR ranges for signaling. </param>

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of trigger resources. </summary>
     internal partial class TriggerListResponse
     {
-        /// <summary> Initializes a new instance of TriggerListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerListResponse"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerListResponse(IEnumerable<TriggerResource> value)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TriggerListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerListResponse"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal TriggerListResponse(IReadOnlyList<TriggerResource> value, string nextLink)

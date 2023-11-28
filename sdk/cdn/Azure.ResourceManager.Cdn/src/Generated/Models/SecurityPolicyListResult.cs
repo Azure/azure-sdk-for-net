@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list security policies. It contains a list of security policy objects and a URL link to get the next set of results. </summary>
     internal partial class SecurityPolicyListResult
     {
-        /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
         internal SecurityPolicyListResult()
         {
             Value = new ChangeTrackingList<FrontDoorSecurityPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
         /// <param name="value"> List of Security policies within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of security policy objects if there is any. </param>
         internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink)

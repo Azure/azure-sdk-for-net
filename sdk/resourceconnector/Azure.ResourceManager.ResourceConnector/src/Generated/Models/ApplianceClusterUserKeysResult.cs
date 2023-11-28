@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The List Cluster Keys Results appliance. </summary>
     public partial class ApplianceClusterUserKeysResult
     {
-        /// <summary> Initializes a new instance of ApplianceClusterUserKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserKeysResult"/>. </summary>
         internal ApplianceClusterUserKeysResult()
         {
             ArtifactProfiles = new ChangeTrackingDictionary<string, ApplianceArtifactProfile>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             SshKeys = new ChangeTrackingDictionary<string, ApplianceSshKey>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceClusterUserKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserKeysResult"/>. </summary>
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> This enables publishing to Event Grid using a custom input schema. This can be used to map properties from a custom input JSON schema to the Event Grid event schema. </summary>
     public partial class EventGridJsonInputSchemaMapping : EventGridInputSchemaMapping
     {
-        /// <summary> Initializes a new instance of EventGridJsonInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
         public EventGridJsonInputSchemaMapping()
         {
             InputSchemaMappingType = InputSchemaMappingType.Json;
         }
 
-        /// <summary> Initializes a new instance of EventGridJsonInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
         /// <param name="id"> The mapping information for the Id property of the Event Grid Event. </param>
         /// <param name="topic"> The mapping information for the Topic property of the Event Grid Event. </param>

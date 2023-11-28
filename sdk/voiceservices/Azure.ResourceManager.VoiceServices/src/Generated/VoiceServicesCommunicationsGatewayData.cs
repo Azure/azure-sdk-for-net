@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.VoiceServices
     /// </summary>
     public partial class VoiceServicesCommunicationsGatewayData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VoiceServicesCommunicationsGatewayData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.VoiceServices
             EmergencyDialStrings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

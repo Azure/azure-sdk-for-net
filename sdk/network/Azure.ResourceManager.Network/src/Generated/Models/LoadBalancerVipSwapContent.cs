@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The request for a VIP swap. </summary>
     public partial class LoadBalancerVipSwapContent
     {
-        /// <summary> Initializes a new instance of LoadBalancerVipSwapContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapContent"/>. </summary>
         public LoadBalancerVipSwapContent()
         {
             FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>();

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on Azure Workload for SQL specific backup item. </summary>
     public partial class VmWorkloadProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemExtendedInfo"/>. </summary>
         public VmWorkloadProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
         /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
         /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>

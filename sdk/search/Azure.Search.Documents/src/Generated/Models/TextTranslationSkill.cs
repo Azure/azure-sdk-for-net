@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill to translate text from one language to another. </summary>
     public partial class TextTranslationSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of TextTranslationSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultToLanguageCode"> The language code to translate documents into for documents that don't specify the to language explicitly. </param>
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Skills.Text.TranslationSkill";
         }
 
-        /// <summary> Initializes a new instance of TextTranslationSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character `#`. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An Azure storage blob data set. </summary>
     public partial class BlobDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobDataSet"/>. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
         /// <param name="filePath"> File path within the source data set. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.Blob;
         }
 
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

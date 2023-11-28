@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates. </summary>
     public partial class LabServicesSchedulePatch
     {
-        /// <summary> Initializes a new instance of LabServicesSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesSchedulePatch"/>. </summary>
         public LabServicesSchedulePatch()
         {
         }

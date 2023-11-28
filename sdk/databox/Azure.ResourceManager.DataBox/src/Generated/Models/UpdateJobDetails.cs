@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job details for update. </summary>
     public partial class UpdateJobDetails
     {
-        /// <summary> Initializes a new instance of UpdateJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateJobDetails"/>. </summary>
         public UpdateJobDetails()
         {
         }

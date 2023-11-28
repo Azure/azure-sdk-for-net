@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRelayModelFactory
     {
-        /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayAuthorizationRuleData(id, name, resourceType, systemData, rights?.ToList(), location);
         }
 
-        /// <summary> Initializes a new instance of RelayAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RelayAccessKeys"/>. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayAccessKeys(primaryConnectionString, secondaryConnectionString, primaryKey, secondaryKey, keyName);
         }
 
-        /// <summary> Initializes a new instance of RelayHybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayHybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayHybridConnectionData(id, name, resourceType, systemData, createdOn, updatedOn, listenerCount, isClientAuthorizationRequired, userMetadata, location);
         }
 
-        /// <summary> Initializes a new instance of RelayNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RelayNameAvailabilityResult"/>. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="isNameAvailable"> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNameAvailabilityResult(message, isNameAvailable, reason);
         }
 
-        /// <summary> Initializes a new instance of RelayNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNamespaceData(id, name, resourceType, systemData, tags, location, sku, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
         }
 
-        /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RelayNamespacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNamespacePatch(id, name, resourceType, systemData, sku, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, privateEndpointConnections?.ToList(), publicNetworkAccess, tags);
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.RelayNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNetworkRuleSetData(id, name, resourceType, systemData, defaultAction, publicNetworkAccess, ipRules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WcfRelayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Relay.WcfRelayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class OneLakeArtifact
     {
-        /// <summary> Initializes a new instance of OneLakeArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         protected OneLakeArtifact(string artifactName)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ArtifactName = artifactName;
         }
 
-        /// <summary> Initializes a new instance of OneLakeArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
         internal OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType)

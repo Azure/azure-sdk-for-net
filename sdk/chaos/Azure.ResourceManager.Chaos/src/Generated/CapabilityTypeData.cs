@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class CapabilityTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         public CapabilityTypeData()
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

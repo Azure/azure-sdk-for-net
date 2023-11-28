@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// </summary>
     public abstract partial class PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForCreate. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
         protected PostgreSqlServerPropertiesForCreate()
         {
         }

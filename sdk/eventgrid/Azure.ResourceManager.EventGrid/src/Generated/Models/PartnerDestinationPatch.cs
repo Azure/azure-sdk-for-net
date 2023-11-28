@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Partner Destination that can be updated. </summary>
     public partial class PartnerDestinationPatch
     {
-        /// <summary> Initializes a new instance of PartnerDestinationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationPatch"/>. </summary>
         public PartnerDestinationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

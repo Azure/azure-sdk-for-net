@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> An update to a SQL virtual machine. </summary>
     public partial class SqlVmPatch
     {
-        /// <summary> Initializes a new instance of SqlVmPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmPatch"/>. </summary>
         public SqlVmPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

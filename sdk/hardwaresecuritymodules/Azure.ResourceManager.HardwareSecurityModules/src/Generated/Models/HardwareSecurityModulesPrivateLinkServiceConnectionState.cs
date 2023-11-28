@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class HardwareSecurityModulesPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/>. </summary>
         public HardwareSecurityModulesPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The QueueStatus of Agent Pool. </summary>
     public partial class ContainerRegistryAgentPoolQueueStatus
     {
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolQueueStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolQueueStatus"/>. </summary>
         internal ContainerRegistryAgentPoolQueueStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolQueueStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolQueueStatus"/>. </summary>
         /// <param name="count"> The number of pending runs in the queue. </param>
         internal ContainerRegistryAgentPoolQueueStatus(int? count)
         {

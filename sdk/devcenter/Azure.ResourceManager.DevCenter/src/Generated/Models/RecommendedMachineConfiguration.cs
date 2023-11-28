@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Properties for a recommended machine configuration. </summary>
     public partial class RecommendedMachineConfiguration
     {
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         internal RecommendedMachineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         /// <param name="memory"> Recommended memory range. </param>
         /// <param name="vCpus"> Recommended vCPU range. </param>
         internal RecommendedMachineConfiguration(DevCenterResourceRange memory, DevCenterResourceRange vCpus)

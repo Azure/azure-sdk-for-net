@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DW Table data set mapping. </summary>
     public partial class SqlDWTableDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="dataWarehouseName"> DataWarehouse name of the source data set. </param>
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.SqlDWTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

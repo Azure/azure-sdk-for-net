@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The path of the Dynamics AX OData entity. </summary>
     public partial class DynamicsAXResourceDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "DynamicsAXResource";
         }
 
-        /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

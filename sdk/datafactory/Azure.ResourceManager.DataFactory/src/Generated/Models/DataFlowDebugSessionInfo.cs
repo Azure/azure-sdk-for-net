@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow debug session info. </summary>
     public partial class DataFlowDebugSessionInfo
     {
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfo"/>. </summary>
         internal DataFlowDebugSessionInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfo"/>. </summary>
         /// <param name="dataFlowName"> The name of the data flow. </param>
         /// <param name="computeType"> Compute type of the cluster. </param>
         /// <param name="coreCount"> Core count of the cluster. </param>

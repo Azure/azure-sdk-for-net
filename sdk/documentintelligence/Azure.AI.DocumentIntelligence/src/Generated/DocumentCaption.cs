@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A caption object describing a table or figure. </summary>
     public partial class DocumentCaption
     {
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
         /// <param name="content"> Content of the caption. </param>
         /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
         /// <param name="content"> Content of the caption. </param>
         /// <param name="boundingRegions"> Bounding regions covering the caption. </param>
         /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Cassandra views and their properties. </summary>
     internal partial class CassandraViewListResult
     {
-        /// <summary> Initializes a new instance of CassandraViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewListResult"/>. </summary>
         internal CassandraViewListResult()
         {
             Value = new ChangeTrackingList<CassandraViewGetResultData>();
         }
 
-        /// <summary> Initializes a new instance of CassandraViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewListResult"/>. </summary>
         /// <param name="value"> List of Cassandra views and their properties. </param>
         internal CassandraViewListResult(IReadOnlyList<CassandraViewGetResultData> value)
         {

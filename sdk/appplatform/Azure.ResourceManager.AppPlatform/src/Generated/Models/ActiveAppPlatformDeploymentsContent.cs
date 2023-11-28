@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Deployment resource name and set them as active. </summary>
     public partial class ActiveAppPlatformDeploymentsContent
     {
-        /// <summary> Initializes a new instance of ActiveAppPlatformDeploymentsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveAppPlatformDeploymentsContent"/>. </summary>
         public ActiveAppPlatformDeploymentsContent()
         {
             ActiveDeploymentNames = new ChangeTrackingList<string>();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A Kusto database data set mapping. </summary>
     public partial class KustoDatabaseDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="kustoClusterResourceId"> Resource id of the sink kusto cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.KustoDatabase;
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

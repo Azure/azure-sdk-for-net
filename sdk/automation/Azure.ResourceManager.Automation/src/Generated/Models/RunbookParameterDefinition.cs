@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the runbook parameter type. </summary>
     public partial class RunbookParameterDefinition
     {
-        /// <summary> Initializes a new instance of RunbookParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookParameterDefinition"/>. </summary>
         public RunbookParameterDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookParameterDefinition"/>. </summary>
         /// <param name="runbookParameterType"> Gets or sets the type of the parameter. </param>
         /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
         /// <param name="position"> Get or sets the position of the parameter. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The autoscale configuration update parameter. </summary>
     public partial class HDInsightAutoScaleConfigurationUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleConfigurationUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfigurationUpdateContent"/>. </summary>
         public HDInsightAutoScaleConfigurationUpdateContent()
         {
         }

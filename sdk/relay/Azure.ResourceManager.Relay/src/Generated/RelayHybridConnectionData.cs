@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayHybridConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayHybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionData"/>. </summary>
         public RelayHybridConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayHybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

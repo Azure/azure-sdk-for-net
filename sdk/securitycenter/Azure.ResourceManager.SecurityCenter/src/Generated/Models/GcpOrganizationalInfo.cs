@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class GcpOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of GcpOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationalInfo"/>. </summary>
         protected GcpOrganizationalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         internal GcpOrganizationalInfo(OrganizationMembershipType organizationMembershipType)
         {

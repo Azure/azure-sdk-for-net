@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
     public partial class HybridConnectionKey : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
         public HybridConnectionKey()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

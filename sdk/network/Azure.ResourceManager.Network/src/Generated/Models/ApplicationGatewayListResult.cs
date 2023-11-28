@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListApplicationGateways API service call. </summary>
     internal partial class ApplicationGatewayListResult
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
         internal ApplicationGatewayListResult()
         {
             Value = new ChangeTrackingList<ApplicationGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
         /// <param name="value"> List of an application gateways in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ApplicationGatewayListResult(IReadOnlyList<ApplicationGatewayData> value, string nextLink)

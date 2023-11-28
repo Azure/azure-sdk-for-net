@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </summary>
     public partial class JobConfigurationManualTriggerConfig
     {
-        /// <summary> Initializes a new instance of JobConfigurationManualTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationManualTriggerConfig"/>. </summary>
         public JobConfigurationManualTriggerConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of JobConfigurationManualTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationManualTriggerConfig"/>. </summary>
         /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
         /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
         internal JobConfigurationManualTriggerConfig(int? replicaCompletionCount, int? parallelism)

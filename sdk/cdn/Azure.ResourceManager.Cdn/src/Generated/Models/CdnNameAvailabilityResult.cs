@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Output of check name availability API. </summary>
     public partial class CdnNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CdnNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
         internal CdnNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>

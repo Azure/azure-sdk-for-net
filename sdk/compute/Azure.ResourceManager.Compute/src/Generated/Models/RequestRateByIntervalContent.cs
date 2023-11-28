@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Api request input for LogAnalytics getRequestRateByInterval Api. </summary>
     public partial class RequestRateByIntervalContent : LogAnalyticsInputBase
     {
-        /// <summary> Initializes a new instance of RequestRateByIntervalContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestRateByIntervalContent"/>. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
