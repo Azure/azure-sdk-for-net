@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, string annotation) : base(tags)
+        {
+            IPExtendedCommunityRules = ipExtendedCommunityRules;
+            Annotation = annotation;
+        }
+
         /// <summary> List of IP Extended Community Rules. </summary>
         public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
         /// <summary> Switch configuration description. </summary>

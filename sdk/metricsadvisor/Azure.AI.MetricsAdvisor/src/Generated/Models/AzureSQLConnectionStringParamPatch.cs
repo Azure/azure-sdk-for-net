@@ -15,6 +15,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParamPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string to access the Azure SQL. </param>
+        internal AzureSQLConnectionStringParamPatch(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> The connection string to access the Azure SQL. </summary>
         public string ConnectionString { get; set; }
     }

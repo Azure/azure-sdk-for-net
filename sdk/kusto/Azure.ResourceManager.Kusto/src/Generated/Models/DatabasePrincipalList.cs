@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Kusto.Models
             Value = new ChangeTrackingList<KustoDatabasePrincipal>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalList"/>. </summary>
+        /// <param name="value"> The list of Kusto database principals. </param>
+        internal DatabasePrincipalList(IList<KustoDatabasePrincipal> value)
+        {
+            Value = value;
+        }
+
         /// <summary> The list of Kusto database principals. </summary>
         public IList<KustoDatabasePrincipal> Value { get; }
     }

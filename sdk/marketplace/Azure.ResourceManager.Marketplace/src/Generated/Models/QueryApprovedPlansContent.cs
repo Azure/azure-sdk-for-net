@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansContent"/>. </summary>
+        /// <param name="offerId"> Offer id. </param>
+        /// <param name="planIds"> Offer plan ids. </param>
+        /// <param name="subscriptionIds"> List of subscription IDs. </param>
+        internal QueryApprovedPlansContent(string offerId, IList<string> planIds, IList<string> subscriptionIds)
+        {
+            OfferId = offerId;
+            PlanIds = planIds;
+            SubscriptionIds = subscriptionIds;
+        }
+
         /// <summary> Offer id. </summary>
         public string OfferId { get; set; }
         /// <summary> Offer plan ids. </summary>

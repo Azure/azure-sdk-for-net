@@ -15,6 +15,13 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentFilter"/>. </summary>
+        /// <param name="principalId"> Returns role assignment of the specific principal. </param>
+        internal RoleAssignmentFilter(string principalId)
+        {
+            PrincipalId = principalId;
+        }
+
         /// <summary> Returns role assignment of the specific principal. </summary>
         public string PrincipalId { get; }
     }
