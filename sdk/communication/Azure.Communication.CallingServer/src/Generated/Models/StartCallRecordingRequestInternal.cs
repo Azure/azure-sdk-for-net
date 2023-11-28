@@ -25,6 +25,23 @@ namespace Azure.Communication.CallingServer
             ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
+        /// <param name="callLocator"> The call locator. </param>
+        /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
+        /// <param name="recordingContentType"> The content type of call recording. </param>
+        /// <param name="recordingChannelType"> The channel type of call recording. </param>
+        /// <param name="recordingFormatType"> The format type of call recording. </param>
+        /// <param name="channelAffinity"> The channel affinity of call recording. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<ChannelAffinityInternal> channelAffinity)
+        {
+            CallLocator = callLocator;
+            RecordingStateCallbackUri = recordingStateCallbackUri;
+            RecordingContentType = recordingContentType;
+            RecordingChannelType = recordingChannelType;
+            RecordingFormatType = recordingFormatType;
+            ChannelAffinity = channelAffinity;
+        }
+
         /// <summary> The call locator. </summary>
         public CallLocatorInternal CallLocator { get; }
         /// <summary> The uri to send notifications to. </summary>

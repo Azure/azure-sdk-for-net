@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        internal TenantAccessInfoPatch(bool? isDirectAccessEnabled)
+        {
+            IsDirectAccessEnabled = isDirectAccessEnabled;
+        }
+
         /// <summary> Determines whether direct access is enabled. </summary>
         public bool? IsDirectAccessEnabled { get; set; }
     }

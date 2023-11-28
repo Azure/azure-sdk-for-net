@@ -15,6 +15,13 @@ namespace Azure.Communication.Chat
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
+        /// <param name="topic"> Chat thread topic. </param>
+        internal UpdateChatThreadRequest(string topic)
+        {
+            Topic = topic;
+        }
+
         /// <summary> Chat thread topic. </summary>
         public string Topic { get; set; }
     }

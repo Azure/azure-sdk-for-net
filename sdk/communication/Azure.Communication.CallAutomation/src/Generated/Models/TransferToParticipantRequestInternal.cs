@@ -24,6 +24,21 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="transferee"> Transferee is the participant who is transferring the call. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomContextInternal customContext, string operationContext, CommunicationIdentifierModel transferee, string callbackUri)
+        {
+            TargetParticipant = targetParticipant;
+            CustomContext = customContext;
+            OperationContext = operationContext;
+            Transferee = transferee;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary> The identity of the target where call should be transferred to. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Used by customer to send custom context to targets. </summary>
