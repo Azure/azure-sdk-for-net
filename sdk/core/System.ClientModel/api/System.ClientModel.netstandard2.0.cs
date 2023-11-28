@@ -215,6 +215,8 @@ namespace System.ClientModel.Primitives
         public RequestRetryPolicy() { }
         public RequestRetryPolicy(int maxRetries) { }
         protected virtual System.TimeSpan GetDelay(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        protected virtual void OnBeforeRetry(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnBeforeRetryAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
