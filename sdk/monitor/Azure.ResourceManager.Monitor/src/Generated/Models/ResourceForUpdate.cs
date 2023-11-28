@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
     public partial class ResourceForUpdate
     {
-        /// <summary> Initializes a new instance of ResourceForUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceForUpdate"/>. </summary>
         public ResourceForUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

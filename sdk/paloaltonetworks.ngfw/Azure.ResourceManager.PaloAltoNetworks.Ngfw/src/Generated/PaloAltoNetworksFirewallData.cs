@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class PaloAltoNetworksFirewallData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             MarketplaceDetails = marketplaceDetails;
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

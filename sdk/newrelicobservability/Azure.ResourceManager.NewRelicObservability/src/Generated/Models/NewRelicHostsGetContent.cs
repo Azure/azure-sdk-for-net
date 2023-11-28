@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a Hosts get Operation. </summary>
     public partial class NewRelicHostsGetContent
     {
-        /// <summary> Initializes a new instance of NewRelicHostsGetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)

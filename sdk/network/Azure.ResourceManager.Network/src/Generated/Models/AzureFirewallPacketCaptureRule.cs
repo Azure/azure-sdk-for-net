@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Group of src/dest ips and ports to be captured. </summary>
     public partial class AzureFirewallPacketCaptureRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureRule"/>. </summary>
         public AzureFirewallPacketCaptureRule()
         {
             Sources = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPorts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureRule"/>. </summary>
         /// <param name="sources"> List of source IP addresses/subnets to be captured. </param>
         /// <param name="destinations"> List of destination IP addresses/subnets to be captured. </param>
         /// <param name="destinationPorts"> List of ports to be captured. </param>

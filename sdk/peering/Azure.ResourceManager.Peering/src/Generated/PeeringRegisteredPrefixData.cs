@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringRegisteredPrefixData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         public PeeringRegisteredPrefixData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

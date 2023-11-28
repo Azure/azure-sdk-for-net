@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Storage properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerStorage
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         public PostgreSqlFlexibleServerStorage()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
         /// <param name="tier"> Name of storage tier for IOPS. </param>

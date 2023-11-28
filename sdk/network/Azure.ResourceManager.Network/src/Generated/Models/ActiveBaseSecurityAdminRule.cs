@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network.Models
     /// </summary>
     public abstract partial class ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveBaseSecurityAdminRule"/>. </summary>
         protected ActiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
             RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
-        /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>

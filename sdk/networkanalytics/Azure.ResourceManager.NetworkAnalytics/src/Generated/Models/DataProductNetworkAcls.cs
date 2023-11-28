@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Data Product Network rule set. </summary>
     public partial class DataProductNetworkAcls
     {
-        /// <summary> Initializes a new instance of DataProductNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductNetworkAcls"/>. </summary>
         /// <param name="virtualNetworkRule"> Virtual Network Rule. </param>
         /// <param name="ipRules"> IP rule with specific IP or IP range in CIDR format. </param>
         /// <param name="allowedQueryIPRangeList"> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             DefaultAction = defaultAction;
         }
 
-        /// <summary> Initializes a new instance of DataProductNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductNetworkAcls"/>. </summary>
         /// <param name="virtualNetworkRule"> Virtual Network Rule. </param>
         /// <param name="ipRules"> IP rule with specific IP or IP range in CIDR format. </param>
         /// <param name="allowedQueryIPRangeList"> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </param>

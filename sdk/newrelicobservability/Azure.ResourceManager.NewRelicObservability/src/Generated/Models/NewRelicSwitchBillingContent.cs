@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a switch billing Operation. </summary>
     public partial class NewRelicSwitchBillingContent
     {
-        /// <summary> Initializes a new instance of NewRelicSwitchBillingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicSwitchBillingContent(string userEmail)

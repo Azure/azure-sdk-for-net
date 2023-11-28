@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the FirewallResource. </summary>
     public partial class PaloAltoNetworksFirewallPatch
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallPatch"/>. </summary>
         public PaloAltoNetworksFirewallPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

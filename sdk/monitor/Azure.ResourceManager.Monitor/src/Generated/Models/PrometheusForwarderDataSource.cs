@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of Prometheus metrics forwarding configuration. </summary>
     public partial class PrometheusForwarderDataSource
     {
-        /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusForwarderDataSource"/>. </summary>
         public PrometheusForwarderDataSource()
         {
             Streams = new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>();
             LabelIncludeFilter = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusForwarderDataSource"/>. </summary>
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
         /// <param name="labelIncludeFilter">
         /// The list of label inclusion filters in the form of label "name-value" pairs.

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The RequestHeaderOptions. </summary>
     internal partial class RequestHeaderOptions
     {
-        /// <summary> Initializes a new instance of RequestHeaderOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderOptions"/>. </summary>
         public RequestHeaderOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of RequestHeaderOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderOptions"/>. </summary>
         /// <param name="optInHeaders"></param>
         internal RequestHeaderOptions(OptInHeaderType? optInHeaders)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListAzureFirewalls API service call. </summary>
     internal partial class AzureFirewallListResult
     {
-        /// <summary> Initializes a new instance of AzureFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallListResult"/>. </summary>
         internal AzureFirewallListResult()
         {
             Value = new ChangeTrackingList<AzureFirewallData>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallListResult"/>. </summary>
         /// <param name="value"> List of Azure Firewalls in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal AzureFirewallListResult(IReadOnlyList<AzureFirewallData> value, string nextLink)

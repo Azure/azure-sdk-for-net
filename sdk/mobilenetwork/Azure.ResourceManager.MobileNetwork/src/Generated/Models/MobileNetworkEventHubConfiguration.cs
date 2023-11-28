@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Configuration for sending packet core events to Azure Event Hub. </summary>
     public partial class MobileNetworkEventHubConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public MobileNetworkEventHubConfiguration(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <param name="reportingInterval"> The duration (in seconds) between UE usage reports. </param>
         internal MobileNetworkEventHubConfiguration(ResourceIdentifier id, int? reportingInterval)

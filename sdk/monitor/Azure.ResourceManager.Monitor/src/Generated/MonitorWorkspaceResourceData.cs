@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorWorkspaceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MonitorWorkspaceResourceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The data type resource. </summary>
     public partial class DataProductDataType : ResourceData
     {
-        /// <summary> Initializes a new instance of DataProductDataType. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductDataType"/>. </summary>
         public DataProductDataType()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProductDataType. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductDataType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

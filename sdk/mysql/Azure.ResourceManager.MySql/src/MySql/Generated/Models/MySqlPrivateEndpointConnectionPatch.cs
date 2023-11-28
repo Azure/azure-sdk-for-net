@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class MySqlPrivateEndpointConnectionPatch
     {
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionPatch"/>. </summary>
         public MySqlPrivateEndpointConnectionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

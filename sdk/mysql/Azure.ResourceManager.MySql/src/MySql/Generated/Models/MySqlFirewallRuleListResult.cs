@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class MySqlFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of MySqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFirewallRuleListResult"/>. </summary>
         internal MySqlFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<MySqlFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a server. </param>
         internal MySqlFirewallRuleListResult(IReadOnlyList<MySqlFirewallRuleData> value)
         {

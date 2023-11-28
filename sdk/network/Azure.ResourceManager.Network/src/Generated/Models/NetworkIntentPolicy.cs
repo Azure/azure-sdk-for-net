@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Intent Policy resource. </summary>
     public partial class NetworkIntentPolicy : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkIntentPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicy"/>. </summary>
         public NetworkIntentPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkIntentPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

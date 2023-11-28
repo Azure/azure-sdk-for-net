@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class BaseAdminRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of BaseAdminRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseAdminRuleData"/>. </summary>
         public BaseAdminRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of BaseAdminRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseAdminRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

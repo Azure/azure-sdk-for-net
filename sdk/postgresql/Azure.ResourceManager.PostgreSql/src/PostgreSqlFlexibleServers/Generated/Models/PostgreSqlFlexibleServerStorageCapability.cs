@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> storage size in MB capability. </summary>
     public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
         {
             SupportedIopsTiers = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>

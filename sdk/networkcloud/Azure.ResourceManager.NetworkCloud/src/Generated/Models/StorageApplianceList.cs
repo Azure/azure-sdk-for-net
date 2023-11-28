@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageApplianceList represents a list of storage appliances. </summary>
     internal partial class StorageApplianceList
     {
-        /// <summary> Initializes a new instance of StorageApplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
         internal StorageApplianceList()
         {
             Value = new ChangeTrackingList<NetworkCloudStorageApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of StorageApplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of storage appliances. </param>
         internal StorageApplianceList(string nextLink, IReadOnlyList<NetworkCloudStorageApplianceData> value)

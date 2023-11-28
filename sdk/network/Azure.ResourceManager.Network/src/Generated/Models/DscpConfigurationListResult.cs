@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the DscpConfigurationList API service call. </summary>
     internal partial class DscpConfigurationListResult
     {
-        /// <summary> Initializes a new instance of DscpConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpConfigurationListResult"/>. </summary>
         internal DscpConfigurationListResult()
         {
             Value = new ChangeTrackingList<DscpConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of DscpConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpConfigurationListResult"/>. </summary>
         /// <param name="value"> A list of dscp configurations in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal DscpConfigurationListResult(IReadOnlyList<DscpConfigurationData> value, string nextLink)

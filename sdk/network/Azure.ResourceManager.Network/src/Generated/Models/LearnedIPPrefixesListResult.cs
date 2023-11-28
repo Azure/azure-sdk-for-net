@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of SNAT IP Prefixes learnt by firewall to not SNAT. </summary>
     public partial class LearnedIPPrefixesListResult
     {
-        /// <summary> Initializes a new instance of LearnedIPPrefixesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         internal LearnedIPPrefixesListResult()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LearnedIPPrefixesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         /// <param name="ipPrefixes"> IP Prefix value. </param>
         internal LearnedIPPrefixesListResult(IReadOnlyList<string> ipPrefixes)
         {

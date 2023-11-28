@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PublicIPAddressData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressData"/>. </summary>
         public PublicIPAddressData()
         {
             Zones = new ChangeTrackingList<string>();
             IPTags = new ChangeTrackingList<IPTag>();
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

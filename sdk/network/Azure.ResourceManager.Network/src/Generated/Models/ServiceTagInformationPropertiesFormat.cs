@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the service tag information. </summary>
     public partial class ServiceTagInformationPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ServiceTagInformationPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformationPropertiesFormat"/>. </summary>
         internal ServiceTagInformationPropertiesFormat()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceTagInformationPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformationPropertiesFormat"/>. </summary>
         /// <param name="changeNumber"> The iteration number of service tag. </param>
         /// <param name="region"> The region of service tag. </param>
         /// <param name="systemService"> The name of system service. </param>

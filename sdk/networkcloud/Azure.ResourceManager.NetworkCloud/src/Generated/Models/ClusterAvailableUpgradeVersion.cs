@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterAvailableUpgradeVersion represents the various cluster upgrade parameters. </summary>
     public partial class ClusterAvailableUpgradeVersion
     {
-        /// <summary> Initializes a new instance of ClusterAvailableUpgradeVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableUpgradeVersion"/>. </summary>
         internal ClusterAvailableUpgradeVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAvailableUpgradeVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableUpgradeVersion"/>. </summary>
         /// <param name="controlImpact"> The indicator of whether the control plane will be impacted during the upgrade. </param>
         /// <param name="expectedDuration"> The expected duration needed for this upgrade. </param>
         /// <param name="impactDescription"> The impact description including the specific details and release notes. </param>

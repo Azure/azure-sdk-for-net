@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Metadata about types of Azure resources, containing relevant tables, functions, etc. </summary>
     internal partial class MetadataResourceType
     {
-        /// <summary> Initializes a new instance of MetadataResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataResourceType"/>. </summary>
         /// <param name="id"> The ID of the resource-type. </param>
         /// <param name="type"> The type of the resource-type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="type"/> is null. </exception>

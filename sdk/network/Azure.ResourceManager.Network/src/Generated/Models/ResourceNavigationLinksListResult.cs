@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ResourceNavigationLinks_List operation. </summary>
     internal partial class ResourceNavigationLinksListResult
     {
-        /// <summary> Initializes a new instance of ResourceNavigationLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinksListResult"/>. </summary>
         internal ResourceNavigationLinksListResult()
         {
             Value = new ChangeTrackingList<ResourceNavigationLink>();
         }
 
-        /// <summary> Initializes a new instance of ResourceNavigationLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinksListResult"/>. </summary>
         /// <param name="value"> The resource navigation links in a subnet. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ResourceNavigationLinksListResult(IReadOnlyList<ResourceNavigationLink> value, string nextLink)

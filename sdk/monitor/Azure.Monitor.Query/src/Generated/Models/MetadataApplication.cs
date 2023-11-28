@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Application Insights apps that were part of the metadata request and that the user has access to. </summary>
     internal partial class MetadataApplication
     {
-        /// <summary> Initializes a new instance of MetadataApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
         /// <param name="id"> The ID of the Application Insights app. </param>
         /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
         /// <param name="name"> The name of the Application Insights app. </param>

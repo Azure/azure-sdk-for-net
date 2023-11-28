@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Explicit Proxy Settings in Firewall Policy. </summary>
     public partial class FirewallPolicyExplicitProxy
     {
-        /// <summary> Initializes a new instance of FirewallPolicyExplicitProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyExplicitProxy"/>. </summary>
         public FirewallPolicyExplicitProxy()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyExplicitProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyExplicitProxy"/>. </summary>
         /// <param name="enableExplicitProxy"> When set to true, explicit proxy mode is enabled. </param>
         /// <param name="httpPort"> Port number for explicit proxy http protocol, cannot be greater than 64000. </param>
         /// <param name="httpsPort"> Port number for explicit proxy https protocol, cannot be greater than 64000. </param>
