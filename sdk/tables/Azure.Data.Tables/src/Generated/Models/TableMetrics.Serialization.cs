@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -39,7 +40,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableMetrics DeserializeTableMetrics(XElement element)
+        internal static TableMetrics DeserializeTableMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;

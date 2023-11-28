@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class DirectoryItem
     {
-        internal static DirectoryItem DeserializeDirectoryItem(XElement element)
+        internal static DirectoryItem DeserializeDirectoryItem(XElement element, ModelReaderWriterOptions options = null)
         {
             StringEncoded name = default;
             string fileId = default;

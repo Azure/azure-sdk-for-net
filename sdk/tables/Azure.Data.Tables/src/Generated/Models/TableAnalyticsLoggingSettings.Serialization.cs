@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -33,7 +34,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element)
+        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;

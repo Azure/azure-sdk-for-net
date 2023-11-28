@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -55,7 +56,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element)
+        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobAnalyticsLogging logging = default;
             BlobMetrics hourMetrics = default;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -34,7 +35,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareCorsRule DeserializeShareCorsRule(XElement element)
+        internal static ShareCorsRule DeserializeShareCorsRule(XElement element, ModelReaderWriterOptions options = null)
         {
             string allowedOrigins = default;
             string allowedMethods = default;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -32,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element)
+        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;

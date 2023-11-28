@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element)
+        internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? startsOn = default;
             DateTimeOffset? expiresOn = default;

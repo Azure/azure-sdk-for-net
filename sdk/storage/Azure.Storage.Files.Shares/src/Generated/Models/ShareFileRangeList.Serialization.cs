@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ShareFileRangeList
     {
-        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element)
+        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<FileRange> ranges = default;
             IReadOnlyList<ClearRange> clearRanges = default;

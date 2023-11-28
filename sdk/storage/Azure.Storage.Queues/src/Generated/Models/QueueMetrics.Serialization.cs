@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueMetrics DeserializeQueueMetrics(XElement element)
+        internal static QueueMetrics DeserializeQueueMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.Data.Tables
             writer.WriteEndElement();
         }
 
-        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element)
+        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             int? days = default;

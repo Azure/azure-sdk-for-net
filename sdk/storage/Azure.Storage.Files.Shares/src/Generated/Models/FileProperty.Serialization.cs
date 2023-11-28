@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class FileProperty
     {
-        internal static FileProperty DeserializeFileProperty(XElement element)
+        internal static FileProperty DeserializeFileProperty(XElement element, ModelReaderWriterOptions options = null)
         {
             long contentLength = default;
             DateTimeOffset? creationTime = default;

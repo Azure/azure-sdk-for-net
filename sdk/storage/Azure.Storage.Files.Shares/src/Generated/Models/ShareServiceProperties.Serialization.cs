@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -41,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
+        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             ShareMetrics hourMetrics = default;
             ShareMetrics minuteMetrics = default;

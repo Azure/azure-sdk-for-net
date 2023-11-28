@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobPropertiesInternal
     {
-        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element)
+        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;

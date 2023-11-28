@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class BlockList
     {
-        internal static BlockList DeserializeBlockList(XElement element)
+        internal static BlockList DeserializeBlockList(XElement element, ModelReaderWriterOptions options = null)
         {
             IEnumerable<BlobBlock> committedBlocks = default;
             IEnumerable<BlobBlock> uncommittedBlocks = default;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class BlobGeoReplication
     {
-        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
+        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
