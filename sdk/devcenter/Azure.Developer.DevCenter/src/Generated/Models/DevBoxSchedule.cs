@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A Schedule to execute action. </summary>
-    public partial class Schedule
+    public partial class DevBoxSchedule
     {
-        /// <summary> Initializes a new instance of Schedule. </summary>
+        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="time"/> or <paramref name="timeZone"/> is null. </exception>
-        internal Schedule(ScheduledType type, ScheduledFrequency frequency, string time, string timeZone)
+        internal DevBoxSchedule(ScheduledType type, ScheduledFrequency frequency, string time, string timeZone)
         {
             Argument.AssertNotNull(time, nameof(time));
             Argument.AssertNotNull(timeZone, nameof(timeZone));
@@ -30,13 +30,13 @@ namespace Azure.Developer.DevCenter.Models
             TimeZone = timeZone;
         }
 
-        /// <summary> Initializes a new instance of Schedule. </summary>
+        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        internal Schedule(string name, ScheduledType type, ScheduledFrequency frequency, string time, string timeZone)
+        internal DevBoxSchedule(string name, ScheduledType type, ScheduledFrequency frequency, string time, string timeZone)
         {
             Name = name;
             Type = type;

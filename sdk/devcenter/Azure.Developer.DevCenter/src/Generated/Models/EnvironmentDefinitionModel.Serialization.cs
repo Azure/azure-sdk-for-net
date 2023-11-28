@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class EnvironmentDefinition
+    public partial class EnvironmentDefinitionModel
     {
-        internal static EnvironmentDefinition DeserializeEnvironmentDefinition(JsonElement element)
+        internal static EnvironmentDefinitionModel DeserializeEnvironmentDefinitionModel(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -24,7 +24,7 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             string catalogName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<EnvironmentDefinitionParameter>> parameters = default;
+            Optional<IReadOnlyList<EnvironmentDefinitionParameterModel>> parameters = default;
             Optional<string> parametersSchema = default;
             Optional<string> templatePath = default;
             foreach (var property in element.EnumerateObject())
@@ -55,10 +55,10 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    List<EnvironmentDefinitionParameter> array = new List<EnvironmentDefinitionParameter>();
+                    List<EnvironmentDefinitionParameterModel> array = new List<EnvironmentDefinitionParameterModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item));
+                        array.Add(EnvironmentDefinitionParameterModel.DeserializeEnvironmentDefinitionParameterModel(item));
                     }
                     parameters = array;
                     continue;
@@ -74,15 +74,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new EnvironmentDefinition(id, name, catalogName, description.Value, Optional.ToList(parameters), parametersSchema.Value, templatePath.Value);
+            return new EnvironmentDefinitionModel(id, name, catalogName, description.Value, Optional.ToList(parameters), parametersSchema.Value, templatePath.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EnvironmentDefinition FromResponse(Response response)
+        internal static EnvironmentDefinitionModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironmentDefinition(document.RootElement);
+            return DeserializeEnvironmentDefinitionModel(document.RootElement);
         }
     }
 }

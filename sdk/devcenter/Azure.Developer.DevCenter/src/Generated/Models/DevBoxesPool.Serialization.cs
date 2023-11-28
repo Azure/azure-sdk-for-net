@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class Pool
+    public partial class DevBoxesPool
     {
-        internal static Pool DeserializePool(JsonElement element)
+        internal static DevBoxesPool DeserializeDevBoxesPool(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,15 +110,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new Pool(name, location, Optional.ToNullable(osType), hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, healthStatus);
+            return new DevBoxesPool(name, location, Optional.ToNullable(osType), hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, healthStatus);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Pool FromResponse(Response response)
+        internal static DevBoxesPool FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePool(document.RootElement);
+            return DeserializeDevBoxesPool(document.RootElement);
         }
     }
 }

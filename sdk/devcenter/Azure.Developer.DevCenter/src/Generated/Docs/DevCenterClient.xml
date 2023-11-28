@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-Response<Project> response = await client.GetProjectAsync("<projectName>");
+Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
 ]]></code>
 This sample shows how to call GetProjectAsync with all parameters.
 <code><![CDATA[
@@ -17,7 +17,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-Response<Project> response = await client.GetProjectAsync("<projectName>");
+Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
 ]]></code></example>
     </member>
     <member name="GetProject(string,CancellationToken)">
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-Response<Project> response = client.GetProject("<projectName>");
+Response<DevCenterProject> response = client.GetProject("<projectName>");
 ]]></code>
 This sample shows how to call GetProject with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-Response<Project> response = client.GetProject("<projectName>");
+Response<DevCenterProject> response = client.GetProject("<projectName>");
 ]]></code></example>
     </member>
     <member name="GetProjectAsync(string,RequestContext)">
@@ -101,7 +101,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-await foreach (Project item in client.GetProjectsAsync())
+await foreach (DevCenterProject item in client.GetProjectsAsync())
 {
 }
 ]]></code>
@@ -111,7 +111,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-await foreach (Project item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
+await foreach (DevCenterProject item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -124,7 +124,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-foreach (Project item in client.GetProjects())
+foreach (DevCenterProject item in client.GetProjects())
 {
 }
 ]]></code>
@@ -134,7 +134,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-foreach (Project item in client.GetProjects(filter: "<filter>", maxCount: 1234))
+foreach (DevCenterProject item in client.GetProjects(filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class Environment : IUtf8JsonSerializable
+    public partial class DevCenterEnvironment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static Environment DeserializeEnvironment(JsonElement element)
+        internal static DevCenterEnvironment DeserializeDevCenterEnvironment(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,15 +109,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new Environment(parameters.Value, name.Value, environmentType, user.Value, provisioningState.Value, resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value);
+            return new DevCenterEnvironment(parameters.Value, name.Value, environmentType, user.Value, provisioningState.Value, resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Environment FromResponse(Response response)
+        internal static DevCenterEnvironment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironment(document.RootElement);
+            return DeserializeDevCenterEnvironment(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

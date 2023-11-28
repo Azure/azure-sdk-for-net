@@ -8,21 +8,21 @@
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Project details. </summary>
-    public partial class Project
+    public partial class DevCenterProject
     {
-        /// <summary> Initializes a new instance of Project. </summary>
-        internal Project()
+        /// <summary> Initializes a new instance of DevCenterProject. </summary>
+        internal DevCenterProject()
         {
         }
 
-        /// <summary> Initializes a new instance of Project. </summary>
+        /// <summary> Initializes a new instance of DevCenterProject. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
         /// When specified, indicates the maximum number of Dev Boxes a single user can
         /// create across all pools in the project.
         /// </param>
-        internal Project(string name, string description, int? maxDevBoxesPerUser)
+        internal DevCenterProject(string name, string description, int? maxDevBoxesPerUser)
         {
             Name = name;
             Description = description;

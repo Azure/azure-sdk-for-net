@@ -69,13 +69,13 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<Project>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProject>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectAsync(projectName, context).ConfigureAwait(false);
-            return Response.FromValue(Project.FromResponse(response), response);
+            return Response.FromValue(DevCenterProject.FromResponse(response), response);
         }
 
         /// <summary> Gets a project. </summary>
@@ -84,13 +84,13 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
-        public virtual Response<Project> GetProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProject> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProject(projectName, context);
-            return Response.FromValue(Project.FromResponse(response), response);
+            return Response.FromValue(DevCenterProject.FromResponse(response), response);
         }
 
         /// <summary>
@@ -178,12 +178,12 @@ namespace Azure.Developer.DevCenter
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<Project> GetProjectsAsync(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Project.DeserializeProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterProject.DeserializeDevCenterProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists all projects. </summary>
@@ -191,12 +191,12 @@ namespace Azure.Developer.DevCenter
         /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,CancellationToken)']/*" />
-        public virtual Pageable<Project> GetProjects(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevCenterProject> GetProjects(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Project.DeserializeProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterProject.DeserializeDevCenterProject, ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>

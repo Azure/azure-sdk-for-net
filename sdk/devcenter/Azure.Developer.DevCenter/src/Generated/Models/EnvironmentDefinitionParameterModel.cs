@@ -12,9 +12,9 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
-    public partial class EnvironmentDefinitionParameter
+    public partial class EnvironmentDefinitionParameterModel
     {
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameter. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="type">
         /// A string of one of the basic JSON types (number, integer, array, object,
@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal EnvironmentDefinitionParameter(string id, ParameterType type, bool required)
+        internal EnvironmentDefinitionParameterModel(string id, ParameterType type, bool required)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Models
             Allowed = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameter. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, string @default, ParameterType type, bool? readOnly, bool required, IReadOnlyList<string> allowed)
+        internal EnvironmentDefinitionParameterModel(string id, string name, string description, string @default, ParameterType type, bool? readOnly, bool required, IReadOnlyList<string> allowed)
         {
             Id = id;
             Name = name;

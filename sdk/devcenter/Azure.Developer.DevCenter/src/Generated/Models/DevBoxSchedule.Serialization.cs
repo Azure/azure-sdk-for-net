@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class Schedule
+    public partial class DevBoxSchedule
     {
-        internal static Schedule DeserializeSchedule(JsonElement element)
+        internal static DevBoxSchedule DeserializeDevBoxSchedule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -51,15 +51,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new Schedule(name, type, frequency, time, timeZone);
+            return new DevBoxSchedule(name, type, frequency, time, timeZone);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Schedule FromResponse(Response response)
+        internal static DevBoxSchedule FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSchedule(document.RootElement);
+            return DeserializeDevBoxSchedule(document.RootElement);
         }
     }
 }

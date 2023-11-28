@@ -15,20 +15,20 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class DeveloperDevCenterModelFactory
     {
-        /// <summary> Initializes a new instance of Project. </summary>
+        /// <summary> Initializes a new instance of DevCenterProject. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
         /// When specified, indicates the maximum number of Dev Boxes a single user can
         /// create across all pools in the project.
         /// </param>
-        /// <returns> A new <see cref="Models.Project"/> instance for mocking. </returns>
-        public static Project Project(string name = null, string description = null, int? maxDevBoxesPerUser = null)
+        /// <returns> A new <see cref="Models.DevCenterProject"/> instance for mocking. </returns>
+        public static DevCenterProject DevCenterProject(string name = null, string description = null, int? maxDevBoxesPerUser = null)
         {
-            return new Project(name, description, maxDevBoxesPerUser);
+            return new DevCenterProject(name, description, maxDevBoxesPerUser);
         }
 
-        /// <summary> Initializes a new instance of Pool. </summary>
+        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -45,10 +45,10 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        /// <returns> A new <see cref="Models.Pool"/> instance for mocking. </returns>
-        public static Pool Pool(string name = null, string location = null, OsType? osType = null, HardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, StorageProfile storageProfile = null, ImageReference imageReference = null, LocalAdminStatus? localAdministrator = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
+        /// <returns> A new <see cref="Models.DevBoxesPool"/> instance for mocking. </returns>
+        public static DevBoxesPool DevBoxesPool(string name = null, string location = null, OsType? osType = null, HardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, StorageProfile storageProfile = null, ImageReference imageReference = null, LocalAdminStatus? localAdministrator = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
         {
-            return new Pool(name, location, osType, hardwareProfile, hibernateSupport, storageProfile, imageReference, localAdministrator, stopOnDisconnect, healthStatus);
+            return new DevBoxesPool(name, location, osType, hardwareProfile, hibernateSupport, storageProfile, imageReference, localAdministrator, stopOnDisconnect, healthStatus);
         }
 
         /// <summary> Initializes a new instance of HardwareProfile. </summary>
@@ -96,16 +96,16 @@ namespace Azure.Developer.DevCenter.Models
             return new StopOnDisconnectConfiguration(status, gracePeriodMinutes);
         }
 
-        /// <summary> Initializes a new instance of Schedule. </summary>
+        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <returns> A new <see cref="Models.Schedule"/> instance for mocking. </returns>
-        public static Schedule Schedule(string name = null, ScheduledType type = default, ScheduledFrequency frequency = default, string time = null, string timeZone = null)
+        /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
+        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduledType type = default, ScheduledFrequency frequency = default, string time = null, string timeZone = null)
         {
-            return new Schedule(name, type, frequency, time, timeZone);
+            return new DevBoxSchedule(name, type, frequency, time, timeZone);
         }
 
         /// <summary> Initializes a new instance of DevBox. </summary>
@@ -206,7 +206,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxActionDelayResult(name, result, action, error);
         }
 
-        /// <summary> Initializes a new instance of Environment. </summary>
+        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentType"> Environment type. </param>
@@ -216,27 +216,27 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        /// <returns> A new <see cref="Models.Environment"/> instance for mocking. </returns>
-        public static Environment Environment(BinaryData parameters = null, string name = null, string environmentType = null, string user = null, string provisioningState = null, string resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
+        public static DevCenterEnvironment DevCenterEnvironment(BinaryData parameters = null, string name = null, string environmentType = null, string user = null, string provisioningState = null, string resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
         {
-            return new Environment(parameters, name, environmentType, user, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error);
+            return new DevCenterEnvironment(parameters, name, environmentType, user, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error);
         }
 
-        /// <summary> Initializes a new instance of Catalog. </summary>
+        /// <summary> Initializes a new instance of DevCenterCatalog. </summary>
         /// <param name="name"> Name of the catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> A new <see cref="Models.Catalog"/> instance for mocking. </returns>
-        public static Catalog Catalog(string name = null)
+        /// <returns> A new <see cref="Models.DevCenterCatalog"/> instance for mocking. </returns>
+        public static DevCenterCatalog DevCenterCatalog(string name = null)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return new Catalog(name);
+            return new DevCenterCatalog(name);
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinition. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -244,15 +244,15 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parameters"> Input parameters passed to an environment. </param>
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
-        /// <returns> A new <see cref="Models.EnvironmentDefinition"/> instance for mocking. </returns>
-        public static EnvironmentDefinition EnvironmentDefinition(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameter> parameters = null, string parametersSchema = null, string templatePath = null)
+        /// <returns> A new <see cref="Models.EnvironmentDefinitionModel"/> instance for mocking. </returns>
+        public static EnvironmentDefinitionModel EnvironmentDefinitionModel(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameterModel> parameters = null, string parametersSchema = null, string templatePath = null)
         {
-            parameters ??= new List<EnvironmentDefinitionParameter>();
+            parameters ??= new List<EnvironmentDefinitionParameterModel>();
 
-            return new EnvironmentDefinition(id, name, catalogName, description, parameters?.ToList(), parametersSchema, templatePath);
+            return new EnvironmentDefinitionModel(id, name, catalogName, description, parameters?.ToList(), parametersSchema, templatePath);
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameter. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
@@ -267,12 +267,12 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
-        /// <returns> A new <see cref="Models.EnvironmentDefinitionParameter"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionParameter EnvironmentDefinitionParameter(string id = null, string name = null, string description = null, string @default = null, ParameterType type = default, bool? readOnly = null, bool required = default, IEnumerable<string> allowed = null)
+        /// <returns> A new <see cref="Models.EnvironmentDefinitionParameterModel"/> instance for mocking. </returns>
+        public static EnvironmentDefinitionParameterModel EnvironmentDefinitionParameterModel(string id = null, string name = null, string description = null, string @default = null, ParameterType type = default, bool? readOnly = null, bool required = default, IEnumerable<string> allowed = null)
         {
             allowed ??= new List<string>();
 
-            return new EnvironmentDefinitionParameter(id, name, description, @default, type, readOnly, required, allowed?.ToList());
+            return new EnvironmentDefinitionParameterModel(id, name, description, @default, type, readOnly, required, allowed?.ToList());
         }
 
         /// <summary> Initializes a new instance of EnvironmentType. </summary>

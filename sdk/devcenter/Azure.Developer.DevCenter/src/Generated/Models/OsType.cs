@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> The operating system type. </summary>
     public readonly partial struct OsType : IEquatable<OsType>
     {
         private readonly string _value;

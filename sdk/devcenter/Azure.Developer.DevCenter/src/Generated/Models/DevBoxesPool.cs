@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
-    public partial class Pool
+    public partial class DevBoxesPool
     {
-        /// <summary> Initializes a new instance of Pool. </summary>
+        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal Pool(string location, PoolHealthStatus healthStatus)
+        internal DevBoxesPool(string location, PoolHealthStatus healthStatus)
         {
             Argument.AssertNotNull(location, nameof(location));
 
@@ -28,7 +28,7 @@ namespace Azure.Developer.DevCenter.Models
             HealthStatus = healthStatus;
         }
 
-        /// <summary> Initializes a new instance of Pool. </summary>
+        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -45,7 +45,7 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        internal Pool(string name, string location, OsType? osType, HardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, StorageProfile storageProfile, ImageReference imageReference, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
+        internal DevBoxesPool(string name, string location, OsType? osType, HardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, StorageProfile storageProfile, ImageReference imageReference, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
         {
             Name = name;
             Location = location;

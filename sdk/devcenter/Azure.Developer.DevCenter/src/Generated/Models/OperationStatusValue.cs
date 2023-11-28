@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> Indicates whether operation status is running, completed, canceled or failed. </summary>
     public readonly partial struct OperationStatusValue : IEquatable<OperationStatusValue>
     {
         private readonly string _value;

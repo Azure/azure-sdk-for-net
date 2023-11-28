@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> The frequency of task execution. </summary>
     public readonly partial struct ScheduledFrequency : IEquatable<ScheduledFrequency>
     {
         private readonly string _value;

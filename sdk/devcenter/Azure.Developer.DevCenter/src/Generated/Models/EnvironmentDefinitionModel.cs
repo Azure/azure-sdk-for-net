@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An environment definition. </summary>
-    public partial class EnvironmentDefinition
+    public partial class EnvironmentDefinitionModel
     {
-        /// <summary> Initializes a new instance of EnvironmentDefinition. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="catalogName"/> is null. </exception>
-        internal EnvironmentDefinition(string id, string name, string catalogName)
+        internal EnvironmentDefinitionModel(string id, string name, string catalogName)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
@@ -28,10 +28,10 @@ namespace Azure.Developer.DevCenter.Models
             Id = id;
             Name = name;
             CatalogName = catalogName;
-            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
+            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameterModel>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinition. </summary>
+        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parameters"> Input parameters passed to an environment. </param>
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath)
+        internal EnvironmentDefinitionModel(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameterModel> parameters, string parametersSchema, string templatePath)
         {
             Id = id;
             Name = name;
@@ -59,7 +59,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> A short description of the environment definition. </summary>
         public string Description { get; }
         /// <summary> Input parameters passed to an environment. </summary>
-        public IReadOnlyList<EnvironmentDefinitionParameter> Parameters { get; }
+        public IReadOnlyList<EnvironmentDefinitionParameterModel> Parameters { get; }
         /// <summary> JSON schema defining the parameters object passed to an environment. </summary>
         public string ParametersSchema { get; }
         /// <summary> Path to the Environment Definition entrypoint file. </summary>

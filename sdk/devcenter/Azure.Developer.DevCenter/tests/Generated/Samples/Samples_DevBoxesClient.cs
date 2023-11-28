@@ -59,7 +59,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Pool> response = client.GetPool("<projectName>", "<poolName>");
+            Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Pool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+            Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Pool> response = client.GetPool("<projectName>", "<poolName>");
+            Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Pool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+            Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Schedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
+            Response<DevBoxSchedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Schedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
+            Response<DevBoxSchedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Schedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
+            Response<DevBoxSchedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
         }
 
         [Test]
@@ -268,7 +268,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<Schedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
+            Response<DevBoxSchedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
         }
 
         [Test]
@@ -843,7 +843,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (Pool item in client.GetPools("<projectName>"))
+            foreach (DevBoxesPool item in client.GetPools("<projectName>"))
             {
             }
         }
@@ -856,7 +856,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (Pool item in client.GetPoolsAsync("<projectName>"))
+            await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>"))
             {
             }
         }
@@ -931,7 +931,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (Pool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
+            foreach (DevBoxesPool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -944,7 +944,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (Pool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
+            await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -995,7 +995,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (Schedule item in client.GetSchedules("<projectName>", "<poolName>"))
+            foreach (DevBoxSchedule item in client.GetSchedules("<projectName>", "<poolName>"))
             {
             }
         }
@@ -1008,7 +1008,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (Schedule item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
+            await foreach (DevBoxSchedule item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
             {
             }
         }
@@ -1059,7 +1059,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (Schedule item in client.GetSchedules("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
+            foreach (DevBoxSchedule item in client.GetSchedules("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -1072,7 +1072,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (Schedule item in client.GetSchedulesAsync("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
+            await foreach (DevBoxSchedule item in client.GetSchedulesAsync("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }

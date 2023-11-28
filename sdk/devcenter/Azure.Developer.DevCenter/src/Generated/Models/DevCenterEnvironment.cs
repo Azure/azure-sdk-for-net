@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment. </summary>
-    public partial class Environment
+    public partial class DevCenterEnvironment
     {
-        /// <summary> Initializes a new instance of Environment. </summary>
+        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
         /// <param name="environmentType"> Environment type. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentType"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
-        public Environment(string environmentType, string catalogName, string environmentDefinitionName)
+        public DevCenterEnvironment(string environmentType, string catalogName, string environmentDefinitionName)
         {
             Argument.AssertNotNull(environmentType, nameof(environmentType));
             Argument.AssertNotNull(catalogName, nameof(catalogName));
@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
             EnvironmentDefinitionName = environmentDefinitionName;
         }
 
-        /// <summary> Initializes a new instance of Environment. </summary>
+        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentType"> Environment type. </param>
@@ -40,7 +40,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        internal Environment(BinaryData parameters, string name, string environmentType, string user, string provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
+        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentType, string user, string provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
         {
             Parameters = parameters;
             Name = name;

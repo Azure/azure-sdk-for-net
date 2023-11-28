@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class EnvironmentDefinitionParameter
+    public partial class EnvironmentDefinitionParameterModel
     {
-        internal static EnvironmentDefinitionParameter DeserializeEnvironmentDefinitionParameter(JsonElement element)
+        internal static EnvironmentDefinitionParameterModel DeserializeEnvironmentDefinitionParameterModel(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,15 +84,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new EnvironmentDefinitionParameter(id, name.Value, description.Value, @default.Value, type, Optional.ToNullable(readOnly), required, Optional.ToList(allowed));
+            return new EnvironmentDefinitionParameterModel(id, name.Value, description.Value, @default.Value, type, Optional.ToNullable(readOnly), required, Optional.ToList(allowed));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EnvironmentDefinitionParameter FromResponse(Response response)
+        internal static EnvironmentDefinitionParameterModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironmentDefinitionParameter(document.RootElement);
+            return DeserializeEnvironmentDefinitionParameterModel(document.RootElement);
         }
     }
 }

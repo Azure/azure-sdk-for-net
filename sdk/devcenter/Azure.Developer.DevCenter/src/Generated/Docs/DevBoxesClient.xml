@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Pool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
 ]]></code>
 This sample shows how to call GetPoolAsync with all parameters.
 <code><![CDATA[
@@ -17,7 +17,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Pool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
 ]]></code></example>
     </member>
     <member name="GetPool(string,string,CancellationToken)">
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Pool> response = client.GetPool("<projectName>", "<poolName>");
+Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
 ]]></code>
 This sample shows how to call GetPool with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Pool> response = client.GetPool("<projectName>", "<poolName>");
+Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
 ]]></code></example>
     </member>
     <member name="GetPoolAsync(string,string,RequestContext)">
@@ -133,7 +133,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Schedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
+Response<DevBoxSchedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
 ]]></code>
 This sample shows how to call GetScheduleAsync with all parameters.
 <code><![CDATA[
@@ -141,7 +141,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Schedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
+Response<DevBoxSchedule> response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
 ]]></code></example>
     </member>
     <member name="GetSchedule(string,string,string,CancellationToken)">
@@ -152,7 +152,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Schedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
+Response<DevBoxSchedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
 ]]></code>
 This sample shows how to call GetSchedule with all parameters.
 <code><![CDATA[
@@ -160,7 +160,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Response<Schedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
+Response<DevBoxSchedule> response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
 ]]></code></example>
     </member>
     <member name="GetScheduleAsync(string,string,string,RequestContext)">
@@ -713,7 +713,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-await foreach (Pool item in client.GetPoolsAsync("<projectName>"))
+await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -723,7 +723,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-await foreach (Pool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
+await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -736,7 +736,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-foreach (Pool item in client.GetPools("<projectName>"))
+foreach (DevBoxesPool item in client.GetPools("<projectName>"))
 {
 }
 ]]></code>
@@ -746,7 +746,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-foreach (Pool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
+foreach (DevBoxesPool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -849,7 +849,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-await foreach (Schedule item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
+await foreach (DevBoxSchedule item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
 {
 }
 ]]></code>
@@ -859,7 +859,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-await foreach (Schedule item in client.GetSchedulesAsync("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
+await foreach (DevBoxSchedule item in client.GetSchedulesAsync("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -872,7 +872,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-foreach (Schedule item in client.GetSchedules("<projectName>", "<poolName>"))
+foreach (DevBoxSchedule item in client.GetSchedules("<projectName>", "<poolName>"))
 {
 }
 ]]></code>
@@ -882,7 +882,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-foreach (Schedule item in client.GetSchedules("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
+foreach (DevBoxSchedule item in client.GetSchedules("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
 {
 }
 ]]></code></example>

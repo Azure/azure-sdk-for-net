@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> Indicates whether an environment type is enabled for use in a project. </summary>
     public readonly partial struct EnvironmentTypeEnableStatus : IEquatable<EnvironmentTypeEnableStatus>
     {
         private readonly string _value;

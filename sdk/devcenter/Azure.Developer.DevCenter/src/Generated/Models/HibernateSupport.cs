@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> Indicates whether hibernate is supported and enabled, disabled, or unsupported by the operating system. Unknown hibernate support is represented as null. </summary>
     public readonly partial struct HibernateSupport : IEquatable<HibernateSupport>
     {
         private readonly string _value;

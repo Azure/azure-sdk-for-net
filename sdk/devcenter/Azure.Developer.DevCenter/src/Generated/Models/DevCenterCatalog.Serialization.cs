@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class Catalog
+    public partial class DevCenterCatalog
     {
-        internal static Catalog DeserializeCatalog(JsonElement element)
+        internal static DevCenterCatalog DeserializeDevCenterCatalog(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -27,15 +27,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new Catalog(name);
+            return new DevCenterCatalog(name);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Catalog FromResponse(Response response)
+        internal static DevCenterCatalog FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCatalog(document.RootElement);
+            return DeserializeDevCenterCatalog(document.RootElement);
         }
     }
 }

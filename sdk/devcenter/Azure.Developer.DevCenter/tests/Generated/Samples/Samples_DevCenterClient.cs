@@ -55,7 +55,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<Project> response = client.GetProject("<projectName>");
+            Response<DevCenterProject> response = client.GetProject("<projectName>");
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<Project> response = await client.GetProjectAsync("<projectName>");
+            Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<Project> response = client.GetProject("<projectName>");
+            Response<DevCenterProject> response = client.GetProject("<projectName>");
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<Project> response = await client.GetProjectAsync("<projectName>");
+            Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            foreach (Project item in client.GetProjects())
+            foreach (DevCenterProject item in client.GetProjects())
             {
             }
         }
@@ -174,7 +174,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            await foreach (Project item in client.GetProjectsAsync())
+            await foreach (DevCenterProject item in client.GetProjectsAsync())
             {
             }
         }
@@ -221,7 +221,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            foreach (Project item in client.GetProjects(filter: "<filter>", maxCount: 1234))
+            foreach (DevCenterProject item in client.GetProjects(filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -234,7 +234,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            await foreach (Project item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
+            await foreach (DevCenterProject item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
             {
             }
         }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class Project
+    public partial class DevCenterProject
     {
-        internal static Project DeserializeProject(JsonElement element)
+        internal static DevCenterProject DeserializeDevCenterProject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,15 +44,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new Project(name, description.Value, Optional.ToNullable(maxDevBoxesPerUser));
+            return new DevCenterProject(name, description.Value, Optional.ToNullable(maxDevBoxesPerUser));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Project FromResponse(Response response)
+        internal static DevCenterProject FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeProject(document.RootElement);
+            return DeserializeDevCenterProject(document.RootElement);
         }
     }
 }

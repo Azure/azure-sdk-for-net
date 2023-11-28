@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.DevCenter.Models
 {
+    /// <summary> The type of data a parameter accepts. </summary>
     public readonly partial struct ParameterType : IEquatable<ParameterType>
     {
         private readonly string _value;

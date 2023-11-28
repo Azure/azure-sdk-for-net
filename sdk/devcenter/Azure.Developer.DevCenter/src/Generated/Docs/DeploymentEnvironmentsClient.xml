@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Models.Environment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
+Response<DevCenterEnvironment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
 ]]></code>
 This sample shows how to call GetEnvironmentAsync with all parameters.
 <code><![CDATA[
@@ -17,7 +17,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Models.Environment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
+Response<DevCenterEnvironment> response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>");
 ]]></code></example>
     </member>
     <member name="GetEnvironment(string,string,string,CancellationToken)">
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Models.Environment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
+Response<DevCenterEnvironment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
 ]]></code>
 This sample shows how to call GetEnvironment with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Models.Environment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
+Response<DevCenterEnvironment> response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>");
 ]]></code></example>
     </member>
     <member name="GetEnvironmentAsync(string,string,string,RequestContext)">
@@ -123,7 +123,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Catalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
+Response<DevCenterCatalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
 ]]></code>
 This sample shows how to call GetCatalogAsync with all parameters.
 <code><![CDATA[
@@ -131,7 +131,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Catalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
+Response<DevCenterCatalog> response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
 ]]></code></example>
     </member>
     <member name="GetCatalog(string,string,CancellationToken)">
@@ -142,7 +142,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Catalog> response = client.GetCatalog("<projectName>", "<catalogName>");
+Response<DevCenterCatalog> response = client.GetCatalog("<projectName>", "<catalogName>");
 ]]></code>
 This sample shows how to call GetCatalog with all parameters.
 <code><![CDATA[
@@ -150,7 +150,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<Catalog> response = client.GetCatalog("<projectName>", "<catalogName>");
+Response<DevCenterCatalog> response = client.GetCatalog("<projectName>", "<catalogName>");
 ]]></code></example>
     </member>
     <member name="GetCatalogAsync(string,string,RequestContext)">
@@ -211,7 +211,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+Response<EnvironmentDefinitionModel> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
 ]]></code>
 This sample shows how to call GetEnvironmentDefinitionAsync with all parameters.
 <code><![CDATA[
@@ -219,7 +219,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+Response<EnvironmentDefinitionModel> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
 ]]></code></example>
     </member>
     <member name="GetEnvironmentDefinition(string,string,string,CancellationToken)">
@@ -230,7 +230,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+Response<EnvironmentDefinitionModel> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
 ]]></code>
 This sample shows how to call GetEnvironmentDefinition with all parameters.
 <code><![CDATA[
@@ -238,7 +238,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+Response<EnvironmentDefinitionModel> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
 ]]></code></example>
     </member>
     <member name="GetEnvironmentDefinitionAsync(string,string,string,RequestContext)">
@@ -329,7 +329,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Models.Environment item in client.GetAllEnvironmentsAsync("<projectName>"))
+await foreach (DevCenterEnvironment item in client.GetAllEnvironmentsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -339,7 +339,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Models.Environment item in client.GetAllEnvironmentsAsync("<projectName>", maxCount: 1234))
+await foreach (DevCenterEnvironment item in client.GetAllEnvironmentsAsync("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -352,7 +352,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Models.Environment item in client.GetAllEnvironments("<projectName>"))
+foreach (DevCenterEnvironment item in client.GetAllEnvironments("<projectName>"))
 {
 }
 ]]></code>
@@ -362,7 +362,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Models.Environment item in client.GetAllEnvironments("<projectName>", maxCount: 1234))
+foreach (DevCenterEnvironment item in client.GetAllEnvironments("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -455,7 +455,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Models.Environment item in client.GetEnvironmentsAsync("<projectName>", "<userId>"))
+await foreach (DevCenterEnvironment item in client.GetEnvironmentsAsync("<projectName>", "<userId>"))
 {
 }
 ]]></code>
@@ -465,7 +465,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Models.Environment item in client.GetEnvironmentsAsync("<projectName>", "<userId>", maxCount: 1234))
+await foreach (DevCenterEnvironment item in client.GetEnvironmentsAsync("<projectName>", "<userId>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -478,7 +478,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Models.Environment item in client.GetEnvironments("<projectName>", "<userId>"))
+foreach (DevCenterEnvironment item in client.GetEnvironments("<projectName>", "<userId>"))
 {
 }
 ]]></code>
@@ -488,7 +488,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Models.Environment item in client.GetEnvironments("<projectName>", "<userId>", maxCount: 1234))
+foreach (DevCenterEnvironment item in client.GetEnvironments("<projectName>", "<userId>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -581,7 +581,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Catalog item in client.GetCatalogsAsync("<projectName>"))
+await foreach (DevCenterCatalog item in client.GetCatalogsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -591,7 +591,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (Catalog item in client.GetCatalogsAsync("<projectName>", maxCount: 1234))
+await foreach (DevCenterCatalog item in client.GetCatalogsAsync("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -604,7 +604,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Catalog item in client.GetCatalogs("<projectName>"))
+foreach (DevCenterCatalog item in client.GetCatalogs("<projectName>"))
 {
 }
 ]]></code>
@@ -614,7 +614,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (Catalog item in client.GetCatalogs("<projectName>", maxCount: 1234))
+foreach (DevCenterCatalog item in client.GetCatalogs("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -681,7 +681,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
+await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
 {
 }
 ]]></code>
@@ -691,7 +691,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
+await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -704,7 +704,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>"))
+foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitions("<projectName>"))
 {
 }
 ]]></code>
@@ -714,7 +714,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
+foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -811,7 +811,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
+await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
 {
 }
 ]]></code>
@@ -821,7 +821,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
+await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -834,7 +834,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
+foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
 {
 }
 ]]></code>
@@ -844,7 +844,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
+foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
 {
 }
 ]]></code></example>
@@ -1041,7 +1041,7 @@ foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>", 1234, nu
 }
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,Environment,CancellationToken)">
+    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)">
       <example>
 This sample shows how to call CreateOrUpdateEnvironmentAsync.
 <code><![CDATA[
@@ -1049,9 +1049,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
-Operation<Models.Environment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-Models.Environment responseData = operation.Value;
+DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+DevCenterEnvironment responseData = operation.Value;
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters.
 <code><![CDATA[
@@ -1059,15 +1059,15 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
 {
     Parameters = BinaryData.FromObjectAsJson(new object()),
 };
-Operation<Models.Environment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-Models.Environment responseData = operation.Value;
+Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+DevCenterEnvironment responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdateEnvironment(WaitUntil,string,string,string,Environment,CancellationToken)">
+    <member name="CreateOrUpdateEnvironment(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)">
       <example>
 This sample shows how to call CreateOrUpdateEnvironment.
 <code><![CDATA[
@@ -1075,9 +1075,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
-Operation<Models.Environment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-Models.Environment responseData = operation.Value;
+DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+DevCenterEnvironment responseData = operation.Value;
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironment with all parameters.
 <code><![CDATA[
@@ -1085,12 +1085,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Models.Environment body = new Models.Environment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
 {
     Parameters = BinaryData.FromObjectAsJson(new object()),
 };
-Operation<Models.Environment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-Models.Environment responseData = operation.Value;
+Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
+DevCenterEnvironment responseData = operation.Value;
 ]]></code></example>
     </member>
     <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,RequestContent,RequestContext)">
