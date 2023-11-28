@@ -74,7 +74,7 @@ This section demonstrates usage of Data Movement for interacting with blob stora
 
 ### Extensions on `BlobContainerClient`
 
-For applicatons with preexisting code using Azure.Storage.Blobs, this package provides extension methods for `BlobContainerClient` to get some of the benefits of the `TransferManager` with minimal extra code.
+For applications with preexisting code using Azure.Storage.Blobs, this package provides extension methods for `BlobContainerClient` to get some of the benefits of the `TransferManager` with minimal extra code.
 
 Instantiate the BlobContainerClient
 ```C# Snippet:ExtensionMethodCreateContainerClient
@@ -203,7 +203,7 @@ StorageResource pageBlobResource = blobs.FromClient(pageBlobClient);
 StorageResource appendBlobResource = blobs.FromClient(appendBlobClient);
 ```
 
-There are more options which can be used when creating a blob storage resource. Below are some exapmles.
+There are more options which can be used when creating a blob storage resource. Below are some examples.
 
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
 BlobStorageResourceContainerOptions virtualDirectoryOptions = new()

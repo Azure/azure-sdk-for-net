@@ -205,7 +205,7 @@ async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, 
 
 ### Pausing transfers
 
-Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you recieved upon transfer start.
+Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you received upon transfer start.
 
 ```C# Snippet:PauseFromTransfer
 await dataTransfer.PauseIfRunningAsync(cancellationToken);
@@ -241,7 +241,7 @@ transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
     {
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
-        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+        logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
             $"Source Resource: {args.SourceResource.Path}, +" +
             $"Destination Resource: {args.DestinationResource.Path}," +
             $"Exception Message: {args.Exception.Message}");
