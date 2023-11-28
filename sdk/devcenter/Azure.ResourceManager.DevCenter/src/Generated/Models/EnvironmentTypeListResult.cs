@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Result of the environment type list operation. </summary>
     internal partial class EnvironmentTypeListResult
     {
-        /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentTypeListResult"/>. </summary>
         internal EnvironmentTypeListResult()
         {
             Value = new ChangeTrackingList<DevCenterEnvironmentTypeData>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentTypeListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal EnvironmentTypeListResult(IReadOnlyList<DevCenterEnvironmentTypeData> value, string nextLink)

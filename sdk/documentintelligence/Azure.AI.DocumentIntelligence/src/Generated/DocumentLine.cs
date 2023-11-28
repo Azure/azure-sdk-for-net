@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class DocumentLine
     {
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="polygon">
         /// Bounding polygon of the line, with coordinates specified relative to the

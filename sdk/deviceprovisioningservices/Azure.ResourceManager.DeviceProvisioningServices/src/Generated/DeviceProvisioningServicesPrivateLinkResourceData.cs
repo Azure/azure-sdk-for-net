@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="properties"> The properties for a group information object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DeviceProvisioningServicesPrivateLinkResourceData(DeviceProvisioningServicesPrivateLinkResourceProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

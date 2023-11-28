@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Container host mapping object specifying the Container host resource ID and its associated Controller resource. </summary>
     public partial class ContainerHostMapping
     {
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHostMapping"/>. </summary>
         public ContainerHostMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHostMapping"/>. </summary>
         /// <param name="containerHostResourceId"> ARM ID of the Container Host resource. </param>
         /// <param name="mappedControllerResourceId"> ARM ID of the mapped Controller resource. </param>
         internal ContainerHostMapping(string containerHostResourceId, string mappedControllerResourceId)

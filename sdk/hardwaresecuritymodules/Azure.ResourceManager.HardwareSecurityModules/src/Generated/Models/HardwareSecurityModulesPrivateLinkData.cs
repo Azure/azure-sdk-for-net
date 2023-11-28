@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> A private link resource. </summary>
     public partial class HardwareSecurityModulesPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkData"/>. </summary>
         internal HardwareSecurityModulesPrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

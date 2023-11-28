@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for creating a virtual machine. </summary>
     public partial class DevTestLabVmCreationContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmCreationContent"/>. </summary>
         public DevTestLabVmCreationContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmCreationContent"/>. </summary>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>

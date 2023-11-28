@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of private endpoint connections associated with SAN. </summary>
     internal partial class ElasticSanPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionListResult"/>. </summary>
         internal ElasticSanPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanPrivateEndpointConnectionListResult(IReadOnlyList<ElasticSanPrivateEndpointConnectionData> value, string nextLink)

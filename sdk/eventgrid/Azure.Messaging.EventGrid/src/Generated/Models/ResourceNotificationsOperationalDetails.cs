@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> details of operational info. </summary>
     public partial class ResourceNotificationsOperationalDetails
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
         internal ResourceNotificationsOperationalDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
         /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
         internal ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime)
         {

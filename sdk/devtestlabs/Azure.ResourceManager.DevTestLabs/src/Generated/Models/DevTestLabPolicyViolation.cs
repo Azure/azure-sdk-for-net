@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Policy violation. </summary>
     public partial class DevTestLabPolicyViolation
     {
-        /// <summary> Initializes a new instance of DevTestLabPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyViolation"/>. </summary>
         internal DevTestLabPolicyViolation()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyViolation"/>. </summary>
         /// <param name="code"> The code of the policy violation. </param>
         /// <param name="message"> The message of the policy violation. </param>
         internal DevTestLabPolicyViolation(string code, string message)

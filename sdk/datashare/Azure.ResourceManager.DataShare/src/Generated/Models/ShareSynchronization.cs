@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A ShareSynchronization data transfer object. </summary>
     public partial class ShareSynchronization
     {
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         public ShareSynchronization()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>

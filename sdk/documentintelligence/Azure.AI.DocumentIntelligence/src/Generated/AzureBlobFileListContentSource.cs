@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> File list in Azure Blob Storage. </summary>
     public partial class AzureBlobFileListContentSource
     {
-        /// <summary> Initializes a new instance of AzureBlobFileListContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFileListContentSource"/>. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> or <paramref name="fileList"/> is null. </exception>

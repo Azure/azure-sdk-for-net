@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Profile of schedule based Autoscale. </summary>
     public partial class ScheduleBasedConfig
     {
-        /// <summary> Initializes a new instance of ScheduleBasedConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedConfig"/>. </summary>
         /// <param name="timeZone"> User has to specify the timezone on which the schedule has to be set for schedule based autoscale configuration. </param>
         /// <param name="defaultCount"> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </param>
         /// <param name="schedules"> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Schedules = schedules.ToList();
         }
 
-        /// <summary> Initializes a new instance of ScheduleBasedConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedConfig"/>. </summary>
         /// <param name="timeZone"> User has to specify the timezone on which the schedule has to be set for schedule based autoscale configuration. </param>
         /// <param name="defaultCount"> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </param>
         /// <param name="schedules"> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </param>

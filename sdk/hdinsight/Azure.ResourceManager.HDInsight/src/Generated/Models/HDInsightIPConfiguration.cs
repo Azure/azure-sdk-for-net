@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The ip configurations for the private link service. </summary>
     public partial class HDInsightIPConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/>. </summary>
         /// <param name="name"> The name of private link IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightIPConfiguration(string name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/>. </summary>
         /// <param name="id"> The private link IP configuration id. </param>
         /// <param name="name"> The name of private link IP configuration. </param>
         /// <param name="resourceType"> The type of the private link IP configuration. </param>

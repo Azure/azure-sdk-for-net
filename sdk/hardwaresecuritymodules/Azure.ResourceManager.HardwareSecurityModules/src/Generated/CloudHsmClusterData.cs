@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// </summary>
     public partial class CloudHsmClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CloudHsmClusterData(AzureLocation location) : base(location)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             PrivateEndpointConnections = new ChangeTrackingList<HardwareSecurityModulesPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

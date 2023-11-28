@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Workspace patch properties. </summary>
     public partial class EasmWorkspacePatch
     {
-        /// <summary> Initializes a new instance of EasmWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspacePatch"/>. </summary>
         public EasmWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The current billing term of the SaaS Subscription. </summary>
     public partial class SubscriptionTerm
     {
-        /// <summary> Initializes a new instance of SubscriptionTerm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionTerm"/>. </summary>
         internal SubscriptionTerm()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionTerm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionTerm"/>. </summary>
         /// <param name="termUnit"> The unit of the billing term. </param>
         /// <param name="startOn"> The date and time in UTC of when the billing term starts. </param>
         /// <param name="endOn"> The date and time in UTC of when the billing term ends. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Update properties for the corresponding partner topic of a channel. </summary>
     internal partial class PartnerUpdateTopicInfo
     {
-        /// <summary> Initializes a new instance of PartnerUpdateTopicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateTopicInfo"/>. </summary>
         public PartnerUpdateTopicInfo()
         {
         }

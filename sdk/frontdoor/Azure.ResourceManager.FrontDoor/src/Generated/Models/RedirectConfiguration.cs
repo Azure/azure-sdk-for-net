@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes Redirect Route. </summary>
     public partial class RedirectConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of RedirectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectConfiguration"/>. </summary>
         public RedirectConfiguration()
         {
             OdataType = "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration";
         }
 
-        /// <summary> Initializes a new instance of RedirectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectConfiguration"/>. </summary>
         /// <param name="odataType"></param>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
         /// <param name="redirectProtocol"> The protocol of the destination to where the traffic is redirected. </param>

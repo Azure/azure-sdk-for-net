@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Cloud Hsm Cluster restore information. </summary>
     public partial class RestoreProperties
     {
-        /// <summary> Initializes a new instance of RestoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProperties"/>. </summary>
         public RestoreProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProperties"/>. </summary>
         /// <param name="foldername"> Directory name in Azure Storage Blob where the backup is stored. </param>
         /// <param name="azureStorageResourceUri"> Azure Blob storage container Uri. </param>
         internal RestoreProperties(string foldername, Uri azureStorageResourceUri)

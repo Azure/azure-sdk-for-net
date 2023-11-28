@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ElasticSanPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
         internal ElasticSanPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ElasticSanPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanPrivateLinkResourceListResult(IReadOnlyList<ElasticSanPrivateLinkResource> value, string nextLink)

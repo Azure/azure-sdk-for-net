@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The node profile. </summary>
     public partial class ClusterComputeNodeProfile
     {
-        /// <summary> Initializes a new instance of ClusterComputeNodeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeNodeProfile"/>. </summary>
         /// <param name="nodeProfileType"> The node type. </param>
         /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <param name="count"> The number of virtual machines. </param>

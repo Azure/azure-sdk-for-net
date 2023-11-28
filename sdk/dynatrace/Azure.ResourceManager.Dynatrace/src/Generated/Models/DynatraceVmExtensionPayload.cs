@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response of payload to be passed while installing VM agent. </summary>
     public partial class DynatraceVmExtensionPayload
     {
-        /// <summary> Initializes a new instance of DynatraceVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceVmExtensionPayload"/>. </summary>
         internal DynatraceVmExtensionPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceVmExtensionPayload"/>. </summary>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="environmentId"> Id of the environment created. </param>
         internal DynatraceVmExtensionPayload(string ingestionKey, string environmentId)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The allocation details of the per subscription free trial slot of the subscription. </summary>
     public partial class MarketplaceTrialQuota
     {
-        /// <summary> Initializes a new instance of MarketplaceTrialQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         internal MarketplaceTrialQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of MarketplaceTrialQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         /// <param name="availablePromotion"> Available enterprise promotion for the subscription. </param>
         /// <param name="grafanaResourceId"> Resource Id of the Grafana resource which is doing the trial. </param>
         /// <param name="trialStartOn"> The date and time in UTC of when the trial starts. </param>

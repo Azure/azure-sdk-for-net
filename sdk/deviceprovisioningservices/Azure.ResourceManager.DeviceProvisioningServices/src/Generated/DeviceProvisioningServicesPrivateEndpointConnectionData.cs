@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeviceProvisioningServicesPrivateEndpointConnectionData(DeviceProvisioningServicesPrivateEndpointConnectionProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
