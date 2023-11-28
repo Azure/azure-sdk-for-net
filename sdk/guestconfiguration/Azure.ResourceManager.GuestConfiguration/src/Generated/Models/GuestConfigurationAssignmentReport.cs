@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
     public partial class GuestConfigurationAssignmentReport
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReport"/>. </summary>
         internal GuestConfigurationAssignmentReport()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReport"/>. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="properties"> Properties of the guest configuration report. </param>

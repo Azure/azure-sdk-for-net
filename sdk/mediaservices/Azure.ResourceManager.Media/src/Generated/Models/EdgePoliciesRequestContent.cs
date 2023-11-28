@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The EdgePoliciesRequestContent. </summary>
     public partial class EdgePoliciesRequestContent
     {
-        /// <summary> Initializes a new instance of EdgePoliciesRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
         public EdgePoliciesRequestContent()
         {
         }

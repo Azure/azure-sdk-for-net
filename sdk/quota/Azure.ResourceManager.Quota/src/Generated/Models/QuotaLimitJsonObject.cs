@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// </summary>
     public abstract partial class QuotaLimitJsonObject
     {
-        /// <summary> Initializes a new instance of QuotaLimitJsonObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaLimitJsonObject"/>. </summary>
         protected QuotaLimitJsonObject()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaLimitJsonObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaLimitJsonObject"/>. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         internal QuotaLimitJsonObject(LimitType limitObjectType)
         {

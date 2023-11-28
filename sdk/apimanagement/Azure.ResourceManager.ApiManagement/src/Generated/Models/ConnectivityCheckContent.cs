@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> A request to perform the connectivity check operation on a API Management service. </summary>
     public partial class ConnectivityCheckContent
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/>. </summary>
         /// <param name="source"> Definitions about the connectivity check origin. </param>
         /// <param name="destination"> The connectivity check operation destination. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>

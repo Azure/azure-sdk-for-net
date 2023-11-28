@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class AllowedEnvironmentTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of AllowedEnvironmentTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeData"/>. </summary>
         public AllowedEnvironmentTypeData()
         {
         }
 
-        /// <summary> Initializes a new instance of AllowedEnvironmentTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

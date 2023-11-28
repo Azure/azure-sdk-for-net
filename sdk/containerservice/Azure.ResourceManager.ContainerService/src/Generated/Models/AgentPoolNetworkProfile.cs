@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Network settings of an agent pool. </summary>
     public partial class AgentPoolNetworkProfile
     {
-        /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
         public AgentPoolNetworkProfile()
         {
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ApplicationSecurityGroups = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerSecurityAlertPolicyData"/>. </summary>
         public PostgreSqlServerSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

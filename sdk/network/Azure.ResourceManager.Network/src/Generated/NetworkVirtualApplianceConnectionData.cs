@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         public NetworkVirtualApplianceConnectionData()
         {
             BgpPeerAddress = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

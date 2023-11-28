@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call disconnected event. </summary>
     public partial class CallDisconnected
     {
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         internal CallDisconnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

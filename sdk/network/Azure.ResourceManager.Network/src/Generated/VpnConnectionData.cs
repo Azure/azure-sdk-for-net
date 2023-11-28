@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         public VpnConnectionData()
         {
             IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
             VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of VpnConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

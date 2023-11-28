@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of the endpoint used for accessing configuration. </summary>
     internal partial class ConfigurationAccessEndpointSpec
     {
-        /// <summary> Initializes a new instance of ConfigurationAccessEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationAccessEndpointSpec"/>. </summary>
         public ConfigurationAccessEndpointSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationAccessEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationAccessEndpointSpec"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal ConfigurationAccessEndpointSpec(string endpoint)
         {

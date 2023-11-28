@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The properties to create a new replica. </summary>
     public partial class MySqlServerPropertiesForReplica : MySqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of MySqlServerPropertiesForReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForReplica"/>. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public MySqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)

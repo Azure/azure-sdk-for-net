@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Object that represents a collection of SupportTicket resources. </summary>
     internal partial class SupportTicketsListResult
     {
-        /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketsListResult"/>. </summary>
         internal SupportTicketsListResult()
         {
             Value = new ChangeTrackingList<SupportTicketData>();
         }
 
-        /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketsListResult"/>. </summary>
         /// <param name="value"> List of SupportTicket resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of SupportTicket resources. </param>
         internal SupportTicketsListResult(IReadOnlyList<SupportTicketData> value, string nextLink)

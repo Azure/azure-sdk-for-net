@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> File content associated with the file under a workspace. </summary>
     public partial class UploadFileContent
     {
-        /// <summary> Initializes a new instance of UploadFileContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadFileContent"/>. </summary>
         public UploadFileContent()
         {
         }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The response of a FleetUpdateStrategy list operation. </summary>
     internal partial class FleetUpdateStrategyListResult
     {
-        /// <summary> Initializes a new instance of FleetUpdateStrategyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyListResult"/>. </summary>
         /// <param name="value"> The FleetUpdateStrategy items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FleetUpdateStrategyListResult(IEnumerable<FleetUpdateStrategyData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FleetUpdateStrategyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyListResult"/>. </summary>
         /// <param name="value"> The FleetUpdateStrategy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal FleetUpdateStrategyListResult(IReadOnlyList<FleetUpdateStrategyData> value, Uri nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API metadata property for Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayApiMetadataProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiMetadataProperties"/>. </summary>
         public AppPlatformGatewayApiMetadataProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiMetadataProperties"/>. </summary>
         /// <param name="title"> Title describing the context of the APIs available on the Gateway instance (default: `Spring Cloud Gateway for K8S`). </param>
         /// <param name="description"> Detailed description of the APIs available on the Gateway instance (default: `Generated OpenAPI 3 document that describes the API routes configured.`). </param>
         /// <param name="documentation"> Location of additional documentation for the APIs available on the Gateway instance. </param>

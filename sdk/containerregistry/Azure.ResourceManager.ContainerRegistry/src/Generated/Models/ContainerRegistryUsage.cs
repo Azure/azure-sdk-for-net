@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The quota usage for a container registry. </summary>
     public partial class ContainerRegistryUsage
     {
-        /// <summary> Initializes a new instance of ContainerRegistryUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsage"/>. </summary>
         internal ContainerRegistryUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsage"/>. </summary>
         /// <param name="name"> The name of the usage. </param>
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="currentValue"> The current value of the usage. </param>

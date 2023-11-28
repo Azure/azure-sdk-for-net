@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class MySqlServerPatch
     {
-        /// <summary> Initializes a new instance of MySqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPatch"/>. </summary>
         public MySqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

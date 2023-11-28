@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> revert a volume to the snapshot. </summary>
     public partial class NetAppVolumeRevertContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeRevertContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeRevertContent"/>. </summary>
         public NetAppVolumeRevertContent()
         {
         }

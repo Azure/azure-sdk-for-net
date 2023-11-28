@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public partial class HyperVToAzStackHciEventModelCustomProperties : EventModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciEventModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
         internal HyperVToAzStackHciEventModelCustomProperties()
         {
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciEventModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>

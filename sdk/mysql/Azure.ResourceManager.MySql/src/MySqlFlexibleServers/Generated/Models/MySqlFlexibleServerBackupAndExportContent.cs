@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> BackupAndExport API Request. </summary>
     public partial class MySqlFlexibleServerBackupAndExportContent : MySqlFlexibleServerBackupContentBase
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails">
         /// Backup Target Store Details

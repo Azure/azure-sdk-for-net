@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Properties of a Managed Network Peering Policy. </summary>
     public partial class ManagedNetworkPeeringPolicyProperties : ResourceProperties
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyProperties"/>. </summary>
         /// <param name="connectivityType"> Gets or sets the connectivity type of a network structure policy. </param>
         public ManagedNetworkPeeringPolicyProperties(ConnectivityType connectivityType)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Mesh = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the ManagedNetwork resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="connectivityType"> Gets or sets the connectivity type of a network structure policy. </param>

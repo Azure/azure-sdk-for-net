@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role storage resource. </summary>
     public partial class EdgeKubernetesRoleStorage
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorage"/>. </summary>
         public EdgeKubernetesRoleStorage()
         {
             StorageClasses = new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>();
             Endpoints = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorage"/>. </summary>
         /// <param name="storageClasses"> Kubernetes storage class info. </param>
         /// <param name="endpoints"> Mount points of shares in role(s). </param>
         internal EdgeKubernetesRoleStorage(IReadOnlyList<EdgeKubernetesRoleStorageClassInfo> storageClasses, IList<DataBoxEdgeMountPointMap> endpoints)

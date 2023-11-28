@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Subnets of the network. </summary>
     public partial class SiteRecoverySubnet
     {
-        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySubnet"/>. </summary>
         internal SiteRecoverySubnet()
         {
             AddressList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySubnet"/>. </summary>
         /// <param name="name"> The subnet name. </param>
         /// <param name="friendlyName"> The subnet friendly name. </param>
         /// <param name="addressList"> The list of addresses for the subnet. </param>

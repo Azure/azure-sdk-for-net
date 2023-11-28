@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AutomationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResourceListResult"/>. </summary>
         internal AutomationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AutomationPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value)
         {

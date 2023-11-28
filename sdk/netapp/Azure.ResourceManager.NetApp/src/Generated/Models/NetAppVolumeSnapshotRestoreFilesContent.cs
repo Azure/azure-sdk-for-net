@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Restore payload for Single File Snapshot Restore. </summary>
     public partial class NetAppVolumeSnapshotRestoreFilesContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotRestoreFilesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
         /// <param name="filePaths"> List of files to be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePaths"/> is null. </exception>
         public NetAppVolumeSnapshotRestoreFilesContent(IEnumerable<string> filePaths)

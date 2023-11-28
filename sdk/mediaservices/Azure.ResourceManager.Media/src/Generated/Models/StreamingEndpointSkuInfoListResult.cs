@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The StreamingEndpointSkuInfoListResult. </summary>
     internal partial class StreamingEndpointSkuInfoListResult
     {
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfoListResult"/>. </summary>
         internal StreamingEndpointSkuInfoListResult()
         {
             Value = new ChangeTrackingList<StreamingEndpointSkuInfo>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfoListResult"/>. </summary>
         /// <param name="value"> The result of the List StreamingEndpoint skus. </param>
         internal StreamingEndpointSkuInfoListResult(IReadOnlyList<StreamingEndpointSkuInfo> value)
         {

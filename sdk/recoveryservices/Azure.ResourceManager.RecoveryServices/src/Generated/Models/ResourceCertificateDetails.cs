@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// </summary>
     public abstract partial class ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         protected ResourceCertificateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>

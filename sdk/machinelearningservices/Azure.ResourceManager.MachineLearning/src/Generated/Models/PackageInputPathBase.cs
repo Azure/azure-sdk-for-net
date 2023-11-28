@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class PackageInputPathBase
     {
-        /// <summary> Initializes a new instance of PackageInputPathBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathBase"/>. </summary>
         protected PackageInputPathBase()
         {
         }
 
-        /// <summary> Initializes a new instance of PackageInputPathBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathBase"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
         internal PackageInputPathBase(InputPathType inputPathType)
         {

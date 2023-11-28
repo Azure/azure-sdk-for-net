@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set the server/instance-level settings for SQL Server. </summary>
     public partial class SqlInstanceSettings
     {
-        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInstanceSettings"/>. </summary>
         public SqlInstanceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInstanceSettings"/>. </summary>
         /// <param name="collation"> SQL Server Collation. </param>
         /// <param name="maxDop"> SQL Server MAXDOP. </param>
         /// <param name="isOptimizeForAdHocWorkloadsEnabled"> SQL Server Optimize for Adhoc workloads. </param>

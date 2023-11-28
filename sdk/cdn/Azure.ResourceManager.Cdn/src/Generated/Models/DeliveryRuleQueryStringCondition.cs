@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the QueryString condition for the delivery rule. </summary>
     public partial class DeliveryRuleQueryStringCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleQueryStringCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleQueryStringCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleQueryStringCondition(QueryStringMatchCondition properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.QueryString;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleQueryStringCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleQueryStringCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleQueryStringCondition(MatchVariable name, QueryStringMatchCondition properties) : base(name)

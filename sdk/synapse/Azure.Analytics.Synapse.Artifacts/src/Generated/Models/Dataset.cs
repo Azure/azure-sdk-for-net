@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class Dataset
     {
-        /// <summary> Initializes a new instance of Dataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public Dataset(LinkedServiceReference linkedServiceName)
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Dataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

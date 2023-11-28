@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection of instances belong to the Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceInstance"/>. </summary>
         internal AppPlatformConfigurationServiceInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceInstance"/>. </summary>
         /// <param name="name"> Name of the Application Configuration Service instance. </param>
         /// <param name="status"> Status of the Application Configuration Service instance. </param>
         internal AppPlatformConfigurationServiceInstance(string name, string status)

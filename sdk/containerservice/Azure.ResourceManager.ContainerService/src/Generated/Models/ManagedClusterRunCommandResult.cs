@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> run command result. </summary>
     public partial class ManagedClusterRunCommandResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         internal ManagedClusterRunCommandResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         /// <param name="id"> The command id. </param>
         /// <param name="provisioningState"> provisioning State. </param>
         /// <param name="exitCode"> The exit code of the command. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Network ACL. </summary>
     public partial class SignalRNetworkAcl
     {
-        /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcl"/>. </summary>
         public SignalRNetworkAcl()
         {
             Allow = new ChangeTrackingList<SignalRRequestType>();
             Deny = new ChangeTrackingList<SignalRRequestType>();
         }
 
-        /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcl"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         internal SignalRNetworkAcl(IList<SignalRRequestType> allow, IList<SignalRRequestType> deny)

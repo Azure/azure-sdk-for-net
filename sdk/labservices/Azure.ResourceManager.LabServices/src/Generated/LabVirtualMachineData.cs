@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineData"/>. </summary>
         public LabVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

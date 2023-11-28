@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged deleted API Management Services List Representation. </summary>
     internal partial class DeletedServicesListResult
     {
-        /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedServicesListResult"/>. </summary>
         internal DeletedServicesListResult()
         {
             Value = new ChangeTrackingList<ApiManagementDeletedServiceData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedServicesListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         internal DeletedServicesListResult(IReadOnlyList<ApiManagementDeletedServiceData> value, string nextLink)

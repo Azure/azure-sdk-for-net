@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ManagementGroups
     /// </summary>
     public partial class ManagementGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupData"/>. </summary>
         internal ManagementGroupData()
         {
             Children = new ChangeTrackingList<ManagementGroupChildInfo>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

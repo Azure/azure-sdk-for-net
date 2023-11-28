@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The properties that the machine learning workspace connection will be updated with. </summary>
     public partial class MachineLearningWorkspaceConnectionPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionPatch"/>. </summary>
         public MachineLearningWorkspaceConnectionPatch()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List storage account object replication policies. </summary>
     internal partial class ObjectReplicationPolicies
     {
-        /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicies"/>. </summary>
         internal ObjectReplicationPolicies()
         {
             Value = new ChangeTrackingList<ObjectReplicationPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicies"/>. </summary>
         /// <param name="value"> The replication policy between two storage accounts. </param>
         internal ObjectReplicationPolicies(IReadOnlyList<ObjectReplicationPolicyData> value)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L3NetworkList represents a list of L3 networks. </summary>
     internal partial class L3NetworkList
     {
-        /// <summary> Initializes a new instance of L3NetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkList"/>. </summary>
         internal L3NetworkList()
         {
             Value = new ChangeTrackingList<NetworkCloudL3NetworkData>();
         }
 
-        /// <summary> Initializes a new instance of L3NetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of L3 networks. </param>
         internal L3NetworkList(string nextLink, IReadOnlyList<NetworkCloudL3NetworkData> value)

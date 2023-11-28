@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A create protection intent input. </summary>
     public partial class A2ACreateProtectionIntentContent : SiteRecoveryCreateProtectionIntentProviderDetail
     {
-        /// <summary> Initializes a new instance of A2ACreateProtectionIntentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
         /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>

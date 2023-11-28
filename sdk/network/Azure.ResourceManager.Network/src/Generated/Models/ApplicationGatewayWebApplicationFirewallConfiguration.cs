@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway web application firewall configuration. </summary>
     public partial class ApplicationGatewayWebApplicationFirewallConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/>. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             Exclusions = new ChangeTrackingList<ApplicationGatewayFirewallExclusion>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/>. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>

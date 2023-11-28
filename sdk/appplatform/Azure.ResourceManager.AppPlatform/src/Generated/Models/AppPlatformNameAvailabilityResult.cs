@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Name availability result payload. </summary>
     public partial class AppPlatformNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityResult"/>. </summary>
         internal AppPlatformNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> Reason why the name is not available. </param>
         /// <param name="message"> Message why the name is not available. </param>

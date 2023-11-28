@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of all Static Routes. </summary>
     public partial class StaticRoute
     {
-        /// <summary> Initializes a new instance of StaticRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRoute"/>. </summary>
         public StaticRoute()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StaticRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRoute"/>. </summary>
         /// <param name="name"> The name of the StaticRoute that is unique within a VnetRoute. </param>
         /// <param name="addressPrefixes"> List of all address prefixes. </param>
         /// <param name="nextHopIPAddress"> The ip address of the next hop. </param>

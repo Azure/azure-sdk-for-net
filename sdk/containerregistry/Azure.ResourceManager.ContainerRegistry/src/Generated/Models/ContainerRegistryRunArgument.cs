@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a run argument. </summary>
     public partial class ContainerRegistryRunArgument
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunArgument. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunArgument"/>. </summary>
         /// <param name="name"> The name of the argument. </param>
         /// <param name="value"> The value of the argument. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunArgument. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunArgument"/>. </summary>
         /// <param name="name"> The name of the argument. </param>
         /// <param name="value"> The value of the argument. </param>
         /// <param name="isSecret"> Flag to indicate whether the argument represents a secret and want to be removed from build logs. </param>

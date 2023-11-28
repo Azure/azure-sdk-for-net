@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningAssetBase. </summary>
     public partial class MachineLearningAssetBase : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningAssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetBase"/>. </summary>
         public MachineLearningAssetBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetBase"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

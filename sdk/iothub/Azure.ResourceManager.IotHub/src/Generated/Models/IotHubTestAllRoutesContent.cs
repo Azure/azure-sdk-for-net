@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input for testing all routes. </summary>
     public partial class IotHubTestAllRoutesContent
     {
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesContent"/>. </summary>
         public IotHubTestAllRoutesContent()
         {
         }

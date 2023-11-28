@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get ShareSubscription. </summary>
     internal partial class ShareSubscriptionList
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ShareSubscriptionList(IEnumerable<ShareSubscriptionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal ShareSubscriptionList(string nextLink, IReadOnlyList<ShareSubscriptionData> value)

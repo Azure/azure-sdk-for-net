@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Descriptions of APIM policies. </summary>
     internal partial class PolicyDescriptionListResult
     {
-        /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionListResult"/>. </summary>
         internal PolicyDescriptionListResult()
         {
             Value = new ChangeTrackingList<PolicyDescriptionContractData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionListResult"/>. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
         internal PolicyDescriptionListResult(IReadOnlyList<PolicyDescriptionContractData> value, long? count)

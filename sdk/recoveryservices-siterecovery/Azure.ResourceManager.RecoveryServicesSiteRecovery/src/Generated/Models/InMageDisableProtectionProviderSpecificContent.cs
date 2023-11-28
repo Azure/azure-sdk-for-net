@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage disable protection provider specific input. </summary>
     public partial class InMageDisableProtectionProviderSpecificContent : DisableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageDisableProtectionProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageDisableProtectionProviderSpecificContent"/>. </summary>
         public InMageDisableProtectionProviderSpecificContent()
         {
             InstanceType = "InMage";

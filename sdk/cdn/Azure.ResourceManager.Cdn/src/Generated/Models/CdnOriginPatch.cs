@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Origin properties needed for origin update. </summary>
     public partial class CdnOriginPatch
     {
-        /// <summary> Initializes a new instance of CdnOriginPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginPatch"/>. </summary>
         public CdnOriginPatch()
         {
         }

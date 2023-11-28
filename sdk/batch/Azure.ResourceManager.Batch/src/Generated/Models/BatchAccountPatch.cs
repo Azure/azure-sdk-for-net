@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for updating an Azure Batch account. </summary>
     public partial class BatchAccountPatch
     {
-        /// <summary> Initializes a new instance of BatchAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
         public BatchAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

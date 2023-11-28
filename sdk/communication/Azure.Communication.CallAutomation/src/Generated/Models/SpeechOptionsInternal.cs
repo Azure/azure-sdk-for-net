@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Options for continuous speech recognition. </summary>
     internal partial class SpeechOptionsInternal
     {
-        /// <summary> Initializes a new instance of SpeechOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
         public SpeechOptionsInternal()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Backup/Restore of an API Management service operation. </summary>
     public partial class ApiManagementServiceBackupRestoreContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceBackupRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
         /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
         /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
         /// <param name="backupName"> The name of the backup file to create/retrieve. </param>

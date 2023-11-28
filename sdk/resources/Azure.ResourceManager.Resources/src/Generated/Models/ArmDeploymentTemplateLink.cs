@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Entity representing the reference to the template. </summary>
     public partial class ArmDeploymentTemplateLink
     {
-        /// <summary> Initializes a new instance of ArmDeploymentTemplateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentTemplateLink"/>. </summary>
         public ArmDeploymentTemplateLink()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentTemplateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentTemplateLink"/>. </summary>
         /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
         /// <param name="id"> The resource id of a Template Spec. Use either the id or uri property, but not both. </param>
         /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>

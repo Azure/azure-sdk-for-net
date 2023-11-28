@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The DiscoveredSecuritySolution. </summary>
     public partial class DiscoveredSecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/>. </summary>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
         /// <param name="offer"> The security solutions' image offer. </param>
         /// <param name="publisher"> The security solutions' image publisher. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

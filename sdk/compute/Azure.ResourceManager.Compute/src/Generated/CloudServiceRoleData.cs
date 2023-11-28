@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceRoleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleData"/>. </summary>
         internal CloudServiceRoleData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

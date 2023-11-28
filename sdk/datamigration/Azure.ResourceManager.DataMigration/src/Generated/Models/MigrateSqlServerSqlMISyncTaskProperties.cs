@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for task that migrates SQL Server databases to Azure SQL Database Managed Instance sync scenario. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
         public MigrateSqlServerSqlMISyncTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
             TaskType = TaskType.MigrateSqlServerAzureSqlDBMISyncLRS;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

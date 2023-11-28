@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route Target Configuration. </summary>
     public partial class RouteTargetInformation
     {
-        /// <summary> Initializes a new instance of RouteTargetInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTargetInformation"/>. </summary>
         public RouteTargetInformation()
         {
             ImportIPv4RouteTargets = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExportIPv6RouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RouteTargetInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTargetInformation"/>. </summary>
         /// <param name="importIPv4RouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
         /// <param name="importIPv6RouteTargets"> Route Targets to be applied for incoming routes from CE. </param>
         /// <param name="exportIPv4RouteTargets"> Route Targets to be applied for outgoing routes into CE. </param>

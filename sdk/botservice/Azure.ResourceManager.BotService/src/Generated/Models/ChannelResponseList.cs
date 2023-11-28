@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The list of bot service channel operation response. </summary>
     internal partial class ChannelResponseList
     {
-        /// <summary> Initializes a new instance of ChannelResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelResponseList"/>. </summary>
         internal ChannelResponseList()
         {
             Value = new ChangeTrackingList<BotChannelData>();
         }
 
-        /// <summary> Initializes a new instance of ChannelResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelResponseList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of bot service channel resources. </param>
         /// <param name="value"> Gets the list of bot service channel results and their properties. </param>
         internal ChannelResponseList(string nextLink, IReadOnlyList<BotChannelData> value)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The check availability request body. </summary>
     public partial class DevCenterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityContent"/>. </summary>
         public DevCenterNameAvailabilityContent()
         {
         }

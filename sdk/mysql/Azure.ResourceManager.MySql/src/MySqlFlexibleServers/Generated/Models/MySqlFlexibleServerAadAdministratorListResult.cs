@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A List of azure ad administrators. </summary>
     internal partial class MySqlFlexibleServerAadAdministratorListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorListResult"/>. </summary>
         internal MySqlFlexibleServerAadAdministratorListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerAadAdministratorData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorListResult"/>. </summary>
         /// <param name="value"> The list of azure ad administrator of a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal MySqlFlexibleServerAadAdministratorListResult(IReadOnlyList<MySqlFlexibleServerAadAdministratorData> value, string nextLink)

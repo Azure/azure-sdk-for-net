@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing a list item in the document. </summary>
     public partial class DocumentListItem
     {
-        /// <summary> Initializes a new instance of DocumentListItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentListItem"/>. </summary>
         /// <param name="level"> Level of the list item (1-indexed). </param>
         /// <param name="content"> Content of the list item. </param>
         /// <param name="spans"> Location of the list item in the reading order concatenated content. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentListItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentListItem"/>. </summary>
         /// <param name="level"> Level of the list item (1-indexed). </param>
         /// <param name="content"> Content of the list item. </param>
         /// <param name="boundingRegions"> Bounding regions covering the list item. </param>

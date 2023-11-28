@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class InteractionResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InteractionResourceFormatData"/>. </summary>
         public InteractionResourceFormatData()
         {
             Attributes = new ChangeTrackingDictionary<string, IList<string>>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights
             DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
         }
 
-        /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InteractionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

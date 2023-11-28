@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Rules for the InternetGateways. </summary>
     public partial class InternetGatewayRules
     {
-        /// <summary> Initializes a new instance of InternetGatewayRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AddressList = addressList.ToList();
         }
 
-        /// <summary> Initializes a new instance of InternetGatewayRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList)

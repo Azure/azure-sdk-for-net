@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A kusto table data set. </summary>
     public partial class KustoTableDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoTableDataSet"/>. </summary>
         /// <param name="kustoDatabaseResourceId"> Resource id of the kusto database. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing properties for kusto database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoDatabaseResourceId"/> or <paramref name="tableLevelSharingProperties"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.KustoTable;
         }
 
-        /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

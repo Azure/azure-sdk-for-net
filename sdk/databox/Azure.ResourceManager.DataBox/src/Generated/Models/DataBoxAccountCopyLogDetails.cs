@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Copy log details for a storage account of a DataBox job. </summary>
     public partial class DataBoxAccountCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
         internal DataBoxAccountCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBox;
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>

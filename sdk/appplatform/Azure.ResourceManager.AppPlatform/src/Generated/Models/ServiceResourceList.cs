@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Service resources and a possible link for next set. </summary>
     internal partial class ServiceResourceList
     {
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         internal ServiceResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         /// <param name="value"> Collection of Service resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

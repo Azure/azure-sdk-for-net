@@ -14,13 +14,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
     public partial class OciDescriptor
     {
-        /// <summary> Initializes a new instance of OciDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciDescriptor"/>. </summary>
         public OciDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of OciDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciDescriptor"/>. </summary>
         /// <param name="mediaType"> Layer media type. </param>
         /// <param name="sizeInBytes"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>

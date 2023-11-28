@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of a single operation on a batch of time series hierarchies. Only one of "get", "put" or "delete" will be set. </summary>
     internal partial class HierarchiesBatchResponse
     {
-        /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesBatchResponse"/>. </summary>
         internal HierarchiesBatchResponse()
         {
             Get = new ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
@@ -21,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
-        /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesBatchResponse"/>. </summary>
         /// <param name="get"> List of hierarchy or error objects corresponding by position to the "get" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of hierarchy or error object corresponding by position to the "put" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </param>

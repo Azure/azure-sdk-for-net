@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The array of costs of a lab services SKU. </summary>
     public partial class AvailableLabServicesSkuCost
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCost"/>. </summary>
         internal AvailableLabServicesSkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCost"/>. </summary>
         /// <param name="meterId"> The meter id. </param>
         /// <param name="quantity"> The quantity of units charged. </param>
         /// <param name="extendedUnit"> The extended unit. </param>

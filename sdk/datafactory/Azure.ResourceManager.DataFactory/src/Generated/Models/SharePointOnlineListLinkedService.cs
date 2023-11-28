@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SharePoint Online List linked service. </summary>
     public partial class SharePointOnlineListLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
         /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "SharePointOnlineList";
         }
 
-        /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

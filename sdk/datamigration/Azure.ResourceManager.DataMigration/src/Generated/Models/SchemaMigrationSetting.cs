@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Settings for migrating schema from source to target. </summary>
     public partial class SchemaMigrationSetting
     {
-        /// <summary> Initializes a new instance of SchemaMigrationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaMigrationSetting"/>. </summary>
         public SchemaMigrationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaMigrationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaMigrationSetting"/>. </summary>
         /// <param name="schemaOption"> Option on how to migrate the schema. </param>
         /// <param name="fileId"> Resource Identifier of a file resource containing the uploaded schema file. </param>
         /// <param name="fileName"> Name of the file resource containing the uploaded schema file. </param>

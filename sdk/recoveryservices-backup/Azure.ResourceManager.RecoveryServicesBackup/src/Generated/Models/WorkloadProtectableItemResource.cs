@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for backup item. Workload-specific backup items are derived from this class. </summary>
     public partial class WorkloadProtectableItemResource : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadProtectableItemResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItemResource"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkloadProtectableItemResource(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadProtectableItemResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItemResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

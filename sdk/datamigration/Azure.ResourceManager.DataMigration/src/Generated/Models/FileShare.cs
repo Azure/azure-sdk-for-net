@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> File share information with Path, Username, and Password. </summary>
     public partial class FileShare
     {
-        /// <summary> Initializes a new instance of FileShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShare"/>. </summary>
         /// <param name="path"> The folder path for this share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public FileShare(string path)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of FileShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShare"/>. </summary>
         /// <param name="userName"> User name credential to connect to the share location. </param>
         /// <param name="password"> Password credential used to connect to the share location. </param>
         /// <param name="path"> The folder path for this share. </param>

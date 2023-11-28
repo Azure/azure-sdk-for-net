@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcScVmm
             ExtendedLocation = extendedLocation;
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

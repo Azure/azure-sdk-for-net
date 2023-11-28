@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Customer End point to store/retrieve data during a contact. </summary>
     public partial class OrbitalContactEndpoint
     {
-        /// <summary> Initializes a new instance of OrbitalContactEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactEndpoint"/>. </summary>
         /// <param name="ipAddress"> IP Address. </param>
         /// <param name="endPointName"> Name of an end point. </param>
         /// <param name="port"> TCP port to listen on to receive data. </param>

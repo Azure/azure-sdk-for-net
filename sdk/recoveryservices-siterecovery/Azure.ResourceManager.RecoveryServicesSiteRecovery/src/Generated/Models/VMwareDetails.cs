@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Store the fabric details specific to the VMware fabric. </summary>
     public partial class VMwareDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         internal VMwareDetails()
         {
             ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServer>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMware";
         }
 
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
         /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>

@@ -12,12 +12,12 @@ namespace Azure.AI.OpenAI
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         internal ContentFilterResults()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including

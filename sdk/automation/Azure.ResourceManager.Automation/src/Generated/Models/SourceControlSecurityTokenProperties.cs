@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The SourceControlSecurityTokenProperties. </summary>
     public partial class SourceControlSecurityTokenProperties
     {
-        /// <summary> Initializes a new instance of SourceControlSecurityTokenProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
         public SourceControlSecurityTokenProperties()
         {
         }

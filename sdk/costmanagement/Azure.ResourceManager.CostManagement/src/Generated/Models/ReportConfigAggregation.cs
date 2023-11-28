@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The aggregation expression to be used in the report. </summary>
     public partial class ReportConfigAggregation
     {
-        /// <summary> Initializes a new instance of ReportConfigAggregation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigAggregation"/>. </summary>
         /// <param name="name"> The name of the column to aggregate. </param>
         /// <param name="function"> The name of the aggregation function to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

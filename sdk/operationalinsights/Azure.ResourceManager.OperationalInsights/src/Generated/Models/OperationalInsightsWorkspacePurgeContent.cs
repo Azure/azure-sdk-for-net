@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Describes the body of a purge request for an App Insights Workspace. </summary>
     public partial class OperationalInsightsWorkspacePurgeContent
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeContent"/>. </summary>
         /// <param name="table"> Table from which to purge data. </param>
         /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>

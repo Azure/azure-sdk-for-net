@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Pipeline Policy. </summary>
     internal partial class DataFactoryPipelinePolicy
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelinePolicy"/>. </summary>
         public DataFactoryPipelinePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelinePolicy"/>. </summary>
         /// <param name="elapsedTimeMetric"> Pipeline ElapsedTime Metric Policy. </param>
         internal DataFactoryPipelinePolicy(PipelineElapsedTimeMetricPolicy elapsedTimeMetric)
         {

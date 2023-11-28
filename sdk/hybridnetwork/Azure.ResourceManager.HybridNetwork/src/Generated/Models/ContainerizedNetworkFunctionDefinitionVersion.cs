@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Containerized network function network function definition version properties. </summary>
     public partial class ContainerizedNetworkFunctionDefinitionVersion : NetworkFunctionDefinitionVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
         public ContainerizedNetworkFunctionDefinitionVersion()
         {
             NetworkFunctionType = NetworkFunctionType.ContainerizedNetworkFunction;
         }
 
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>

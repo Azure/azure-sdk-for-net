@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm policy creation input. </summary>
     public partial class InMageRcmPolicyCreationContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmPolicyCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmPolicyCreationContent"/>. </summary>
         public InMageRcmPolicyCreationContent()
         {
             InstanceType = "InMageRcm";

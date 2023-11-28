@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Details of the security control, its score, and the health status of the relevant resources. </summary>
     public partial class SecureScoreControlDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of SecureScoreControlDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDetails"/>. </summary>
         public SecureScoreControlDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

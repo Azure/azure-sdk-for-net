@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CognitiveServicesPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceListResult"/>. </summary>
         internal CognitiveServicesPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal CognitiveServicesPrivateLinkResourceListResult(IReadOnlyList<CognitiveServicesPrivateLinkResource> value)
         {

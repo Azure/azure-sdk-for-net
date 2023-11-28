@@ -12,27 +12,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class HardwareSecurityModulesPrivateLinkData : IUtf8JsonSerializable
+    public partial class HardwareSecurityModulesPrivateLinkData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
-            {
-                writer.WritePropertyName("requiredZoneNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static HardwareSecurityModulesPrivateLinkData DeserializeHardwareSecurityModulesPrivateLinkData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -45,7 +26,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
+            Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

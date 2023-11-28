@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for UrlPath match conditions. </summary>
     public partial class UriPathMatchCondition
     {
-        /// <summary> Initializes a new instance of UriPathMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriPathMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="uriPathOperator"> Describes operator to be matched. </param>
         public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of UriPathMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriPathMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="uriPathOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

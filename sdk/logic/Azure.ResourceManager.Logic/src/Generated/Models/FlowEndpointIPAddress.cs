@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The ip address. </summary>
     public partial class FlowEndpointIPAddress
     {
-        /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointIPAddress"/>. </summary>
         public FlowEndpointIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointIPAddress"/>. </summary>
         /// <param name="cidrAddress"> The address. </param>
         internal FlowEndpointIPAddress(string cidrAddress)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Workload Identity settings for the security profile. </summary>
     internal partial class ManagedClusterSecurityProfileWorkloadIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
         public ManagedClusterSecurityProfileWorkloadIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
         /// <param name="enabled"> Whether to enable Workload Identity. </param>
         internal ManagedClusterSecurityProfileWorkloadIdentity(bool? enabled)
         {

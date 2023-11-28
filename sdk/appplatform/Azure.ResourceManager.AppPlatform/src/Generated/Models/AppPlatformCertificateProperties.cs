@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCertificateProperties"/>. </summary>
         protected AppPlatformCertificateProperties()
         {
             DnsNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>

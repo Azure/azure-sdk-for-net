@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Peering optionA properties. </summary>
     public partial class OptionAProperties
     {
-        /// <summary> Initializes a new instance of OptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
         public OptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of OptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>

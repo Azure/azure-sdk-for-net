@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Certificate renewal input. </summary>
     public partial class RenewCertificateContent
     {
-        /// <summary> Initializes a new instance of RenewCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateContent"/>. </summary>
         public RenewCertificateContent()
         {
         }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The ARM channel of list channel with keys operation response. </summary>
     public partial class BotChannelGetWithKeysResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BotChannelGetWithKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelGetWithKeysResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public BotChannelGetWithKeysResult(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BotChannelGetWithKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelGetWithKeysResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

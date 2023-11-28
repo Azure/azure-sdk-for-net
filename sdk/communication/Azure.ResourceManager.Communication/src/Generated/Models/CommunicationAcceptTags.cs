@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> An ARM resource with that can accept tags. </summary>
     public partial class CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationAcceptTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationAcceptTags"/>. </summary>
         public CommunicationAcceptTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

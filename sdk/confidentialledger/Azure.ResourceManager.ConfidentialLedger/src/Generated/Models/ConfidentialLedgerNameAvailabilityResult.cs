@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> The check availability result. </summary>
     public partial class ConfidentialLedgerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerNameAvailabilityResult"/>. </summary>
         internal ConfidentialLedgerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>

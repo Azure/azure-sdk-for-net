@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> The Cloud HSM Properties. </summary>
     public partial class CloudHsmProperties
     {
-        /// <summary> Initializes a new instance of CloudHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
         public CloudHsmProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
         /// <param name="fqdn"> FQDN of the Cloud HSM. </param>
         /// <param name="state"> The Cloud HSM State. </param>
         /// <param name="stateMessage"> The Cloud HSM State message. </param>

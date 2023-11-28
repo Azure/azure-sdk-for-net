@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> AML token compute identity definition. </summary>
     public partial class AmlTokenComputeIdentity : MonitorComputeIdentityBase
     {
-        /// <summary> Initializes a new instance of AmlTokenComputeIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlTokenComputeIdentity"/>. </summary>
         public AmlTokenComputeIdentity()
         {
             ComputeIdentityType = MonitorComputeIdentityType.AmlToken;
         }
 
-        /// <summary> Initializes a new instance of AmlTokenComputeIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlTokenComputeIdentity"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
         internal AmlTokenComputeIdentity(MonitorComputeIdentityType computeIdentityType) : base(computeIdentityType)
         {

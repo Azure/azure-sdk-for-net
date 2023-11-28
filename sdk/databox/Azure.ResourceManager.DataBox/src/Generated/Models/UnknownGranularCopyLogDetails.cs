@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The UnknownGranularCopyLogDetails. </summary>
     internal partial class UnknownGranularCopyLogDetails : GranularCopyLogDetails
     {
-        /// <summary> Initializes a new instance of UnknownGranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownGranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         internal UnknownGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType) : base(copyLogDetailsType)
         {

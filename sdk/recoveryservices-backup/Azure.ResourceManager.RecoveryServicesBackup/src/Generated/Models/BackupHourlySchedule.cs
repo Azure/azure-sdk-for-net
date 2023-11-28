@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupHourlySchedule. </summary>
     public partial class BackupHourlySchedule
     {
-        /// <summary> Initializes a new instance of BackupHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
         public BackupHourlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
         /// <param name="interval">
         /// Interval at which backup needs to be triggered. For hourly the value
         ///  can be 4/6/8/12

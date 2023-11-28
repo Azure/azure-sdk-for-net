@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class MobileNetworkTagsPatch
     {
-        /// <summary> Initializes a new instance of MobileNetworkTagsPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkTagsPatch"/>. </summary>
         public MobileNetworkTagsPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

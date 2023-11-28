@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a read only following database. </summary>
     public partial class KustoReadOnlyFollowingDatabase : KustoDatabaseData
     {
-        /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
         public KustoReadOnlyFollowingDatabase()
         {
             Kind = KustoKind.ReadOnlyFollowing;
         }
 
-        /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

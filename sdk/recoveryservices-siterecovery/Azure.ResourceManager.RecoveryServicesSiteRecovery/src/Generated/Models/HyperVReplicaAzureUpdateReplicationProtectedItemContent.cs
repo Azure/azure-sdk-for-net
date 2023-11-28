@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HyperV replica Azure input to update replication protected item. </summary>
     public partial class HyperVReplicaAzureUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureUpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>. </summary>
         public HyperVReplicaAzureUpdateReplicationProtectedItemContent()
         {
             DiskIdToDiskEncryptionMap = new ChangeTrackingDictionary<string, string>();

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Represents the correlation filter expression. </summary>
     public partial class ServiceBusCorrelationFilter
     {
-        /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
         public ServiceBusCorrelationFilter()
         {
             ApplicationProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
         /// <param name="applicationProperties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>

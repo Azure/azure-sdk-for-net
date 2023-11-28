@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBSqlRoleAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
         public CosmosDBSqlRoleAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class ResourceSkuCosts
     {
-        /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCosts"/>. </summary>
         internal ResourceSkuCosts()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCosts"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>

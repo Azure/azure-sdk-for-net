@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The properties of the reservations. </summary>
     public partial class ReservationProperties
     {
-        /// <summary> Initializes a new instance of ReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationProperties"/>. </summary>
         internal ReservationProperties()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationProperties"/>. </summary>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="displayName"> Friendly name for user to easily identify the reservation. </param>

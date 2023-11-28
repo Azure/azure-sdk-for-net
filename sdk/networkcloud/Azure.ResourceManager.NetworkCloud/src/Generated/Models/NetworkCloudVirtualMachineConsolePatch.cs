@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ConsolePatchParameters represents the body of the request to patch the virtual machine console. </summary>
     public partial class NetworkCloudVirtualMachineConsolePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudVirtualMachineConsolePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
         public NetworkCloudVirtualMachineConsolePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

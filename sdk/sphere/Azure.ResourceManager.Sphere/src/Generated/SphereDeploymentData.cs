@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         public SphereDeploymentData()
         {
             DeployedImages = new ChangeTrackingList<SphereImageData>();
         }
 
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

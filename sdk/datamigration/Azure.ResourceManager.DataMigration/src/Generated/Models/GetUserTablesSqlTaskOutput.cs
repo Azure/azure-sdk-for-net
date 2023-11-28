@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlTaskOutput"/>. </summary>
         internal GetUserTablesSqlTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>

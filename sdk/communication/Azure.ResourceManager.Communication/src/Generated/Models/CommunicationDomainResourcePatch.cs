@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class that describes the PATCH request parameters of a Domains resource. </summary>
     public partial class CommunicationDomainResourcePatch : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationDomainResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourcePatch"/>. </summary>
         public CommunicationDomainResourcePatch()
         {
         }

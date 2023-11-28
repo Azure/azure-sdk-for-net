@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of hostname bindings. </summary>
     internal partial class HybridConnectionListResult
     {
-        /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridConnectionListResult(IEnumerable<HybridConnectionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal HybridConnectionListResult(IReadOnlyList<HybridConnectionData> value, string nextLink)

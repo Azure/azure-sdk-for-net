@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> List of logical networks. </summary>
     internal partial class SiteRecoveryLogicalNetworkListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkListResult"/>. </summary>
         internal SiteRecoveryLogicalNetworkListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryLogicalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkListResult"/>. </summary>
         /// <param name="value"> The Logical Networks list details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryLogicalNetworkListResult(IReadOnlyList<SiteRecoveryLogicalNetworkData> value, string nextLink)

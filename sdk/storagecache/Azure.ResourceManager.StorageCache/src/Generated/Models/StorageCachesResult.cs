@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Result of the request to list caches. It contains a list of caches and a URL link to get the next set of results. </summary>
     internal partial class StorageCachesResult
     {
-        /// <summary> Initializes a new instance of StorageCachesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCachesResult"/>. </summary>
         internal StorageCachesResult()
         {
             Value = new ChangeTrackingList<StorageCacheData>();
         }
 
-        /// <summary> Initializes a new instance of StorageCachesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCachesResult"/>. </summary>
         /// <param name="nextLink"> URL to get the next set of cache list results, if there are any. </param>
         /// <param name="value"> List of Caches. </param>
         internal StorageCachesResult(string nextLink, IReadOnlyList<StorageCacheData> value)

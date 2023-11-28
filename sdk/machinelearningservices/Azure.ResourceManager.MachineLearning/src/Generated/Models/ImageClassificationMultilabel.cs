@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageClassificationMultilabel : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of ImageClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassificationMultilabel"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.ImageClassificationMultilabel;
         }
 
-        /// <summary> Initializes a new instance of ImageClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassificationMultilabel"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

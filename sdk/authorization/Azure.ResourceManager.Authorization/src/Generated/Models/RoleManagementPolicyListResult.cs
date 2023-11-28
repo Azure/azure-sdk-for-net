@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role management policy list operation result. </summary>
     internal partial class RoleManagementPolicyListResult
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyListResult"/>. </summary>
         internal RoleManagementPolicyListResult()
         {
             Value = new ChangeTrackingList<RoleManagementPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyListResult"/>. </summary>
         /// <param name="value"> Role management policy list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleManagementPolicyListResult(IReadOnlyList<RoleManagementPolicyData> value, string nextLink)

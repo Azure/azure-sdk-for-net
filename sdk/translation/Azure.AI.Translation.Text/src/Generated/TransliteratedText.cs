@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Transliterated text element. </summary>
     public partial class TransliteratedText
     {
-        /// <summary> Initializes a new instance of TransliteratedText. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/>. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="script"/> is null. </exception>

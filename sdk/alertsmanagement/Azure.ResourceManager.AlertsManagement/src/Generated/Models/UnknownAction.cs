@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> The UnknownAction. </summary>
     internal partial class UnknownAction : AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of UnknownAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         internal UnknownAction(AlertProcessingRuleActionType actionType) : base(actionType)
         {

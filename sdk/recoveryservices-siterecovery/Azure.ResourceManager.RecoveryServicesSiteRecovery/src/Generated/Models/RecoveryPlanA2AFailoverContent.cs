@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan A2A failover input. </summary>
     public partial class RecoveryPlanA2AFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanA2AFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2AFailoverContent"/>. </summary>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         public RecoveryPlanA2AFailoverContent(A2ARpRecoveryPointType recoveryPointType)
         {

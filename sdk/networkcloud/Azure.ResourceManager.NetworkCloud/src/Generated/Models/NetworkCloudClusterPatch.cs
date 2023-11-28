@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterPatchParameters represents the body of the request to patch the cluster properties. </summary>
     public partial class NetworkCloudClusterPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         public NetworkCloudClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

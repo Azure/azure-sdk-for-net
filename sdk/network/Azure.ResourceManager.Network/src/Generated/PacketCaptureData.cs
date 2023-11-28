@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PacketCaptureData : ResourceData
     {
-        /// <summary> Initializes a new instance of PacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
         internal PacketCaptureData()
         {
             Filters = new ChangeTrackingList<PacketCaptureFilter>();
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

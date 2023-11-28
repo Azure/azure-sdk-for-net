@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesMySqlTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         internal GetUserTablesMySqlTaskInput(MySqlConnectionInfo connectionInfo, IList<string> selectedDatabases)

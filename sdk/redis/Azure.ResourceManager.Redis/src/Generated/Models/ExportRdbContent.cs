@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters for Redis export operation. </summary>
     public partial class ExportRdbContent
     {
-        /// <summary> Initializes a new instance of ExportRdbContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRdbContent"/>. </summary>
         /// <param name="prefix"> Prefix to use for exported files. </param>
         /// <param name="container"> Container name to export to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="container"/> is null. </exception>

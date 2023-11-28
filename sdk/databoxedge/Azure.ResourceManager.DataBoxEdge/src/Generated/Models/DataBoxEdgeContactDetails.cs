@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Contains all the contact details of the customer. </summary>
     public partial class DataBoxEdgeContactDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>

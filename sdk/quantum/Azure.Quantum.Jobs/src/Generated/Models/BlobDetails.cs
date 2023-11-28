@@ -13,7 +13,7 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Blob details. </summary>
     public partial class BlobDetails
     {
-        /// <summary> Initializes a new instance of BlobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobDetails"/>. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public BlobDetails(string containerName)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A run command request. </summary>
     public partial class ManagedClusterRunCommandContent
     {
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public ManagedClusterRunCommandContent(string command)

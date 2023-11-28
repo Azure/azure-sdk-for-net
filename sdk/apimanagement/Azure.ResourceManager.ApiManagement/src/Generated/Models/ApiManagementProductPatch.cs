@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Product Update parameters. </summary>
     public partial class ApiManagementProductPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementProductPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductPatch"/>. </summary>
         public ApiManagementProductPatch()
         {
         }

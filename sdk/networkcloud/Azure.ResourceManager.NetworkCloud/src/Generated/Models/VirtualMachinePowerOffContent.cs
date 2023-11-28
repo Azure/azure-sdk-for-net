@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VirtualMachinePowerOffParameters represents the body of the request to power off virtual machine. </summary>
     public partial class VirtualMachinePowerOffContent
     {
-        /// <summary> Initializes a new instance of VirtualMachinePowerOffContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePowerOffContent"/>. </summary>
         public VirtualMachinePowerOffContent()
         {
         }

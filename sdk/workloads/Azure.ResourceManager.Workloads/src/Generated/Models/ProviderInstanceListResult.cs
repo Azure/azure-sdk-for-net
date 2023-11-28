@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The response from the List provider instances operation. </summary>
     internal partial class ProviderInstanceListResult
     {
-        /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderInstanceListResult"/>. </summary>
         internal ProviderInstanceListResult()
         {
             Value = new ChangeTrackingList<SapProviderInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderInstanceListResult"/>. </summary>
         /// <param name="value"> The list of provider instances. </param>
         /// <param name="nextLink"> The URL to get the next set of provider instances. </param>
         internal ProviderInstanceListResult(IReadOnlyList<SapProviderInstanceData> value, string nextLink)

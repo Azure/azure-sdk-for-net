@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         public PeerExpressRouteCircuitConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

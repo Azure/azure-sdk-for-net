@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable protection input. </summary>
     public partial class ReplicationProtectedItemCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ReplicationProtectedItemCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemCreateOrUpdateContent"/>. </summary>
         public ReplicationProtectedItemCreateOrUpdateContent()
         {
         }

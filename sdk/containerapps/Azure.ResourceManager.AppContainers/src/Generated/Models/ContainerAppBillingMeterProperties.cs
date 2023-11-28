@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Revision resource specific properties. </summary>
     public partial class ContainerAppBillingMeterProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppBillingMeterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeterProperties"/>. </summary>
         public ContainerAppBillingMeterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBillingMeterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeterProperties"/>. </summary>
         /// <param name="workloadProfileCategory"> Used to categorize billing meters. </param>
         /// <param name="meterType"> Billing meter type. </param>
         /// <param name="displayName"> The everyday name of the billing meter. </param>

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DiagnosticProactiveLogCollectionSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
         public DiagnosticProactiveLogCollectionSettingData(ProactiveDiagnosticsConsent userConsent)
         {
             UserConsent = userConsent;
         }
 
-        /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

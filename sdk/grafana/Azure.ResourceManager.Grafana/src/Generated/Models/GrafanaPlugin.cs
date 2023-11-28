@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Plugin of Grafana. </summary>
     public partial class GrafanaPlugin
     {
-        /// <summary> Initializes a new instance of GrafanaPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPlugin"/>. </summary>
         public GrafanaPlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of GrafanaPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPlugin"/>. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         internal GrafanaPlugin(string pluginId)
         {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the alert rule templates. </summary>
     internal partial class AlertRuleTemplatesList
     {
-        /// <summary> Initializes a new instance of AlertRuleTemplatesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleTemplatesList"/>. </summary>
         /// <param name="value">
         /// Array of alert rule templates.
         /// Please note <see cref="SecurityInsightsAlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleTemplatesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleTemplatesList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alert rule templates. </param>
         /// <param name="value">
         /// Array of alert rule templates.

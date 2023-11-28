@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Disk update resource. </summary>
     public partial class ManagedDiskPatch
     {
-        /// <summary> Initializes a new instance of ManagedDiskPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
         public ManagedDiskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

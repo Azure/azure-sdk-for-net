@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Deleted repository. </summary>
     internal partial class DeleteRepositoryResult
     {
-        /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteRepositoryResult"/>. </summary>
         internal DeleteRepositoryResult()
         {
             DeletedManifests = new ChangeTrackingList<string>();

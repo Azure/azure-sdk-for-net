@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Request payload for closing jobs. </summary>
     public partial class CloseJobOptions
     {
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
         /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
         /// <param name="closeAt"> If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC. </param>
         /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Simulate alerts according to this bundles. </summary>
     public partial class SecurityAlertSimulatorBundlesRequestProperties : SecurityAlertSimulatorRequestProperties
     {
-        /// <summary> Initializes a new instance of SecurityAlertSimulatorBundlesRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
         public SecurityAlertSimulatorBundlesRequestProperties()
         {
             Bundles = new ChangeTrackingList<SecurityAlertSimulatorBundleType>();

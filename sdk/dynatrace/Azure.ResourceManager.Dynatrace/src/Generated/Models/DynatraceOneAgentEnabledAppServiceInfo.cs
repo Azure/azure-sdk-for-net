@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Details of App Services having Dynatrace OneAgent installed. </summary>
     public partial class DynatraceOneAgentEnabledAppServiceInfo
     {
-        /// <summary> Initializes a new instance of DynatraceOneAgentEnabledAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>
         internal DynatraceOneAgentEnabledAppServiceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceOneAgentEnabledAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>
         /// <param name="resourceId"> App service resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the App Service. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>

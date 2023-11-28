@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates a migration for Oracle to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class ValidateOracleAzureDBForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         public ValidateOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.ValidateOracleAzureDBPostgreSqlSync;
         }
 
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

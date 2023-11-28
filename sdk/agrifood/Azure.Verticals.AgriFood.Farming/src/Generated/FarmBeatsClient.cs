@@ -32,9 +32,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of FarmBeatsClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public FarmBeatsClient(TokenCredential credential) : this(new Uri(""), credential, new FarmBeatsClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public FarmBeatsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FarmBeatsClientOptions())
         {
         }
 

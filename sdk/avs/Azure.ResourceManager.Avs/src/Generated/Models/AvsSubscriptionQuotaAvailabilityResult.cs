@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Subscription quotas. </summary>
     public partial class AvsSubscriptionQuotaAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionQuotaAvailabilityResult"/>. </summary>
         internal AvsSubscriptionQuotaAvailabilityResult()
         {
             HostsRemaining = new ChangeTrackingDictionary<string, int>();
         }
 
-        /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionQuotaAvailabilityResult"/>. </summary>
         /// <param name="hostsRemaining"> Remaining hosts quota by sku type. </param>
         /// <param name="quotaEnabled"> Host quota is active for current subscription. </param>
         internal AvsSubscriptionQuotaAvailabilityResult(IReadOnlyDictionary<string, int> hostsRemaining, AvsSubscriptionQuotaEnabled? quotaEnabled)

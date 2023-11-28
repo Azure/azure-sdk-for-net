@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role definition properties. </summary>
     internal partial class RoleDefinitionProperties
     {
-        /// <summary> Initializes a new instance of RoleDefinitionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
         public RoleDefinitionProperties()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();

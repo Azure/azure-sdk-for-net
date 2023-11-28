@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component API Key creation request definition. </summary>
     public partial class APIKeyContent
     {
-        /// <summary> Initializes a new instance of APIKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="APIKeyContent"/>. </summary>
         public APIKeyContent()
         {
             LinkedReadProperties = new ChangeTrackingList<string>();

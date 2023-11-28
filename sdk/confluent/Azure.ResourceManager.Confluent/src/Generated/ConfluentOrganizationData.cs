@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Confluent
     /// </summary>
     public partial class ConfluentOrganizationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Confluent
             UserDetail = userDetail;
         }
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

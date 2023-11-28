@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownAutoMLVertical. </summary>
     internal partial class UnknownAutoMLVertical : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of UnknownAutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAutoMLVertical"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

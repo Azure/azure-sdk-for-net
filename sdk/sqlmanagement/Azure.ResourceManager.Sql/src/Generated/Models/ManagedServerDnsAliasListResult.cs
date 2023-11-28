@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of managed server DNS aliases. </summary>
     internal partial class ManagedServerDnsAliasListResult
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasListResult"/>. </summary>
         internal ManagedServerDnsAliasListResult()
         {
             Value = new ChangeTrackingList<ManagedServerDnsAliasData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ManagedServerDnsAliasListResult(IReadOnlyList<ManagedServerDnsAliasData> value, string nextLink)
