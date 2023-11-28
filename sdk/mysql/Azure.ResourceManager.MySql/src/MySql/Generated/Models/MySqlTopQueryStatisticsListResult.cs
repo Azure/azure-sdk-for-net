@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of query statistics. </summary>
     internal partial class MySqlTopQueryStatisticsListResult
     {
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsListResult"/>. </summary>
         internal MySqlTopQueryStatisticsListResult()
         {
             Value = new ChangeTrackingList<MySqlQueryStatisticData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsListResult"/>. </summary>
         /// <param name="value"> The list of top query statistics. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal MySqlTopQueryStatisticsListResult(IReadOnlyList<MySqlQueryStatisticData> value, string nextLink)

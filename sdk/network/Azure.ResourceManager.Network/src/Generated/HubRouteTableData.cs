@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubRouteTableData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubRouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         public HubRouteTableData()
         {
             Routes = new ChangeTrackingList<HubRoute>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
             PropagatingConnections = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HubRouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

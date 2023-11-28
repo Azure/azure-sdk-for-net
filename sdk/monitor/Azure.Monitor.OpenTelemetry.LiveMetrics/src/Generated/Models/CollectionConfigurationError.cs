@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Represents an error while SDK parsing and applying an instance of CollectionConfigurationInfo. </summary>
     internal partial class CollectionConfigurationError
     {
-        /// <summary> Initializes a new instance of CollectionConfigurationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
         public CollectionConfigurationError()
         {
             Data = new ChangeTrackingList<KeyValuePairString>();

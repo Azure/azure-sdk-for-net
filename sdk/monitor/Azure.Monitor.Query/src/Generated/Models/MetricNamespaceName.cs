@@ -10,12 +10,12 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The fully qualified metric namespace name. </summary>
     internal partial class MetricNamespaceName
     {
-        /// <summary> Initializes a new instance of MetricNamespaceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
         internal MetricNamespaceName()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricNamespaceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
         /// <param name="metricNamespaceNameValue"> The metric namespace name. </param>
         internal MetricNamespaceName(string metricNamespaceNameValue)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Address prefix item. </summary>
     public partial class AddressPrefixItem
     {
-        /// <summary> Initializes a new instance of AddressPrefixItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressPrefixItem"/>. </summary>
         public AddressPrefixItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressPrefixItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressPrefixItem"/>. </summary>
         /// <param name="addressPrefix"> Address prefix. </param>
         /// <param name="addressPrefixType"> Address prefix type. </param>
         internal AddressPrefixItem(string addressPrefix, AddressPrefixType? addressPrefixType)

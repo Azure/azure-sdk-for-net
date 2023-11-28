@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Exception type document. </summary>
     internal partial class ExceptionDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of ExceptionDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionDocumentIngress"/>. </summary>
         public ExceptionDocumentIngress()
         {
         }

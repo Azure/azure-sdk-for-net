@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will contain the properties of the resource (the actual signature overrides). </summary>
     internal partial class PolicySignaturesOverridesForIdpsProperties
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsProperties"/>. </summary>
         public PolicySignaturesOverridesForIdpsProperties()
         {
             Signatures = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsProperties"/>. </summary>
         /// <param name="signatures"> Dictionary of &lt;string&gt;. </param>
         internal PolicySignaturesOverridesForIdpsProperties(IDictionary<string, string> signatures)
         {

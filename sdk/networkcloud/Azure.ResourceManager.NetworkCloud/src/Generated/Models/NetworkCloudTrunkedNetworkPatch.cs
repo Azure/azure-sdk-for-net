@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> TrunkedNetworkPatchParameters represents the body of the request to patch the Trunked network. </summary>
     public partial class NetworkCloudTrunkedNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudTrunkedNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkPatch"/>. </summary>
         public NetworkCloudTrunkedNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

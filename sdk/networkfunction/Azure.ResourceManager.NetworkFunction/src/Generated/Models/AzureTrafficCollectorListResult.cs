@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Response for the ListTrafficCollectors API service call. </summary>
     internal partial class AzureTrafficCollectorListResult
     {
-        /// <summary> Initializes a new instance of AzureTrafficCollectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorListResult"/>. </summary>
         internal AzureTrafficCollectorListResult()
         {
             Value = new ChangeTrackingList<AzureTrafficCollectorData>();
         }
 
-        /// <summary> Initializes a new instance of AzureTrafficCollectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorListResult"/>. </summary>
         /// <param name="value"> A list of Traffic Collector resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AzureTrafficCollectorListResult(IReadOnlyList<AzureTrafficCollectorData> value, string nextLink)

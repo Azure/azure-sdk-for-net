@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
     public partial class RoutingConfiguration
     {
-        /// <summary> Initializes a new instance of RoutingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         public RoutingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="vnetRoutes"> List of routes that control routing from VirtualHub into a virtual network connection. </param>

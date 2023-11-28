@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Connectivity group item. </summary>
     public partial class ConnectivityGroupItem
     {
-        /// <summary> Initializes a new instance of ConnectivityGroupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network group Id. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             GroupConnectivity = groupConnectivity;
         }
 
-        /// <summary> Initializes a new instance of ConnectivityGroupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network group Id. </param>
         /// <param name="useHubGateway"> Flag if need to use hub gateway. </param>
         /// <param name="isGlobal"> Flag if global is supported. </param>

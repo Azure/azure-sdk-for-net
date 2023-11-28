@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VPN client revoked certificate of virtual network gateway. </summary>
     public partial class VpnClientRevokedCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnClientRevokedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientRevokedCertificate"/>. </summary>
         public VpnClientRevokedCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnClientRevokedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientRevokedCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

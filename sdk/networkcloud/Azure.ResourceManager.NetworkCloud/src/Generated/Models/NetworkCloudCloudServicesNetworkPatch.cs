@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> CloudServicesNetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
     public partial class NetworkCloudCloudServicesNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkPatch"/>. </summary>
         public NetworkCloudCloudServicesNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

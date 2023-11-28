@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SKU of nat gateway. </summary>
     internal partial class NatGatewaySku
     {
-        /// <summary> Initializes a new instance of NatGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewaySku"/>. </summary>
         public NatGatewaySku()
         {
         }
 
-        /// <summary> Initializes a new instance of NatGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewaySku"/>. </summary>
         /// <param name="name"> Name of Nat Gateway SKU. </param>
         internal NatGatewaySku(NatGatewaySkuName? name)
         {

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
         public LoadBalancingRuleData()
         {
             BackendAddressPools = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

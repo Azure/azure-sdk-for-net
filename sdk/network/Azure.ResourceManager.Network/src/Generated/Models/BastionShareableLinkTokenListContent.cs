@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Post request for Delete Bastion Shareable Link By Token endpoint. </summary>
     public partial class BastionShareableLinkTokenListContent
     {
-        /// <summary> Initializes a new instance of BastionShareableLinkTokenListContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionShareableLinkTokenListContent"/>. </summary>
         public BastionShareableLinkTokenListContent()
         {
             Tokens = new ChangeTrackingList<string>();

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server edition capabilities. </summary>
     public partial class ServerEditionCapabilityV2
     {
-        /// <summary> Initializes a new instance of ServerEditionCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEditionCapabilityV2"/>. </summary>
         internal ServerEditionCapabilityV2()
         {
             SupportedStorageEditions = new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>();
             SupportedSkus = new ChangeTrackingList<SkuCapabilityV2>();
         }
 
-        /// <summary> Initializes a new instance of ServerEditionCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEditionCapabilityV2"/>. </summary>
         /// <param name="name"> Server edition name. </param>
         /// <param name="defaultSku"> Default Sku name. </param>
         /// <param name="defaultStorageSize"> Default storage size. </param>

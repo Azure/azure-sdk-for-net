@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class MetricAlertStatusCollection
     {
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusCollection"/>. </summary>
         internal MetricAlertStatusCollection()
         {
             Value = new ChangeTrackingList<MetricAlertStatus>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusCollection"/>. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
         internal MetricAlertStatusCollection(IReadOnlyList<MetricAlertStatus> value)
         {

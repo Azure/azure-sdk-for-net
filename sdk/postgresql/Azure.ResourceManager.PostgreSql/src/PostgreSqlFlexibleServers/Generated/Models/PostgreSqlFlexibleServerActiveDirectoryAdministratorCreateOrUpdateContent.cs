@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents an Active Directory administrator. </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
         public PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
         {
         }
