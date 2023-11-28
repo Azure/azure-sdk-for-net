@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DataShare.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountPatch"/>. </summary>
+        /// <param name="tags"> Tags on the azure resource. </param>
+        internal DataShareAccountPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Tags on the azure resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

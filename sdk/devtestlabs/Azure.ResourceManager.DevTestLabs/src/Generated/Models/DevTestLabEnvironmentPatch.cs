@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> An environment, which is essentially an ARM template deployment. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentPatch"/>. </summary>
         public DevTestLabEnvironmentPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabEnvironmentPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

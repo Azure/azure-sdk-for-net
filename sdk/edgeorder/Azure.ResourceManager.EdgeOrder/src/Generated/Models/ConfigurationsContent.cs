@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ConfigurationFilters = configurationFilters.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
+        /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
+        /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
+        internal ConfigurationsContent(IList<ConfigurationFilters> configurationFilters, CustomerSubscriptionDetails customerSubscriptionDetails)
+        {
+            ConfigurationFilters = configurationFilters;
+            CustomerSubscriptionDetails = customerSubscriptionDetails;
+        }
+
         /// <summary> Holds details about product hierarchy information and filterable property. </summary>
         public IList<ConfigurationFilters> ConfigurationFilters { get; }
         /// <summary> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
