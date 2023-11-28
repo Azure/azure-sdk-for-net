@@ -38,6 +38,112 @@ namespace Azure.AI.OpenAI
         {
         }
 
+        /// <summary> Returns the status of the images operation. </summary>
+        /// <param name="operationId"> . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<BatchImageGenerationOperationResponse>> GetAzureBatchImageGenerationOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAzureBatchImageGenerationOperationStatusAsync(operationId, context).ConfigureAwait(false);
+            return Response.FromValue(BatchImageGenerationOperationResponse.FromResponse(response), response);
+        }
+
+        /// <summary> Returns the status of the images operation. </summary>
+        /// <param name="operationId"> . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<BatchImageGenerationOperationResponse> GetAzureBatchImageGenerationOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAzureBatchImageGenerationOperationStatus(operationId, context);
+            return Response.FromValue(BatchImageGenerationOperationResponse.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the status of the images operation
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAzureBatchImageGenerationOperationStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> . </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetAzureBatchImageGenerationOperationStatusAsync(string operationId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAzureBatchImageGenerationOperationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAzureBatchImageGenerationOperationStatusRequest(operationId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the status of the images operation
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAzureBatchImageGenerationOperationStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> . </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetAzureBatchImageGenerationOperationStatus(string operationId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAzureBatchImageGenerationOperationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAzureBatchImageGenerationOperationStatusRequest(operationId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Starts the generation of a batch of images from a text caption. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
@@ -144,6 +250,22 @@ namespace Azure.AI.OpenAI
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateGetAzureBatchImageGenerationOperationStatusRequest(string operationId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/openai", false);
+            uri.AppendPath("/operations/images/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         internal HttpMessage CreateBeginAzureBatchImageGenerationRequest(RequestContent content, RequestContext context)
