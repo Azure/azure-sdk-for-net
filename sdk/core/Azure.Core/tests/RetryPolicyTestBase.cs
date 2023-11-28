@@ -673,15 +673,15 @@ namespace Azure.Core.Tests
 
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            //internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
-            //{
-            //    DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
-            //}
+            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            {
+                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
+            }
 
-            //internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-            //{
-            //    return DelayGate.WaitForRelease(time);
-            //}
+            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+            {
+                return DelayGate.WaitForRelease(time);
+            }
 
             protected override void OnRequestSent(HttpMessage message)
             {

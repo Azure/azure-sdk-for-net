@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -27,7 +28,7 @@ namespace Azure.Core.Pipeline
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
 
-            _policy = new AzureCoreRetryPolicy(maxRetries, this);
+            _policy = new AzureCoreRetryPolicy(maxRetries, _delayStrategy, this);
         }
 
         /// <summary>
@@ -129,14 +130,14 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <returns>The amount of time to delay before retrying.</returns>
-        private TimeSpan GetNextDelay(HttpMessage message)
-             => _delayStrategy.GetNextDelay(
-                    message.HasResponse ? message.Response : default,
-                    message.RetryNumber);
+        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+        {
+            await Task.Delay(time, cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+        {
+            cancellationToken.WaitHandle.WaitOne(time);
+        }
     }
 }

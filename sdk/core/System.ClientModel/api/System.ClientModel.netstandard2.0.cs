@@ -118,6 +118,14 @@ namespace System.ClientModel.Primitives
         protected internal MessageClassifier() { }
         public virtual bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
+    public partial class MessageDelay
+    {
+        public MessageDelay() { }
+        protected virtual System.TimeSpan GetDelay(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
+        protected virtual void OnDelayComplete(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual void Wait(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
@@ -213,10 +221,7 @@ namespace System.ClientModel.Primitives
     public partial class RequestRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public RequestRetryPolicy() { }
-        public RequestRetryPolicy(int maxRetries) { }
-        protected virtual System.TimeSpan GetDelay(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        protected virtual void OnBeforeRetry(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnBeforeRetryAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public RequestRetryPolicy(int maxRetries, System.ClientModel.Primitives.MessageDelay delay) { }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }

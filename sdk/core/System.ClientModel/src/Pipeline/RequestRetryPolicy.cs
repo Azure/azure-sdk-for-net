@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.ExceptionServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -14,14 +13,16 @@ public class RequestRetryPolicy : PipelinePolicy
     private const int DefaultMaxRetries = 3;
 
     private readonly int _maxRetries;
+    private readonly MessageDelay _delay;
 
-    public RequestRetryPolicy() : this(DefaultMaxRetries)
+    public RequestRetryPolicy() : this(DefaultMaxRetries, MessageDelay.Default)
     {
     }
 
-    public RequestRetryPolicy(int maxRetries)
+    public RequestRetryPolicy(int maxRetries, MessageDelay delay)
     {
         _maxRetries = maxRetries;
+        _delay = delay;
     }
 
     public override void Process(PipelineMessage message, PipelineProcessor pipeline)
@@ -34,28 +35,6 @@ public class RequestRetryPolicy : PipelinePolicy
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
-    //{
-    //    if (async)
-    //    {
-    //        await pipeline.ProcessNextAsync().ConfigureAwait(false);
-    //    }
-    //    else
-    //    {
-    //        pipeline.ProcessNext();
-    //    }
-
-    //    // If "Should Retry"
-    //    //    GetNextDelay
-    //    //    Wait(Delay, CancellationToken)
-    //    //    If (message.HasRespose)
-    //    //        Dispose the content stream if applicable
-    //    //    Increment Retry Count
-    //    // If "Last Exception"
-    //    //    Throw single or Throw Aggregate
-
-    //    // There is logic to swap out the delay length algo
-    //    // There is logic to selectively retry based on the exception - ResponseClassifier
-    //}
     {
         List<Exception>? exceptions = null;
 
@@ -100,6 +79,7 @@ public class RequestRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            // TODO: simplify should retry.
             bool shouldRetry = false;
 
             if (lastException is not null ||
@@ -112,33 +92,19 @@ public class RequestRetryPolicy : PipelinePolicy
 
             if (shouldRetry)
             {
-                TimeSpan delay = GetDelay(message);
-
-                if (delay > TimeSpan.Zero)
+                if (async)
                 {
-                    if (async)
-                    {
-                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Wait(delay, message.CancellationToken);
-                    }
+                    await _delay.DelayAsync(message, message.CancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    _delay.Delay(message, message.CancellationToken);
                 }
 
                 if (message.TryGetResponse(out response))
                 {
                     // Dispose the content stream to free up a connection if the request has any
                     response.ContentStream?.Dispose();
-                }
-
-                if (async)
-                {
-                    await OnBeforeRetryAsync(message).ConfigureAwait(false);
-                }
-                else
-                {
-                    OnBeforeRetry(message);
                 }
 
                 message.RetryCount++;
@@ -169,16 +135,6 @@ public class RequestRetryPolicy : PipelinePolicy
         }
     }
 
-    private async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-    {
-        await Task.Delay(time, cancellationToken).ConfigureAwait(false);
-    }
-
-    private void Wait(TimeSpan time, CancellationToken cancellationToken)
-    {
-        cancellationToken.WaitHandle.WaitOne(time);
-    }
-
     protected virtual void OnSendingRequest(PipelineMessage message) { }
 
     protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message) => default;
@@ -186,10 +142,6 @@ public class RequestRetryPolicy : PipelinePolicy
     protected virtual void OnRequestSent(PipelineMessage message) { }
 
     protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
-
-    protected virtual void OnBeforeRetry(PipelineMessage message) { }
-
-    protected virtual ValueTask OnBeforeRetryAsync(PipelineMessage message) => default;
 
     protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
@@ -206,12 +158,6 @@ public class RequestRetryPolicy : PipelinePolicy
 
     protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetry(message, exception));
-
-    protected virtual TimeSpan GetDelay(PipelineMessage message)
-    {
-        // TODO: implement
-        return TimeSpan.FromSeconds(1);
-    }
 
     #region Retry Classifier
 
