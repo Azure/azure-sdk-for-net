@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters for Redis import operation. </summary>
     public partial class ImportRdbContent
     {
-        /// <summary> Initializes a new instance of ImportRdbContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
         /// <param name="files"> files to import. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
         public ImportRdbContent(IEnumerable<string> files)

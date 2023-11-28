@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Quota request details. </summary>
     internal partial class QuotaRequestDetailsList
     {
-        /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/>. </summary>
         internal QuotaRequestDetailsList()
         {
             Value = new ChangeTrackingList<QuotaRequestDetailData>();
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/>. </summary>
         /// <param name="value"> The quota requests. </param>
         /// <param name="nextLink"> The URI to fetch the next page of quota limits. When there are no more pages, this is null. </param>
         internal QuotaRequestDetailsList(IReadOnlyList<QuotaRequestDetailData> value, string nextLink)

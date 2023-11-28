@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the appliance resource. </summary>
     public partial class DataStoreUtilizationDetails
     {
-        /// <summary> Initializes a new instance of DataStoreUtilizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreUtilizationDetails"/>. </summary>
         internal DataStoreUtilizationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataStoreUtilizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreUtilizationDetails"/>. </summary>
         /// <param name="totalSnapshotsSupported"> The total count of snapshots supported by the datastore. </param>
         /// <param name="totalSnapshotsCreated"> The total snapshots created for server migration in the datastore. </param>
         /// <param name="dataStoreName"> The datastore name. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific resume replication input. </summary>
     public partial class VMwareCbtResumeReplicationContent : ResumeReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtResumeReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
         public VMwareCbtResumeReplicationContent()
         {
             InstanceType = "VMwareCbt";

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes the Network Security Groups effective on a network interface. </summary>
     public partial class EffectiveNetworkSecurityGroups
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroups"/>. </summary>
         public EffectiveNetworkSecurityGroups()
         {
             NetworkSecurityGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroups"/>. </summary>
         /// <param name="networkInterface"> The Azure resource ID of the network interface. </param>
         /// <param name="networkSecurityGroups"> The Network Security Groups effective on the network interface. </param>
         internal EffectiveNetworkSecurityGroups(string networkInterface, IList<string> networkSecurityGroups)

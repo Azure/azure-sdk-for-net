@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
     public partial class IdentityBasedRestoreDetails
     {
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         public IdentityBasedRestoreDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         /// <param name="objectType"> Gets the class type. </param>
         /// <param name="targetStorageAccountId"> Fully qualified ARM ID of the target storage account. </param>
         internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId)

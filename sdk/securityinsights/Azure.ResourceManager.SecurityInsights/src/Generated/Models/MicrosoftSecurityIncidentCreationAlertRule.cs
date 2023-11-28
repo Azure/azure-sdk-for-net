@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MicrosoftSecurityIncidentCreation rule. </summary>
     public partial class MicrosoftSecurityIncidentCreationAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
         public MicrosoftSecurityIncidentCreationAlertRule()
         {
             DisplayNamesFilter = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

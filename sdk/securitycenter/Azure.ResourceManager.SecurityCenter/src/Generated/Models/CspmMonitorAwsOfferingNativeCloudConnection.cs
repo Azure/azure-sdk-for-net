@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The native cloud connection configuration. </summary>
     internal partial class CspmMonitorAwsOfferingNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of CspmMonitorAwsOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOfferingNativeCloudConnection"/>. </summary>
         public CspmMonitorAwsOfferingNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAwsOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOfferingNativeCloudConnection"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         internal CspmMonitorAwsOfferingNativeCloudConnection(string cloudRoleArn)
         {

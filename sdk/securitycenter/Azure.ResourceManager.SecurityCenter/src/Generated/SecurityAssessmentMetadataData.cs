@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
         public SecurityAssessmentMetadataData()
         {
             Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

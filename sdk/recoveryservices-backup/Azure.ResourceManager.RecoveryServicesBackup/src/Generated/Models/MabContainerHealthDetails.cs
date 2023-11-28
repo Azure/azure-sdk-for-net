@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific Health Details. </summary>
     public partial class MabContainerHealthDetails
     {
-        /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerHealthDetails"/>. </summary>
         public MabContainerHealthDetails()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>

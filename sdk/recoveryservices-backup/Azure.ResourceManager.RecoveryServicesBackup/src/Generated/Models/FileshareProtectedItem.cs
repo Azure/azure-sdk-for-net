@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure File Share workload-specific backup item. </summary>
     public partial class FileshareProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of FileshareProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItem"/>. </summary>
         public FileshareProtectedItem()
         {
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureFileShareProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of FileshareProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

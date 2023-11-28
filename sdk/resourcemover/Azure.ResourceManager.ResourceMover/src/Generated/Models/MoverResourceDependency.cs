@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the dependency of the move resource. </summary>
     public partial class MoverResourceDependency
     {
-        /// <summary> Initializes a new instance of MoverResourceDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceDependency"/>. </summary>
         internal MoverResourceDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceDependency"/>. </summary>
         /// <param name="id"> Gets the source ARM ID of the dependent resource. </param>
         /// <param name="resolutionStatus"> Gets the dependency resolution status. </param>
         /// <param name="resolutionType"> Defines the resolution type. </param>

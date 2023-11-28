@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains a document found by a search query, plus associated metadata. </summary>
     internal partial class SearchResult
     {
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
         internal SearchResult(double score)
         {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
         /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type `semantic`. </param>
         /// <param name="highlights"> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </param>

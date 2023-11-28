@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Name of the resource provided by the resource Provider. When requesting quota, use this property name. </summary>
     public partial class QuotaRequestResourceName
     {
-        /// <summary> Initializes a new instance of QuotaRequestResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestResourceName"/>. </summary>
         public QuotaRequestResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestResourceName"/>. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         internal QuotaRequestResourceName(string value, string localizedValue)

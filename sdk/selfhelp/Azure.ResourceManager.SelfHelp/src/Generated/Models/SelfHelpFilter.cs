@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Filter criterion. </summary>
     public partial class SelfHelpFilter
     {
-        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
         public SelfHelpFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
         /// <param name="name"> Filter name. </param>
         /// <param name="values"> Filter values. </param>
         /// <param name="operator"> Filter operator. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model class for event details of a VMwareAzureV2 event. </summary>
     public partial class InMageAzureV2EventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2EventDetails"/>. </summary>
         internal InMageAzureV2EventDetails()
         {
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2EventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="eventType"> InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType. </param>
         /// <param name="category"> InMage Event Category. </param>

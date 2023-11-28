@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownProtectionContainerMappingProviderSpecificDetails. </summary>
     internal partial class UnknownProtectionContainerMappingProviderSpecificDetails : ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of UnknownProtectionContainerMappingProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainerMappingProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal UnknownProtectionContainerMappingProviderSpecificDetails(string instanceType) : base(instanceType)
         {

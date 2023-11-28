@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
     public partial class VaultPropertiesMoveDetails
     {
-        /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesMoveDetails"/>. </summary>
         public VaultPropertiesMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesMoveDetails"/>. </summary>
         /// <param name="operationId"> OperationId of the Resource Move Operation. </param>
         /// <param name="startOn"> Start Time of the Resource Move Operation. </param>
         /// <param name="completedOn"> End Time of the Resource Move Operation. </param>

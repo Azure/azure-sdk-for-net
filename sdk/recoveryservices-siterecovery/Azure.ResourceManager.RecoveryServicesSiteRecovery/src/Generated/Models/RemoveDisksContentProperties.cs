@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Remove Disk input properties. </summary>
     internal partial class RemoveDisksContentProperties
     {
-        /// <summary> Initializes a new instance of RemoveDisksContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksContentProperties"/>. </summary>
         public RemoveDisksContentProperties()
         {
         }

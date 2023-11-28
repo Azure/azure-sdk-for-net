@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Partner region information for the failover group. </summary>
     public partial class PartnerRegionInfo
     {
-        /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegionInfo"/>. </summary>
         public PartnerRegionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegionInfo"/>. </summary>
         /// <param name="location"> Geo location of the partner managed instances. </param>
         /// <param name="replicationRole"> Replication role of the partner managed instances. </param>
         internal PartnerRegionInfo(AzureLocation? location, InstanceFailoverGroupReplicationRole? replicationRole)

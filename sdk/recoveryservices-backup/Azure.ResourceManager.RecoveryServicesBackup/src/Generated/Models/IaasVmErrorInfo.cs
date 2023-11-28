@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific error information. </summary>
     public partial class IaasVmErrorInfo
     {
-        /// <summary> Initializes a new instance of IaasVmErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmErrorInfo"/>. </summary>
         public IaasVmErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IaasVmErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>
         /// <param name="errorString"> Localized error string. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the response to a get database service objectives request. </summary>
     internal partial class ServiceObjectiveListResult
     {
-        /// <summary> Initializes a new instance of ServiceObjectiveListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveListResult"/>. </summary>
         /// <param name="value"> The list of database service objectives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ServiceObjectiveListResult(IEnumerable<ServiceObjectiveData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveListResult"/>. </summary>
         /// <param name="value"> The list of database service objectives. </param>
         internal ServiceObjectiveListResult(IReadOnlyList<ServiceObjectiveData> value)
         {

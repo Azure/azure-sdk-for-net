@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure specific reprotect input. </summary>
     public partial class HyperVReplicaAzureReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReprotectContent"/>. </summary>
         public HyperVReplicaAzureReprotectContent()
         {
             InstanceType = "HyperVReplicaAzure";

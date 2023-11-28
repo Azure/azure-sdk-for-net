@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a security applications list. </summary>
     internal partial class ApplicationsList
     {
-        /// <summary> Initializes a new instance of ApplicationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationsList"/>. </summary>
         internal ApplicationsList()
         {
             Value = new ChangeTrackingList<SecurityApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationsList"/>. </summary>
         /// <param name="value"> Collection of applications in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal ApplicationsList(IReadOnlyList<SecurityApplicationData> value, string nextLink)

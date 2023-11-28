@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Savings plan purchase details. </summary>
     public partial class SavingsPlanToPurchaseExchange
     {
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseExchange"/>. </summary>
         internal SavingsPlanToPurchaseExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseExchange"/>. </summary>
         /// <param name="savingsPlanOrderId"> Fully qualified id of the savings plan order being purchased. </param>
         /// <param name="savingsPlanId"> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
         /// <param name="properties"> Request body for savings plan purchase. </param>

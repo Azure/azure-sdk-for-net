@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform export database operation. </summary>
     public partial class DatabaseExportDefinition
     {
-        /// <summary> Initializes a new instance of DatabaseExportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>

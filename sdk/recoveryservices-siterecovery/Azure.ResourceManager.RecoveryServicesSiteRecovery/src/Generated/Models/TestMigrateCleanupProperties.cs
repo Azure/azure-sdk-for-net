@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Test migrate cleanup input properties. </summary>
     public partial class TestMigrateCleanupProperties
     {
-        /// <summary> Initializes a new instance of TestMigrateCleanupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupProperties"/>. </summary>
         public TestMigrateCleanupProperties()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Fabric model for update. </summary>
     public partial class DataReplicationFabricPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricPatch"/>. </summary>
         public DataReplicationFabricPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

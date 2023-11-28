@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resolve health errors input properties. </summary>
     public partial class ResolveHealthError
     {
-        /// <summary> Initializes a new instance of ResolveHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthError"/>. </summary>
         public ResolveHealthError()
         {
         }
