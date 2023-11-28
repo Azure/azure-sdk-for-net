@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update of a DRS placement policy resource. </summary>
     public partial class PlacementPolicyPatch
     {
-        /// <summary> Initializes a new instance of PlacementPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
         public PlacementPolicyPatch()
         {
             VmMembers = new ChangeTrackingList<ResourceIdentifier>();

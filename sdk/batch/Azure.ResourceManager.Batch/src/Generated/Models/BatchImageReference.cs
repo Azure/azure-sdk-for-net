@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
     public partial class BatchImageReference
     {
-        /// <summary> Initializes a new instance of BatchImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchImageReference"/>. </summary>
         public BatchImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchImageReference"/>. </summary>
         /// <param name="publisher"> For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="offer"> For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> For example, 18.04-LTS or 2022-datacenter. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for HttpVersion match conditions. </summary>
     public partial class HttpVersionMatchCondition
     {
-        /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

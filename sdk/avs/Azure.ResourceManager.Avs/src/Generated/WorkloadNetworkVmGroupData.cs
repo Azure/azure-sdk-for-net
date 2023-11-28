@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVmGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
         public WorkloadNetworkVmGroupData()
         {
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Create Group operation. </summary>
     public partial class ApiManagementGroupCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
         public ApiManagementGroupCreateOrUpdateContent()
         {
         }

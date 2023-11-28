@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API Authentication Settings. </summary>
     public partial class AuthenticationSettingsContract
     {
-        /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         public AuthenticationSettingsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
         /// <param name="openId"> OpenID Connect Authentication Settings. </param>
         internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId)

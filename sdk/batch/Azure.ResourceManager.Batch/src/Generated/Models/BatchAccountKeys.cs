@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A set of Azure Batch account keys. </summary>
     public partial class BatchAccountKeys
     {
-        /// <summary> Initializes a new instance of BatchAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountKeys"/>. </summary>
         internal BatchAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountKeys"/>. </summary>
         /// <param name="accountName"> The Batch account name. </param>
         /// <param name="primary"> The primary key associated with the account. </param>
         /// <param name="secondary"> The secondary key associated with the account. </param>

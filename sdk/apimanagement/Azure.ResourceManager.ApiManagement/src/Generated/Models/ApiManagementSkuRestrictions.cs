@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ApiManagementSkuRestrictions
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictions"/>. </summary>
         internal ApiManagementSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>

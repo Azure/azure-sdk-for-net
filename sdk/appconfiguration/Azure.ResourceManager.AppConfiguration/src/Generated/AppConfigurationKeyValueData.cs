@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class AppConfigurationKeyValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueData"/>. </summary>
         public AppConfigurationKeyValueData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

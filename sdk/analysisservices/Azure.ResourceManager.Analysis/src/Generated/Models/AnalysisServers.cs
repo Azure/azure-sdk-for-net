@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An array of Analysis Services resources. </summary>
     internal partial class AnalysisServers
     {
-        /// <summary> Initializes a new instance of AnalysisServers. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServers"/>. </summary>
         /// <param name="analysisResources"> An array of Analysis Services resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisResources"/> is null. </exception>
         internal AnalysisServers(IEnumerable<AnalysisServerData> analysisResources)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
             AnalysisResources = analysisResources.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalysisServers. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServers"/>. </summary>
         /// <param name="analysisResources"> An array of Analysis Services resources. </param>
         internal AnalysisServers(IReadOnlyList<AnalysisServerData> analysisResources)
         {

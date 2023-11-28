@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Customer Managed Identity. </summary>
     public partial class MyWorkbookManagedIdentity
     {
-        /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookManagedIdentity"/>. </summary>
         public MyWorkbookManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> Customer Managed Identity. </param>
         /// <param name="identityType"> The identity type. </param>
         internal MyWorkbookManagedIdentity(MyWorkbookUserAssignedIdentities userAssignedIdentities, MyWorkbookManagedIdentityType? identityType)

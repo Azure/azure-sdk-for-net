@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The collection of validation rule properties. </summary>
     public partial class WebTestPropertiesValidationRules
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRules"/>. </summary>
         public WebTestPropertiesValidationRules()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRules"/>. </summary>
         /// <param name="contentValidation"> The collection of content validation properties. </param>
         /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>

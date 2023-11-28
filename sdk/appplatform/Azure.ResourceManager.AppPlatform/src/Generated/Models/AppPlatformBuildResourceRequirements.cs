@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Resource request payload of Build Resource. </summary>
     public partial class AppPlatformBuildResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResourceRequirements"/>. </summary>
         public AppPlatformBuildResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResourceRequirements"/>. </summary>
         /// <param name="cpu">
         /// Optional Cpu allocated to the build resource. 1 core can be represented by 1 or 1000m.
         /// The default value is 1, this should not exceed build service agent pool cpu size.

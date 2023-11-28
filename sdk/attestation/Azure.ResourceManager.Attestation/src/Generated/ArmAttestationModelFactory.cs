@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAttestationModelFactory
     {
-        /// <summary> Initializes a new instance of AttestationProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Attestation.AttestationProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderData(id, name, resourceType, systemData, tags, location, trustModel, status, attestUri, publicNetworkAccess, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Attestation.AttestationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AttestationPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

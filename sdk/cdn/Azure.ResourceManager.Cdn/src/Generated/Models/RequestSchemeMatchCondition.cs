@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestScheme match conditions. </summary>
     public partial class RequestSchemeMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
         }
 
-        /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

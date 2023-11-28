@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The response of the list policy operation. </summary>
     internal partial class PolicyListResult
     {
-        /// <summary> Initializes a new instance of PolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyListResult"/>. </summary>
         internal PolicyListResult()
         {
             Value = new ChangeTrackingList<PolicyContractData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyListResult"/>. </summary>
         /// <param name="value"> Policy Contract value. </param>
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>

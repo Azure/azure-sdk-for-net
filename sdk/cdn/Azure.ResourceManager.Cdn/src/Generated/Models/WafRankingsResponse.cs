@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Waf Rankings Response. </summary>
     public partial class WafRankingsResponse
     {
-        /// <summary> Initializes a new instance of WafRankingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
         internal WafRankingsResponse()
         {
             Groups = new ChangeTrackingList<string>();
             Data = new ChangeTrackingList<WafRankingsResponseDataItem>();
         }
 
-        /// <summary> Initializes a new instance of WafRankingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="groups"></param>

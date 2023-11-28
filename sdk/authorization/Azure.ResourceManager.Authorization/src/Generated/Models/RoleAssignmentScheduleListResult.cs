@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role assignment schedule list operation result. </summary>
     internal partial class RoleAssignmentScheduleListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleListResult"/>. </summary>
         internal RoleAssignmentScheduleListResult()
         {
             Value = new ChangeTrackingList<RoleAssignmentScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleListResult"/>. </summary>
         /// <param name="value"> Role assignment schedule list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleAssignmentScheduleListResult(IReadOnlyList<RoleAssignmentScheduleData> value, string nextLink)

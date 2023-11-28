@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Details about connectivity to a resource. </summary>
     public partial class ConnectivityStatusContract
     {
-        /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="lastUpdatedOn">
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IsOptional = isOptional;
         }
 
-        /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusContract"/>. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="error"> Error details of the connectivity to the resource. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Rules defining user's geo access within a CDN endpoint. </summary>
     public partial class GeoFilter
     {
-        /// <summary> Initializes a new instance of GeoFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoFilter"/>. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryCodes = countryCodes.ToList();
         }
 
-        /// <summary> Initializes a new instance of GeoFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoFilter"/>. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>

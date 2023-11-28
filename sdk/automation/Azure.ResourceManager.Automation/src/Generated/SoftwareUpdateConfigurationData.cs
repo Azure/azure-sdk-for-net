@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class SoftwareUpdateConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
         /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
         /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateConfiguration"/> or <paramref name="scheduleInfo"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation
             ScheduleInfo = scheduleInfo;
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

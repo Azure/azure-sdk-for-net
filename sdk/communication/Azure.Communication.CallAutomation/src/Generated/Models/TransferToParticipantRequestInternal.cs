@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for transferring call to a participant. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
