@@ -117,12 +117,22 @@ These settings apply only when `--tag=package-preview-2023-09` is specified on t
 
 ```yaml $(tag) == 'package-preview-2023-09'
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/arcSettings.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/clusters.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/extensions.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/offers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/operations.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/publishers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/skus.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/updateRuns.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/updateSummaries.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-08-01/updates.json
 ```
