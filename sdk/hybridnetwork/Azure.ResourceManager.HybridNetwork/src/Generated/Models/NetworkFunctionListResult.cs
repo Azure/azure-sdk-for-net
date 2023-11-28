@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Response for network function API service call. </summary>
     internal partial class NetworkFunctionListResult
     {
-        /// <summary> Initializes a new instance of NetworkFunctionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionListResult"/>. </summary>
         internal NetworkFunctionListResult()
         {
             Value = new ChangeTrackingList<NetworkFunctionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionListResult"/>. </summary>
         /// <param name="value"> A list of network function resources in a subscription or resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkFunctionListResult(IReadOnlyList<NetworkFunctionData> value, string nextLink)

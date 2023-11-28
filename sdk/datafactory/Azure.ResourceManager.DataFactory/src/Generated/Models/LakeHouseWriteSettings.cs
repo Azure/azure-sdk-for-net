@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Microsoft Fabric LakeHouse Files write settings. </summary>
     public partial class LakeHouseWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of LakeHouseWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseWriteSettings"/>. </summary>
         public LakeHouseWriteSettings()
         {
             StoreWriteSettingsType = "LakeHouseWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseWriteSettings"/>. </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

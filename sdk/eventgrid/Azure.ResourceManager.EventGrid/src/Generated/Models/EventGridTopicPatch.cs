@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Topic update. </summary>
     public partial class EventGridTopicPatch
     {
-        /// <summary> Initializes a new instance of EventGridTopicPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridTopicPatch"/>. </summary>
         public EventGridTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

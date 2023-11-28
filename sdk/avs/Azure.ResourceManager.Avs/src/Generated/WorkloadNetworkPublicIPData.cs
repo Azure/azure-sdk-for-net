@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkPublicIPData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPData"/>. </summary>
         public WorkloadNetworkPublicIPData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

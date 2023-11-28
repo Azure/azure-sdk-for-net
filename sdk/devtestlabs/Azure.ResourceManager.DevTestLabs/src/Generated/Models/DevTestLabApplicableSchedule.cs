@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
     public partial class DevTestLabApplicableSchedule : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabApplicableSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabApplicableSchedule(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabApplicableSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

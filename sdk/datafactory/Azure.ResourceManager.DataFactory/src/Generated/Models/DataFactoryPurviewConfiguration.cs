@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Purview configuration. </summary>
     internal partial class DataFactoryPurviewConfiguration
     {
-        /// <summary> Initializes a new instance of DataFactoryPurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPurviewConfiguration"/>. </summary>
         public DataFactoryPurviewConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview resource id. </param>
         internal DataFactoryPurviewConfiguration(ResourceIdentifier purviewResourceId)
         {

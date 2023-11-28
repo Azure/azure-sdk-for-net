@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Default config details. </summary>
     public partial class ClusterServiceConfigValueEntity
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigValueEntity"/>. </summary>
         /// <param name="value"> Config value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ClusterServiceConfigValueEntity(string value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigValueEntity"/>. </summary>
         /// <param name="value"> Config value. </param>
         /// <param name="description"> Config description. </param>
         internal ClusterServiceConfigValueEntity(string value, string description)

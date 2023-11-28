@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonFeatureCollectionData. </summary>
     internal partial class GeoJsonFeatureCollectionData
     {
-        /// <summary> Initializes a new instance of GeoJsonFeatureCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         public GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)

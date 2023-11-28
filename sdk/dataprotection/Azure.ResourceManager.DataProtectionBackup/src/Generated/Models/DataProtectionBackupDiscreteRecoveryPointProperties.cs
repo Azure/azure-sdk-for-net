@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure backup discrete RecoveryPoint. </summary>
     public partial class DataProtectionBackupDiscreteRecoveryPointProperties : DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="recoverOn"></param>
         public DataProtectionBackupDiscreteRecoveryPointProperties(DateTimeOffset recoverOn)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupDiscreteRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
         /// <param name="friendlyName"></param>
         /// <param name="recoveryPointDataStoresDetails"></param>

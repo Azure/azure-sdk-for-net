@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update ClientEncryptionKey. </summary>
     public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/>. </summary>
         /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource)

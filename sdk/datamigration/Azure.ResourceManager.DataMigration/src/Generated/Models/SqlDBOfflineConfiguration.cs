@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Offline configuration. </summary>
     internal partial class SqlDBOfflineConfiguration
     {
-        /// <summary> Initializes a new instance of SqlDBOfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBOfflineConfiguration"/>. </summary>
         internal SqlDBOfflineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDBOfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBOfflineConfiguration"/>. </summary>
         /// <param name="offline"> Offline migration. </param>
         internal SqlDBOfflineConfiguration(bool? offline)
         {

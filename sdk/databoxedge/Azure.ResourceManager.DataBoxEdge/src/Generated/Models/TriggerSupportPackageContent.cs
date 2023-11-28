@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The request object for trigger support package. </summary>
     public partial class TriggerSupportPackageContent : ResourceData
     {
-        /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
         public TriggerSupportPackageContent()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

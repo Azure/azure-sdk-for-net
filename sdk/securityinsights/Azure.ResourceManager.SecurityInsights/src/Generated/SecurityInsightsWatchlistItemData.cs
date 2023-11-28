@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsWatchlistItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsWatchlistItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
         public SecurityInsightsWatchlistItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsWatchlistItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

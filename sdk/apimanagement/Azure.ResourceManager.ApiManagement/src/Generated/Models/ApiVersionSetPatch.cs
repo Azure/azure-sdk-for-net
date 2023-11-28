@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters to update or create an API Version Set Contract. </summary>
     public partial class ApiVersionSetPatch
     {
-        /// <summary> Initializes a new instance of ApiVersionSetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetPatch"/>. </summary>
         public ApiVersionSetPatch()
         {
         }

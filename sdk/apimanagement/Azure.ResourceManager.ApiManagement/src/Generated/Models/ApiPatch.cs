@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API update contract details. </summary>
     public partial class ApiPatch
     {
-        /// <summary> Initializes a new instance of ApiPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPatch"/>. </summary>
         public ApiPatch()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();

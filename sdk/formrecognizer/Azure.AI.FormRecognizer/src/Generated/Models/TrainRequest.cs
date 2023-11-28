@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request parameter to train a new custom model. </summary>
     internal partial class TrainRequest
     {
-        /// <summary> Initializes a new instance of TrainRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainRequest"/>. </summary>
         /// <param name="source"> Source path containing the training documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)

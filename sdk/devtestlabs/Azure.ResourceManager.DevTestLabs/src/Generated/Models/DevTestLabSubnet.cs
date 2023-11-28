@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Subnet information. </summary>
     public partial class DevTestLabSubnet
     {
-        /// <summary> Initializes a new instance of DevTestLabSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnet"/>. </summary>
         public DevTestLabSubnet()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnet"/>. </summary>
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name of the subnet as seen in the lab. </param>
         /// <param name="allowPublicIP"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>

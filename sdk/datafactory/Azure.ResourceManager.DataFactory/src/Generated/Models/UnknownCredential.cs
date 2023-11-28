@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownCredential. </summary>
     internal partial class UnknownCredential : DataFactoryCredential
     {
-        /// <summary> Initializes a new instance of UnknownCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCredential"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>

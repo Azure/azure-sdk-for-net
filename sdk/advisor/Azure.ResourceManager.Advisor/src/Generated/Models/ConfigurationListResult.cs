@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The list of Advisor configurations. </summary>
     internal partial class ConfigurationListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
         internal ConfigurationListResult()
         {
             Value = new ChangeTrackingList<ConfigData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of configurations. </param>
         /// <param name="nextLink"> The link used to get the next page of configurations. </param>
         internal ConfigurationListResult(IReadOnlyList<ConfigData> value, string nextLink)

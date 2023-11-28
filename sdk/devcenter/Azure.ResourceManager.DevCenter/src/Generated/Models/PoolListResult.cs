@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the machine pool list operation. </summary>
     internal partial class PoolListResult
     {
-        /// <summary> Initializes a new instance of PoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolListResult"/>. </summary>
         internal PoolListResult()
         {
             Value = new ChangeTrackingList<DevCenterPoolData>();
         }
 
-        /// <summary> Initializes a new instance of PoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal PoolListResult(IReadOnlyList<DevCenterPoolData> value, string nextLink)

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class TargetTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetTypeData"/>. </summary>
         public TargetTypeData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> The CMK encryption settings on the Device Update account. </summary>
     public partial class DeviceUpdateEncryption
     {
-        /// <summary> Initializes a new instance of DeviceUpdateEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateEncryption"/>. </summary>
         public DeviceUpdateEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateEncryption"/>. </summary>
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="userAssignedIdentity"> The full resourceId of the user assigned identity to be used for key vault access. Identity has to be also assigned to the Account. </param>
         internal DeviceUpdateEncryption(Uri keyVaultKeyUri, ResourceIdentifier userAssignedIdentity)

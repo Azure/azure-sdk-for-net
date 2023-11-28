@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for discard operation. </summary>
     public partial class MoverDiscardContent
     {
-        /// <summary> Initializes a new instance of MoverDiscardContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverDiscardContent"/>. </summary>
         /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverDiscardContent(IEnumerable<ResourceIdentifier> moverResources)

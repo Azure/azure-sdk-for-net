@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of Storage for Environments. </summary>
     internal partial class ConnectedEnvironmentStoragesCollection
     {
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConnectedEnvironmentStoragesCollection(IEnumerable<ContainerAppConnectedEnvironmentStorageData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value)
         {

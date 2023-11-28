@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The Key Vault update information used for user managed key rotation. </summary>
     internal partial class UpdateKeyVaultMetaInfo
     {
-        /// <summary> Initializes a new instance of UpdateKeyVaultMetaInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
         public UpdateKeyVaultMetaInfo()
         {
         }

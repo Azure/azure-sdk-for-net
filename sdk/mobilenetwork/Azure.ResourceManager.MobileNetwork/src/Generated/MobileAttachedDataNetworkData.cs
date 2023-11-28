@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileAttachedDataNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileAttachedDataNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
         /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MobileNetwork
             UserEquipmentStaticAddressPoolPrefix = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileAttachedDataNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

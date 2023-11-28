@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model sweeping and hyperparameter tuning related settings. </summary>
     public partial class NlpSweepSettings
     {
-        /// <summary> Initializes a new instance of NlpSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of sampling algorithm. </param>
         public NlpSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of NlpSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpSweepSettings"/>. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy for the sweeping job.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

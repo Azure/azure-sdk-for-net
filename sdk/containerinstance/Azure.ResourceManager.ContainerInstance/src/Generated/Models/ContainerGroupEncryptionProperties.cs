@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container group encryption properties. </summary>
     public partial class ContainerGroupEncryptionProperties
     {
-        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupEncryptionProperties"/>. </summary>
         /// <param name="vaultBaseUri"> The keyvault base url. </param>
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             KeyVersion = keyVersion;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupEncryptionProperties"/>. </summary>
         /// <param name="vaultBaseUri"> The keyvault base url. </param>
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>

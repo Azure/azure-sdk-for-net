@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The execution options of a job step. </summary>
     public partial class JobStepExecutionOptions
     {
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         public JobStepExecutionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         /// <param name="timeoutSeconds"> Execution timeout for the job step. </param>
         /// <param name="retryAttempts"> Maximum number of times the job step will be reattempted if the first attempt fails. </param>
         /// <param name="initialRetryIntervalSeconds"> Initial delay between retries for job step execution. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> defines the type of alert. </summary>
     public partial class AlertPropertiesDefinition
     {
-        /// <summary> Initializes a new instance of AlertPropertiesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDefinition"/>. </summary>
         public AlertPropertiesDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertPropertiesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDefinition"/>. </summary>
         /// <param name="alertType"> type of alert. </param>
         /// <param name="category"> Alert category. </param>
         /// <param name="criteria"> Criteria that triggered alert. </param>

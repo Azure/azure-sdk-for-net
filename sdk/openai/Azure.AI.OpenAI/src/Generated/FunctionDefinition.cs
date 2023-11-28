@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     public partial class FunctionDefinition
     {
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FunctionDefinition(string name)
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description">
         /// A description of what the function does. The model will use this description when selecting the function and

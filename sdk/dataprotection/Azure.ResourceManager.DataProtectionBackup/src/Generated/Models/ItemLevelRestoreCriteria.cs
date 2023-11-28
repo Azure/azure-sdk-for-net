@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of ItemLevelRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreCriteria"/>. </summary>
         protected ItemLevelRestoreCriteria()
         {
         }

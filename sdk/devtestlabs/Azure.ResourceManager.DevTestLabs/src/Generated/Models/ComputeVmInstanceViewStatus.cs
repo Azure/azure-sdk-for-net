@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Status information about a virtual machine. </summary>
     public partial class ComputeVmInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmInstanceViewStatus"/>. </summary>
         internal ComputeVmInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmInstanceViewStatus"/>. </summary>
         /// <param name="code"> Gets the status Code. </param>
         /// <param name="displayStatus"> Gets the short localizable label for the status. </param>
         /// <param name="message"> Gets the message associated with the status. </param>

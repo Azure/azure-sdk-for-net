@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Sms channel definition. </summary>
     public partial class SmsChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of SmsChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsChannel"/>. </summary>
         public SmsChannel()
         {
             ChannelName = "SmsChannel";
         }
 
-        /// <summary> Initializes a new instance of SmsChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

@@ -14,13 +14,14 @@
 
   <!-- Reference the Client Library -->
   <ItemGroup Condition="$(TargetFramework) != 'net462'">
-    <ProjectReference Include="..\src\Microsoft.Azure.WebPubSub.AspNetCore.csproj" />
+		<ProjectReference Include="..\src\Microsoft.Azure.WebPubSub.AspNetCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+		<PackageReference Include="Azure.Identity"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+		<PackageReference Include="Moq" />
+		<PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The IP Extended Communities patch resource definition. </summary>
     public partial class NetworkFabricIPExtendedCommunityPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
         public NetworkFabricIPExtendedCommunityPatch()
         {
             IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();

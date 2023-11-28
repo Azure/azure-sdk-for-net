@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubConnectorStatsListResponse. </summary>
     internal partial class GitHubConnectorStatsListResponse
     {
-        /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsListResponse"/>. </summary>
         internal GitHubConnectorStatsListResponse()
         {
             Value = new ChangeTrackingList<GitHubConnectorStats>();
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         internal GitHubConnectorStatsListResponse(IReadOnlyList<GitHubConnectorStats> value, string nextLink)

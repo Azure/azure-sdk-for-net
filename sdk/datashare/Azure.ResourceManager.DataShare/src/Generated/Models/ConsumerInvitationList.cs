@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get InvitationList. </summary>
     internal partial class ConsumerInvitationList
     {
-        /// <summary> Initializes a new instance of ConsumerInvitationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerInvitationList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConsumerInvitationList(IEnumerable<DataShareConsumerInvitationData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConsumerInvitationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerInvitationList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal ConsumerInvitationList(string nextLink, IReadOnlyList<DataShareConsumerInvitationData> value)

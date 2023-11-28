@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Article of event. </summary>
     public partial class ResourceHealthEventArticle
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventArticle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventArticle"/>. </summary>
         internal ResourceHealthEventArticle()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventArticle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventArticle"/>. </summary>
         /// <param name="articleContent"> Article content of event. </param>
         /// <param name="articleId"> Article Id. </param>
         /// <param name="parameters"> It provides a map of parameter name and value. </param>

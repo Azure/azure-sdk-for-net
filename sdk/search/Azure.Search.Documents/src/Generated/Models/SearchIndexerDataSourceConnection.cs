@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
     public partial class SearchIndexerDataSourceConnection
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataSourceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
         /// <param name="name"> The name of the datasource. </param>
         /// <param name="description"> The description of the datasource. </param>
         /// <param name="type"> The type of the datasource. </param>

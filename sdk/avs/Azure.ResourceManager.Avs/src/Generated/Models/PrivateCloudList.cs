@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of private clouds. </summary>
     internal partial class PrivateCloudList
     {
-        /// <summary> Initializes a new instance of PrivateCloudList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudList"/>. </summary>
         internal PrivateCloudList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateCloudList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal PrivateCloudList(IReadOnlyList<AvsPrivateCloudData> value, string nextLink)

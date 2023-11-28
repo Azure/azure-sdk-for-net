@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> AzureKB web result. </summary>
     public partial class WebResult
     {
-        /// <summary> Initializes a new instance of WebResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
         public WebResult()
         {
             SearchResults = new ChangeTrackingList<SearchResult>();
         }
 
-        /// <summary> Initializes a new instance of WebResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
         internal WebResult(string replacementKey, IList<SearchResult> searchResults)

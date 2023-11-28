@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// </summary>
     internal partial class MessageTemplateValueMedia
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueMedia. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
         public MessageTemplateValueMedia()
         {
         }

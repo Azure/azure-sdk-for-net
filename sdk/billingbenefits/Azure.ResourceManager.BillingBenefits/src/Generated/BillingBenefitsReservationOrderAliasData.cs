@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsReservationOrderAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
         /// <param name="sku"> Reservation order SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsReservationOrderAliasData(BillingBenefitsSku sku)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

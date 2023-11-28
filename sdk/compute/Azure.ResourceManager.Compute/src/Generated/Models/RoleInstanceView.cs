@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of the role instance. </summary>
     public partial class RoleInstanceView
     {
-        /// <summary> Initializes a new instance of RoleInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceView"/>. </summary>
         internal RoleInstanceView()
         {
             Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceView"/>. </summary>
         /// <param name="platformUpdateDomain"> The Update Domain. </param>
         /// <param name="platformFaultDomain"> The Fault Domain. </param>
         /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>

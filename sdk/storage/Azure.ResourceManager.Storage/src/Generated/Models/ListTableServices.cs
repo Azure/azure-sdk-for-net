@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The ListTableServices. </summary>
     internal partial class ListTableServices
     {
-        /// <summary> Initializes a new instance of ListTableServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableServices"/>. </summary>
         internal ListTableServices()
         {
             Value = new ChangeTrackingList<TableServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ListTableServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableServices"/>. </summary>
         /// <param name="value"> List of table services returned. </param>
         internal ListTableServices(IReadOnlyList<TableServiceData> value)
         {

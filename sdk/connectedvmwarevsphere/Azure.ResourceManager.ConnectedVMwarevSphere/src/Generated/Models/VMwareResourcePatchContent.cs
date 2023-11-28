@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Object containing updates for patch operations. </summary>
     public partial class VMwareResourcePatchContent
     {
-        /// <summary> Initializes a new instance of VMwareResourcePatchContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareResourcePatchContent"/>. </summary>
         public VMwareResourcePatchContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

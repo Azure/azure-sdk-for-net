@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
     public partial class NetworkTapRuleMatchConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkTapRuleMatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleMatchConfiguration"/>. </summary>
         public NetworkTapRuleMatchConfiguration()
         {
             MatchConditions = new ChangeTrackingList<NetworkTapRuleMatchCondition>();
             Actions = new ChangeTrackingList<NetworkTapRuleAction>();
         }
 
-        /// <summary> Initializes a new instance of NetworkTapRuleMatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleMatchConfiguration"/>. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration.. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>

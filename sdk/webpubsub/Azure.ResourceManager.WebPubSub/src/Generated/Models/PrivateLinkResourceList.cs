@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Contains a list of PrivateLinkResource and a possible link to query more results. </summary>
     internal partial class PrivateLinkResourceList
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
         internal PrivateLinkResourceList()
         {
             Value = new ChangeTrackingList<WebPubSubPrivateLink>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
         /// <param name="value"> List of PrivateLinkResource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

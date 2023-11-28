@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </summary>
     public partial class OAuth2WebhookClientCredential
     {
-        /// <summary> Initializes a new instance of OAuth2WebhookClientCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
         internal OAuth2WebhookClientCredential()
         {
         }

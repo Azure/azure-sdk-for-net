@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Statistical information about the number of recommendations per device, per recommendation type. </summary>
     public partial class IotSecurityDeviceRecommendation
     {
-        /// <summary> Initializes a new instance of IotSecurityDeviceRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceRecommendation"/>. </summary>
         public IotSecurityDeviceRecommendation()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityDeviceRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceRecommendation"/>. </summary>
         /// <param name="recommendationDisplayName"> Display name of the recommendation. </param>
         /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
         /// <param name="devicesCount"> Number of devices with this recommendation. </param>

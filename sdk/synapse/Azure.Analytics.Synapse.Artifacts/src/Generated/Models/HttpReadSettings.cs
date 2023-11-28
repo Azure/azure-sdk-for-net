@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Http read settings. </summary>
     public partial class HttpReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         public HttpReadSettings()
         {
             Type = "HttpReadSettings";
         }
 
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

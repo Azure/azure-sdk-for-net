@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Information about Sku. </summary>
     internal partial class SkuDetail
     {
-        /// <summary> Initializes a new instance of SkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDetail"/>. </summary>
         internal SkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDetail"/>. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
         internal SkuDetail(RedisEnterpriseSkuName? name)
         {

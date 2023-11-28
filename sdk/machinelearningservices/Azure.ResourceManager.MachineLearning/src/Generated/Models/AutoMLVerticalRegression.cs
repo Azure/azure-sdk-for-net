@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Regression task in AutoML Table vertical. </summary>
     public partial class AutoMLVerticalRegression : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVerticalRegression. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegression"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public AutoMLVerticalRegression(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Regression;
         }
 
-        /// <summary> Initializes a new instance of AutoMLVerticalRegression. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegression"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all the Role addon on the Azure Stack Edge device. </summary>
     internal partial class AddonList
     {
-        /// <summary> Initializes a new instance of AddonList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonList"/>. </summary>
         internal AddonList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeRoleAddonData>();
         }
 
-        /// <summary> Initializes a new instance of AddonList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonList"/>. </summary>
         /// <param name="value">
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

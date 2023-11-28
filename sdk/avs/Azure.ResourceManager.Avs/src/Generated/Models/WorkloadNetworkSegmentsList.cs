@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX Segments. </summary>
     internal partial class WorkloadNetworkSegmentsList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentsList"/>. </summary>
         internal WorkloadNetworkSegmentsList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkSegmentData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentsList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkSegmentsList(IReadOnlyList<WorkloadNetworkSegmentData> value, string nextLink)

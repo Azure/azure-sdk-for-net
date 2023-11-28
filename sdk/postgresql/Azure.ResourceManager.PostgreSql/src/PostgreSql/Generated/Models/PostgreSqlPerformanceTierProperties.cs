@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Performance tier properties. </summary>
     public partial class PostgreSqlPerformanceTierProperties
     {
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierProperties"/>. </summary>
         internal PostgreSqlPerformanceTierProperties()
         {
             ServiceLevelObjectives = new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierProperties"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The HTTP header. </summary>
     public partial class ContainerHttpHeader
     {
-        /// <summary> Initializes a new instance of ContainerHttpHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHttpHeader"/>. </summary>
         public ContainerHttpHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerHttpHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHttpHeader"/>. </summary>
         /// <param name="name"> The header name. </param>
         /// <param name="value"> The header value. </param>
         internal ContainerHttpHeader(string name, string value)

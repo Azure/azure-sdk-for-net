@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates MySQL databases to Azure Database for MySQL for online migrations. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
         public MigrateMySqlAzureDBForMySqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateMySqlAzureDBForMySqlSyncTaskOutput>();
             TaskType = TaskType.MigrateMySqlAzureDBForMySqlSync;
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

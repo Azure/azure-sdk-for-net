@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> The DeviceUpdateAccountLocationDetail. </summary>
     public partial class DeviceUpdateAccountLocationDetail
     {
-        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountLocationDetail"/>. </summary>
         internal DeviceUpdateAccountLocationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountLocationDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="role"> Whether the location is primary or failover. </param>
         internal DeviceUpdateAccountLocationDetail(string name, DeviceUpdateAccountLocationRole? role)

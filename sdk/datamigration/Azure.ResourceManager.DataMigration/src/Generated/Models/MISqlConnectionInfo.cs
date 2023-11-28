@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties required to create a connection to Azure SQL database Managed instance. </summary>
     public partial class MISqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of MISqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MISqlConnectionInfo"/>. </summary>
         /// <param name="managedInstanceResourceId"> Resource id for Azure SQL database Managed instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceResourceId"/> is null. </exception>
         public MISqlConnectionInfo(string managedInstanceResourceId)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "MiSqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of MISqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MISqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

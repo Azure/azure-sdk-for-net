@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino cluster catalog options. </summary>
     internal partial class CatalogOptions
     {
-        /// <summary> Initializes a new instance of CatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogOptions"/>. </summary>
         public CatalogOptions()
         {
             Hive = new ChangeTrackingList<HiveCatalogOption>();
         }
 
-        /// <summary> Initializes a new instance of CatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogOptions"/>. </summary>
         /// <param name="hive"> hive catalog options. </param>
         internal CatalogOptions(IList<HiveCatalogOption> hive)
         {

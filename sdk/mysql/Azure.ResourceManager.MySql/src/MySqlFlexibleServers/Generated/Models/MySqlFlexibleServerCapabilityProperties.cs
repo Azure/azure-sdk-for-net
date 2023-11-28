@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Location capabilities. </summary>
     public partial class MySqlFlexibleServerCapabilityProperties
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerCapabilityProperties"/>. </summary>
         internal MySqlFlexibleServerCapabilityProperties()
         {
             SupportedHAMode = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             SupportedFlexibleServerEditions = new ChangeTrackingList<MySqlFlexibleServerEditionCapability>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="zone"> zone name. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>
         /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An array of administrator user identities. </summary>
     internal partial class DedicatedCapacityAdministrators
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityAdministrators"/>. </summary>
         public DedicatedCapacityAdministrators()
         {
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityAdministrators"/>. </summary>
         /// <param name="members"> An array of administrator user identities. </param>
         internal DedicatedCapacityAdministrators(IList<string> members)
         {

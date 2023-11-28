@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The description of the service. </summary>
     public partial class HealthcareApisServicePatch
     {
-        /// <summary> Initializes a new instance of HealthcareApisServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePatch"/>. </summary>
         public HealthcareApisServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

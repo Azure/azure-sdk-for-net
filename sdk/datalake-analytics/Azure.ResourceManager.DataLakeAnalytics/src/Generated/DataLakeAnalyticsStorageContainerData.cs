@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsStorageContainerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageContainerData"/>. </summary>
         internal DataLakeAnalyticsStorageContainerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

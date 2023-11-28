@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageVolumeExclusionOptions
     {
-        /// <summary> Initializes a new instance of InMageVolumeExclusionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageVolumeExclusionOptions"/>. </summary>
         public InMageVolumeExclusionOptions()
         {
         }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class VirtualDesktopData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopData"/>. </summary>
         public VirtualDesktopData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

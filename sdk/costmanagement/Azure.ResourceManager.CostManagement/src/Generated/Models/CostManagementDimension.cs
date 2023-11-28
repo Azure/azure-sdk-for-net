@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> List of Dimension. </summary>
     public partial class CostManagementDimension : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimension"/>. </summary>
         internal CostManagementDimension()
         {
             Data = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

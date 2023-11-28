@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> User property. </summary>
     public partial class UserProperty
     {
-        /// <summary> Initializes a new instance of UserProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserProperty"/>. </summary>
         /// <param name="name"> User property name. </param>
         /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

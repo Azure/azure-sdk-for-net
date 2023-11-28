@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the assessment. </summary>
     public partial class Assessment
     {
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         internal Assessment()
         {
             ResourceList = new ChangeTrackingList<AssessmentResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         /// <param name="name"> The name of the assessment. </param>
         /// <param name="severity"> The severity level of this assessment. </param>
         /// <param name="description"> The description of the assessment. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update replication protected item input. </summary>
     public partial class ReplicationProtectedItemPatch
     {
-        /// <summary> Initializes a new instance of ReplicationProtectedItemPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemPatch"/>. </summary>
         public ReplicationProtectedItemPatch()
         {
         }

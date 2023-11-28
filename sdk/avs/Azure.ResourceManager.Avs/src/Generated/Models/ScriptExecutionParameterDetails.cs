@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// </summary>
     public abstract partial class ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected ScriptExecutionParameterDetails(string name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
         internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType)

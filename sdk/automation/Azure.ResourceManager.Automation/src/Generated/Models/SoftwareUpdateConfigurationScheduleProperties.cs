@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of schedule parameters. </summary>
     public partial class SoftwareUpdateConfigurationScheduleProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         public SoftwareUpdateConfigurationScheduleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
         /// <param name="startInMinutes"> Gets the start time's offset in minutes. </param>
         /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>

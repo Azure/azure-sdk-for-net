@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data flow reference type. </summary>
     public partial class DataFlowReference
     {
-        /// <summary> Initializes a new instance of DataFlowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
         /// <param name="type"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
         /// <param name="type"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>

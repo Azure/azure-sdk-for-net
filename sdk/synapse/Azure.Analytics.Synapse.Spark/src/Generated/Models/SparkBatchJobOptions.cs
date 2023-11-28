@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkBatchJobOptions. </summary>
     public partial class SparkBatchJobOptions
     {
-        /// <summary> Initializes a new instance of SparkBatchJobOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobOptions"/>. </summary>
         /// <param name="name"></param>
         /// <param name="file"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="file"/> is null. </exception>

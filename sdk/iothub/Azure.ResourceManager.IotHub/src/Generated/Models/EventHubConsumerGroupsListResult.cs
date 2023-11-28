@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of Event Hub-compatible consumer group names with a next link. </summary>
     internal partial class EventHubConsumerGroupsListResult
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
         internal EventHubConsumerGroupsListResult()
         {
             Value = new ChangeTrackingList<EventHubConsumerGroupInfoData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
         /// <param name="value"> List of consumer groups objects. </param>
         /// <param name="nextLink"> The next link. </param>
         internal EventHubConsumerGroupsListResult(IReadOnlyList<EventHubConsumerGroupInfoData> value, string nextLink)

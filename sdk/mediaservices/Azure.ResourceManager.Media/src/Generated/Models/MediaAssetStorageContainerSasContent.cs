@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The parameters to the list SAS request. </summary>
     public partial class MediaAssetStorageContainerSasContent
     {
-        /// <summary> Initializes a new instance of MediaAssetStorageContainerSasContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStorageContainerSasContent"/>. </summary>
         public MediaAssetStorageContainerSasContent()
         {
         }

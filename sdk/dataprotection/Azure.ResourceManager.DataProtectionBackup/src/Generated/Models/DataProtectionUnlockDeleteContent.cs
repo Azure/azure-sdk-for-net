@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Request body of unlock delete API. </summary>
     public partial class DataProtectionUnlockDeleteContent
     {
-        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteContent"/>. </summary>
         public DataProtectionUnlockDeleteContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();

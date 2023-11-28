@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Run Command. </summary>
     public partial class RunCommandDocument : RunCommandDocumentBase
     {
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>

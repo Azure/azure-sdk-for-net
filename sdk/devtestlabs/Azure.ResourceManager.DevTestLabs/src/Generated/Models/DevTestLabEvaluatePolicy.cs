@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePolicy
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePolicy"/>. </summary>
         public DevTestLabEvaluatePolicy()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information of DPM Protected item. </summary>
     public partial class DpmProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItemExtendedInfo"/>. </summary>
         public DpmProtectedItemExtendedInfo()
         {
             ProtectableObjectLoadPath = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItemExtendedInfo"/>. </summary>
         /// <param name="protectableObjectLoadPath"> Attribute to provide information on various DBs. </param>
         /// <param name="isProtected"> To check if backup item is disk protected. </param>
         /// <param name="isPresentOnCloud"> To check if backup item is cloud protected. </param>

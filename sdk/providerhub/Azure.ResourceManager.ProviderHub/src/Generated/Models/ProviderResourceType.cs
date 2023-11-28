@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderResourceType. </summary>
     public partial class ProviderResourceType
     {
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
         {
             AllowedUnauthorizedActions = new ChangeTrackingList<string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LinkedOperationRules = new ChangeTrackingList<LinkedOperationRule>();
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         /// <param name="name"></param>
         /// <param name="routingType"></param>
         /// <param name="resourceValidation"></param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
         public QuotaCounterValueUpdateContent()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of FunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionRetrieveDefaultDefinitionContent"/>. </summary>
         protected FunctionRetrieveDefaultDefinitionContent()
         {
         }

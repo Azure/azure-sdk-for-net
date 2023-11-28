@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterRestartNodeParameters represents the body of the request to restart the node of a Kubernetes cluster. </summary>
     public partial class KubernetesClusterRestartNodeContent
     {
-        /// <summary> Initializes a new instance of KubernetesClusterRestartNodeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestartNodeContent"/>. </summary>
         /// <param name="nodeName"> The name of the node to restart. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public KubernetesClusterRestartNodeContent(string nodeName)

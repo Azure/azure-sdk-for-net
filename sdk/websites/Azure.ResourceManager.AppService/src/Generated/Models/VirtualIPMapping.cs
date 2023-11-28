@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual IP mapping. </summary>
     public partial class VirtualIPMapping
     {
-        /// <summary> Initializes a new instance of VirtualIPMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualIPMapping"/>. </summary>
         public VirtualIPMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualIPMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualIPMapping"/>. </summary>
         /// <param name="virtualIP"> Virtual IP address. </param>
         /// <param name="internalHttpPort"> Internal HTTP port. </param>
         /// <param name="internalHttpsPort"> Internal HTTPS port. </param>

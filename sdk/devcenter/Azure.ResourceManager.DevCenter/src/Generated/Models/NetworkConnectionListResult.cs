@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Result of the network connection list operation. </summary>
     internal partial class NetworkConnectionListResult
     {
-        /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConnectionListResult"/>. </summary>
         internal NetworkConnectionListResult()
         {
             Value = new ChangeTrackingList<DevCenterNetworkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConnectionListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal NetworkConnectionListResult(IReadOnlyList<DevCenterNetworkConnectionData> value, string nextLink)

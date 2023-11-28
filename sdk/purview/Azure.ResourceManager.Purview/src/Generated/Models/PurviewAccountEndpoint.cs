@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The account endpoints. </summary>
     public partial class PurviewAccountEndpoint
     {
-        /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         internal PurviewAccountEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="guardian"> Gets the guardian endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>

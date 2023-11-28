@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Update integration runtime node request. </summary>
     public partial class UpdateIntegrationRuntimeNodeContent
     {
-        /// <summary> Initializes a new instance of UpdateIntegrationRuntimeNodeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
         public UpdateIntegrationRuntimeNodeContent()
         {
         }

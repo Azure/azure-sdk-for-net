@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A policy violation reported against a gallery artifact. </summary>
     public partial class GalleryImageVersionPolicyViolation
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPolicyViolation"/>. </summary>
         internal GalleryImageVersionPolicyViolation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPolicyViolation"/>. </summary>
         /// <param name="category"> Describes the nature of the policy violation. </param>
         /// <param name="details"> Describes specific details about why this policy violation was reported. </param>
         internal GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category, string details)

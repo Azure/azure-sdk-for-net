@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume patch resource. </summary>
     public partial class NetAppVolumePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppVolumePatch(AzureLocation location) : base(location)
         {

@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag attribute details. </summary>
     internal partial class TagAttributesBase
     {
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> A linker to be updated. </summary>
     public partial class LinkerResourcePatch
     {
-        /// <summary> Initializes a new instance of LinkerResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerResourcePatch"/>. </summary>
         public LinkerResourcePatch()
         {
         }

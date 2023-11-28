@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a virtual machine that determine how it is connected to a load balancer. </summary>
     internal partial class SharedPublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
         public SharedPublicIPAddressConfiguration()
         {
             InboundNatRules = new ChangeTrackingList<DevTestLabInboundNatRule>();
         }
 
-        /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="inboundNatRules"> The incoming NAT rules. </param>
         internal SharedPublicIPAddressConfiguration(IList<DevTestLabInboundNatRule> inboundNatRules)
         {

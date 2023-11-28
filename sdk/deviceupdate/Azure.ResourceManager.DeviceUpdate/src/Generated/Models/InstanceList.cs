@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> List of Instances. </summary>
     internal partial class InstanceList
     {
-        /// <summary> Initializes a new instance of InstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceList"/>. </summary>
         internal InstanceList()
         {
             Value = new ChangeTrackingList<DeviceUpdateInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of InstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Instances list. </param>
         /// <param name="value"> List of Instances. </param>
         internal InstanceList(string nextLink, IReadOnlyList<DeviceUpdateInstanceData> value)

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The account SKU. </summary>
     public partial class AutomationSku
     {
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         public AutomationSku(AutomationSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         /// <param name="family"> Gets or sets the SKU family. </param>
         /// <param name="capacity"> Gets or sets the SKU capacity. </param>

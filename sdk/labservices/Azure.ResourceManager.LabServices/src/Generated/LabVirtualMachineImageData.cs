@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabVirtualMachineImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
         public LabVirtualMachineImageData()
         {
             AvailableRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

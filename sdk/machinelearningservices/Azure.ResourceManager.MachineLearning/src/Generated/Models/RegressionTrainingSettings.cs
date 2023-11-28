@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Regression Training related configuration. </summary>
     public partial class RegressionTrainingSettings : MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegressionTrainingSettings"/>. </summary>
         public RegressionTrainingSettings()
         {
             AllowedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
             BlockedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
         }
 
-        /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegressionTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>

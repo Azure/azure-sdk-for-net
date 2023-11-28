@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
     public partial class AccessControlListMatchCondition : CommonMatchConditions
     {
-        /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         public AccessControlListMatchCondition()
         {
             EtherTypes = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             DscpMarkings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>

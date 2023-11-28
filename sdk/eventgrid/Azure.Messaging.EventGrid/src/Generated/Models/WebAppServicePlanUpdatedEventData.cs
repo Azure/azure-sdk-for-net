@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.AppServicePlanUpdated event. </summary>
     public partial class WebAppServicePlanUpdatedEventData
     {
-        /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
         internal WebAppServicePlanUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
         /// <param name="appServicePlanEventTypeDetail"> Detail of action on the app service plan. </param>
         /// <param name="sku"> sku of app service plan. </param>
         /// <param name="name"> name of the app service plan that had this event. </param>

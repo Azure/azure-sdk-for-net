@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Update Tags of Managed Network. </summary>
     public partial class ManagedNetworkPatch
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPatch"/>. </summary>
         public ManagedNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

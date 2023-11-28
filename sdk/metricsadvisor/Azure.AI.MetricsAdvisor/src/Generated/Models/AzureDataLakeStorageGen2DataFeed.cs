@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureDataLakeStorageGen2DataFeed. </summary>
     internal partial class AzureDataLakeStorageGen2DataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2DataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureDataLakeStorage;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2DataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the network interfaces of the virtual machine. </summary>
     internal partial class VMwareNetworkProfileUpdate
     {
-        /// <summary> Initializes a new instance of VMwareNetworkProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkProfileUpdate"/>. </summary>
         public VMwareNetworkProfileUpdate()
         {
             NetworkInterfaces = new ChangeTrackingList<VMwareNetworkInterfaceUpdate>();

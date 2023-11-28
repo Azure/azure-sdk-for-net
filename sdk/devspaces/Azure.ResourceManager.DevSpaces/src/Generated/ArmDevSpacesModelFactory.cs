@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevSpacesModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerHostMapping"/>. </summary>
         /// <param name="containerHostResourceId"> ARM ID of the Container Host resource. </param>
         /// <param name="mappedControllerResourceId"> ARM ID of the mapped Controller resource. </param>
         /// <returns> A new <see cref="Models.ContainerHostMapping"/> instance for mocking. </returns>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId);
         }
 
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevSpaces.ControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64);
         }
 
-        /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetailsList"/>. </summary>
         /// <param name="connectionDetailsList"> List of Azure Dev Spaces Controller connection details. </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetailsList"/> instance for mocking. </returns>
         public static ControllerConnectionDetailsList ControllerConnectionDetailsList(IEnumerable<ControllerConnectionDetails> connectionDetailsList = null)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             return new ControllerConnectionDetailsList(connectionDetailsList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ControllerConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetails"/>. </summary>
         /// <param name="orchestratorSpecificConnectionDetails">
         /// Base class for types that supply values used to connect to container orchestrators
         /// Please note <see cref="OrchestratorSpecificConnectionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails);
         }
 
-        /// <summary> Initializes a new instance of KubernetesConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesConnectionDetails"/>. </summary>
         /// <param name="kubeConfig"> Gets the kubeconfig for the cluster. </param>
         /// <returns> A new <see cref="Models.KubernetesConnectionDetails"/> instance for mocking. </returns>
         public static KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null)

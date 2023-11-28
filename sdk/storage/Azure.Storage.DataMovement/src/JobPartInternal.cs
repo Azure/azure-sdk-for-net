@@ -378,8 +378,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException
-                && ex is not TaskCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)

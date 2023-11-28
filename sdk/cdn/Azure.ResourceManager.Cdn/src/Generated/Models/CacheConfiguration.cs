@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
     public partial class CacheConfiguration
     {
-        /// <summary> Initializes a new instance of CacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheConfiguration"/>. </summary>
         public CacheConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of CacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheConfiguration"/>. </summary>
         /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </param>

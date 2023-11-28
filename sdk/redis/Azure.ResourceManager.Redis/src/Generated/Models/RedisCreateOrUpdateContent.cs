@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters supplied to the Create Redis operation. </summary>
     public partial class RedisCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of RedisCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>

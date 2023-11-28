@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnSiteLinkConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         public VpnSiteLinkConnectionData()
         {
             VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

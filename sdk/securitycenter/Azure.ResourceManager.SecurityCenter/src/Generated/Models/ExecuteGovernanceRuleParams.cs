@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Governance rule execution parameters. </summary>
     public partial class ExecuteGovernanceRuleParams
     {
-        /// <summary> Initializes a new instance of ExecuteGovernanceRuleParams. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
         public ExecuteGovernanceRuleParams()
         {
         }

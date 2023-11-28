@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating encoded task step. </summary>
     public partial class ContainerRegistryEncodedTaskStepUpdateContent : ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStepUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>. </summary>
         public ContainerRegistryEncodedTaskStepUpdateContent()
         {
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

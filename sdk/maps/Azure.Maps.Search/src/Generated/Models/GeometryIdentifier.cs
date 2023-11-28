@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Information about the geometric shape of the result. Only present if type == Geography. </summary>
     public partial class GeometryIdentifier
     {
-        /// <summary> Initializes a new instance of GeometryIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeometryIdentifier"/>. </summary>
         internal GeometryIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of GeometryIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeometryIdentifier"/>. </summary>
         /// <param name="id"> Pass this as geometryId to the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API to fetch geometry information for this result. </param>
         internal GeometryIdentifier(string id)
         {

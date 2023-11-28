@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> Represents the SKU name and Azure pricing tier for Analysis Services resource. </summary>
     public partial class AnalysisResourceSku
     {
-        /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisResourceSku"/>. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AnalysisResourceSku(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Analysis.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisResourceSku"/>. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="capacity"> The number of instances in the read only query pool. </param>

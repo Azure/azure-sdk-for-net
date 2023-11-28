@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Settings for Azure Monitor based alerts. </summary>
     internal partial class AzureMonitorAlertSettings
     {
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         public AzureMonitorAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         /// <param name="alertSettingsForAllJobFailures"></param>
         internal AzureMonitorAlertSettings(AzureMonitorAlertsState? alertSettingsForAllJobFailures)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KeySetUser represents the properties of the user in the key set. </summary>
     public partial class KeySetUser
     {
-        /// <summary> Initializes a new instance of KeySetUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureUserName"/> or <paramref name="sshPublicKey"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SshPublicKey = sshPublicKey;
         }
 
-        /// <summary> Initializes a new instance of KeySetUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="description"> The free-form description for this user. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>

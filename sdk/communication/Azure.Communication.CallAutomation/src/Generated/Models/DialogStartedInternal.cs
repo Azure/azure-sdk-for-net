@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogStarted. </summary>
     internal partial class DialogStartedInternal
     {
-        /// <summary> Initializes a new instance of DialogStartedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStartedInternal"/>. </summary>
         internal DialogStartedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogStartedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStartedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

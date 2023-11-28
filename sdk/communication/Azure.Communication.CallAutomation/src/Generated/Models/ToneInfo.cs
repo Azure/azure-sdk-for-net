@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The information about the tone. </summary>
     public partial class ToneInfo
     {
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneInfo"/>. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         internal ToneInfo(int sequenceId, DtmfTone tone)

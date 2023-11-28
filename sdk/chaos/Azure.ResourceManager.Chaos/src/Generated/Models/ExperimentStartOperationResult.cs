@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the result of a start Experiment operation. </summary>
     public partial class ExperimentStartOperationResult
     {
-        /// <summary> Initializes a new instance of ExperimentStartOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentStartOperationResult"/>. </summary>
         internal ExperimentStartOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentStartOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentStartOperationResult"/>. </summary>
         /// <param name="name"> String of the Experiment name. </param>
         /// <param name="statusUri"> URL to retrieve the Experiment status. </param>
         internal ExperimentStartOperationResult(string name, string statusUri)

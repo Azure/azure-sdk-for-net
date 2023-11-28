@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicWorkflowVersionData(AzureLocation location) : base(location)
         {
             Parameters = new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

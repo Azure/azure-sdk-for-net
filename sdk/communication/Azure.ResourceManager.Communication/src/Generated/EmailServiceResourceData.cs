@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class EmailServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailServiceResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EmailServiceResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

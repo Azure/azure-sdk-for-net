@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The updatable properties of the TagRule. </summary>
     public partial class DynatraceTagRulePatch
     {
-        /// <summary> Initializes a new instance of DynatraceTagRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
         public DynatraceTagRulePatch()
         {
         }

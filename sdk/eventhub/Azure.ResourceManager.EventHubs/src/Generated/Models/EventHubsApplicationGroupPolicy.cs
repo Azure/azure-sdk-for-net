@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// </summary>
     public abstract partial class EventHubsApplicationGroupPolicy
     {
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected EventHubsApplicationGroupPolicy(string name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType)

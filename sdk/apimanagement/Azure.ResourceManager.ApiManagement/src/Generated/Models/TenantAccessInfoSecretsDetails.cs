@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Tenant access information contract of the API Management service. </summary>
     public partial class TenantAccessInfoSecretsDetails
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoSecretsDetails"/>. </summary>
         internal TenantAccessInfoSecretsDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoSecretsDetails"/>. </summary>
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>

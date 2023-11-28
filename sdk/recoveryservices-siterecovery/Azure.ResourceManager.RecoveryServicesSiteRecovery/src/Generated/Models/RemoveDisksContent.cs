@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input for remove disk(s) operation. </summary>
     public partial class RemoveDisksContent
     {
-        /// <summary> Initializes a new instance of RemoveDisksContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksContent"/>. </summary>
         public RemoveDisksContent()
         {
         }

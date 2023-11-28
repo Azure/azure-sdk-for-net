@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a host entity. </summary>
     public partial class SecurityInsightsHostEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsHostEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
         public SecurityInsightsHostEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Host;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsHostEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> The SKU of the Maps Account. </summary>
     public partial class MapsSku
     {
-        /// <summary> Initializes a new instance of MapsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsSku"/>. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         public MapsSku(MapsSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MapsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsSku"/>. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
         internal MapsSku(MapsSkuName name, string tier)

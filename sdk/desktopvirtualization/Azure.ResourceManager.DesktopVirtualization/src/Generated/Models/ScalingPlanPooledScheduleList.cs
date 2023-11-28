@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of ScalingPlanPooledSchedule definitions. </summary>
     internal partial class ScalingPlanPooledScheduleList
     {
-        /// <summary> Initializes a new instance of ScalingPlanPooledScheduleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleList"/>. </summary>
         internal ScalingPlanPooledScheduleList()
         {
             Value = new ChangeTrackingList<ScalingPlanPooledScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPooledScheduleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleList"/>. </summary>
         /// <param name="value"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal ScalingPlanPooledScheduleList(IReadOnlyList<ScalingPlanPooledScheduleData> value, string nextLink)

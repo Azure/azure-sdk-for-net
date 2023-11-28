@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlockLookupList. </summary>
     internal partial class BlockLookupList
     {
-        /// <summary> Initializes a new instance of BlockLookupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
         public BlockLookupList()
         {
             Committed = new ChangeTrackingList<string>();

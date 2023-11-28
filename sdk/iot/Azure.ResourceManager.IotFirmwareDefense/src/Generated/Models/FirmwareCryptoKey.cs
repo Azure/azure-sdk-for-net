@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto key properties. </summary>
     public partial class FirmwareCryptoKey
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKey"/>. </summary>
         internal FirmwareCryptoKey()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKey"/>. </summary>
         /// <param name="firmwareCryptoKeyId"> ID for the key. </param>
         /// <param name="keyType"> Type of the key (public or private). </param>
         /// <param name="keySize"> Size of the key in bits. </param>

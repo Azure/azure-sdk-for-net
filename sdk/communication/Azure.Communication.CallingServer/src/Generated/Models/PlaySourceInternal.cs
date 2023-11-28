@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The PlaySource. </summary>
     internal partial class PlaySourceInternal
     {
-        /// <summary> Initializes a new instance of PlaySourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
         /// <param name="sourceType"> Defines the type of the play source. </param>
         public PlaySourceInternal(PlaySourceTypeInternal sourceType)
         {

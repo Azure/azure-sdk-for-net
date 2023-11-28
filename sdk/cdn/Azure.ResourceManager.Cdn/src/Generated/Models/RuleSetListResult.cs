@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list rule sets. It contains a list of rule set objects and a URL link to get the next set of results. </summary>
     internal partial class RuleSetListResult
     {
-        /// <summary> Initializes a new instance of RuleSetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
         internal RuleSetListResult()
         {
             Value = new ChangeTrackingList<FrontDoorRuleSetData>();
         }
 
-        /// <summary> Initializes a new instance of RuleSetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
         /// <param name="value"> List of AzureFrontDoor rule sets within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of rule set objects if there are any. </param>
         internal RuleSetListResult(IReadOnlyList<FrontDoorRuleSetData> value, string nextLink)

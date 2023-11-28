@@ -10,12 +10,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to the HNSW algorithm. </summary>
     public partial class HnswParameters
     {
-        /// <summary> Initializes a new instance of HnswParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
         public HnswParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of HnswParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
         /// <param name="m"> The number of bi-directional links created for every new element during construction. Increasing this parameter value may improve recall and reduce retrieval times for datasets with high intrinsic dimensionality at the expense of increased memory consumption and longer indexing time. </param>
         /// <param name="efConstruction"> The size of the dynamic list containing the nearest neighbors, which is used during index time. Increasing this parameter may improve index quality, at the expense of increased indexing time. At a certain point, increasing this parameter leads to diminishing returns. </param>
         /// <param name="efSearch"> The size of the dynamic list containing the nearest neighbors, which is used during search time. Increasing this parameter may improve search results, at the expense of slower search. At a certain point, increasing this parameter leads to diminishing returns. </param>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an update to a Kusto kusto pool. </summary>
     public partial class SynapseKustoPoolPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPatch"/>. </summary>
         public SynapseKustoPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

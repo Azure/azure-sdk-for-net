@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel()
         {
             ResultType = "TableLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="tableName"> Name of the table. </param>

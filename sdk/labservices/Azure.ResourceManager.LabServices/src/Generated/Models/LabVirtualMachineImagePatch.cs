@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Lab services virtual machine image for updates. </summary>
     public partial class LabVirtualMachineImagePatch
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImagePatch"/>. </summary>
         public LabVirtualMachineImagePatch()
         {
         }

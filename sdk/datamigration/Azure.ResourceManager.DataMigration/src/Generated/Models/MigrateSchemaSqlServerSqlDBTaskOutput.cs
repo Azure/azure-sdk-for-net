@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
         protected MigrateSchemaSqlServerSqlDBTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal MigrateSchemaSqlServerSqlDBTaskOutput(string id, string resultType)

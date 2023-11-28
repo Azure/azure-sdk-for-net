@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Appliance SSHKey definition. </summary>
     public partial class ApplianceSshKey
     {
-        /// <summary> Initializes a new instance of ApplianceSshKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSshKey"/>. </summary>
         internal ApplianceSshKey()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSshKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSshKey"/>. </summary>
         /// <param name="certificate"> Certificate associated with the public key if the key is signed. </param>
         /// <param name="creationTimeStamp"> Certificate creation timestamp (Unix). </param>
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>

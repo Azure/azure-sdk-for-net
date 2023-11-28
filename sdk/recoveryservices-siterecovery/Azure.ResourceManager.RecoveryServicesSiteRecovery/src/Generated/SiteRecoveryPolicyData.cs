@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyData"/>. </summary>
         internal SiteRecoveryPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

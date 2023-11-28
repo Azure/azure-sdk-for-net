@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// </summary>
     public abstract partial class Facet
     {
-        /// <summary> Initializes a new instance of Facet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         protected Facet(string expression)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Expression = expression;
         }
 
-        /// <summary> Initializes a new instance of Facet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         internal Facet(string expression, string resultType)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Summary of revision metadata. </summary>
     public partial class ApiRevisionContract
     {
-        /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionContract"/>. </summary>
         internal ApiRevisionContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionContract"/>. </summary>
         /// <param name="apiId"> Identifier of the API Revision. </param>
         /// <param name="apiRevision"> Revision number of API. </param>
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>

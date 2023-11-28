@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureDataLakeStorageGen2ParameterPatch. </summary>
     internal partial class AzureDataLakeStorageGen2ParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2ParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2ParameterPatch"/>. </summary>
         public AzureDataLakeStorageGen2ParameterPatch()
         {
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The custom dataset. </summary>
     public partial class CustomDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of CustomDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public CustomDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "CustomDataset";
         }
 
-        /// <summary> Initializes a new instance of CustomDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services network function image application definition. </summary>
     public partial class AzureOperatorNexusNetworkFunctionImageApplication : AzureOperatorNexusNetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionImageApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>. </summary>
         public AzureOperatorNexusNetworkFunctionImageApplication()
         {
             ArtifactType = AzureOperatorNexusArtifactType.ImageFile;
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionImageApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

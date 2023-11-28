@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class VirtualApplicationGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ApplicationGroupType = applicationGroupType;
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

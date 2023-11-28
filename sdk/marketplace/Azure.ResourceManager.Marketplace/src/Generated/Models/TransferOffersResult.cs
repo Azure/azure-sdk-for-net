@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
     public partial class TransferOffersResult
     {
-        /// <summary> Initializes a new instance of TransferOffersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferOffersResult"/>. </summary>
         internal TransferOffersResult()
         {
             Succeeded = new ChangeTrackingList<PrivateStoreCollectionDetails>();
             Failed = new ChangeTrackingList<PrivateStoreCollectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransferOffersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferOffersResult"/>. </summary>
         /// <param name="succeeded"> Succeeded collections. </param>
         /// <param name="failed"> Failed collections. </param>
         internal TransferOffersResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed)

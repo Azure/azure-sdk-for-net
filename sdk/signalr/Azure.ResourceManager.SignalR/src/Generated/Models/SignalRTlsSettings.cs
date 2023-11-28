@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> TLS settings for the resource. </summary>
     internal partial class SignalRTlsSettings
     {
-        /// <summary> Initializes a new instance of SignalRTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTlsSettings"/>. </summary>
         public SignalRTlsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTlsSettings"/>. </summary>
         /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
         internal SignalRTlsSettings(bool? isClientCertEnabled)
         {

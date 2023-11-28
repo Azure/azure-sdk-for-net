@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class MySqlFlexibleServerPatch
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
         public MySqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

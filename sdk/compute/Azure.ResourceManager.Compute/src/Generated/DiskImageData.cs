@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskImageData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DiskImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

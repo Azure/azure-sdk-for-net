@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a url entity. </summary>
     public partial class SecurityInsightsUriEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsUriEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsUriEntity"/>. </summary>
         public SecurityInsightsUriEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Uri;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsUriEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsUriEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

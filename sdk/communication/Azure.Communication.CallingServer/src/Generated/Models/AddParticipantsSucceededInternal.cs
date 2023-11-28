@@ -14,13 +14,13 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AddParticipantsSucceededEvent. </summary>
     internal partial class AddParticipantsSucceededInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsSucceededInternal"/>. </summary>
         internal AddParticipantsSucceededInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsSucceededInternal"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>

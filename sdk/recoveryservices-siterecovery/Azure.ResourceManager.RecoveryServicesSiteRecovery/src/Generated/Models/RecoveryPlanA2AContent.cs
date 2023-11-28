@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan A2A input. </summary>
     public partial class RecoveryPlanA2AContent : RecoveryPlanProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanA2AContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2AContent"/>. </summary>
         public RecoveryPlanA2AContent()
         {
             InstanceType = "A2A";

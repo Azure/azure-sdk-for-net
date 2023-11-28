@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Filter details to transfer Azure Blobs. </summary>
     public partial class BlobFilterDetails
     {
-        /// <summary> Initializes a new instance of BlobFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFilterDetails"/>. </summary>
         public BlobFilterDetails()
         {
             BlobPrefixList = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ContainerList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BlobFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFilterDetails"/>. </summary>
         /// <param name="blobPrefixList"> Prefix list of the Azure blobs to be transferred. </param>
         /// <param name="blobPathList"> List of full path of the blobs to be transferred. </param>
         /// <param name="containerList"> List of blob containers to be transferred. </param>

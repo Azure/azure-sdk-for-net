@@ -10,7 +10,7 @@ namespace Azure.Communication.Messages
     /// <summary> The class describes a parameter of a template. </summary>
     internal partial class MessageTemplateValueInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueInternal"/>. </summary>
         /// <param name="kind"> The template value kind. </param>
         public MessageTemplateValueInternal(MessageTemplateValueKind kind)
         {

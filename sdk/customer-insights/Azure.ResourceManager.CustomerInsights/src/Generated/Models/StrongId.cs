@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Property/Properties which represent a unique ID. </summary>
     public partial class StrongId
     {
-        /// <summary> Initializes a new instance of StrongId. </summary>
+        /// <summary> Initializes a new instance of <see cref="StrongId"/>. </summary>
         /// <param name="keyPropertyNames"> The properties which make up the unique ID. </param>
         /// <param name="strongIdName"> The Name identifying the strong ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyPropertyNames"/> or <paramref name="strongIdName"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Description = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StrongId. </summary>
+        /// <summary> Initializes a new instance of <see cref="StrongId"/>. </summary>
         /// <param name="keyPropertyNames"> The properties which make up the unique ID. </param>
         /// <param name="strongIdName"> The Name identifying the strong ID. </param>
         /// <param name="displayName"> Localized display name. </param>

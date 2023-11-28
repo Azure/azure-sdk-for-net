@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a source based trigger. </summary>
     public partial class ContainerRegistrySourceTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistrySourceTriggerUpdateContent(string name)

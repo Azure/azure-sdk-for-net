@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when calling trigger change detection action on cloud endpoint. </summary>
     public partial class TriggerChangeDetectionContent
     {
-        /// <summary> Initializes a new instance of TriggerChangeDetectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerChangeDetectionContent"/>. </summary>
         public TriggerChangeDetectionContent()
         {
             Paths = new ChangeTrackingList<string>();

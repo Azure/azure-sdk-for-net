@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Suggested subscription list. </summary>
     public partial class CollectionOffersByAllContextsPayload
     {
-        /// <summary> Initializes a new instance of CollectionOffersByAllContextsPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByAllContextsPayload"/>. </summary>
         public CollectionOffersByAllContextsPayload()
         {
             SubscriptionIds = new ChangeTrackingList<string>();

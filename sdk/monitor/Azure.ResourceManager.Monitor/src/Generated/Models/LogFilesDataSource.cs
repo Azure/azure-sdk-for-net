@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of which custom log files will be collected by this data collection rule. </summary>
     public partial class LogFilesDataSource
     {
-        /// <summary> Initializes a new instance of LogFilesDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogFilesDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data source
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Format = format;
         }
 
-        /// <summary> Initializes a new instance of LogFilesDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogFilesDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data source

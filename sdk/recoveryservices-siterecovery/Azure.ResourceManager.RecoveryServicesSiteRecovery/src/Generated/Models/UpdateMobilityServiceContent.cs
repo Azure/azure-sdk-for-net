@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Request to update the mobility service on a protected item. </summary>
     public partial class UpdateMobilityServiceContent
     {
-        /// <summary> Initializes a new instance of UpdateMobilityServiceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceContent"/>. </summary>
         public UpdateMobilityServiceContent()
         {
         }
