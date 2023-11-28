@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsCancelOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsCancelOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJobsCancelOptions"/>. </summary>
         public ImportJobsCancelOptions()
         {
         }

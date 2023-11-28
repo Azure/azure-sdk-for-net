@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class SystemTopicData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SystemTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SystemTopicData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SystemTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

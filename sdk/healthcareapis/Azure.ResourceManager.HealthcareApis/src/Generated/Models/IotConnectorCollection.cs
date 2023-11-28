@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A collection of IoT Connectors. </summary>
     internal partial class IotConnectorCollection
     {
-        /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         internal IotConnectorCollection()
         {
             Value = new ChangeTrackingList<HealthcareApisIotConnectorData>();
         }
 
-        /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Connectors. </param>
         /// <param name="value"> The list of IoT Connectors. </param>
         internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnectorData> value)

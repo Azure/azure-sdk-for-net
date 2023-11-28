@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class DicomServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DicomServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DicomServiceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

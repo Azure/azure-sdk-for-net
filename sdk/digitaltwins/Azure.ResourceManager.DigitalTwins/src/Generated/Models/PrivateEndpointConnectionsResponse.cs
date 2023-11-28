@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The available private link connections for a Digital Twin. </summary>
     internal partial class PrivateEndpointConnectionsResponse
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionsResponse"/>. </summary>
         internal PrivateEndpointConnectionsResponse()
         {
             Value = new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionsResponse"/>. </summary>
         /// <param name="value"> The list of available private link connections for a Digital Twin. </param>
         internal PrivateEndpointConnectionsResponse(IReadOnlyList<DigitalTwinsPrivateEndpointConnectionData> value)
         {

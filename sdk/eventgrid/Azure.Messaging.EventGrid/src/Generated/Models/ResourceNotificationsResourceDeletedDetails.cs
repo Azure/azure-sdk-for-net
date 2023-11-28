@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Describes the schema of the properties under resource info which are common across all ARN system topic delete events. </summary>
     public partial class ResourceNotificationsResourceDeletedDetails
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceDeletedDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
         internal ResourceNotificationsResourceDeletedDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceDeletedDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
         /// <param name="resource"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>

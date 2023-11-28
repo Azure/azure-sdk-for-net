@@ -12,12 +12,12 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document analysis parameters. </summary>
     public partial class AnalyzeDocumentContent
     {
-        /// <summary> Initializes a new instance of AnalyzeDocumentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentContent"/>. </summary>
         public AnalyzeDocumentContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeDocumentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentContent"/>. </summary>
         /// <param name="urlSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
         /// <param name="base64Source">
         /// Base64 encoding of the document to analyze.  Either urlSource or base64Source

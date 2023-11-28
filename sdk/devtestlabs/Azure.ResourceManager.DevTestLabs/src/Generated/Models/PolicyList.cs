@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class PolicyList
     {
-        /// <summary> Initializes a new instance of PolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyList"/>. </summary>
         internal PolicyList()
         {
             Value = new ChangeTrackingList<DevTestLabPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal PolicyList(IReadOnlyList<DevTestLabPolicyData> value, string nextLink)

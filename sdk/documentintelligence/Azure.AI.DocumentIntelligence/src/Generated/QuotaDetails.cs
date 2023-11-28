@@ -12,7 +12,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Quota used, limit, and next reset date/time. </summary>
     public partial class QuotaDetails
     {
-        /// <summary> Initializes a new instance of QuotaDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
         /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an artifact deployment. </summary>
     public partial class DevTestLabArtifactDeploymentStatus
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactDeploymentStatus"/>. </summary>
         internal DevTestLabArtifactDeploymentStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactDeploymentStatus"/>. </summary>
         /// <param name="deploymentStatus"> The deployment status of the artifact. </param>
         /// <param name="artifactsApplied"> The total count of the artifacts that were successfully applied. </param>
         /// <param name="totalArtifacts"> The total count of the artifacts that were tentatively applied. </param>

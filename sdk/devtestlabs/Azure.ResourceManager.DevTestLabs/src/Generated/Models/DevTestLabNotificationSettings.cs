@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Notification settings for a schedule. </summary>
     public partial class DevTestLabNotificationSettings
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationSettings"/>. </summary>
         public DevTestLabNotificationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNotificationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationSettings"/>. </summary>
         /// <param name="status"> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </param>
         /// <param name="timeInMinutes"> Time in minutes before event at which notification will be sent. </param>
         /// <param name="webhookUri"> The webhook URL to which the notification will be sent. </param>

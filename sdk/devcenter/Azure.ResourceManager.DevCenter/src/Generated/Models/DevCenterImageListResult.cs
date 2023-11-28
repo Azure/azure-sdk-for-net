@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the image list operation. </summary>
     internal partial class DevCenterImageListResult
     {
-        /// <summary> Initializes a new instance of DevCenterImageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageListResult"/>. </summary>
         internal DevCenterImageListResult()
         {
             Value = new ChangeTrackingList<DevCenterImageData>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal DevCenterImageListResult(IReadOnlyList<DevCenterImageData> value, string nextLink)

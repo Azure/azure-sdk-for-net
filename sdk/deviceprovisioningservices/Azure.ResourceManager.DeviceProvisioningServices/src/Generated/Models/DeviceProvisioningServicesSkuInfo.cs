@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of possible provisioning service SKUs. </summary>
     public partial class DeviceProvisioningServicesSkuInfo
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSkuInfo"/>. </summary>
         public DeviceProvisioningServicesSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSkuInfo"/>. </summary>
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Pricing tier name of the provisioning service. </param>
         /// <param name="capacity"> The number of units to provision. </param>

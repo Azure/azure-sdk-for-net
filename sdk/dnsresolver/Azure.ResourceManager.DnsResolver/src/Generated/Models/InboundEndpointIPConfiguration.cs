@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> IP configuration. </summary>
     public partial class InboundEndpointIPConfiguration
     {
-        /// <summary> Initializes a new instance of InboundEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Subnet = subnet;
         }
 
-        /// <summary> Initializes a new instance of InboundEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>

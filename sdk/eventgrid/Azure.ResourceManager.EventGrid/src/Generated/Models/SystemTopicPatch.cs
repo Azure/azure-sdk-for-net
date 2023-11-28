@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the System Topic update. </summary>
     public partial class SystemTopicPatch
     {
-        /// <summary> Initializes a new instance of SystemTopicPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicPatch"/>. </summary>
         public SystemTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

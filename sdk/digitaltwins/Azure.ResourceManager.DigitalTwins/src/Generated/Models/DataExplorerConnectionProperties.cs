@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Properties of a time series database connection to Azure Data Explorer with data being sent via an EventHub. </summary>
     public partial class DataExplorerConnectionProperties : TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExplorerConnectionProperties"/>. </summary>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>
         /// <param name="adxEndpointUri"> The URI of the Azure Data Explorer endpoint. </param>
         /// <param name="adxDatabaseName"> The name of the Azure Data Explorer database. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ConnectionType = ConnectionType.AzureDataExplorer;
         }
 
-        /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExplorerConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
