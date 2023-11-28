@@ -26,6 +26,13 @@ namespace Azure.AI.Translation.Document.Models
             Inputs = inputs.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        internal StartTranslationDetails(IList<DocumentTranslationInput> inputs)
+        {
+            Inputs = inputs;
+        }
+
         /// <summary> The input list of documents or folders containing documents. </summary>
         public IList<DocumentTranslationInput> Inputs { get; }
     }

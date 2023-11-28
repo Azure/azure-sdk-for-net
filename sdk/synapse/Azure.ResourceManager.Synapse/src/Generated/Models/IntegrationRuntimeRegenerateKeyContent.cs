@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Synapse.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> The name of the authentication key to regenerate. </param>
+        internal IntegrationRuntimeRegenerateKeyContent(SynapseIntegrationRuntimeAuthKeyName? keyName)
+        {
+            KeyName = keyName;
+        }
+
         /// <summary> The name of the authentication key to regenerate. </summary>
         public SynapseIntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }

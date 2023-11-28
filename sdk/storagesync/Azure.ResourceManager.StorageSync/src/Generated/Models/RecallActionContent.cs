@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecallActionContent"/>. </summary>
+        /// <param name="pattern"> Pattern of the files. </param>
+        /// <param name="recallPath"> Recall path. </param>
+        internal RecallActionContent(string pattern, string recallPath)
+        {
+            Pattern = pattern;
+            RecallPath = recallPath;
+        }
+
         /// <summary> Pattern of the files. </summary>
         public string Pattern { get; set; }
         /// <summary> Recall path. </summary>

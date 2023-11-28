@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointPatch"/>. </summary>
+        /// <param name="properties">
+        /// The Endpoint resource, which contains information about file sources and targets.
+        /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+        /// </param>
+        internal StorageMoverEndpointPatch(EndpointBaseUpdateProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary>
         /// The Endpoint resource, which contains information about file sources and targets.
         /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
