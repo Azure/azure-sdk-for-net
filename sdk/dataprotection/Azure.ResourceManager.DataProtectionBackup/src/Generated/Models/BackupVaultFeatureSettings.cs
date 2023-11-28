@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class containing feature settings of vault. </summary>
     public partial class BackupVaultFeatureSettings
     {
-        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultFeatureSettings"/>. </summary>
         public BackupVaultFeatureSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultFeatureSettings"/>. </summary>
         /// <param name="crossSubscriptionRestoreSettings"> CrossSubscriptionRestore Settings. </param>
         /// <param name="crossRegionRestoreSettings"></param>
         internal BackupVaultFeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, CrossRegionRestoreSettings crossRegionRestoreSettings)

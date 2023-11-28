@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container group list response that contains the container group properties. </summary>
     internal partial class ContainerGroupListResult
     {
-        /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         internal ContainerGroupListResult()
         {
             Value = new ChangeTrackingList<ContainerGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         /// <param name="value"> The list of container groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of container groups. </param>
         internal ContainerGroupListResult(IReadOnlyList<ContainerGroupData> value, string nextLink)

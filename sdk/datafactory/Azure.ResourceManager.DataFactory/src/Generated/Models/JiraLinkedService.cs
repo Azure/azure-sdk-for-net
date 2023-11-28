@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Jira Service linked service. </summary>
     public partial class JiraLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of JiraLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="JiraLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Jira service. (e.g. jira.example.com). </param>
         /// <param name="username"> The user name that you use to access Jira Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="username"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Jira";
         }
 
-        /// <summary> Initializes a new instance of JiraLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="JiraLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

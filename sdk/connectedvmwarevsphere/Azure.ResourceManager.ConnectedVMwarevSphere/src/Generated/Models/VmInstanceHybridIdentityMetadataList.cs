@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of HybridIdentityMetadata. </summary>
     internal partial class VmInstanceHybridIdentityMetadataList
     {
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHybridIdentityMetadataList"/>. </summary>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VmInstanceHybridIdentityMetadataList(IEnumerable<VmInstanceHybridIdentityMetadataData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHybridIdentityMetadataList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of HybridIdentityMetadata. </param>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
         internal VmInstanceHybridIdentityMetadataList(string nextLink, IReadOnlyList<VmInstanceHybridIdentityMetadataData> value)

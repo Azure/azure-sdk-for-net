@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the filter files to be used for data transfer. </summary>
     public partial class FilterFileDetails
     {
-        /// <summary> Initializes a new instance of FilterFileDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterFileDetails"/>. </summary>
         /// <param name="filterFileType"> Type of the filter file. </param>
         /// <param name="filterFilePath"> Path of the file that contains the details of all items to transfer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterFilePath"/> is null. </exception>

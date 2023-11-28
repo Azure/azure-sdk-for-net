@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupTriggerContext
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTriggerContext"/>. </summary>
         protected DataProtectionBackupTriggerContext()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupTriggerContext(string objectType)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationPatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationPatch"/>. </summary>
         public DataLakeAnalyticsStorageAccountInformationPatch()
         {
         }

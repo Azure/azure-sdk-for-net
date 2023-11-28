@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of an export. </summary>
     public partial class ExportDefinition
     {
-        /// <summary> Initializes a new instance of ExportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDefinition"/>. </summary>
         /// <param name="exportType"> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </param>
         /// <param name="timeframe"> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </param>
         public ExportDefinition(ExportType exportType, TimeframeType timeframe)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Timeframe = timeframe;
         }
 
-        /// <summary> Initializes a new instance of ExportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDefinition"/>. </summary>
         /// <param name="exportType"> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </param>
         /// <param name="timeframe"> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </param>
         /// <param name="timePeriod"> Has time period for pulling data for the export. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The custom setup of installing 3rd party components. </summary>
     public partial class ComponentSetup : CustomSetupBase
     {
-        /// <summary> Initializes a new instance of ComponentSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public ComponentSetup(string componentName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CustomSetupBaseType = "ComponentSetup";
         }
 
-        /// <summary> Initializes a new instance of ComponentSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey"> The license key to activate the component. </param>

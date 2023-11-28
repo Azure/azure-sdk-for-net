@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The URL to download the generated report. </summary>
     public partial class DownloadURL
     {
-        /// <summary> Initializes a new instance of DownloadURL. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadURL"/>. </summary>
         internal DownloadURL()
         {
         }
 
-        /// <summary> Initializes a new instance of DownloadURL. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadURL"/>. </summary>
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>

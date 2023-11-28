@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Fields for tracking resource move. </summary>
     public partial class DataBoxEdgeResourceMoveDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         internal DataBoxEdgeResourceMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
         /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
         internal DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc)

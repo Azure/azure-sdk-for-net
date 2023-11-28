@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of factory resources. </summary>
     internal partial class DataFactoryListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryListResult"/>. </summary>
         /// <param name="value"> List of factories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryListResult(IEnumerable<DataFactoryData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryListResult"/>. </summary>
         /// <param name="value"> List of factories. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DataFactoryListResult(IReadOnlyList<DataFactoryData> value, string nextLink)

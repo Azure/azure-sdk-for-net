@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Dedicated Host Group with resource group response. </summary>
     internal partial class DedicatedHostGroupListResult
     {
-        /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedHostGroupListResult(IEnumerable<DedicatedHostGroupData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated Host Groups. </param>
         internal DedicatedHostGroupListResult(IReadOnlyList<DedicatedHostGroupData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The OIDC issuer profile of the Managed Cluster. </summary>
     public partial class ManagedClusterOidcIssuerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterOidcIssuerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterOidcIssuerProfile"/>. </summary>
         public ManagedClusterOidcIssuerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterOidcIssuerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterOidcIssuerProfile"/>. </summary>
         /// <param name="issuerUriInfo"> The OIDC issuer url of the Managed Cluster. </param>
         /// <param name="isEnabled"> Whether the OIDC issuer is enabled. </param>
         internal ManagedClusterOidcIssuerProfile(string issuerUriInfo, bool? isEnabled)

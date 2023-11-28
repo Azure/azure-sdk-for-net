@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> OS option property. </summary>
     public partial class ContainerServiceOSOptionProperty
     {
-        /// <summary> Initializes a new instance of ContainerServiceOSOptionProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
         /// <param name="osType"> The OS type. </param>
         /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>

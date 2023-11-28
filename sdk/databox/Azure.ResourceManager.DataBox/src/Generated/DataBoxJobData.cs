@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="sku"> The sku type. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

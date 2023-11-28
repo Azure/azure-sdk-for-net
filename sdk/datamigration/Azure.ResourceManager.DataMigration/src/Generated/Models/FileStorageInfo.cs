@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> File storage information. </summary>
     public partial class FileStorageInfo
     {
-        /// <summary> Initializes a new instance of FileStorageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileStorageInfo"/>. </summary>
         internal FileStorageInfo()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FileStorageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileStorageInfo"/>. </summary>
         /// <param name="uri"> A URI that can be used to access the file content. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
         internal FileStorageInfo(Uri uri, IReadOnlyDictionary<string, string> headers)

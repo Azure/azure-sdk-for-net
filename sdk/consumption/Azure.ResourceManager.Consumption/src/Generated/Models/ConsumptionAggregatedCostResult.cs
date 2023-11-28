@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A management group aggregated cost resource. </summary>
     public partial class ConsumptionAggregatedCostResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAggregatedCostResult"/>. </summary>
         internal ConsumptionAggregatedCostResult()
         {
             Children = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAggregatedCostResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

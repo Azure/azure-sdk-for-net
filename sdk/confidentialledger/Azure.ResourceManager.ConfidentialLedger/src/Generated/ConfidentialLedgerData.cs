@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// </summary>
     public partial class ConfidentialLedgerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ConfidentialLedgerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Query parameters for triggers. </summary>
     public partial class TriggerFilterContent
     {
-        /// <summary> Initializes a new instance of TriggerFilterContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerFilterContent"/>. </summary>
         public TriggerFilterContent()
         {
         }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> List of SKU Information objects. </summary>
     internal partial class AvailableDataBoxEdgeSkuList
     {
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSkuList"/>. </summary>
         internal AvailableDataBoxEdgeSkuList()
         {
             Value = new ChangeTrackingList<AvailableDataBoxEdgeSku>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSkuList"/>. </summary>
         /// <param name="value"> List of ResourceType Sku. </param>
         /// <param name="nextLink"> Links to the next set of results. </param>
         internal AvailableDataBoxEdgeSkuList(IReadOnlyList<AvailableDataBoxEdgeSku> value, string nextLink)

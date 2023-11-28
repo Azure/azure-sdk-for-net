@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> An error response from the pod identity provisioning. </summary>
     internal partial class ManagedClusterPodIdentityProvisioningError
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProvisioningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
         internal ManagedClusterPodIdentityProvisioningError()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProvisioningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
         /// <param name="errorDetail"> Details about the error. </param>
         internal ManagedClusterPodIdentityProvisioningError(ResponseError errorDetail)
         {
