@@ -108,9 +108,6 @@ public class RequestRetryPolicy : PipelinePolicy
 
             bool shouldRetry = false;
 
-            // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
-            // or modify the ResponseClassifier.
-
             if (lastException is not null ||
                 (message.TryGetResponse(out PipelineResponse response) && response.IsError))
             {
@@ -167,16 +164,17 @@ public class RequestRetryPolicy : PipelinePolicy
 
             // ShouldRetry returned false this iteration and
             // the last request sent didn't cause an exception.
+            // So, we're done.  Exit the while loop.
             break;
         }
     }
 
-    internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+    private async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
     {
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);
     }
 
-    internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+    private void Wait(TimeSpan time, CancellationToken cancellationToken)
     {
         cancellationToken.WaitHandle.WaitOne(time);
     }
