@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The gallery artifact version source. </summary>
     public partial class GalleryArtifactVersionSource
     {
-        /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionSource"/>. </summary>
         public GalleryArtifactVersionSource()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
         internal GalleryArtifactVersionSource(ResourceIdentifier id)
         {

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionData"/>. </summary>
         public BillingSubscriptionData()
         {
             BillingPolicies = new ChangeTrackingDictionary<string, string>();
             SuspensionReasons = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

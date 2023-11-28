@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListOutboundRule API service call. </summary>
     internal partial class LoadBalancerOutboundRuleListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerOutboundRuleListResult"/>. </summary>
         internal LoadBalancerOutboundRuleListResult()
         {
             Value = new ChangeTrackingList<OutboundRuleData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerOutboundRuleListResult"/>. </summary>
         /// <param name="value"> A list of outbound rules in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LoadBalancerOutboundRuleListResult(IReadOnlyList<OutboundRuleData> value, string nextLink)

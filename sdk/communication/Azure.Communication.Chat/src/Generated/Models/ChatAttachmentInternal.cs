@@ -13,7 +13,7 @@ namespace Azure.Communication.Chat
     /// <summary> An attachment in a chat message. </summary>
     internal partial class ChatAttachmentInternal
     {
-        /// <summary> Initializes a new instance of ChatAttachmentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatAttachmentInternal"/>. </summary>
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
             AttachmentType = attachmentType;
         }
 
-        /// <summary> Initializes a new instance of ChatAttachmentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatAttachmentInternal"/>. </summary>
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <param name="name"> The name of the attachment content. </param>

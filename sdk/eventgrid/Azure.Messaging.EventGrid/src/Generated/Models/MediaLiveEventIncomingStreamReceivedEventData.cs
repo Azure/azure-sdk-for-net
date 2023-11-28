@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamReceived event. </summary>
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
         internal MediaLiveEventIncomingStreamReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>

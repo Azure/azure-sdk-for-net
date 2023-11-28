@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The list usages operation response. </summary>
     internal partial class UsagesListResult
     {
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         internal UsagesListResult()
         {
             Value = new ChangeTrackingList<FrontDoorUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         /// <param name="value"> The list of resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal UsagesListResult(IReadOnlyList<FrontDoorUsage> value, string nextLink)

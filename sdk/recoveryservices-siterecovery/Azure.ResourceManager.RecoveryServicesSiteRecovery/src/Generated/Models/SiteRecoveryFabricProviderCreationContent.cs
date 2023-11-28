@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Fabric provider specific settings. </summary>
     public partial class SiteRecoveryFabricProviderCreationContent : FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderCreationContent"/>. </summary>
         public SiteRecoveryFabricProviderCreationContent()
         {
             InstanceType = "Azure";

@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> An offer of a job to a worker. </summary>
     public partial class RouterJobOffer
     {
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
             CapacityCost = capacityCost;
         }
 
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
         /// <param name="offerId"> Id of an offer. </param>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>

@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The EntityLinkingTask. </summary>
     internal partial class EntityLinkingTask
     {
-        /// <summary> Initializes a new instance of EntityLinkingTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTask"/>. </summary>
         public EntityLinkingTask()
         {
         }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Credential details of the shares in account. </summary>
     public partial class ShareCredentialDetails
     {
-        /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareCredentialDetails"/>. </summary>
         internal ShareCredentialDetails()
         {
             SupportedAccessProtocols = new ChangeTrackingList<DataBoxAccessProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareCredentialDetails"/>. </summary>
         /// <param name="shareName"> Name of the share. </param>
         /// <param name="shareType"> Type of the share. </param>
         /// <param name="userName"> User name for the share. </param>

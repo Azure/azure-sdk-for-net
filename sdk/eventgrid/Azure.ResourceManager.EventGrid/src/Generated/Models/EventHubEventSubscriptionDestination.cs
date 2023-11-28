@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the event hub destination for an event subscription. </summary>
     public partial class EventHubEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of EventHubEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubEventSubscriptionDestination"/>. </summary>
         public EventHubEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.EventHub;
         }
 
-        /// <summary> Initializes a new instance of EventHubEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of an Event Hub destination of an event subscription. </param>
         /// <param name="deliveryAttributeMappings">

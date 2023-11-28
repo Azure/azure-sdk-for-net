@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An A record. </summary>
     public partial class PrivateDnsARecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsARecordInfo"/>. </summary>
         public PrivateDnsARecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsARecordInfo"/>. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         internal PrivateDnsARecordInfo(IPAddress ipv4Address)
         {

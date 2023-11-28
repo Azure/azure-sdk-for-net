@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </summary>
     public partial class TimeSeriesExpression
     {
-        /// <summary> Initializes a new instance of TimeSeriesExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesExpression"/>. </summary>
         /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public TimeSeriesExpression(string expression)

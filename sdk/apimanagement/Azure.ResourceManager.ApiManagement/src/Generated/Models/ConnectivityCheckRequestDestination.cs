@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The connectivity check operation destination. </summary>
     public partial class ConnectivityCheckRequestDestination
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/>. </summary>
         /// <param name="address"> Destination address. Can either be an IP address or a FQDN. </param>
         /// <param name="port"> Destination port. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>

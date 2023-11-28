@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class PreRulestackRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of PreRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreRulestackRuleData"/>. </summary>
         /// <param name="ruleName"> rule name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public PreRulestackRuleData(string ruleName)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Tags = new ChangeTrackingList<RulestackTagInfo>();
         }
 
-        /// <summary> Initializes a new instance of PreRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

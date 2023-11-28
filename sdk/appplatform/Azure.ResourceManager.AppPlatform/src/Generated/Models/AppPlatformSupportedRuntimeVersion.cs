@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Supported deployment runtime version descriptor. </summary>
     public partial class AppPlatformSupportedRuntimeVersion
     {
-        /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSupportedRuntimeVersion"/>. </summary>
         internal AppPlatformSupportedRuntimeVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSupportedRuntimeVersion"/>. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
         /// <param name="platform"> The platform of this runtime version (possible values: "Java" or ".NET"). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>

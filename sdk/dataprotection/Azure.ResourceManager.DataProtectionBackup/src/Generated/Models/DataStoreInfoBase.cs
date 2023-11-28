@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> DataStoreInfo base. </summary>
     public partial class DataStoreInfoBase
     {
-        /// <summary> Initializes a new instance of DataStoreInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreInfoBase"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectType"/> is null. </exception>

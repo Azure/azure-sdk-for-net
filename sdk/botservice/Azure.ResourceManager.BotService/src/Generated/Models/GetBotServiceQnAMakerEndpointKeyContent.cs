@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The request body for a request to Bot Service Management to list QnA Maker endpoint keys. </summary>
     public partial class GetBotServiceQnAMakerEndpointKeyContent
     {
-        /// <summary> Initializes a new instance of GetBotServiceQnAMakerEndpointKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyContent"/>. </summary>
         public GetBotServiceQnAMakerEndpointKeyContent()
         {
         }

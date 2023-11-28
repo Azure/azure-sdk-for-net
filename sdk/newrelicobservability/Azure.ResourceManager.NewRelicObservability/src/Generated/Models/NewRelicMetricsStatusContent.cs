@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of get metrics status Operation. </summary>
     public partial class NewRelicMetricsStatusContent
     {
-        /// <summary> Initializes a new instance of NewRelicMetricsStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsStatusContent(string userEmail)

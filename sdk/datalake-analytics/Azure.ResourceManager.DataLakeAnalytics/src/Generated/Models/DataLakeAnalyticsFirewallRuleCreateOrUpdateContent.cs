@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="startIPAddress">
         /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
         /// Serialized Name: CreateOrUpdateFirewallRuleParameters.properties.startIpAddress

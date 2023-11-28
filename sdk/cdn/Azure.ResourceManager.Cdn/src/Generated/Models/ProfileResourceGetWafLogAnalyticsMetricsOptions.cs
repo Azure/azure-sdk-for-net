@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
     public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/>. </summary>
         /// <param name="metrics"> The metrics. </param>
         /// <param name="dateTimeBegin"> The dateTimeBegin. </param>
         /// <param name="dateTimeEnd"> The dateTimeEnd. </param>

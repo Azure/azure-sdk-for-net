@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSqlServerSqlMITaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupBlobShare = backupBlobShare;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>

@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series type defines variables or formulas for doing computation on events associated with time series instances. Each time series instance is associated with exactly one type. A type can have one or more variables. For example, a time series instance might be of type Temperature Sensor, which consists of the variables avg temperature, min temperature, and max temperature. </summary>
     public partial class TimeSeriesType
     {
-        /// <summary> Initializes a new instance of TimeSeriesType. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesType"/>. </summary>
         /// <param name="name"> User-given unique name for the type. Mutable, not null. </param>
         /// <param name="variables">
         /// Different variables associated with the type. Not empty, not null.
@@ -31,7 +31,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Variables = variables;
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesType. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesType"/>. </summary>
         /// <param name="id"> Case-sensitive unique type identifier that is immutable. Can be null on create or update requests, and then server generates the ID. Not null on get and delete operations. </param>
         /// <param name="name"> User-given unique name for the type. Mutable, not null. </param>
         /// <param name="description"> Description of the type. May be null. </param>

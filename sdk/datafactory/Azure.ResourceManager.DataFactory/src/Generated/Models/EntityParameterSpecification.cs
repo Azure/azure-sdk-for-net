@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class EntityParameterSpecification
     {
-        /// <summary> Initializes a new instance of EntityParameterSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         public EntityParameterSpecification(EntityParameterType parameterType)
         {
             ParameterType = parameterType;
         }
 
-        /// <summary> Initializes a new instance of EntityParameterSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
         internal EntityParameterSpecification(EntityParameterType parameterType, BinaryData defaultValue)

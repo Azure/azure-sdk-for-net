@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 specific provider input. </summary>
     public partial class InMageAzureV2ReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReprotectContent"/>. </summary>
         public InMageAzureV2ReprotectContent()
         {
             DisksToInclude = new ChangeTrackingList<string>();

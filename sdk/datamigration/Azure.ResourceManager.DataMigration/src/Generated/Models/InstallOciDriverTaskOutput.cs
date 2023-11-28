@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the service task to install an OCI driver. </summary>
     public partial class InstallOciDriverTaskOutput
     {
-        /// <summary> Initializes a new instance of InstallOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         internal InstallOciDriverTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Validation errors. </param>
         internal InstallOciDriverTaskOutput(IReadOnlyList<ReportableException> validationErrors)
         {

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Recipient Email details. </summary>
     public partial class RecipientEmailContract : ResourceData
     {
-        /// <summary> Initializes a new instance of RecipientEmailContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientEmailContract"/>. </summary>
         public RecipientEmailContract()
         {
         }
 
-        /// <summary> Initializes a new instance of RecipientEmailContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientEmailContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

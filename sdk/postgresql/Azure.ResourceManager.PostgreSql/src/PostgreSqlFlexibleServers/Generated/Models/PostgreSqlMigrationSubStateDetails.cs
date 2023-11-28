@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Migration sub state details. </summary>
     internal partial class PostgreSqlMigrationSubStateDetails
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSubStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         internal PostgreSqlMigrationSubStateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSubStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         /// <param name="currentSubState"> Migration sub state. </param>
         internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState)
         {

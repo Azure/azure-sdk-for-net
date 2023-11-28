@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The tracking event error info. </summary>
     public partial class IntegrationAccountTrackingEventErrorInfo
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEventErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventErrorInfo"/>. </summary>
         public IntegrationAccountTrackingEventErrorInfo()
         {
         }

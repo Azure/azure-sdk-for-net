@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
     public partial class ProviderDescription
     {
-        /// <summary> Initializes a new instance of ProviderDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
         internal ProviderDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> A list of provider-specific properties. </param>

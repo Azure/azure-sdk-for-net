@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class AuthorizationPolicyResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyResourceFormatData"/>. </summary>
         public AuthorizationPolicyResourceFormatData()
         {
             Permissions = new ChangeTrackingList<PermissionType>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

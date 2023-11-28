@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the request body for updating SAP monitor resource. </summary>
     public partial class SapMonitorPatch
     {
-        /// <summary> Initializes a new instance of SapMonitorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorPatch"/>. </summary>
         public SapMonitorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

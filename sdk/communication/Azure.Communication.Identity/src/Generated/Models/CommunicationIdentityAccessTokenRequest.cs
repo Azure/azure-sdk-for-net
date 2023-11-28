@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The CommunicationIdentityAccessTokenRequest. </summary>
     internal partial class CommunicationIdentityAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)

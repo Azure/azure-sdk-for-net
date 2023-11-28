@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of SSIS object metadata. </summary>
     internal partial class SynapseSsisObjectMetadataListResult
     {
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadataListResult"/>. </summary>
         internal SynapseSsisObjectMetadataListResult()
         {
             Value = new ChangeTrackingList<SynapseSsisObjectMetadata>();
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadataListResult"/>. </summary>
         /// <param name="value">
         /// List of SSIS object metadata.
         /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LinkedAccessCheck. </summary>
     public partial class LinkedAccessCheck
     {
-        /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedAccessCheck"/>. </summary>
         public LinkedAccessCheck()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedAccessCheck"/>. </summary>
         /// <param name="actionName"></param>
         /// <param name="linkedProperty"></param>
         /// <param name="linkedAction"></param>

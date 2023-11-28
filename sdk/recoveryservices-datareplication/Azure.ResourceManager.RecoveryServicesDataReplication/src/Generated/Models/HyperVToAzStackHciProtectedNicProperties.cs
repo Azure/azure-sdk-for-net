@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperVToAzStackHCI NIC properties. </summary>
     public partial class HyperVToAzStackHciProtectedNicProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedNicProperties"/>. </summary>
         internal HyperVToAzStackHciProtectedNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedNicProperties"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>

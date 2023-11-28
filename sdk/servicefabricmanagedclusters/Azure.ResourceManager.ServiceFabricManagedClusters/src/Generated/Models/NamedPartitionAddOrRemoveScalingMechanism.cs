@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format '0','1'...'N-1'. </summary>
     public partial class NamedPartitionAddOrRemoveScalingMechanism : ManagedServiceScalingMechanism
     {
-        /// <summary> Initializes a new instance of NamedPartitionAddOrRemoveScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionAddOrRemoveScalingMechanism"/>. </summary>
         /// <param name="minPartitionCount"> Minimum number of named partitions of the service. </param>
         /// <param name="maxPartitionCount"> Maximum number of named partitions of the service. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Kind = ServiceScalingMechanismKind.AddRemoveIncrementalNamedPartition;
         }
 
-        /// <summary> Initializes a new instance of NamedPartitionAddOrRemoveScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionAddOrRemoveScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
         /// <param name="minPartitionCount"> Minimum number of named partitions of the service. </param>
         /// <param name="maxPartitionCount"> Maximum number of named partitions of the service. </param>

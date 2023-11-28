@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
     public partial class LinuxConfiguration
     {
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         public LinuxConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
         /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>

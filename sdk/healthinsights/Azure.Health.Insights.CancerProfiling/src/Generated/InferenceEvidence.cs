@@ -10,12 +10,12 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> A piece of evidence corresponding to an inference. </summary>
     public partial class InferenceEvidence
     {
-        /// <summary> Initializes a new instance of InferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferenceEvidence"/>. </summary>
         internal InferenceEvidence()
         {
         }
 
-        /// <summary> Initializes a new instance of InferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferenceEvidence"/>. </summary>
         /// <param name="patientDataEvidence"> A piece of evidence from a clinical note (text document). </param>
         /// <param name="patientInfoEvidence">
         /// A piece of clinical information, expressed as a code in a clinical coding

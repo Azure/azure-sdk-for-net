@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that determine how the connectivity check will be performed. </summary>
     public partial class ConnectivityContent
     {
-        /// <summary> Initializes a new instance of ConnectivityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityContent"/>. </summary>
         /// <param name="source"> The source of the connection. </param>
         /// <param name="destination"> The destination of connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>

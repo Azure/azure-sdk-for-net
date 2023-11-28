@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SKU to be applied for this resource. </summary>
     public partial class BillingBenefitsSku
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSku"/>. </summary>
         public BillingBenefitsSku()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSku"/>. </summary>
         /// <param name="name"> Name of the SKU to be applied. </param>
         internal BillingBenefitsSku(string name)
         {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         public SiteLogsConfigData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

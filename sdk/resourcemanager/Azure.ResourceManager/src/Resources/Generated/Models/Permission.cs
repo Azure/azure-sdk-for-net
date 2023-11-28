@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Role definition permissions. </summary>
     public partial class Permission
     {
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
         internal Permission()
         {
             AllowedActions = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             DeniedDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
         /// <param name="allowedActions"> Allowed actions. </param>
         /// <param name="deniedActions"> Denied actions. </param>
         /// <param name="allowedDataActions"> Allowed Data actions. </param>

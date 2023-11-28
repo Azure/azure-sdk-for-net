@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The training results of the prediction. </summary>
     public partial class PredictionTrainingResults
     {
-        /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionTrainingResults"/>. </summary>
         internal PredictionTrainingResults()
         {
             CanonicalProfiles = new ChangeTrackingList<CanonicalProfileDefinition>();
         }
 
-        /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionTrainingResults"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="scoreName"> Score name. </param>
         /// <param name="predictionDistribution"> Prediction distribution. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> aggregateIpv4Route model. </summary>
     public partial class AggregateRoute
     {
-        /// <summary> Initializes a new instance of AggregateRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateRoute"/>. </summary>
         /// <param name="prefix"> IPv4 Prefix of the aggregate Ipv4Route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
         public AggregateRoute(string prefix)

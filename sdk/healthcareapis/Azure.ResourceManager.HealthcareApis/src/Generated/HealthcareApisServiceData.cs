@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class HealthcareApisServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the service. </param>
         public HealthcareApisServiceData(AzureLocation location, HealthcareApisKind kind) : base(location)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

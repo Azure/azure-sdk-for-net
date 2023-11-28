@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a active directory administrator. </summary>
     public partial class ServerExternalAdministrator
     {
-        /// <summary> Initializes a new instance of ServerExternalAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerExternalAdministrator"/>. </summary>
         public ServerExternalAdministrator()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerExternalAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerExternalAdministrator"/>. </summary>
         /// <param name="administratorType"> Type of the sever administrator. </param>
         /// <param name="principalType"> Principal Type of the sever administrator. </param>
         /// <param name="login"> Login name of the server administrator. </param>

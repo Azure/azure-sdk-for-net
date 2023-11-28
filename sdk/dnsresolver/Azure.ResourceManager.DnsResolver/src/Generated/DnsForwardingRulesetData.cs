@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRulesetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

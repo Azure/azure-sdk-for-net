@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSource. </summary>
     public partial class ContainerRegistryImportSource
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSource"/>. </summary>
         /// <param name="sourceImage">
         /// Repository name of the source image.
         /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.

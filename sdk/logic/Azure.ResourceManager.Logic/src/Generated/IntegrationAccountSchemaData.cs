@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountSchemaData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="schemaType"> The schema type. </param>
         public IntegrationAccountSchemaData(AzureLocation location, IntegrationAccountSchemaType schemaType) : base(location)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic
             SchemaType = schemaType;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> Channel affinity for a participant. </summary>
     internal partial class ChannelAffinityInternal
     {
-        /// <summary> Initializes a new instance of ChannelAffinityInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
         public ChannelAffinityInternal()
         {
         }

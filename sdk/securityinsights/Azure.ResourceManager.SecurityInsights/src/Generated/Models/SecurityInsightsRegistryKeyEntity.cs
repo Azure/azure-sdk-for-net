@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a registry key entity. </summary>
     public partial class SecurityInsightsRegistryKeyEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryKeyEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryKeyEntity"/>. </summary>
         public SecurityInsightsRegistryKeyEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.RegistryKey;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryKeyEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryKeyEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

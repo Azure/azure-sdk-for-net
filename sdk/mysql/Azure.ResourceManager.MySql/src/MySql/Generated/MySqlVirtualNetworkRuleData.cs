@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlVirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlVirtualNetworkRuleData"/>. </summary>
         public MySqlVirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

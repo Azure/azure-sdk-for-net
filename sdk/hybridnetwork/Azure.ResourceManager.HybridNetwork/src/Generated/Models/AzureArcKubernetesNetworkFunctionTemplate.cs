@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Arc kubernetes network function template. </summary>
     public partial class AzureArcKubernetesNetworkFunctionTemplate : ContainerizedNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
         public AzureArcKubernetesNetworkFunctionTemplate()
         {
             NetworkFunctionApplications = new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>();
             NfviType = ContainerizedNetworkFunctionNfviType.AzureArcKubernetes;
         }
 
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.

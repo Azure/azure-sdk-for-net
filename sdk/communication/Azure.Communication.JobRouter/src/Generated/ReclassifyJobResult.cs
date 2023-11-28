@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload from reclassifying a job. </summary>
     internal partial class ReclassifyJobResult
     {
-        /// <summary> Initializes a new instance of ReclassifyJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReclassifyJobResult"/>. </summary>
         internal ReclassifyJobResult()
         {
         }

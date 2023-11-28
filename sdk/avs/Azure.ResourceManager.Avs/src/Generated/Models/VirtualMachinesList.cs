@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of Virtual Machines. </summary>
     internal partial class VirtualMachinesList
     {
-        /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
         internal VirtualMachinesList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudClusterVirtualMachineData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
         /// <param name="value"> The items to be displayed on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal VirtualMachinesList(IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData> value, string nextLink)

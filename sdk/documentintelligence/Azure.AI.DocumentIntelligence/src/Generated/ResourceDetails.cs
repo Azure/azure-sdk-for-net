@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> General information regarding the current resource. </summary>
     public partial class ResourceDetails
     {
-        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>

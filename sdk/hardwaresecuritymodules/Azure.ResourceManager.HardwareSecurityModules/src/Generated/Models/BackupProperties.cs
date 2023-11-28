@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Cloud Hsm Cluster backup information. </summary>
     public partial class BackupProperties
     {
-        /// <summary> Initializes a new instance of BackupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         public BackupProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         /// <param name="azureStorageResourceUri"> Azure storage Resource Uri. </param>
         /// <param name="lastBackupOn"> Last Date Time that Customer Enabled Backup was taken. </param>
         /// <param name="lastBackupStatus"> Status of last backup. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The artifact update state properties. </summary>
     internal partial class ArtifactChangeStateProperties
     {
-        /// <summary> Initializes a new instance of ArtifactChangeStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeStateProperties"/>. </summary>
         public ArtifactChangeStateProperties()
         {
         }

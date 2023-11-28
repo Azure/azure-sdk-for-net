@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Labeling MLAssist configuration definition when MLAssist is disabled. </summary>
     public partial class MLAssistConfigurationDisabled : MachineLearningAssistConfiguration
     {
-        /// <summary> Initializes a new instance of MLAssistConfigurationDisabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MLAssistConfigurationDisabled"/>. </summary>
         public MLAssistConfigurationDisabled()
         {
             MlAssist = MLAssistConfigurationType.Disabled;
         }
 
-        /// <summary> Initializes a new instance of MLAssistConfigurationDisabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MLAssistConfigurationDisabled"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
         internal MLAssistConfigurationDisabled(MLAssistConfigurationType mlAssist) : base(mlAssist)
         {

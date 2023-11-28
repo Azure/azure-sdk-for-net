@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Additional parameters for Reimaging Non-Ephemeral Virtual Machine. </summary>
     public partial class OSProfileProvisioningData
     {
-        /// <summary> Initializes a new instance of OSProfileProvisioningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileProvisioningData"/>. </summary>
         public OSProfileProvisioningData()
         {
         }

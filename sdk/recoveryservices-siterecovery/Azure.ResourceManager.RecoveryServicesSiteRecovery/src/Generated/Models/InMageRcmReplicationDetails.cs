@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific details. </summary>
     public partial class InMageRcmReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReplicationDetails"/>. </summary>
         internal InMageRcmReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageRcmProtectedDiskDetails>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of the discovered VM. </param>

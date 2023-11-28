@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a virtual network link for PATCH operation. </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkPatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
         public DnsForwardingRulesetVirtualNetworkLinkPatch()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();

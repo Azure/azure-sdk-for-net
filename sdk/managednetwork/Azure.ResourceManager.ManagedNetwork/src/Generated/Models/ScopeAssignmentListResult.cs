@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results. </summary>
     internal partial class ScopeAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentListResult"/>. </summary>
         internal ScopeAssignmentListResult()
         {
             Value = new ChangeTrackingList<ScopeAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentListResult"/>. </summary>
         /// <param name="value"> Gets a page of ScopeAssignment. </param>
         /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
         internal ScopeAssignmentListResult(IReadOnlyList<ScopeAssignmentData> value, string nextLink)

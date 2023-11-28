@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Telegram channel. </summary>
     public partial class TelegramChannelProperties
     {
-        /// <summary> Initializes a new instance of TelegramChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelegramChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public TelegramChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of TelegramChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelegramChannelProperties"/>. </summary>
         /// <param name="accessToken"> The Telegram access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>

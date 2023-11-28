@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Weekly Schedule properties, make a snapshot every week at a specific day or days. </summary>
     public partial class SnapshotPolicyWeeklySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyWeeklySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyWeeklySchedule"/>. </summary>
         public SnapshotPolicyWeeklySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyWeeklySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyWeeklySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Weekly snapshot count to keep. </param>
         /// <param name="day"> Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
     internal partial class SnapshotResourceList
     {
-        /// <summary> Initializes a new instance of SnapshotResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceList"/>. </summary>
         internal SnapshotResourceList()
         {
             Value = new ChangeTrackingList<SnapshotResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceList"/>. </summary>
         /// <param name="value"> List of the snapshots. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

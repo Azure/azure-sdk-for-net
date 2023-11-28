@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Source of the input documents. </summary>
     public partial class TranslationSource
     {
-        /// <summary> Initializes a new instance of TranslationSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
         /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
         public TranslationSource(Uri sourceUri)

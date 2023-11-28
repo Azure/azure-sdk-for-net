@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters used to generate credentials for a specified token or user of a container registry. </summary>
     public partial class ContainerRegistryGenerateCredentialsContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsContent"/>. </summary>
         public ContainerRegistryGenerateCredentialsContent()
         {
         }

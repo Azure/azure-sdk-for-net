@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricAccessControlListData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricAccessControlListData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFabricAccessControlListData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricAccessControlListData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

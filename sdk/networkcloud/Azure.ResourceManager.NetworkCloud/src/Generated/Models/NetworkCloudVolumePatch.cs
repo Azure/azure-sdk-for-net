@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VolumePatchParameters represents the body of the request to patch the volume resource. </summary>
     public partial class NetworkCloudVolumePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudVolumePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumePatch"/>. </summary>
         public NetworkCloudVolumePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

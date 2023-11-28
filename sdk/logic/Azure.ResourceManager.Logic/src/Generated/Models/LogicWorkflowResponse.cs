@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A response. </summary>
     public partial class LogicWorkflowResponse
     {
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         public LogicWorkflowResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the response. </param>
         /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="bodyLink"> Details on the location of the body content. </param>

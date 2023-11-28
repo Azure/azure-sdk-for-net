@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the parameters of ephemeral disk settings that can be specified for operating system disk. **Note:** The ephemeral disk settings can only be specified for managed disk. </summary>
     public partial class DiffDiskSettings
     {
-        /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
         public DiffDiskSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. </param>
         internal DiffDiskSettings(DiffDiskOption? option, DiffDiskPlacement? placement)

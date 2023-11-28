@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
     public partial class KubernetesBucketUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesBucketUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucketUpdateContent"/>. </summary>
         public KubernetesBucketUpdateContent()
         {
         }

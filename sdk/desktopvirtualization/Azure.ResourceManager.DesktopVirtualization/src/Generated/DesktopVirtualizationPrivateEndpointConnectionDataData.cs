@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class DesktopVirtualizationPrivateEndpointConnectionDataData : ResourceData
     {
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateEndpointConnectionDataData"/>. </summary>
         public DesktopVirtualizationPrivateEndpointConnectionDataData()
         {
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateEndpointConnectionDataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

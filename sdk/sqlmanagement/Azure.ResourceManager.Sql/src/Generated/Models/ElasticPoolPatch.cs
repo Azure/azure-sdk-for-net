@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An elastic pool update. </summary>
     public partial class ElasticPoolPatch
     {
-        /// <summary> Initializes a new instance of ElasticPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPatch"/>. </summary>
         public ElasticPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

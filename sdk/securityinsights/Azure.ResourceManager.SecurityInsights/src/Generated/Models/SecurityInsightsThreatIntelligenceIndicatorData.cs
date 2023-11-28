@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Threat intelligence indicator entity. </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorData : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
         public SecurityInsightsThreatIntelligenceIndicatorData()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = ThreatIntelligenceResourceInnerKind.Indicator;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

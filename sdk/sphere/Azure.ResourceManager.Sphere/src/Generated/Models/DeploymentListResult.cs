@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class DeploymentListResult
     {
-        /// <summary> Initializes a new instance of DeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
         /// <param name="value">
         /// The Deployment items on this page
         /// Serialized Name: DeploymentListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
         /// <param name="value">
         /// The Deployment items on this page
         /// Serialized Name: DeploymentListResult.value

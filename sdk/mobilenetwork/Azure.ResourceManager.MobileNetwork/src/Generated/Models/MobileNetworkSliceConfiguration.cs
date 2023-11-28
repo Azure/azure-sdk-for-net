@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Per-slice settings. </summary>
     public partial class MobileNetworkSliceConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkSliceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceConfiguration"/>. </summary>
         /// <param name="slice"> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </param>
         /// <param name="defaultDataNetwork"> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </param>
         /// <param name="dataNetworkConfigurations"> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             DataNetworkConfigurations = dataNetworkConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSliceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceConfiguration"/>. </summary>
         /// <param name="slice"> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </param>
         /// <param name="defaultDataNetwork"> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </param>
         /// <param name="dataNetworkConfigurations"> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>

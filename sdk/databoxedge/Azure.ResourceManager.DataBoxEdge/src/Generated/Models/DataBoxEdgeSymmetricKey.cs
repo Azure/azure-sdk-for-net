@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Symmetric key for authentication. </summary>
     internal partial class DataBoxEdgeSymmetricKey
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSymmetricKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSymmetricKey"/>. </summary>
         public DataBoxEdgeSymmetricKey()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSymmetricKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSymmetricKey"/>. </summary>
         /// <param name="connectionString"> Connection string based on the symmetric key. </param>
         internal DataBoxEdgeSymmetricKey(AsymmetricEncryptedSecret connectionString)
         {

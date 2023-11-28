@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UserCreatedAcrAccount. </summary>
     internal partial class UserCreatedAcrAccount
     {
-        /// <summary> Initializes a new instance of UserCreatedAcrAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserCreatedAcrAccount"/>. </summary>
         public UserCreatedAcrAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of UserCreatedAcrAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserCreatedAcrAccount"/>. </summary>
         /// <param name="armResourceIdentifier"> ARM ResourceId of a resource. </param>
         internal UserCreatedAcrAccount(ArmResourceId armResourceIdentifier)
         {

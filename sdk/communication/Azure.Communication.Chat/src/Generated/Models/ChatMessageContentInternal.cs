@@ -14,14 +14,14 @@ namespace Azure.Communication.Chat
     /// <summary> Content of a chat message. </summary>
     internal partial class ChatMessageContentInternal
     {
-        /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContentInternal"/>. </summary>
         internal ChatMessageContentInternal()
         {
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
             Attachments = new ChangeTrackingList<ChatAttachmentInternal>();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContentInternal"/>. </summary>
         /// <param name="message"> Chat message content for messages of types text or html. </param>
         /// <param name="topic"> Chat message content for messages of type topicUpdated. </param>
         /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>

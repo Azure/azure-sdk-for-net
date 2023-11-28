@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
     /// <summary> Chat message. </summary>
     internal partial class ChatMessageInternal
     {
-        /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInternal"/>. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
@@ -36,7 +36,7 @@ namespace Azure.Communication.Chat
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInternal"/>. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>

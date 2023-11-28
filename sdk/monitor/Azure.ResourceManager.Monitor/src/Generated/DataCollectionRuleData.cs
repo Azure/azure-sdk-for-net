@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DataCollectionRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor
             DataFlows = new ChangeTrackingList<DataFlow>();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

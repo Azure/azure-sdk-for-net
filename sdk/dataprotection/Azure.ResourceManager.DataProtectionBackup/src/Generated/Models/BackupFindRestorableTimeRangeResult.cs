@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List Restore Ranges Response. </summary>
     public partial class BackupFindRestorableTimeRangeResult : ResourceData
     {
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
         public BackupFindRestorableTimeRangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

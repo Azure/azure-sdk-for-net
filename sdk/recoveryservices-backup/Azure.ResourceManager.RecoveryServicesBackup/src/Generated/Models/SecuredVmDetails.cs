@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Restore request parameters for Secured VMs. </summary>
     internal partial class SecuredVmDetails
     {
-        /// <summary> Initializes a new instance of SecuredVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuredVmDetails"/>. </summary>
         public SecuredVmDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuredVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuredVmDetails"/>. </summary>
         /// <param name="securedVmOSDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
         internal SecuredVmDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId)
         {

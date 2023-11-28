@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm ReplicaSet status properties. </summary>
     public partial class KubernetesReplicaSet
     {
-        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesReplicaSet"/>. </summary>
         internal KubernetesReplicaSet()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesReplicaSet"/>. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>

@@ -15,7 +15,7 @@ namespace Azure.Communication.Email
     /// <summary> Recipients of the email. </summary>
     public partial class EmailRecipients
     {
-        /// <summary> Initializes a new instance of EmailRecipients. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailRecipients"/>. </summary>
         /// <param name="to"> Email To recipients. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public EmailRecipients(IEnumerable<EmailAddress> to)

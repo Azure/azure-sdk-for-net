@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmElasticModelFactory
     {
-        /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Elastic.ElasticMonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName) : null, properties, identity);
         }
 
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitor resource. </param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new MonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, liftrResourceCategory, liftrResourcePreference);
         }
 
-        /// <summary> Initializes a new instance of ElasticCloudUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticCloudUser"/>. </summary>
         /// <param name="emailAddress"> Email of the Elastic User Account. </param>
         /// <param name="id"> User Id of the elastic account of the User. </param>
         /// <param name="elasticCloudSsoDefaultUri"> Elastic cloud default dashboard sso URL of the Elastic user account. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUri);
         }
 
-        /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticCloudDeployment"/>. </summary>
         /// <param name="name"> Elastic deployment name. </param>
         /// <param name="deploymentId"> Elastic deployment Id. </param>
         /// <param name="azureSubscriptionId"> Associated Azure subscription Id for the elastic deployment. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticCloudDeployment(name, deploymentId, azureSubscriptionId, elasticsearchRegion, elasticsearchServiceUri, kibanaServiceUri, kibanaSsoUri);
         }
 
-        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingLogs"> Flag indicating the status of the resource for sending logs operation to Elastic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus);
         }
 
-        /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentInfoResponse"/>. </summary>
         /// <param name="status"> The Elastic deployment status. </param>
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new DeploymentInfoResponse(status, version, memoryCapacity, diskCapacity);
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Elastic.MonitoringTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new MonitoringTagRuleData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of VmResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmResources"/>. </summary>
         /// <param name="vmResourceId"> The ARM id of the VM resource. </param>
         /// <returns> A new <see cref="Models.VmResources"/> instance for mocking. </returns>
         public static VmResources VmResources(string vmResourceId = null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Elastic.Models
             return new VmResources(vmResourceId);
         }
 
-        /// <summary> Initializes a new instance of VmIngestionDetailsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmIngestionDetailsResponse"/>. </summary>
         /// <param name="cloudId"> The cloudId of given Elastic monitor resource. </param>
         /// <param name="ingestionKey"> Ingestion details to install agent on given VM. </param>
         /// <returns> A new <see cref="Models.VmIngestionDetailsResponse"/> instance for mocking. </returns>

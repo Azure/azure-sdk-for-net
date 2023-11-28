@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Destination for the finished translated documents. </summary>
     public partial class TranslationTarget
     {
-        /// <summary> Initializes a new instance of TranslationTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Collection administrator update. </summary>
     public partial class CollectionAdminUpdateContent
     {
-        /// <summary> Initializes a new instance of CollectionAdminUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
         public CollectionAdminUpdateContent()
         {
         }

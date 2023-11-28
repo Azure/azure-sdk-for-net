@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of a query. </summary>
     public partial class QueryDefinition
     {
-        /// <summary> Initializes a new instance of QueryDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDefinition"/>. </summary>
         /// <param name="exportType"> The type of the query. </param>
         /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
         /// <param name="dataset"> Has definition for data in this query. </param>

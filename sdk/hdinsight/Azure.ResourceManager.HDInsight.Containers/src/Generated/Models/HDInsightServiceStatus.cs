@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Describes the status of a service of a HDInsight on aks cluster. </summary>
     public partial class HDInsightServiceStatus
     {
-        /// <summary> Initializes a new instance of HDInsightServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightServiceStatus"/>. </summary>
         /// <param name="kind"> Kind of the service. E.g. "Zookeeper". </param>
         /// <param name="ready"> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="ready"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Ready = ready;
         }
 
-        /// <summary> Initializes a new instance of HDInsightServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightServiceStatus"/>. </summary>
         /// <param name="kind"> Kind of the service. E.g. "Zookeeper". </param>
         /// <param name="ready"> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </param>
         /// <param name="message"> A message describing the error if any. </param>

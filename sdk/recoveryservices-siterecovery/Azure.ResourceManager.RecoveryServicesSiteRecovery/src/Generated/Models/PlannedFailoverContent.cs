@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for planned failover. </summary>
     public partial class PlannedFailoverContent
     {
-        /// <summary> Initializes a new instance of PlannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverContent"/>. </summary>
         public PlannedFailoverContent()
         {
         }

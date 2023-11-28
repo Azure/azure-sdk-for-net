@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Background data download activity object. </summary>
     public partial class ServerEndpointBackgroundDataDownloadActivity
     {
-        /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
         internal ServerEndpointBackgroundDataDownloadActivity()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="startedOn"> Timestamp when the operation started. </param>
         /// <param name="percentProgress"> Progress percentage. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container probe, for liveness or readiness. </summary>
     public partial class ContainerProbe
     {
-        /// <summary> Initializes a new instance of ContainerProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbe"/>. </summary>
         public ContainerProbe()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbe"/>. </summary>
         /// <param name="exec"> The execution command to probe. </param>
         /// <param name="httpGet"> The Http Get settings to probe. </param>
         /// <param name="initialDelayInSeconds"> The initial delay seconds. </param>

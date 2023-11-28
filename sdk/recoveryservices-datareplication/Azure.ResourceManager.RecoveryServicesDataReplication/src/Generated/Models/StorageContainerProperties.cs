@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Storage container properties. </summary>
     public partial class StorageContainerProperties
     {
-        /// <summary> Initializes a new instance of StorageContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerProperties"/>. </summary>
         /// <param name="name"> Gets or sets the Name. </param>
         /// <param name="clusterSharedVolumePath"> Gets or sets the ClusterSharedVolumePath. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="clusterSharedVolumePath"/> is null. </exception>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The definition of a canonical profile property. </summary>
     public partial class CanonicalProfileDefinitionPropertiesItem
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         internal CanonicalProfileDefinitionPropertiesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         /// <param name="profileName"> Profile name. </param>
         /// <param name="profilePropertyName"> Property name of profile. </param>
         /// <param name="rank"> The rank. </param>

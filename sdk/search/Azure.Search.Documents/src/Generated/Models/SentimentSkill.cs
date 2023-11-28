@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Text analytics positive-negative sentiment analysis, scored as a floating point value in a range of zero to 1. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of SentimentSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character `#`. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>

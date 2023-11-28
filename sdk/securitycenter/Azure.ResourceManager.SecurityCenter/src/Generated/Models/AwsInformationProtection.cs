@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The native cloud connection configuration. </summary>
     internal partial class AwsInformationProtection
     {
-        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsInformationProtection"/>. </summary>
         public AwsInformationProtection()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsInformationProtection"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         internal AwsInformationProtection(string cloudRoleArn)
         {

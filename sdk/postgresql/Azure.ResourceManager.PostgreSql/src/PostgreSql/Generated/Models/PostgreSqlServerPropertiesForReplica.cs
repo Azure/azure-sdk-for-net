@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> The properties to create a new replica. </summary>
     public partial class PostgreSqlServerPropertiesForReplica : PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForReplica"/>. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)

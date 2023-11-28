@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from. </summary>
     public partial class WebTestGeolocation
     {
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         public WebTestGeolocation()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         /// <param name="location"> Location ID for the WebTest to run from. </param>
         internal WebTestGeolocation(AzureLocation? location)
         {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapProviderInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapProviderInstanceData"/>. </summary>
         public SapProviderInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapProviderInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

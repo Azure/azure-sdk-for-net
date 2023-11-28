@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ManagedClusterUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeProfileData"/>. </summary>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
             AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

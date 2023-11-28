@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Health error model. </summary>
     public partial class DataReplicationHealthErrorInfo
     {
-        /// <summary> Initializes a new instance of DataReplicationHealthErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationHealthErrorInfo"/>. </summary>
         internal DataReplicationHealthErrorInfo()
         {
             AffectedResourceCorrelationIds = new ChangeTrackingList<string>();
             ChildErrors = new ChangeTrackingList<DataReplicationInnerHealthErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationHealthErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationHealthErrorInfo"/>. </summary>
         /// <param name="affectedResourceType"> Gets or sets the type of affected resource type. </param>
         /// <param name="affectedResourceCorrelationIds">
         /// Gets or sets the list of affected resource correlation Ids. This can be used to

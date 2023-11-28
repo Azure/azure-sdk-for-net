@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseRestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointData"/>. </summary>
         public SynapseRestorePointData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

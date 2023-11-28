@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPoliciesList. </summary>
     internal partial class JitNetworkAccessPoliciesList
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPoliciesList"/>. </summary>
         internal JitNetworkAccessPoliciesList()
         {
             Value = new ChangeTrackingList<JitNetworkAccessPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPoliciesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal JitNetworkAccessPoliciesList(IReadOnlyList<JitNetworkAccessPolicyData> value, string nextLink)

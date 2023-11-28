@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Billing information related properties of a server. </summary>
     public partial class MySqlFlexibleServerSku
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, e.g. Standard_D32s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. GeneralPurpose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

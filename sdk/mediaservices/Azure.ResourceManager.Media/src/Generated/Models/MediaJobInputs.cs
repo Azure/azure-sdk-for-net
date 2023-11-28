@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes a list of inputs to a Job. </summary>
     public partial class MediaJobInputs : MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of MediaJobInputs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputs"/>. </summary>
         public MediaJobInputs()
         {
             Inputs = new ChangeTrackingList<MediaJobInputBasicProperties>();
             OdataType = "#Microsoft.Media.JobInputs";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputs"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputs">
         /// List of inputs to a Job.

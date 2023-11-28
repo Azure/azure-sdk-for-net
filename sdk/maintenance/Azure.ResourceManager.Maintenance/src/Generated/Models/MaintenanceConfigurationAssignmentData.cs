@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Configuration Assignment. </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentData"/>. </summary>
         public MaintenanceConfigurationAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

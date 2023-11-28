@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The tracking event. </summary>
     public partial class IntegrationAccountTrackingEvent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
         /// <param name="eventLevel"> The event level. </param>
         /// <param name="eventOn"> The event time. </param>
         /// <param name="recordType"> The record type. </param>

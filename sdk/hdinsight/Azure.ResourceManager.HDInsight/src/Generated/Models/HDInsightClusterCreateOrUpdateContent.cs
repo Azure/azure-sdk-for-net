@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The CreateCluster request parameters. </summary>
     public partial class HDInsightClusterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
         public HDInsightClusterCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

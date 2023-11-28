@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties of reservation split. </summary>
     public partial class ReservationSplitProperties
     {
-        /// <summary> Initializes a new instance of ReservationSplitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSplitProperties"/>. </summary>
         internal ReservationSplitProperties()
         {
             SplitDestinations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReservationSplitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSplitProperties"/>. </summary>
         /// <param name="splitDestinations"> List of destination resource id that are created due to split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="splitSource"> Resource id of the reservation from which this is split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         internal ReservationSplitProperties(IReadOnlyList<string> splitDestinations, string splitSource)

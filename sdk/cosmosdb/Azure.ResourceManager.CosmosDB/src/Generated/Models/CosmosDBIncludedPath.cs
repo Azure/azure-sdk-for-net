@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The paths that are included in indexing. </summary>
     public partial class CosmosDBIncludedPath
     {
-        /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIncludedPath"/>. </summary>
         public CosmosDBIncludedPath()
         {
             Indexes = new ChangeTrackingList<CosmosDBPathIndexes>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIncludedPath"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="indexes"> List of indexes for this path. </param>
         internal CosmosDBIncludedPath(string path, IList<CosmosDBPathIndexes> indexes)

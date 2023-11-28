@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// </summary>
     public abstract partial class Filter
     {
-        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Filter"/>. </summary>
         protected Filter()
         {
         }
 
-        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Filter"/>. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
         internal Filter(FilterType filterType)
         {

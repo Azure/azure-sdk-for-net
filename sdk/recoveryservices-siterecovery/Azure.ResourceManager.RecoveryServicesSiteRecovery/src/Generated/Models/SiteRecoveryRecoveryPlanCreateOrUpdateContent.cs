@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Recovery plan creation properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryRecoveryPlanCreateOrUpdateContent(SiteRecoveryCreateRecoveryPlanProperties properties)

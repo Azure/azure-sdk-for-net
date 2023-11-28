@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection intent input properties. </summary>
     internal partial class SiteRecoveryCreateProtectionIntentProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionIntentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionIntentProperties"/>. </summary>
         public SiteRecoveryCreateProtectionIntentProperties()
         {
         }

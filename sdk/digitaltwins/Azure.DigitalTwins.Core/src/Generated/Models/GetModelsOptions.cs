@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     public partial class GetModelsOptions
     {
-        /// <summary> Initializes a new instance of GetModelsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetModelsOptions"/>. </summary>
         public GetModelsOptions()
         {
         }

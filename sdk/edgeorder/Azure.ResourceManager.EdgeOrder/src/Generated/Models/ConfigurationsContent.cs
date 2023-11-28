@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration request object. </summary>
     public partial class ConfigurationsContent
     {
-        /// <summary> Initializes a new instance of ConfigurationsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
         /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationFilters"/> is null. </exception>
         public ConfigurationsContent(IEnumerable<ConfigurationFilters> configurationFilters)

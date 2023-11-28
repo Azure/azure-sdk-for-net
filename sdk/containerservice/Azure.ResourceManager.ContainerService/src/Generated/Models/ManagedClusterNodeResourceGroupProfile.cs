@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Node resource group lockdown profile for a managed cluster. </summary>
     internal partial class ManagedClusterNodeResourceGroupProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterNodeResourceGroupProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeResourceGroupProfile"/>. </summary>
         public ManagedClusterNodeResourceGroupProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterNodeResourceGroupProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeResourceGroupProfile"/>. </summary>
         /// <param name="restrictionLevel"> The restriction level applied to the cluster's node resource group. </param>
         internal ManagedClusterNodeResourceGroupProfile(ManagedClusterNodeResourceGroupRestrictionLevel? restrictionLevel)
         {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnOriginData : ResourceData
     {
-        /// <summary> Initializes a new instance of CdnOriginData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
         public CdnOriginData()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnOriginData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

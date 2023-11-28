@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of wait statistics. </summary>
     internal partial class MySqlWaitStatisticsListResult
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsListResult"/>. </summary>
         internal MySqlWaitStatisticsListResult()
         {
             Value = new ChangeTrackingList<MySqlWaitStatisticData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsListResult"/>. </summary>
         /// <param name="value"> The list of wait statistics. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal MySqlWaitStatisticsListResult(IReadOnlyList<MySqlWaitStatisticData> value, string nextLink)

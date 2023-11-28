@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Authentication configuration information. </summary>
     public partial class DicomServiceAuthenticationConfiguration
     {
-        /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceAuthenticationConfiguration"/>. </summary>
         public DicomServiceAuthenticationConfiguration()
         {
             Audiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audiences"> The audiences for the service. </param>
         internal DicomServiceAuthenticationConfiguration(string authority, IReadOnlyList<string> audiences)

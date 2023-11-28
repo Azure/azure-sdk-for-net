@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V VM network input details. </summary>
     public partial class VmNicContentDetails
     {
-        /// <summary> Initializes a new instance of VmNicContentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicContentDetails"/>. </summary>
         public VmNicContentDetails()
         {
             IPConfigs = new ChangeTrackingList<HyperVFailoverIPConfigDetails>();

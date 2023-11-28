@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table resource object. </summary>
     public partial class CassandraTableResourceInfo
     {
-        /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CassandraTableResourceInfo(string tableName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
         /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>

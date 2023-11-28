@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Properties for HelmRelease objects. </summary>
     public partial class HelmReleaseProperties
     {
-        /// <summary> Initializes a new instance of HelmReleaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         internal HelmReleaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmReleaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         /// <param name="lastRevisionApplied"> The revision number of the last released object change. </param>
         /// <param name="helmChartRef"> The reference to the HelmChart object used as the source to this HelmRelease. </param>
         /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
