@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
@@ -36,9 +37,12 @@ namespace Azure.Identity.Broker.Tests
         [Test]
         public async Task GetPopToken()
         {
+            using var logger = AzureEventSourceListener.CreateConsoleLogger();
             IntPtr parentWindowHandle = GetForegroundWindow();
 
-            var client = new PopTestClient(new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }));
+            var client = new PopTestClient(new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }),
+                new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
             var response = await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual(200, response.Status);
