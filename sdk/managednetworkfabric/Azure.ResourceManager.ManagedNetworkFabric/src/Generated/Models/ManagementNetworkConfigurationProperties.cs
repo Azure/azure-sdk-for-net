@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Configuration to be used to setup the management network. </summary>
     public partial class ManagementNetworkConfigurationProperties
     {
-        /// <summary> Initializes a new instance of ManagementNetworkConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/>. </summary>
         /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="infrastructureVpnConfiguration"/> or <paramref name="workloadVpnConfiguration"/> is null. </exception>

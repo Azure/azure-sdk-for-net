@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Notification update request payload. </summary>
     public partial class AcknowledgeOfferNotificationContent
     {
-        /// <summary> Initializes a new instance of AcknowledgeOfferNotificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeOfferNotificationContent"/>. </summary>
         public AcknowledgeOfferNotificationContent()
         {
             AddPlans = new ChangeTrackingList<string>();

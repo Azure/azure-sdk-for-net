@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List result for components. </summary>
     internal partial class ComponentList
     {
-        /// <summary> Initializes a new instance of ComponentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentList"/>. </summary>
         internal ComponentList()
         {
             Value = new ChangeTrackingList<SbomComponent>();
         }
 
-        /// <summary> Initializes a new instance of ComponentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentList"/>. </summary>
         /// <param name="value"> The list of components. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal ComponentList(IReadOnlyList<SbomComponent> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Configuration settings for Docker build context. </summary>
     public partial class MachineLearningBuildContext
     {
-        /// <summary> Initializes a new instance of MachineLearningBuildContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBuildContext"/>. </summary>
         /// <param name="contextUri">
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ContextUri = contextUri;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBuildContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBuildContext"/>. </summary>
         /// <param name="contextUri">
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;

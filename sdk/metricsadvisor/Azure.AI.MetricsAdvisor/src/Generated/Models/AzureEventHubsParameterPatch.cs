@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureEventHubsParameterPatch. </summary>
     internal partial class AzureEventHubsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureEventHubsParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameterPatch"/>. </summary>
         public AzureEventHubsParameterPatch()
         {
         }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies that the content key ID is specified in the PlayReady configuration. </summary>
     public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier : ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>. </summary>
         /// <param name="keyId"> The content key ID. </param>
         public ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(Guid? keyId)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="keyId"> The content key ID. </param>
         internal ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(string odataType, Guid? keyId) : base(odataType)

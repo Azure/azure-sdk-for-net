@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The ConfigurationValue with no secrets. </summary>
     public partial class ConfigurationValueWithoutSecrets : ConfigurationGroupValuePropertiesFormat
     {
-        /// <summary> Initializes a new instance of ConfigurationValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithoutSecrets"/>. </summary>
         public ConfigurationValueWithoutSecrets()
         {
             ConfigurationType = ConfigurationGroupValueConfigurationType.Open;
         }
 
-        /// <summary> Initializes a new instance of ConfigurationValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithoutSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

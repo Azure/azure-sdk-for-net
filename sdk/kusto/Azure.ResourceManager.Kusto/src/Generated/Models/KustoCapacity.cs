@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Azure capacity definition. </summary>
     public partial class KustoCapacity
     {
-        /// <summary> Initializes a new instance of KustoCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCapacity"/>. </summary>
         /// <param name="scaleType"> Scale type. </param>
         /// <param name="minimum"> Minimum allowed capacity. </param>
         /// <param name="maximum"> Maximum allowed capacity. </param>

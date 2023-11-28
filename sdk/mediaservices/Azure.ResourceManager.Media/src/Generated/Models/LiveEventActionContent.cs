@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The LiveEvent action input parameter definition. </summary>
     public partial class LiveEventActionContent
     {
-        /// <summary> Initializes a new instance of LiveEventActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
         public LiveEventActionContent()
         {
         }

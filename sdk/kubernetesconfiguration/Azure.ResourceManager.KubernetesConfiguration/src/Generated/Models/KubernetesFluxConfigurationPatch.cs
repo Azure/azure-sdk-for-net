@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Flux Configuration Patch Request object. </summary>
     public partial class KubernetesFluxConfigurationPatch
     {
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationPatch"/>. </summary>
         public KubernetesFluxConfigurationPatch()
         {
             Kustomizations = new ChangeTrackingDictionary<string, KustomizationUpdateContent>();

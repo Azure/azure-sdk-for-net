@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the secret. </summary>
     public partial class SecretProperties
     {
-        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretProperties"/>. </summary>
         public SecretProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretProperties"/>. </summary>
         /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>

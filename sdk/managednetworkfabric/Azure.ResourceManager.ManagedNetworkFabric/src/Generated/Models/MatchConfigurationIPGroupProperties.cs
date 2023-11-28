@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Group properties. </summary>
     public partial class MatchConfigurationIPGroupProperties
     {
-        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
         public MatchConfigurationIPGroupProperties()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>

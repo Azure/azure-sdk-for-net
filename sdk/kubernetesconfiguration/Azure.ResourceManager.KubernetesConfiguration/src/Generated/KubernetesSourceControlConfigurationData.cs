@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesSourceControlConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesSourceControlConfigurationData"/>. </summary>
         public KubernetesSourceControlConfigurationData()
         {
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesSourceControlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

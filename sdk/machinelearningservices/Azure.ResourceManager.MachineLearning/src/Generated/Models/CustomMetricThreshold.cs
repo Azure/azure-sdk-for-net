@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CustomMetricThreshold. </summary>
     public partial class CustomMetricThreshold
     {
-        /// <summary> Initializes a new instance of CustomMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The user-defined metric to calculate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metric"/> is null. </exception>
         public CustomMetricThreshold(string metric)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Metric = metric;
         }
 
-        /// <summary> Initializes a new instance of CustomMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The user-defined metric to calculate. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal CustomMetricThreshold(string metric, MonitoringThreshold threshold)

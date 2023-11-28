@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of Datastore entities. </summary>
     internal partial class DatastoreResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreResourceArmPaginatedResult"/>. </summary>
         internal DatastoreResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningDatastoreData>();
         }
 
-        /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Datastore objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Datastore. </param>
         internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDatastoreData> value)

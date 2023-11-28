@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The API backend service. </summary>
     internal partial class LogicApiResourceBackendService
     {
-        /// <summary> Initializes a new instance of LogicApiResourceBackendService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceBackendService"/>. </summary>
         internal LogicApiResourceBackendService()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceBackendService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceBackendService"/>. </summary>
         /// <param name="serviceUri"> The service URL. </param>
         internal LogicApiResourceBackendService(Uri serviceUri)
         {
