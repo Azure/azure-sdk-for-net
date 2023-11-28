@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Network function application definition. </summary>
     public partial class NetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of NetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionApplication"/>. </summary>
         public NetworkFunctionApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         internal NetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile)

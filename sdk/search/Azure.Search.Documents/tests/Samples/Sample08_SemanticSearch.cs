@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Tests.Samples
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Index
-            string indexName = "Hotel";
+            string indexName = "hotel";
 #if !SNIPPET
             indexName = name;
 #endif

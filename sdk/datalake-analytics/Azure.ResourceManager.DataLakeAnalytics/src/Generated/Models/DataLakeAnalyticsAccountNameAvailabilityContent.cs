@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name">
         /// The Data Lake Analytics name to check availability for.
         /// Serialized Name: CheckNameAvailabilityParameters.name

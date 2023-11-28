@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component Continuous Export configuration request definition. </summary>
     public partial class ApplicationInsightsComponentExportRequest
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportRequest"/>. </summary>
         public ApplicationInsightsComponentExportRequest()
         {
         }

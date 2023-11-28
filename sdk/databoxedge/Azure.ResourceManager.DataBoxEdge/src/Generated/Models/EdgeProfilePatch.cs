@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway Edge Profile patch. </summary>
     internal partial class EdgeProfilePatch
     {
-        /// <summary> Initializes a new instance of EdgeProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
         public EdgeProfilePatch()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> A backend pool is a collection of backends that can be routed to. </summary>
     public partial class FrontDoorBackendPool : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         public FrontDoorBackendPool()
         {
             Backends = new ChangeTrackingList<FrontDoorBackend>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Alexa channel. </summary>
     public partial class AlexaChannelProperties
     {
-        /// <summary> Initializes a new instance of AlexaChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlexaChannelProperties"/>. </summary>
         /// <param name="alexaSkillId"> The Alexa skill Id. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alexaSkillId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of AlexaChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlexaChannelProperties"/>. </summary>
         /// <param name="alexaSkillId"> The Alexa skill Id. </param>
         /// <param name="uriFragment"> Url fragment used in part of the Uri configured in Alexa. </param>
         /// <param name="serviceEndpointUri"> Full Uri used to configured the skill in Alexa. </param>

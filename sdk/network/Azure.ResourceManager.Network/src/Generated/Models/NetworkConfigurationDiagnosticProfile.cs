@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters to compare with network configuration. </summary>
     public partial class NetworkConfigurationDiagnosticProfile
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/>. </summary>
         /// <param name="direction"> The direction of the traffic. </param>
         /// <param name="protocol"> Protocol to be verified on. Accepted values are '*', TCP, UDP. </param>
         /// <param name="source"> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </param>

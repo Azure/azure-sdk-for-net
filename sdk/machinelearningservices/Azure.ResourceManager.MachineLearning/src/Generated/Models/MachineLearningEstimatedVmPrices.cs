@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The estimated price info for using a VM. </summary>
     public partial class MachineLearningEstimatedVmPrices
     {
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>

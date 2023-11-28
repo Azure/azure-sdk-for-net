@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The trigger based on base image dependency. </summary>
     public partial class ContainerRegistryBaseImageTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTrigger"/>. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTrigger"/>. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
         /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
         /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>

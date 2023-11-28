@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of response for listContentKeys action. </summary>
     internal partial class ListContentKeysResponse
     {
-        /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContentKeysResponse"/>. </summary>
         internal ListContentKeysResponse()
         {
             ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
         }
 
-        /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContentKeysResponse"/>. </summary>
         /// <param name="contentKeys"> ContentKeys used by current Streaming Locator. </param>
         internal ListContentKeysResponse(IReadOnlyList<StreamingLocatorContentKey> contentKeys)
         {

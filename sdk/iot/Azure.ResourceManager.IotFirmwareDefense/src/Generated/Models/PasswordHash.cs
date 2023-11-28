@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Password hash properties. </summary>
     public partial class PasswordHash
     {
-        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordHash"/>. </summary>
         internal PasswordHash()
         {
         }
 
-        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordHash"/>. </summary>
         /// <param name="passwordHashId"> ID for password hash. </param>
         /// <param name="filePath"> File path of the password hash. </param>
         /// <param name="salt"> Salt of the password hash. </param>

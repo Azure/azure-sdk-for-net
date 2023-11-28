@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AlertingResultQuery. </summary>
     internal partial class AlertingResultQuery
     {
-        /// <summary> Initializes a new instance of AlertingResultQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertingResultQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         /// <param name="timeMode"> time mode. </param>

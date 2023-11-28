@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-12-30)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+    - Added support for User Assigned Identity in Azure Cloud HSM
+    - Added Backup and Restore Properties in Azure Cloud HSM
 
 ### Other Changes
+    - Upgraded API version to `2023-12-10-preview`.
 
 ## 1.0.0-beta.1 (2023-10-30)
 

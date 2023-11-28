@@ -13,7 +13,7 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for updating a chat message. </summary>
     internal partial class UpdateChatMessageRequest
     {
-        /// <summary> Initializes a new instance of UpdateChatMessageRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateChatMessageRequest"/>. </summary>
         public UpdateChatMessageRequest()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();

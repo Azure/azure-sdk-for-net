@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a forwarding rule for PATCH operation. </summary>
     public partial class DnsForwardingRulePatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulePatch"/>. </summary>
         public DnsForwardingRulePatch()
         {
             TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();

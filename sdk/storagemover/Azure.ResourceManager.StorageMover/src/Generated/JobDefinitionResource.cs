@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The JobDefinitionPatch to use. </param>
+        /// <param name="patch"> The <see cref="JobDefinitionPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<JobDefinitionResource>> UpdateAsync(JobDefinitionPatch patch, CancellationToken cancellationToken = default)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The JobDefinitionPatch to use. </param>
+        /// <param name="patch"> The <see cref="JobDefinitionPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<JobDefinitionResource> Update(JobDefinitionPatch patch, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of data present in the forecast. </summary>
     public partial class ForecastDataset
     {
-        /// <summary> Initializes a new instance of ForecastDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastDataset"/>. </summary>
         /// <param name="aggregation"> Dictionary of aggregation expression to use in the forecast. The key of each item in the dictionary is the alias for the aggregated column. forecast can have up to 2 aggregation clauses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public ForecastDataset(IDictionary<string, ForecastAggregation> aggregation)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the Get delivery attributes operation. </summary>
     internal partial class DeliveryAttributeListResult
     {
-        /// <summary> Initializes a new instance of DeliveryAttributeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeListResult"/>. </summary>
         internal DeliveryAttributeListResult()
         {
             Value = new ChangeTrackingList<DeliveryAttributeMapping>();
         }
 
-        /// <summary> Initializes a new instance of DeliveryAttributeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeListResult"/>. </summary>
         /// <param name="value">
         /// A collection of DeliveryAttributeMapping
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

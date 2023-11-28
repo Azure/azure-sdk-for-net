@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyAlertingConfigurationPatch. </summary>
     internal partial class AnomalyAlertingConfigurationPatch
     {
-        /// <summary> Initializes a new instance of AnomalyAlertingConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlertingConfigurationPatch"/>. </summary>
         public AnomalyAlertingConfigurationPatch()
         {
             SplitAlertByDimensions = new ChangeTrackingList<string>();

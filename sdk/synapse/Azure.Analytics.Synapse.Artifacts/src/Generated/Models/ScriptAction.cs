@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
     public partial class ScriptAction
     {
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Roles = roles;
         }
 
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>

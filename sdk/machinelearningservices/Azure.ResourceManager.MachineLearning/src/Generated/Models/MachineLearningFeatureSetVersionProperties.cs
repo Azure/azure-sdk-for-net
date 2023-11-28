@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing feature set version. </summary>
     public partial class MachineLearningFeatureSetVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
         public MachineLearningFeatureSetVersionProperties()
         {
             Entities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

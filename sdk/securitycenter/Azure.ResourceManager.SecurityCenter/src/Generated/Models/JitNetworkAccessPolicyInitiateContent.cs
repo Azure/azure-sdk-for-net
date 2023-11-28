@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPolicyInitiateContent. </summary>
     public partial class JitNetworkAccessPolicyInitiateContent
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
         /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyInitiateContent(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)

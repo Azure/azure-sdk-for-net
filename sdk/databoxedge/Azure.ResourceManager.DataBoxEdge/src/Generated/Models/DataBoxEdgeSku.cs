@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The SKU type. </summary>
     public partial class DataBoxEdgeSku
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSku"/>. </summary>
         public DataBoxEdgeSku()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         internal DataBoxEdgeSku(DataBoxEdgeSkuName? name, DataBoxEdgeSkuTier? tier)

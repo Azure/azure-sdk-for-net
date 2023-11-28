@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Response schema for querying the Azure Blueprints service principal in the tenant. </summary>
     public partial class WhoIsBlueprintContract
     {
-        /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhoIsBlueprintContract"/>. </summary>
         internal WhoIsBlueprintContract()
         {
         }
 
-        /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhoIsBlueprintContract"/>. </summary>
         /// <param name="objectId"> AAD object Id of the Azure Blueprints service principal in the tenant. </param>
         internal WhoIsBlueprintContract(string objectId)
         {

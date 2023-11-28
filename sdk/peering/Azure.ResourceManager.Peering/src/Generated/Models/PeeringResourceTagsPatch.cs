@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The resource tags. </summary>
     public partial class PeeringResourceTagsPatch
     {
-        /// <summary> Initializes a new instance of PeeringResourceTagsPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringResourceTagsPatch"/>. </summary>
         public PeeringResourceTagsPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

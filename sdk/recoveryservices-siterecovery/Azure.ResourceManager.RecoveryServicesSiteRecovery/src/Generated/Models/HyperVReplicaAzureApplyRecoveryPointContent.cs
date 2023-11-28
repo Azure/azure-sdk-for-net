@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ApplyRecoveryPoint input specific to HyperVReplicaAzure provider. </summary>
     public partial class HyperVReplicaAzureApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
         public HyperVReplicaAzureApplyRecoveryPointContent()
         {
             InstanceType = "HyperVReplicaAzure";

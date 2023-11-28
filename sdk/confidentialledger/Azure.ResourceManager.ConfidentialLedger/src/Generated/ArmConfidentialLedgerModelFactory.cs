@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConfidentialLedgerModelFactory
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ConfidentialLedgerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ConfidentialLedgerData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerProperties"/>. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ConfidentialLedgerProperties(ledgerName, ledgerUri, identityServiceUri, ledgerInternalNamespace, runningState, ledgerType, provisioningState, aadBasedSecurityPrincipals?.ToList(), certBasedSecurityPrincipals?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ManagedCcfData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ManagedCcfData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfProperties"/>. </summary>
         /// <param name="appName"> Unique name for the Managed CCF. </param>
         /// <param name="appUri"> Endpoint for calling Managed CCF Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationCallAutomationModelFactory
     {
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TransferCallToParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.TransferCallToParticipantResult"/> instance for mocking. </returns>
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantsResult"/> instance for mocking. </returns>
         public static MuteParticipantsResult MuteParticipantsResult(string operationContext = null)
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             return new MuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.UnmuteParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResult"/> instance for mocking. </returns>
         public static UnmuteParticipantsResult UnmuteParticipantsResult(string operationContext = null)
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
             return new UnmuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingStateResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
         /// <param name="recordingType"></param>
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
             return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation
             return new ResultInformation(code, subCode, message);
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.CallConnected"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
             return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.CallDisconnected"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -80,7 +80,7 @@ namespace Azure.Communication.CallAutomation
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.CallTransferFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -92,7 +92,7 @@ namespace Azure.Communication.CallAutomation
             return new CallTransferFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingStateChanged"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -105,7 +105,7 @@ namespace Azure.Communication.CallAutomation
             return new RecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
         }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.PlayCompleted"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -117,7 +117,7 @@ namespace Azure.Communication.CallAutomation
             return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.PlayFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -129,7 +129,7 @@ namespace Azure.Communication.CallAutomation
             return new PlayFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of PlayCanceled. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.PlayCanceled"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -140,7 +140,7 @@ namespace Azure.Communication.CallAutomation
             return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallAutomation.CollectTonesResult"/> instance for mocking. </returns>
         public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
@@ -150,7 +150,7 @@ namespace Azure.Communication.CallAutomation
             return new CollectTonesResult(tones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallAutomation.DtmfResult"/> instance for mocking. </returns>
         public static DtmfResult DtmfResult(IEnumerable<DtmfTone> tones = null)
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallAutomation
             return new DtmfResult(tones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
         /// Phrases are set to the value if choice is selected via phrase detection.
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
             return new ChoiceResult(label, recognizedPhrase);
         }
 
-        /// <summary> Initializes a new instance of SpeechResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
         public static SpeechResult SpeechResult(string speech = null)
@@ -180,7 +180,7 @@ namespace Azure.Communication.CallAutomation
             return new SpeechResult(speech);
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecognizeFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -192,7 +192,7 @@ namespace Azure.Communication.CallAutomation
             return new RecognizeFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecognizeCanceled"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -203,7 +203,7 @@ namespace Azure.Communication.CallAutomation
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>
         /// <param name="recording"></param>
         /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
         public static UserConsent UserConsent(int? recording = null)
@@ -211,7 +211,7 @@ namespace Azure.Communication.CallAutomation
             return new UserConsent(recording);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ContinuousDtmfRecognitionToneFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -223,7 +223,7 @@ namespace Azure.Communication.CallAutomation
             return new ContinuousDtmfRecognitionToneFailed(callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/>. </summary>
         /// <param name="toneInfo"> Information about Tone. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -236,7 +236,7 @@ namespace Azure.Communication.CallAutomation
             return new ContinuousDtmfRecognitionToneReceived(toneInfo, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ToneInfo"/>. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         /// <returns> A new <see cref="CallAutomation.ToneInfo"/> instance for mocking. </returns>
@@ -245,7 +245,7 @@ namespace Azure.Communication.CallAutomation
             return new ToneInfo(sequenceId, tone);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ContinuousDtmfRecognitionStopped"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -257,7 +257,7 @@ namespace Azure.Communication.CallAutomation
             return new ContinuousDtmfRecognitionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SendDtmfCompleted"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -269,7 +269,7 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SendDtmfFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
@@ -281,7 +281,7 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionStarted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -294,7 +294,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
@@ -303,7 +303,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionStopped. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -316,7 +316,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionResumed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -329,7 +329,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

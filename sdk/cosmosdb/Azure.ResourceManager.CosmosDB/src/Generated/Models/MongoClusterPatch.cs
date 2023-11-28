@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Represents a mongo cluster resource for updates. </summary>
     public partial class MongoClusterPatch
     {
-        /// <summary> Initializes a new instance of MongoClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPatch"/>. </summary>
         public MongoClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The status of operation. </summary>
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>. </summary>
         internal MonitorPrivateLinkScopeOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>. </summary>
         /// <param name="id"> The operation Id. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>

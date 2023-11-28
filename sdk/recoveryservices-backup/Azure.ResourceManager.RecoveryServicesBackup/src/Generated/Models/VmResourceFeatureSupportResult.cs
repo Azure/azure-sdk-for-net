@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Response for feature support requests for Azure IaasVm. </summary>
     public partial class VmResourceFeatureSupportResult
     {
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportResult"/>. </summary>
         internal VmResourceFeatureSupportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportResult"/>. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
         internal VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus)
         {

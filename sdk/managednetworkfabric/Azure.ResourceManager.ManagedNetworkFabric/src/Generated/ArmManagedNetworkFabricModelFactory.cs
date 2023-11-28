@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmManagedNetworkFabricModelFactory
     {
-        /// <summary> Initializes a new instance of NetworkFabricAccessControlListData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricAccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, defaultAction, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), lastSyncedOn, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricErrorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <returns> A new <see cref="Models.NetworkFabricErrorResult"/> instance for mocking. </returns>
         public static NetworkFabricErrorResult NetworkFabricErrorResult(ResponseError error = null)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricErrorResult(error);
         }
 
-        /// <summary> Initializes a new instance of StateUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StateUpdateCommonPostActionResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <returns> A new <see cref="Models.StateUpdateCommonPostActionResult"/> instance for mocking. </returns>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StateUpdateCommonPostActionResult(error, configurationState);
         }
 
-        /// <summary> Initializes a new instance of ValidateConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateConfigurationResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="uri"> URL for the details of the response. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ValidateConfigurationResult(error, configurationState, uri);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipV4Address, port, typePropertiesType, networkFabricControllerId, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricInternetGatewayRuleData(id, name, resourceType, systemData, tags, location, annotation, ruleProperties, provisioningState, internetGatewayIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIPCommunityData(id, name, resourceType, systemData, tags, location, annotation, ipCommunityRules?.ToList(), configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIPExtendedCommunityData(id, name, resourceType, systemData, tags, location, annotation, ipExtendedCommunityRules?.ToList(), configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIPPrefixData(id, name, resourceType, systemData, tags, location, annotation, ipPrefixRules?.ToList(), configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricL2IsolationDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricL2IsolationDomainData(id, name, resourceType, systemData, tags, location, annotation, networkFabricId, vlanId, mtu, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateCommonPostActionResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="successfulDevices"> List of ARM Resource IDs for which the given action applied successfully. </param>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new DeviceUpdateCommonPostActionResult(error, configurationState, successfulDevices?.ToList(), failedDevices?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricL3IsolationDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricL3IsolationDomainData(id, name, resourceType, systemData, tags, location, annotation, redistributeConnectedSubnets, redistributeStaticRoutes, aggregateRouteConfiguration, connectedSubnetRoutePolicy, networkFabricId, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricInternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricInternalNetworkData(id, name, resourceType, systemData, annotation, mtu, connectedIPv4Subnets?.ToList(), connectedIPv6Subnets?.ToList(), importRoutePolicyId, exportRoutePolicyId, importRoutePolicy, exportRoutePolicy, ingressAclId, egressAclId, isMonitoringEnabled, extension, vlanId, bgpConfiguration, staticRouteConfiguration, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternalNetworkBgpConfiguration(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BgpConfiguration(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BfdConfiguration"/>. </summary>
         /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
         /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
         /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BfdConfiguration(administrativeState, intervalInMilliSeconds, multiplier);
         }
 
-        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NeighborAddress"/>. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <returns> A new <see cref="Models.NeighborAddress"/> instance for mocking. </returns>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddress(address, configurationState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricExternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricExternalNetworkData(id, name, resourceType, systemData, annotation, importRoutePolicyId, exportRoutePolicyId, importRoutePolicy, exportRoutePolicy, networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworkOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkOptionAProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkOptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricAsn, peerAsn, bfdConfiguration, ingressAclId, egressAclId);
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworkPatchOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricAsn, peerAsn, bfdConfiguration, ingressAclId, egressAclId);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricNeighborGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricNeighborGroupData(id, name, resourceType, systemData, tags, location, annotation, destination, networkTapIds?.ToList(), networkTapRuleIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceSkuData(id, name, resourceType, systemData, model, manufacturer, supportedVersions?.ToList(), supportedRoleTypes?.ToList(), interfaces?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceData(id, name, resourceType, systemData, tags, location, annotation, hostName, serialNumber, version, networkDeviceSku, networkDeviceRole, networkRackId, managementIPv4Address, managementIPv6Address, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceInterfaceData(id, name, resourceType, systemData, annotation, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricControllerData(id, name, resourceType, systemData, tags, location, annotation, infrastructureExpressRouteConnections?.ToList(), workloadExpressRouteConnections?.ToList(), infrastructureServices, workloadServices, managedResourceGroupConfiguration, networkFabricIds?.ToList(), isWorkloadManagementNetwork, isWorkloadManagementNetworkEnabled, tenantInternetGatewayIds?.ToList(), ipv4AddressSpace, ipv6AddressSpace, nfcSku, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllerServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricControllerServices"/>. </summary>
         /// <param name="ipv4AddressSpaces"> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
         /// <param name="ipv6AddressSpaces"> The IPv6 is not supported right now. </param>
         /// <returns> A new <see cref="Models.NetworkFabricControllerServices"/> instance for mocking. </returns>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricControllerServices(ipv4AddressSpaces?.ToList(), ipv6AddressSpaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricSkuData(id, name, resourceType, systemData, typePropertiesType, maxComputeRacks, maximumServerCount, supportedVersions?.ToList(), details, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricData(id, name, resourceType, systemData, tags, location, annotation, networkFabricSku, fabricVersion, routerIds?.ToList(), networkFabricControllerId, rackCount, serverCountPerRack, ipv4Prefix, ipv6Prefix, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, racks?.ToList(), l2IsolationDomains?.ToList(), l3IsolationDomains?.ToList(), configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new TerminalServerConfiguration(username, password, serialNumber, networkDeviceId, primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix);
         }
 
-        /// <summary> Initializes a new instance of VpnConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VpnConfigurationProperties(networkToNetworkInterconnectId, administrativeState, peeringOption, optionBProperties, optionAProperties);
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectData(id, name, resourceType, systemData, nniType, isManagementType, useOptionB, layer2Configuration, optionBLayer3Configuration, npbStaticRouteConfiguration, importRoutePolicy, exportRoutePolicy, egressAclId, ingressAclId, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectOptionBLayer3Configuration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, peerAsn, vlanId, fabricAsn);
         }
 
-        /// <summary> Initializes a new instance of OptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new OptionBLayer3Configuration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, peerAsn, vlanId, fabricAsn);
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectPatch(id, name, resourceType, systemData, layer2Configuration, optionBLayer3Configuration, npbStaticRouteConfiguration, importRoutePolicy, exportRoutePolicy, egressAclId, ingressAclId);
         }
 
-        /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkPacketBrokerData(id, name, resourceType, systemData, tags, location, networkFabricId, networkDeviceIds?.ToList(), sourceInterfaceIds?.ToList(), networkTapIds?.ToList(), neighborGroupIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkRackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkRackData(id, name, resourceType, systemData, tags, location, annotation, networkRackType, networkFabricId, networkDevices?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkTapRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRuleData(id, name, resourceType, systemData, tags, location, annotation, configurationType, tapRulesUri, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), networkTapId, pollingIntervalInSeconds, lastSyncedOn, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapData(id, name, resourceType, systemData, tags, location, annotation, networkPacketBrokerId, sourceTapRuleId, destinations?.ToList(), pollingType, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

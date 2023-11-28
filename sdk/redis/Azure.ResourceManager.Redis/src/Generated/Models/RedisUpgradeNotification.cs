@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Properties of upgrade notification. </summary>
     public partial class RedisUpgradeNotification
     {
-        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
         internal RedisUpgradeNotification()
         {
             UpsellNotification = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>

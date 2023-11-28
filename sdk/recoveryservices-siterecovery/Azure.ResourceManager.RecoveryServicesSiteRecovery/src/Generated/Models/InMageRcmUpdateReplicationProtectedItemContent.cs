@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input to update replication protected item. </summary>
     public partial class InMageRcmUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of InMageRcmUpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>. </summary>
         public InMageRcmUpdateReplicationProtectedItemContent()
         {
             VmNics = new ChangeTrackingList<InMageRcmNicContent>();

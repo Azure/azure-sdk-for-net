@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> DPM workload-specific error information. </summary>
     public partial class DpmErrorInfo
     {
-        /// <summary> Initializes a new instance of DpmErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmErrorInfo"/>. </summary>
         public DpmErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DpmErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmErrorInfo"/>. </summary>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations for above error code. </param>
         internal DpmErrorInfo(string errorString, IList<string> recommendations)

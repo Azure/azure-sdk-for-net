@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The top level Workspace resource container. </summary>
     public partial class OperationalInsightsWorkspacePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePatch"/>. </summary>
         public OperationalInsightsWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for Cookies match conditions. </summary>
     public partial class CookiesMatchCondition
     {
-        /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>
         public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Cookies to be matched. </param>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>

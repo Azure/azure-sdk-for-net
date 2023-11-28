@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> IsNullOrUndefined Advanced Filter. </summary>
     public partial class IsNullOrUndefinedAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of IsNullOrUndefinedAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsNullOrUndefinedAdvancedFilter"/>. </summary>
         public IsNullOrUndefinedAdvancedFilter()
         {
             OperatorType = AdvancedFilterOperatorType.IsNullOrUndefined;
         }
 
-        /// <summary> Initializes a new instance of IsNullOrUndefinedAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsNullOrUndefinedAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         internal IsNullOrUndefinedAdvancedFilter(AdvancedFilterOperatorType operatorType, string key) : base(operatorType, key)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Table properties. </summary>
     public partial class DatabaseTable
     {
-        /// <summary> Initializes a new instance of DatabaseTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseTable"/>. </summary>
         internal DatabaseTable()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseTable"/>. </summary>
         /// <param name="hasRows"> Indicates whether table is empty or not. </param>
         /// <param name="name"> Schema-qualified name of the table. </param>
         internal DatabaseTable(bool? hasRows, string name)

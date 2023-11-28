@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
     public partial class DataProtectionBackupVaultPatch
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatch"/>. </summary>
         public DataProtectionBackupVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The peering service location. </summary>
     public partial class PeeringServiceLocation : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServiceLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
         public PeeringServiceLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

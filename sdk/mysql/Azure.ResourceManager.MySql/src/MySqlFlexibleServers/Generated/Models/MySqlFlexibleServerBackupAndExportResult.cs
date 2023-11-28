@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents BackupAndExport API Response. </summary>
     public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
         public MySqlFlexibleServerBackupAndExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

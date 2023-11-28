@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to an event hub endpoint. </summary>
     public partial class RoutingEventHubProperties
     {
-        /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingEventHubProperties(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/>. </summary>
         /// <param name="id"> Id of the event hub endpoint. </param>
         /// <param name="connectionString"> The connection string of the event hub endpoint. </param>
         /// <param name="endpoint"> The url of the event hub endpoint. It must include the protocol sb://. </param>

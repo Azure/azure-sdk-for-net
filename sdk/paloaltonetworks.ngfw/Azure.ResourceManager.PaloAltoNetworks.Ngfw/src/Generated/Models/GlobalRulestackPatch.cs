@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the GlobalRulestackResource. </summary>
     public partial class GlobalRulestackPatch
     {
-        /// <summary> Initializes a new instance of GlobalRulestackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPatch"/>. </summary>
         public GlobalRulestackPatch()
         {
         }

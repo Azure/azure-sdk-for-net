@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an Operating System disk. </summary>
     public partial class ImageOSDisk : ImageDisk
     {
-        /// <summary> Initializes a new instance of ImageOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageOSDisk"/>. </summary>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. Possible values are: **Windows,** **Linux.**. </param>
         /// <param name="osState"> The OS State. For managed images, use Generalized. </param>
         public ImageOSDisk(SupportedOperatingSystemType osType, OperatingSystemStateType osState)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             OSState = osState;
         }
 
-        /// <summary> Initializes a new instance of ImageOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageOSDisk"/>. </summary>
         /// <param name="snapshot"> The snapshot. </param>
         /// <param name="managedDisk"> The managedDisk. </param>
         /// <param name="blobUri"> The Virtual Hard Disk. </param>

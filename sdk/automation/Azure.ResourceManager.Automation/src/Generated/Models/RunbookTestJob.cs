@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the test job. </summary>
     public partial class RunbookTestJob
     {
-        /// <summary> Initializes a new instance of RunbookTestJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookTestJob"/>. </summary>
         internal RunbookTestJob()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RunbookTestJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookTestJob"/>. </summary>
         /// <param name="createdOn"> Gets or sets the creation time of the test job. </param>
         /// <param name="status"> Gets or sets the status of the test job. </param>
         /// <param name="statusDetails"> Gets or sets the status details of the test job. </param>

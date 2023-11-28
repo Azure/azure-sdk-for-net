@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricFeedbackFilter. </summary>
     internal partial class MetricFeedbackFilter
     {
-        /// <summary> Initializes a new instance of MetricFeedbackFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricFeedbackFilter"/>. </summary>
         /// <param name="metricId"> filter feedbacks by metric id. </param>
         public MetricFeedbackFilter(Guid metricId)
         {

@@ -17,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class ImportSettings
     {
-        /// <summary> Initializes a new instance of ImportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
         public ImportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ImportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
         /// <param name="type"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ImportSettings(string type, IDictionary<string, object> additionalProperties)

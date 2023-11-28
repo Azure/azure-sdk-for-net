@@ -12,12 +12,12 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The CompanyInformation. </summary>
     public partial class CompanyInformation
     {
-        /// <summary> Initializes a new instance of CompanyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompanyInformation"/>. </summary>
         public CompanyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of CompanyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompanyInformation"/>. </summary>
         /// <param name="name"> Legal entity name for customer submitting Program Brief. </param>
         /// <param name="url"> Company URL for customer submitting Program Brief. </param>
         /// <param name="address"> Company's address for the customer submitting the Program Brief. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the FirewallPolicyFilterRuleCollectionAction. </summary>
     internal partial class FirewallPolicyFilterRuleCollectionAction
     {
-        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionAction"/>. </summary>
         public FirewallPolicyFilterRuleCollectionAction()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionAction"/>. </summary>
         /// <param name="actionType"> The type of action. </param>
         internal FirewallPolicyFilterRuleCollectionAction(FirewallPolicyFilterRuleCollectionActionType? actionType)
         {

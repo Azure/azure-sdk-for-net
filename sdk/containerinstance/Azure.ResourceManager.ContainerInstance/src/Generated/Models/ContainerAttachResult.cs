@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The information for the output stream from container attach. </summary>
     public partial class ContainerAttachResult
     {
-        /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAttachResult"/>. </summary>
         internal ContainerAttachResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAttachResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
         internal ContainerAttachResult(Uri webSocketUri, string password)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Custom inference server configurations. </summary>
     public partial class CustomInferencingServer : InferencingServer
     {
-        /// <summary> Initializes a new instance of CustomInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomInferencingServer"/>. </summary>
         public CustomInferencingServer()
         {
             ServerType = InferencingServerType.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         /// <param name="inferenceConfiguration"> Inference configuration for custom inferencing. </param>
         internal CustomInferencingServer(InferencingServerType serverType, OnlineInferenceConfiguration inferenceConfiguration) : base(serverType)

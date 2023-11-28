@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmGraphServicesModelFactory
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServices.GraphServicesAccountResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             return new GraphServicesAccountResourceData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>

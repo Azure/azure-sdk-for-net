@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudL2NetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudL2NetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud
             VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudL2NetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

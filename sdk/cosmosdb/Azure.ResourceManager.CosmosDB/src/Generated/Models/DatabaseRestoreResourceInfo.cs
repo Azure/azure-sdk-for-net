@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class DatabaseRestoreResourceInfo
     {
-        /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseRestoreResourceInfo"/>. </summary>
         public DatabaseRestoreResourceInfo()
         {
             CollectionNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseRestoreResourceInfo"/>. </summary>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
         internal DatabaseRestoreResourceInfo(string databaseName, IList<string> collectionNames)

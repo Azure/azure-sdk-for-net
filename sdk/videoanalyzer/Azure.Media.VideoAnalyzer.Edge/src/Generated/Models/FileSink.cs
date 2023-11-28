@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> File sink allows for video and audio content to be recorded on the file system on the edge device. </summary>
     public partial class FileSink : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of FileSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSink"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="baseDirectoryPath"> Absolute directory path where media files will be stored. </param>
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.FileSink";
         }
 
-        /// <summary> Initializes a new instance of FileSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSink"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

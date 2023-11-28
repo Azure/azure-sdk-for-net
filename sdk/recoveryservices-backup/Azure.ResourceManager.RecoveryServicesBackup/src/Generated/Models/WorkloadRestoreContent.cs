@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadRestoreContent : RestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRestoreContent"/>. </summary>
         public WorkloadRestoreContent()
         {
             PropertyBag = new ChangeTrackingDictionary<string, string>();
             ObjectType = "AzureWorkloadRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>

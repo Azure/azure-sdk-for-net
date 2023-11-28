@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalInKVCredentialPatch. </summary>
     internal partial class ServicePrincipalInKVCredentialPatch : DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of ServicePrincipalInKVCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalInKVCredentialPatch"/>. </summary>
         public ServicePrincipalInKVCredentialPatch()
         {
             DataSourceCredentialType = DataSourceCredentialKind.ServicePrincipalInKeyVault;

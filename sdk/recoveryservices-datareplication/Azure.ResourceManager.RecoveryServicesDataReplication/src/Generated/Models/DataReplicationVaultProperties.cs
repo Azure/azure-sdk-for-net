@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Vault properties. </summary>
     public partial class DataReplicationVaultProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultProperties"/>. </summary>
         public DataReplicationVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the vault. </param>
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
         /// <param name="vaultType"> Gets or sets the type of vault. </param>

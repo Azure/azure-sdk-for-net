@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for AppFigures. </summary>
     public partial class AppFiguresLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password of the AppFigures source. </param>
         /// <param name="clientKey"> The client key for the AppFigures source. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AppFigures";
         }
 
-        /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

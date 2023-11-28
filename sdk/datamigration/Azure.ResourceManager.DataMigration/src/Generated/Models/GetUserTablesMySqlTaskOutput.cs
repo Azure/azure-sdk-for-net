@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesMySqlTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskOutput"/>. </summary>
         internal GetUserTablesMySqlTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>

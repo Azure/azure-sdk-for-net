@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallDisconnectedEvent. </summary>
     public partial class CallDisconnected
     {
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         internal CallDisconnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>

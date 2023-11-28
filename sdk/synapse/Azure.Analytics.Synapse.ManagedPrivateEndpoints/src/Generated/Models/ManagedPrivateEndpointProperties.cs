@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> Properties of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointProperties"/>. </summary>
         public ManagedPrivateEndpointProperties()
         {
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointProperties"/>. </summary>
         /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>

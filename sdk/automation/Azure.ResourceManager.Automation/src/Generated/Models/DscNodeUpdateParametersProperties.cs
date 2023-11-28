@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The DscNodeUpdateParametersProperties. </summary>
     internal partial class DscNodeUpdateParametersProperties
     {
-        /// <summary> Initializes a new instance of DscNodeUpdateParametersProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeUpdateParametersProperties"/>. </summary>
         public DscNodeUpdateParametersProperties()
         {
         }

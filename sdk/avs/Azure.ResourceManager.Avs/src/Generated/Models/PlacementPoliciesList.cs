@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Represents list of placement policies. </summary>
     internal partial class PlacementPoliciesList
     {
-        /// <summary> Initializes a new instance of PlacementPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPoliciesList"/>. </summary>
         internal PlacementPoliciesList()
         {
             Value = new ChangeTrackingList<PlacementPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of PlacementPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPoliciesList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal PlacementPoliciesList(IReadOnlyList<PlacementPolicyData> value, string nextLink)

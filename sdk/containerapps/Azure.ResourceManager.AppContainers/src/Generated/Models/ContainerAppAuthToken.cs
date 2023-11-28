@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App Auth Token. </summary>
     public partial class ContainerAppAuthToken : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthToken"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppAuthToken(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthToken"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

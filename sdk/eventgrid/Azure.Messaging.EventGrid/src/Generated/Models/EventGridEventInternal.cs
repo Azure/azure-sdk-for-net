@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.Models
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
     internal partial class EventGridEventInternal
     {
-        /// <summary> Initializes a new instance of EventGridEventInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridEventInternal"/>. </summary>
         /// <param name="id"> An unique identifier for the event. </param>
         /// <param name="subject"> A resource path relative to the topic path. </param>
         /// <param name="data"> Event data specific to the event type. </param>
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.Models
             DataVersion = dataVersion;
         }
 
-        /// <summary> Initializes a new instance of EventGridEventInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridEventInternal"/>. </summary>
         /// <param name="id"> An unique identifier for the event. </param>
         /// <param name="topic"> The resource path of the event source. </param>
         /// <param name="subject"> A resource path relative to the topic path. </param>

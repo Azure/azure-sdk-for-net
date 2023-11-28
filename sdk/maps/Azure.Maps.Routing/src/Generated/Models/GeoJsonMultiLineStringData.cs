@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonMultiLineStringData. </summary>
     internal partial class GeoJsonMultiLineStringData
     {
-        /// <summary> Initializes a new instance of GeoJsonMultiLineStringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiLineStringData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonMultiLineStringData(IEnumerable<IList<IList<double>>> coordinates)

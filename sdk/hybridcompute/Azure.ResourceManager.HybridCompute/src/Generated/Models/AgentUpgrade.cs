@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The info w.r.t Agent Upgrade. </summary>
     public partial class AgentUpgrade
     {
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         public AgentUpgrade()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
         /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>

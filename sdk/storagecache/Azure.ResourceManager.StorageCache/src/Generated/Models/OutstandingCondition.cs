@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Outstanding conditions that will need to be resolved. </summary>
     public partial class OutstandingCondition
     {
-        /// <summary> Initializes a new instance of OutstandingCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutstandingCondition"/>. </summary>
         internal OutstandingCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of OutstandingCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutstandingCondition"/>. </summary>
         /// <param name="timestamp"> The time when the condition was raised. </param>
         /// <param name="message"> The issue requiring attention. </param>
         internal OutstandingCondition(DateTimeOffset? timestamp, string message)

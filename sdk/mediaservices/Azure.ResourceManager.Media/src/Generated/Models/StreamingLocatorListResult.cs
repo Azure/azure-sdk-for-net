@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of StreamingLocator items. </summary>
     internal partial class StreamingLocatorListResult
     {
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         internal StreamingLocatorListResult()
         {
             Value = new ChangeTrackingList<StreamingLocatorData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         /// <param name="value"> A collection of StreamingLocator items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal StreamingLocatorListResult(IReadOnlyList<StreamingLocatorData> value, string odataNextLink)

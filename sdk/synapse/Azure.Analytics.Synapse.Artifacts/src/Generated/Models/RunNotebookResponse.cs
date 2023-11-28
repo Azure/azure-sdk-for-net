@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook response. </summary>
     public partial class RunNotebookResponse
     {
-        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResponse"/>. </summary>
         internal RunNotebookResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResponse"/>. </summary>
         /// <param name="message"> Response message. </param>
         /// <param name="result"> Result of run notebook. </param>
         internal RunNotebookResponse(string message, RunNotebookResult result)

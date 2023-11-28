@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Updates severity, ticket status, and contact details in the support ticket. </summary>
     public partial class UpdateSupportTicket
     {
-        /// <summary> Initializes a new instance of UpdateSupportTicket. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateSupportTicket"/>. </summary>
         public UpdateSupportTicket()
         {
             SecondaryConsent = new ChangeTrackingList<SecondaryConsent>();

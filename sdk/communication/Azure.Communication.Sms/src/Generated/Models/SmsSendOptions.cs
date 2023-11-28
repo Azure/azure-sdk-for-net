@@ -10,7 +10,7 @@ namespace Azure.Communication.Sms
     /// <summary> Optional configuration for sending SMS messages. </summary>
     public partial class SmsSendOptions
     {
-        /// <summary> Initializes a new instance of SmsSendOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         public SmsSendOptions(bool enableDeliveryReport)
         {

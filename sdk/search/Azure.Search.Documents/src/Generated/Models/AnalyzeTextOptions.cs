@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies some text and analysis components used to break that text into tokens. </summary>
     public partial class AnalyzeTextOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text to break into tokens. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)

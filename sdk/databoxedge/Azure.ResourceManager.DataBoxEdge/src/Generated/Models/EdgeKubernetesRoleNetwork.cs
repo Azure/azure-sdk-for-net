@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role network resource. </summary>
     public partial class EdgeKubernetesRoleNetwork
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleNetwork"/>. </summary>
         internal EdgeKubernetesRoleNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleNetwork"/>. </summary>
         /// <param name="cniConfig"> Cni configuration. </param>
         /// <param name="loadBalancerConfig"> Load balancer configuration. </param>
         internal EdgeKubernetesRoleNetwork(CniConfig cniConfig, DataBoxEdgeLoadBalancerConfig loadBalancerConfig)

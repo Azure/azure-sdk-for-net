@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Panorama Config. </summary>
     public partial class FirewallPanoramaConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/>. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configString"/> is null. </exception>
         public FirewallPanoramaConfiguration(string configString)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             ConfigString = configString;
         }
 
-        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/>. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <param name="vmAuthKey"> VM auth key for panorama connectivity. </param>
         /// <param name="panoramaServer"> Primary Panorama Server IP address value in dotted format for IPv4. </param>

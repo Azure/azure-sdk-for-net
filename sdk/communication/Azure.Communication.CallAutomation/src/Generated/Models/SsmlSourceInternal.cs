@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SsmlSource. </summary>
     internal partial class SsmlSourceInternal
     {
-        /// <summary> Initializes a new instance of SsmlSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
         /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
         public SsmlSourceInternal(string ssmlText)

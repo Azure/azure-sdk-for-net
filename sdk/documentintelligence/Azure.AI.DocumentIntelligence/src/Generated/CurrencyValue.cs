@@ -10,14 +10,14 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Currency field value. </summary>
     public partial class CurrencyValue
     {
-        /// <summary> Initializes a new instance of CurrencyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         internal CurrencyValue(double amount)
         {
             Amount = amount;
         }
 
-        /// <summary> Initializes a new instance of CurrencyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
         /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>

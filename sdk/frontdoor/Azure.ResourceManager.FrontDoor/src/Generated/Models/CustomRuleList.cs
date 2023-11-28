@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines contents of custom rules. </summary>
     internal partial class CustomRuleList
     {
-        /// <summary> Initializes a new instance of CustomRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleList"/>. </summary>
         public CustomRuleList()
         {
             Rules = new ChangeTrackingList<WebApplicationCustomRule>();
         }
 
-        /// <summary> Initializes a new instance of CustomRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleList"/>. </summary>
         /// <param name="rules"> List of rules. </param>
         internal CustomRuleList(IList<WebApplicationCustomRule> rules)
         {

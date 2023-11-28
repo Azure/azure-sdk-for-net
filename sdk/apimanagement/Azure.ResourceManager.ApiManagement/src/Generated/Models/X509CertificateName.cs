@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Properties of server X509Names. </summary>
     public partial class X509CertificateName
     {
-        /// <summary> Initializes a new instance of X509CertificateName. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509CertificateName"/>. </summary>
         public X509CertificateName()
         {
         }
 
-        /// <summary> Initializes a new instance of X509CertificateName. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509CertificateName"/>. </summary>
         /// <param name="name"> Common Name of the Certificate. </param>
         /// <param name="issuerCertificateThumbprint"> Thumbprint for the Issuer of the Certificate. </param>
         internal X509CertificateName(string name, string issuerCertificateThumbprint)

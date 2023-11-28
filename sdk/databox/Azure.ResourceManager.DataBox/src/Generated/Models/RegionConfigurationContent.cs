@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the configuration for the region. </summary>
     public partial class RegionConfigurationContent
     {
-        /// <summary> Initializes a new instance of RegionConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionConfigurationContent"/>. </summary>
         public RegionConfigurationContent()
         {
         }

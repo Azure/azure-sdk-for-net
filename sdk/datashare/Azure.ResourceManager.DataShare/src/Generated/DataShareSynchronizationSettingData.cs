@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareSynchronizationSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizationSettingData"/>. </summary>
         public DataShareSynchronizationSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

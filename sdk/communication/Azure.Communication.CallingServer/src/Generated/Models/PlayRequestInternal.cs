@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The PlayRequest. </summary>
     internal partial class PlayRequestInternal
     {
-        /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
         public PlayRequestInternal(PlaySourceInternal playSourceInfo)

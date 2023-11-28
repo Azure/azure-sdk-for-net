@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of Service resources. </summary>
     internal partial class ServicesListResult
     {
-        /// <summary> Initializes a new instance of ServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesListResult"/>. </summary>
         internal ServicesListResult()
         {
             Value = new ChangeTrackingList<SupportAzureServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesListResult"/>. </summary>
         /// <param name="value"> List of Service resources. </param>
         internal ServicesListResult(IReadOnlyList<SupportAzureServiceData> value)
         {

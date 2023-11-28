@@ -12,12 +12,12 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document classification parameters. </summary>
     public partial class ClassifyDocumentContent
     {
-        /// <summary> Initializes a new instance of ClassifyDocumentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentContent"/>. </summary>
         public ClassifyDocumentContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassifyDocumentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentContent"/>. </summary>
         /// <param name="urlSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
         /// <param name="base64Source">
         /// Base64 encoding of the document to classify.  Either urlSource or base64Source

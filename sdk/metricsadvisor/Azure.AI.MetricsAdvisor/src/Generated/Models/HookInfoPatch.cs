@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class HookInfoPatch
     {
-        /// <summary> Initializes a new instance of HookInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HookInfoPatch"/>. </summary>
         public HookInfoPatch()
         {
             Admins = new ChangeTrackingList<string>();

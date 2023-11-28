@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The list of available upgrade versions. </summary>
     public partial class ProvisionedClusterPoolUpgradeProfile
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfile"/>. </summary>
         public ProvisionedClusterPoolUpgradeProfile()
         {
             Upgrades = new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfile"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </param>

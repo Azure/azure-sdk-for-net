@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public abstract partial class SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
         protected SecurityPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         internal SecurityPolicyProperties(SecurityPolicyType policyType)
         {

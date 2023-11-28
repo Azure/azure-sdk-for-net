@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The StorageSignedIdentifier. </summary>
     public partial class StorageSignedIdentifier
     {
-        /// <summary> Initializes a new instance of StorageSignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSignedIdentifier"/>. </summary>
         public StorageSignedIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSignedIdentifier"/>. </summary>
         /// <param name="id"> An unique identifier of the stored access policy. </param>
         /// <param name="accessPolicy"> Access policy. </param>
         internal StorageSignedIdentifier(string id, StorageServiceAccessPolicy accessPolicy)

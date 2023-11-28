@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a data disk. </summary>
     public partial class VirtualMachineDataDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> Specifies how the virtual machine should be created. Possible values are: **Attach.** This value is used when you are using a specialized disk to create the virtual machine. **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
         public VirtualMachineDataDisk(int lun, DiskCreateOptionType createOption)
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="name"> The disk name. </param>
         /// <param name="vhd"> The virtual hard disk. </param>

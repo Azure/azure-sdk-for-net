@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentStorageData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentStorageData"/>. </summary>
         public ContainerAppManagedEnvironmentStorageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

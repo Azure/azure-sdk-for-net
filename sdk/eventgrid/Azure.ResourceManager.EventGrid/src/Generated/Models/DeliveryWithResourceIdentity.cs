@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the delivery for an event subscription with resource identity. </summary>
     public partial class DeliveryWithResourceIdentity
     {
-        /// <summary> Initializes a new instance of DeliveryWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryWithResourceIdentity"/>. </summary>
         public DeliveryWithResourceIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryWithResourceIdentity"/>. </summary>
         /// <param name="identity"> The identity to use when delivering events. </param>
         /// <param name="destination">
         /// Information about the destination where events have to be delivered for the event subscription.

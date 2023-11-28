@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement security settings. </summary>
     public partial class AS2SecuritySettings
     {
-        /// <summary> Initializes a new instance of AS2SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2SecuritySettings"/>. </summary>
         /// <param name="overrideGroupSigningCertificate"> The value indicating whether to send or request a MDN. </param>
         /// <param name="enableNrrForInboundEncodedMessages"> The value indicating whether to enable NRR for inbound encoded messages. </param>
         /// <param name="enableNrrForInboundDecodedMessages"> The value indicating whether to enable NRR for inbound decoded messages. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             EnableNrrForInboundMdn = enableNrrForInboundMdn;
         }
 
-        /// <summary> Initializes a new instance of AS2SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2SecuritySettings"/>. </summary>
         /// <param name="overrideGroupSigningCertificate"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signingCertificateName"> The name of the signing certificate. </param>
         /// <param name="encryptionCertificateName"> The name of the encryption certificate. </param>

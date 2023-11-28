@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSimPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkSimPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ueAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </param>
         /// <param name="defaultSlice"> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork
             SliceConfigurations = sliceConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

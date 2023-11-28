@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the LatencyScorecard. </summary>
     public partial class LatencyScorecard : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LatencyScorecard. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="location"> The location. </param>
         public LatencyScorecard(AzureLocation location) : base(location)
         {
             LatencyMetrics = new ChangeTrackingList<LatencyMetric>();
         }
 
-        /// <summary> Initializes a new instance of LatencyScorecard. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

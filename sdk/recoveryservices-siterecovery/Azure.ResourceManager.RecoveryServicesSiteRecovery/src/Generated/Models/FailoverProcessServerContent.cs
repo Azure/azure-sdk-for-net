@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Request to failover a process server. </summary>
     public partial class FailoverProcessServerContent
     {
-        /// <summary> Initializes a new instance of FailoverProcessServerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerContent"/>. </summary>
         public FailoverProcessServerContent()
         {
         }

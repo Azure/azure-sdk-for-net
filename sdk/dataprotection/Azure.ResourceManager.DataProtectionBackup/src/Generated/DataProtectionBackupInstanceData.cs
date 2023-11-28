@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class DataProtectionBackupInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceData"/>. </summary>
         public DataProtectionBackupInstanceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

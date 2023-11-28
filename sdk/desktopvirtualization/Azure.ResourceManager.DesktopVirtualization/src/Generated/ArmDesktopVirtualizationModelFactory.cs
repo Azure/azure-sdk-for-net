@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDesktopVirtualizationModelFactory
     {
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, applicationGroupReferences?.ToList(), isCloudPCResource, publicNetworkAccess, privateEndpointConnections?.ToList(), managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.ScalingPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingPlanData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, timeZone, scalingHostPoolType, exclusionTag, schedules?.ToList(), hostPoolReferences?.ToList(), managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPooledScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.ScalingPlanPooledScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingPlanPooledScheduleData(id, name, resourceType, systemData, daysOfWeek?.ToList(), rampUpStartTime, rampUpLoadBalancingAlgorithm, rampUpMinimumHostsPct, rampUpCapacityThresholdPct, peakStartTime, peakLoadBalancingAlgorithm, rampDownStartTime, rampDownLoadBalancingAlgorithm, rampDownMinimumHostsPct, rampDownCapacityThresholdPct, rampDownForceLogoffUsers, rampDownStopHostsWhen, rampDownWaitTimeMinutes, rampDownNotificationMessage, offPeakStartTime, offPeakLoadBalancingAlgorithm);
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPooledSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScalingPlanPooledSchedulePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingPlanPooledSchedulePatch(id, name, resourceType, systemData, daysOfWeek?.ToList(), rampUpStartTime, rampUpLoadBalancingAlgorithm, rampUpMinimumHostsPct, rampUpCapacityThresholdPct, peakStartTime, peakLoadBalancingAlgorithm, rampDownStartTime, rampDownLoadBalancingAlgorithm, rampDownMinimumHostsPct, rampDownCapacityThresholdPct, rampDownForceLogoffUsers, rampDownStopHostsWhen, rampDownWaitTimeMinutes, rampDownNotificationMessage, offPeakStartTime, offPeakLoadBalancingAlgorithm);
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPersonalScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.ScalingPlanPersonalScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingPlanPersonalScheduleData(id, name, resourceType, systemData, daysOfWeek?.ToList(), rampUpStartTime, rampUpAutoStartHosts, rampUpStartVmOnConnect, rampUpActionOnDisconnect, rampUpMinutesToWaitOnDisconnect, rampUpActionOnLogoff, rampUpMinutesToWaitOnLogoff, peakStartTime, peakStartVmOnConnect, peakActionOnDisconnect, peakMinutesToWaitOnDisconnect, peakActionOnLogoff, peakMinutesToWaitOnLogoff, rampDownStartTime, rampDownStartVmOnConnect, rampDownActionOnDisconnect, rampDownMinutesToWaitOnDisconnect, rampDownActionOnLogoff, rampDownMinutesToWaitOnLogoff, offPeakStartTime, offPeakStartVmOnConnect, offPeakActionOnDisconnect, offPeakMinutesToWaitOnDisconnect, offPeakActionOnLogoff, offPeakMinutesToWaitOnLogoff);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualApplicationGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualApplicationGroupData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, hostPoolId, workspaceId, applicationGroupType, isCloudPCResource, showInFeed, managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualApplicationGroupPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualApplicationGroupPatch(id, name, resourceType, systemData, tags, description, friendlyName, showInFeed);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationStartMenuItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DesktopVirtualizationStartMenuItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationStartMenuItem(id, name, resourceType, systemData, appAlias, filePath, commandLineArguments, iconPath, iconIndex);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualApplicationData(id, name, resourceType, systemData, objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent);
         }
 
-        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualDesktopData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualDesktopData(id, name, resourceType, systemData, objectId, description, friendlyName, iconHash, iconContent);
         }
 
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.HostPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolData(id, name, resourceType, systemData, tags, location, objectId, friendlyName, description, hostPoolType, personalDesktopAssignmentType, customRdpProperty, maxSessionLimit, loadBalancerType, ring, isValidationEnvironment, registrationInfo, vmTemplate, applicationGroupReferences?.ToList(), ssoAdfsAuthority, ssoClientId, ssoClientSecretKeyVaultPath, ssoSecretType, preferredAppGroupType, startVmOnConnect, isCloudPCResource, publicNetworkAccess, agentUpdate, privateEndpointConnections?.ToList(), managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HostPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolPatch(id, name, resourceType, systemData, tags, friendlyName, description, customRdpProperty, maxSessionLimit, personalDesktopAssignmentType, loadBalancerType, ring, isValidationEnvironment, registrationInfo, vmTemplate, ssoAdfsAuthority, ssoClientId, ssoClientSecretKeyVaultPath, ssoSecretType, preferredAppGroupType, startVmOnConnect, publicNetworkAccess, agentUpdate);
         }
 
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.UserSessionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new UserSessionData(id, name, resourceType, systemData, objectId, userPrincipalName, applicationType, sessionState, activeDirectoryUserName, createOn);
         }
 
-        /// <summary> Initializes a new instance of SessionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.SessionHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostData(id, name, resourceType, systemData, objectId, lastHeartBeatOn, sessions, agentVersion, allowNewSession, vmId, resourceId, assignedUser, friendlyName, status, statusTimestamp, osVersion, sxsStackVersion, updateState, lastUpdatedOn, updateErrorMessage, sessionHostHealthCheckResults?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SessionHostHealthCheckReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SessionHostHealthCheckReport"/>. </summary>
         /// <param name="healthCheckName"> Represents the name of the health check operation performed. </param>
         /// <param name="healthCheckResult"> Represents the Health state of the health check we performed. </param>
         /// <param name="additionalFailureDetails"> Additional detailed information on the failure. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostHealthCheckReport(healthCheckName, healthCheckResult, additionalFailureDetails);
         }
 
-        /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SessionHostHealthCheckFailureDetails"/>. </summary>
         /// <param name="message"> Failure message: hints on what is wrong and how to recover. </param>
         /// <param name="errorCode"> Error code corresponding for the failure. </param>
         /// <param name="lastHealthCheckOn"> The timestamp of the last update. </param>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostHealthCheckFailureDetails(message, errorCode, lastHealthCheckOn);
         }
 
-        /// <summary> Initializes a new instance of SessionHostPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SessionHostPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostPatch(id, name, resourceType, systemData, allowNewSession, assignedUser, friendlyName);
         }
 
-        /// <summary> Initializes a new instance of MsixPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.MsixPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MsixPackageData(id, name, resourceType, systemData, imagePath, packageName, packageFamilyName, displayName, packageRelativePath, isRegularRegistration, isActive, packageDependencies?.ToList(), version, lastUpdatedOn, packageApplications?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MsixPackagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MsixPackagePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MsixPackagePatch(id, name, resourceType, systemData, isActive, isRegularRegistration, displayName);
         }
 
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExpandMsixImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

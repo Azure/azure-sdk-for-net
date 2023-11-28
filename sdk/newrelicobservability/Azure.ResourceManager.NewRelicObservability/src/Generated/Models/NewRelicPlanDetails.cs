@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Plan data of NewRelic Monitor resource. </summary>
     public partial class NewRelicPlanDetails
     {
-        /// <summary> Initializes a new instance of NewRelicPlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         public NewRelicPlanDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicPlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>

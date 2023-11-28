@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> An API Version Set contains the common configuration for a set of API Versions relating. </summary>
     public partial class ApiVersionSetContractDetails
     {
-        /// <summary> Initializes a new instance of ApiVersionSetContractDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetContractDetails"/>. </summary>
         public ApiVersionSetContractDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiVersionSetContractDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetContractDetails"/>. </summary>
         /// <param name="id"> Identifier for existing API Version Set. Omit this value to create a new Version Set. </param>
         /// <param name="name"> The display Name of the API Version Set. </param>
         /// <param name="description"> Description of API Version Set. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The result returned from a database check name availability request. </summary>
     public partial class KustoPoolChildResourceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolChildResourceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolChildResourceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

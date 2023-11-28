@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource to retrieve throughput information for Cosmos DB resource. </summary>
     public partial class RetrieveThroughputPropertiesResource
     {
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputPropertiesResource(IEnumerable<WritableSubResource> physicalPartitionIds)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             PhysicalPartitionIds = physicalPartitionIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         internal RetrieveThroughputPropertiesResource(IList<WritableSubResource> physicalPartitionIds)
         {

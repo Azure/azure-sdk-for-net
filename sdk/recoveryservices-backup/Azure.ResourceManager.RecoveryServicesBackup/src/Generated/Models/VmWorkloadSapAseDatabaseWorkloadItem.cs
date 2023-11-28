@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific workload item representing SAP ASE Database. </summary>
     public partial class VmWorkloadSapAseDatabaseWorkloadItem : VmWorkloadItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSapAseDatabaseWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>. </summary>
         public VmWorkloadSapAseDatabaseWorkloadItem()
         {
             WorkloadItemType = "SAPAseDatabase";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapAseDatabaseWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>

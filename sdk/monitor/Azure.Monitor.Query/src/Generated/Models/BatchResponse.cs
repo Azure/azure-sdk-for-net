@@ -13,13 +13,13 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Response to a batch query. </summary>
     internal partial class BatchResponse
     {
-        /// <summary> Initializes a new instance of BatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
         internal BatchResponse()
         {
             Responses = new ChangeTrackingList<BatchQueryResponse>();
         }
 
-        /// <summary> Initializes a new instance of BatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
         internal BatchResponse(IReadOnlyList<BatchQueryResponse> responses)
         {

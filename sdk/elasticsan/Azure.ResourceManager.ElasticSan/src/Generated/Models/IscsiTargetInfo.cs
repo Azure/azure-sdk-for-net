@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Iscsi target information. </summary>
     public partial class IscsiTargetInfo
     {
-        /// <summary> Initializes a new instance of IscsiTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetInfo"/>. </summary>
         internal IscsiTargetInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetInfo"/>. </summary>
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="targetPortalHostname"> iSCSI Target Portal Host Name. </param>
         /// <param name="targetPortalPort"> iSCSI Target Portal Port. </param>

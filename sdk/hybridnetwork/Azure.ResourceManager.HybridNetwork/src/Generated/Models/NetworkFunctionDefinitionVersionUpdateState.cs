@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Publisher network function definition version update request definition. </summary>
     public partial class NetworkFunctionDefinitionVersionUpdateState
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionUpdateState"/>. </summary>
         public NetworkFunctionDefinitionVersionUpdateState()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionUpdateState"/>. </summary>
         /// <param name="versionState"> The network function definition version state. Only the 'Active' and 'Deprecated' states are allowed for updates. Other states are used for internal state transitioning. </param>
         internal NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState)
         {

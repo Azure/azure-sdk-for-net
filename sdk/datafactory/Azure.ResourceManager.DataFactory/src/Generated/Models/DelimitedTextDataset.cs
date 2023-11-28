@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Delimited text dataset. </summary>
     public partial class DelimitedTextDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DelimitedTextDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "DelimitedText";
         }
 
-        /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

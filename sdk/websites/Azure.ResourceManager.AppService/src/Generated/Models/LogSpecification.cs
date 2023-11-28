@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Log Definition of a single resource metric. </summary>
     public partial class LogSpecification
     {
-        /// <summary> Initializes a new instance of LogSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
         internal LogSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of LogSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="blobDuration"></param>

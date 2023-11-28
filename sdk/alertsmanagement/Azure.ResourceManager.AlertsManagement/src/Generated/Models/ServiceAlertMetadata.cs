@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> alert meta data information. </summary>
     public partial class ServiceAlertMetadata
     {
-        /// <summary> Initializes a new instance of ServiceAlertMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadata"/>. </summary>
         internal ServiceAlertMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadata"/>. </summary>
         /// <param name="properties">
         /// alert meta data property bag
         /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

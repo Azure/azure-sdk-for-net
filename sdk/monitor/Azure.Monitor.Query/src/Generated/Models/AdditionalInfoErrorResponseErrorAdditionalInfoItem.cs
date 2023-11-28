@@ -10,12 +10,12 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
     internal partial class AdditionalInfoErrorResponseErrorAdditionalInfoItem
     {
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseErrorAdditionalInfoItem"/>. </summary>
         internal AdditionalInfoErrorResponseErrorAdditionalInfoItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseErrorAdditionalInfoItem"/>. </summary>
         /// <param name="type"> The type of the info property (e.g. string). </param>
         /// <param name="info"> Additional information related to the error. </param>
         internal AdditionalInfoErrorResponseErrorAdditionalInfoItem(string type, string info)

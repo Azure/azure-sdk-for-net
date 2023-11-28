@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
     public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         internal AcsRouterJobReceivedEventData(bool unavailableForMatching)
         {
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UnavailableForMatching = unavailableForMatching;
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

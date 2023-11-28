@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class ProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of ProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The azure monitor parameters. </summary>
     public partial class HDInsightAzureMonitorExtensionEnableContent
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionEnableContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionEnableContent"/>. </summary>
         public HDInsightAzureMonitorExtensionEnableContent()
         {
         }

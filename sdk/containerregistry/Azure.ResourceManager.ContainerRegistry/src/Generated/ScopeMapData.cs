@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ScopeMapData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapData"/>. </summary>
         public ScopeMapData()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScopeMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

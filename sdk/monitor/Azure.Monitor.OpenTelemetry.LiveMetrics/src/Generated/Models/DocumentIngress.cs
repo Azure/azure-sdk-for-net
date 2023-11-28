@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Base class of the specific document types. </summary>
     internal partial class DocumentIngress
     {
-        /// <summary> Initializes a new instance of DocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
         public DocumentIngress()
         {
             DocumentStreamIds = new ChangeTrackingList<string>();

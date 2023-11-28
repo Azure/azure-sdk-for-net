@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public partial class ClientCertificateSubjectDistinguishedName
     {
-        /// <summary> Initializes a new instance of ClientCertificateSubjectDistinguishedName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateSubjectDistinguishedName"/>. </summary>
         public ClientCertificateSubjectDistinguishedName()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientCertificateSubjectDistinguishedName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateSubjectDistinguishedName"/>. </summary>
         /// <param name="commonName"> The common name field in the subject name. The allowed limit is 64 characters and it should be specified. </param>
         /// <param name="organization"> The organization field in the subject name. If present, the allowed limit is 64 characters. </param>
         /// <param name="organizationUnit"> The organization unit field in the subject name. If present, the allowed limit is 32 characters. </param>

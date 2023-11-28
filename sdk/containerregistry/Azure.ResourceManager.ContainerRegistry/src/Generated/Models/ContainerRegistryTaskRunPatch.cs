@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a task run. </summary>
     public partial class ContainerRegistryTaskRunPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunPatch"/>. </summary>
         public ContainerRegistryTaskRunPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

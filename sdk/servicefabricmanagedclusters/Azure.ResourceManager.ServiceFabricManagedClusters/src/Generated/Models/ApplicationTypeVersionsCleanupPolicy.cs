@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The policy used to clean up unused versions. When the policy is not specified explicitly, the default unused application versions to keep will be 3. </summary>
     internal partial class ApplicationTypeVersionsCleanupPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationTypeVersionsCleanupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionsCleanupPolicy"/>. </summary>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         public ApplicationTypeVersionsCleanupPolicy(int maxUnusedVersionsToKeep)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An XML configuration specification for a WebTest. </summary>
     internal partial class WebTestPropertiesConfiguration
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesConfiguration"/>. </summary>
         public WebTestPropertiesConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesConfiguration"/>. </summary>
         /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
         internal WebTestPropertiesConfiguration(string webTest)
         {

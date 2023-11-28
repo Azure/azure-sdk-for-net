@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The scaling rule. </summary>
     public partial class ScalingRule
     {
-        /// <summary> Initializes a new instance of ScalingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingRule"/>. </summary>
         /// <param name="actionType"> The action type. </param>
         /// <param name="evaluationCount"> This is an evaluation count for a scaling condition, the number of times a trigger condition should be successful, before scaling activity is triggered. </param>
         /// <param name="scalingMetric"> Metrics name for individual workloads. For example: cpu. </param>

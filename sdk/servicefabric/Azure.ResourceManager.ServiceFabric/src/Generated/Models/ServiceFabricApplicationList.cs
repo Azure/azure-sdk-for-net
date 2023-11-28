@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list of application resources. </summary>
     internal partial class ServiceFabricApplicationList
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationList"/>. </summary>
         internal ServiceFabricApplicationList()
         {
             Value = new ChangeTrackingList<ServiceFabricApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of application list results if there are any. </param>
         internal ServiceFabricApplicationList(IReadOnlyList<ServiceFabricApplicationData> value, string nextLink)

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the pre-build summarization results of each document. </summary>
     internal partial class AbstractiveSummarizationResult : AbstractiveSummarizationResultBase
     {
-        /// <summary> Initializes a new instance of AbstractiveSummarizationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummarizationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>

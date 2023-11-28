@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request to validate sku availability. </summary>
     public partial class SkuAvailabilityValidationContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of SkuAvailabilityValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuAvailabilityValidationContent"/>. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>

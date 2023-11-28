@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMwareToAzStackHCI NIC properties. </summary>
     public partial class VMwareToAzStackHciProtectedNicProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedNicProperties"/>. </summary>
         internal VMwareToAzStackHciProtectedNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedNicProperties"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineRunCommandData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineRunCommandData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

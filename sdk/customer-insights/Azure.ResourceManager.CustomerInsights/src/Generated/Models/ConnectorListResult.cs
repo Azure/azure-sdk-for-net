@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list connector operation. </summary>
     internal partial class ConnectorListResult
     {
-        /// <summary> Initializes a new instance of ConnectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorListResult"/>. </summary>
         internal ConnectorListResult()
         {
             Value = new ChangeTrackingList<ConnectorResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ConnectorListResult(IReadOnlyList<ConnectorResourceFormatData> value, string nextLink)

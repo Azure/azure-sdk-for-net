@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public abstract partial class RuleDataSource
     {
-        /// <summary> Initializes a new instance of RuleDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleDataSource"/>. </summary>
         protected RuleDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleDataSource"/>. </summary>
         /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
         /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>

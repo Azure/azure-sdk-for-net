@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an iot hub data connection. </summary>
     public partial class KustoIotHubDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
         public KustoIotHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = DataConnectionKind.IotHub;
         }
 
-        /// <summary> Initializes a new instance of KustoIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

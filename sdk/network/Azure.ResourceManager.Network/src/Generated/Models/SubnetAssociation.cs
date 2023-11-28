@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Subnet and it's custom security rules. </summary>
     public partial class SubnetAssociation
     {
-        /// <summary> Initializes a new instance of SubnetAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetAssociation"/>. </summary>
         internal SubnetAssociation()
         {
             SecurityRules = new ChangeTrackingList<SecurityRuleData>();
         }
 
-        /// <summary> Initializes a new instance of SubnetAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetAssociation"/>. </summary>
         /// <param name="id"> Subnet ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
         internal SubnetAssociation(ResourceIdentifier id, IReadOnlyList<SecurityRuleData> securityRules)

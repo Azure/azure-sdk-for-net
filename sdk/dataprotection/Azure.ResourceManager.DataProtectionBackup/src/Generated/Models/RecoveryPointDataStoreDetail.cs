@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> RecoveryPoint datastore details. </summary>
     public partial class RecoveryPointDataStoreDetail
     {
-        /// <summary> Initializes a new instance of RecoveryPointDataStoreDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         public RecoveryPointDataStoreDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointDataStoreDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointDataStoreId"></param>

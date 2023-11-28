@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a Virtual Machine Extension. </summary>
     public partial class VirtualMachineExtensionPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionPatch"/>. </summary>
         public VirtualMachineExtensionPatch()
         {
         }

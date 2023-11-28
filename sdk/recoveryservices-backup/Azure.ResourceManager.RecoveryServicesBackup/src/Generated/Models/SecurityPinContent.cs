@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for get security pin request body. </summary>
     public partial class SecurityPinContent
     {
-        /// <summary> Initializes a new instance of SecurityPinContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPinContent"/>. </summary>
         public SecurityPinContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for generating a Notification. </summary>
     public partial class DevTestLabNotificationChannelNotifyContent
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelNotifyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelNotifyContent"/>. </summary>
         public DevTestLabNotificationChannelNotifyContent()
         {
         }

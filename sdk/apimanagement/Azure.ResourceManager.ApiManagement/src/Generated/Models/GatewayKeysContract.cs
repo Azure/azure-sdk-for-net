@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Gateway authentication keys. </summary>
     public partial class GatewayKeysContract
     {
-        /// <summary> Initializes a new instance of GatewayKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayKeysContract"/>. </summary>
         internal GatewayKeysContract()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayKeysContract"/>. </summary>
         /// <param name="primary"> Primary gateway key. </param>
         /// <param name="secondary"> Secondary gateway key. </param>
         internal GatewayKeysContract(string primary, string secondary)

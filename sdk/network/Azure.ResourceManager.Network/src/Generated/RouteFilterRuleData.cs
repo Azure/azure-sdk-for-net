@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class RouteFilterRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         public RouteFilterRuleData()
         {
             Communities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

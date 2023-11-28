@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// </summary>
     public partial class FirmwareData : ResourceData
     {
-        /// <summary> Initializes a new instance of FirmwareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareData"/>. </summary>
         public FirmwareData()
         {
             StatusMessages = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

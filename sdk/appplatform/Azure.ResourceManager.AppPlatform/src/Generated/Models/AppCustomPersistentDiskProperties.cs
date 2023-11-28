@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppCustomPersistentDiskProperties
     {
-        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppCustomPersistentDiskProperties"/>. </summary>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> is null. </exception>
         protected AppCustomPersistentDiskProperties(string mountPath)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             MountOptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppCustomPersistentDiskProperties"/>. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>

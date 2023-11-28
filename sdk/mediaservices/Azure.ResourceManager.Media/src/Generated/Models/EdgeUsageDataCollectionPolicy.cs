@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The EdgeUsageDataCollectionPolicy. </summary>
     public partial class EdgeUsageDataCollectionPolicy
     {
-        /// <summary> Initializes a new instance of EdgeUsageDataCollectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataCollectionPolicy"/>. </summary>
         internal EdgeUsageDataCollectionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeUsageDataCollectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataCollectionPolicy"/>. </summary>
         /// <param name="dataCollectionFrequency"> Usage data collection frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="dataReportingFrequency"> Usage data reporting frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="maxAllowedUnreportedUsageDuration"> Maximum time for which the functionality of the device will not be hampered for not reporting the usage data. </param>

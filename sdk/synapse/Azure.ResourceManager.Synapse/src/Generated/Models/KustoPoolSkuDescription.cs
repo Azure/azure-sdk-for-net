@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The Kusto SKU description of given resource type. </summary>
     public partial class KustoPoolSkuDescription
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescription"/>. </summary>
         internal KustoPoolSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescription"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> The size of the SKU. </param>

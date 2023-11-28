@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> The UnknownOrchestratorSpecificConnectionDetails. </summary>
     internal partial class UnknownOrchestratorSpecificConnectionDetails : OrchestratorSpecificConnectionDetails
     {
-        /// <summary> Initializes a new instance of UnknownOrchestratorSpecificConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOrchestratorSpecificConnectionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal UnknownOrchestratorSpecificConnectionDetails(string instanceType) : base(instanceType)
         {

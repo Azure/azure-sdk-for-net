@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties of the throttling policy. </summary>
     public partial class EventHubsThrottlingPolicy : EventHubsApplicationGroupPolicy
     {
-        /// <summary> Initializes a new instance of EventHubsThrottlingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsThrottlingPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="rateLimitThreshold"> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </param>
         /// <param name="metricId"> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             ApplicationGroupPolicyType = ApplicationGroupPolicyType.ThrottlingPolicy;
         }
 
-        /// <summary> Initializes a new instance of EventHubsThrottlingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsThrottlingPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         /// <param name="rateLimitThreshold"> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </param>

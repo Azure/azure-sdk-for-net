@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt container mapping input. </summary>
     public partial class VMwareCbtContainerMappingContent : ReplicationProviderSpecificContainerMappingContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/>. </summary>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
         /// <param name="targetLocation"> The target location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>

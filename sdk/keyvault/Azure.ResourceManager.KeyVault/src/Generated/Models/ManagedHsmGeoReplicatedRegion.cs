@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A region that this managed HSM Pool has been extended to. </summary>
     public partial class ManagedHsmGeoReplicatedRegion
     {
-        /// <summary> Initializes a new instance of ManagedHsmGeoReplicatedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmGeoReplicatedRegion"/>. </summary>
         public ManagedHsmGeoReplicatedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmGeoReplicatedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmGeoReplicatedRegion"/>. </summary>
         /// <param name="name"> Name of the geo replicated region. </param>
         /// <param name="provisioningState"> Provisioning state of the geo replicated region. </param>
         /// <param name="isPrimary"> A boolean value that indicates whether the region is the primary region or a secondary region. </param>

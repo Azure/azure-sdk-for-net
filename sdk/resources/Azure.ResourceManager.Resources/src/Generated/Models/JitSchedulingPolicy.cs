@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The JIT scheduling policies. </summary>
     public partial class JitSchedulingPolicy
     {
-        /// <summary> Initializes a new instance of JitSchedulingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/>. </summary>
         /// <param name="schedulingType"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
         /// <param name="startOn"> The start time of the request. </param>

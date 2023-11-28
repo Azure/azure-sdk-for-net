@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudKubernetesClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane for this Kubernetes Cluster. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Nodes = new ChangeTrackingList<KubernetesClusterNode>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

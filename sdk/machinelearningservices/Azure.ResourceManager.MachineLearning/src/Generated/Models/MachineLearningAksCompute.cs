@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A Machine Learning compute based on AKS. </summary>
     public partial class MachineLearningAksCompute : MachineLearningComputeProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksCompute"/>. </summary>
         public MachineLearningAksCompute()
         {
             ComputeType = ComputeType.Aks;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

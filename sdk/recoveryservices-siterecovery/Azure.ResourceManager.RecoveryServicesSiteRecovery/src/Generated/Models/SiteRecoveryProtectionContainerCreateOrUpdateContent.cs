@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection container input. </summary>
     public partial class SiteRecoveryProtectionContainerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryProtectionContainerCreateOrUpdateContent()
         {
         }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Managed Resource Group configuration properties. </summary>
     public partial class ManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         public ManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> The NFC service will be hosted in a Managed resource group. </param>
         /// <param name="location"> Managed resource group location. </param>
         internal ManagedResourceGroupConfiguration(string name, AzureLocation? location)

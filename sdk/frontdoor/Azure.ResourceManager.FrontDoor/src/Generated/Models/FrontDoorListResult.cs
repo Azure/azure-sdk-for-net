@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Result of the request to list Front Doors. It contains a list of Front Door objects and a URL link to get the next set of results. </summary>
     internal partial class FrontDoorListResult
     {
-        /// <summary> Initializes a new instance of FrontDoorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorListResult"/>. </summary>
         internal FrontDoorListResult()
         {
             Value = new ChangeTrackingList<FrontDoorData>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorListResult"/>. </summary>
         /// <param name="value"> List of Front Doors within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of Front Door objects if there are any. </param>
         internal FrontDoorListResult(IReadOnlyList<FrontDoorData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Snapshot policy Details for create and update. </summary>
     public partial class SnapshotPolicyPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public SnapshotPolicyPatch(AzureLocation location) : base(location)
         {

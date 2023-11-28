@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Details of the Credentials used to connect to Backend. </summary>
     public partial class BackendCredentialsContract
     {
-        /// <summary> Initializes a new instance of BackendCredentialsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendCredentialsContract"/>. </summary>
         public BackendCredentialsContract()
         {
             CertificateIds = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Header = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of BackendCredentialsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendCredentialsContract"/>. </summary>
         /// <param name="certificateIds"> List of Client Certificate Ids. </param>
         /// <param name="certificate"> List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided. </param>
         /// <param name="query"> Query Parameter description. </param>

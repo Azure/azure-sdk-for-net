@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sync database ID properties. </summary>
     internal partial class SyncDatabaseIdListResult
     {
-        /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncDatabaseIdListResult"/>. </summary>
         internal SyncDatabaseIdListResult()
         {
             Value = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncDatabaseIdListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SyncDatabaseIdListResult(IReadOnlyList<SubResource> value, string nextLink)

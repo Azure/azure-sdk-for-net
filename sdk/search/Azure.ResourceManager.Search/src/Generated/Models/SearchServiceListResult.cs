@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of Azure Cognitive Search services. </summary>
     internal partial class SearchServiceListResult
     {
-        /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceListResult"/>. </summary>
         internal SearchServiceListResult()
         {
             Value = new ChangeTrackingList<SearchServiceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceListResult"/>. </summary>
         /// <param name="value"> The list of Search services. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </param>
         internal SearchServiceListResult(IReadOnlyList<SearchServiceData> value, string nextLink)

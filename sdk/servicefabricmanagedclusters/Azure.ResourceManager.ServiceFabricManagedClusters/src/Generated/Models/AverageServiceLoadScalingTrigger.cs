@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. </summary>
     public partial class AverageServiceLoadScalingTrigger : ManagedServiceScalingTrigger
     {
-        /// <summary> Initializes a new instance of AverageServiceLoadScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="AverageServiceLoadScalingTrigger"/>. </summary>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
         /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Kind = ServiceScalingTriggerKind.AverageServiceLoadTrigger;
         }
 
-        /// <summary> Initializes a new instance of AverageServiceLoadScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="AverageServiceLoadScalingTrigger"/>. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>

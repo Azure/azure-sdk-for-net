@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class SandboxCustomImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of SandboxCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImageData"/>. </summary>
         public SandboxCustomImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of SandboxCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

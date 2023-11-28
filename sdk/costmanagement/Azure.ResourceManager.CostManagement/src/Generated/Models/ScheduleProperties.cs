@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the schedule. </summary>
     public partial class ScheduleProperties
     {
-        /// <summary> Initializes a new instance of ScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         /// <param name="frequency"> Frequency of the schedule. </param>
         /// <param name="startOn"> The start date and time of the scheduled action (UTC). </param>
         /// <param name="endOn"> The end date and time of the scheduled action (UTC). </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of ScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         /// <param name="frequency"> Frequency of the schedule. </param>
         /// <param name="hourOfDay"> UTC time at which cost analysis data will be emailed. </param>
         /// <param name="daysOfWeek"> Day names in english on which cost analysis data will be emailed. This property is applicable when frequency is Weekly or Monthly. </param>

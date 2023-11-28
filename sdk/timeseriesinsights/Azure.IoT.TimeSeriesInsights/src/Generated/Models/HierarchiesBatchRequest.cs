@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to perform a single operation on a batch of hierarchies. Exactly one of "get", "put" or "delete" must be set. </summary>
     internal partial class HierarchiesBatchRequest
     {
-        /// <summary> Initializes a new instance of HierarchiesBatchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesBatchRequest"/>. </summary>
         public HierarchiesBatchRequest()
         {
             Put = new ChangeTrackingList<TimeSeriesHierarchy>();

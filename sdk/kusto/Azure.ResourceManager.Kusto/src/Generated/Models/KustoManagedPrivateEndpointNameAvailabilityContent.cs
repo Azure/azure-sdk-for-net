@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a managedPrivateEndpoints check name availability request. </summary>
     public partial class KustoManagedPrivateEndpointNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Managed private endpoint resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoManagedPrivateEndpointNameAvailabilityContent(string name)

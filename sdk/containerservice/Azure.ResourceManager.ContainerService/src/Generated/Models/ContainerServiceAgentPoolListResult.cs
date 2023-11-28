@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Agent Pools operation. </summary>
     internal partial class ContainerServiceAgentPoolListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
         internal ContainerServiceAgentPoolListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
         /// <param name="value"> The list of agent pools. </param>
         /// <param name="nextLink"> The URL to get the next set of agent pool results. </param>
         internal ContainerServiceAgentPoolListResult(IReadOnlyList<ContainerServiceAgentPoolData> value, string nextLink)

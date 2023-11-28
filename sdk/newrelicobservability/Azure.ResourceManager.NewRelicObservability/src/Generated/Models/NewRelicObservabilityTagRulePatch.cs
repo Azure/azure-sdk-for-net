@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The type used for update operations of the TagRule. </summary>
     public partial class NewRelicObservabilityTagRulePatch
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRulePatch"/>. </summary>
         public NewRelicObservabilityTagRulePatch()
         {
         }

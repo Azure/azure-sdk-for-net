@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 switch provider details. </summary>
     public partial class InMageAzureV2SwitchProviderDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderDetails"/>. </summary>
         internal InMageAzureV2SwitchProviderDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderDetails"/>. </summary>
         /// <param name="targetVaultId"> The target vault Id. </param>
         /// <param name="targetResourceId"> The target resource Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>

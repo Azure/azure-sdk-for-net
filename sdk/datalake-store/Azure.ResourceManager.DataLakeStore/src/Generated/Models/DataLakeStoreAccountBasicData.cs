@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Basic Data Lake Store account information, returned on list calls. </summary>
     public partial class DataLakeStoreAccountBasicData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountBasicData"/>. </summary>
         internal DataLakeStoreAccountBasicData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountBasicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

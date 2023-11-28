@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
     public partial class KubernetesGitRepository
     {
-        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepository"/>. </summary>
         public KubernetesGitRepository()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepository"/>. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>

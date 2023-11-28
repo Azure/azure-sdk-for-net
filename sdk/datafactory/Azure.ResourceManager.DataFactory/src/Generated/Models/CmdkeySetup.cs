@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The custom setup of running cmdkey commands. </summary>
     public partial class CmdkeySetup : CustomSetupBase
     {
-        /// <summary> Initializes a new instance of CmdkeySetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
         /// <param name="password"> The password of data source access. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CustomSetupBaseType = "CmdkeySetup";
         }
 
-        /// <summary> Initializes a new instance of CmdkeySetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>

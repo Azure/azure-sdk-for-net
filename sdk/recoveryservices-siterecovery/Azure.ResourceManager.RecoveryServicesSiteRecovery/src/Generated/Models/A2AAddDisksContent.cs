@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A add disk(s) input. </summary>
     public partial class A2AAddDisksContent : SiteRecoveryAddDisksProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AAddDisksContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AAddDisksContent"/>. </summary>
         public A2AAddDisksContent()
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();

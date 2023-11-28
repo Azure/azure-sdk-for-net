@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
     public partial class VirtualMachineGalleryApplication
     {
-        /// <summary> Initializes a new instance of VirtualMachineGalleryApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
         public VirtualMachineGalleryApplication(string packageReferenceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             PackageReferenceId = packageReferenceId;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineGalleryApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineGalleryApplication"/>. </summary>
         /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>

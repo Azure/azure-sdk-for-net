@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class CloudServiceSwapData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceSwapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
         public CloudServiceSwapData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceSwapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

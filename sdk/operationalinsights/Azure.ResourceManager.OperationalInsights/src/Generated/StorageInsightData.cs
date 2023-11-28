@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class StorageInsightData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageInsightData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
         public StorageInsightData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tables = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageInsightData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

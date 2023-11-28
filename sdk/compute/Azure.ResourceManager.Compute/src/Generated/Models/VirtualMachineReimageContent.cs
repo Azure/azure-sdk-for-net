@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Parameters for Reimaging Virtual Machine. NOTE: Virtual Machine OS disk will always be reimaged. </summary>
     public partial class VirtualMachineReimageContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineReimageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineReimageContent"/>. </summary>
         public VirtualMachineReimageContent()
         {
         }

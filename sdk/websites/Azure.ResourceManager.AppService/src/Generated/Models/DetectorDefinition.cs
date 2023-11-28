@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing detector definition. </summary>
     public partial class DetectorDefinition
     {
-        /// <summary> Initializes a new instance of DetectorDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDefinition"/>. </summary>
         public DetectorDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectorDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDefinition"/>. </summary>
         /// <param name="displayName"> Display name of the detector. </param>
         /// <param name="description"> Description of the detector. </param>
         /// <param name="rank"> Detector Rank. </param>

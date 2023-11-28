@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeShareData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
         /// <param name="shareStatus"> Current status of the share. </param>
         /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
         /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

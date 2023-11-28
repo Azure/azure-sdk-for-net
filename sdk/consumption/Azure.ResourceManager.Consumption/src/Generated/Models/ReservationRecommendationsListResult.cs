@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing reservation recommendations. </summary>
     internal partial class ReservationRecommendationsListResult
     {
-        /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRecommendationsListResult"/>. </summary>
         internal ReservationRecommendationsListResult()
         {
             Value = new ChangeTrackingList<ConsumptionReservationRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRecommendationsListResult"/>. </summary>
         /// <param name="value">
         /// The list of reservation recommendations.
         /// Please note <see cref="ConsumptionReservationRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
