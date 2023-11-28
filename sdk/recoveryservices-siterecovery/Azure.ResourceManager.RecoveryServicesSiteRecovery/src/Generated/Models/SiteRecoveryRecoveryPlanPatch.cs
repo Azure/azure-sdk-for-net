@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
+        /// <param name="properties"> Recovery plan update properties. </param>
+        internal SiteRecoveryRecoveryPlanPatch(UpdateRecoveryPlanContentProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Recovery plan update properties. </summary>
         internal UpdateRecoveryPlanContentProperties Properties { get; set; }
         /// <summary> The recovery plan groups. </summary>

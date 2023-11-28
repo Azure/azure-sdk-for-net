@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteContent"/>. </summary>
+        /// <param name="resourceGuardOperationRequests"></param>
+        /// <param name="resourceToBeDeleted"></param>
+        internal UnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted)
+        {
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            ResourceToBeDeleted = resourceToBeDeleted;
+        }
+
         /// <summary> Gets the resource guard operation requests. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
         /// <summary> Gets or sets the resource to be deleted. </summary>

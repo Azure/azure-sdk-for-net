@@ -21,6 +21,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
+        /// <param name="ipConfigName"></param>
+        /// <param name="isPrimary"></param>
+        /// <param name="isSeletedForFailover"></param>
+        /// <param name="recoverySubnetName"></param>
+        /// <param name="recoveryStaticIPAddress"></param>
+        /// <param name="recoveryPublicIPAddressId"></param>
+        /// <param name="recoveryLBBackendAddressPoolIds"></param>
+        /// <param name="tfoSubnetName"></param>
+        /// <param name="tfoStaticIPAddress"></param>
+        /// <param name="tfoPublicIPAddressId"></param>
+        /// <param name="tfoLBBackendAddressPoolIds"></param>
+        internal HyperVFailoverIPConfigDetails(string ipConfigName, bool? isPrimary, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, ResourceIdentifier recoveryPublicIPAddressId, IList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IList<string> tfoLBBackendAddressPoolIds)
+        {
+            IPConfigName = ipConfigName;
+            IsPrimary = isPrimary;
+            IsSeletedForFailover = isSeletedForFailover;
+            RecoverySubnetName = recoverySubnetName;
+            RecoveryStaticIPAddress = recoveryStaticIPAddress;
+            RecoveryPublicIPAddressId = recoveryPublicIPAddressId;
+            RecoveryLBBackendAddressPoolIds = recoveryLBBackendAddressPoolIds;
+            TfoSubnetName = tfoSubnetName;
+            TfoStaticIPAddress = tfoStaticIPAddress;
+            TfoPublicIPAddressId = tfoPublicIPAddressId;
+            TfoLBBackendAddressPoolIds = tfoLBBackendAddressPoolIds;
+        }
+
         /// <summary> Gets or sets the ip config name. </summary>
         public string IPConfigName { get; set; }
         /// <summary> Gets or sets the is primary. </summary>

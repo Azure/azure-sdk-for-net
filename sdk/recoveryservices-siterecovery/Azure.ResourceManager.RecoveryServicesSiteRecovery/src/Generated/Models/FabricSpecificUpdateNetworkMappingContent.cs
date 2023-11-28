@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificUpdateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        internal FabricSpecificUpdateNetworkMappingContent(string instanceType)
+        {
+            InstanceType = instanceType;
+        }
+
         /// <summary> The instance type. </summary>
         internal string InstanceType { get; set; }
     }

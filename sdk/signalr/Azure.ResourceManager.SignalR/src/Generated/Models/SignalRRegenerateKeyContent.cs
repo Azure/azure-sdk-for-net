@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.SignalR.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SignalRRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of access key. </param>
+        internal SignalRRegenerateKeyContent(SignalRKeyType? keyType)
+        {
+            KeyType = keyType;
+        }
+
         /// <summary> The type of access key. </summary>
         public SignalRKeyType? KeyType { get; set; }
     }

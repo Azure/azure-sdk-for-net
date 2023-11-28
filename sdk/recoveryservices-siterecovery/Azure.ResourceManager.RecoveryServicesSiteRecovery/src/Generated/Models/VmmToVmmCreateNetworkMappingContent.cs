@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             InstanceType = "VmmToVmm";
         }
+
+        /// <summary> Initializes a new instance of <see cref="VmmToVmmCreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        internal VmmToVmmCreateNetworkMappingContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "VmmToVmm";
+        }
     }
 }

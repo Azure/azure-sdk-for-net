@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="deleteMigrationResources"> A value indicating whether Migration resources to be deleted. </param>
+        internal VMwareCbtResumeReplicationContent(string instanceType, string deleteMigrationResources) : base(instanceType)
+        {
+            DeleteMigrationResources = deleteMigrationResources;
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
+
         /// <summary> A value indicating whether Migration resources to be deleted. </summary>
         public string DeleteMigrationResources { get; set; }
     }

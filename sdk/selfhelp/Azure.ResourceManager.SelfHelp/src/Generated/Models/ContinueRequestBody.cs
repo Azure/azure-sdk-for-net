@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Responses = new ChangeTrackingList<TroubleshooterResult>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContinueRequestBody"/>. </summary>
+        /// <param name="stepId"> Unique id of the result. </param>
+        /// <param name="responses"></param>
+        internal ContinueRequestBody(string stepId, IList<TroubleshooterResult> responses)
+        {
+            StepId = stepId;
+            Responses = responses;
+        }
+
         /// <summary> Unique id of the result. </summary>
         public string StepId { get; set; }
         /// <summary> Gets the responses. </summary>
