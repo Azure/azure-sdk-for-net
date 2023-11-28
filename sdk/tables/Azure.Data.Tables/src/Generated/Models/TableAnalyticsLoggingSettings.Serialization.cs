@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -14,7 +15,7 @@ namespace Azure.Data.Tables.Models
 {
     public partial class TableAnalyticsLoggingSettings : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");
@@ -33,7 +34,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;

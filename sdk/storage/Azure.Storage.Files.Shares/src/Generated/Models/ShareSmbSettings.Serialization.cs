@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     public partial class ShareSmbSettings : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SMB");
             if (Optional.IsDefined(Multichannel))
@@ -23,7 +24,9 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             SmbMultichannel multichannel = default;
             if (element.Element("Multichannel") is XElement multichannelElement)

@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobItemInternal
     {
-        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
+        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             bool deleted = default;

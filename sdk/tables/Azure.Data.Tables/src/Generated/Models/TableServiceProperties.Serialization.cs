@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,7 +15,7 @@ namespace Azure.Data.Tables.Models
 {
     public partial class TableServiceProperties : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Optional.IsDefined(Logging))
@@ -41,7 +42,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             TableAnalyticsLoggingSettings logging = default;
             TableMetrics hourMetrics = default;

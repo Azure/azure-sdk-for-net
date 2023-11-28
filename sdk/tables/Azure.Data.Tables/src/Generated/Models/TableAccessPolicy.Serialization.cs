@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -14,7 +15,7 @@ namespace Azure.Data.Tables.Models
 {
     public partial class TableAccessPolicy : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (StartsOn != null)
@@ -38,7 +39,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? startsOn = default;
             DateTimeOffset? expiresOn = default;

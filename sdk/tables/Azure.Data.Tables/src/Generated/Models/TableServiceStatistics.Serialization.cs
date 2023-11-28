@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Data.Tables.Models
 {
     public partial class TableServiceStatistics
     {
-        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element)
+        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element, ModelReaderWriterOptions options = null)
         {
             TableGeoReplicationInfo geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)

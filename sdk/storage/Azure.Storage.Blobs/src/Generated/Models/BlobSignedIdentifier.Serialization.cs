@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class BlobSignedIdentifier : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -23,7 +24,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             BlobAccessPolicy accessPolicy = default;

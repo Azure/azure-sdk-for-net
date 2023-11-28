@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class ContainerPropertiesInternal
     {
-        internal static ContainerPropertiesInternal DeserializeContainerPropertiesInternal(XElement element)
+        internal static ContainerPropertiesInternal DeserializeContainerPropertiesInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset lastModified = default;
             string etag = default;

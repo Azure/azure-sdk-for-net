@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlobTags : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Tags");
             writer.WriteStartElement("TagSet");
@@ -26,7 +27,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobTags DeserializeBlobTags(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobTags DeserializeBlobTags(XElement element, ModelReaderWriterOptions options = null)
         {
             IList<BlobTag> blobTagSet = default;
             if (element.Element("TagSet") is XElement tagSetElement)

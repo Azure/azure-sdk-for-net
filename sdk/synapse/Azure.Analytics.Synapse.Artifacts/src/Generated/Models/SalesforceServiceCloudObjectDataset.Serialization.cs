@@ -77,10 +77,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(ObjectApiName);
             }
             writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
             }
             writer.WriteEndObject();
         }

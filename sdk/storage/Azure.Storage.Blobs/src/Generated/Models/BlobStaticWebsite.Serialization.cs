@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class BlobStaticWebsite : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StaticWebsite");
             writer.WriteStartElement("Enabled");
@@ -40,7 +41,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             string indexDocument = default;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using Azure.Core;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class JsonTextConfigurationInternal : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "JsonTextConfiguration");
             if (Optional.IsDefined(RecordSeparator))
@@ -23,5 +24,7 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
     }
 }

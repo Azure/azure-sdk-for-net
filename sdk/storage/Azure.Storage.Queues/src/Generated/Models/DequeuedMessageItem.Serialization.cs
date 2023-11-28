@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Queues.Models
 {
     internal partial class DequeuedMessageItem
     {
-        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element)
+        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;

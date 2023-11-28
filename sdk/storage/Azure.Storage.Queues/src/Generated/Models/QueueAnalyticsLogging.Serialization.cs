@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Queues.Models
 {
     public partial class QueueAnalyticsLogging : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");
@@ -32,7 +33,9 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueAnalyticsLogging DeserializeQueueAnalyticsLogging(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueAnalyticsLogging DeserializeQueueAnalyticsLogging(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;

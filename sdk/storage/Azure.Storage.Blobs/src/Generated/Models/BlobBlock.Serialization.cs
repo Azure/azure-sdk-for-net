@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     public partial struct BlobBlock
     {
-        internal static BlobBlock DeserializeBlobBlock(XElement element)
+        internal static BlobBlock DeserializeBlobBlock(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             long sizeLong = default;

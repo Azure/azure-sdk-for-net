@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ListHandlesResponse
     {
-        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
+        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string nextMarker = default;
             IReadOnlyList<HandleItem> handleList = default;
