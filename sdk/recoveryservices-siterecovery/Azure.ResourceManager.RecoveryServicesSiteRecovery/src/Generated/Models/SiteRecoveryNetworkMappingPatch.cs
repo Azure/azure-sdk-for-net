@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingPatch"/>. </summary>
+        /// <param name="properties"> The input properties needed to update network mapping. </param>
+        internal SiteRecoveryNetworkMappingPatch(UpdateNetworkMappingProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The input properties needed to update network mapping. </summary>
         public UpdateNetworkMappingProperties Properties { get; set; }
     }

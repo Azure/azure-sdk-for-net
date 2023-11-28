@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.Sql.Models
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStartMoveDefinition"/>. </summary>
+        /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
+        /// <param name="operationMode"> The move operation mode. </param>
+        internal ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId, ManagedDatabaseMoveOperationMode? operationMode)
+        {
+            DestinationManagedDatabaseId = destinationManagedDatabaseId;
+            OperationMode = operationMode;
+        }
+
         /// <summary> The destination managed database ID. </summary>
         public ResourceIdentifier DestinationManagedDatabaseId { get; }
         /// <summary> The move operation mode. </summary>

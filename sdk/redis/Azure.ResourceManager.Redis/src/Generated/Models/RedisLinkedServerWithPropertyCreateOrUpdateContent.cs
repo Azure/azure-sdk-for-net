@@ -27,6 +27,21 @@ namespace Azure.ResourceManager.Redis.Models
             ServerRole = serverRole;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyCreateOrUpdateContent"/>. </summary>
+        /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
+        /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
+        /// <param name="serverRole"> Role of the linked server. </param>
+        /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
+        /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
+        internal RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole, string geoReplicatedPrimaryHostName, string primaryHostName)
+        {
+            LinkedRedisCacheId = linkedRedisCacheId;
+            LinkedRedisCacheLocation = linkedRedisCacheLocation;
+            ServerRole = serverRole;
+            GeoReplicatedPrimaryHostName = geoReplicatedPrimaryHostName;
+            PrimaryHostName = primaryHostName;
+        }
+
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
         public ResourceIdentifier LinkedRedisCacheId { get; }
         /// <summary> Location of the linked redis cache. </summary>

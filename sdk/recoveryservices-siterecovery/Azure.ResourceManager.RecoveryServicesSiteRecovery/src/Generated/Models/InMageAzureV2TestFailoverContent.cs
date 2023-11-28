@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2TestFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal InMageAzureV2TestFailoverContent(string instanceType, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType)
+        {
+            RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>

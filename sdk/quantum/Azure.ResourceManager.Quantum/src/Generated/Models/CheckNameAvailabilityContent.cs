@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Quantum.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type of Quantum Workspace. </param>
+        internal CheckNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Name for checking availability. </summary>
         public string Name { get; set; }
         /// <summary> The resource type of Quantum Workspace. </summary>

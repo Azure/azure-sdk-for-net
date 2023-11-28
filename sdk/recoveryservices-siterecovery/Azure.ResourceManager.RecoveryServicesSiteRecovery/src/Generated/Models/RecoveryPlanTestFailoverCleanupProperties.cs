@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverCleanupProperties"/>. </summary>
+        /// <param name="comments"> The test failover cleanup comments. </param>
+        internal RecoveryPlanTestFailoverCleanupProperties(string comments)
+        {
+            Comments = comments;
+        }
+
         /// <summary> The test failover cleanup comments. </summary>
         public string Comments { get; set; }
     }

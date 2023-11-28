@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfSettings"/>. </summary>
+        /// <param name="resultFormat"> The format of the What-If results. </param>
+        internal ArmDeploymentWhatIfSettings(WhatIfResultFormat? resultFormat)
+        {
+            ResultFormat = resultFormat;
+        }
+
         /// <summary> The format of the What-If results. </summary>
         public WhatIfResultFormat? ResultFormat { get; set; }
     }

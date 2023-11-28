@@ -21,6 +21,21 @@ namespace Azure.ResourceManager.Sql.Models
             PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers)
+        {
+            Tags = tags;
+            ReadWriteEndpoint = readWriteEndpoint;
+            ReadOnlyEndpoint = readOnlyEndpoint;
+            FailoverDatabases = failoverDatabases;
+            PartnerServers = partnerServers;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>

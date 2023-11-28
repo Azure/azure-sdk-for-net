@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityContent"/>. </summary>
+        /// <param name="resourceType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="name"> Resource name for which availability needs to be checked. </param>
+        internal RecoveryServicesNameAvailabilityContent(ResourceType? resourceType, string name)
+        {
+            ResourceType = resourceType;
+            Name = name;
+        }
+
         /// <summary> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </summary>
         public ResourceType? ResourceType { get; set; }
         /// <summary> Resource name for which availability needs to be checked. </summary>

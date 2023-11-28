@@ -17,6 +17,19 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundRequestProperties"/>. </summary>
+        /// <param name="sessionId"> SessionId that was returned by CalculateRefund API. </param>
+        /// <param name="scope"> The scope of the refund, e.g. Reservation. </param>
+        /// <param name="reservationToReturn"> Reservation to return. </param>
+        /// <param name="returnReason"> The reason of returning the reservation. </param>
+        internal ReservationRefundRequestProperties(Guid? sessionId, string scope, ReservationToReturn reservationToReturn, string returnReason)
+        {
+            SessionId = sessionId;
+            Scope = scope;
+            ReservationToReturn = reservationToReturn;
+            ReturnReason = returnReason;
+        }
+
         /// <summary> SessionId that was returned by CalculateRefund API. </summary>
         public Guid? SessionId { get; set; }
         /// <summary> The scope of the refund, e.g. Reservation. </summary>

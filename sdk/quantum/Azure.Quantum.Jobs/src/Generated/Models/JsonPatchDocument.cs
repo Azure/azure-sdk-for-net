@@ -25,6 +25,19 @@ namespace Azure.Quantum.Jobs.Models
             Path = path;
         }
 
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/>. </summary>
+        /// <param name="op"> The operation to be performed. </param>
+        /// <param name="path"> A JSON-Pointer. </param>
+        /// <param name="value"> A value to be used in the operation on the path. </param>
+        /// <param name="from"> Optional field used in copy and move operations. </param>
+        internal JsonPatchDocument(JsonPatchOperation op, string path, object value, string @from)
+        {
+            Op = op;
+            Path = path;
+            Value = value;
+            From = @from;
+        }
+
         /// <summary> The operation to be performed. </summary>
         public JsonPatchOperation Op { get; }
         /// <summary> A JSON-Pointer. </summary>

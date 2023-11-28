@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.Sphere.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ListSphereDeviceGroupsContent"/>. </summary>
+        /// <param name="deviceGroupName">
+        /// Device Group name.
+        /// Serialized Name: ListDeviceGroupsRequest.deviceGroupName
+        /// </param>
+        internal ListSphereDeviceGroupsContent(string deviceGroupName)
+        {
+            DeviceGroupName = deviceGroupName;
+        }
+
         /// <summary>
         /// Device Group name.
         /// Serialized Name: ListDeviceGroupsRequest.deviceGroupName

@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.Sphere.Models
             DeviceIdentifiers = deviceIdentifiers.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
+        /// <param name="deviceIdentifiers">
+        /// Device identifiers of the devices to be claimed.
+        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
+        /// </param>
+        internal ClaimSphereDevicesContent(IList<string> deviceIdentifiers)
+        {
+            DeviceIdentifiers = deviceIdentifiers;
+        }
+
         /// <summary>
         /// Device identifiers of the devices to be claimed.
         /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers

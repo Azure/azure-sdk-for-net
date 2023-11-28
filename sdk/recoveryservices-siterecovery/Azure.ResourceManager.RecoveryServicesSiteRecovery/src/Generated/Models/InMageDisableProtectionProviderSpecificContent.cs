@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageDisableProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="replicaVmDeletionStatus"> A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain. </param>
+        internal InMageDisableProtectionProviderSpecificContent(string instanceType, string replicaVmDeletionStatus) : base(instanceType)
+        {
+            ReplicaVmDeletionStatus = replicaVmDeletionStatus;
+            InstanceType = instanceType ?? "InMage";
+        }
+
         /// <summary> A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain. </summary>
         public string ReplicaVmDeletionStatus { get; set; }
     }
