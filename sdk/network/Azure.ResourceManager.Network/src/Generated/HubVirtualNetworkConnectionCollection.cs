@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HubVirtualNetworkConnectionResource" /> and their operations.
-    /// Each <see cref="HubVirtualNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
-    /// To get a <see cref="HubVirtualNetworkConnectionCollection" /> instance call the GetHubVirtualNetworkConnections method from an instance of <see cref="VirtualHubResource" />.
+    /// A class representing a collection of <see cref="HubVirtualNetworkConnectionResource"/> and their operations.
+    /// Each <see cref="HubVirtualNetworkConnectionResource"/> in the collection will belong to the same instance of <see cref="VirtualHubResource"/>.
+    /// To get a <see cref="HubVirtualNetworkConnectionCollection"/> instance call the GetHubVirtualNetworkConnections method from an instance of <see cref="VirtualHubResource"/>.
     /// </summary>
     public partial class HubVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<HubVirtualNetworkConnectionResource>, IAsyncEnumerable<HubVirtualNetworkConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HubVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HubVirtualNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HubVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hubVirtualNetworkConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HubVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HubVirtualNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HubVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hubVirtualNetworkConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

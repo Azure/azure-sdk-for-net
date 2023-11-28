@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Response containing Id's for the worker, job, and assignment from an accepted offer. </summary>
+    /// <summary> Response containing ids for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult
     {
-        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
-        /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
-        /// <param name="jobId"> The Id of the job assigned. </param>
-        /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
         internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId)
         {
@@ -29,11 +29,11 @@ namespace Azure.Communication.JobRouter
             WorkerId = workerId;
         }
 
-        /// <summary> The assignment Id that assigns a worker that has accepted an offer to a job. </summary>
+        /// <summary> Id of job assignment that assigns a worker that has accepted an offer to a job. </summary>
         public string AssignmentId { get; }
-        /// <summary> The Id of the job assigned. </summary>
+        /// <summary> Id of the job assigned. </summary>
         public string JobId { get; }
-        /// <summary> The Id of the worker that has been assigned this job. </summary>
+        /// <summary> Id of the worker that has been assigned this job. </summary>
         public string WorkerId { get; }
     }
 }

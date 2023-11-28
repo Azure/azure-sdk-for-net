@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreTrustedIdProviderData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderData"/>. </summary>
         internal DataLakeStoreTrustedIdProviderData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectFileResource" /> and their operations.
-    /// Each <see cref="ProjectFileResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
-    /// To get a <see cref="ProjectFileCollection" /> instance call the GetProjectFiles method from an instance of <see cref="ProjectResource" />.
+    /// A class representing a collection of <see cref="ProjectFileResource"/> and their operations.
+    /// Each <see cref="ProjectFileResource"/> in the collection will belong to the same instance of <see cref="ProjectResource"/>.
+    /// To get a <see cref="ProjectFileCollection"/> instance call the GetProjectFiles method from an instance of <see cref="ProjectResource"/>.
     /// </summary>
     public partial class ProjectFileCollection : ArmCollection, IEnumerable<ProjectFileResource>, IAsyncEnumerable<ProjectFileResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectFileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProjectFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectFileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectFileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProjectFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectFileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

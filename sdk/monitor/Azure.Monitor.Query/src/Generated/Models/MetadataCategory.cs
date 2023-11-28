@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Categories are used to group other metadata entities. </summary>
     internal partial class MetadataCategory
     {
-        /// <summary> Initializes a new instance of MetadataCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataCategory"/>. </summary>
         /// <param name="id"> The ID of the category. </param>
         /// <param name="displayName"> The display name of the category. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="displayName"/> is null. </exception>

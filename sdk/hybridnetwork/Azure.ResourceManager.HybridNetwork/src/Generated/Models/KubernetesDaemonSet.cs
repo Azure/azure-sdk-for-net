@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm DaemonSet status properties. </summary>
     public partial class KubernetesDaemonSet
     {
-        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDaemonSet"/>. </summary>
         internal KubernetesDaemonSet()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDaemonSet"/>. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>

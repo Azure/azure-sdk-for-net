@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The claims for a rule management event data source. </summary>
     internal partial class RuleManagementEventClaimsDataSource
     {
-        /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventClaimsDataSource"/>. </summary>
         public RuleManagementEventClaimsDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventClaimsDataSource"/>. </summary>
         /// <param name="emailAddress"> the email address. </param>
         internal RuleManagementEventClaimsDataSource(string emailAddress)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The RDS configuration. </summary>
     public partial class DefenderForDatabasesAwsOfferingRds
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingRds. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
         public DefenderForDatabasesAwsOfferingRds()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingRds. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
         /// <param name="isEnabled"> Is RDS protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         internal DefenderForDatabasesAwsOfferingRds(bool? isEnabled, string cloudRoleArn)

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Attestation
     /// </summary>
     public partial class AttestationProviderData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AttestationProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AttestationProviderData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

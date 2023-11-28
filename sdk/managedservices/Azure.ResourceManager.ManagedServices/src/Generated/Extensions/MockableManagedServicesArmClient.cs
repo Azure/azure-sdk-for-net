@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource"/> object. </returns>
         public virtual ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(ResourceIdentifier id)
         {
             ManagedServicesRegistrationResource.ValidateResourceId(id);
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource"/> object. </returns>
         public virtual ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(ResourceIdentifier id)
         {
             ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource"/> object. </returns>
         public virtual ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(ResourceIdentifier id)
         {
             ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);

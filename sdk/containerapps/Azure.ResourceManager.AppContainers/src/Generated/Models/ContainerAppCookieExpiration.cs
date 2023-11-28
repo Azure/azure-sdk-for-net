@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the session cookie's expiration. </summary>
     public partial class ContainerAppCookieExpiration
     {
-        /// <summary> Initializes a new instance of ContainerAppCookieExpiration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCookieExpiration"/>. </summary>
         public ContainerAppCookieExpiration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCookieExpiration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCookieExpiration"/>. </summary>
         /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
         internal ContainerAppCookieExpiration(ContainerAppCookieExpirationConvention? convention, string timeToExpiration)

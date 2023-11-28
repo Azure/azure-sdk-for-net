@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom domain of app resource payload. </summary>
     public partial class AppPlatformCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         public AppPlatformCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>

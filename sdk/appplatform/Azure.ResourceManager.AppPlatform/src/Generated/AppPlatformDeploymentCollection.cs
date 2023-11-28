@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformDeploymentResource" /> and their operations.
-    /// Each <see cref="AppPlatformDeploymentResource" /> in the collection will belong to the same instance of <see cref="AppPlatformAppResource" />.
-    /// To get an <see cref="AppPlatformDeploymentCollection" /> instance call the GetAppPlatformDeployments method from an instance of <see cref="AppPlatformAppResource" />.
+    /// A class representing a collection of <see cref="AppPlatformDeploymentResource"/> and their operations.
+    /// Each <see cref="AppPlatformDeploymentResource"/> in the collection will belong to the same instance of <see cref="AppPlatformAppResource"/>.
+    /// To get an <see cref="AppPlatformDeploymentCollection"/> instance call the GetAppPlatformDeployments method from an instance of <see cref="AppPlatformAppResource"/>.
     /// </summary>
     public partial class AppPlatformDeploymentCollection : ArmCollection, IEnumerable<AppPlatformDeploymentResource>, IAsyncEnumerable<AppPlatformDeploymentResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformDeploymentResource> GetAllAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformDeploymentResource> GetAll(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);

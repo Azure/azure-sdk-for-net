@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Desired outbound IP resources for Azure Spring Apps resource. </summary>
     internal partial class NetworkProfileOutboundIPs
     {
-        /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileOutboundIPs"/>. </summary>
         internal NetworkProfileOutboundIPs()
         {
             PublicIPs = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileOutboundIPs"/>. </summary>
         /// <param name="publicIPs"> A list of public IP addresses. </param>
         internal NetworkProfileOutboundIPs(IReadOnlyList<IPAddress> publicIPs)
         {

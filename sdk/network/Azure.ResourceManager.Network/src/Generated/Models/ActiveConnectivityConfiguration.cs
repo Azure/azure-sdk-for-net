@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Active connectivity configuration. </summary>
     public partial class ActiveConnectivityConfiguration : EffectiveConnectivityConfiguration
     {
-        /// <summary> Initializes a new instance of ActiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfiguration"/>. </summary>
         internal ActiveConnectivityConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ActiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
         /// <param name="description"> A description of the connectivity configuration. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         protected SecretBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
         internal SecretBaseInfo(LinkerSecretType secretType)
         {

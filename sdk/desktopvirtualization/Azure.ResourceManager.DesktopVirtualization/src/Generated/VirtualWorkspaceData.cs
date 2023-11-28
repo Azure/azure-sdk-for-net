@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class VirtualWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualWorkspaceData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PrivateEndpointConnections = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

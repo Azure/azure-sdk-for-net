@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource" />.
-    /// To get a <see cref="RedisEnterprisePrivateEndpointConnectionCollection" /> instance call the GetRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource" />.
+    /// A class representing a collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// To get a <see cref="RedisEnterprisePrivateEndpointConnectionCollection"/> instance call the GetRedisEnterprisePrivateEndpointConnections method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
     /// </summary>
     public partial class RedisEnterprisePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<RedisEnterprisePrivateEndpointConnectionResource>, IAsyncEnumerable<RedisEnterprisePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterprisePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterprisePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

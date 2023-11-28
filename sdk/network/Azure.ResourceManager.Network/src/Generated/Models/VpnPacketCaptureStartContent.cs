@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Start packet capture parameters on virtual network gateway. </summary>
     public partial class VpnPacketCaptureStartContent
     {
-        /// <summary> Initializes a new instance of VpnPacketCaptureStartContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnPacketCaptureStartContent"/>. </summary>
         public VpnPacketCaptureStartContent()
         {
         }

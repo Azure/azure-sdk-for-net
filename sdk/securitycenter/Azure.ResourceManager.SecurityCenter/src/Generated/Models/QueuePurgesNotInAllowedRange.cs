@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Number of device queue purges is not in allowed range. </summary>
     public partial class QueuePurgesNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of QueuePurgesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueuePurgesNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "QueuePurgesNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of QueuePurgesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueuePurgesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

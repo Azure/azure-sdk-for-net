@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The information of an AvailablePrivateEndpointType. </summary>
     public partial class AvailablePrivateEndpointType : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointType"/>. </summary>
         internal AvailablePrivateEndpointType()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

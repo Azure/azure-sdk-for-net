@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Snapshots operation. </summary>
     internal partial class AgentPoolSnapshotListResult
     {
-        /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/>. </summary>
         internal AgentPoolSnapshotListResult()
         {
             Value = new ChangeTrackingList<AgentPoolSnapshotData>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/>. </summary>
         /// <param name="value"> The list of snapshots. </param>
         /// <param name="nextLink"> The URL to get the next set of snapshot results. </param>
         internal AgentPoolSnapshotListResult(IReadOnlyList<AgentPoolSnapshotData> value, string nextLink)

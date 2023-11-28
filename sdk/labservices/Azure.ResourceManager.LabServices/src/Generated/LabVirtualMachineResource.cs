@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
     /// A Class representing a LabVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabVirtualMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLabVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LabResource" /> using the GetLabVirtualMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabVirtualMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabVirtualMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LabResource"/> using the GetLabVirtualMachine method.
     /// </summary>
     public partial class LabVirtualMachineResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LabServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LabVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LabVirtualMachineResource(ArmClient client, LabVirtualMachineData data) : this(client, data.Id)

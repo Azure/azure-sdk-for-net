@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Binding resource properties payload. </summary>
     public partial class AppPlatformBindingProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBindingProperties"/>. </summary>
         public AppPlatformBindingProperties()
         {
             BindingParameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBindingProperties"/>. </summary>
         /// <param name="resourceName"> The name of the bound resource. </param>
         /// <param name="resourceType"> The standard Azure resource type of the bound resource. </param>
         /// <param name="resourceId"> The Azure resource id of the bound resource. </param>

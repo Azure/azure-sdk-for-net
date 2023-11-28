@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The parameters that can be provided when updating workbook properties properties. </summary>
     public partial class WorkbookPatch
     {
-        /// <summary> Initializes a new instance of WorkbookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookPatch"/>. </summary>
         public WorkbookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

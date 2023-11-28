@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a lab's support banner. </summary>
     public partial class DevTestLabSupport
     {
-        /// <summary> Initializes a new instance of DevTestLabSupport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSupport"/>. </summary>
         public DevTestLabSupport()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSupport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSupport"/>. </summary>
         /// <param name="enabled"> Is the lab support banner active/enabled at this time?. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         internal DevTestLabSupport(DevTestLabEnableStatus? enabled, string markdown)

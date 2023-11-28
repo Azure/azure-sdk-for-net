@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BmcKeySetPatchParameters represents the body of the request to patch the baseboard management controller key set. </summary>
     public partial class NetworkCloudBmcKeySetPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudBmcKeySetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetPatch"/>. </summary>
         public NetworkCloudBmcKeySetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Http listener of an application gateway. </summary>
     public partial class ApplicationGatewayHttpListener : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         public ApplicationGatewayHttpListener()
         {
             CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
             HostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

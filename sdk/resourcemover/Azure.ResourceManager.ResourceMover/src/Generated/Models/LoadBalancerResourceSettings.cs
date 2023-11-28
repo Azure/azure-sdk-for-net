@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the load balancer resource settings. </summary>
     public partial class LoadBalancerResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerResourceSettings"/>. </summary>
         public LoadBalancerResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/loadBalancers";
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

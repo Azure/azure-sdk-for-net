@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameter required for creating a linked server to redis cache. </summary>
     public partial class RedisLinkedServerWithPropertyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyCreateOrUpdateContent"/>. </summary>
         /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
         /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
         /// <param name="serverRole"> Role of the linked server. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for Update Disk Pool request. </summary>
     public partial class DiskPoolPatch
     {
-        /// <summary> Initializes a new instance of DiskPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolPatch"/>. </summary>
         public DiskPoolPatch()
         {
             ManagedByExtended = new ChangeTrackingList<string>();

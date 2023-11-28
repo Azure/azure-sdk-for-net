@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> A reference to the origin group. </summary>
     internal partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersDefaultOriginGroup"/>. </summary>
         public EndpointPropertiesUpdateParametersDefaultOriginGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersDefaultOriginGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup(ResourceIdentifier id)
         {

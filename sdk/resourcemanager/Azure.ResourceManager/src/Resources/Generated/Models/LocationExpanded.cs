@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Location information. </summary>
     public partial class LocationExpanded
     {
-        /// <summary> Initializes a new instance of LocationExpanded. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationExpanded"/>. </summary>
         internal LocationExpanded()
         {
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMappings>();

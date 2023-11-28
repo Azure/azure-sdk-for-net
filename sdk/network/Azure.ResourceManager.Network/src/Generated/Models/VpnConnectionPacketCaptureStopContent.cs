@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </summary>
     public partial class VpnConnectionPacketCaptureStopContent
     {
-        /// <summary> Initializes a new instance of VpnConnectionPacketCaptureStopContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStopContent"/>. </summary>
         public VpnConnectionPacketCaptureStopContent()
         {
             LinkConnectionNames = new ChangeTrackingList<string>();

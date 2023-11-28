@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSessionCollection. </summary>
     public partial class SparkSessionCollection
     {
-        /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         internal SparkSessionCollection(int @from, int total)
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Sessions = new ChangeTrackingList<SparkSession>();
         }
 
-        /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         /// <param name="sessions"></param>

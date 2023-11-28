@@ -13,16 +13,16 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
     public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleEngineWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="rule"> A RouterRule that resolves a collection of worker selectors to attach. </param>
-        internal RuleEngineWorkerSelectorAttachment(string kind, RouterRule rule) : base(kind)
+        internal RuleEngineWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterRule rule) : base(kind)
         {
             Rule = rule;
         }
 
         /// <summary>
-        /// A RouterRule that resolves a collection of worker selectors to attach
+        /// A RouterRule that resolves a collection of worker selectors to attach.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>

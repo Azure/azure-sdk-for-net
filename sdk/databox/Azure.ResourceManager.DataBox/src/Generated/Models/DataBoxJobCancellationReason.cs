@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Reason for cancellation. </summary>
     public partial class DataBoxJobCancellationReason
     {
-        /// <summary> Initializes a new instance of DataBoxJobCancellationReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobCancellationReason"/>. </summary>
         /// <param name="reason"> Reason for cancellation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
         public DataBoxJobCancellationReason(string reason)

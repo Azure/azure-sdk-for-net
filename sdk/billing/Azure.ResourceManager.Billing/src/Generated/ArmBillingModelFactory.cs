@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmBillingModelFactory
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Billing.BillingSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingSubscriptionData(id, name, resourceType, systemData, autoRenew, beneficiaryTenantId, billingFrequency, billingProfileId, billingPolicies, billingProfileDisplayName, billingProfileName, consumptionCostCenter, customerId, customerDisplayName, displayName, enrollmentAccountId, enrollmentAccountDisplayName, invoiceSectionId, invoiceSectionDisplayName, invoiceSectionName, lastMonthCharges, monthToDateCharges, nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency) : null, offerId, productCategory, productType, productTypeId, purchaseOn, quantity, reseller, renewalTermDetails, skuDescription, skuId, status, subscriptionId, suspensionReasons?.ToList(), termDuration, termStartOn, termEndOn, subscriptionEnrollmentAccountStatus, enrollmentAccountStartOn);
         }
 
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingAmount"/>. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> Amount value. </param>
         /// <returns> A new <see cref="Models.BillingAmount"/> instance for mocking. </returns>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingAmount(currency, value);
         }
 
-        /// <summary> Initializes a new instance of CreatedSubscriptionReseller. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreatedSubscriptionReseller"/>. </summary>
         /// <param name="resellerId"> The MPN ID of the reseller. </param>
         /// <param name="description"> The name of the reseller. </param>
         /// <returns> A new <see cref="Models.CreatedSubscriptionReseller"/> instance for mocking. </returns>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new CreatedSubscriptionReseller(resellerId, description);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionRenewalTermDetails"/>. </summary>
         /// <param name="billingFrequency"> The billing frequency of the subscription. </param>
         /// <param name="productTypeId"> The ID of the product. </param>
         /// <param name="quantity"> The number of licenses. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new SubscriptionRenewalTermDetails(billingFrequency, productTypeId, quantity, skuId, termDuration);
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
         /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to move. </param>
         /// <param name="errorDetails"> Validation error details. </param>
         /// <returns> A new <see cref="Models.BillingSubscriptionValidateMoveEligibilityResult"/> instance for mocking. </returns>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingSubscriptionValidateMoveEligibilityResult(isMoveEligible, errorDetails);
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
         /// <param name="code"> Error code for the billing subscription move validation. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> Detailed error message explaining the error. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingSubscriptionValidateMoveEligibilityError(code, message, details);
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Billing.BillingSubscriptionAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingSubscriptionAliasData(id, name, resourceType, systemData, autoRenew, beneficiaryTenantId, billingFrequency, billingProfileId, billingPolicies, billingProfileDisplayName, billingProfileName, consumptionCostCenter, customerId, customerDisplayName, displayName, enrollmentAccountId, enrollmentAccountDisplayName, invoiceSectionId, invoiceSectionDisplayName, invoiceSectionName, lastMonthCharges, monthToDateCharges, nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency) : null, offerId, productCategory, productType, productTypeId, purchaseOn, quantity, reseller, renewalTermDetails, skuDescription, skuId, status, subscriptionId, suspensionReasons?.ToList(), termDuration, termStartOn, termEndOn, subscriptionEnrollmentAccountStatus, enrollmentAccountStartOn, billingSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Billing.BillingPaymentMethodData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingPaymentMethodData(id, name, resourceType, systemData, family, paymentMethodType, accountHolderName, expiration, lastFourDigits, displayName, logos?.ToList(), status);
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodLogo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PaymentMethodLogo"/>. </summary>
         /// <param name="mimeType"> MIME type of the logo. </param>
         /// <param name="uri"> Public URL of image of the logo. </param>
         /// <returns> A new <see cref="Models.PaymentMethodLogo"/> instance for mocking. </returns>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new PaymentMethodLogo(mimeType, uri);
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Billing.BillingPaymentMethodLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingPaymentMethodLinkData(id, name, resourceType, systemData, paymentMethod);
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PaymentMethodProjectionProperties"/>. </summary>
         /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="family"> The family of payment method. </param>
         /// <param name="paymentMethodProjectionPropertiesType"> The type of payment method. </param>

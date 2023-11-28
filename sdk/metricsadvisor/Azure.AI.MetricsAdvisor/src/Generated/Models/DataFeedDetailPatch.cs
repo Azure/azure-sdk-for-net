@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of DataFeedDetailPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedDetailPatch"/>. </summary>
         public DataFeedDetailPatch()
         {
             RollUpColumns = new ChangeTrackingList<string>();

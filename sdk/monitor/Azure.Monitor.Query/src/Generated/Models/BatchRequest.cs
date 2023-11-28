@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An array of requests. </summary>
     internal partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
         /// <param name="requests"> An single request in a batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public BatchRequest(IEnumerable<BatchQueryRequest> requests)

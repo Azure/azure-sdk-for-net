@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RouteFilterRuleResource" /> and their operations.
-    /// Each <see cref="RouteFilterRuleResource" /> in the collection will belong to the same instance of <see cref="RouteFilterResource" />.
-    /// To get a <see cref="RouteFilterRuleCollection" /> instance call the GetRouteFilterRules method from an instance of <see cref="RouteFilterResource" />.
+    /// A class representing a collection of <see cref="RouteFilterRuleResource"/> and their operations.
+    /// Each <see cref="RouteFilterRuleResource"/> in the collection will belong to the same instance of <see cref="RouteFilterResource"/>.
+    /// To get a <see cref="RouteFilterRuleCollection"/> instance call the GetRouteFilterRules method from an instance of <see cref="RouteFilterResource"/>.
     /// </summary>
     public partial class RouteFilterRuleCollection : ArmCollection, IEnumerable<RouteFilterRuleResource>, IAsyncEnumerable<RouteFilterRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteFilterRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RouteFilterRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilterRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routeFilterRuleRestClient.CreateListByRouteFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteFilterRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RouteFilterRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilterRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routeFilterRuleRestClient.CreateListByRouteFilterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

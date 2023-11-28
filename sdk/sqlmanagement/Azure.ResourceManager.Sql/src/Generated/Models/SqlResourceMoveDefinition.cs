@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a resource move (rename). </summary>
     public partial class SqlResourceMoveDefinition
     {
-        /// <summary> Initializes a new instance of SqlResourceMoveDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlResourceMoveDefinition"/>. </summary>
         /// <param name="id"> The target ID for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlResourceMoveDefinition(ResourceIdentifier id)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Statuses of objects deployed by the user-specified kustomizations from the git repository. </summary>
     public partial class KubernetesObjectStatus
     {
-        /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatus"/>. </summary>
         internal KubernetesObjectStatus()
         {
             StatusConditions = new ChangeTrackingList<KubernetesObjectStatusCondition>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatus"/>. </summary>
         /// <param name="name"> Name of the applied object. </param>
         /// <param name="namespace"> Namespace of the applied object. </param>
         /// <param name="kind"> Kind of the applied object. </param>

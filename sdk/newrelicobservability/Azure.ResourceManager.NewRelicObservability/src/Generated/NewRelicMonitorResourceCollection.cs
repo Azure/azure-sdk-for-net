@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NewRelicMonitorResource" /> and their operations.
-    /// Each <see cref="NewRelicMonitorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="NewRelicMonitorResourceCollection" /> instance call the GetNewRelicMonitorResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NewRelicMonitorResource"/> and their operations.
+    /// Each <see cref="NewRelicMonitorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NewRelicMonitorResourceCollection"/> instance call the GetNewRelicMonitorResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class NewRelicMonitorResourceCollection : ArmCollection, IEnumerable<NewRelicMonitorResource>, IAsyncEnumerable<NewRelicMonitorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NewRelicMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRelicMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

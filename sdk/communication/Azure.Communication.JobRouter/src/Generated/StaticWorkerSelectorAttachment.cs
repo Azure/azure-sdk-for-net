@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a worker selector that will be attached to the job. </summary>
+    /// <summary> Describes a worker selector that will be attached to a job. </summary>
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="workerSelector"> The worker selector to attach. </param>
-        internal StaticWorkerSelectorAttachment(string kind, RouterWorkerSelector workerSelector) : base(kind)
+        internal StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterWorkerSelector workerSelector) : base(kind)
         {
             WorkerSelector = workerSelector;
         }

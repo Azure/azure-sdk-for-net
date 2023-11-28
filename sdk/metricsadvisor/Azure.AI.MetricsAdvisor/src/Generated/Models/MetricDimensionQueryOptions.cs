@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDimensionQueryOptions. </summary>
     internal partial class MetricDimensionQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricDimensionQueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
         /// <param name="dimensionName"> dimension name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> is null. </exception>
         public MetricDimensionQueryOptions(string dimensionName)

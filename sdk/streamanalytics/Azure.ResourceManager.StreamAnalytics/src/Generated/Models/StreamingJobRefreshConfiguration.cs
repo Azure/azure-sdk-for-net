@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The refresh parameters for any/all updatable user defined functions present in the job config. </summary>
     public partial class StreamingJobRefreshConfiguration
     {
-        /// <summary> Initializes a new instance of StreamingJobRefreshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobRefreshConfiguration"/>. </summary>
         public StreamingJobRefreshConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobRefreshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobRefreshConfiguration"/>. </summary>
         /// <param name="pathPattern"> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </param>
         /// <param name="dateFormat"> The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead. </param>
         /// <param name="timeFormat"> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </param>

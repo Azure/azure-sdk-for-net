@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HcxEnterpriseSiteResource" /> and their operations.
-    /// Each <see cref="HcxEnterpriseSiteResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="HcxEnterpriseSiteCollection" /> instance call the GetHcxEnterpriseSites method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="HcxEnterpriseSiteResource"/> and their operations.
+    /// Each <see cref="HcxEnterpriseSiteResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="HcxEnterpriseSiteCollection"/> instance call the GetHcxEnterpriseSites method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class HcxEnterpriseSiteCollection : ArmCollection, IEnumerable<HcxEnterpriseSiteResource>, IAsyncEnumerable<HcxEnterpriseSiteResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HcxEnterpriseSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HcxEnterpriseSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HcxEnterpriseSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hcxEnterpriseSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HcxEnterpriseSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HcxEnterpriseSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HcxEnterpriseSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hcxEnterpriseSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

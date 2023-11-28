@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The response to a list usage request. </summary>
     internal partial class ServiceAccountUsageListResult
     {
-        /// <summary> Initializes a new instance of ServiceAccountUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageListResult"/>. </summary>
         internal ServiceAccountUsageListResult()
         {
             Value = new ChangeTrackingList<ServiceAccountUsage>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Usages. </param>
         /// <param name="value"> The list of usages for Cognitive Service account. </param>
         internal ServiceAccountUsageListResult(string nextLink, IReadOnlyList<ServiceAccountUsage> value)

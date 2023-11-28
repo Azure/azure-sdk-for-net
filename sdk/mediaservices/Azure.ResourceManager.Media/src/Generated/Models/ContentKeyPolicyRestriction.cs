@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class ContentKeyPolicyRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRestriction"/>. </summary>
         protected ContentKeyPolicyRestriction()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ContentKeyPolicyRestriction(string odataType)
         {

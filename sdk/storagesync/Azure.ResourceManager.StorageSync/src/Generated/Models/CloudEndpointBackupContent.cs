@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Backup request. </summary>
     public partial class CloudEndpointBackupContent
     {
-        /// <summary> Initializes a new instance of CloudEndpointBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointBackupContent"/>. </summary>
         public CloudEndpointBackupContent()
         {
         }

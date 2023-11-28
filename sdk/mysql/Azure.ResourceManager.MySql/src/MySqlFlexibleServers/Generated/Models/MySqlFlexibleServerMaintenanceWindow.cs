@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Maintenance window of a server. </summary>
     public partial class MySqlFlexibleServerMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceWindow"/>. </summary>
         public MySqlFlexibleServerMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceWindow"/>. </summary>
         /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
         /// <param name="startHour"> start hour for maintenance window. </param>
         /// <param name="startMinute"> start minute for maintenance window. </param>

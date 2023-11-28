@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Key and identity details for Customer Managed Key encryption of load test resource. </summary>
     public partial class LoadTestingCmkEncryptionProperties
     {
-        /// <summary> Initializes a new instance of LoadTestingCmkEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingCmkEncryptionProperties"/>. </summary>
         public LoadTestingCmkEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingCmkEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingCmkEncryptionProperties"/>. </summary>
         /// <param name="identity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyUri"> key encryption key Url, versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         internal LoadTestingCmkEncryptionProperties(LoadTestingCmkIdentity identity, Uri keyUri)

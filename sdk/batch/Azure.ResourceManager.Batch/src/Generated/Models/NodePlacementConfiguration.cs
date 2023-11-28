@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Allocation configuration used by Batch Service to provision the nodes. </summary>
     internal partial class NodePlacementConfiguration
     {
-        /// <summary> Initializes a new instance of NodePlacementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodePlacementConfiguration"/>. </summary>
         public NodePlacementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NodePlacementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodePlacementConfiguration"/>. </summary>
         /// <param name="policy"> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
         internal NodePlacementConfiguration(BatchNodePlacementPolicyType? policy)
         {

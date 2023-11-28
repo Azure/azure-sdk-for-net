@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TenantPolicyDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPolicyDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantPolicyDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicyDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPolicyDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantPolicyDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPolicyDefinition method.
     /// </summary>
     public partial class TenantPolicyDefinitionResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPolicyDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPolicyDefinitionResource(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)

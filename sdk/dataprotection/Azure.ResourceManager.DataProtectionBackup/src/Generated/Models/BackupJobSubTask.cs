@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Details of Job's Sub Task. </summary>
     public partial class BackupJobSubTask
     {
-        /// <summary> Initializes a new instance of BackupJobSubTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
         /// <param name="taskId"> Task Id of the Sub Task. </param>
         /// <param name="taskName"> Name of the Sub Task. </param>
         /// <param name="taskStatus"> Status of the Sub Task. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TaskStatus = taskStatus;
         }
 
-        /// <summary> Initializes a new instance of BackupJobSubTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
         /// <param name="additionalDetails"> Additional details of Sub Tasks. </param>
         /// <param name="taskId"> Task Id of the Sub Task. </param>
         /// <param name="taskName"> Name of the Sub Task. </param>

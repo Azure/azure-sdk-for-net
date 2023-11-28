@@ -13,8 +13,8 @@ namespace Azure.Communication.JobRouter
     /// <summary> An offer of a job to a worker. </summary>
     public partial class RouterJobOffer
     {
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
-        /// <param name="jobId"> The Id of the job. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal RouterJobOffer(string jobId, int capacityCost)
@@ -25,12 +25,12 @@ namespace Azure.Communication.JobRouter
             CapacityCost = capacityCost;
         }
 
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
-        /// <param name="offerId"> The Id of the offer. </param>
-        /// <param name="jobId"> The Id of the job. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
+        /// <param name="offerId"> Id of an offer. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
-        /// <param name="offeredAt"> The time the offer was created in UTC. </param>
-        /// <param name="expiresAt"> The time that the offer will expire in UTC. </param>
+        /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
+        /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
         internal RouterJobOffer(string offerId, string jobId, int capacityCost, DateTimeOffset? offeredAt, DateTimeOffset? expiresAt)
         {
             OfferId = offerId;
@@ -40,15 +40,15 @@ namespace Azure.Communication.JobRouter
             ExpiresAt = expiresAt;
         }
 
-        /// <summary> The Id of the offer. </summary>
+        /// <summary> Id of an offer. </summary>
         public string OfferId { get; }
-        /// <summary> The Id of the job. </summary>
+        /// <summary> Id of the job. </summary>
         public string JobId { get; }
         /// <summary> The capacity cost consumed by the job offer. </summary>
         public int CapacityCost { get; }
-        /// <summary> The time the offer was created in UTC. </summary>
+        /// <summary> Timestamp when the offer was created in UTC. </summary>
         public DateTimeOffset? OfferedAt { get; }
-        /// <summary> The time that the offer will expire in UTC. </summary>
+        /// <summary> Timestamp when the offer will expire in UTC. </summary>
         public DateTimeOffset? ExpiresAt { get; }
     }
 }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoDataConnectionResource" /> and their operations.
-    /// Each <see cref="KustoDataConnectionResource" /> in the collection will belong to the same instance of <see cref="KustoDatabaseResource" />.
-    /// To get a <see cref="KustoDataConnectionCollection" /> instance call the GetKustoDataConnections method from an instance of <see cref="KustoDatabaseResource" />.
+    /// A class representing a collection of <see cref="KustoDataConnectionResource"/> and their operations.
+    /// Each <see cref="KustoDataConnectionResource"/> in the collection will belong to the same instance of <see cref="KustoDatabaseResource"/>.
+    /// To get a <see cref="KustoDataConnectionCollection"/> instance call the GetKustoDataConnections method from an instance of <see cref="KustoDatabaseResource"/>.
     /// </summary>
     public partial class KustoDataConnectionCollection : ArmCollection, IEnumerable<KustoDataConnectionResource>, IAsyncEnumerable<KustoDataConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoDataConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDataConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoDataConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDataConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

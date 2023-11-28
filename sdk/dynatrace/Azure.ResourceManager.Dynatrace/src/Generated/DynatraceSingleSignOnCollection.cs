@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DynatraceSingleSignOnResource" /> and their operations.
-    /// Each <see cref="DynatraceSingleSignOnResource" /> in the collection will belong to the same instance of <see cref="DynatraceMonitorResource" />.
-    /// To get a <see cref="DynatraceSingleSignOnCollection" /> instance call the GetDynatraceSingleSignOns method from an instance of <see cref="DynatraceMonitorResource" />.
+    /// A class representing a collection of <see cref="DynatraceSingleSignOnResource"/> and their operations.
+    /// Each <see cref="DynatraceSingleSignOnResource"/> in the collection will belong to the same instance of <see cref="DynatraceMonitorResource"/>.
+    /// To get a <see cref="DynatraceSingleSignOnCollection"/> instance call the GetDynatraceSingleSignOns method from an instance of <see cref="DynatraceMonitorResource"/>.
     /// </summary>
     public partial class DynatraceSingleSignOnCollection : ArmCollection, IEnumerable<DynatraceSingleSignOnResource>, IAsyncEnumerable<DynatraceSingleSignOnResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DynatraceSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DynatraceSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

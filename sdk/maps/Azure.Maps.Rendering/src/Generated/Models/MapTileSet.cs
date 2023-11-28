@@ -13,7 +13,7 @@ namespace Azure.Maps.Rendering
     /// <summary> Metadata for a tileset in the TileJSON format. </summary>
     public partial class MapTileSet
     {
-        /// <summary> Initializes a new instance of MapTileSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapTileSet"/>. </summary>
         internal MapTileSet()
         {
             TileEndpoints = new ChangeTrackingList<string>();

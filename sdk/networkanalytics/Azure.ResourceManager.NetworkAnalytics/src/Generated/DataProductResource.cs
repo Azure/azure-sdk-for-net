@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
 {
     /// <summary>
     /// A Class representing a DataProduct along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProductResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProductResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataProduct method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProductResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataProductResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataProduct method.
     /// </summary>
     public partial class DataProductResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProductResource(ArmClient client, DataProductData data) : this(client, data.Id)
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProductDataType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProductDataType"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProductDataType> GetDataTypesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProductDataType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProductDataType"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProductDataType> GetDataTypes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

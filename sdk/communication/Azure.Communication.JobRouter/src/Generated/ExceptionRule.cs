@@ -15,8 +15,8 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule that defines actions to execute upon a specific trigger. </summary>
     public partial class ExceptionRule
     {
-        /// <summary> Initializes a new instance of ExceptionRule. </summary>
-        /// <param name="id"> Id of the exception rule. </param>
+        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/>. </summary>
+        /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
@@ -31,8 +31,8 @@ namespace Azure.Communication.JobRouter
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExceptionRule. </summary>
-        /// <param name="id"> Id of the exception rule. </param>
+        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/>. </summary>
+        /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         internal ExceptionRule(string id, ExceptionTrigger trigger, IList<ExceptionAction> actions)
@@ -42,10 +42,10 @@ namespace Azure.Communication.JobRouter
             Actions = actions;
         }
 
-        /// <summary> Id of the exception rule. </summary>
+        /// <summary> Id of an exception rule. </summary>
         public string Id { get; }
         /// <summary>
-        /// The trigger for this exception rule
+        /// The trigger for this exception rule.
         /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
         /// </summary>

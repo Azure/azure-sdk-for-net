@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a ProviderRegistration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderRegistrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProviderRegistrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetProviderRegistration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProviderRegistrationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProviderRegistrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetProviderRegistration method.
     /// </summary>
     public partial class ProviderRegistrationResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProviderRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProviderRegistrationResource(ArmClient client, ProviderRegistrationData data) : this(client, data.Id)

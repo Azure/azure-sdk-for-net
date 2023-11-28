@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The properties of the create Advanced Schedule. </summary>
     public partial class AutomationAdvancedSchedule
     {
-        /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedSchedule"/>. </summary>
         public AutomationAdvancedSchedule()
         {
             WeekDays = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
             MonthlyOccurrences = new ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedSchedule"/>. </summary>
         /// <param name="weekDays"> Days of the week that the job should execute on. </param>
         /// <param name="monthDays"> Days of the month that the job should execute on. Must be between 1 and 31. </param>
         /// <param name="monthlyOccurrences"> Occurrences of days within a month. </param>

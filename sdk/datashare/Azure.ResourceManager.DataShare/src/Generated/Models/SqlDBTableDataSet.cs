@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DB table data set. </summary>
     public partial class SqlDBTableDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSet"/>. </summary>
         public SqlDBTableDataSet()
         {
             Kind = DataSetKind.SqlDBTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

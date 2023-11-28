@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerDevOpsAuditingSettingResource" /> and their operations.
-    /// Each <see cref="SqlServerDevOpsAuditingSettingResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerDevOpsAuditingSettingCollection" /> instance call the GetSqlServerDevOpsAuditingSettings method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> and their operations.
+    /// Each <see cref="SqlServerDevOpsAuditingSettingResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerDevOpsAuditingSettingCollection"/> instance call the GetSqlServerDevOpsAuditingSettings method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerDevOpsAuditingSettingCollection : ArmCollection, IEnumerable<SqlServerDevOpsAuditingSettingResource>, IAsyncEnumerable<SqlServerDevOpsAuditingSettingResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDevOpsAuditingSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDevOpsAuditingSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerDevOpsAuditingSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDevOpsAuditingSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

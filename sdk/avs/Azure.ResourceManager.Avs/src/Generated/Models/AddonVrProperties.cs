@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of a vSphere Replication (VR) addon. </summary>
     public partial class AddonVrProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonVrProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/>. </summary>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>
         public AddonVrProperties(int vrsCount)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             AddonType = AddonType.VR;
         }
 
-        /// <summary> Initializes a new instance of AddonVrProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>

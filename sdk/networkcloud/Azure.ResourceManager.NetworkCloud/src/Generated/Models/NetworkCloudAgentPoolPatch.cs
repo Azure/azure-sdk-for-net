@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AgentPoolPatchParameters represents the body of the request to patch the Kubernetes cluster agent pool. </summary>
     public partial class NetworkCloudAgentPoolPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudAgentPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
         public NetworkCloudAgentPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

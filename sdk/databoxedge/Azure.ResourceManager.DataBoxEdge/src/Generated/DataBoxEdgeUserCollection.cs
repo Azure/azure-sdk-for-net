@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeUserResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeUserResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeUserCollection" /> instance call the GetDataBoxEdgeUsers method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeUserResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeUserResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeUserCollection"/> instance call the GetDataBoxEdgeUsers method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeUserCollection : ArmCollection, IEnumerable<DataBoxEdgeUserResource>, IAsyncEnumerable<DataBoxEdgeUserResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeUserResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeUserResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

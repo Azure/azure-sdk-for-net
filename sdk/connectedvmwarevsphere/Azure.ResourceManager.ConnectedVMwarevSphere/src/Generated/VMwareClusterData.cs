@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareClusterData(AzureLocation location) : base(location)
         {
-            Statuses = new ChangeTrackingList<ResourceStatus>();
+            Statuses = new ChangeTrackingList<VMwareResourceStatus>();
             DatastoreIds = new ChangeTrackingList<string>();
             NetworkIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,10 +44,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the cluster. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
-        /// <param name="datastoreIds"> Gets or sets the datastore ARM ids. </param>
-        /// <param name="networkIds"> Gets or sets the network ARM ids. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="usedMemoryGB"> Gets the used physical memory on the cluster in GB. </param>
+        /// <param name="totalMemoryGB"> Gets the total amount of physical memory on the cluster in GB. </param>
+        /// <param name="usedCpuMHz"> Gets the used CPU usage across all cores on the cluster in MHz. </param>
+        /// <param name="totalCpuMHz"> Gets the max CPU usage across all cores on the cluster in MHz. </param>
+        /// <param name="datastoreIds"> Gets the datastore ARM ids. </param>
+        /// <param name="networkIds"> Gets the network ARM ids. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? usedMemoryGB, long? totalMemoryGB, long? usedCpuMHz, long? totalCpuMHz, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -58,6 +62,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MoName = moName;
             Statuses = statuses;
             CustomResourceName = customResourceName;
+            UsedMemoryGB = usedMemoryGB;
+            TotalMemoryGB = totalMemoryGB;
+            UsedCpuMHz = usedCpuMHz;
+            TotalCpuMHz = totalCpuMHz;
             DatastoreIds = datastoreIds;
             NetworkIds = networkIds;
             ProvisioningState = provisioningState;
@@ -78,14 +86,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Gets or sets the vCenter Managed Object name for the cluster. </summary>
         public string MoName { get; }
         /// <summary> The resource status information. </summary>
-        public IReadOnlyList<ResourceStatus> Statuses { get; }
+        public IReadOnlyList<VMwareResourceStatus> Statuses { get; }
         /// <summary> Gets the name of the corresponding resource in Kubernetes. </summary>
         public string CustomResourceName { get; }
-        /// <summary> Gets or sets the datastore ARM ids. </summary>
+        /// <summary> Gets the used physical memory on the cluster in GB. </summary>
+        public long? UsedMemoryGB { get; }
+        /// <summary> Gets the total amount of physical memory on the cluster in GB. </summary>
+        public long? TotalMemoryGB { get; }
+        /// <summary> Gets the used CPU usage across all cores on the cluster in MHz. </summary>
+        public long? UsedCpuMHz { get; }
+        /// <summary> Gets the max CPU usage across all cores on the cluster in MHz. </summary>
+        public long? TotalCpuMHz { get; }
+        /// <summary> Gets the datastore ARM ids. </summary>
         public IReadOnlyList<string> DatastoreIds { get; }
-        /// <summary> Gets or sets the network ARM ids. </summary>
+        /// <summary> Gets the network ARM ids. </summary>
         public IReadOnlyList<string> NetworkIds { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public VMwareResourceProvisioningState? ProvisioningState { get; }
     }
 }

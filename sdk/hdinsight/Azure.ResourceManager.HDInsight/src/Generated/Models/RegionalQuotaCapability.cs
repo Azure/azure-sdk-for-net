@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The regional quota capacity. </summary>
     public partial class RegionalQuotaCapability
     {
-        /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalQuotaCapability"/>. </summary>
         internal RegionalQuotaCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalQuotaCapability"/>. </summary>
         /// <param name="region"> The region name. </param>
         /// <param name="coresUsed"> The number of cores used in the region. </param>
         /// <param name="coresAvailable"> The number of cores available in the region. </param>

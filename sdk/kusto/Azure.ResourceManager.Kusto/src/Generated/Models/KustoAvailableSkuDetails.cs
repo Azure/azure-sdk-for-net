@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Azure resource SKU definition. </summary>
     public partial class KustoAvailableSkuDetails
     {
-        /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAvailableSkuDetails"/>. </summary>
         internal KustoAvailableSkuDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAvailableSkuDetails"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>

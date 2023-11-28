@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Sampling settings for Diagnostic. </summary>
     public partial class SamplingSettings
     {
-        /// <summary> Initializes a new instance of SamplingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingSettings"/>. </summary>
         public SamplingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SamplingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingSettings"/>. </summary>
         /// <param name="samplingType"> Sampling type. </param>
         /// <param name="percentage"> Rate of sampling for fixed-rate sampling. </param>
         internal SamplingSettings(SamplingType? samplingType, double? percentage)

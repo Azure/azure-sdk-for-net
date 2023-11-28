@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class SynapseGetSsisObjectMetadataContent
     {
-        /// <summary> Initializes a new instance of SynapseGetSsisObjectMetadataContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGetSsisObjectMetadataContent"/>. </summary>
         public SynapseGetSsisObjectMetadataContent()
         {
         }

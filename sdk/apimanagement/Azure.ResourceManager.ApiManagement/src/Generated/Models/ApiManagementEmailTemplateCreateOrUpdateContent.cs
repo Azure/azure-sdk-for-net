@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Email Template update Parameters. </summary>
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
         public ApiManagementEmailTemplateCreateOrUpdateContent()
         {
             Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();

@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A field that is used as part of the semantic configuration. </summary>
     public partial class SemanticField
     {
-        /// <summary> Initializes a new instance of SemanticField. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
         /// <param name="fieldName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
         public SemanticField(string fieldName)

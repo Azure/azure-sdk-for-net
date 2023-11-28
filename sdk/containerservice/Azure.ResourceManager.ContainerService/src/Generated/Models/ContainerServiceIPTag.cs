@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Contains the IPTag associated with the object. </summary>
     public partial class ContainerServiceIPTag
     {
-        /// <summary> Initializes a new instance of ContainerServiceIPTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceIPTag"/>. </summary>
         public ContainerServiceIPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceIPTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceIPTag"/>. </summary>
         /// <param name="ipTagType"> The IP tag type. Example: RoutingPreference. </param>
         /// <param name="tag"> The value of the IP tag associated with the public IP. Example: Internet. </param>
         internal ContainerServiceIPTag(string ipTagType, string tag)

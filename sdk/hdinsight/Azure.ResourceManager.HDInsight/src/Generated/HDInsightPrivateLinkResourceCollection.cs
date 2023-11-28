@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HDInsightPrivateLinkResource" /> and their operations.
-    /// Each <see cref="HDInsightPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="HDInsightClusterResource" />.
-    /// To get a <see cref="HDInsightPrivateLinkResourceCollection" /> instance call the GetHDInsightPrivateLinkResources method from an instance of <see cref="HDInsightClusterResource" />.
+    /// A class representing a collection of <see cref="HDInsightPrivateLinkResource"/> and their operations.
+    /// Each <see cref="HDInsightPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HDInsightClusterResource"/>.
+    /// To get a <see cref="HDInsightPrivateLinkResourceCollection"/> instance call the GetHDInsightPrivateLinkResources method from an instance of <see cref="HDInsightClusterResource"/>.
     /// </summary>
     public partial class HDInsightPrivateLinkResourceCollection : ArmCollection, IEnumerable<HDInsightPrivateLinkResource>, IAsyncEnumerable<HDInsightPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     public abstract partial class ExceptionAction : IUtf8JsonSerializable
     {
         /// <summary> The type discriminator describing a sub-type of ExceptionAction. </summary>
-        public string Kind { get; protected set; }
+        public ExceptionActionKind Kind { get; protected set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,8 +21,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

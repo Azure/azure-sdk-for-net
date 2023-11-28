@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Report data. </summary>
     public partial class ReportRecordContract
     {
-        /// <summary> Initializes a new instance of ReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportRecordContract"/>. </summary>
         internal ReportRecordContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportRecordContract"/>. </summary>
         /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
         /// <param name="timestamp">
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.

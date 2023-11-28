@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteFunctionResource" /> and their operations.
-    /// Each <see cref="SiteFunctionResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteFunctionCollection" /> instance call the GetSiteFunctions method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteFunctionResource"/> and their operations.
+    /// Each <see cref="SiteFunctionResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteFunctionCollection"/> instance call the GetSiteFunctions method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteFunctionCollection : ArmCollection, IEnumerable<SiteFunctionResource>, IAsyncEnumerable<SiteFunctionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteFunctionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteFunctionWebAppsRestClient.CreateListFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteFunctionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteFunctionWebAppsRestClient.CreateListFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

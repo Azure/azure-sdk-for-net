@@ -13,13 +13,13 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
     public partial class ManualReclassifyExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManualReclassifyExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        internal ManualReclassifyExceptionAction(string id, string kind, string queueId, int? priority, IList<RouterWorkerSelector> workerSelectors) : base(id, kind)
+        internal ManualReclassifyExceptionAction(string id, ExceptionActionKind kind, string queueId, int? priority, IList<RouterWorkerSelector> workerSelectors) : base(id, kind)
         {
             QueueId = queueId;
             Priority = priority;

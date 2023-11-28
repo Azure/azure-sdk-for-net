@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningRegistry data model. </summary>
     public partial class MachineLearningRegistryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningRegistryData(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
             RegionDetails = new ChangeTrackingList<RegistryRegionArmDetails>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

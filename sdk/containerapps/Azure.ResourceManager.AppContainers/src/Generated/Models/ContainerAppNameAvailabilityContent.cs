@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The check availability request body. </summary>
     public partial class ContainerAppNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ContainerAppNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNameAvailabilityContent"/>. </summary>
         public ContainerAppNameAvailabilityContent()
         {
         }

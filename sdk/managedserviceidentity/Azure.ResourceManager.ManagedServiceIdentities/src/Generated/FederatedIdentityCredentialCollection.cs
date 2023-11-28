@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FederatedIdentityCredentialResource" /> and their operations.
-    /// Each <see cref="FederatedIdentityCredentialResource" /> in the collection will belong to the same instance of <see cref="UserAssignedIdentityResource" />.
-    /// To get a <see cref="FederatedIdentityCredentialCollection" /> instance call the GetFederatedIdentityCredentials method from an instance of <see cref="UserAssignedIdentityResource" />.
+    /// A class representing a collection of <see cref="FederatedIdentityCredentialResource"/> and their operations.
+    /// Each <see cref="FederatedIdentityCredentialResource"/> in the collection will belong to the same instance of <see cref="UserAssignedIdentityResource"/>.
+    /// To get a <see cref="FederatedIdentityCredentialCollection"/> instance call the GetFederatedIdentityCredentials method from an instance of <see cref="UserAssignedIdentityResource"/>.
     /// </summary>
     public partial class FederatedIdentityCredentialCollection : ArmCollection, IEnumerable<FederatedIdentityCredentialResource>, IAsyncEnumerable<FederatedIdentityCredentialResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FederatedIdentityCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FederatedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FederatedIdentityCredentialResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FederatedIdentityCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FederatedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FederatedIdentityCredentialResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);

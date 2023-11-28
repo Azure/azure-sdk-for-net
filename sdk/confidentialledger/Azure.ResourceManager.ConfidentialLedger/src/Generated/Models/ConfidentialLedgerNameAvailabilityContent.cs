@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> The check availability request body. </summary>
     public partial class ConfidentialLedgerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerNameAvailabilityContent"/>. </summary>
         public ConfidentialLedgerNameAvailabilityContent()
         {
         }

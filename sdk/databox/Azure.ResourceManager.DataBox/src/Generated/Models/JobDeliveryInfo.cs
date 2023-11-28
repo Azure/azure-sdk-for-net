@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Additional delivery info. </summary>
     internal partial class JobDeliveryInfo
     {
-        /// <summary> Initializes a new instance of JobDeliveryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDeliveryInfo"/>. </summary>
         public JobDeliveryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of JobDeliveryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDeliveryInfo"/>. </summary>
         /// <param name="scheduledOn"> Scheduled date time. </param>
         internal JobDeliveryInfo(DateTimeOffset? scheduledOn)
         {

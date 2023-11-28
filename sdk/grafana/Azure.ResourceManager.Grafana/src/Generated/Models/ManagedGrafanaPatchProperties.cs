@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatchProperties
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
         public ManagedGrafanaPatchProperties()
         {
+            GrafanaPlugins = new ChangeTrackingDictionary<string, GrafanaPlugin>();
         }
 
         /// <summary> The zone redundancy setting of the Grafana instance. </summary>
@@ -37,5 +39,29 @@ namespace Azure.ResourceManager.Grafana.Models
                 return GrafanaIntegrations.MonitorWorkspaceIntegrations;
             }
         }
+
+        /// <summary> Enterprise settings of a Grafana instance. </summary>
+        public EnterpriseConfigurations EnterpriseConfigurations { get; set; }
+        /// <summary> Server configurations of a Grafana instance. </summary>
+        internal GrafanaConfigurations GrafanaConfigurations { get; set; }
+        /// <summary>
+        /// Email server settings.
+        /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
+        /// </summary>
+        public Smtp GrafanaConfigurationsSmtp
+        {
+            get => GrafanaConfigurations is null ? default : GrafanaConfigurations.Smtp;
+            set
+            {
+                if (GrafanaConfigurations is null)
+                    GrafanaConfigurations = new GrafanaConfigurations();
+                GrafanaConfigurations.Smtp = value;
+            }
+        }
+
+        /// <summary> Update of Grafana plugin. Key is plugin id, value is plugin definition. If plugin definition is null, plugin with given plugin id will be removed. Otherwise, given plugin will be installed. </summary>
+        public IDictionary<string, GrafanaPlugin> GrafanaPlugins { get; }
+        /// <summary> The major Grafana software version to target. </summary>
+        public string GrafanaMajorVersion { get; set; }
     }
 }

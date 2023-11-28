@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The columns to be read out from the Office 365 table. </summary>
     public partial class Office365TableOutputColumn
     {
-        /// <summary> Initializes a new instance of Office365TableOutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
         public Office365TableOutputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of Office365TableOutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
         /// <param name="name"> Name of the table column. Type: string. </param>
         internal Office365TableOutputColumn(string name)
         {

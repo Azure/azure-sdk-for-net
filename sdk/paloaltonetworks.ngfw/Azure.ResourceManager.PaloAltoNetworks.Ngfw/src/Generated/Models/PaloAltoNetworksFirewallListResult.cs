@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a FirewallResource list operation. </summary>
     internal partial class PaloAltoNetworksFirewallListResult
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PaloAltoNetworksFirewallListResult(IEnumerable<PaloAltoNetworksFirewallData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal PaloAltoNetworksFirewallListResult(IReadOnlyList<PaloAltoNetworksFirewallData> value, string nextLink)

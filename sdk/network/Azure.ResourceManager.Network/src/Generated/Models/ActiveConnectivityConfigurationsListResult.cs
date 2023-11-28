@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list active connectivity configurations. It contains a list of active connectivity configurations and a skiptoken to get the next set of results. </summary>
     internal partial class ActiveConnectivityConfigurationsListResult
     {
-        /// <summary> Initializes a new instance of ActiveConnectivityConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfigurationsListResult"/>. </summary>
         internal ActiveConnectivityConfigurationsListResult()
         {
             Value = new ChangeTrackingList<ActiveConnectivityConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ActiveConnectivityConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfigurationsListResult"/>. </summary>
         /// <param name="value"> Gets a page of active connectivity configurations. </param>
         /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
         internal ActiveConnectivityConfigurationsListResult(IReadOnlyList<ActiveConnectivityConfiguration> value, string skipToken)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm Deployment status properties. </summary>
     public partial class KubernetesDeployment
     {
-        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDeployment"/>. </summary>
         internal KubernetesDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDeployment"/>. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>

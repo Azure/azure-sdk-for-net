@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
         public virtual ExtensionResource GetExtensionResource(ResourceIdentifier id)
         {
             ExtensionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FarmBeatsExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FarmBeatsExtensionResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatsExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FarmBeatsExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FarmBeatsExtensionResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatsExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FarmBeatsExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FarmBeatsExtensionResource"/> object. </returns>
         public virtual FarmBeatsExtensionResource GetFarmBeatsExtensionResource(ResourceIdentifier id)
         {
             FarmBeatsExtensionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FarmBeatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FarmBeatResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FarmBeatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FarmBeatResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FarmBeatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FarmBeatResource"/> object. </returns>
         public virtual FarmBeatResource GetFarmBeatResource(ResourceIdentifier id)
         {
             FarmBeatResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgFoodPlatformPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgFoodPlatformPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AgFoodPlatformPrivateEndpointConnectionResource GetAgFoodPlatformPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             AgFoodPlatformPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AgFoodPlatformPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgFoodPlatformPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgFoodPlatformPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgFoodPlatformPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgFoodPlatformPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AgFoodPlatformPrivateLinkResource"/> object. </returns>
         public virtual AgFoodPlatformPrivateLinkResource GetAgFoodPlatformPrivateLinkResource(ResourceIdentifier id)
         {
             AgFoodPlatformPrivateLinkResource.ValidateResourceId(id);

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The ExternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricExternalNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricExternalNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
         public NetworkFabricExternalNetworkPatch()
         {
         }

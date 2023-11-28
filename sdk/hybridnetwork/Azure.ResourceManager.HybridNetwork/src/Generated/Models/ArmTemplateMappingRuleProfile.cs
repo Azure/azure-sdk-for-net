@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Template mapping rule profile. </summary>
     internal partial class ArmTemplateMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of ArmTemplateMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateMappingRuleProfile"/>. </summary>
         public ArmTemplateMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmTemplateMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateMappingRuleProfile"/>. </summary>
         /// <param name="templateParameters"> List of template parameters. </param>
         internal ArmTemplateMappingRuleProfile(string templateParameters)
         {

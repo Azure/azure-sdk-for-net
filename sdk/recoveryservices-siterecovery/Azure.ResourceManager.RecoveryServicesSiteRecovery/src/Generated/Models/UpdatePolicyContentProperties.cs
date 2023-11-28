@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Policy update properties. </summary>
     internal partial class UpdatePolicyContentProperties
     {
-        /// <summary> Initializes a new instance of UpdatePolicyContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatePolicyContentProperties"/>. </summary>
         public UpdatePolicyContentProperties()
         {
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlRoleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
         /// <param name="password"> The password of the cluster role. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public CosmosDBForPostgreSqlRoleData(string password)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

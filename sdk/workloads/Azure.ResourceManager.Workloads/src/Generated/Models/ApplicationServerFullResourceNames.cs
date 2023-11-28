@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The full resource names object for application layer resources. The number of entries in this list should be equal to the number VMs to be created for application layer. </summary>
     public partial class ApplicationServerFullResourceNames
     {
-        /// <summary> Initializes a new instance of ApplicationServerFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerFullResourceNames"/>. </summary>
         public ApplicationServerFullResourceNames()
         {
             VirtualMachines = new ChangeTrackingList<VirtualMachineResourceNames>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationServerFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerFullResourceNames"/>. </summary>
         /// <param name="virtualMachines"> The list of virtual machine naming details. </param>
         /// <param name="availabilitySetName"> The full name for availability set. In case name is not provided, it will be defaulted to {SID}-App-AvSet. </param>
         internal ApplicationServerFullResourceNames(IList<VirtualMachineResourceNames> virtualMachines, string availabilitySetName)

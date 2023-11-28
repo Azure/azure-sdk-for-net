@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class IotHubCertificateProperties
     {
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         public IotHubCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>

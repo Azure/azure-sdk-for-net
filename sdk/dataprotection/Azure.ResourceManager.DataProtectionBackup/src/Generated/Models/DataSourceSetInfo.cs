@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> DatasourceSet details of datasource to be backed up. </summary>
     public partial class DataSourceSetInfo
     {
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DataSourceSetInfo(ResourceIdentifier resourceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
         /// <param name="dataSourceType"> DatasourceType of the resource. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The request spec of checking name availability. </summary>
     public partial class HDInsightNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
         public HDInsightNameAvailabilityContent()
         {
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The authorization policy. </summary>
     public partial class AuthorizationPolicy
     {
-        /// <summary> Initializes a new instance of AuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicy"/>. </summary>
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/> is null. </exception>
         internal AuthorizationPolicy(IEnumerable<PermissionType> permissions)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Permissions = permissions.ToList();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicy"/>. </summary>
         /// <param name="policyName"> Name of the policy. </param>
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <param name="primaryKey"> Primary key associated with the policy. </param>

@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             Optional<int> minConcurrentOffers = default;
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
-            string kind = "Unknown";
+            DistributionModeKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minConcurrentOffers"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new DistributionModeKind(property.Value.GetString());
                     continue;
                 }
             }

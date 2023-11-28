@@ -128,6 +128,7 @@ namespace Azure.Storage.DataMovement
 
         private List<Task<bool>> _chunkTasks;
         private List<TaskCompletionSource<bool>> _chunkTaskSources;
+        protected bool _queueingTasks = false;
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -377,8 +378,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException
-                && ex is not TaskCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)
@@ -557,15 +559,15 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (_chunkTasks.All((Task task) => (task.IsCompleted)))
+            if (JobPartStatus.State == DataTransferState.Pausing ||
+                JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (JobPartStatus.State == DataTransferState.Pausing)
+                if (!_queueingTasks && _chunkTasks.All((Task task) => (task.IsCompleted)))
                 {
-                    await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
-                }
-                else if (JobPartStatus.State == DataTransferState.Stopping)
-                {
-                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                        DataTransferState.Paused :
+                        DataTransferState.Completed;
+                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
         }

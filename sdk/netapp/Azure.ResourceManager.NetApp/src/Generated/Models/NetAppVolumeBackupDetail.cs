@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume details using the backup policy. </summary>
     public partial class NetAppVolumeBackupDetail
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBackupDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         internal NetAppVolumeBackupDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeBackupDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
         /// <param name="isPolicyEnabled"> Policy enabled. </param>

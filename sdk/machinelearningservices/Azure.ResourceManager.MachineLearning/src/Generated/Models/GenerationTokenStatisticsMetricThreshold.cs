@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Generation token statistics metric threshold definition. </summary>
     public partial class GenerationTokenStatisticsMetricThreshold
     {
-        /// <summary> Initializes a new instance of GenerationTokenStatisticsMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationTokenStatisticsMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] Gets or sets the feature attribution metric to calculate. </param>
         public GenerationTokenStatisticsMetricThreshold(GenerationTokenStatisticsMetric metric)
         {
             Metric = metric;
         }
 
-        /// <summary> Initializes a new instance of GenerationTokenStatisticsMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationTokenStatisticsMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] Gets or sets the feature attribution metric to calculate. </param>
         /// <param name="threshold">
         /// Gets or sets the threshold value.

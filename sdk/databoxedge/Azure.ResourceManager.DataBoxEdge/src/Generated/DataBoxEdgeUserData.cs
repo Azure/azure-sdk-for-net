@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
         /// <param name="userType"> Type of the user. </param>
         public DataBoxEdgeUserData(DataBoxEdgeUserType userType)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             UserType = userType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

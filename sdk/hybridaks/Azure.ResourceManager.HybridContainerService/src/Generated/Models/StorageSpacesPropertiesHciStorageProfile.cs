@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The StorageSpacesPropertiesHciStorageProfile. </summary>
     public partial class StorageSpacesPropertiesHciStorageProfile
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesHciStorageProfile"/>. </summary>
         public StorageSpacesPropertiesHciStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesHciStorageProfile"/>. </summary>
         /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocStorageContainer"> Name of the storage container in MOC(Microsoft On-premises Cloud). </param>

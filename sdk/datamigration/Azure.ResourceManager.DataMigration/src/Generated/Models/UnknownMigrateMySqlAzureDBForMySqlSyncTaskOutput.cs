@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput. </summary>
     internal partial class UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(string id, string resultType) : base(id, resultType)

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DedicatedHostGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DedicatedHostGroupData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             DedicatedHosts = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

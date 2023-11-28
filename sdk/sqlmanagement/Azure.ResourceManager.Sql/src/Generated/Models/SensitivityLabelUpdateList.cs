@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sensitivity label update operations. </summary>
     public partial class SensitivityLabelUpdateList
     {
-        /// <summary> Initializes a new instance of SensitivityLabelUpdateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabelUpdateList"/>. </summary>
         public SensitivityLabelUpdateList()
         {
             Operations = new ChangeTrackingList<SensitivityLabelUpdate>();

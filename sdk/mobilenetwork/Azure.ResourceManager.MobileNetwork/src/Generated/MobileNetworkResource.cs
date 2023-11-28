@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMobileNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMobileNetwork method.
     /// </summary>
     public partial class MobileNetworkResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkResource(ArmClient client, MobileNetworkData data) : this(client, data.Id)

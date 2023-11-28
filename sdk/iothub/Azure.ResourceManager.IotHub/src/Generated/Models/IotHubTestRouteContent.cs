@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input for testing route. </summary>
     public partial class IotHubTestRouteContent
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/>. </summary>
         /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public IotHubTestRouteContent(RoutingRuleProperties route)

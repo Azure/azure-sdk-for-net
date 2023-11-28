@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of Shared Private Link Resources. </summary>
     internal partial class SharedPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
         internal SharedPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of Shared Private Link Resources. </param>
         /// <param name="nextLink"> The URL to get the next set of shared private link resources, if there are any. </param>
         internal SharedPrivateLinkResourceListResult(IReadOnlyList<SharedSearchServicePrivateLinkResourceData> value, string nextLink)

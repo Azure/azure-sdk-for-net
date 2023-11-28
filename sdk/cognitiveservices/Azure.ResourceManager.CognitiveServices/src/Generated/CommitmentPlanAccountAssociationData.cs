@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CommitmentPlanAccountAssociationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAccountAssociationData"/>. </summary>
         public CommitmentPlanAccountAssociationData()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAccountAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,19 +12,19 @@ namespace Azure.Communication.JobRouter
     /// <summary> Assignment details of a job to a worker. </summary>
     public partial class RouterJobAssignment
     {
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
-        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
+        /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         internal RouterJobAssignment(DateTimeOffset assignedAt)
         {
             AssignedAt = assignedAt;
         }
 
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
-        /// <param name="workerId"> The Id of the Worker assigned to the job. </param>
-        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
-        /// <param name="completedAt"> The time the job was marked as completed after being assigned in UTC. </param>
-        /// <param name="closedAt"> The time the job was marked as closed after being completed in UTC. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
+        /// <param name="workerId"> Id of the Worker assigned to the job. </param>
+        /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
+        /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
+        /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
         internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt)
         {
             AssignmentId = assignmentId;
@@ -34,15 +34,15 @@ namespace Azure.Communication.JobRouter
             ClosedAt = closedAt;
         }
 
-        /// <summary> The Id of the job assignment. </summary>
+        /// <summary> Id of a job assignment. </summary>
         public string AssignmentId { get; }
-        /// <summary> The Id of the Worker assigned to the job. </summary>
+        /// <summary> Id of the Worker assigned to the job. </summary>
         public string WorkerId { get; }
-        /// <summary> The assignment time of the job in UTC. </summary>
+        /// <summary> Timestamp when the job was assigned to a worker in UTC. </summary>
         public DateTimeOffset AssignedAt { get; }
-        /// <summary> The time the job was marked as completed after being assigned in UTC. </summary>
+        /// <summary> Timestamp when the job was marked as completed after being assigned in UTC. </summary>
         public DateTimeOffset? CompletedAt { get; }
-        /// <summary> The time the job was marked as closed after being completed in UTC. </summary>
+        /// <summary> Timestamp when the job was marked as closed after being completed in UTC. </summary>
         public DateTimeOffset? ClosedAt { get; }
     }
 }

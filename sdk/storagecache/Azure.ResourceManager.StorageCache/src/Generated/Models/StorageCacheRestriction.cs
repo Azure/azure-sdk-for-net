@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> The restrictions preventing this SKU from being used. </summary>
     public partial class StorageCacheRestriction
     {
-        /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRestriction"/>. </summary>
         internal StorageCacheRestriction()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRestriction"/>. </summary>
         /// <param name="restrictionType"> The type of restrictions. In this version, the only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". "QuotaId" is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. "NotAvailableForSubscription" is related to capacity at the datacenter. </param>

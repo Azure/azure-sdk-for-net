@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The code and message for an error. </summary>
     internal partial class ErrorInfo
     {
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         /// <param name="code"> A machine readable error code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Models
             Details = new ChangeTrackingList<ErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         /// <param name="code"> A machine readable error code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="details"> error details. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a metric metadata value. </summary>
     public partial class MonitorMetadataValue
     {
-        /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetadataValue"/>. </summary>
         internal MonitorMetadataValue()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetadataValue"/>. </summary>
         /// <param name="name"> the name of the metadata. </param>
         /// <param name="value"> the value of the metadata. </param>
         internal MonitorMetadataValue(MonitorLocalizableString name, string value)

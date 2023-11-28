@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Configuration for notification. </summary>
     public partial class NotificationSetting
     {
-        /// <summary> Initializes a new instance of NotificationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationSetting"/>. </summary>
         public NotificationSetting()
         {
             EmailOn = new ChangeTrackingList<EmailNotificationEnableType>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();
         }
 
-        /// <summary> Initializes a new instance of NotificationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationSetting"/>. </summary>
         /// <param name="emailOn"> Send email notification to user on specified notification type. </param>
         /// <param name="emails"> This is the email recipient list which has a limitation of 499 characters in total concat with comma separator. </param>
         /// <param name="webhooks">

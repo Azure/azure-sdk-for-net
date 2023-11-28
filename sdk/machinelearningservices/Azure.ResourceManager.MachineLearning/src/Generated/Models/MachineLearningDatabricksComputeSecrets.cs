@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secrets related to a Machine Learning compute based on Databricks. </summary>
     public partial class MachineLearningDatabricksComputeSecrets : MachineLearningComputeSecrets
     {
-        /// <summary> Initializes a new instance of MachineLearningDatabricksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
         internal MachineLearningDatabricksComputeSecrets()
         {
             ComputeType = ComputeType.Databricks;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatabricksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="databricksAccessToken"> access token for databricks account. </param>
         internal MachineLearningDatabricksComputeSecrets(ComputeType computeType, string databricksAccessToken) : base(computeType)

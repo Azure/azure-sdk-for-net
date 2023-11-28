@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the forecast. </summary>
     internal partial class ForecastDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of ForecastDatasetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastDatasetConfiguration"/>. </summary>
         public ForecastDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();

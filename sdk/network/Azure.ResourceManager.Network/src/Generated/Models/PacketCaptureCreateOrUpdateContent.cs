@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the create packet capture operation. </summary>
     public partial class PacketCaptureCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of PacketCaptureCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureCreateOrUpdateContent"/>. </summary>
         /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>

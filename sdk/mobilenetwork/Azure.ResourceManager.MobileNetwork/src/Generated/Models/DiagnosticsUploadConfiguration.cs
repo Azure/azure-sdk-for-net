@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Configuration for uploading packet core diagnostics. </summary>
     internal partial class DiagnosticsUploadConfiguration
     {
-        /// <summary> Initializes a new instance of DiagnosticsUploadConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/>. </summary>
         /// <param name="storageAccountContainerUri"> The Storage Account Container URL to upload diagnostics to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountContainerUri"/> is null. </exception>
         public DiagnosticsUploadConfiguration(Uri storageAccountContainerUri)

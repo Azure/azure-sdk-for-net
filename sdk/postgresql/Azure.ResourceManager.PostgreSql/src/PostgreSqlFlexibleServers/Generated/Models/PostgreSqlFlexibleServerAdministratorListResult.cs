@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of active directory administrators. </summary>
     internal partial class PostgreSqlFlexibleServerAdministratorListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAdministratorListResult"/>. </summary>
         internal PostgreSqlFlexibleServerAdministratorListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAdministratorListResult"/>. </summary>
         /// <param name="value"> The list of active directory administrators. </param>
         /// <param name="nextLink"> The link used to get the next page of active directory. </param>
         internal PostgreSqlFlexibleServerAdministratorListResult(IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value, string nextLink)

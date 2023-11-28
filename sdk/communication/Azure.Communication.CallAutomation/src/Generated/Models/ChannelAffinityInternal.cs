@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Channel affinity for a participant. </summary>
     internal partial class ChannelAffinityInternal
     {
-        /// <summary> Initializes a new instance of ChannelAffinityInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
         /// <param name="participant">
         /// The identifier for the participant whose bitstream will be written to the channel
         /// represented by the channel number.

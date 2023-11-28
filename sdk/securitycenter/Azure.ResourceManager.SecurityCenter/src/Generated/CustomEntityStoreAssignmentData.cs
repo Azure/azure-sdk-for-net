@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class CustomEntityStoreAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentData"/>. </summary>
         public CustomEntityStoreAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

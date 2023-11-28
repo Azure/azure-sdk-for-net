@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
         /// <param name="sourceResourceId"> The ARM resource ID of source resource that trusted access is configured for. </param>
         /// <param name="roles"> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="roles"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
             Roles = roles.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

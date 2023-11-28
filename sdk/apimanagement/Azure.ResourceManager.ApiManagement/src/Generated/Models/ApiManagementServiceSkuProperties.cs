@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API Management service resource SKU properties. </summary>
     public partial class ApiManagementServiceSkuProperties
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
         public ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity)

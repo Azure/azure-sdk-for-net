@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ApplicationGatewayWafDynamicManifest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationGatewayWafDynamicManifestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationGatewayWafDynamicManifestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetApplicationGatewayWafDynamicManifest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationGatewayWafDynamicManifestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApplicationGatewayWafDynamicManifestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApplicationGatewayWafDynamicManifest method.
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayWafDynamicManifestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayWafDynamicManifestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationGatewayWafDynamicManifestResource(ArmClient client, ApplicationGatewayWafDynamicManifestData data) : this(client, data.Id)

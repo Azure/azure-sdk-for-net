@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The LegalHold property of a blob container. </summary>
     public partial class LegalHold
     {
-        /// <summary> Initializes a new instance of LegalHold. </summary>
+        /// <summary> Initializes a new instance of <see cref="LegalHold"/>. </summary>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public LegalHold(IEnumerable<string> tags)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             Tags = tags.ToList();
         }
 
-        /// <summary> Initializes a new instance of LegalHold. </summary>
+        /// <summary> Initializes a new instance of <see cref="LegalHold"/>. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>

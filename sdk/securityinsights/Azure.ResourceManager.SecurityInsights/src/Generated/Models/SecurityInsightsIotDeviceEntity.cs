@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an IoT device entity. </summary>
     public partial class SecurityInsightsIotDeviceEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         public SecurityInsightsIotDeviceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.IotDevice;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

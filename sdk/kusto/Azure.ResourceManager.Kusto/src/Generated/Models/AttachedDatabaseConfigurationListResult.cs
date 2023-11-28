@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list attached database configurations operation response. </summary>
     internal partial class AttachedDatabaseConfigurationListResult
     {
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
             Value = new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of attached database configurations. </param>
         internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value)
         {

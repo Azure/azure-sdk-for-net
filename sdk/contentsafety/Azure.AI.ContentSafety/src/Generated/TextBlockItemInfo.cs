@@ -13,7 +13,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> Block item info in text blocklist. </summary>
     public partial class TextBlockItemInfo
     {
-        /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextBlockItemInfo"/>. </summary>
         /// <param name="text"> Block item content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public TextBlockItemInfo(string text)
@@ -23,7 +23,7 @@ namespace Azure.AI.ContentSafety
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextBlockItemInfo"/>. </summary>
         /// <param name="description"> Block item description. </param>
         /// <param name="text"> Block item content. </param>
         internal TextBlockItemInfo(string description, string text)

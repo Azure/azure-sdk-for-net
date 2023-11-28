@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure SQL DB and target server requirements. </summary>
     public partial class ConnectToTargetSqlDBSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>

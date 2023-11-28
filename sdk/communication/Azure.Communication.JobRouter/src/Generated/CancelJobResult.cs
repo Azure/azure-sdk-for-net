@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload from cancelling a job. </summary>
     internal partial class CancelJobResult
     {
-        /// <summary> Initializes a new instance of CancelJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelJobResult"/>. </summary>
         internal CancelJobResult()
         {
         }

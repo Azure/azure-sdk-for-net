@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkToNetworkInterconnectResource" /> and their operations.
-    /// Each <see cref="NetworkToNetworkInterconnectResource" /> in the collection will belong to the same instance of <see cref="NetworkFabricResource" />.
-    /// To get a <see cref="NetworkToNetworkInterconnectCollection" /> instance call the GetNetworkToNetworkInterconnects method from an instance of <see cref="NetworkFabricResource" />.
+    /// A class representing a collection of <see cref="NetworkToNetworkInterconnectResource"/> and their operations.
+    /// Each <see cref="NetworkToNetworkInterconnectResource"/> in the collection will belong to the same instance of <see cref="NetworkFabricResource"/>.
+    /// To get a <see cref="NetworkToNetworkInterconnectCollection"/> instance call the GetNetworkToNetworkInterconnects method from an instance of <see cref="NetworkFabricResource"/>.
     /// </summary>
     public partial class NetworkToNetworkInterconnectCollection : ArmCollection, IEnumerable<NetworkToNetworkInterconnectResource>, IAsyncEnumerable<NetworkToNetworkInterconnectResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkToNetworkInterconnectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkToNetworkInterconnectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkToNetworkInterconnectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkToNetworkInterconnectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkToNetworkInterconnectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkToNetworkInterconnectResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Git integration settings. </summary>
     public partial class SynapseWorkspaceRepositoryConfiguration
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceRepositoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceRepositoryConfiguration"/>. </summary>
         public SynapseWorkspaceRepositoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceRepositoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceRepositoryConfiguration"/>. </summary>
         /// <param name="workspaceRepositoryConfigurationType"> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </param>
         /// <param name="hostName"> GitHub Enterprise host name. For example: https://github.mydomain.com. </param>
         /// <param name="accountName"> Account name. </param>

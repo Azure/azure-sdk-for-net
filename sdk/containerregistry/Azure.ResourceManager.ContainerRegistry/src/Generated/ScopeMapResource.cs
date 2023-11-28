@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ScopeMap along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScopeMapResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScopeMapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetScopeMap method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScopeMapResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScopeMapResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetScopeMap method.
     /// </summary>
     public partial class ScopeMapResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScopeMapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScopeMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScopeMapResource(ArmClient client, ScopeMapData data) : this(client, data.Id)

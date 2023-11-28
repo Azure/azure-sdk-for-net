@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> List of blueprint artifacts. </summary>
     internal partial class ArtifactList
     {
-        /// <summary> Initializes a new instance of ArtifactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactList"/>. </summary>
         internal ArtifactList()
         {
             Value = new ChangeTrackingList<ArtifactData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactList"/>. </summary>
         /// <param name="value">
         /// List of blueprint artifacts.
         /// Please note <see cref="ArtifactData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

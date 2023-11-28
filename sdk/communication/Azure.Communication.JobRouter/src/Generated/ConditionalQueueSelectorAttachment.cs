@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a set of queue selectors that will be attached if the given condition resolves to true. </summary>
     public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="queueSelectors"/> is null. </exception>
@@ -24,23 +24,23 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
 
-            Kind = "conditional";
+            Kind = QueueSelectorAttachmentKind.Conditional;
             Condition = condition;
             QueueSelectors = queueSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(string kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
+        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;
         }
 
         /// <summary>
-        /// The condition that must be true for the queue selectors to be attached
+        /// The condition that must be true for the queue selectors to be attached.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>

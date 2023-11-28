@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Agent pool profile along with a name parameter. </summary>
     public partial class NamedAgentPoolProfile : AgentPoolProfile
     {
-        /// <summary> Initializes a new instance of NamedAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedAgentPoolProfile"/>. </summary>
         public NamedAgentPoolProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NamedAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedAgentPoolProfile"/>. </summary>
         /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>

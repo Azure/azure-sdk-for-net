@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The response of calculate price for reservation. </summary>
     public partial class CalculatePriceResult
     {
-        /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResult"/>. </summary>
         internal CalculatePriceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResult"/>. </summary>
         /// <param name="properties"> Properties for calculate price response. </param>
         internal CalculatePriceResult(CalculatePriceResultProperties properties)
         {

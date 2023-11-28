@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Amazon Marketplace Web Service linked service. </summary>
     public partial class AmazonMwsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AmazonMwsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMwsLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
         /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
         /// <param name="sellerId"> The Amazon seller ID. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AmazonMWS";
         }
 
-        /// <summary> Initializes a new instance of AmazonMwsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMwsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

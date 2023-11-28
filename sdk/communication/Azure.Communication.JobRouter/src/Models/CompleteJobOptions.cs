@@ -16,8 +16,8 @@ namespace Azure.Communication.JobRouter
         {
         }
 
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="assignmentId"> Id of the assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
 
@@ -30,16 +30,16 @@ namespace Azure.Communication.JobRouter
             AssignmentId = assignmentId;
         }
 
-        /// <summary> Id of the job assignment. </summary>
+        /// <summary> Id of a job assignment. </summary>
         public string AssignmentId { get; }
 
         /// <summary>
-        /// Id of the job.
+        /// Id of a job.
         /// </summary>
         public string JobId { get; }
 
         /// <summary>
-        /// Custom supplied note.
+        /// A note that will be appended to a job's notes collection with the current timestamp.
         /// </summary>
         public string Note { get; set; }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a mail cluster entity. </summary>
     public partial class SecurityInsightsMailClusterEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsMailClusterEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailClusterEntity"/>. </summary>
         public SecurityInsightsMailClusterEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.MailCluster;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsMailClusterEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailClusterEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

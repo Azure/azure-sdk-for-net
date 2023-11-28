@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Task model. </summary>
     public partial class DataReplicationTask
     {
-        /// <summary> Initializes a new instance of DataReplicationTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationTask"/>. </summary>
         internal DataReplicationTask()
         {
             ChildrenWorkflows = new ChangeTrackingList<DataReplicationWorkflowData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationTask"/>. </summary>
         /// <param name="taskName"> Gets or sets the task name. </param>
         /// <param name="state"> Gets or sets the task state. </param>
         /// <param name="startOn"> Gets or sets the start time. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Update administrative state on list of resources. </summary>
     public partial class UpdateAdministrativeStateOnResources
     {
-        /// <summary> Initializes a new instance of UpdateAdministrativeStateOnResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
         public UpdateAdministrativeStateOnResources()
         {
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();

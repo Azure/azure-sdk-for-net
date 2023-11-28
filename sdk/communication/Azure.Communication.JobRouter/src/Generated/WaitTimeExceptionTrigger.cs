@@ -10,18 +10,18 @@ namespace Azure.Communication.JobRouter
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
         /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
         internal WaitTimeExceptionTrigger(double thresholdSeconds)
         {
-            Kind = "wait-time";
+            Kind = ExceptionTriggerKind.WaitTime;
             _thresholdSeconds = thresholdSeconds;
         }
 
-        /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(string kind, double thresholdSeconds) : base(kind)
+        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, double thresholdSeconds) : base(kind)
         {
             _thresholdSeconds = thresholdSeconds;
         }

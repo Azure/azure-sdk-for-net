@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The version properties. </summary>
     public partial class HDInsightVersionSpec
     {
-        /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionSpec"/>. </summary>
         internal HDInsightVersionSpec()
         {
             ComponentVersions = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionSpec"/>. </summary>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="isDefault"> Whether or not the version is the default version. </param>

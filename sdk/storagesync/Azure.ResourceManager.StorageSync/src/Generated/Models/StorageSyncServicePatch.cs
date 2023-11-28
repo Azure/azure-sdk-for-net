@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Parameters for updating an Storage sync service. </summary>
     public partial class StorageSyncServicePatch
     {
-        /// <summary> Initializes a new instance of StorageSyncServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
         public StorageSyncServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

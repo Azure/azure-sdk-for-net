@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfidentialLedgerResource" /> and their operations.
-    /// Each <see cref="ConfidentialLedgerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConfidentialLedgerCollection" /> instance call the GetConfidentialLedgers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ConfidentialLedgerResource"/> and their operations.
+    /// Each <see cref="ConfidentialLedgerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConfidentialLedgerCollection"/> instance call the GetConfidentialLedgers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConfidentialLedgerCollection : ArmCollection, IEnumerable<ConfidentialLedgerResource>, IAsyncEnumerable<ConfidentialLedgerResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfidentialLedgerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Internet Gateway Rules patch resource definition. </summary>
     public partial class NetworkFabricInternetGatewayRulePatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRulePatch"/>. </summary>
         public NetworkFabricInternetGatewayRulePatch()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Time and capacity request parameters. </summary>
     public partial class HDInsightAutoScaleTimeAndCapacity
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleTimeAndCapacity"/>. </summary>
         public HDInsightAutoScaleTimeAndCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleTimeAndCapacity"/>. </summary>
         /// <param name="time"> 24-hour time in the form xx:xx. </param>
         /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
         /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>

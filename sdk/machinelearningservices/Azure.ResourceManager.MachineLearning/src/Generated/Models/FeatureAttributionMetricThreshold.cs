@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FeatureAttributionMetricThreshold. </summary>
     public partial class FeatureAttributionMetricThreshold
     {
-        /// <summary> Initializes a new instance of FeatureAttributionMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureAttributionMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The feature attribution metric to calculate. </param>
         public FeatureAttributionMetricThreshold(FeatureAttributionMetric metric)
         {
             Metric = metric;
         }
 
-        /// <summary> Initializes a new instance of FeatureAttributionMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureAttributionMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The feature attribution metric to calculate. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal FeatureAttributionMetricThreshold(FeatureAttributionMetric metric, MonitoringThreshold threshold)

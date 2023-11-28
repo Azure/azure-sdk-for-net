@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
     public partial class CommonMatchConditions
     {
-        /// <summary> Initializes a new instance of CommonMatchConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonMatchConditions"/>. </summary>
         public CommonMatchConditions()
         {
             ProtocolTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommonMatchConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonMatchConditions"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>

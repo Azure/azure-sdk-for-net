@@ -13,7 +13,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents the status of an AOA asset conversion job. </summary>
     public partial class AssetConversionProperties
     {
-        /// <summary> Initializes a new instance of AssetConversionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetConversionProperties"/>. </summary>
         /// <param name="clientErrorDetails"> Information about the cause of a ClientError JobStatus. </param>
         /// <param name="serverErrorDetails"> Information about the cause of a ServerError JobStatus. </param>
         /// <param name="errorCode"> The error code associated with the asset conversion job. </param>

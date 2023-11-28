@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the central server configuration. </summary>
     public partial class CentralServerConfiguration
     {
-        /// <summary> Initializes a new instance of CentralServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of central server VMs. </param>

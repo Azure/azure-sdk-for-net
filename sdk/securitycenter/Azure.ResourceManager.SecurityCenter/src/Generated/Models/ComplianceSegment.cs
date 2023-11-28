@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A segment of a compliance assessment. </summary>
     public partial class ComplianceSegment
     {
-        /// <summary> Initializes a new instance of ComplianceSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceSegment"/>. </summary>
         internal ComplianceSegment()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceSegment"/>. </summary>
         /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
         /// <param name="percentage"> The size (%) of the segment. </param>
         internal ComplianceSegment(string segmentType, double? percentage)

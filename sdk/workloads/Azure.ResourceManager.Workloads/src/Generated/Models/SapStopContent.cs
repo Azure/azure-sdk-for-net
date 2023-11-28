@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Stop SAP instance(s) request body. </summary>
     public partial class SapStopContent
     {
-        /// <summary> Initializes a new instance of SapStopContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapStopContent"/>. </summary>
         public SapStopContent()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The request object for query testing. </summary>
     public partial class StreamAnalyticsTestQuery
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsTestQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestQuery"/>. </summary>
         /// <param name="streamingJob"> Stream analytics job object which defines the input, output, and transformation for the query testing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingJob"/> is null. </exception>
         public StreamAnalyticsTestQuery(StreamingJobData streamingJob)

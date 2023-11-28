@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of SkuResource entities. </summary>
     internal partial class SkuResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuResourceArmPaginatedResult"/>. </summary>
         internal SkuResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningSkuDetail>();
         }
 
-        /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of SkuResource objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type SkuResource. </param>
         internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningSkuDetail> value)

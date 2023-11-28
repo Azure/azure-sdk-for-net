@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-11-20)
 
 ### Features Added
 
@@ -21,8 +31,8 @@
 - `UpdateExceptionPolicy(UpdateExceptionPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateExceptionPolicy(ExceptionPolicy exceptionPolicy, CancellationToken cancellationToken)`
 
 #### RouterClient
-- `GetJobs` returns `Pageable<RouterJob>` rather than `Pageable<RouterJobItem>`
-- `GetWorkers` returns `Pageable<RouterWorker>` rather than `Pageable<RouterJobWorker>`
+- `Pageable<RouterJobItem> GetJobs(GetJobsOptions options = null, CancellationToken cancellationToken = default)` changed to `Pageable<RouterJob> GetJobs(RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)`
+- `Pageable<RouterWorkerItem> GetWorkers(GetWorkersOptions options = null, CancellationToken cancellationToken = default)` changed to `Pageable<RouterWorker> GetWorkers(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)`
 - `UpdateJob(UpdateJobOptions options, CancellationToken cancellationToken)` changed to `UpdateJob(RouterJob job, CancellationToken cancellationToken)`
 - `UpdateWorker(UpdateWorkerOptions options, CancellationToken cancellationToken)` changed to `UpdateWorker(RouterWorker worker, CancellationToken cancellationToken)`
 
@@ -102,6 +112,8 @@
 - `UpdateQueueOptions`
 - `UpdateWorkerOptions`
 - `UpdateJobOptions`
+- `GetJobsOptions`
+- `GetWorkersOptions`
 
 ### Other Changes
 
@@ -151,16 +163,6 @@
 
 #### OAuth2WebhookClientCredential
 - Added constructor `OAuth2WebhookClientCredential(string clientId, string clientSecret)`
-
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2023-09-07)
 

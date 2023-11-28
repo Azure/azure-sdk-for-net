@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Response for site network services API service call. </summary>
     internal partial class SiteNetworkServiceListResult
     {
-        /// <summary> Initializes a new instance of SiteNetworkServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceListResult"/>. </summary>
         internal SiteNetworkServiceListResult()
         {
             Value = new ChangeTrackingList<SiteNetworkServiceData>();
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceListResult"/>. </summary>
         /// <param name="value"> A list of site network services in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal SiteNetworkServiceListResult(IReadOnlyList<SiteNetworkServiceData> value, string nextLink)

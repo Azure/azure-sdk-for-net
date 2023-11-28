@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseServerSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseServerSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseServerSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseServerSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseServerSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseServerSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseServerSecurityAlertPolicy method.
     /// </summary>
     public partial class SynapseServerSecurityAlertPolicyResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseServerSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseServerSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseServerSecurityAlertPolicyResource(ArmClient client, SynapseServerSecurityAlertPolicyData data) : this(client, data.Id)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX VM Groups. </summary>
     internal partial class WorkloadNetworkVmGroupsList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupsList"/>. </summary>
         internal WorkloadNetworkVmGroupsList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkVmGroupData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupsList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkVmGroupsList(IReadOnlyList<WorkloadNetworkVmGroupData> value, string nextLink)

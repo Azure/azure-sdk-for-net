@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The CertificateVerificationCodeProperties. </summary>
     public partial class CertificateVerificationCodeProperties
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeProperties"/>. </summary>
         internal CertificateVerificationCodeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateVerificationCodeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeProperties"/>. </summary>
         /// <param name="verificationCode"> Verification code. </param>
         /// <param name="subject"> Certificate subject. </param>
         /// <param name="expireOn"> Code expiry. </param>

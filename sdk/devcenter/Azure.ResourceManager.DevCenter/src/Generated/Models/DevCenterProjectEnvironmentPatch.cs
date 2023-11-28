@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The project environment type for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterProjectEnvironmentPatch
     {
-        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentPatch"/>. </summary>
         public DevCenterProjectEnvironmentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

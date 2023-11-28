@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Shopify Service dataset. </summary>
     public partial class ShopifyObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of ShopifyObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShopifyObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ShopifyObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "ShopifyObject";
         }
 
-        /// <summary> Initializes a new instance of ShopifyObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShopifyObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

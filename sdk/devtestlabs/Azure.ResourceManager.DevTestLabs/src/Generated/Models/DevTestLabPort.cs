@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a network port. </summary>
     public partial class DevTestLabPort
     {
-        /// <summary> Initializes a new instance of DevTestLabPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPort"/>. </summary>
         public DevTestLabPort()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPort"/>. </summary>
         /// <param name="transportProtocol"> Protocol type of the port. </param>
         /// <param name="backendPort"> Backend port of the target virtual machine. </param>
         internal DevTestLabPort(DevTestLabTransportProtocol? transportProtocol, int? backendPort)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Domain update. </summary>
     public partial class EventGridDomainPatch
     {
-        /// <summary> Initializes a new instance of EventGridDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainPatch"/>. </summary>
         public EventGridDomainPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

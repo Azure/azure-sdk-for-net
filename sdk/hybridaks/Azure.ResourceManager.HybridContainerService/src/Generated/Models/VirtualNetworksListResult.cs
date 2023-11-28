@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworksListResult. </summary>
     internal partial class VirtualNetworksListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         internal VirtualNetworksListResult()
         {
             Value = new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal VirtualNetworksListResult(IReadOnlyList<HybridContainerServiceVirtualNetworkData> value, string nextLink)

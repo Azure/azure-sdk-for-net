@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEndpointKeyRegenerateContent. </summary>
     public partial class MachineLearningEndpointKeyRegenerateContent
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointKeyRegenerateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
         public MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType)
         {

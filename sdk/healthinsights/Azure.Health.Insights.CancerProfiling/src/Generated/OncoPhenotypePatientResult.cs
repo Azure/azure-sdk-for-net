@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class OncoPhenotypePatientResult
     {
-        /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Inferences = inferences.ToList();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences)

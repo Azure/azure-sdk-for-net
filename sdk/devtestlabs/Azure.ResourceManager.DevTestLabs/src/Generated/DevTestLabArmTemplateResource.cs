@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabArmTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabArmTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabArmTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource" /> using the GetDevTestLabArmTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArmTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabArmTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource"/> using the GetDevTestLabArmTemplate method.
     /// </summary>
     public partial class DevTestLabArmTemplateResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabArmTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabArmTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabArmTemplateResource(ArmClient client, DevTestLabArmTemplateData data) : this(client, data.Id)

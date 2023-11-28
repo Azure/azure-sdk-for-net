@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The information about security rules applied to the specified VM. </summary>
     public partial class SecurityGroupViewResult
     {
-        /// <summary> Initializes a new instance of SecurityGroupViewResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewResult"/>. </summary>
         internal SecurityGroupViewResult()
         {
             NetworkInterfaces = new ChangeTrackingList<SecurityGroupNetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of SecurityGroupViewResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewResult"/>. </summary>
         /// <param name="networkInterfaces"> List of network interfaces on the specified VM. </param>
         internal SecurityGroupViewResult(IReadOnlyList<SecurityGroupNetworkInterface> networkInterfaces)
         {

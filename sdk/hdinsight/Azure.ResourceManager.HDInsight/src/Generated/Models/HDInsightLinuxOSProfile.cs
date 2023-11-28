@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The ssh username, password, and ssh public key. </summary>
     public partial class HDInsightLinuxOSProfile
     {
-        /// <summary> Initializes a new instance of HDInsightLinuxOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinuxOSProfile"/>. </summary>
         public HDInsightLinuxOSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightLinuxOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinuxOSProfile"/>. </summary>
         /// <param name="username"> The username. </param>
         /// <param name="password"> The password. </param>
         /// <param name="sshProfile"> The SSH profile. </param>

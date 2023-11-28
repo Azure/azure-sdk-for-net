@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The JobMetadata. </summary>
     internal partial class JobMetadata
     {
-        /// <summary> Initializes a new instance of JobMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobMetadata"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of JobMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobMetadata"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>

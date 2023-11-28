@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceTypeSkuResource" /> and their operations.
-    /// Each <see cref="ResourceTypeSkuResource" /> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource" />.
-    /// To get a <see cref="ResourceTypeSkuCollection" /> instance call the GetResourceTypeSkus method from an instance of <see cref="ResourceTypeRegistrationResource" />.
+    /// A class representing a collection of <see cref="ResourceTypeSkuResource"/> and their operations.
+    /// Each <see cref="ResourceTypeSkuResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// To get a <see cref="ResourceTypeSkuCollection"/> instance call the GetResourceTypeSkus method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
     /// </summary>
     public partial class ResourceTypeSkuCollection : ArmCollection, IEnumerable<ResourceTypeSkuResource>, IAsyncEnumerable<ResourceTypeSkuResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);

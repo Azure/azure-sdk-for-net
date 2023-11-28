@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list connection operation. </summary>
     internal partial class AutomationConnectionListResult
     {
-        /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionListResult"/>. </summary>
         internal AutomationConnectionListResult()
         {
             Value = new ChangeTrackingList<AutomationConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of connection. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationConnectionListResult(IReadOnlyList<AutomationConnectionData> value, string nextLink)

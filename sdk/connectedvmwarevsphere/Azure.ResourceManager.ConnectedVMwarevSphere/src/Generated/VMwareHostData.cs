@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareHostData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareHostData(AzureLocation location) : base(location)
         {
-            Statuses = new ChangeTrackingList<ResourceStatus>();
+            Statuses = new ChangeTrackingList<VMwareResourceStatus>();
+            DatastoreIds = new ChangeTrackingList<string>();
+            NetworkIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,8 +44,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the host. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="overallMemoryUsageGB"> Gets the used physical memory on the host in GB. </param>
+        /// <param name="memorySizeGB"> Gets the total amount of physical memory on the host in GB. </param>
+        /// <param name="overallCpuUsageMHz"> Gets the used CPU usage across all cores in MHz. </param>
+        /// <param name="cpuMhz"> Gets the max CPU usage across all cores in MHz. </param>
+        /// <param name="datastoreIds"> Gets the datastore ARM ids. </param>
+        /// <param name="networkIds"> Gets the network ARM ids. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? overallMemoryUsageGB, long? memorySizeGB, long? overallCpuUsageMHz, long? cpuMhz, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -54,6 +62,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MoName = moName;
             Statuses = statuses;
             CustomResourceName = customResourceName;
+            OverallMemoryUsageGB = overallMemoryUsageGB;
+            MemorySizeGB = memorySizeGB;
+            OverallCpuUsageMHz = overallCpuUsageMHz;
+            CpuMhz = cpuMhz;
+            DatastoreIds = datastoreIds;
+            NetworkIds = networkIds;
             ProvisioningState = provisioningState;
         }
 
@@ -72,10 +86,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Gets or sets the vCenter Managed Object name for the host. </summary>
         public string MoName { get; }
         /// <summary> The resource status information. </summary>
-        public IReadOnlyList<ResourceStatus> Statuses { get; }
+        public IReadOnlyList<VMwareResourceStatus> Statuses { get; }
         /// <summary> Gets the name of the corresponding resource in Kubernetes. </summary>
         public string CustomResourceName { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the used physical memory on the host in GB. </summary>
+        public long? OverallMemoryUsageGB { get; }
+        /// <summary> Gets the total amount of physical memory on the host in GB. </summary>
+        public long? MemorySizeGB { get; }
+        /// <summary> Gets the used CPU usage across all cores in MHz. </summary>
+        public long? OverallCpuUsageMHz { get; }
+        /// <summary> Gets the max CPU usage across all cores in MHz. </summary>
+        public long? CpuMhz { get; }
+        /// <summary> Gets the datastore ARM ids. </summary>
+        public IReadOnlyList<string> DatastoreIds { get; }
+        /// <summary> Gets the network ARM ids. </summary>
+        public IReadOnlyList<string> NetworkIds { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public VMwareResourceProvisioningState? ProvisioningState { get; }
     }
 }

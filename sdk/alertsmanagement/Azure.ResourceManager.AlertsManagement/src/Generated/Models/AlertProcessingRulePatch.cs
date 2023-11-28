@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Data contract for patch. </summary>
     public partial class AlertProcessingRulePatch
     {
-        /// <summary> Initializes a new instance of AlertProcessingRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRulePatch"/>. </summary>
         public AlertProcessingRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

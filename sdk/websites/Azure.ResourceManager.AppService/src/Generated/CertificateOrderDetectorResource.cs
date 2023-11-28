@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a CertificateOrderDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CertificateOrderDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCertificateOrderDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource" /> using the GetCertificateOrderDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CertificateOrderDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCertificateOrderDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource"/> using the GetCertificateOrderDetector method.
     /// </summary>
     public partial class CertificateOrderDetectorResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CertificateOrderDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CertificateOrderDetectorResource(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)

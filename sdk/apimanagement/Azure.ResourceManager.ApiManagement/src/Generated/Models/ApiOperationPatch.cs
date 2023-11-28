@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API Operation Update Contract details. </summary>
     public partial class ApiOperationPatch
     {
-        /// <summary> Initializes a new instance of ApiOperationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationPatch"/>. </summary>
         public ApiOperationPatch()
         {
             TemplateParameters = new ChangeTrackingList<ParameterContract>();

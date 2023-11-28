@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Waf Metrics Response. </summary>
     public partial class WafMetricsResponse
     {
-        /// <summary> Initializes a new instance of WafMetricsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponse"/>. </summary>
         internal WafMetricsResponse()
         {
             Series = new ChangeTrackingList<WafMetricsResponseSeriesItem>();
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="granularity"></param>

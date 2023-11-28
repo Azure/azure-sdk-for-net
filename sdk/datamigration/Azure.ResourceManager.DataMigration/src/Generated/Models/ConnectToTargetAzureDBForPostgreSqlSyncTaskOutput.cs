@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure Database for PostgreSQL and target server requirements. </summary>
     public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         internal ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetServerVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>

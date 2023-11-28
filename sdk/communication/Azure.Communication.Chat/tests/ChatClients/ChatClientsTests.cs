@@ -1347,7 +1347,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var chatThreadItem = ChatModelFactory.ChatThreadItem("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
             Assert.IsNotNull(chatThreadItem);
 
-            var chatMessageContent = ChatModelFactory.ChatMessageContent("id", "topic", It.IsAny<CommunicationUserIdentifier>(), It.IsAny<IEnumerable<ChatParticipant>>());
+            var chatMessageContent = ChatModelFactory.ChatMessageContent("id", "topic", It.IsAny<CommunicationUserIdentifier>(), It.IsAny<IEnumerable<ChatParticipant>>(), It.IsAny<IReadOnlyList<ChatAttachment>>());
             Assert.IsNotNull(chatMessageContent);
 
             try

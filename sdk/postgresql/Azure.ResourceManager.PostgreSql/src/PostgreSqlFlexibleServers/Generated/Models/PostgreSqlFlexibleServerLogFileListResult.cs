@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A List of logFiles. </summary>
     internal partial class PostgreSqlFlexibleServerLogFileListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFileListResult"/>. </summary>
         internal PostgreSqlFlexibleServerLogFileListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerLogFile>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFileListResult"/>. </summary>
         /// <param name="value"> The list of logFiles in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal PostgreSqlFlexibleServerLogFileListResult(IReadOnlyList<PostgreSqlFlexibleServerLogFile> value, string nextLink)

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an ArcExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArcExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArcExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArcSettingResource" /> using the GetArcExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArcExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArcExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArcSettingResource"/> using the GetArcExtension method.
     /// </summary>
     public partial class ArcExtensionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArcExtensionResource(ArmClient client, ArcExtensionData data) : this(client, data.Id)
