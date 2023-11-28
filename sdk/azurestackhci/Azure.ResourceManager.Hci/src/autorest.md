@@ -111,3 +111,18 @@ directive:
     transform: >
       $.duration['x-ms-format'] = 'string';
 ```
+### Tag: package-preview-2023-09
+
+These settings apply only when `--tag=package-preview-2023-09` is specified on the command line.
+
+```yaml $(tag) == 'package-preview-2023-09'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/c0e7b1360c19187fde2497251f784aa82641aa95/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
+```
