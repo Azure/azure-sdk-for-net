@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The options for facet evaluation. </summary>
     public partial class FacetRequestOptions
     {
-        /// <summary> Initializes a new instance of FacetRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetRequestOptions"/>. </summary>
         public FacetRequestOptions()
         {
         }

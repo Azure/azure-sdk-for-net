@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class SignalRRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of SignalRRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRRegenerateKeyContent"/>. </summary>
         public SignalRRegenerateKeyContent()
         {
         }

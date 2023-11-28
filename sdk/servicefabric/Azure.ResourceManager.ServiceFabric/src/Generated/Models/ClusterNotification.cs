@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the notification channel for cluster events. </summary>
     public partial class ClusterNotification
     {
-        /// <summary> Initializes a new instance of ClusterNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/>. </summary>
         /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
         /// <param name="notificationCategory"> The category of notification. </param>
         /// <param name="notificationLevel"> The level of notification. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             NotificationTargets = notificationTargets.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/>. </summary>
         /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
         /// <param name="notificationCategory"> The category of notification. </param>
         /// <param name="notificationLevel"> The level of notification. </param>

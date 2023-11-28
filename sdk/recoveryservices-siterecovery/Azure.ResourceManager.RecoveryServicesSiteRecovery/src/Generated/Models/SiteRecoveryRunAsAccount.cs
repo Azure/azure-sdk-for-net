@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> CS Accounts Details. </summary>
     public partial class SiteRecoveryRunAsAccount
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRunAsAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRunAsAccount"/>. </summary>
         internal SiteRecoveryRunAsAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRunAsAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRunAsAccount"/>. </summary>
         /// <param name="accountId"> The CS RunAs account Id. </param>
         /// <param name="accountName"> The CS RunAs account name. </param>
         internal SiteRecoveryRunAsAccount(string accountId, string accountName)

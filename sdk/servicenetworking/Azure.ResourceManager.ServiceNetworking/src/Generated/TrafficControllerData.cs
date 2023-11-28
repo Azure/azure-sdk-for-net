@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// </summary>
     public partial class TrafficControllerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public TrafficControllerData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             Associations = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

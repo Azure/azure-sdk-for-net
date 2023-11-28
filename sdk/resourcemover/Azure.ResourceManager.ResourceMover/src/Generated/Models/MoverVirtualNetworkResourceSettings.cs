@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the virtual network resource settings. </summary>
     public partial class MoverVirtualNetworkResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
         public MoverVirtualNetworkResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/virtualNetworks";
         }
 
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

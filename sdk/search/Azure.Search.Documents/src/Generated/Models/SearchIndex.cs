@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
     public partial class SearchIndex
     {
-        /// <summary> Initializes a new instance of SearchIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="scoringProfiles"> The scoring profiles for the index. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for planned failover input properties. </summary>
     public partial class PlannedFailoverProperties
     {
-        /// <summary> Initializes a new instance of PlannedFailoverProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverProperties"/>. </summary>
         public PlannedFailoverProperties()
         {
         }

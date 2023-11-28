@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class RecoverableDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
         public RecoverableDatabaseData()
         {
             Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

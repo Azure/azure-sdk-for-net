@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item job properties. </summary>
     public partial class ProtectedItemJobProperties
     {
-        /// <summary> Initializes a new instance of ProtectedItemJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemJobProperties"/>. </summary>
         internal ProtectedItemJobProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectedItemJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemJobProperties"/>. </summary>
         /// <param name="scenarioName"> Gets or sets protection scenario name. </param>
         /// <param name="id"> Gets or sets workflow Id. </param>
         /// <param name="name"> Gets or sets workflow name. </param>

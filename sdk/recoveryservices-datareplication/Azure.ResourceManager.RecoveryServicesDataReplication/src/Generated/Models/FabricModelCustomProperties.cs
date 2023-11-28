@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of FabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricModelCustomProperties"/>. </summary>
         protected FabricModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal FabricModelCustomProperties(string instanceType)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RemoveDisksProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of RemoveDisksProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksProviderSpecificContent"/>. </summary>
         protected RemoveDisksProviderSpecificContent()
         {
         }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Parameters to Provision ILR API. </summary>
     public partial class ProvisionIlrConnectionContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionIlrConnectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionIlrConnectionContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProvisionIlrConnectionContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionIlrConnectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionIlrConnectionContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

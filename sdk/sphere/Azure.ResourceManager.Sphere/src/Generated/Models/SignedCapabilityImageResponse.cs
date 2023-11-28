@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SignedCapabilityImageResponse
     {
-        /// <summary> Initializes a new instance of SignedCapabilityImageResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignedCapabilityImageResponse"/>. </summary>
         internal SignedCapabilityImageResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of SignedCapabilityImageResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignedCapabilityImageResponse"/>. </summary>
         /// <param name="image">
         /// The signed device capability image as a UTF-8 encoded base 64 string.
         /// Serialized Name: SignedCapabilityImageResponse.image

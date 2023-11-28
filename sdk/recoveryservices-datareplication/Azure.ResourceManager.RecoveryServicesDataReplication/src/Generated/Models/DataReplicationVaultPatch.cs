@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Vault model for update. </summary>
     public partial class DataReplicationVaultPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultPatch"/>. </summary>
         public DataReplicationVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

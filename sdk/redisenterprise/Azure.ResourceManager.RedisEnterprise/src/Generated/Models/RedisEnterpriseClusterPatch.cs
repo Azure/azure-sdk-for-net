@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A partial update to the RedisEnterprise cluster. </summary>
     public partial class RedisEnterpriseClusterPatch
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterPatch"/>. </summary>
         public RedisEnterpriseClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

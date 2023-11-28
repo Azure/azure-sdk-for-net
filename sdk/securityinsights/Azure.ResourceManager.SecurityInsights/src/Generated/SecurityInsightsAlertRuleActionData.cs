@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsAlertRuleActionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionData"/>. </summary>
         public SecurityInsightsAlertRuleActionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

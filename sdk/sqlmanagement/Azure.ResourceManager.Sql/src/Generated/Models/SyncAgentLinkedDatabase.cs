@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An Azure SQL Database sync agent linked database. </summary>
     public partial class SyncAgentLinkedDatabase : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentLinkedDatabase"/>. </summary>
         public SyncAgentLinkedDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentLinkedDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

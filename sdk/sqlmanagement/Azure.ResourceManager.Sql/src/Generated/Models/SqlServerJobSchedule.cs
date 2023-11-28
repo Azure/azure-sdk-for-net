@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Scheduling properties of a job. </summary>
     public partial class SqlServerJobSchedule
     {
-        /// <summary> Initializes a new instance of SqlServerJobSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
         public SqlServerJobSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
         /// <param name="startOn"> Schedule start time. </param>
         /// <param name="endOn"> Schedule end time. </param>
         /// <param name="scheduleType"> Schedule interval type. </param>

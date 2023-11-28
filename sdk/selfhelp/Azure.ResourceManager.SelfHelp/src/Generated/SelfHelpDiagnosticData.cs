@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpDiagnosticData : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticData"/>. </summary>
         public SelfHelpDiagnosticData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp
             Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

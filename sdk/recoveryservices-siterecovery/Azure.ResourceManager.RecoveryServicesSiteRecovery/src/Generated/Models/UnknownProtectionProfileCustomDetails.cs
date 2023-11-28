@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownProtectionProfileCustomDetails. </summary>
     internal partial class UnknownProtectionProfileCustomDetails : ProtectionProfileCustomDetails
     {
-        /// <summary> Initializes a new instance of UnknownProtectionProfileCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionProfileCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal UnknownProtectionProfileCustomDetails(string resourceType) : base(resourceType)
         {

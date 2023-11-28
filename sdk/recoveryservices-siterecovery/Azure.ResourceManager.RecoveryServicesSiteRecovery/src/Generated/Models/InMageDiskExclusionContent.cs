@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DiskExclusionInput when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageDiskExclusionContent
     {
-        /// <summary> Initializes a new instance of InMageDiskExclusionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
         public InMageDiskExclusionContent()
         {
             VolumeOptions = new ChangeTrackingList<InMageVolumeExclusionOptions>();

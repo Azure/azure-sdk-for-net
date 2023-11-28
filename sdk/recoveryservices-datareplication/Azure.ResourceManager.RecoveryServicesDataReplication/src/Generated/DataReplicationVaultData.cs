@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationVaultData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataReplicationVaultData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

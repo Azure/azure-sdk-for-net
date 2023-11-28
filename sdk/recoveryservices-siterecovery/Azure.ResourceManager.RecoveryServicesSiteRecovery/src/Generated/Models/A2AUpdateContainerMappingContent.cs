@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A update protection container mapping. </summary>
     public partial class A2AUpdateContainerMappingContent : ReplicationProviderSpecificUpdateContainerMappingContent
     {
-        /// <summary> Initializes a new instance of A2AUpdateContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateContainerMappingContent"/>. </summary>
         public A2AUpdateContainerMappingContent()
         {
             InstanceType = "A2A";

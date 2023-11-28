@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of locations where ASC saves your data. </summary>
     internal partial class AscLocationList
     {
-        /// <summary> Initializes a new instance of AscLocationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AscLocationList"/>. </summary>
         internal AscLocationList()
         {
             Value = new ChangeTrackingList<SecurityCenterLocationData>();
         }
 
-        /// <summary> Initializes a new instance of AscLocationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AscLocationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal AscLocationList(IReadOnlyList<SecurityCenterLocationData> value, string nextLink)

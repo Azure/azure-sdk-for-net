@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class PreValidateEnableBackupContent
     {
-        /// <summary> Initializes a new instance of PreValidateEnableBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupContent"/>. </summary>
         public PreValidateEnableBackupContent()
         {
         }

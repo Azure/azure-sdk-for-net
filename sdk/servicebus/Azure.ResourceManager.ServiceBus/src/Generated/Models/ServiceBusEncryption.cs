@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Properties to configure Encryption. </summary>
     public partial class ServiceBusEncryption
     {
-        /// <summary> Initializes a new instance of ServiceBusEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusEncryption"/>. </summary>
         public ServiceBusEncryption()
         {
             KeyVaultProperties = new ChangeTrackingList<ServiceBusKeyVaultProperties>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>

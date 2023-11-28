@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for bulk remove of move resources operation. </summary>
     public partial class MoverBulkRemoveContent
     {
-        /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverBulkRemoveContent"/>. </summary>
         public MoverBulkRemoveContent()
         {
             MoverResources = new ChangeTrackingList<ResourceIdentifier>();

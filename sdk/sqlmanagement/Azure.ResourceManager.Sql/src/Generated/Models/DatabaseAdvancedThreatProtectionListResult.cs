@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of the database's Advanced Threat Protection configurations. </summary>
     internal partial class DatabaseAdvancedThreatProtectionListResult
     {
-        /// <summary> Initializes a new instance of DatabaseAdvancedThreatProtectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAdvancedThreatProtectionListResult"/>. </summary>
         internal DatabaseAdvancedThreatProtectionListResult()
         {
             Value = new ChangeTrackingList<DatabaseAdvancedThreatProtectionData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseAdvancedThreatProtectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAdvancedThreatProtectionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DatabaseAdvancedThreatProtectionListResult(IReadOnlyList<DatabaseAdvancedThreatProtectionData> value, string nextLink)

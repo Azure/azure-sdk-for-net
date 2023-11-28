@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class RecoveryPointModelCustomProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointModelCustomProperties"/>. </summary>
         protected RecoveryPointModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal RecoveryPointModelCustomProperties(string instanceType)
         {
