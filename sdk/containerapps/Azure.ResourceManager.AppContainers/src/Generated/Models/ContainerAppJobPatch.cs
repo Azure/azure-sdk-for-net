@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatch"/>. </summary>
+        /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"></param>
+        internal ContainerAppJobPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerAppJobPatchProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>

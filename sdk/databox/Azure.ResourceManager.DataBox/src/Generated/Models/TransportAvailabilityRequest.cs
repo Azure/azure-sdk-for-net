@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataBox.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityRequest"/>. </summary>
+        /// <param name="skuName"> Type of the device. </param>
+        internal TransportAvailabilityRequest(DataBoxSkuName? skuName)
+        {
+            SkuName = skuName;
+        }
+
         /// <summary> Type of the device. </summary>
         public DataBoxSkuName? SkuName { get; set; }
     }

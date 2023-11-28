@@ -26,6 +26,19 @@ namespace Azure.ResourceManager.DataBox.Models
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences) : base(validationType)
+        {
+            ShippingAddress = shippingAddress;
+            DeviceType = deviceType;
+            TransportPreferences = transportPreferences;
+            ValidationType = validationType;
+        }
+
         /// <summary> Shipping address of the customer. </summary>
         public DataBoxShippingAddress ShippingAddress { get; }
         /// <summary> Device type to be used for the job. </summary>

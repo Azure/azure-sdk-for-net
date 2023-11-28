@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             Columns = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ForecastDatasetConfiguration"/>. </summary>
+        /// <param name="columns"> Array of column names to be included in the forecast. Any valid forecast column name is allowed. If not provided, then forecast includes all columns. </param>
+        internal ForecastDatasetConfiguration(IList<string> columns)
+        {
+            Columns = columns;
+        }
+
         /// <summary> Array of column names to be included in the forecast. Any valid forecast column name is allowed. If not provided, then forecast includes all columns. </summary>
         public IList<string> Columns { get; }
     }

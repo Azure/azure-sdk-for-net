@@ -27,6 +27,21 @@ namespace Azure.Communication.PhoneNumbers
             Capabilities = capabilities;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/>. </summary>
+        /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, or tollFree. </param>
+        /// <param name="assignmentType"> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="areaCode"> The area code of the desired phone number, e.g. 425. </param>
+        /// <param name="quantity"> The quantity of desired phone numbers. The default value is 1. </param>
+        internal PhoneNumberSearchRequest(PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, string areaCode, int? quantity)
+        {
+            PhoneNumberType = phoneNumberType;
+            AssignmentType = assignmentType;
+            Capabilities = capabilities;
+            AreaCode = areaCode;
+            Quantity = quantity;
+        }
+
         /// <summary> The type of phone numbers to search for, e.g. geographic, or tollFree. </summary>
         public PhoneNumberType PhoneNumberType { get; }
         /// <summary> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </summary>

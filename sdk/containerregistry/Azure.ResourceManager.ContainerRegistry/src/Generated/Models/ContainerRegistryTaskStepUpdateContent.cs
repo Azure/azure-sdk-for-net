@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepUpdateContent"/>. </summary>
+        /// <param name="stepType"> The type of the step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        internal ContainerRegistryTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken)
+        {
+            StepType = stepType;
+            ContextPath = contextPath;
+            ContextAccessToken = contextAccessToken;
+        }
+
         /// <summary> The type of the step. </summary>
         internal ContainerRegistryTaskStepType StepType { get; set; }
         /// <summary> The URL(absolute or relative) of the source context for the task step. </summary>
