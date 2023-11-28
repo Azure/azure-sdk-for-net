@@ -20,5 +20,16 @@ namespace Azure.Storage.Blobs.Models
             Uncommitted = new ChangeTrackingList<string>();
             Latest = new ChangeTrackingList<string>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
+        /// <param name="committed"></param>
+        /// <param name="uncommitted"></param>
+        /// <param name="latest"></param>
+        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest)
+        {
+            Committed = committed;
+            Uncommitted = uncommitted;
+            Latest = latest;
+        }
     }
 }

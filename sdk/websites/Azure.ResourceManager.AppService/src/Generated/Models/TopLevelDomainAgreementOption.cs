@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainAgreementOption"/>. </summary>
+        /// <param name="includePrivacy"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isForTransfer"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        internal TopLevelDomainAgreementOption(bool? includePrivacy, bool? isForTransfer)
+        {
+            IncludePrivacy = includePrivacy;
+            IsForTransfer = isForTransfer;
+        }
+
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IncludePrivacy { get; set; }
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

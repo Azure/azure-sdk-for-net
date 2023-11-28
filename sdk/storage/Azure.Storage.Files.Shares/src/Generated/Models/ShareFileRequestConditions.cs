@@ -14,5 +14,12 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="ShareFileRequestConditions"/>. </summary>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        internal ShareFileRequestConditions(string leaseId)
+        {
+            LeaseId = leaseId;
+        }
     }
 }

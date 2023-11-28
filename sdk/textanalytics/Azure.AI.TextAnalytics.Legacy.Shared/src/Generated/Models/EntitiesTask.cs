@@ -17,6 +17,15 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EntitiesTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        internal EntitiesTask(EntitiesTaskParameters parameters, string taskName)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+        }
+
         /// <summary> Gets or sets the parameters. </summary>
         public EntitiesTaskParameters Parameters { get; set; }
         /// <summary> Gets or sets the task name. </summary>
