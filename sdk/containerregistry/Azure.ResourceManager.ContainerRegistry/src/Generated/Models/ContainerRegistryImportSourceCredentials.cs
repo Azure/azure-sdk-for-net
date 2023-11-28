@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Password = password;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/>. </summary>
+        /// <param name="username"> The username to authenticate with the source registry. </param>
+        /// <param name="password"> The password used to authenticate with the source registry. </param>
+        internal ContainerRegistryImportSourceCredentials(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
+
         /// <summary> The username to authenticate with the source registry. </summary>
         public string Username { get; set; }
         /// <summary> The password used to authenticate with the source registry. </summary>

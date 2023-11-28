@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> The name of the authentication key to regenerate. </param>
+        internal IntegrationRuntimeRegenerateKeyContent(IntegrationRuntimeAuthKeyName? keyName)
+        {
+            KeyName = keyName;
+        }
+
         /// <summary> The name of the authentication key to regenerate. </summary>
         public IntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }

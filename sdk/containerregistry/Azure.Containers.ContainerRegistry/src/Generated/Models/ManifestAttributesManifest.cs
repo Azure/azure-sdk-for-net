@@ -19,6 +19,13 @@ namespace Azure.Containers.ContainerRegistry
             References = new ChangeTrackingList<ArtifactManifestPlatform>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesManifest"/>. </summary>
+        /// <param name="references"> List of manifest attributes details. </param>
+        internal ManifestAttributesManifest(IReadOnlyList<ArtifactManifestPlatform> references)
+        {
+            References = references;
+        }
+
         /// <summary> List of manifest attributes details. </summary>
         public IReadOnlyList<ArtifactManifestPlatform> References { get; }
     }

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimePatch"/>. </summary>
+        /// <param name="autoUpdate"> Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189. </param>
+        /// <param name="updateDelayOffset"> The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time. </param>
+        internal DataFactoryIntegrationRuntimePatch(IntegrationRuntimeAutoUpdateState? autoUpdate, TimeSpan? updateDelayOffset)
+        {
+            AutoUpdate = autoUpdate;
+            UpdateDelayOffset = updateDelayOffset;
+        }
+
         /// <summary> Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189. </summary>
         public IntegrationRuntimeAutoUpdateState? AutoUpdate { get; set; }
         /// <summary> The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time. </summary>

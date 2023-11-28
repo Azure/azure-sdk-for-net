@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolPatch"/>. </summary>
+        /// <param name="tags"> The ARM resource tags. </param>
+        /// <param name="count"> The count of agent machine. </param>
+        internal ContainerRegistryAgentPoolPatch(IDictionary<string, string> tags, int? count)
+        {
+            Tags = tags;
+            Count = count;
+        }
+
         /// <summary> The ARM resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The count of agent machine. </summary>

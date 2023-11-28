@@ -13,6 +13,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The Mitigate Job captured from request body for Mitigate API. </summary>
     public partial class MitigateJobContent
     {
+        /// <summary> Initializes a new instance of <see cref="MitigateJobContent"/>. </summary>
+        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
+        /// <param name="serialNumberCustomerResolutionMap"> Serial number and the customer resolution code corresponding to each serial number. </param>
+        internal MitigateJobContent(CustomerResolutionCode customerResolutionCode, IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap)
+        {
+            CustomerResolutionCode = customerResolutionCode;
+            SerialNumberCustomerResolutionMap = serialNumberCustomerResolutionMap;
+        }
         /// <summary> Serial number and the customer resolution code corresponding to each serial number. </summary>
         public IDictionary<string, CustomerResolutionCode> SerialNumberCustomerResolutionMap { get; }
     }
