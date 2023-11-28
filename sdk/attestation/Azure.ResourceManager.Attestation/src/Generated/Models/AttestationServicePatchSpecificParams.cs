@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Attestation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        internal AttestationServicePatchSpecificParams(PublicNetworkAccessType? publicNetworkAccess)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
     }

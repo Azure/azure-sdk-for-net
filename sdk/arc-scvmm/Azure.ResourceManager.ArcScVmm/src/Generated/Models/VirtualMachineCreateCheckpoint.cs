@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCreateCheckpoint"/>. </summary>
+        /// <param name="name"> Name of the checkpoint. </param>
+        /// <param name="description"> Description of the checkpoint. </param>
+        internal VirtualMachineCreateCheckpoint(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+
         /// <summary> Name of the checkpoint. </summary>
         public string Name { get; set; }
         /// <summary> Description of the checkpoint. </summary>

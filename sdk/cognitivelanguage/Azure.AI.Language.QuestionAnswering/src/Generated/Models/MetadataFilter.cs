@@ -19,6 +19,15 @@ namespace Azure.AI.Language.QuestionAnswering
             Metadata = new ChangeTrackingList<MetadataRecord>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
+        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation)
+        {
+            Metadata = metadata;
+            LogicalOperation = logicalOperation;
+        }
+
         /// <summary> Gets the metadata. </summary>
         public IList<MetadataRecord> Metadata { get; }
         /// <summary> Operation used to join metadata filters. </summary>

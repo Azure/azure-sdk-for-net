@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationRegenerateKeyContent"/>. </summary>
+        /// <param name="id"> The id of the key to regenerate. </param>
+        internal AppConfigurationRegenerateKeyContent(string id)
+        {
+            Id = id;
+        }
+
         /// <summary> The id of the key to regenerate. </summary>
         public string Id { get; set; }
     }
