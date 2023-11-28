@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The autoscale setting object for patch operations. </summary>
     public partial class AutoscaleSettingPatch
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPatch"/>. </summary>
         public AutoscaleSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The PostgreSqlDataFeed. </summary>
     internal partial class PostgreSqlDataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of PostgreSqlDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlDataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.PostgreSql;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlDataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

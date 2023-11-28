@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The parameters for updating a configuration store. </summary>
     public partial class AppConfigurationStorePatch
     {
-        /// <summary> Initializes a new instance of AppConfigurationStorePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStorePatch"/>. </summary>
         public AppConfigurationStorePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

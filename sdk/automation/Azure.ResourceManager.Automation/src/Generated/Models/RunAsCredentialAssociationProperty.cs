@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of RunAs credential to use for hybrid worker. </summary>
     internal partial class RunAsCredentialAssociationProperty
     {
-        /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunAsCredentialAssociationProperty"/>. </summary>
         public RunAsCredentialAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunAsCredentialAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the credential. </param>
         internal RunAsCredentialAssociationProperty(string name)
         {

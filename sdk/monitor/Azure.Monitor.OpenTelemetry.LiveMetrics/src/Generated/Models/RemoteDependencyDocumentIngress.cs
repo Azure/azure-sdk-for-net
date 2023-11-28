@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Dependency type document. </summary>
     internal partial class RemoteDependencyDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of RemoteDependencyDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDependencyDocumentIngress"/>. </summary>
         public RemoteDependencyDocumentIngress()
         {
         }

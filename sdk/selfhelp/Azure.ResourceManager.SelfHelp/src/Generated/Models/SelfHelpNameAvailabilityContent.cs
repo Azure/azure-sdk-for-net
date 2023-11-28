@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> The check availability request body. </summary>
     public partial class SelfHelpNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityContent"/>. </summary>
         public SelfHelpNameAvailabilityContent()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An SOA record. </summary>
     public partial class PrivateDnsSoaRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsSoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSoaRecordInfo"/>. </summary>
         public PrivateDnsSoaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsSoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSoaRecordInfo"/>. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>

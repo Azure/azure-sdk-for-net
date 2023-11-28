@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on pod identity integration. </summary>
     public partial class ManagedClusterPodIdentityProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         public ManagedClusterPodIdentityProfile()
         {
             UserAssignedIdentities = new ChangeTrackingList<ManagedClusterPodIdentity>();
             UserAssignedIdentityExceptions = new ChangeTrackingList<ManagedClusterPodIdentityException>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
         /// <param name="allowNetworkPluginKubenet"> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
         /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>

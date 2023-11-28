@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The StorageSpacesListResult. </summary>
     internal partial class StorageSpacesListResult
     {
-        /// <summary> Initializes a new instance of StorageSpacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesListResult"/>. </summary>
         internal StorageSpacesListResult()
         {
             Value = new ChangeTrackingList<StorageSpaceData>();
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal StorageSpacesListResult(IReadOnlyList<StorageSpaceData> value, string nextLink)

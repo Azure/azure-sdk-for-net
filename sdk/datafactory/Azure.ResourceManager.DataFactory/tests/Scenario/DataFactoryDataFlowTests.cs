@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -13,78 +14,19 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryDataFlowTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceGroupResource _resourceGroup;
-        private DataFactoryResource _dataFactory;
         public DataFactoryDataFlowTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
+        public async Task DataFlowCreate(string name, Func<DataFactoryResource, string, string, string, string, DataFactoryDataFlowData> dataflowFunc)
         {
-            var rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            var storageAccountName = SessionRecording.GenerateAssetName("datafactory");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                }
-            }
-            await StopSessionRecordingAsync();
-        }
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
 
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            _dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-        }
-
-        [TearDown]
-        public async Task TestCaseDoneTearDown()
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return;
-            }
-            try
-            {
-                using (Recording.DisableRecording())
-                {
-                    await foreach (var dataFactoryResource in _resourceGroup.GetDataFactories().GetAllAsync())
-                    {
-                        await dataFactoryResource.DeleteAsync(WaitUntil.Completed);
-                    }
-                }
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-            }
-        }
-
-        private async Task<DataFactoryDatasetResource> CreateDefaultAzureSqlDatabaseDataset(string linkedServiceName, string datasetName)
-        {
-            DataFactoryLinkedServiceData lkSqlSource = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-            await _dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlSource);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
-            var result = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            return result.Value;
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task DataFlow_ExecuteDataFlow()
-        {
             string dataFlowName = Recording.GenerateAssetName("task-");
             string linkedServiceSourceName = Recording.GenerateAssetName("linkedService_");
             string linkedServiceSinkName = Recording.GenerateAssetName("linkedService_");
@@ -93,107 +35,93 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string datasetSinkName1 = Recording.GenerateAssetName("dataset_");
             string datasetSinkName2 = Recording.GenerateAssetName("dataset_");
 
-            await CreateDefaultAzureSqlDatabaseDataset(linkedServiceSourceName, datasetSourceName1);
-            await CreateDefaultAzureSqlDatabaseDataset(linkedServiceSinkName, datasetSourceName2);
-            await CreateDefaultAzureSqlDatabaseDataset(linkedServiceSinkName, datasetSinkName1);
-            await CreateDefaultAzureSqlDatabaseDataset(linkedServiceSinkName, datasetSinkName2);
+            await CreateDefaultAzureSqlDatabaseDataset(dataFactory, linkedServiceSourceName, datasetSourceName1);
+            await CreateDefaultAzureSqlDatabaseDataset(dataFactory, linkedServiceSinkName, datasetSourceName2);
+            await CreateDefaultAzureSqlDatabaseDataset(dataFactory, linkedServiceSinkName, datasetSinkName1);
+            await CreateDefaultAzureSqlDatabaseDataset(dataFactory, linkedServiceSinkName, datasetSinkName2);
 
-            DataFactoryDataFlowData mappingDataFlowForScriptLines = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
-            {
-                Sources =
-                {
-                    new DataFlowSource(datasetSourceName1)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName1)
-                    },
-                    new DataFlowSource(datasetSourceName2)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName2)
-                    }
-                },
-                Sinks =
-                {
-                    new DataFlowSink(datasetSinkName1)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName1)
-                    },
-                    new DataFlowSink(datasetSinkName2)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName2)
-                    }
-                },
-                Script = "fake some script",
-                ScriptLines =
-                {
-                    "some script1",
-                    "some script2"
-                }
-            });
-            var resultForScriptLines = await _dataFactory.GetDataFactoryDataFlows().CreateOrUpdateAsync(WaitUntil.Completed, dataFlowName, mappingDataFlowForScriptLines);
-            Assert.NotNull(resultForScriptLines.Value.Id);
+            var result = await dataFactory.GetDataFactoryDataFlows().CreateOrUpdateAsync(WaitUntil.Completed, dataFlowName, dataflowFunc(dataFactory, datasetSourceName1, datasetSourceName2, datasetSinkName1, datasetSinkName2));
+            Assert.NotNull(result.Value.Id);
+        }
 
-            DataFactoryDataFlowData mappingDataFlowForScript = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
-            {
-                Sources =
-                {
-                    new DataFlowSource(datasetSourceName1)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName1)
-                    },
-                    new DataFlowSource(datasetSourceName2)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName2)
-                    }
-                },
-                Sinks =
-                {
-                    new DataFlowSink(datasetSinkName1)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName1)
-                    },
-                    new DataFlowSink(datasetSinkName2)
-                    {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName2)
-                    }
-                },
-                Script = "fake some script"
-            });
-            var resultForScript = await _dataFactory.GetDataFactoryDataFlows().CreateOrUpdateAsync(WaitUntil.Completed, dataFlowName, mappingDataFlowForScript);
-            Assert.NotNull(resultForScript.Value.Id);
+        private async Task<DataFactoryDatasetResource> CreateDefaultAzureSqlDatabaseDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
+        {
+            DataFactoryLinkedServiceData lkSqlSource = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlSource);
+
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+            return result.Value;
         }
 
         [Test]
         [RecordedTest]
-        public async Task Pipeline_ExecuteWarnglingDataflow_Queries()
+        public async Task DataFlow_ExecuteDataFlow_Create()
         {
-            string taskPowerQueryName = "powerquery1";
-            string linkedServiceSourceName = Recording.GenerateAssetName("linkedService_");
-            string datasetSourceName = "DS_AzureSqlDatabase1";
-            string datasetSinkName = "DS_AzureSqlDatabase2";
-
-            await CreateDefaultAzureSqlDatabaseDataset(datasetSourceName, datasetSourceName);
-            await CreateDefaultAzureSqlDatabaseDataset(linkedServiceSourceName, datasetSinkName);
-
-            DataFactoryDataFlowData mapping = new DataFactoryDataFlowData(new DataFactoryWranglingDataFlowProperties()
+            await DataFlowCreate("dataflow", (DataFactoryResource dataFactory, string datasetSourceName1, string datasetSourceName2, string datasetSinkName1, string datasetSinkName2) =>
             {
-                Sources =
+                return new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
                 {
-                    new PowerQuerySource(datasetSourceName)
+                    Sources =
                     {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName),
-                        Script = "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  DS_AzureSqlDatabase1"
+                        new DataFlowSource(datasetSourceName1)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName1)
+                        },
+                        new DataFlowSource(datasetSourceName2)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName2)
+                        }
                     },
-                    new PowerQuerySource(datasetSinkName)
+                    Sinks =
                     {
-                        Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName),
-                        Script = "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  DS_AzureSqlDatabase1"
+                        new DataFlowSink(datasetSinkName1)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName1)
+                        },
+                        new DataFlowSink(datasetSinkName2)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName2)
+                        }
+                    },
+                    Script = "fake some script",
+                    ScriptLines =
+                    {
+                        "some script1",
+                        "some script2"
                     }
-                },
-                Script = "section Section1;\r\nshared DS_AzureSqlDatabase1 = let AdfDoc = Sql.Database(\"**********\", \"**********\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"undefined\",Item=\"undefined\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"DS_AzureSqlDatabase1\" in Source;\r\n",
-                DocumentLocale = "de-DE"
+                });
             });
-            var result = await _dataFactory.GetDataFactoryDataFlows().CreateOrUpdateAsync(WaitUntil.Completed, taskPowerQueryName, mapping);
-            Assert.NotNull(result.Value.Id);
+
+            await DataFlowCreate("dataflow", (DataFactoryResource dataFactory, string datasetSourceName1, string datasetSourceName2, string datasetSinkName1, string datasetSinkName2) =>
+            {
+                return new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
+                {
+                    Sources =
+                    {
+                        new DataFlowSource(datasetSourceName1)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName1)
+                        },
+                        new DataFlowSource(datasetSourceName2)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName2)
+                        }
+                    },
+                    Sinks =
+                    {
+                        new DataFlowSink(datasetSinkName1)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName1)
+                        },
+                        new DataFlowSink(datasetSinkName2)
+                        {
+                            Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName2)
+                        }
+                    },
+                    Script = "fake some script"
+                });
+            });
         }
     }
 }

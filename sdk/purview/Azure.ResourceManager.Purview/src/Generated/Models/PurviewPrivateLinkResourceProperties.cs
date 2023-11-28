@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> A privately linkable resource properties. </summary>
     public partial class PurviewPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceProperties"/>. </summary>
         internal PurviewPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group identifier. </param>
         /// <param name="requiredMembers"> This translates to how many Private IPs should be created for each privately linkable resource. </param>
         /// <param name="requiredZoneNames"> The required zone names for private link resource. </param>

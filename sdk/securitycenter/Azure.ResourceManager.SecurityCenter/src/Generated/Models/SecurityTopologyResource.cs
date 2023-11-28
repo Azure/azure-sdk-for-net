@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecurityTopologyResource. </summary>
     public partial class SecurityTopologyResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTopologyResource"/>. </summary>
         public SecurityTopologyResource()
         {
             TopologyResources = new ChangeTrackingList<TopologySingleResource>();
         }
 
-        /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTopologyResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

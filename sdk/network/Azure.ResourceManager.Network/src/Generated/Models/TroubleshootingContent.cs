@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the resource to troubleshoot. </summary>
     public partial class TroubleshootingContent
     {
-        /// <summary> Initializes a new instance of TroubleshootingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
         /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>

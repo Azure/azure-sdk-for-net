@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The type of the paths for alias. </summary>
     public partial class ResourceTypeAliasPath
     {
-        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPath"/>. </summary>
         internal ResourceTypeAliasPath()
         {
             ApiVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPath"/>. </summary>
         /// <param name="path"> The path of an alias. </param>
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>

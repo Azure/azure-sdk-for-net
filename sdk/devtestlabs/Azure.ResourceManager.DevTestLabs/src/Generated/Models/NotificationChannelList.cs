@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class NotificationChannelList
     {
-        /// <summary> Initializes a new instance of NotificationChannelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationChannelList"/>. </summary>
         internal NotificationChannelList()
         {
             Value = new ChangeTrackingList<DevTestLabNotificationChannelData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationChannelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationChannelList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal NotificationChannelList(IReadOnlyList<DevTestLabNotificationChannelData> value, string nextLink)

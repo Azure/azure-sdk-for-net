@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Subscription information. </summary>
     public partial class MarketplaceSubscription
     {
-        /// <summary> Initializes a new instance of MarketplaceSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscription"/>. </summary>
         internal MarketplaceSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of MarketplaceSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscription"/>. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>

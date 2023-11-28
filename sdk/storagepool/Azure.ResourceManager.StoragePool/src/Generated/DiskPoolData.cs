@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool
     /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StoragePool
             AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

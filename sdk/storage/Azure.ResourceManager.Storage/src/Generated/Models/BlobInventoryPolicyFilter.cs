@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An object that defines the blob inventory rule filter conditions. For 'Blob' definition.objectType all filter properties are applicable, 'blobTypes' is required and others are optional. For 'Container' definition.objectType only prefixMatch is applicable and is optional. </summary>
     public partial class BlobInventoryPolicyFilter
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
         public BlobInventoryPolicyFilter()
         {
             IncludePrefix = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
         /// <param name="includePrefix"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
         /// <param name="excludePrefix"> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </param>
         /// <param name="blobTypes"> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to 'Blob'. </param>

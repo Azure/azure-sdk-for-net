@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Azure API management (APIM) configuration linked to the app. </summary>
     internal partial class ApiManagementConfig
     {
-        /// <summary> Initializes a new instance of ApiManagementConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementConfig"/>. </summary>
         public ApiManagementConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementConfig"/>. </summary>
         /// <param name="id"> APIM-Api Identifier. </param>
         internal ApiManagementConfig(string id)
         {

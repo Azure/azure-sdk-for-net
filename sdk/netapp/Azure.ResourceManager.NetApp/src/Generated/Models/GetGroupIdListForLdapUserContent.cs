@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Get group Id list for LDAP User request. </summary>
     public partial class GetGroupIdListForLdapUserContent
     {
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserContent"/>. </summary>
         /// <param name="username"> username is required to fetch the group to which user is part of. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public GetGroupIdListForLdapUserContent(string username)

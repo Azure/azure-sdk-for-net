@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> disk encryption set update resource. </summary>
     public partial class DiskEncryptionSetPatch
     {
-        /// <summary> Initializes a new instance of DiskEncryptionSetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetPatch"/>. </summary>
         public DiskEncryptionSetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

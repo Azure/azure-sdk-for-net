@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
     public partial class KubernetesAzureBlob
     {
-        /// <summary> Initializes a new instance of KubernetesAzureBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlob"/>. </summary>
         public KubernetesAzureBlob()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesAzureBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlob"/>. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
         /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>

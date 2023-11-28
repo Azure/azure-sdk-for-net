@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Cloud endpoint change enumeration activity object. </summary>
     public partial class CloudEndpointChangeEnumerationActivity
     {
-        /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationActivity"/>. </summary>
         internal CloudEndpointChangeEnumerationActivity()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationActivity"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="operationState"> Change enumeration operation state. </param>
         /// <param name="statusCode"> When non-zero, indicates an issue that is delaying change enumeration. </param>

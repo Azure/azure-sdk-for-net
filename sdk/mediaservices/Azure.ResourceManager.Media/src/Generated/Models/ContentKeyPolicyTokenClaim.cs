@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a token claim. </summary>
     public partial class ContentKeyPolicyTokenClaim
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenClaim. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenClaim"/>. </summary>
         public ContentKeyPolicyTokenClaim()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenClaim. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenClaim"/>. </summary>
         /// <param name="claimType"> Token claim type. </param>
         /// <param name="claimValue"> Token claim value. </param>
         internal ContentKeyPolicyTokenClaim(string claimType, string claimValue)

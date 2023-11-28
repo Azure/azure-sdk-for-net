@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The type used for update operations of the FleetMember. </summary>
     public partial class ContainerServiceFleetMemberPatch
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         public ContainerServiceFleetMemberPatch()
         {
         }

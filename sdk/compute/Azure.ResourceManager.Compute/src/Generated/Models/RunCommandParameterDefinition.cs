@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a run command parameter. </summary>
     public partial class RunCommandParameterDefinition
     {
-        /// <summary> Initializes a new instance of RunCommandParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandParameterDefinition"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="runCommandParameterDefinitionType"> The run command parameter type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="runCommandParameterDefinitionType"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             RunCommandParameterDefinitionType = runCommandParameterDefinitionType;
         }
 
-        /// <summary> Initializes a new instance of RunCommandParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandParameterDefinition"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="runCommandParameterDefinitionType"> The run command parameter type. </param>
         /// <param name="defaultValue"> The run command parameter default value. </param>

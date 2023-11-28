@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class CloudEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointData"/>. </summary>
         public CloudEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

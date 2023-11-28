@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Gateway certificate authority list representation. </summary>
     internal partial class GatewayCertificateAuthorityListResult
     {
-        /// <summary> Initializes a new instance of GatewayCertificateAuthorityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCertificateAuthorityListResult"/>. </summary>
         internal GatewayCertificateAuthorityListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayCertificateAuthorityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCertificateAuthorityListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         internal GatewayCertificateAuthorityListResult(IReadOnlyList<ApiManagementGatewayCertificateAuthorityData> value, string nextLink)

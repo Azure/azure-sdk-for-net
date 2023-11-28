@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The MoveRPAcrossTiersContent. </summary>
     public partial class MoveRPAcrossTiersContent
     {
-        /// <summary> Initializes a new instance of MoveRPAcrossTiersContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveRPAcrossTiersContent"/>. </summary>
         public MoveRPAcrossTiersContent()
         {
         }

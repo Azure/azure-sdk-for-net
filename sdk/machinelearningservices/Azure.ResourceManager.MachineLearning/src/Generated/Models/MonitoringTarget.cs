@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Monitoring target definition. </summary>
     public partial class MonitoringTarget
     {
-        /// <summary> Initializes a new instance of MonitoringTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="taskType"> [Required] The machine learning task type of the model. </param>
         public MonitoringTarget(ModelTaskType taskType)
         {
             TaskType = taskType;
         }
 
-        /// <summary> Initializes a new instance of MonitoringTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="deploymentId"> The ARM resource ID of either the deployment targeted by this monitor. </param>
         /// <param name="modelId"> The ARM resource ID of either the model targeted by this monitor. </param>
         /// <param name="taskType"> [Required] The machine learning task type of the model. </param>

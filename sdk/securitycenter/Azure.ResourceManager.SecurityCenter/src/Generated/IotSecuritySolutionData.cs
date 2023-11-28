@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecuritySolutionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IotSecuritySolutionData(AzureLocation location) : base(location)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
             AdditionalWorkspaces = new ChangeTrackingList<AdditionalWorkspacesProperties>();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineReplaceParameters represents the body of the request to physically swap a bare metal machine for another. </summary>
     public partial class BareMetalMachineReplaceContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineReplaceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
         public BareMetalMachineReplaceContent()
         {
         }

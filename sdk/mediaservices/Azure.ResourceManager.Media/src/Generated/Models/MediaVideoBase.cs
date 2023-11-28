@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class MediaVideoBase : MediaCodecBase
     {
-        /// <summary> Initializes a new instance of MediaVideoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaVideoBase"/>. </summary>
         public MediaVideoBase()
         {
             OdataType = "#Microsoft.Media.Video";
         }
 
-        /// <summary> Initializes a new instance of MediaVideoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaVideoBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update network mapping input. </summary>
     public partial class SiteRecoveryNetworkMappingPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingPatch"/>. </summary>
         public SiteRecoveryNetworkMappingPatch()
         {
         }

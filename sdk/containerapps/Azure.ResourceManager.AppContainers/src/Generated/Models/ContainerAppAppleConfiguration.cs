@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Apple provider. </summary>
     public partial class ContainerAppAppleConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAppleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAppleConfiguration"/>. </summary>
         public ContainerAppAppleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAppleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAppleConfiguration"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Apple registration. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>

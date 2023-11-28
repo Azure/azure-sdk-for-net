@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementLoggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerData"/>. </summary>
         public ApiManagementLoggerData()
         {
             Credentials = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

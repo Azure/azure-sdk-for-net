@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store account name availability check parameters. </summary>
     public partial class DataLakeStoreAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The Data Lake Store name to check availability for. </param>
         /// <param name="resourceType"> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

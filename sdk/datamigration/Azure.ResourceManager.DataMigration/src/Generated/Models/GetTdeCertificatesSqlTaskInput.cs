@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that gets TDE certificates in Base64 encoded format. </summary>
     public partial class GetTdeCertificatesSqlTaskInput
     {
-        /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetTdeCertificatesSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="backupFileShare"> Backup file share information for file share to be used for temporarily storing files. </param>
         /// <param name="selectedCertificates"> List containing certificate names and corresponding password to use for encrypting the exported certificate. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedCertificates = selectedCertificates.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetTdeCertificatesSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="backupFileShare"> Backup file share information for file share to be used for temporarily storing files. </param>
         /// <param name="selectedCertificates"> List containing certificate names and corresponding password to use for encrypting the exported certificate. </param>

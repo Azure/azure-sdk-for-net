@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabNotificationChannelData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabNotificationChannelData(AzureLocation location) : base(location)
         {
             Events = new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

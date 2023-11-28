@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Ticket Info of the role eligibility. </summary>
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         public RoleEligibilityScheduleRequestPropertiesTicketInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
         /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
         internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes the compute profile. </summary>
     internal partial class ComputeProfile
     {
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         public ComputeProfile()
         {
             Roles = new ChangeTrackingList<HDInsightClusterRole>();
         }
 
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="roles"> The list of roles in the cluster. </param>
         internal ComputeProfile(IList<HDInsightClusterRole> roles)
         {

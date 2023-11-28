@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The updatable properties of the FirewallResource. </summary>
     public partial class FirewallUpdateProperties
     {
-        /// <summary> Initializes a new instance of FirewallUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallUpdateProperties"/>. </summary>
         public FirewallUpdateProperties()
         {
             FrontEndSettings = new ChangeTrackingList<FirewallFrontendSetting>();

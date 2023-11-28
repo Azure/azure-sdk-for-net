@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Effective Virtual Networks Parameter. </summary>
     public partial class ActiveConfigurationContent
     {
-        /// <summary> Initializes a new instance of ActiveConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConfigurationContent"/>. </summary>
         public ActiveConfigurationContent()
         {
             Regions = new ChangeTrackingList<AzureLocation>();

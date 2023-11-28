@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Inbound NAT pool of the load balancer. </summary>
     public partial class LoadBalancerInboundNatPool : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of LoadBalancerInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPool"/>. </summary>
         public LoadBalancerInboundNatPool()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecognizeRequest. </summary>
     internal partial class RecognizeRequestInternal
     {
-        /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>

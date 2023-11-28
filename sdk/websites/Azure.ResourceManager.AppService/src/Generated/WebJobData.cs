@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebJobData"/>. </summary>
         public WebJobData()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of WebJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

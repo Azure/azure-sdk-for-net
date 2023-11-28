@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a app service environment. </summary>
     public partial class AppServiceEnvironmentPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatch"/>. </summary>
         public AppServiceEnvironmentPatch()
         {
             ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

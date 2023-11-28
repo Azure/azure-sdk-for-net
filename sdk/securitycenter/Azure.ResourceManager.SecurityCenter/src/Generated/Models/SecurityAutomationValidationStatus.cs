@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The security automation model state property bag. </summary>
     public partial class SecurityAutomationValidationStatus
     {
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationValidationStatus"/>. </summary>
         internal SecurityAutomationValidationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationValidationStatus"/>. </summary>
         /// <param name="isValid"> Indicates whether the model is valid or not. </param>
         /// <param name="message"> The validation message. </param>
         internal SecurityAutomationValidationStatus(bool? isValid, string message)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of get log link operation. </summary>
     public partial class ContainerRegistryRunGetLogResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunGetLogResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunGetLogResult"/>. </summary>
         internal ContainerRegistryRunGetLogResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunGetLogResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunGetLogResult"/>. </summary>
         /// <param name="logLink"> The link to logs for a run on a azure container registry. </param>
         /// <param name="logArtifactLink"> The link to logs in registry for a run on a azure container registry. </param>
         internal ContainerRegistryRunGetLogResult(string logLink, string logArtifactLink)

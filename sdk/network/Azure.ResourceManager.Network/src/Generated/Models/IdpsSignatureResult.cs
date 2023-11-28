@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The IdpsSignatureResult. </summary>
     public partial class IdpsSignatureResult
     {
-        /// <summary> Initializes a new instance of IdpsSignatureResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureResult"/>. </summary>
         internal IdpsSignatureResult()
         {
             SourcePorts = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IdpsSignatureResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureResult"/>. </summary>
         /// <param name="signatureId"> The ID of the signature. </param>
         /// <param name="mode"> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </param>
         /// <param name="severity"> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </param>

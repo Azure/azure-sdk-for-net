@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity
     {
-        /// <summary> Initializes a new instance of StampCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StampCapacity"/>. </summary>
         internal StampCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of StampCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StampCapacity"/>. </summary>
         /// <param name="name"> Name of the stamp. </param>
         /// <param name="availableCapacity"> Available capacity (# of machines, bytes of storage etc...). </param>
         /// <param name="totalCapacity"> Total capacity (# of machines, bytes of storage etc...). </param>

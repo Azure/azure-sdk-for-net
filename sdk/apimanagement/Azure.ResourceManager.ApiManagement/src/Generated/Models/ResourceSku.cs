@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available API Management SKU. </summary>
     internal partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         internal ResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         internal ResourceSku(ApiManagementServiceSkuType? name)
         {

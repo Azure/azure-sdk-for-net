@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The authorization properties for accessing the source code repository. </summary>
     public partial class SourceCodeRepoAuthInfoUpdateContent
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoAuthInfoUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoAuthInfoUpdateContent"/>. </summary>
         public SourceCodeRepoAuthInfoUpdateContent()
         {
         }

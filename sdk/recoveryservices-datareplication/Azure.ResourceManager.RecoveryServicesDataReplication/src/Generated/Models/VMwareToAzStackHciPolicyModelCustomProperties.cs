@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware To AzStackHCI Policy model custom properties. </summary>
     public partial class VMwareToAzStackHciPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>. </summary>
         /// <param name="recoveryPointHistoryInMinutes">
         /// Gets or sets the duration in minutes until which the recovery points need to be
         /// stored.
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="recoveryPointHistoryInMinutes">
         /// Gets or sets the duration in minutes until which the recovery points need to be

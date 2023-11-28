@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNginxModelFactory
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxCertificateData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxCertificateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId);
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), package, rootFile);
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName) : null);
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
         /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>

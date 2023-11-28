@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of active directory only authentications. </summary>
     internal partial class SynapseAadOnlyAuthenticationListResult
     {
-        /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAadOnlyAuthenticationListResult"/>. </summary>
         internal SynapseAadOnlyAuthenticationListResult()
         {
             Value = new ChangeTrackingList<SynapseAadOnlyAuthenticationData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAadOnlyAuthenticationListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseAadOnlyAuthenticationListResult(IReadOnlyList<SynapseAadOnlyAuthenticationData> value, string nextLink)

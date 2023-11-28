@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration Run Navigation model. </summary>
     internal partial class SoftwareUpdateConfigurationNavigation
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationNavigation"/>. </summary>
         internal SoftwareUpdateConfigurationNavigation()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationNavigation"/>. </summary>
         /// <param name="name"> Name of the software update configuration triggered the software update configuration run. </param>
         internal SoftwareUpdateConfigurationNavigation(string name)
         {

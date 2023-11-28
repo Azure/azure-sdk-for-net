@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class AdaptiveNetworkHardeningData : ResourceData
     {
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningData"/>. </summary>
         public AdaptiveNetworkHardeningData()
         {
             Rules = new ChangeTrackingList<RecommendedSecurityRule>();
             EffectiveNetworkSecurityGroups = new ChangeTrackingList<EffectiveNetworkSecurityGroups>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

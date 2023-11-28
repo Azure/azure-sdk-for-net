@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ProductApiData. </summary>
     public partial class ProductApiData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProductApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductApiData"/>. </summary>
         public ProductApiData()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ProductApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

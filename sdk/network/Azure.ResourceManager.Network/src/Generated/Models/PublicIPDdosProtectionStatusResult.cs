@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for GetPublicIpAddressDdosProtectionStatusOperation API service call. </summary>
     public partial class PublicIPDdosProtectionStatusResult
     {
-        /// <summary> Initializes a new instance of PublicIPDdosProtectionStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPDdosProtectionStatusResult"/>. </summary>
         internal PublicIPDdosProtectionStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPDdosProtectionStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPDdosProtectionStatusResult"/>. </summary>
         /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
         /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update variable operation. </summary>
     public partial class AutomationVariableCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationVariableCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationVariableCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationVariableCreateOrUpdateContent(string name)

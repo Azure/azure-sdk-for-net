@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Package store for the SSIS integration runtime. </summary>
     public partial class DataFactoryPackageStore
     {
-        /// <summary> Initializes a new instance of DataFactoryPackageStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/>. </summary>
         /// <param name="name"> The name of the package store. </param>
         /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="packageStoreLinkedService"/> is null. </exception>

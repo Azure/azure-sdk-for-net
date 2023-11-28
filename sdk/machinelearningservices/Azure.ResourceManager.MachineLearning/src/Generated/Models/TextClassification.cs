@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextClassification : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.TextClassification;
         }
 
-        /// <summary> Initializes a new instance of TextClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

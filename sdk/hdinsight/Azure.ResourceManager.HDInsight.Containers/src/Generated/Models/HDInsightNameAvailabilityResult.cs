@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Result of check name availability. </summary>
     public partial class HDInsightNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         internal HDInsightNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicator of availability of the Microsoft.HDInsight resource name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The error message of unavailability. </param>

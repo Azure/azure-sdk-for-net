@@ -13,7 +13,7 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The incurred cost for a single short code. </summary>
     public partial class ShortCodeCost
     {
-        /// <summary> Initializes a new instance of ShortCodeCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCodeCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>

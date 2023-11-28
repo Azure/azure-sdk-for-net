@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates MySQL database connection. </summary>
     public partial class ConnectToSourceMySqlTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
         /// <param name="targetPlatform"> Target Platform for the migration. </param>
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>

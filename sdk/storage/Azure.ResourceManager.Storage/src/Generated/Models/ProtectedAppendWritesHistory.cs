@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Protected append writes history setting for the blob container with Legal holds. </summary>
     public partial class ProtectedAppendWritesHistory
     {
-        /// <summary> Initializes a new instance of ProtectedAppendWritesHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedAppendWritesHistory"/>. </summary>
         internal ProtectedAppendWritesHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectedAppendWritesHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedAppendWritesHistory"/>. </summary>
         /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
         /// <param name="timestamp"> Returns the date and time the tag was added. </param>
         internal ProtectedAppendWritesHistory(bool? allowProtectedAppendWritesAll, DateTimeOffset? timestamp)

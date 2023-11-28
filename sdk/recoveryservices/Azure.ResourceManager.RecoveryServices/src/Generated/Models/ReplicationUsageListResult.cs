@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Replication usages for vault. </summary>
     internal partial class ReplicationUsageListResult
     {
-        /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
         internal ReplicationUsageListResult()
         {
             Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
         /// <param name="value"> The list of replication usages for the given vault. </param>
         internal ReplicationUsageListResult(IReadOnlyList<ReplicationUsage> value)
         {

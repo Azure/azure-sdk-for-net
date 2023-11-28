@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the filter values possibles for a given column. </summary>
     public partial class SignatureOverridesFilterValuesQueryContent
     {
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesQueryContent"/>. </summary>
         public SignatureOverridesFilterValuesQueryContent()
         {
         }

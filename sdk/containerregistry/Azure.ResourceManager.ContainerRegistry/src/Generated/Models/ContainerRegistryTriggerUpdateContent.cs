@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating triggers. </summary>
     public partial class ContainerRegistryTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerUpdateContent"/>. </summary>
         public ContainerRegistryTriggerUpdateContent()
         {
             TimerTriggers = new ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>();

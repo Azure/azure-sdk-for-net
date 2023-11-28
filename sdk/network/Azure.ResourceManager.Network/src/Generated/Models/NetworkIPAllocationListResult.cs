@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListIpAllocations API service call. </summary>
     internal partial class NetworkIPAllocationListResult
     {
-        /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPAllocationListResult"/>. </summary>
         internal NetworkIPAllocationListResult()
         {
             Value = new ChangeTrackingList<IPAllocationData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPAllocationListResult"/>. </summary>
         /// <param name="value"> A list of IpAllocation resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkIPAllocationListResult(IReadOnlyList<IPAllocationData> value, string nextLink)

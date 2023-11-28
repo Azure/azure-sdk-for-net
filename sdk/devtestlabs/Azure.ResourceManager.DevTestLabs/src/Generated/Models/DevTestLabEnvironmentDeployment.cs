@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an environment deployment. </summary>
     public partial class DevTestLabEnvironmentDeployment
     {
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentDeployment"/>. </summary>
         public DevTestLabEnvironmentDeployment()
         {
             Parameters = new ChangeTrackingList<DevTestLabArmTemplateParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentDeployment"/>. </summary>
         /// <param name="armTemplateId"> The Azure Resource Manager template's identifier. </param>
         /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
         internal DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId, IList<DevTestLabArmTemplateParameter> parameters)

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes an automation rule action to run a playbook. </summary>
     public partial class AutomationRuleRunPlaybookAction : SecurityInsightsAutomationRuleAction
     {
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
         /// <param name="order"></param>
         public AutomationRuleRunPlaybookAction(int order) : base(order)
         {
             ActionType = ActionType.RunPlaybook;
         }
 
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="actionConfiguration"></param>

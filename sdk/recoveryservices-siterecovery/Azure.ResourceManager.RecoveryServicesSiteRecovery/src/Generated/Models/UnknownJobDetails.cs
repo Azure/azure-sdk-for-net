@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownJobDetails. </summary>
     internal partial class UnknownJobDetails : SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of UnknownJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         internal UnknownJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)

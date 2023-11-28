@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeviceProvisioningServicesModelFactory
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesCertificateData(id, name, resourceType, systemData, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprint"> The certificate's thumbprint. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesCertificateProperties(subject, expireOn, thumbprint, isVerified, certificate, createdOn, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServiceData(id, name, resourceType, systemData, tags, location, etag, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServiceProperties"/>. </summary>
         /// <param name="state"> Current state of the provisioning service. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServiceProperties(state, publicNetworkAccess, ipFilterRules?.ToList(), privateEndpointConnections?.ToList(), provisioningState, iotHubs?.ToList(), allocationPolicy, serviceOperationsHostName, deviceProvisioningHostName, idScope, authorizationPolicies?.ToList(), isDataResidencyEnabled);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubDefinitionDescription"/>. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
         /// <param name="name"> Host name of the IoT hub. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new IotHubDefinitionDescription(applyAllocationPolicy, allocationWeight, name, connectionString, location);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesSkuInfo"/>. </summary>
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Pricing tier name of the provisioning service. </param>
         /// <param name="capacity"> The number of units to provision. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesSkuInfo(name, tier, capacity);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesSkuDefinition"/>. </summary>
         /// <param name="name"> Sku name. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesSkuDefinition"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesSkuDefinition DeviceProvisioningServicesSkuDefinition(DeviceProvisioningServicesSku? name = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesSkuDefinition(name);
         }
 
-        /// <summary> Initializes a new instance of CertificateVerificationCodeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new CertificateVerificationCodeResult(id, name, resourceType, systemData, etag, properties);
         }
 
-        /// <summary> Initializes a new instance of CertificateVerificationCodeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeProperties"/>. </summary>
         /// <param name="verificationCode"> Verification code. </param>
         /// <param name="subject"> Certificate subject. </param>
         /// <param name="expireOn"> Code expiry. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new CertificateVerificationCodeProperties(verificationCode, subject, expireOn, thumbprint, isVerified, certificate, createdOn, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> specifies if a name is available or not. </param>
         /// <param name="reason"> specifies the reason a name is unavailable. </param>
         /// <param name="message"> message containing a detailed reason name is unavailable. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>

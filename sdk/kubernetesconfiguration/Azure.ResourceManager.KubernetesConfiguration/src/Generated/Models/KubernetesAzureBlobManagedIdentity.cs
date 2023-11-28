@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to authenticate using a Managed Identity. </summary>
     internal partial class KubernetesAzureBlobManagedIdentity
     {
-        /// <summary> Initializes a new instance of KubernetesAzureBlobManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobManagedIdentity"/>. </summary>
         public KubernetesAzureBlobManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesAzureBlobManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobManagedIdentity"/>. </summary>
         /// <param name="clientId"> The client Id for authenticating a Managed Identity. </param>
         internal KubernetesAzureBlobManagedIdentity(Guid? clientId)
         {

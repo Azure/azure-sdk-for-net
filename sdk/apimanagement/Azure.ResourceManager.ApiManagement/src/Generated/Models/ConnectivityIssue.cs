@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
     public partial class ConnectivityIssue
     {
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
         internal ConnectivityIssue()
         {
             Context = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>

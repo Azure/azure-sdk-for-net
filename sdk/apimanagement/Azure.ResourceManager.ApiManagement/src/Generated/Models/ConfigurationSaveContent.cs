@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Save Tenant Configuration Contract details. </summary>
     public partial class ConfigurationSaveContent
     {
-        /// <summary> Initializes a new instance of ConfigurationSaveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
         public ConfigurationSaveContent()
         {
         }

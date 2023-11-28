@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Error Detail class which encapsulates Code, Message and Recommendations. </summary>
     public partial class BackupErrorDetail
     {
-        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
         public BackupErrorDetail()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error Message related to the Code. </param>
         /// <param name="recommendations"> List of recommendation strings. </param>

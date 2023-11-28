@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Image reference information. </summary>
     public partial class DevCenterImageReference
     {
-        /// <summary> Initializes a new instance of DevCenterImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageReference"/>. </summary>
         public DevCenterImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageReference"/>. </summary>
         /// <param name="id"> Image ID, or Image version ID. When Image ID is provided, its latest version will be used. </param>
         /// <param name="exactVersion"> The actual version of the image after use. When id references a gallery image latest version, this will indicate the actual version in use. </param>
         internal DevCenterImageReference(ResourceIdentifier id, string exactVersion)

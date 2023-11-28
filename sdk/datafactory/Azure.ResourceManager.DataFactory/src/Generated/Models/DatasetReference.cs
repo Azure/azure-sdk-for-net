@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Dataset reference type. </summary>
     public partial class DatasetReference
     {
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>

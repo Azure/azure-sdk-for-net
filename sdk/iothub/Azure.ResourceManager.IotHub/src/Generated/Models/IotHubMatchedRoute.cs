@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Routes that matched. </summary>
     public partial class IotHubMatchedRoute
     {
-        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMatchedRoute"/>. </summary>
         internal IotHubMatchedRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMatchedRoute"/>. </summary>
         /// <param name="properties"> Properties of routes that matched. </param>
         internal IotHubMatchedRoute(RoutingRuleProperties properties)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> ClassicAdministrator list result information. </summary>
     internal partial class AuthorizationClassicAdministratorListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministratorListResult"/>. </summary>
         internal AuthorizationClassicAdministratorListResult()
         {
             Value = new ChangeTrackingList<AuthorizationClassicAdministrator>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministratorListResult"/>. </summary>
         /// <param name="value"> An array of administrators. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal AuthorizationClassicAdministratorListResult(IReadOnlyList<AuthorizationClassicAdministrator> value, string nextLink)

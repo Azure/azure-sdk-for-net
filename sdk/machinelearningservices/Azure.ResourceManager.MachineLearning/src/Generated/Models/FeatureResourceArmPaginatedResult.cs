@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of Feature entities. </summary>
     internal partial class FeatureResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureResourceArmPaginatedResult"/>. </summary>
         internal FeatureResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureData>();
         }
 
-        /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Feature objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Feature. </param>
         internal FeatureResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureData> value)

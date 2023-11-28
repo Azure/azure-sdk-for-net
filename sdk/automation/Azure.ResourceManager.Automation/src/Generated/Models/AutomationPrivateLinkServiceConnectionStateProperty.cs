@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Connection State of the Private Endpoint Connection. </summary>
     public partial class AutomationPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of AutomationPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkServiceConnectionStateProperty"/>. </summary>
         public AutomationPrivateLinkServiceConnectionStateProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>

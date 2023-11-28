@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Check name availability model. </summary>
     public partial class DataReplicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataReplicationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityContent"/>. </summary>
         public DataReplicationNameAvailabilityContent()
         {
         }

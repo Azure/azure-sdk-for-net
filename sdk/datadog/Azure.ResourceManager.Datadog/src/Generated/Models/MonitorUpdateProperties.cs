@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>
     internal partial class MonitorUpdateProperties
     {
-        /// <summary> Initializes a new instance of MonitorUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
         public MonitorUpdateProperties()
         {
         }

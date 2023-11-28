@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class TenantAccessInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoData"/>. </summary>
         public TenantAccessInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Open authentication access policy defined by user. </summary>
     public partial class OpenAuthenticationAccessPolicy
     {
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
         public OpenAuthenticationAccessPolicy()
         {
             Claims = new ChangeTrackingList<OpenAuthenticationPolicyClaim>();
         }
 
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
         /// <param name="providerType"> Type of provider for OAuth. </param>
         /// <param name="claims"> The access policy claims. </param>
         internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType, IList<OpenAuthenticationPolicyClaim> claims)

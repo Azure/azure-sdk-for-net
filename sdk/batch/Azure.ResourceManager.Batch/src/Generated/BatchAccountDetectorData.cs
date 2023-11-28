@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountDetectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorData"/>. </summary>
         public BatchAccountDetectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

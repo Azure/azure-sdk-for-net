@@ -10,12 +10,12 @@ namespace Azure.Communication.Messages
     /// <summary> The TemplateResponse. </summary>
     internal partial class TemplateResponseInternal
     {
-        /// <summary> Initializes a new instance of TemplateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
         internal TemplateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
         /// <param name="name"> Get the template's Name. </param>
         /// <param name="language"> Get the template's language. </param>
         /// <param name="channelType"></param>

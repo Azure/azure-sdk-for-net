@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The exposure control request. </summary>
     public partial class ExposureControlContent
     {
-        /// <summary> Initializes a new instance of ExposureControlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlContent"/>. </summary>
         public ExposureControlContent()
         {
         }

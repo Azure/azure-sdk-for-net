@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataFeedList. </summary>
     internal partial class DataFeedList
     {
-        /// <summary> Initializes a new instance of DataFeedList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedList"/>. </summary>
         internal DataFeedList()
         {
             Value = new ChangeTrackingList<DataFeedDetail>();
         }
 
-        /// <summary> Initializes a new instance of DataFeedList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value">
         /// Please note <see cref="DataFeedDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

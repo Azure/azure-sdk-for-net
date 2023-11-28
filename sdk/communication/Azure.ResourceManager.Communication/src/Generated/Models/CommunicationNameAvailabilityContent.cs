@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> The check availability request body. </summary>
     public partial class CommunicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationNameAvailabilityContent"/>. </summary>
         public CommunicationNameAvailabilityContent()
         {
         }

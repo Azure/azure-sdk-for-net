@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage Azure V2 input to update replication protected item. </summary>
     public partial class InMageAzureV2UpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2UpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/>. </summary>
         public InMageAzureV2UpdateReplicationProtectedItemContent()
         {
             TargetVmTags = new ChangeTrackingDictionary<string, string>();

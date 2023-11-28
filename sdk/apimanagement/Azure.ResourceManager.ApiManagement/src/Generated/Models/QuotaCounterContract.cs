@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Quota counter details. </summary>
     public partial class QuotaCounterContract
     {
-        /// <summary> Initializes a new instance of QuotaCounterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PeriodEndOn = periodEndOn;
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">

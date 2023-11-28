@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The content hash. </summary>
     public partial class LogicContentHash
     {
-        /// <summary> Initializes a new instance of LogicContentHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentHash"/>. </summary>
         internal LogicContentHash()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicContentHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentHash"/>. </summary>
         /// <param name="algorithm"> The algorithm of the content hash. </param>
         /// <param name="value"> The value of the content hash. </param>
         internal LogicContentHash(string algorithm, string value)

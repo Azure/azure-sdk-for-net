@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxConfigurationPackage. </summary>
     public partial class NginxConfigurationPackage
     {
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         public NginxConfigurationPackage()
         {
             ProtectedFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         /// <param name="data"></param>
         /// <param name="protectedFiles"></param>
         internal NginxConfigurationPackage(string data, IList<string> protectedFiles)

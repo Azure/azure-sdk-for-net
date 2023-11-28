@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> OAuth acquire token request body parameter (www-url-form-encoded). </summary>
     public partial class TokenBodyParameterContract
     {
-        /// <summary> Initializes a new instance of TokenBodyParameterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/>. </summary>
         /// <param name="name"> body parameter name. </param>
         /// <param name="value"> body parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

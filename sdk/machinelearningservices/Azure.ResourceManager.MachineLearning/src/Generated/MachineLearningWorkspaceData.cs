@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningWorkspaceData(AzureLocation location) : base(location)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
             StorageAccounts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

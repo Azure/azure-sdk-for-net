@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Actions to invoke when the alert fires. </summary>
     public partial class ScheduledQueryRuleActions
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         public ScheduledQueryRuleActions()
         {
             ActionGroups = new ChangeTrackingList<string>();
             CustomProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
         /// <param name="customProperties"> The properties of an alert payload. </param>
         internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties)

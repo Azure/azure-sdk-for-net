@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The event response message received from the service URI. </summary>
     public partial class ContainerRegistryWebhookEventResponseMessage
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventResponseMessage"/>. </summary>
         internal ContainerRegistryWebhookEventResponseMessage()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventResponseMessage"/>. </summary>
         /// <param name="content"> The content of the event response message. </param>
         /// <param name="headers"> The headers of the event response message. </param>
         /// <param name="reasonPhrase"> The reason phrase of the event response message. </param>

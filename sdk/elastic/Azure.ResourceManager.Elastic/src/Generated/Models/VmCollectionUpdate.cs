@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Update VM resource collection. </summary>
     public partial class VmCollectionUpdate
     {
-        /// <summary> Initializes a new instance of VmCollectionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmCollectionUpdate"/>. </summary>
         public VmCollectionUpdate()
         {
         }

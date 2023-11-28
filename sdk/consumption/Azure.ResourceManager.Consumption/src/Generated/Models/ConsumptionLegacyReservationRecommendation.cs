@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Legacy reservation recommendation. </summary>
     public partial class ConsumptionLegacyReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of ConsumptionLegacyReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         internal ConsumptionLegacyReservationRecommendation(string scope)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = ReservationRecommendationKind.Legacy;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

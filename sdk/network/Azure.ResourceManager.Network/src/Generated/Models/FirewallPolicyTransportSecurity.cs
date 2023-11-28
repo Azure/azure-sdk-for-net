@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Configuration needed to perform TLS termination &amp; initiation. </summary>
     internal partial class FirewallPolicyTransportSecurity
     {
-        /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyTransportSecurity"/>. </summary>
         public FirewallPolicyTransportSecurity()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyTransportSecurity"/>. </summary>
         /// <param name="certificateAuthority"> The CA used for intermediate CA generation. </param>
         internal FirewallPolicyTransportSecurity(FirewallPolicyCertificateAuthority certificateAuthority)
         {

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB provisioned throughput settings object. </summary>
     public partial class AutoscaleSettingsResourceInfo
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingsResourceInfo"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput container can scale up to. </param>
         public AutoscaleSettingsResourceInfo(int maxThroughput)
         {
             MaxThroughput = maxThroughput;
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingsResourceInfo"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput container can scale up to. </param>
         /// <param name="autoUpgradePolicy"> Cosmos DB resource auto-upgrade policy. </param>
         /// <param name="targetMaxThroughput"> Represents target maximum throughput container can scale up to once offer is no longer in pending state. </param>

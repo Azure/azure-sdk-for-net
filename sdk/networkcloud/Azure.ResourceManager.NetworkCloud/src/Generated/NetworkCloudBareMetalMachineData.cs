@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudBareMetalMachineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud
             VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

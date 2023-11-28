@@ -13,14 +13,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The discovered properties of the ONVIF device that are returned during the discovery. </summary>
     public partial class DiscoveredOnvifDevice
     {
-        /// <summary> Initializes a new instance of DiscoveredOnvifDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDevice"/>. </summary>
         public DiscoveredOnvifDevice()
         {
             Scopes = new ChangeTrackingList<string>();
             Endpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiscoveredOnvifDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDevice"/>. </summary>
         /// <param name="serviceIdentifier"> The unique identifier of the ONVIF device that was discovered in the same subnet as the IoT Edge device. </param>
         /// <param name="remoteIPAddress"> The IP address of the ONVIF device that was discovered in the same subnet as the IoT Edge device. </param>
         /// <param name="scopes"> An array of hostnames for the ONVIF discovered devices that are in the same subnet as the IoT Edge device. </param>

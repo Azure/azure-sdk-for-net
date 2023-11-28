@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class ClipTime
     {
-        /// <summary> Initializes a new instance of ClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClipTime"/>. </summary>
         protected ClipTime()
         {
         }
 
-        /// <summary> Initializes a new instance of ClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ClipTime(string odataType)
         {

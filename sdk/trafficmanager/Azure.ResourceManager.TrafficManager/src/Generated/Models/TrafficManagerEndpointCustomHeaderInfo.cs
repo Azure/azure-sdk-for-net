@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Custom header name and value. </summary>
     public partial class TrafficManagerEndpointCustomHeaderInfo
     {
-        /// <summary> Initializes a new instance of TrafficManagerEndpointCustomHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointCustomHeaderInfo"/>. </summary>
         public TrafficManagerEndpointCustomHeaderInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerEndpointCustomHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointCustomHeaderInfo"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         internal TrafficManagerEndpointCustomHeaderInfo(string name, string value)

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represents an Azure resource group in a blueprint definition. </summary>
     public partial class ResourceGroupDefinition
     {
-        /// <summary> Initializes a new instance of ResourceGroupDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupDefinition"/>. </summary>
         public ResourceGroupDefinition()
         {
             DependsOn = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupDefinition"/>. </summary>
         /// <param name="name"> Name of this resourceGroup. Leave empty if the resource group name will be specified during the blueprint assignment. </param>
         /// <param name="location"> Location of this resourceGroup. Leave empty if the resource group location will be specified during the blueprint assignment. </param>
         /// <param name="dependsOn"> Artifacts which need to be deployed before this resource group. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
     public partial class SapOpenHubTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SapOpenHubTable";
         }
 
-        /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

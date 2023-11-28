@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedPrivateEndpointModelData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedPrivateEndpointModelData(AzureLocation location) : base(location)
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

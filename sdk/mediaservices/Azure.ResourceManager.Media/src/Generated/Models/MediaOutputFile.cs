@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an output file produced. </summary>
     public partial class MediaOutputFile
     {
-        /// <summary> Initializes a new instance of MediaOutputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaOutputFile"/>. </summary>
         /// <param name="labels"> The list of labels that describe how the encoder should multiplex video and audio into an output file. For example, if the encoder is producing two video layers with labels v1 and v2, and one audio layer with label a1, then an array like '[v1, a1]' tells the encoder to produce an output file with the video track represented by v1 and the audio track represented by a1. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/> is null. </exception>
         public MediaOutputFile(IEnumerable<string> labels)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             Labels = labels.ToList();
         }
 
-        /// <summary> Initializes a new instance of MediaOutputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaOutputFile"/>. </summary>
         /// <param name="labels"> The list of labels that describe how the encoder should multiplex video and audio into an output file. For example, if the encoder is producing two video layers with labels v1 and v2, and one audio layer with label a1, then an array like '[v1, a1]' tells the encoder to produce an output file with the video track represented by v1 and the audio track represented by a1. </param>
         internal MediaOutputFile(IList<string> labels)
         {

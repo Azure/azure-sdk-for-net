@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPortRule. </summary>
     public partial class JitNetworkAccessPortRule
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPortRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortRule"/>. </summary>
         /// <param name="number"></param>
         /// <param name="protocol"></param>
         /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             MaxRequestAccessDuration = maxRequestAccessDuration;
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPortRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortRule"/>. </summary>
         /// <param name="number"></param>
         /// <param name="protocol"></param>
         /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </param>

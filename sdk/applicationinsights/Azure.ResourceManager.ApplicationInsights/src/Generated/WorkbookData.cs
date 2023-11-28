@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WorkbookData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkbookData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

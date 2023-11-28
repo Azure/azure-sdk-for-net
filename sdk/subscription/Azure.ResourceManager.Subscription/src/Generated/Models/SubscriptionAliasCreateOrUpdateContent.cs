@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The parameters required to create a new subscription. </summary>
     public partial class SubscriptionAliasCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
         public SubscriptionAliasCreateOrUpdateContent()
         {
         }

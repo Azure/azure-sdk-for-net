@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class SynapsePrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionProperties"/>. </summary>
         internal SynapsePrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>

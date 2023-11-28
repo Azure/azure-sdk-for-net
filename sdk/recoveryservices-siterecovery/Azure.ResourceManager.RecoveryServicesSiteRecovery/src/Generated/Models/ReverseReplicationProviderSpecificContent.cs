@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of ReverseReplicationProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationProviderSpecificContent"/>. </summary>
         protected ReverseReplicationProviderSpecificContent()
         {
         }

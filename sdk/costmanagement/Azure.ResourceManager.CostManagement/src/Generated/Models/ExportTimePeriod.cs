@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The date range for data in the export. This should only be specified with timeFrame set to 'Custom'. The maximum date range is 3 months. </summary>
     public partial class ExportTimePeriod
     {
-        /// <summary> Initializes a new instance of ExportTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/>. </summary>
         /// <param name="from"> The start date for export data. </param>
         /// <param name="to"> The end date for export data. </param>
         public ExportTimePeriod(DateTimeOffset @from, DateTimeOffset to)

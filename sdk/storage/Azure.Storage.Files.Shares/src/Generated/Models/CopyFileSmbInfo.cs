@@ -10,7 +10,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Parameter group. </summary>
     internal partial class CopyFileSmbInfo
     {
-        /// <summary> Initializes a new instance of CopyFileSmbInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyFileSmbInfo"/>. </summary>
         public CopyFileSmbInfo()
         {
         }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// </summary>
     public partial class CloudEdgeManagementRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
         public CloudEdgeManagementRole()
         {
             Kind = DataBoxEdgeRoleType.CloudEdgeManagement;
         }
 
-        /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

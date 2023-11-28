@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The properties of a change. </summary>
     public partial class ChangeProperties
     {
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeProperties"/>. </summary>
         internal ChangeProperties()
         {
             InitiatedByList = new ChangeTrackingList<string>();
             PropertyChanges = new ChangeTrackingList<PropertyChange>();
         }
 
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeProperties"/>. </summary>
         /// <param name="resourceId"> The resource id that the change is attached to. </param>
         /// <param name="changeDetectedOn"> The time when the change is detected. </param>
         /// <param name="initiatedByList">

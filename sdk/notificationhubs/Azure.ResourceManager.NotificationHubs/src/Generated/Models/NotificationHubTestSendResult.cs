@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub Resource. </summary>
     public partial class NotificationHubTestSendResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubTestSendResult(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

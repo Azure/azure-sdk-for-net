@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Diagnostic Metric. </summary>
     public partial class DiagnosticMetricSample
     {
-        /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSample"/>. </summary>
         public DiagnosticMetricSample()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSample"/>. </summary>
         /// <param name="timestamp"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
         /// Role Instance. Null if this counter is not per instance

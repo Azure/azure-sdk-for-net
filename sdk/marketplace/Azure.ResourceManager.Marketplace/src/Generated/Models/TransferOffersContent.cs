@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Transfer offers properties. </summary>
     public partial class TransferOffersContent
     {
-        /// <summary> Initializes a new instance of TransferOffersContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
         public TransferOffersContent()
         {
             TargetCollections = new ChangeTrackingList<string>();

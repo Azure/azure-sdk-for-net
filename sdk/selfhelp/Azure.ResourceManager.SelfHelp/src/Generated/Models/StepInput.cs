@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Details of step input. </summary>
     public partial class StepInput
     {
-        /// <summary> Initializes a new instance of StepInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         internal StepInput()
         {
             ResponseOptions = new ChangeTrackingList<ResponseConfig>();
         }
 
-        /// <summary> Initializes a new instance of StepInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
         /// <param name="questionType"> Text Input. Will be a single line input. </param>
         /// <param name="questionContent"> User question content. </param>

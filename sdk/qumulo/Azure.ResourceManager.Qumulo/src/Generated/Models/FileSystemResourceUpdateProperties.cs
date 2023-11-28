@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> The updatable properties of the FileSystemResource. </summary>
     public partial class FileSystemResourceUpdateProperties
     {
-        /// <summary> Initializes a new instance of FileSystemResourceUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
         public FileSystemResourceUpdateProperties()
         {
             PrivateIPs = new ChangeTrackingList<string>();

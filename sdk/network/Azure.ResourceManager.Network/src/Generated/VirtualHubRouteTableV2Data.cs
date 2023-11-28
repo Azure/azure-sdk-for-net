@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualHubRouteTableV2Data : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         public VirtualHubRouteTableV2Data()
         {
             Routes = new ChangeTrackingList<VirtualHubRouteV2>();
             AttachedConnections = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The Security Settings of managed instance DTC. </summary>
     public partial class ManagedInstanceDtcSecuritySettings
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
         public ManagedInstanceDtcSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
         /// <param name="transactionManagerCommunicationSettings"> Transaction Manager communication settings of managed instance DTC. </param>
         /// <param name="isXATransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
         /// <param name="snaLu6Point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>

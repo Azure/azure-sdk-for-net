@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information required to validate the subnet that will be used in AML file system create. </summary>
     public partial class AmlFileSystemSubnetContent
     {
-        /// <summary> Initializes a new instance of AmlFileSystemSubnetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemSubnetContent"/>. </summary>
         public AmlFileSystemSubnetContent()
         {
         }

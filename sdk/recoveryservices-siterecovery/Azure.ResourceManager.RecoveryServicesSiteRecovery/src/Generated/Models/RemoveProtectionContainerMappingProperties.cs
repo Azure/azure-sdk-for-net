@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Unpairing input properties. </summary>
     internal partial class RemoveProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of RemoveProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveProtectionContainerMappingProperties"/>. </summary>
         public RemoveProtectionContainerMappingProperties()
         {
         }

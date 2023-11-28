@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobTransformationData : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobTransformationData"/>. </summary>
         public StreamingJobTransformationData()
         {
             ValidStreamingUnits = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobTransformationData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

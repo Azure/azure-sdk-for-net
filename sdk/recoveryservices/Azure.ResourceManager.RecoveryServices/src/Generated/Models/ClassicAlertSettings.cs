@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Settings for classic alerts. </summary>
     internal partial class ClassicAlertSettings
     {
-        /// <summary> Initializes a new instance of ClassicAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
         public ClassicAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassicAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
         /// <param name="alertsForCriticalOperations"></param>
         internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations)
         {

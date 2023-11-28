@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Security Settings of the vault. </summary>
     public partial class RecoveryServicesSecuritySettings
     {
-        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSecuritySettings"/>. </summary>
         public RecoveryServicesSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSecuritySettings"/>. </summary>
         /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Schedule based trigger context. </summary>
     public partial class ScheduleBasedBackupTriggerContext : DataProtectionBackupTriggerContext
     {
-        /// <summary> Initializes a new instance of ScheduleBasedBackupTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupTriggerContext"/>. </summary>
         /// <param name="schedule"> Schedule for this backup. </param>
         /// <param name="taggingCriteriaList"> List of tags that can be applicable for given schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="taggingCriteriaList"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "ScheduleBasedTriggerContext";
         }
 
-        /// <summary> Initializes a new instance of ScheduleBasedBackupTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="schedule"> Schedule for this backup. </param>
         /// <param name="taggingCriteriaList"> List of tags that can be applicable for given schedule. </param>

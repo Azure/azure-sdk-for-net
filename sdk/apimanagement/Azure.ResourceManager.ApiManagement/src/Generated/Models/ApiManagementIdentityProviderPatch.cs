@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to update Identity Provider. </summary>
     public partial class ApiManagementIdentityProviderPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderPatch"/>. </summary>
         public ApiManagementIdentityProviderPatch()
         {
             AllowedTenants = new ChangeTrackingList<string>();

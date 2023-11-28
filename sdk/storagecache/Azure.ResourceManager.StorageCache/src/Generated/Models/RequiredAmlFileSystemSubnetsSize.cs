@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information about the number of available IP addresses that are required for the AML file system. </summary>
     public partial class RequiredAmlFileSystemSubnetsSize
     {
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSize"/>. </summary>
         internal RequiredAmlFileSystemSubnetsSize()
         {
         }
 
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSize"/>. </summary>
         /// <param name="filesystemSubnetSize"> The number of available IP addresses that are required for the AML file system. </param>
         internal RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize)
         {

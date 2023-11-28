@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input properties to apply recovery point. </summary>
     public partial class SiteRecoveryApplyRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplyRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific input for applying recovery point.
         /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

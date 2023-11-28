@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the shared access key. </summary>
     public partial class DeviceProvisioningServicesSharedAccessKey
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSharedAccessKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="rights"> Rights that this key has. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Rights = rights;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSharedAccessKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="primaryKey"> Primary SAS key value. </param>
         /// <param name="secondaryKey"> Secondary SAS key value. </param>

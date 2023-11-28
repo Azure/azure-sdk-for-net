@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The share mount point. </summary>
     public partial class DataBoxEdgeMountPointMap
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMountPointMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMountPointMap"/>. </summary>
         /// <param name="shareId"> ID of the share mounted to the role VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         public DataBoxEdgeMountPointMap(ResourceIdentifier shareId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ShareId = shareId;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMountPointMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMountPointMap"/>. </summary>
         /// <param name="shareId"> ID of the share mounted to the role VM. </param>
         /// <param name="roleId"> ID of the role to which share is mounted. </param>
         /// <param name="mountPoint"> Mount point for the share. </param>

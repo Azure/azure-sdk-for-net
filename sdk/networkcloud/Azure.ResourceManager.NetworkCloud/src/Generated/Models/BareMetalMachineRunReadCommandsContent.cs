@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineRunReadCommandsParameters represents the body of request containing list of read-only commands to run on the bare metal machine. </summary>
     public partial class BareMetalMachineRunReadCommandsContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineRunReadCommandsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/>. </summary>
         /// <param name="commands"> The list of read-only commands to be executed directly against the target machine. </param>
         /// <param name="limitTimeSeconds">
         /// The maximum time the commands are allowed to run.

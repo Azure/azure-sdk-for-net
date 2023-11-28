@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details of the estimated savings. </summary>
     public partial class ConsumptionSavingsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSavingsProperties"/>. </summary>
         internal ConsumptionSavingsProperties()
         {
             CalculatedSavings = new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSavingsProperties"/>. </summary>
         /// <param name="calculatedSavings"> List of calculated savings. </param>
         /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
         /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>

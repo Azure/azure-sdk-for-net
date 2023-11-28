@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> List document classifiers response object. </summary>
     internal partial class GetDocumentClassifiersResponse
     {
-        /// <summary> Initializes a new instance of GetDocumentClassifiersResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDocumentClassifiersResponse"/>. </summary>
         /// <param name="value"> List of document classifiers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetDocumentClassifiersResponse(IEnumerable<DocumentClassifierDetails> value)
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetDocumentClassifiersResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDocumentClassifiersResponse"/>. </summary>
         /// <param name="value"> List of document classifiers. </param>
         /// <param name="nextLink"> Link to the next page of document classifiers. </param>
         internal GetDocumentClassifiersResponse(IReadOnlyList<DocumentClassifierDetails> value, Uri nextLink)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> The request that is made for a long term retention backup. </summary>
     public partial class PostgreSqlFlexibleServerLtrBackupContent : PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup store detail for target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>

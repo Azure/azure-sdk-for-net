@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The platform where the packet core is deployed. </summary>
     public partial class MobileNetworkPlatformConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         public MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             AzureStackEdgeDevices = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         /// <param name="azureStackEdgeDevice"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
         /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>

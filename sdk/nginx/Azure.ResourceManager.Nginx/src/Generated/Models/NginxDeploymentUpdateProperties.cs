@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentUpdateProperties. </summary>
     public partial class NginxDeploymentUpdateProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         public NginxDeploymentUpdateProperties()
         {
         }

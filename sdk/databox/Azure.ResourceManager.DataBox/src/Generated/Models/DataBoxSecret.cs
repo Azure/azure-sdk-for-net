@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The secrets related to a DataBox. </summary>
     public partial class DataBoxSecret
     {
-        /// <summary> Initializes a new instance of DataBoxSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSecret"/>. </summary>
         internal DataBoxSecret()
         {
             NetworkConfigurations = new ChangeTrackingList<ApplianceNetworkConfiguration>();
             AccountCredentialDetails = new ChangeTrackingList<DataBoxAccountCredentialDetails>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSecret"/>. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
