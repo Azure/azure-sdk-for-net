@@ -41,6 +41,8 @@ public class PipelineMessage : IDisposable
         return _response is not null;
     }
 
+    internal int RetryCount { get; set; }
+
     #region Pipeline invocation options
 
     public virtual CancellationToken CancellationToken { get; set; }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -59,12 +58,10 @@ public class RequestRetryPolicy : PipelinePolicy
     //}
     {
         List<Exception>? exceptions = null;
-        TryGetRetryCount(message, out int retryCount);
 
         while (true)
         {
             Exception? lastException = null;
-            long before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -103,9 +100,6 @@ public class RequestRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
-            long after = Stopwatch.GetTimestamp();
-            double elapsed = (after - before) / (double)Stopwatch.Frequency;
-
             bool shouldRetry = false;
 
             if (lastException is not null ||
@@ -138,10 +132,16 @@ public class RequestRetryPolicy : PipelinePolicy
                     response.ContentStream?.Dispose();
                 }
 
-                SetRetryCount(message, retryCount++);
+                if (async)
+                {
+                    await OnBeforeRetryAsync(message).ConfigureAwait(false);
+                }
+                else
+                {
+                    OnBeforeRetry(message);
+                }
 
-                // TODO: extend
-                //AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
+                message.RetryCount++;
 
                 continue;
             }
@@ -154,7 +154,7 @@ public class RequestRetryPolicy : PipelinePolicy
                     ExceptionDispatchInfo.Capture(lastException).Throw();
                 }
 
-                throw new AggregateException($"Retry failed after {retryCount} tries.", exceptions);
+                throw new AggregateException($"Retry failed after {message.RetryCount} tries.", exceptions);
 
                 //throw new AggregateException(
                 //    $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
@@ -187,9 +187,13 @@ public class RequestRetryPolicy : PipelinePolicy
 
     protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
 
+    protected virtual void OnBeforeRetry(PipelineMessage message) { }
+
+    protected virtual ValueTask OnBeforeRetryAsync(PipelineMessage message) => default;
+
     protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
-        if (TryGetRetryCount(message, out int retryCount) && retryCount >= _maxRetries)
+        if (message.RetryCount >= _maxRetries)
         {
             // out of retries
             return false;
@@ -203,7 +207,8 @@ public class RequestRetryPolicy : PipelinePolicy
     protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetry(message, exception));
 
-    protected virtual TimeSpan GetDelay(PipelineMessage message) {
+    protected virtual TimeSpan GetDelay(PipelineMessage message)
+    {
         // TODO: implement
         return TimeSpan.FromSeconds(1);
     }
@@ -247,24 +252,5 @@ public class RequestRetryPolicy : PipelinePolicy
         => (exception is IOException) ||
             (exception is ClientRequestException ex && ex.Status == 0);
 
-    #endregion
-
-    #region RetryCount Property
-    private static void SetRetryCount(PipelineMessage message, int retryCount)
-        => message.SetProperty(typeof(RetryCountPropertyKey), retryCount);
-
-    private static bool TryGetRetryCount(PipelineMessage message, out int retryCount)
-    {
-        if (message.TryGetProperty(typeof(RetryCountPropertyKey), out object? value) && value is int count)
-        {
-            retryCount = count;
-            return true;
-        }
-
-        retryCount = default;
-        return false;
-    }
-
-    private struct RetryCountPropertyKey { }
     #endregion
 }
