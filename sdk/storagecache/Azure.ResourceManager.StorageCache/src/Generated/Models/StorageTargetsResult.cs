@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A list of Storage Targets. </summary>
     internal partial class StorageTargetsResult
     {
-        /// <summary> Initializes a new instance of StorageTargetsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetsResult"/>. </summary>
         internal StorageTargetsResult()
         {
             Value = new ChangeTrackingList<StorageTargetData>();
         }
 
-        /// <summary> Initializes a new instance of StorageTargetsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetsResult"/>. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of Storage Targets. </param>
         /// <param name="value"> The list of Storage Targets defined for the cache. </param>
         internal StorageTargetsResult(string nextLink, IReadOnlyList<StorageTargetData> value)

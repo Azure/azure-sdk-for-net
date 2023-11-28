@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Custom Domain of a Container App. </summary>
     public partial class ContainerAppCustomDomain
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomain"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerAppCustomDomain(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomain"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <param name="bindingType"> Custom Domain binding type. </param>
         /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>

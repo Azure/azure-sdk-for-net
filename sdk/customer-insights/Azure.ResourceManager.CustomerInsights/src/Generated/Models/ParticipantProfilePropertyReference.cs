@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The participant profile property reference. </summary>
     public partial class ParticipantProfilePropertyReference
     {
-        /// <summary> Initializes a new instance of ParticipantProfilePropertyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantProfilePropertyReference"/>. </summary>
         /// <param name="interactionPropertyName"> The source interaction property that maps to the target profile property. </param>
         /// <param name="profilePropertyName"> The target profile property that maps to the source interaction property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="interactionPropertyName"/> or <paramref name="profilePropertyName"/> is null. </exception>

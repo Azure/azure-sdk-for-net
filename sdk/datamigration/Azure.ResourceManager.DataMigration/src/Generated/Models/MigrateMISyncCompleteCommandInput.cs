@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for command that completes online migration for an Azure SQL Database Managed Instance. </summary>
     internal partial class MigrateMISyncCompleteCommandInput
     {
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandInput"/>. </summary>
         /// <param name="sourceDatabaseName"> Name of managed instance database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDatabaseName"/> is null. </exception>
         public MigrateMISyncCompleteCommandInput(string sourceDatabaseName)

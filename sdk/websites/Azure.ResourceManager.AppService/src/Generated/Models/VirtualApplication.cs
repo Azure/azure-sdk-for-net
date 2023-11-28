@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual application in an app. </summary>
     public partial class VirtualApplication
     {
-        /// <summary> Initializes a new instance of VirtualApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplication"/>. </summary>
         public VirtualApplication()
         {
             VirtualDirectories = new ChangeTrackingList<VirtualDirectory>();
         }
 
-        /// <summary> Initializes a new instance of VirtualApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplication"/>. </summary>
         /// <param name="virtualPath"> Virtual path. </param>
         /// <param name="physicalPath"> Physical path. </param>
         /// <param name="isPreloadEnabled"> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>

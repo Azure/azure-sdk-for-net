@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure Firewall Packet Capture Parameters resource. </summary>
     public partial class FirewallPacketCaptureContent : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
         public FirewallPacketCaptureContent()
         {
             Flags = new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
             Filters = new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.IotHub.Models;
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubConsumerGroupInfoResource" /> and their operations.
-    /// Each <see cref="EventHubConsumerGroupInfoResource" /> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource" />.
-    /// To get an <see cref="EventHubConsumerGroupInfoCollection" /> instance call the GetEventHubConsumerGroupInfos method from an instance of <see cref="IotHubDescriptionResource" />.
+    /// A class representing a collection of <see cref="EventHubConsumerGroupInfoResource"/> and their operations.
+    /// Each <see cref="EventHubConsumerGroupInfoResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get an <see cref="EventHubConsumerGroupInfoCollection"/> instance call the GetEventHubConsumerGroupInfos method from an instance of <see cref="IotHubDescriptionResource"/>.
     /// </summary>
     public partial class EventHubConsumerGroupInfoCollection : ArmCollection, IEnumerable<EventHubConsumerGroupInfoResource>, IAsyncEnumerable<EventHubConsumerGroupInfoResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.IotHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubConsumerGroupInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubConsumerGroupInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.IotHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubConsumerGroupInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubConsumerGroupInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);

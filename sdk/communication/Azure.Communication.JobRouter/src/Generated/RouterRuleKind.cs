@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported router rule types. </summary>
+    /// <summary> Discriminators for supported router rule types. </summary>
     public readonly partial struct RouterRuleKind : IEquatable<RouterRuleKind>
     {
         private readonly string _value;

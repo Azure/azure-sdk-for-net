@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a sandboxCustomImage check name availability request. </summary>
     public partial class SandboxCustomImagesCheckNameContent
     {
-        /// <summary> Initializes a new instance of SandboxCustomImagesCheckNameContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesCheckNameContent"/>. </summary>
         /// <param name="name"> Sandbox custom image resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SandboxCustomImagesCheckNameContent(string name)

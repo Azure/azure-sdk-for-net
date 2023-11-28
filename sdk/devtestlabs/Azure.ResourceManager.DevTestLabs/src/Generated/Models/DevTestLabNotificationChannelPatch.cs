@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A notification. </summary>
     public partial class DevTestLabNotificationChannelPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelPatch"/>. </summary>
         public DevTestLabNotificationChannelPatch()
         {
         }

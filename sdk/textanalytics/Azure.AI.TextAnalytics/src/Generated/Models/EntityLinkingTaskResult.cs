@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntityLinkingTaskResult. </summary>
     internal partial class EntityLinkingTaskResult : AnalyzeTextTaskResult
     {
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal EntityLinkingTaskResult(EntityLinkingResult results)
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextTaskResultsKind.EntityLinkingResults;
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
         /// <param name="results"></param>
         internal EntityLinkingTaskResult(AnalyzeTextTaskResultsKind kind, EntityLinkingResult results) : base(kind)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the scheduled action notification. </summary>
     public partial class NotificationProperties
     {
-        /// <summary> Initializes a new instance of NotificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
         /// <param name="to"> Array of email addresses. </param>
         /// <param name="subject"> Subject of the email. Length is limited to 70 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="subject"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Subject = subject;
         }
 
-        /// <summary> Initializes a new instance of NotificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
         /// <param name="to"> Array of email addresses. </param>
         /// <param name="language"> Locale of the email. </param>
         /// <param name="message"> Optional message to be added in the email. Length is limited to 250 characters. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Response for long running operation. </summary>
     public partial class DataShareOperationResult
     {
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareOperationResult"/>. </summary>
         /// <param name="status"> Operation state of the long running operation. </param>
         internal DataShareOperationResult(DataShareOperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareOperationResult"/>. </summary>
         /// <param name="endOn"> start time. </param>
         /// <param name="error"> The error property when status is failed. </param>
         /// <param name="startOn"> start time. </param>

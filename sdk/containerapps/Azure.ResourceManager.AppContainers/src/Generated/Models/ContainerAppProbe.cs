@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic. </summary>
     public partial class ContainerAppProbe
     {
-        /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppProbe"/>. </summary>
         public ContainerAppProbe()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppProbe"/>. </summary>
         /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
         /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
         /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>

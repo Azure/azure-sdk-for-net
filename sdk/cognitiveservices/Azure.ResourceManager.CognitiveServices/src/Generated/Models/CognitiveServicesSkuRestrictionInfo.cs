@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The CognitiveServicesSkuRestrictionInfo. </summary>
     public partial class CognitiveServicesSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictionInfo"/>. </summary>
         internal CognitiveServicesSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         internal CognitiveServicesSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)

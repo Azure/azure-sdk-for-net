@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies that the content key ID is in the PlayReady header. </summary>
     public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader : ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader"/>. </summary>
         public ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader()
         {
             OdataType = "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader(string odataType) : base(odataType)
         {

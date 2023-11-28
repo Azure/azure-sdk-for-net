@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The credential result response. </summary>
     public partial class ManagedClusterCredential
     {
-        /// <summary> Initializes a new instance of ManagedClusterCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
         internal ManagedClusterCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         internal ManagedClusterCredential(string name, byte[] value)

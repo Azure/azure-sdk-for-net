@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Job endpoint definition. </summary>
     public partial class MachineLearningJobService
     {
-        /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         public MachineLearningJobService()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
         /// <param name="jobServiceType"> Endpoint type. </param>

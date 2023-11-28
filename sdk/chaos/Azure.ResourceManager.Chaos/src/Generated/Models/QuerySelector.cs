@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a query selector. </summary>
     public partial class QuerySelector : Selector
     {
-        /// <summary> Initializes a new instance of QuerySelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySelector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="queryString"> Azure Resource Graph (ARG) Query Language query for target resources. </param>
         /// <param name="subscriptionIds"> Subscription id list to scope resource query. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType = SelectorType.Query;
         }
 
-        /// <summary> Initializes a new instance of QuerySelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySelector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">

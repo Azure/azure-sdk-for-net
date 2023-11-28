@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing an AttachedNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttachedNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttachedNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetAttachedNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttachedNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAttachedNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetAttachedNetworkConnection method.
     /// </summary>
     public partial class AttachedNetworkConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttachedNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)

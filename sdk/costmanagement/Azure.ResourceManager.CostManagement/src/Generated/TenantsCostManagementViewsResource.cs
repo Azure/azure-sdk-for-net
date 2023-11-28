@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a TenantsCostManagementViews along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantsCostManagementViewsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantsCostManagementViewsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantsCostManagementViews method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantsCostManagementViewsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantsCostManagementViewsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantsCostManagementViews method.
     /// </summary>
     public partial class TenantsCostManagementViewsResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantsCostManagementViewsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantsCostManagementViewsResource(ArmClient client, CostManagementViewData data) : this(client, data.Id)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy definition group summary. </summary>
     public partial class PolicyGroupSummary
     {
-        /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyGroupSummary"/>. </summary>
         internal PolicyGroupSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyGroupSummary"/>. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
         internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results)

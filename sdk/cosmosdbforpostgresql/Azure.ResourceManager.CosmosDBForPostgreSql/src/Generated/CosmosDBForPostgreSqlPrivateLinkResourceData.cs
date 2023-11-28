@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceData"/>. </summary>
         public CosmosDBForPostgreSqlPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

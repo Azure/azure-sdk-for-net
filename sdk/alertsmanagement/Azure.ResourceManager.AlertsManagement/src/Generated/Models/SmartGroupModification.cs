@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert Modification details. </summary>
     public partial class SmartGroupModification : ResourceData
     {
-        /// <summary> Initializes a new instance of SmartGroupModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModification"/>. </summary>
         public SmartGroupModification()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModification"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

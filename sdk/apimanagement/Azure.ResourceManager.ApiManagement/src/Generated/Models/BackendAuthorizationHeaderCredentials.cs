@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Authorization header information. </summary>
     public partial class BackendAuthorizationHeaderCredentials
     {
-        /// <summary> Initializes a new instance of BackendAuthorizationHeaderCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
         /// <param name="scheme"> Authentication Scheme name. </param>
         /// <param name="parameter"> Authentication Parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheme"/> or <paramref name="parameter"/> is null. </exception>

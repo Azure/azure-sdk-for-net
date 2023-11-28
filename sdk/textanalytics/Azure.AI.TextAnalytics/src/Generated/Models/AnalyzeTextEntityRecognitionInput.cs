@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextEntityRecognitionInput. </summary>
     internal partial class AnalyzeTextEntityRecognitionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextEntityRecognitionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityRecognitionInput"/>. </summary>
         public AnalyzeTextEntityRecognitionInput()
         {
             Kind = AnalyzeTextTaskKind.EntityRecognition;

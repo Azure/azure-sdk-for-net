@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryNetworkMapping along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryNetworkMappingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryNetworkMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryNetworkResource" /> using the GetSiteRecoveryNetworkMapping method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryNetworkMappingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryNetworkMappingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryNetworkResource"/> using the GetSiteRecoveryNetworkMapping method.
     /// </summary>
     public partial class SiteRecoveryNetworkMappingResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryNetworkMappingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryNetworkMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryNetworkMappingResource(ArmClient client, SiteRecoveryNetworkMappingData data) : this(client, data.Id)

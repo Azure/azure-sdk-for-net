@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Restore target info for Item level restore operation. </summary>
     public partial class ItemLevelRestoreTargetInfo : RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of ItemLevelRestoreTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreTargetInfo"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreCriteria">
         /// Restore Criteria

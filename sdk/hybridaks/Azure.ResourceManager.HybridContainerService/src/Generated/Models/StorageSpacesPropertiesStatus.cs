@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSStorageStatus defines the observed state of HybridAKSStorage. </summary>
     internal partial class StorageSpacesPropertiesStatus
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatus"/>. </summary>
         public StorageSpacesPropertiesStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatus"/>. </summary>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
         internal StorageSpacesPropertiesStatus(StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus)
         {

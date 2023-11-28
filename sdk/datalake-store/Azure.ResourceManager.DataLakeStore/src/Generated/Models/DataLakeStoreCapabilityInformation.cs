@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Subscription-level properties and limits for Data Lake Store. </summary>
     public partial class DataLakeStoreCapabilityInformation
     {
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         internal DataLakeStoreCapabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
         /// <param name="state"> The subscription state. </param>
         /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The GPU resource. </summary>
     public partial class ContainerGpuResourceInfo
     {
-        /// <summary> Initializes a new instance of ContainerGpuResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGpuResourceInfo"/>. </summary>
         /// <param name="count"> The count of the GPU resource. </param>
         /// <param name="sku"> The SKU of the GPU resource. </param>
         public ContainerGpuResourceInfo(int count, ContainerGpuSku sku)

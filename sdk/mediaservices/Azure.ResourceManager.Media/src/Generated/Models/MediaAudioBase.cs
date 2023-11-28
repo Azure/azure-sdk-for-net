@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class MediaAudioBase : MediaCodecBase
     {
-        /// <summary> Initializes a new instance of MediaAudioBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAudioBase"/>. </summary>
         public MediaAudioBase()
         {
             OdataType = "#Microsoft.Media.Audio";
         }
 
-        /// <summary> Initializes a new instance of MediaAudioBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAudioBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="channels"> The number of channels in the audio. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a Encryption Settings for a Disk. </summary>
     public partial class DiskEncryptionSettings
     {
-        /// <summary> Initializes a new instance of DiskEncryptionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSettings"/>. </summary>
         public DiskEncryptionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSettings"/>. </summary>
         /// <param name="diskEncryptionKey"> Specifies the location of the disk encryption key, which is a Key Vault Secret. </param>
         /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
         /// <param name="enabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>

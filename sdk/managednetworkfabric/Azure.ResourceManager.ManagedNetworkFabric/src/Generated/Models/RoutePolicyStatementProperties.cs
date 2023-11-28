@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route Policy Statement properties. </summary>
     public partial class RoutePolicyStatementProperties : AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of RoutePolicyStatementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
         /// <param name="action"> Route policy action properties. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of RoutePolicyStatementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>

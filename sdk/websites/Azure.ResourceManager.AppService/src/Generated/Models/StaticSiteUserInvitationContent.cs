@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static sites user roles invitation resource. </summary>
     public partial class StaticSiteUserInvitationContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationContent"/>. </summary>
         public StaticSiteUserInvitationContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

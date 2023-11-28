@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatchProperties
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
         public ManagedGrafanaPatchProperties()
         {
             GrafanaPlugins = new ChangeTrackingDictionary<string, GrafanaPlugin>();

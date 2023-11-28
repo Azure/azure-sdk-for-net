@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of SKU proxy resources for the HCI cluster. </summary>
     internal partial class HciSkuList
     {
-        /// <summary> Initializes a new instance of HciSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuList"/>. </summary>
         internal HciSkuList()
         {
             Value = new ChangeTrackingList<HciSkuData>();
         }
 
-        /// <summary> Initializes a new instance of HciSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuList"/>. </summary>
         /// <param name="value"> List of SKU proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal HciSkuList(IReadOnlyList<HciSkuData> value, string nextLink)

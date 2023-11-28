@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler : IAsyncDisposable
+    internal class CommitChunkHandler : IDisposable
     {
         // Indicates whether the current thread is processing stage chunks.
         private static Task _processStageChunkEvents;
@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Create channel of <see cref="StageChunkEventArgs"/> to keep track of that are
-        /// waiting to update the bytesTransferredand other required operations.
+        /// waiting to update the bytesTransferred and other required operations.
         /// </summary>
         private readonly Channel<StageChunkEventArgs> _stageChunkChannel;
         private CancellationToken _cancellationToken;
@@ -106,20 +106,19 @@ namespace Azure.Storage.DataMovement
             _clientDiagnostics = clientDiagnostics;
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             // We no longer have to read from the channel. We are not expecting any more requests.
             _stageChunkChannel.Writer.TryComplete();
-            await _stageChunkChannel.Reader.Completion.ConfigureAwait(false);
 
             if (_currentBytesSemaphore != default)
             {
                 _currentBytesSemaphore.Dispose();
             }
-            DipsoseHandlers();
+            DisposeHandlers();
         }
 
-        private void DipsoseHandlers()
+        private void DisposeHandlers()
         {
             if (_transferOrder == DataTransferOrder.Sequential)
             {

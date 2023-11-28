@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The UnknownArtifactAccessCredential. </summary>
     internal partial class UnknownArtifactAccessCredential : ArtifactAccessCredential
     {
-        /// <summary> Initializes a new instance of UnknownArtifactAccessCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownArtifactAccessCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
         internal UnknownArtifactAccessCredential(CredentialType credentialType) : base(credentialType)
         {

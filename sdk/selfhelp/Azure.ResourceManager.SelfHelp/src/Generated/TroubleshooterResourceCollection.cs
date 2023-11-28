@@ -16,9 +16,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TroubleshooterResource" /> and their operations.
-    /// Each <see cref="TroubleshooterResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="TroubleshooterResourceCollection" /> instance call the GetTroubleshooterResources method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="TroubleshooterResource"/> and their operations.
+    /// Each <see cref="TroubleshooterResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="TroubleshooterResourceCollection"/> instance call the GetTroubleshooterResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class TroubleshooterResourceCollection : ArmCollection
     {

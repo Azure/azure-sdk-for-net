@@ -13,7 +13,7 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> A JSONPatch document as defined by RFC 6902. </summary>
     public partial class JsonPatchDocument
     {
-        /// <summary> Initializes a new instance of JsonPatchDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/>. </summary>
         /// <param name="op"> The operation to be performed. </param>
         /// <param name="path"> A JSON-Pointer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>

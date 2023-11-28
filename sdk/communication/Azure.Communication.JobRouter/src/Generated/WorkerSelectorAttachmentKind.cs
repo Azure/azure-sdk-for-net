@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported worker selector attachment types. </summary>
+    /// <summary> Discriminators for supported worker selector attachment types. </summary>
     public readonly partial struct WorkerSelectorAttachmentKind : IEquatable<WorkerSelectorAttachmentKind>
     {
         private readonly string _value;

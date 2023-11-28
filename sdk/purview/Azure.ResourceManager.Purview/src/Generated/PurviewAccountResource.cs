@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A Class representing a PurviewAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPurviewAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPurviewAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPurviewAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPurviewAccount method.
     /// </summary>
     public partial class PurviewAccountResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Purview
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PurviewAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PurviewAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PurviewAccountResource(ArmClient client, PurviewAccountData data) : this(client, data.Id)

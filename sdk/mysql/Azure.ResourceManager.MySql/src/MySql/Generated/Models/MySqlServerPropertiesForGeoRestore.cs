@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The properties used to create a new server by restoring to a different region from a geo replicated backup. </summary>
     public partial class MySqlServerPropertiesForGeoRestore : MySqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of MySqlServerPropertiesForGeoRestore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForGeoRestore"/>. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public MySqlServerPropertiesForGeoRestore(ResourceIdentifier sourceServerId)

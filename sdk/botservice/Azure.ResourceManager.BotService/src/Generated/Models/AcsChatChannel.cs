@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> AcsChat channel definition. </summary>
     public partial class AcsChatChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of AcsChatChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatChannel"/>. </summary>
         public AcsChatChannel()
         {
             ChannelName = "AcsChatChannel";
         }
 
-        /// <summary> Initializes a new instance of AcsChatChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

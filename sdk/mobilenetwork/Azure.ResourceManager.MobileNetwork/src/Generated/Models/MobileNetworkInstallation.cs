@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The installation state of the packet core. </summary>
     public partial class MobileNetworkInstallation
     {
-        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
         public MobileNetworkInstallation()
         {
             Reasons = new ChangeTrackingList<MobileNetworkInstallationReason>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
         /// <param name="desiredState"> The desired installation state. </param>
         /// <param name="state"> Installation state. </param>
         /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>

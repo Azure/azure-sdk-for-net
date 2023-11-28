@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt NIC input. </summary>
     public partial class VMwareCbtNicContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtNicContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicContent"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>

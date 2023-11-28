@@ -164,18 +164,18 @@ If your are using Azure SDK libraries in ASP.NET Core application consider using
 
 ## Distributed tracing
 
-Azure SDKs are instrumented for distributed tracing using OpenTelemetry or ApplicationInsights SDK.
+Azure client libraries are instrumented for distributed tracing using OpenTelemetry or ApplicationInsights SDK.
 
 Distributed tracing relies on `ActivitySource` and `Activity` primitives defined in .NET. Check out [Adding distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) guide for more details.
 
-Azure SDKs produce the following kinds of activities:
+Azure client libraries produce the following kinds of activities:
 
-- *HTTP calls*: every HTTP call originating from Azure SDKs
+- *HTTP calls*: every HTTP call originating from an Azure SDK
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
-Prior to November 2023, OpenTelemetry support was experimental for all Azure SDKs (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
-Most of Azure SDKs released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
+Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
+Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
 
 More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
 
@@ -195,7 +195,7 @@ builder.Services.AddOpenTelemetry()
         .AddOtlpExporter())
 ```
 
-_Note: check out [Enable experimental tracing features](#enabling-experimental-tracing-features) in case you're using one of the messaging SDKs._
+_Note: check out [Enable experimental tracing features](#enabling-experimental-tracing-features) in case you're using one of the messaging libraries._
 
 By calling into `AddSource("Azure.*")` we're telling OpenTelemetry SDK to listen to all sources which name starts with `Azure.`.
 
@@ -210,7 +210,7 @@ _Note: if you use Azure Monitor Distro for ASP.NET Core, you may skip this secti
 
 Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it along with generic HTTP client instrumentation such as `OpenTelemetry.Instrumentation.Http`, it would lead to double-collection of HTTP calls originating from Azure client libraries.
 
-Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure serices in `x-ms-client-request-id`, `x-ms-request-id` or similar request and respose headers. This data may be important when correlating client and server telemetry or creating support tickets.
+Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure services in `x-ms-client-request-id`, `x-ms-request-id` or similar request and response headers. This data may be important when correlating client and server telemetry or creating support tickets.
 
 To avoid double-collection you may either 
 - enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
@@ -250,7 +250,7 @@ _Note: request identifiers are also stamped on HTTP logs emitted by `Azure.Core`
 
 #### Filtering out duplicated HTTP client activities
 
-Another approach would be to filter out generic HTTP client activities with the following approach:
+Another approach would be to filter out generic HTTP client activities:
 
 ```csharp
 .WithTracing(tracerProviderBuilder => tracerProviderBuilder
@@ -267,7 +267,7 @@ _Note: filtering does not prevent new activity from being created and new [`trac
 
 ## HTTP metrics
 
-Azure SDKs do not collect HTTP-level metrics. Please use metrics coming from .NET platform and/or generic HTTP client instrumentation.
+Azure client libraries do not collect HTTP-level metrics. Please use metrics coming from .NET platform and/or generic HTTP client instrumentation.
 
 ## Azure Monitor
 
@@ -279,7 +279,7 @@ If your application uses ApplicationInsights SDK (classic), automatic collection
 
 ### Sample
 
-To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure SDKs.
+To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure client libraries.
 
 ### Enabling experimental tracing features
 
@@ -335,9 +335,9 @@ var secretClient = new SecretClient(new Uri("https://example.com"), new DefaultA
 secretClient.GetSecret("<secret-name>");
 ```
 
-## Setting x-ms-client-request-id value sent with requests
+## Setting `x-ms-client-request-id` value sent with requests
 
-By default x-ms-client-request-id header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
+By default `x-ms-client-request-id` header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
 
 ```C# Snippet:ClientRequestId
 var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());

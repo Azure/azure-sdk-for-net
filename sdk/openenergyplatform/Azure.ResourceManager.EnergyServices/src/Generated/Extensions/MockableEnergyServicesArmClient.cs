@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EnergyServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnergyServiceResource.CreateResourceIdentifier" /> to create an <see cref="EnergyServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EnergyServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EnergyServiceResource.CreateResourceIdentifier" /> to create an <see cref="EnergyServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnergyServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EnergyServiceResource"/> object. </returns>
         public virtual EnergyServiceResource GetEnergyServiceResource(ResourceIdentifier id)
         {
             EnergyServiceResource.ValidateResourceId(id);

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The JobResourceUpdateParameter. </summary>
     public partial class DataBoxJobPatch
     {
-        /// <summary> Initializes a new instance of DataBoxJobPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobPatch"/>. </summary>
         public DataBoxJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

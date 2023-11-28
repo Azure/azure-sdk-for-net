@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NewRelicObservabilityTagRuleResource" /> and their operations.
-    /// Each <see cref="NewRelicObservabilityTagRuleResource" /> in the collection will belong to the same instance of <see cref="NewRelicMonitorResource" />.
-    /// To get a <see cref="NewRelicObservabilityTagRuleCollection" /> instance call the GetNewRelicObservabilityTagRules method from an instance of <see cref="NewRelicMonitorResource" />.
+    /// A class representing a collection of <see cref="NewRelicObservabilityTagRuleResource"/> and their operations.
+    /// Each <see cref="NewRelicObservabilityTagRuleResource"/> in the collection will belong to the same instance of <see cref="NewRelicMonitorResource"/>.
+    /// To get a <see cref="NewRelicObservabilityTagRuleCollection"/> instance call the GetNewRelicObservabilityTagRules method from an instance of <see cref="NewRelicMonitorResource"/>.
     /// </summary>
     public partial class NewRelicObservabilityTagRuleCollection : ArmCollection, IEnumerable<NewRelicObservabilityTagRuleResource>, IAsyncEnumerable<NewRelicObservabilityTagRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRelicObservabilityTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicObservabilityTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

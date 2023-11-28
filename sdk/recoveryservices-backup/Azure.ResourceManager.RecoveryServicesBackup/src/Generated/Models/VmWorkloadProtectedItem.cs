@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class VmWorkloadProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItem"/>. </summary>
         public VmWorkloadProtectedItem()
         {
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemType = "AzureVmWorkloadProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

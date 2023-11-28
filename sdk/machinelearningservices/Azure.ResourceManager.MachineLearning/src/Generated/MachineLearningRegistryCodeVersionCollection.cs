@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningRegistryCodeVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningRegistryCodeVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningRegistryCodeContainerResource" />.
-    /// To get a <see cref="MachineLearningRegistryCodeVersionCollection" /> instance call the GetMachineLearningRegistryCodeVersions method from an instance of <see cref="MachineLearningRegistryCodeContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningRegistryCodeVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningRegistryCodeVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryCodeContainerResource"/>.
+    /// To get a <see cref="MachineLearningRegistryCodeVersionCollection"/> instance call the GetMachineLearningRegistryCodeVersions method from an instance of <see cref="MachineLearningRegistryCodeContainerResource"/>.
     /// </summary>
     public partial class MachineLearningRegistryCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningRegistryCodeVersionResource>, IAsyncEnumerable<MachineLearningRegistryCodeVersionResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningRegistryCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningRegistryCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningRegistryCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningRegistryCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningRegistryCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);

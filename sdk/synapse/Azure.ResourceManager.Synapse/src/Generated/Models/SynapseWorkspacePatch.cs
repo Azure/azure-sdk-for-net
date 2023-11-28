@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Workspace patch details. </summary>
     public partial class SynapseWorkspacePatch
     {
-        /// <summary> Initializes a new instance of SynapseWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspacePatch"/>. </summary>
         public SynapseWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

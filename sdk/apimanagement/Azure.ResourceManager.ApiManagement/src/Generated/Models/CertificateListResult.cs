@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Certificates list representation. </summary>
     internal partial class CertificateListResult
     {
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         internal CertificateListResult()
         {
             Value = new ChangeTrackingList<ApiManagementCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource" /> using the GetServiceBusSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource"/> using the GetServiceBusSubscription method.
     /// </summary>
     public partial class ServiceBusSubscriptionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusSubscriptionResource(ArmClient client, ServiceBusSubscriptionData data) : this(client, data.Id)

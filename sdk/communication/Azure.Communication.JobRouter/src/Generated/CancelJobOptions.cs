@@ -7,12 +7,12 @@
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Request payload for deleting a job. </summary>
+    /// <summary> Request payload for cancelling a job. </summary>
     public partial class CancelJobOptions
     {
-        /// <summary> Initializes a new instance of CancelJobOptions. </summary>
-        /// <param name="note"> A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
-        /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. If not provided, default value of "Cancelled" is set. </param>
+        /// <summary> Initializes a new instance of <see cref="CancelJobOptions"/>. </summary>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. If not provided, default value of "Cancelled" is set. </param>
         internal CancelJobOptions(string note, string dispositionCode)
         {
             Note = note;

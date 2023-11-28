@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The extended error info. </summary>
     public partial class IntegrationServiceErrorInfo
     {
-        /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             Details = new ChangeTrackingList<IntegrationServiceErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error message details. </param>

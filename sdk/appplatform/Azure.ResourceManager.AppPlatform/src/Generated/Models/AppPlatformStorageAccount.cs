@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> storage resource of type Azure Storage Account. </summary>
     public partial class AppPlatformStorageAccount : AppPlatformStorageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageAccount"/>. </summary>
         /// <param name="accountName"> The account name of the Azure Storage Account. </param>
         /// <param name="accountKey"> The account key of the Azure Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="accountKey"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             StorageType = StorageType.StorageAccount;
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageAccount"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
         /// <param name="accountName"> The account name of the Azure Storage Account. </param>
         /// <param name="accountKey"> The account key of the Azure Storage Account. </param>

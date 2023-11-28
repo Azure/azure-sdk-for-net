@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a HciCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HciClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHciClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHciCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHciCluster method.
     /// </summary>
     public partial class HciClusterResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HciClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciClusterResource(ArmClient client, HciClusterData data) : this(client, data.Id)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Gets an object representing a UpdateSummaryResource along with the instance operations that can be performed on it in the HciCluster. </summary>
-        /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
         public virtual UpdateSummaryResource GetUpdateSummary()
         {
             return new UpdateSummaryResource(Client, Id.AppendChildResource("updateSummaries", "default"));
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OfferResource> GetOffersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OfferResource> GetOffers(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);

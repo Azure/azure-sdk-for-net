@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service debug resource. </summary>
     public partial class LinkedServiceDebugResource : SubResourceDebugResource
     {
-        /// <summary> Initializes a new instance of LinkedServiceDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceDebugResource"/>. </summary>
         /// <param name="properties">
         /// Properties of linked service.
         /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties">
         /// Properties of linked service.

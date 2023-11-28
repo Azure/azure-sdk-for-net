@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBSqlDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBSqlDatabaseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatabaseMigrationSqlVmResource" /> and their operations.
-    /// Each <see cref="DatabaseMigrationSqlVmResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DatabaseMigrationSqlVmCollection" /> instance call the GetDatabaseMigrationSqlVms method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DatabaseMigrationSqlVmResource"/> and their operations.
+    /// Each <see cref="DatabaseMigrationSqlVmResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DatabaseMigrationSqlVmCollection"/> instance call the GetDatabaseMigrationSqlVms method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DatabaseMigrationSqlVmCollection : ArmCollection
     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> The String to use. </param>
+        /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>

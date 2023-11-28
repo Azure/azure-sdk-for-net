@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Item Level kubernetes storage class target info for restore operation. </summary>
     public partial class KubernetesStorageClassRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesStorageClassRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesStorageClassRestoreCriteria"/>. </summary>
         public KubernetesStorageClassRestoreCriteria()
         {
             ObjectType = "KubernetesStorageClassRestoreCriteria";

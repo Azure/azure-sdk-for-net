@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineRunDataExtractsParameters represents the body of request containing list of curated data extraction commands to run on the bare metal machine. </summary>
     public partial class BareMetalMachineRunDataExtractsContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineRunDataExtractsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunDataExtractsContent"/>. </summary>
         /// <param name="commands"> The list of curated data extraction commands to be executed directly against the target machine. </param>
         /// <param name="limitTimeSeconds">
         /// The maximum time the commands are allowed to run.

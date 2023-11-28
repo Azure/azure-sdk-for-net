@@ -13,16 +13,16 @@ namespace Azure.Communication.JobRouter
     /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
         internal ExceptionPolicy()
         {
             ExceptionRules = new ChangeTrackingList<ExceptionRule>();
         }
 
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <param name="id"> The Id of the exception policy. </param>
-        /// <param name="name"> The name of the exception policy. </param>
+        /// <param name="id"> Id of an exception policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
         internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules)
         {
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             Name = name;
             ExceptionRules = exceptionRules;
         }
-        /// <summary> The Id of the exception policy. </summary>
+        /// <summary> Id of an exception policy. </summary>
         public string Id { get; }
     }
 }

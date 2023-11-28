@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB table resource object. </summary>
     public partial class CosmosDBTableResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTableResourceInfo(string tableName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>

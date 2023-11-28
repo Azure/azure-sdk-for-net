@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The authorization properties for accessing the source code repository. </summary>
     public partial class SourceCodeRepoAuthInfo
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoAuthInfo"/>. </summary>
         /// <param name="tokenType"> The type of Auth token. </param>
         /// <param name="token"> The access token used to access the source control provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Token = token;
         }
 
-        /// <summary> Initializes a new instance of SourceCodeRepoAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoAuthInfo"/>. </summary>
         /// <param name="tokenType"> The type of Auth token. </param>
         /// <param name="token"> The access token used to access the source control provider. </param>
         /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>

@@ -14,7 +14,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The analysis request of the image. </summary>
     public partial class AnalyzeImageOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public AnalyzeImageOptions(ContentSafetyImageData image)
@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             Categories = new ChangeTrackingList<ImageCategory>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
         internal AnalyzeImageOptions(ContentSafetyImageData image, IList<ImageCategory> categories)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure specific reprotect input. </summary>
     public partial class A2AReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReprotectContent"/>. </summary>
         public A2AReprotectContent()
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteProviderPort along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteProviderPortResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteProviderPortResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetExpressRouteProviderPort method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteProviderPortResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteProviderPortResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetExpressRouteProviderPort method.
     /// </summary>
     public partial class ExpressRouteProviderPortResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteProviderPortResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteProviderPortResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteProviderPortResource(ArmClient client, ExpressRouteProviderPortData data) : this(client, data.Id)

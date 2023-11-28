@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TranscriptionFailed. </summary>
     public partial class TranscriptionFailed
     {
-        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
         internal TranscriptionFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

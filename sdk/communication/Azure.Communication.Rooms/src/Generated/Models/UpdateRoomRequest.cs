@@ -12,7 +12,7 @@ namespace Azure.Communication.Rooms
     /// <summary> Request payload for updating a room. </summary>
     internal partial class UpdateRoomRequest
     {
-        /// <summary> Initializes a new instance of UpdateRoomRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRoomRequest"/>. </summary>
         public UpdateRoomRequest()
         {
         }

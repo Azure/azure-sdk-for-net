@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmInsightsOnboardingStatusResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVmInsightsOnboardingStatusResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetVmInsightsOnboardingStatus method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmInsightsOnboardingStatusResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVmInsightsOnboardingStatusResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetVmInsightsOnboardingStatus method.
     /// </summary>
     public partial class VmInsightsOnboardingStatusResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VmInsightsOnboardingStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VmInsightsOnboardingStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VmInsightsOnboardingStatusResource(ArmClient client, VmInsightsOnboardingStatusData data) : this(client, data.Id)

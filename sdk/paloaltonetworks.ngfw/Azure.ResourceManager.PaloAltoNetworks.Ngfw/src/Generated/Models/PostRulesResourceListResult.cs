@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a PostRulesResource list operation. </summary>
     internal partial class PostRulesResourceListResult
     {
-        /// <summary> Initializes a new instance of PostRulesResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostRulesResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PostRulesResourceListResult(IEnumerable<PostRulestackRuleData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PostRulesResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostRulesResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal PostRulesResourceListResult(IReadOnlyList<PostRulestackRuleData> value, string nextLink)

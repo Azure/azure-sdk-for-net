@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Switch protection input. </summary>
     public partial class SwitchProtectionContent
     {
-        /// <summary> Initializes a new instance of SwitchProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionContent"/>. </summary>
         public SwitchProtectionContent()
         {
         }

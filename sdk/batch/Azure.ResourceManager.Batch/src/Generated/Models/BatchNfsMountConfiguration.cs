@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to an NFS file system. </summary>
     public partial class BatchNfsMountConfiguration
     {
-        /// <summary> Initializes a new instance of BatchNfsMountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNfsMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="relativeMountPath"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of BatchNfsMountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNfsMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>

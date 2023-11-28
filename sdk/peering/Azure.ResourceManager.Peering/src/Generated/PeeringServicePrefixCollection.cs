@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeeringServicePrefixResource" /> and their operations.
-    /// Each <see cref="PeeringServicePrefixResource" /> in the collection will belong to the same instance of <see cref="PeeringServiceResource" />.
-    /// To get a <see cref="PeeringServicePrefixCollection" /> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource" />.
+    /// A class representing a collection of <see cref="PeeringServicePrefixResource"/> and their operations.
+    /// Each <see cref="PeeringServicePrefixResource"/> in the collection will belong to the same instance of <see cref="PeeringServiceResource"/>.
+    /// To get a <see cref="PeeringServicePrefixCollection"/> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource"/>.
     /// </summary>
     public partial class PeeringServicePrefixCollection : ArmCollection, IEnumerable<PeeringServicePrefixResource>, IAsyncEnumerable<PeeringServicePrefixResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringServicePrefixResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringServicePrefixResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);

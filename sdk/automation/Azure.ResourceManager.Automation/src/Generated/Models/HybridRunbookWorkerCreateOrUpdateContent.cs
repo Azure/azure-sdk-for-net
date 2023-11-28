@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create hybrid runbook worker operation. </summary>
     public partial class HybridRunbookWorkerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerCreateOrUpdateContent"/>. </summary>
         public HybridRunbookWorkerCreateOrUpdateContent()
         {
         }

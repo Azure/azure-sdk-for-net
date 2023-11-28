@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The custom setup of setting environment variable. </summary>
     public partial class EnvironmentVariableSetup : CustomSetupBase
     {
-        /// <summary> Initializes a new instance of EnvironmentVariableSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/>. </summary>
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CustomSetupBaseType = "EnvironmentVariableSetup";
         }
 
-        /// <summary> Initializes a new instance of EnvironmentVariableSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>

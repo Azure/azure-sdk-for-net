@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class SuppressionListAddressResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
         public SuppressionListAddressResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

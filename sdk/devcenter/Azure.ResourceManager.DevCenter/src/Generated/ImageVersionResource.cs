@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing an ImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ImageVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageResource" /> using the GetImageVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ImageVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetImageVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageResource"/> using the GetImageVersion method.
     /// </summary>
     public partial class ImageVersionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ImageVersionResource(ArmClient client, ImageVersionData data) : this(client, data.Id)

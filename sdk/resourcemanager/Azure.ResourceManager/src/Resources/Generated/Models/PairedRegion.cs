@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information regarding paired region. </summary>
     public partial class PairedRegion
     {
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
         internal PairedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
         /// <param name="name"> The name of the paired region. </param>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>

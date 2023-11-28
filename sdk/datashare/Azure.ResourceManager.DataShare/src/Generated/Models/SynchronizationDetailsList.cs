@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> details of synchronization. </summary>
     internal partial class SynchronizationDetailsList
     {
-        /// <summary> Initializes a new instance of SynchronizationDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetailsList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynchronizationDetailsList(IEnumerable<SynchronizationDetails> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SynchronizationDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetailsList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal SynchronizationDetailsList(string nextLink, IReadOnlyList<SynchronizationDetails> value)

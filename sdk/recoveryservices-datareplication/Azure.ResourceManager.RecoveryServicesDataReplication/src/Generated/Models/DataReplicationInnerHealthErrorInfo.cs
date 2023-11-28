@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Inner health error model. </summary>
     public partial class DataReplicationInnerHealthErrorInfo
     {
-        /// <summary> Initializes a new instance of DataReplicationInnerHealthErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationInnerHealthErrorInfo"/>. </summary>
         internal DataReplicationInnerHealthErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationInnerHealthErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationInnerHealthErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="healthCategory"> Gets or sets the health category. </param>
         /// <param name="category"> Gets or sets the error category. </param>

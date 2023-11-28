@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Annotations list result. </summary>
     internal partial class AnnotationsListResult
     {
-        /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         internal AnnotationsListResult()
         {
             Value = new ChangeTrackingList<Annotation>();
         }
 
-        /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         /// <param name="value"> An array of annotations. </param>
         internal AnnotationsListResult(IReadOnlyList<Annotation> value)
         {

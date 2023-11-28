@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Backend update parameters. </summary>
     public partial class ApiManagementBackendPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementBackendPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
         public ApiManagementBackendPatch()
         {
         }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the ListAvailableContacts API service call. </summary>
     public partial class OrbitalAvailableContactsResult
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsResult"/>. </summary>
         internal OrbitalAvailableContactsResult()
         {
             Values = new ChangeTrackingList<OrbitalAvailableContact>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsResult"/>. </summary>
         /// <param name="values"> A list of available contacts. </param>
         internal OrbitalAvailableContactsResult(IReadOnlyList<OrbitalAvailableContact> values)
         {

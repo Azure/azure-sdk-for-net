@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
         public ElasticSanVolumePatch()
         {
         }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The options for query evaluation. </summary>
     public partial class ResourceQueryRequestOptions
     {
-        /// <summary> Initializes a new instance of ResourceQueryRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryRequestOptions"/>. </summary>
         public ResourceQueryRequestOptions()
         {
         }

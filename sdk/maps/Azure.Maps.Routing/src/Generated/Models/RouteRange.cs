@@ -13,7 +13,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Reachable Range. </summary>
     public partial class RouteRange
     {
-        /// <summary> Initializes a new instance of RouteRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteRange"/>. </summary>
         internal RouteRange()
         {
             BoundaryInternal = new ChangeTrackingList<LatLongPair>();

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Request body structure for creating data flow debug session. </summary>
     public partial class DataFactoryDataFlowDebugSessionContent
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugSessionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugSessionContent"/>. </summary>
         public DataFactoryDataFlowDebugSessionContent()
         {
         }

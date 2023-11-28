@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Schedule-based autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleRecurrence
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         public HDInsightAutoScaleRecurrence()
         {
             Schedule = new ChangeTrackingList<HDInsightAutoScaleSchedule>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         /// <param name="timeZone"> The time zone for the autoscale schedule times. </param>
         /// <param name="schedule"> Array of schedule-based autoscale rules. </param>
         internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule)

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a SessionHost along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SessionHostResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSessionHostResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource" /> using the GetSessionHost method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SessionHostResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSessionHostResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource"/> using the GetSessionHost method.
     /// </summary>
     public partial class SessionHostResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SessionHostResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SessionHostResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SessionHostResource(ArmClient client, SessionHostData data) : this(client, data.Id)

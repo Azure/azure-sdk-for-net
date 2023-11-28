@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class UserSessionData : ResourceData
     {
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         public UserSessionData()
         {
         }
 
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

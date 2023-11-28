@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceAgentPoolResource" /> and their operations.
-    /// Each <see cref="ContainerServiceAgentPoolResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource" />.
-    /// To get a <see cref="ContainerServiceAgentPoolCollection" /> instance call the GetContainerServiceAgentPools method from an instance of <see cref="ContainerServiceManagedClusterResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceAgentPoolResource"/> and their operations.
+    /// Each <see cref="ContainerServiceAgentPoolResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// To get a <see cref="ContainerServiceAgentPoolCollection"/> instance call the GetContainerServiceAgentPools method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
     /// </summary>
     public partial class ContainerServiceAgentPoolCollection : ArmCollection, IEnumerable<ContainerServiceAgentPoolResource>, IAsyncEnumerable<ContainerServiceAgentPoolResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceAgentPoolAgentPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceAgentPoolAgentPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

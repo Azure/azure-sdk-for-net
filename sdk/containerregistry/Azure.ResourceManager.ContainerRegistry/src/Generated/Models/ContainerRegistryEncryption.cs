@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryEncryption. </summary>
     public partial class ContainerRegistryEncryption
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         public ContainerRegistryEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
         internal ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status, ContainerRegistryKeyVaultProperties keyVaultProperties)

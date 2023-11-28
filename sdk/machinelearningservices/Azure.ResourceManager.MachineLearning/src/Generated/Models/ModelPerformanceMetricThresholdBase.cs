@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ModelPerformanceMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of ModelPerformanceMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceMetricThresholdBase"/>. </summary>
         protected ModelPerformanceMetricThresholdBase()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelPerformanceMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceMetricThresholdBase"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal ModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold)

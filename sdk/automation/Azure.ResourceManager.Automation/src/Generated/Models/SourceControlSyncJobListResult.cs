@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list source control sync jobs operation. </summary>
     internal partial class SourceControlSyncJobListResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobListResult"/>. </summary>
         internal SourceControlSyncJobListResult()
         {
             Value = new ChangeTrackingList<SourceControlSyncJob>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobListResult"/>. </summary>
         /// <param name="value"> The list of source control sync jobs. </param>
         /// <param name="nextLink"> The next link. </param>
         internal SourceControlSyncJobListResult(IReadOnlyList<SourceControlSyncJob> value, string nextLink)

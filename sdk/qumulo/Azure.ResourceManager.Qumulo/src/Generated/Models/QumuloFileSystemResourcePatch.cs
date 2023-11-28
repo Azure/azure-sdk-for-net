@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> The type used for update operations of the FileSystemResource. </summary>
     public partial class QumuloFileSystemResourcePatch
     {
-        /// <summary> Initializes a new instance of QumuloFileSystemResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourcePatch"/>. </summary>
         public QumuloFileSystemResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The private endpoint connection resource. </summary>
     public partial class MonitorWorkspacePrivateEndpointConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
         internal MonitorWorkspacePrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy assignment for Patch request. </summary>
     public partial class PolicyAssignmentPatch
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
         public PolicyAssignmentPatch()
         {
             ResourceSelectors = new ChangeTrackingList<ResourceSelector>();

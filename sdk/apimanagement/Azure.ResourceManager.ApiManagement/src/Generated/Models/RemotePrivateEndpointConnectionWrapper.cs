@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Remote Private Endpoint Connection resource. </summary>
     public partial class RemotePrivateEndpointConnectionWrapper
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         public RemotePrivateEndpointConnectionWrapper()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
         /// <param name="id"> Private Endpoint connection resource id. </param>
         /// <param name="name"> Private Endpoint Connection Name. </param>
         /// <param name="resourceType"> Private Endpoint Connection Resource Type. </param>

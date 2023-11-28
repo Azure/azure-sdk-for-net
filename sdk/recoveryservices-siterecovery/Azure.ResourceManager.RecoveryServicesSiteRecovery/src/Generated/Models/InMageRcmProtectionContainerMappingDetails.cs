@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific container mapping details. </summary>
     public partial class InMageRcmProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmProtectionContainerMappingDetails"/>. </summary>
         internal InMageRcmProtectionContainerMappingDetails()
         {
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmProtectionContainerMappingDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="enableAgentAutoUpgrade"> A value indicating whether the flag for enable agent auto upgrade. </param>
         internal InMageRcmProtectionContainerMappingDetails(string instanceType, string enableAgentAutoUpgrade) : base(instanceType)

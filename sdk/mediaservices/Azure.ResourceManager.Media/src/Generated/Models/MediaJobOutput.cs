@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         protected MediaJobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">

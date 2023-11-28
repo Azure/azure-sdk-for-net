@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The schedule associated with the export. </summary>
     public partial class ExportSchedule
     {
-        /// <summary> Initializes a new instance of ExportSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSchedule"/>. </summary>
         public ExportSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSchedule"/>. </summary>
         /// <param name="status"> The status of the export's schedule. If 'Inactive', the export's schedule is paused. </param>
         /// <param name="recurrence"> The schedule recurrence. </param>
         /// <param name="recurrencePeriod"> Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. </param>

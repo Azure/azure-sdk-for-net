@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Configuration of live transcription. </summary>
     internal partial class TranscriptionOptionsInternal
     {
-        /// <summary> Initializes a new instance of TranscriptionOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
         /// <param name="transportUrl"> Transport URL for live transcription. </param>
         /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>

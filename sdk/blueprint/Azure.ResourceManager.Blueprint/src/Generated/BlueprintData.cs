@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class BlueprintData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         public BlueprintData()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterDefinition>();
             ResourceGroups = new ChangeTrackingDictionary<string, ResourceGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

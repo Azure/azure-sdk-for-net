@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> RackPatchParameters represents the body of the request to patch the rack properties. </summary>
     public partial class NetworkCloudRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudRackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackPatch"/>. </summary>
         public NetworkCloudRackPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

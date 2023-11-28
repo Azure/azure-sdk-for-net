@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a QueryPack instance. </summary>
     public partial class LogAnalyticsQueryPackPatch
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackPatch"/>. </summary>
         public LogAnalyticsQueryPackPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageModelFactory
     {
-        /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSkuInformation"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuInformation(name, tier, resourceType, kind, locations?.ToList(), capabilities?.ToList(), restrictions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StorageSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSkuCapability"/>. </summary>
         /// <param name="name"> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="value"> A string value to indicate states of given capability. Possibly 'true' or 'false'. </param>
         /// <returns> A new <see cref="Models.StorageSkuCapability"/> instance for mocking. </returns>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuCapability(name, value);
         }
 
-        /// <summary> Initializes a new instance of StorageSkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSkuRestriction"/>. </summary>
         /// <param name="restrictionType"> The type of restrictions. As of now only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuRestriction(restrictionType, values?.ToList(), reasonCode);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of StorageSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSku"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         /// <returns> A new <see cref="Models.StorageSku"/> instance for mocking. </returns>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of StorageEncryptionService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageEncryptionService"/>. </summary>
         /// <param name="isEnabled"> A boolean indicating whether or not the service encrypts the data as it is stored. Encryption at rest is enabled by default today and cannot be disabled. </param>
         /// <param name="lastEnabledOn"> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Data is encrypted at rest by default today and cannot be disabled. </param>
         /// <param name="keyType"> Encryption key type to be used for the encryption service. 'Account' key type implies that an account-scoped encryption key will be used. 'Service' key type implies that a default service key is used. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageEncryptionService(isEnabled, lastEnabledOn, keyType);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountKeyVaultProperties(keyName, keyVersion, keyVaultUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, currentVersionedKeyExpirationTimestamp);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState, primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value) : null, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections?.ToList(), routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountEndpoints"/>. </summary>
         /// <param name="blobUri"> Gets the blob endpoint. </param>
         /// <param name="queueUri"> Gets the queue endpoint. </param>
         /// <param name="tableUri"> Gets the table endpoint. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, microsoftEndpoints, internetEndpoints);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountMicrosoftEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountMicrosoftEndpoints"/>. </summary>
         /// <param name="blobUri"> Gets the blob endpoint. </param>
         /// <param name="queueUri"> Gets the queue endpoint. </param>
         /// <param name="tableUri"> Gets the table endpoint. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountMicrosoftEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountInternetEndpoints"/>. </summary>
         /// <param name="blobUri"> Gets the blob endpoint. </param>
         /// <param name="fileUri"> Gets the file endpoint. </param>
         /// <param name="webUri"> Gets the web endpoint. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountInternetEndpoints(blobUri, fileUri, webUri, dfsUri);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKeyCreationTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountKeyCreationTime"/>. </summary>
         /// <param name="key1"></param>
         /// <param name="key2"></param>
         /// <returns> A new <see cref="Models.StorageAccountKeyCreationTime"/> instance for mocking. </returns>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountKeyCreationTime(key1, key2);
         }
 
-        /// <summary> Initializes a new instance of GeoReplicationStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>
         /// <param name="status"> The status of the secondary location. Possible values are: - Live: Indicates that the secondary location is active and operational. - Bootstrap: Indicates initial synchronization from the primary location to the secondary location is in progress.This typically occurs when replication is first enabled. - Unavailable: Indicates that the secondary location is temporarily unavailable. </param>
         /// <param name="lastSyncOn"> All primary writes preceding this UTC date/time value are guaranteed to be available for read operations. Primary writes following this point in time may or may not be available for reads. Element may be default value if value of LastSyncTime is not available, this can happen if secondary is offline or we are in bootstrap. </param>
         /// <param name="canFailover"> A boolean flag which indicates whether or not account failover is supported for the account. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new GeoReplicationStatistics(status, lastSyncOn, canFailover);
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.StoragePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StoragePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of BlobRestoreStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobRestoreStatus"/>. </summary>
         /// <param name="status"> The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed. </param>
         /// <param name="failureReason"> Failure reason when blob restore is failed. </param>
         /// <param name="restoreId"> Id for tracking blob restore request. </param>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobRestoreStatus(status, failureReason, restoreId, parameters);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountSkuConversionStatus"/>. </summary>
         /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
         /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
         /// <param name="startOn"> This property represents the sku conversion start time. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startOn, endOn);
         }
 
-        /// <summary> Initializes a new instance of DeletedAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.DeletedAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new DeletedAccountData(id, name, resourceType, systemData, storageAccountResourceId, location, restoreReference, createdOn, deletedOn);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="value"> Base 64-encoded value of the key. </param>
         /// <param name="permissions"> Permissions for the key -- read-only or full permissions. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountKey(keyName, value, permissions, createdOn);
         }
 
-        /// <summary> Initializes a new instance of StorageUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageUsage"/>. </summary>
         /// <param name="unit"> Gets the unit of measurement. </param>
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
         /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageUsage(unit, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of StorageUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageUsageName"/>. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
         /// <returns> A new <see cref="Models.StorageUsageName"/> instance for mocking. </returns>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of GetAccountSasResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetAccountSasResult"/>. </summary>
         /// <param name="accountSasToken"> List SAS credentials of storage account. </param>
         /// <returns> A new <see cref="Models.GetAccountSasResult"/> instance for mocking. </returns>
         public static GetAccountSasResult GetAccountSasResult(string accountSasToken = null)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new GetAccountSasResult(accountSasToken);
         }
 
-        /// <summary> Initializes a new instance of GetServiceSasResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetServiceSasResult"/>. </summary>
         /// <param name="serviceSasToken"> List service SAS credentials of specific resource. </param>
         /// <returns> A new <see cref="Models.GetServiceSasResult"/> instance for mocking. </returns>
         public static GetServiceSasResult GetServiceSasResult(string serviceSasToken = null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new GetServiceSasResult(serviceSasToken);
         }
 
-        /// <summary> Initializes a new instance of StorageAccountManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountManagementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountManagementPolicyData(id, name, resourceType, systemData, lastModifiedOn, rules != null ? new ManagementPolicySchema(rules?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.BlobInventoryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobInventoryPolicyData(id, name, resourceType, systemData, lastModifiedOn, policySchema);
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobInventoryPolicySchema"/>. </summary>
         /// <param name="isEnabled"> Policy is enabled if set to true. </param>
         /// <param name="destination"> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </param>
         /// <param name="ruleType"> The valid value is Inventory. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobInventoryPolicySchema(isEnabled, destination, ruleType, rules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StoragePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StoragePrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.ObjectReplicationPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountLocalUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountLocalUserData(id, name, resourceType, systemData, permissionScopes?.ToList(), homeDirectory, sshAuthorizedKeys?.ToList(), sid, hasSharedKey, hasSshKey, hasSshPassword);
         }
 
-        /// <summary> Initializes a new instance of LocalUserKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LocalUserKeys"/>. </summary>
         /// <param name="sshAuthorizedKeys"> Optional, local user ssh authorized keys for SFTP. </param>
         /// <param name="sharedKey"> Auto generated by the server for SMB authentication. </param>
         /// <returns> A new <see cref="Models.LocalUserKeys"/> instance for mocking. </returns>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LocalUserKeys(sshAuthorizedKeys?.ToList(), sharedKey);
         }
 
-        /// <summary> Initializes a new instance of LocalUserRegeneratePasswordResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LocalUserRegeneratePasswordResult"/>. </summary>
         /// <param name="sshPassword"> Auto generated password by the server for SSH authentication if hasSshPassword is set to true on the creation of local user. </param>
         /// <returns> A new <see cref="Models.LocalUserRegeneratePasswordResult"/> instance for mocking. </returns>
         public static LocalUserRegeneratePasswordResult LocalUserRegeneratePasswordResult(string sshPassword = null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LocalUserRegeneratePasswordResult(sshPassword);
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.EncryptionScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new EncryptionScopeData(id, name, resourceType, systemData, source, state, createdOn, lastModifiedOn, keyVaultProperties, requireInfrastructureEncryption);
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EncryptionScopeKeyVaultProperties"/>. </summary>
         /// <param name="keyUri"> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </param>
         /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new EncryptionScopeKeyVaultProperties(keyUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp);
         }
 
-        /// <summary> Initializes a new instance of BlobServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.BlobServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null, defaultServiceVersion, deleteRetentionPolicy, isVersioningEnabled, isAutomaticSnapshotPolicyEnabled, changeFeed, restorePolicy, containerDeleteRetentionPolicy, lastAccessTimeTrackingPolicy);
         }
 
-        /// <summary> Initializes a new instance of RestorePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RestorePolicy"/>. </summary>
         /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
         /// <param name="lastEnabledOn"> Deprecated in favor of minRestoreTime property. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new RestorePolicy(isEnabled, days, lastEnabledOn, minRestoreOn);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.BlobContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobContainerData(id, name, resourceType, systemData, version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, immutableStorageWithVersioning, enableNfsV3RootSquash, enableNfsV3AllSquash, etag);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerImmutabilityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobContainerImmutabilityPolicy"/>. </summary>
         /// <param name="etag"> ImmutabilityPolicy Etag. </param>
         /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobContainerImmutabilityPolicy(etag, updateHistory?.ToList(), immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll);
         }
 
-        /// <summary> Initializes a new instance of UpdateHistoryEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpdateHistoryEntry"/>. </summary>
         /// <param name="updateType"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId, upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll);
         }
 
-        /// <summary> Initializes a new instance of LegalHoldProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LegalHoldProperties"/>. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> The list of LegalHold tags of a blob container. </param>
         /// <param name="protectedAppendWritesHistory"> Protected append blob writes history. </param>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LegalHoldProperties(hasLegalHold, tags?.ToList(), protectedAppendWritesHistory);
         }
 
-        /// <summary> Initializes a new instance of LegalHoldTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LegalHoldTag"/>. </summary>
         /// <param name="tag"> The tag value. </param>
         /// <param name="timestamp"> Returns the date and time the tag was added. </param>
         /// <param name="objectIdentifier"> Returns the Object ID of the user who added the tag. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LegalHoldTag(tag, timestamp, objectIdentifier, tenantId, upn);
         }
 
-        /// <summary> Initializes a new instance of ProtectedAppendWritesHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectedAppendWritesHistory"/>. </summary>
         /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
         /// <param name="timestamp"> Returns the date and time the tag was added. </param>
         /// <returns> A new <see cref="Models.ProtectedAppendWritesHistory"/> instance for mocking. </returns>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new ProtectedAppendWritesHistory(allowProtectedAppendWritesAll, timestamp);
         }
 
-        /// <summary> Initializes a new instance of ImmutableStorageWithVersioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImmutableStorageWithVersioning"/>. </summary>
         /// <param name="isEnabled"> This is an immutable property, when set to true it enables object level immutability at the container level. </param>
         /// <param name="timeStamp"> Returns the date and time the object level immutability was enabled. </param>
         /// <param name="migrationState"> This property denotes the container level immutability to object level immutability migration state. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new ImmutableStorageWithVersioning(isEnabled, timeStamp, migrationState);
         }
 
-        /// <summary> Initializes a new instance of LegalHold. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LegalHold"/>. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LegalHold(hasLegalHold, tags?.ToList(), allowProtectedAppendWritesAll);
         }
 
-        /// <summary> Initializes a new instance of ImmutabilityPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.ImmutabilityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new ImmutabilityPolicyData(id, name, resourceType, systemData, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, etag);
         }
 
-        /// <summary> Initializes a new instance of LeaseContainerResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LeaseContainerResponse"/>. </summary>
         /// <param name="leaseId"> Returned unique lease ID that must be included with any request to delete the container, or to renew, change, or release the lease. </param>
         /// <param name="leaseTimeSeconds"> Approximate time remaining in the lease period, in seconds. </param>
         /// <returns> A new <see cref="Models.LeaseContainerResponse"/> instance for mocking. </returns>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LeaseContainerResponse(leaseId, leaseTimeSeconds);
         }
 
-        /// <summary> Initializes a new instance of FileServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.FileServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new FileServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null, shareDeleteRetentionPolicy, protocolSmbSetting != null ? new ProtocolSettings(protocolSmbSetting) : null);
         }
 
-        /// <summary> Initializes a new instance of FileShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers?.ToList(), snapshotOn, etag);
         }
 
-        /// <summary> Initializes a new instance of LeaseShareResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LeaseShareResponse"/>. </summary>
         /// <param name="leaseId"> Returned unique lease ID that must be included with any request to delete the share, or to renew, change, or release the lease. </param>
         /// <param name="leaseTimeSeconds"> Approximate time remaining in the lease period, in seconds. </param>
         /// <returns> A new <see cref="Models.LeaseShareResponse"/> instance for mocking. </returns>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new LeaseShareResponse(leaseId, leaseTimeSeconds);
         }
 
-        /// <summary> Initializes a new instance of QueueServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.QueueServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new QueueServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of StorageQueueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.StorageQueueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageQueueData(id, name, resourceType, systemData, metadata, approximateMessageCount);
         }
 
-        /// <summary> Initializes a new instance of TableServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.TableServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new TableServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of TableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.TableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

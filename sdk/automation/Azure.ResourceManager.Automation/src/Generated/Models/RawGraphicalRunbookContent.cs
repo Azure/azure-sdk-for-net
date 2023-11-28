@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Raw Graphical Runbook content. </summary>
     public partial class RawGraphicalRunbookContent
     {
-        /// <summary> Initializes a new instance of RawGraphicalRunbookContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawGraphicalRunbookContent"/>. </summary>
         public RawGraphicalRunbookContent()
         {
         }
 
-        /// <summary> Initializes a new instance of RawGraphicalRunbookContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawGraphicalRunbookContent"/>. </summary>
         /// <param name="schemaVersion"> Schema version of the serializer. </param>
         /// <param name="runbookDefinition"> Serialized Graphical runbook. </param>
         /// <param name="runbookType"> Runbook Type. </param>

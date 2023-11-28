@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Policy creation properties. </summary>
     internal partial class SiteRecoveryCreatePolicyProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreatePolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreatePolicyProperties"/>. </summary>
         public SiteRecoveryCreatePolicyProperties()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Internet Gateway Rules. </summary>
     internal partial class InternetGatewayRulesListResult
     {
-        /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRulesListResult"/>. </summary>
         internal InternetGatewayRulesListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricInternetGatewayRuleData>();
         }
 
-        /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRulesListResult"/>. </summary>
         /// <param name="value"> List of Internet Gateway Rule resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal InternetGatewayRulesListResult(IReadOnlyList<NetworkFabricInternetGatewayRuleData> value, string nextLink)

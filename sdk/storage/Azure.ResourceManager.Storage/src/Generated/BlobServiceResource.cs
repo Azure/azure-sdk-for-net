@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a BlobService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBlobServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetBlobService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BlobServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBlobServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetBlobService method.
     /// </summary>
     public partial class BlobServiceResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BlobServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BlobServiceResource(ArmClient client, BlobServiceData data) : this(client, data.Id)

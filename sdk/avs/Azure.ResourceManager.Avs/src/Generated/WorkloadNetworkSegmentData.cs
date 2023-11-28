@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkSegmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         public WorkloadNetworkSegmentData()
         {
             PortVif = new ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

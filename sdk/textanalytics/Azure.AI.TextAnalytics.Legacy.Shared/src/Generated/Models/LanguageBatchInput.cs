@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The LanguageBatchInput. </summary>
     internal partial class LanguageBatchInput
     {
-        /// <summary> Initializes a new instance of LanguageBatchInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageBatchInput"/>. </summary>
         /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public LanguageBatchInput(IEnumerable<LanguageInput> documents)

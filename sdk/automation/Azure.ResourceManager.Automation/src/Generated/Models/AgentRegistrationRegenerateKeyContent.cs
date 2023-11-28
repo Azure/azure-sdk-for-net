@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the regenerate keys operation. </summary>
     public partial class AgentRegistrationRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of AgentRegistrationRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Gets or sets the agent registration key name - primary or secondary. </param>
         public AgentRegistrationRegenerateKeyContent(AgentRegistrationKeyName keyName)
         {

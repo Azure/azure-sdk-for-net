@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoDataConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoDataConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoDataConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource" /> using the GetKustoDataConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoDataConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoDataConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource"/> using the GetKustoDataConnection method.
     /// </summary>
     public partial class KustoDataConnectionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Kusto
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoDataConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoDataConnectionResource(ArmClient client, KustoDataConnectionData data) : this(client, data.Id)

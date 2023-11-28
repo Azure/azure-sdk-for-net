@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class WorkflowModelCustomProperties
     {
-        /// <summary> Initializes a new instance of WorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowModelCustomProperties"/>. </summary>
         protected WorkflowModelCustomProperties()
         {
             AffectedObjectDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         internal WorkflowModelCustomProperties(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)

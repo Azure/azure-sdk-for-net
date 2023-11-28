@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The properties for a group information object. </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceProperties"/>. </summary>
         internal DeviceProvisioningServicesPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>

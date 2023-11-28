@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Azure capacity definition. </summary>
     public partial class SynapseDataSourceCapacity
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceCapacity"/>. </summary>
         /// <param name="scaleType"> Scale type. </param>
         /// <param name="minimum"> Minimum allowed capacity. </param>
         /// <param name="maximum"> Maximum allowed capacity. </param>

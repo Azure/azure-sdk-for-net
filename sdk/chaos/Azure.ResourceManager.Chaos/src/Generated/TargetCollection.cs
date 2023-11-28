@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TargetResource" /> and their operations.
-    /// Each <see cref="TargetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="TargetCollection" /> instance call the GetTargets method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="TargetResource"/> and their operations.
+    /// Each <see cref="TargetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TargetCollection"/> instance call the GetTargets method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TargetCollection : ArmCollection, IEnumerable<TargetResource>, IAsyncEnumerable<TargetResource>
     {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);

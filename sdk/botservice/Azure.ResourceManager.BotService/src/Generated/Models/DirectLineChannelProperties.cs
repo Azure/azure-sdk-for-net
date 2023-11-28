@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
     public partial class DirectLineChannelProperties
     {
-        /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannelProperties"/>. </summary>
         public DirectLineChannelProperties()
         {
             Sites = new ChangeTrackingList<DirectLineSite>();
         }
 
-        /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannelProperties"/>. </summary>
         /// <param name="sites"> The list of Direct Line sites. </param>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>

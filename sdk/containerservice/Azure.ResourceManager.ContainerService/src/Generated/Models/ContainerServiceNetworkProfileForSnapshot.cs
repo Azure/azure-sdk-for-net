@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> network profile for managed cluster snapshot, these properties are read only. </summary>
     public partial class ContainerServiceNetworkProfileForSnapshot
     {
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
         internal ContainerServiceNetworkProfileForSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfileForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
         /// <param name="networkPlugin"> networkPlugin for managed cluster snapshot. </param>
         /// <param name="networkPluginMode"> NetworkPluginMode for managed cluster snapshot. </param>
         /// <param name="networkPolicy"> networkPolicy for managed cluster snapshot. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An IPSec Policy configuration for a virtual network gateway connection. </summary>
     public partial class IPsecPolicy
     {
-        /// <summary> Initializes a new instance of IPsecPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPsecPolicy"/>. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel. </param>
         /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>

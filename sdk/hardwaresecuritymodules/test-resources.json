@@ -89,7 +89,7 @@
     }
   },
   "variables": {
-    "cloudHsmApiVersion": "2022-08-31-preview",
+    "cloudHsmApiVersion": "2023-12-10-preview",
     "cloudHsmName": "sdk-test-chsm",
     "dedicatedhsmApiVersion": "2021-11-30",
     "dedicatedHsmName": "sdk-test-dhsm",

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
     public partial class L3ExportRoutePolicy
     {
-        /// <summary> Initializes a new instance of L3ExportRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3ExportRoutePolicy"/>. </summary>
         public L3ExportRoutePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of L3ExportRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3ExportRoutePolicy"/>. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         internal L3ExportRoutePolicy(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId)

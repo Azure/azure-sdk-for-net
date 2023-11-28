@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container Custom scaling rule. </summary>
     public partial class ContainerAppCustomScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomScaleRule"/>. </summary>
         public ContainerAppCustomScaleRule()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomScaleRule"/>. </summary>
         /// <param name="customScaleRuleType">
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.

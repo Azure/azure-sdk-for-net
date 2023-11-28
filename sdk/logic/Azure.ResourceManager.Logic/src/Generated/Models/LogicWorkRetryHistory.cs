@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The retry history. </summary>
     public partial class LogicWorkRetryHistory
     {
-        /// <summary> Initializes a new instance of LogicWorkRetryHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkRetryHistory"/>. </summary>
         public LogicWorkRetryHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkRetryHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkRetryHistory"/>. </summary>
         /// <param name="startOn"> Gets the start time. </param>
         /// <param name="endOn"> Gets the end time. </param>
         /// <param name="code"> Gets the status code. </param>

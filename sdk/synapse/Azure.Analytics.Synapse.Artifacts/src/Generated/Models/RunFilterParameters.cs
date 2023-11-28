@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Query parameters for listing runs. </summary>
     public partial class RunFilterParameters
     {
-        /// <summary> Initializes a new instance of RunFilterParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunFilterParameters"/>. </summary>
         /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
         /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
         public RunFilterParameters(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)

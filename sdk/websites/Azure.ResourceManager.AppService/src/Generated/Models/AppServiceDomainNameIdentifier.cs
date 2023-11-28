@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Identifies an object. </summary>
     public partial class AppServiceDomainNameIdentifier
     {
-        /// <summary> Initializes a new instance of AppServiceDomainNameIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainNameIdentifier"/>. </summary>
         public AppServiceDomainNameIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainNameIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainNameIdentifier"/>. </summary>
         /// <param name="name"> Name of the object. </param>
         internal AppServiceDomainNameIdentifier(string name)
         {

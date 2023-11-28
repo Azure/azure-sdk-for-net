@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details of UnprepareNetworkPolicies for Subnet. </summary>
     public partial class UnprepareNetworkPoliciesContent
     {
-        /// <summary> Initializes a new instance of UnprepareNetworkPoliciesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnprepareNetworkPoliciesContent"/>. </summary>
         public UnprepareNetworkPoliciesContent()
         {
         }

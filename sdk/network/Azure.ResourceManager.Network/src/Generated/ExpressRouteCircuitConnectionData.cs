@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCircuitConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         public ExpressRouteCircuitConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

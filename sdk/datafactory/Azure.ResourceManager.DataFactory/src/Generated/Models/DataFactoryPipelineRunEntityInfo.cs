@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Provides entity name and id that started the pipeline run. </summary>
     public partial class DataFactoryPipelineRunEntityInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunEntityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunEntityInfo"/>. </summary>
         internal DataFactoryPipelineRunEntityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunEntityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunEntityInfo"/>. </summary>
         /// <param name="name"> Name of the entity that started the pipeline run. </param>
         /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         protected RecoveryPlanActionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
         internal RecoveryPlanActionDetails(string instanceType)
         {

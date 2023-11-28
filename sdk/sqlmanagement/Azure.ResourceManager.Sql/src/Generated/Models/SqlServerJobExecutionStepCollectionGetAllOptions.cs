@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The SqlServerJobExecutionStepCollectionGetAllOptions. </summary>
     public partial class SqlServerJobExecutionStepCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of SqlServerJobExecutionStepCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionStepCollectionGetAllOptions"/>. </summary>
         public SqlServerJobExecutionStepCollectionGetAllOptions()
         {
         }

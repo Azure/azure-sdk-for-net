@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> NetApp account patch resource. </summary>
     public partial class NetAppAccountPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppAccountPatch(AzureLocation location) : base(location)
         {

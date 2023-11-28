@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB Mongo DB Resource. </summary>
     public partial class MongoDBPrivilegeResourceInfo
     {
-        /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBPrivilegeResourceInfo"/>. </summary>
         public MongoDBPrivilegeResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBPrivilegeResourceInfo"/>. </summary>
         /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="collection"> The collection name the role is applied. </param>
         internal MongoDBPrivilegeResourceInfo(string dbName, string collection)

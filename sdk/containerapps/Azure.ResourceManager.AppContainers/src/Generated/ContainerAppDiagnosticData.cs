@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDiagnosticData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticData"/>. </summary>
         public ContainerAppDiagnosticData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

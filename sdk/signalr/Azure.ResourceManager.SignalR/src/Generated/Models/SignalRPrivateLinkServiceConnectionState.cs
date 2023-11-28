@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Connection state of the private endpoint connection. </summary>
     public partial class SignalRPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkServiceConnectionState"/>. </summary>
         public SignalRPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

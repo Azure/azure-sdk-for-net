@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The SentenceAssessment. </summary>
     internal partial class SentenceAssessment
     {
-        /// <summary> Initializes a new instance of SentenceAssessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceAssessment"/>. </summary>
         /// <param name="sentiment"> Assessment sentiment in the sentence. </param>
         /// <param name="confidenceScores"> Assessment sentiment confidence scores in the sentence. </param>
         /// <param name="offset"> The assessment offset from the start of the sentence. </param>

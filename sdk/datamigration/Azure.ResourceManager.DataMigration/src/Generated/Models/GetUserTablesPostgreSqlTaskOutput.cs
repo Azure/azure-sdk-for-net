@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that gets the list of tables for a provided list of PostgreSQL databases. </summary>
     public partial class GetUserTablesPostgreSqlTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         internal GetUserTablesPostgreSqlTaskOutput()
         {
             Tables = new ChangeTrackingList<DatabaseTable>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         /// <param name="databaseName"> The database this result is for. </param>
         /// <param name="tables"> List of valid tables found for this database. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>

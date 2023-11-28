@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The init container definition. </summary>
     public partial class InitContainerDefinitionContent
     {
-        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InitContainerDefinitionContent(string name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="image"> The image of the init container. </param>
         /// <param name="command"> The command to execute within the init container in exec form. </param>

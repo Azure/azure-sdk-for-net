@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> network service design group properties. </summary>
     public partial class NetworkServiceDesignGroupPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
         public NetworkServiceDesignGroupPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
         /// <param name="description"> The network service design group description. </param>
         internal NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState, string description)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of supported SKUs. </summary>
     public partial class SapSupportedSkusContent
     {
-        /// <summary> Initializes a new instance of SapSupportedSkusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSkusContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>

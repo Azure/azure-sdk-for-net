@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input to create vault setting. </summary>
     public partial class VaultSettingCreationProperties
     {
-        /// <summary> Initializes a new instance of VaultSettingCreationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultSettingCreationProperties"/>. </summary>
         public VaultSettingCreationProperties()
         {
         }

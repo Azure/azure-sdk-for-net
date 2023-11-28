@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Resource Type. </summary>
     public partial class AuthorizationProviderResourceType
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderResourceType"/>. </summary>
         internal AuthorizationProviderResourceType()
         {
             Operations = new ChangeTrackingList<AuthorizationProviderOperationInfo>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderResourceType"/>. </summary>
         /// <param name="name"> The resource type name. </param>
         /// <param name="displayName"> The resource type display name. </param>
         /// <param name="operations"> The resource type operations. </param>

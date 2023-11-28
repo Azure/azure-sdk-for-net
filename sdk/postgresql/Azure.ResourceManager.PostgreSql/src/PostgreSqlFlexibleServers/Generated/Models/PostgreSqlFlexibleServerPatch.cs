@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
         public PostgreSqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

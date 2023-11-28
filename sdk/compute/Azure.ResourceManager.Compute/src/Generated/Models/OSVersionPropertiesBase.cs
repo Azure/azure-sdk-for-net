@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Configuration view of an OS version. </summary>
     public partial class OSVersionPropertiesBase
     {
-        /// <summary> Initializes a new instance of OSVersionPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionPropertiesBase"/>. </summary>
         internal OSVersionPropertiesBase()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionPropertiesBase"/>. </summary>
         /// <param name="version"> The OS version. </param>
         /// <param name="label"> The OS version label. </param>
         /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>

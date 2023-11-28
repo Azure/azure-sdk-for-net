@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoutingIntentResource" /> and their operations.
-    /// Each <see cref="RoutingIntentResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
-    /// To get a <see cref="RoutingIntentCollection" /> instance call the GetRoutingIntents method from an instance of <see cref="VirtualHubResource" />.
+    /// A class representing a collection of <see cref="RoutingIntentResource"/> and their operations.
+    /// Each <see cref="RoutingIntentResource"/> in the collection will belong to the same instance of <see cref="VirtualHubResource"/>.
+    /// To get a <see cref="RoutingIntentCollection"/> instance call the GetRoutingIntents method from an instance of <see cref="VirtualHubResource"/>.
     /// </summary>
     public partial class RoutingIntentCollection : ArmCollection, IEnumerable<RoutingIntentResource>, IAsyncEnumerable<RoutingIntentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingIntentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutingIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingIntentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

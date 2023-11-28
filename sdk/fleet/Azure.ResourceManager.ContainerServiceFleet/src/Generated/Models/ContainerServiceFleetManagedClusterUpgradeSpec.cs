@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The upgrade to apply to a ManagedCluster. </summary>
     public partial class ContainerServiceFleetManagedClusterUpgradeSpec
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpgradeSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
         /// <param name="upgradeType">
         /// The upgrade type.
         /// Full requires the KubernetesVersion property to be set.
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             UpgradeType = upgradeType;
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpgradeSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
         /// <param name="upgradeType">
         /// The upgrade type.
         /// Full requires the KubernetesVersion property to be set.

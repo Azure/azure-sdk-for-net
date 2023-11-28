@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Summary object for a Search API response. </summary>
     internal partial class SearchSummary
     {
-        /// <summary> Initializes a new instance of SearchSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchSummary"/>. </summary>
         internal SearchSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchSummary"/>. </summary>
         /// <param name="query"> The query parameter that was used to produce these search results. </param>
         /// <param name="queryType"> The type of query being returned: NEARBY or NON_NEAR. </param>
         /// <param name="queryTime"> Time spent resolving the query, in milliseconds. </param>

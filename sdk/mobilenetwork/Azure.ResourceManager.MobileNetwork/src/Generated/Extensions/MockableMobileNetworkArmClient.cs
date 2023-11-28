@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileAttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileAttachedDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileAttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileAttachedDataNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileAttachedDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileAttachedDataNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileAttachedDataNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileAttachedDataNetworkResource"/> object. </returns>
         public virtual MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(ResourceIdentifier id)
         {
             MobileAttachedDataNetworkResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileDataNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileDataNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileDataNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileDataNetworkResource"/> object. </returns>
         public virtual MobileDataNetworkResource GetMobileDataNetworkResource(ResourceIdentifier id)
         {
             MobileDataNetworkResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkDiagnosticsPackageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkDiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkDiagnosticsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkDiagnosticsPackageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkDiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkDiagnosticsPackageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkDiagnosticsPackageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkDiagnosticsPackageResource"/> object. </returns>
         public virtual MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(ResourceIdentifier id)
         {
             MobileNetworkDiagnosticsPackageResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkResource"/> object. </returns>
         public virtual MobileNetworkResource GetMobileNetworkResource(ResourceIdentifier id)
         {
             MobileNetworkResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkPacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkPacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkPacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkPacketCaptureResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkPacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkPacketCaptureResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkPacketCaptureResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkPacketCaptureResource"/> object. </returns>
         public virtual MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(ResourceIdentifier id)
         {
             MobileNetworkPacketCaptureResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PacketCoreControlPlaneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PacketCoreControlPlaneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PacketCoreControlPlaneResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PacketCoreControlPlaneResource"/> object. </returns>
         public virtual PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(ResourceIdentifier id)
         {
             PacketCoreControlPlaneResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantPacketCoreControlPlaneVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource"/> object. </returns>
         public virtual TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(ResourceIdentifier id)
         {
             TenantPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> object. </returns>
         public virtual SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(ResourceIdentifier id)
         {
             SubscriptionPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PacketCoreDataPlaneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PacketCoreDataPlaneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PacketCoreDataPlaneResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PacketCoreDataPlaneResource"/> object. </returns>
         public virtual PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(ResourceIdentifier id)
         {
             PacketCoreDataPlaneResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkServiceResource"/> object. </returns>
         public virtual MobileNetworkServiceResource GetMobileNetworkServiceResource(ResourceIdentifier id)
         {
             MobileNetworkServiceResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkSimResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkSimResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkSimResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkSimResource"/> object. </returns>
         public virtual MobileNetworkSimResource GetMobileNetworkSimResource(ResourceIdentifier id)
         {
             MobileNetworkSimResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkSimGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkSimGroupResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimGroupResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkSimGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkSimGroupResource"/> object. </returns>
         public virtual MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(ResourceIdentifier id)
         {
             MobileNetworkSimGroupResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkSimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkSimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkSimPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkSimPolicyResource"/> object. </returns>
         public virtual MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(ResourceIdentifier id)
         {
             MobileNetworkSimPolicyResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkSiteResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSiteResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkSiteResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkSiteResource"/> object. </returns>
         public virtual MobileNetworkSiteResource GetMobileNetworkSiteResource(ResourceIdentifier id)
         {
             MobileNetworkSiteResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MobileNetworkSliceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MobileNetworkSliceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSliceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSliceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSliceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSliceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MobileNetworkSliceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MobileNetworkSliceResource"/> object. </returns>
         public virtual MobileNetworkSliceResource GetMobileNetworkSliceResource(ResourceIdentifier id)
         {
             MobileNetworkSliceResource.ValidateResourceId(id);

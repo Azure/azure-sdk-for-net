@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ApiKeyAuthWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of ApiKeyAuthWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>. </summary>
         public ApiKeyAuthWorkspaceConnectionProperties()
         {
             AuthType = MachineLearningConnectionAuthType.ApiKey;
         }
 
-        /// <summary> Initializes a new instance of ApiKeyAuthWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

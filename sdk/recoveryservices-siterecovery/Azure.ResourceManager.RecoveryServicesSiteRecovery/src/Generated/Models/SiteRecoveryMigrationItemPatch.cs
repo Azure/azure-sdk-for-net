@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update migration item input. </summary>
     public partial class SiteRecoveryMigrationItemPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
         public SiteRecoveryMigrationItemPatch()
         {
         }

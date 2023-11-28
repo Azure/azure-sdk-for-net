@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedGrafanaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedGrafanaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGrafanaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedGrafanaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedGrafanaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGrafanaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedGrafanaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedGrafanaResource"/> object. </returns>
         public virtual ManagedGrafanaResource GetManagedGrafanaResource(ResourceIdentifier id)
         {
             ManagedGrafanaResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GrafanaPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GrafanaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GrafanaPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource"/> object. </returns>
         public virtual GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             GrafanaPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GrafanaPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GrafanaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GrafanaPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GrafanaPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GrafanaPrivateLinkResource"/> object. </returns>
         public virtual GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(ResourceIdentifier id)
         {
             GrafanaPrivateLinkResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedPrivateEndpointModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedPrivateEndpointModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedPrivateEndpointModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedPrivateEndpointModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointModelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource"/> object. </returns>
         public virtual ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(ResourceIdentifier id)
         {
             ManagedPrivateEndpointModelResource.ValidateResourceId(id);

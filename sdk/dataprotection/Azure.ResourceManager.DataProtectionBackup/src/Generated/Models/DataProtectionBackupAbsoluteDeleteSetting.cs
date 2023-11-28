@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Delete option with duration. </summary>
     public partial class DataProtectionBackupAbsoluteDeleteSetting : DataProtectionBackupDeleteSetting
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupAbsoluteDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         public DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration) : base(duration)
         {
             ObjectType = "AbsoluteDeleteOption";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupAbsoluteDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration, string objectType) : base(duration, objectType)

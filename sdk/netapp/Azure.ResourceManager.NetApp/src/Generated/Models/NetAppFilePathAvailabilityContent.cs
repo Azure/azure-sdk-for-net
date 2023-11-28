@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> File path availability request content - availability is based on the name and the subnetId. </summary>
     public partial class NetAppFilePathAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NetAppFilePathAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppFilePathAvailabilityContent"/>. </summary>
         /// <param name="name"> File path to verify. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>

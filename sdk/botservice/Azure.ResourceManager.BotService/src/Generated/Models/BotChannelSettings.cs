@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Channel settings definition. </summary>
     public partial class BotChannelSettings
     {
-        /// <summary> Initializes a new instance of BotChannelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelSettings"/>. </summary>
         public BotChannelSettings()
         {
             Sites = new ChangeTrackingList<BotChannelSite>();
         }
 
-        /// <summary> Initializes a new instance of BotChannelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelSettings"/>. </summary>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>
         /// <param name="sites"> The list of sites. </param>

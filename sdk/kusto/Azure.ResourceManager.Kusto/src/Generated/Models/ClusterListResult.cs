@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto clusters operation response. </summary>
     internal partial class ClusterListResult
     {
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         internal ClusterListResult()
         {
             Value = new ChangeTrackingList<KustoClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         /// <param name="value"> The list of Kusto clusters. </param>
         internal ClusterListResult(IReadOnlyList<KustoClusterData> value)
         {

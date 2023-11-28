@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DefaultRolloutResource" /> and their operations.
-    /// Each <see cref="DefaultRolloutResource" /> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource" />.
-    /// To get a <see cref="DefaultRolloutCollection" /> instance call the GetDefaultRollouts method from an instance of <see cref="ProviderRegistrationResource" />.
+    /// A class representing a collection of <see cref="DefaultRolloutResource"/> and their operations.
+    /// Each <see cref="DefaultRolloutResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
+    /// To get a <see cref="DefaultRolloutCollection"/> instance call the GetDefaultRollouts method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
     public partial class DefaultRolloutCollection : ArmCollection, IEnumerable<DefaultRolloutResource>, IAsyncEnumerable<DefaultRolloutResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DefaultRolloutResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefaultRolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DefaultRolloutResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefaultRolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);

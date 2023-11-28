@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Rules results input. </summary>
     public partial class RulesResultsContent
     {
-        /// <summary> Initializes a new instance of RulesResultsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
         public RulesResultsContent()
         {
             Results = new ChangeTrackingDictionary<string, IList<IList<string>>>();

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Accept subscription ownership request properties. </summary>
     public partial class AcceptOwnershipRequestProperties
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/>. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public AcceptOwnershipRequestProperties(string displayName)

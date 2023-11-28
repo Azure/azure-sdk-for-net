@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing a DscCompilationJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DscCompilationJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDscCompilationJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetDscCompilationJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscCompilationJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDscCompilationJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetDscCompilationJob method.
     /// </summary>
     public partial class DscCompilationJobResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DscCompilationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscCompilationJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DscCompilationJobResource(ArmClient client, DscCompilationJobData data) : this(client, data.Id)

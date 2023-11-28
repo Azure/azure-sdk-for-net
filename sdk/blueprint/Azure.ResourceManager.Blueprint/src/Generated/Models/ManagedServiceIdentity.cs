@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Managed identity generic object. </summary>
     public partial class ManagedServiceIdentity
     {
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         public ManagedServiceIdentity(ManagedServiceIdentityType identityType)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         /// <param name="principalId"> Azure Active Directory principal ID associated with this Identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>

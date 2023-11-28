@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CanaryTrafficRegionRolloutConfiguration. </summary>
     public partial class CanaryTrafficRegionRolloutConfiguration
     {
-        /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanaryTrafficRegionRolloutConfiguration"/>. </summary>
         public CanaryTrafficRegionRolloutConfiguration()
         {
             SkipRegions = new ChangeTrackingList<AzureLocation>();
             Regions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanaryTrafficRegionRolloutConfiguration"/>. </summary>
         /// <param name="skipRegions"></param>
         /// <param name="regions"></param>
         internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions)

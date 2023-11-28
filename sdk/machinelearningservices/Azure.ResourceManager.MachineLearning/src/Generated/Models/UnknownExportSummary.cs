@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownExportSummary. </summary>
     internal partial class UnknownExportSummary : ExportSummary
     {
-        /// <summary> Initializes a new instance of UnknownExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
         /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>

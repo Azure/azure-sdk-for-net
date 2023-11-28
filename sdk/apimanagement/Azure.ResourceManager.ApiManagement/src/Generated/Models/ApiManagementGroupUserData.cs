@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ApiManagementGroupUserData. </summary>
     public partial class ApiManagementGroupUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserData"/>. </summary>
         public ApiManagementGroupUserData()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
             Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGroupUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

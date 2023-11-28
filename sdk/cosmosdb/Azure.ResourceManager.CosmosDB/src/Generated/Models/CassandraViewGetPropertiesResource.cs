@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraViewGetPropertiesResource. </summary>
     public partial class CassandraViewGetPropertiesResource : CassandraViewResource
     {
-        /// <summary> Initializes a new instance of CassandraViewGetPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewGetPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Cassandra view. </param>
         /// <param name="viewDefinition"> View Definition of the Cosmos DB Cassandra view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="viewDefinition"/> is null. </exception>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(viewDefinition, nameof(viewDefinition));
         }
 
-        /// <summary> Initializes a new instance of CassandraViewGetPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewGetPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Cassandra view. </param>
         /// <param name="viewDefinition"> View Definition of the Cosmos DB Cassandra view. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>

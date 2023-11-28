@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextJobsInput. </summary>
     internal partial class AnalyzeTextJobsInput
     {
-        /// <summary> Initializes a new instance of AnalyzeTextJobsInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
         /// <param name="analysisInput"></param>
         /// <param name="tasks">
         /// The set of tasks to execute on the input documents.

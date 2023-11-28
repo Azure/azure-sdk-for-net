@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The deployment status properties of the network function component. </summary>
     public partial class DeploymentStatusProperties
     {
-        /// <summary> Initializes a new instance of DeploymentStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStatusProperties"/>. </summary>
         internal DeploymentStatusProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStatusProperties"/>. </summary>
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>

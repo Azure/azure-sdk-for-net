@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define destination of connection. </summary>
     public partial class ConnectivityDestination
     {
-        /// <summary> Initializes a new instance of ConnectivityDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityDestination"/>. </summary>
         public ConnectivityDestination()
         {
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Description of an additional API Management resource location. </summary>
     public partial class AdditionalLocation
     {
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>

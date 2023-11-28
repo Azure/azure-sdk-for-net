@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowRunOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowRunOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource" /> using the GetLogicWorkflowRunOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowRunOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowRunOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource"/> using the GetLogicWorkflowRunOperation method.
     /// </summary>
     public partial class LogicWorkflowRunOperationResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowRunOperationResource(ArmClient client, LogicWorkflowRunData data) : this(client, data.Id)

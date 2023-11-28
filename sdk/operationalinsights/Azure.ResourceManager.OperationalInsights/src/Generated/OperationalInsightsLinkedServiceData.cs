@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsLinkedServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedServiceData"/>. </summary>
         public OperationalInsightsLinkedServiceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

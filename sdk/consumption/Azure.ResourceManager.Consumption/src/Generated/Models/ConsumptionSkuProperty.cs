@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The Sku property. </summary>
     public partial class ConsumptionSkuProperty
     {
-        /// <summary> Initializes a new instance of ConsumptionSkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSkuProperty"/>. </summary>
         internal ConsumptionSkuProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionSkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSkuProperty"/>. </summary>
         /// <param name="name"> The name of sku property. </param>
         /// <param name="value"> The value of sku property. </param>
         internal ConsumptionSkuProperty(string name, string value)

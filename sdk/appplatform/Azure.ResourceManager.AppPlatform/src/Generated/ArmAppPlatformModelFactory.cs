@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppPlatformModelFactory
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceData(id, name, resourceType, systemData, tags, location, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="isLogStreamPublicEndpoint"> Additional Service settings in vnet injection instance. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceProperties(provisioningState, networkProfile, isLogStreamPublicEndpoint != null ? new ServiceVnetAddons(isLogStreamPublicEndpoint) : null, version, serviceInstanceId, powerState, isZoneRedundant, fqdn);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceNetworkProfile"/>. </summary>
         /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </param>
         /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host customer apps in Azure Spring Apps. </param>
         /// <param name="serviceCidr"> Azure Spring Apps service reserved CIDR. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId, appSubnetId, serviceCidr, serviceRuntimeNetworkResourceGroup, appNetworkResourceGroup, outboundPublicIPs != null ? new NetworkProfileOutboundIPs(outboundPublicIPs?.ToList()) : null, requiredTraffics?.ToList(), ingressConfigReadTimeoutInSeconds != null ? new IngressConfig(ingressConfigReadTimeoutInSeconds) : null, outboundType);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRequiredTraffic"/>. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
         /// <param name="ips"> The ip list of required traffic. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRequiredTraffic(protocol, port, ips?.ToList(), fqdns?.ToList(), direction);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceTestKeys"/>. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
         /// <param name="primaryTestEndpoint"> Primary test endpoint. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceTestKeys(primaryKey, secondaryKey, primaryTestEndpoint, secondaryTestEndpoint, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformConfigServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigServerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigServerProperties"/>. </summary>
         /// <param name="provisioningState"> State of the config server. </param>
         /// <param name="error"> Error when apply config server settings. </param>
         /// <param name="configServerGitProperty"> Settings of config server. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigServerProperties(provisioningState, error, configServerGitProperty != null ? new ConfigServerSettings(configServerGitProperty) : null);
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigServerSettingsValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the config server settings are valid. </param>
         /// <param name="details"> The detail validation results. </param>
         /// <returns> A new <see cref="Models.ConfigServerSettingsValidateResult"/> instance for mocking. </returns>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new ConfigServerSettingsValidateResult(isValid, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigServerSettingsErrorRecord"/>. </summary>
         /// <param name="name"> The name of the config server settings error record. </param>
         /// <param name="uri"> The uri of the config server settings error record. </param>
         /// <param name="messages"> The detail error messages of the record. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new ConfigServerSettingsErrorRecord(name, uri, messages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformConfigurationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Application Configuration Service. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Application Configuration Service. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceProperties(provisioningState, resourceRequests, instances?.ToList(), configurationServiceGitRepositories != null ? new AppPlatformConfigurationServiceSettings(new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList())) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Application Configuration Service instance. </param>
         /// <param name="memory"> Memory allocated to each Application Configuration Service instance. </param>
         /// <param name="instanceCount"> Instance count of the Application Configuration Service. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceInstance"/>. </summary>
         /// <param name="name"> Name of the Application Configuration Service instance. </param>
         /// <param name="status"> Status of the Application Configuration Service instance. </param>
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceInstance"/> instance for mocking. </returns>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
         /// <param name="gitPropertyValidationResult"> Validation result for configuration service settings. </param>
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceSettingsValidateResult"/> instance for mocking. </returns>
         public static AppPlatformConfigurationServiceSettingsValidateResult AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult = null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the configuration service settings are valid. </param>
         /// <param name="gitReposValidationResult"> The detail validation results. </param>
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitValidateResult"/> instance for mocking. </returns>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitReposValidationMessages. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceGitReposValidationMessages"/>. </summary>
         /// <param name="name"> The name of the configuration service git repository. </param>
         /// <param name="messages"> Detailed validation messages. </param>
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitReposValidationMessages"/> instance for mocking. </returns>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigurationServiceGitReposValidationMessages(name, messages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformServiceRegistryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRegistryData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Service Registry. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Service Registry. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRegistryProperties(provisioningState, resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Service Registry instance. </param>
         /// <param name="memory"> Memory allocated to each Service Registry instance. </param>
         /// <param name="instanceCount"> Instance count of the Service Registry. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRegistryResourceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryInstance"/>. </summary>
         /// <param name="name"> Name of the Service Registry instance. </param>
         /// <param name="status"> Status of the Service Registry instance. </param>
         /// <returns> A new <see cref="Models.AppPlatformServiceRegistryInstance"/> instance for mocking. </returns>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRegistryInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildServiceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceProperties"/>. </summary>
         /// <param name="kPackVersion"> The installed KPack version in this build service. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="resourceRequests"> The runtime resource configuration of this build service. </param>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildServiceProperties(kPackVersion, provisioningState, resourceRequests);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceResourceRequirements"/>. </summary>
         /// <param name="cpu"> vCPU allocated to the entire build service node pool. </param>
         /// <param name="memory"> Memory allocated to the entire build service node pool. </param>
         /// <returns> A new <see cref="Models.AppPlatformBuildServiceResourceRequirements"/> instance for mocking. </returns>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildServiceResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildProperties"/>. </summary>
         /// <param name="relativePath"> The relative path of source code. </param>
         /// <param name="builder"> The resource id of builder to build the source code. </param>
         /// <param name="agentPool"> The resource id of agent pool. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildProperties(relativePath, builder, agentPool, provisioningState, env, triggeredBuildResultId != null ? ResourceManagerModelFactory.SubResource(triggeredBuildResultId) : null, resourceRequests);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildpackBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildpackBindingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildpackBindingProperties"/>. </summary>
         /// <param name="bindingType"> Buildpack Binding Type. </param>
         /// <param name="provisioningState"> State of the Buildpack Binding. </param>
         /// <param name="launchProperties"> The object describes the buildpack binding launch properties. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildResultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildResultProperties"/>. </summary>
         /// <param name="name"> The name of this build result. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="buildPodName"> The build pod name which can be used to get the build log streaming. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildStageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildStageProperties"/>. </summary>
         /// <param name="name"> The name of this build stage resource. </param>
         /// <param name="status"> The provisioning state of this build stage resource. </param>
         /// <returns> A new <see cref="Models.AppPlatformBuildStageProperties"/> instance for mocking. </returns>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildStageProperties(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildResultLog"/>. </summary>
         /// <param name="blobUri"> The public download URL of this build result log. </param>
         /// <returns> A new <see cref="Models.AppPlatformBuildResultLog"/> instance for mocking. </returns>
         public static AppPlatformBuildResultLog AppPlatformBuildResultLog(Uri blobUri = null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildResultLog(blobUri);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuilderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuilderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuilderData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuilderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuilderProperties"/>. </summary>
         /// <param name="provisioningState"> Builder provision status. </param>
         /// <param name="stack"> Builder cluster stack property. </param>
         /// <param name="buildpackGroups"> Builder buildpack groups. </param>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformResourceUploadResult"/>. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
         /// <returns> A new <see cref="Models.AppPlatformResourceUploadResult"/> instance for mocking. </returns>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformResourceUploadResult(relativePath, uploadUri);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSupportedBuildpackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformSupportedBuildpackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSupportedBuildpackData(id, name, resourceType, systemData, supportedBuildpackId != null ? new SupportedBuildpackResourceProperties(supportedBuildpackId) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSupportedStackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformSupportedStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSupportedStackData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildServiceAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildServiceAgentPoolData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceAgentPoolProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the build service agent pool. </param>
         /// <param name="poolSize"> build service agent pool size properties. </param>
         /// <returns> A new <see cref="Models.AppPlatformBuildServiceAgentPoolProperties"/> instance for mocking. </returns>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildServiceAgentPoolProperties(provisioningState, poolSize);
         }
 
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BuildServiceAgentPoolSizeProperties"/>. </summary>
         /// <param name="name"> The name of build service agent pool size. </param>
         /// <param name="cpu"> The cpu property of build service agent pool size. </param>
         /// <param name="memory"> The memory property of build service agent pool size. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new BuildServiceAgentPoolSizeProperties(name, cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformMonitoringSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformMonitoringSettingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformMonitoringSettingProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Monitoring Setting. </param>
         /// <param name="error"> Error when apply Monitoring Setting changes. </param>
         /// <param name="isTraceEnabled"> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformMonitoringSettingProperties(provisioningState, error, isTraceEnabled, appInsightsInstrumentationKey, appInsightsSamplingRate, appInsightsJavaAgentVersion != null ? new ApplicationInsightsAgentVersions(appInsightsJavaAgentVersion) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformAppData(id, name, resourceType, systemData, properties, identity, location);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformAppProperties"/>. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
         /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformAppProperties(isPublic, uriString, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
         }
 
-        /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPersistentDisk"/>. </summary>
         /// <param name="sizeInGB"> Size of the persistent disk in GB. </param>
         /// <param name="usedInGB"> Size of the used persistent disk in GB. </param>
         /// <param name="mountPath"> Mount path of the persistent disk. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPersistentDisk(sizeInGB, usedInGB, mountPath);
         }
 
-        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppVnetAddons"/>. </summary>
         /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
         /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
         /// <returns> A new <see cref="Models.AppVnetAddons"/> instance for mocking. </returns>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppVnetAddons(isPublicEndpoint, publicEndpointUri);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBindingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBindingProperties"/>. </summary>
         /// <param name="resourceName"> The name of the bound resource. </param>
         /// <param name="resourceType"> The standard Azure resource type of the bound resource. </param>
         /// <param name="resourceId"> The Azure resource id of the bound resource. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBindingProperties(resourceName, resourceType, resourceId, key, bindingParameters, generatedProperties, createdOn, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformStorageData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformCertificateData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new UnknownCertificateProperties(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> Reason why the name is not available. </param>
         /// <param name="message"> Message why the name is not available. </param>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformCustomDomainData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCustomDomainValidateResult"/>. </summary>
         /// <param name="isValid"> Indicates if domain name is valid. </param>
         /// <param name="message"> Message of why domain name is invalid. </param>
         /// <returns> A new <see cref="Models.AppPlatformCustomDomainValidateResult"/> instance for mocking. </returns>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformCustomDomainValidateResult(isValid, message);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformDeploymentData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentProperties"/>. </summary>
         /// <param name="source">
         /// Uploaded source information of the deployment.
         /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformDeploymentProperties(source, deploymentSettings, provisioningState, status, isActive, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentInstance"/>. </summary>
         /// <param name="name"> Name of the deployment instance. </param>
         /// <param name="status"> Status of the deployment instance. </param>
         /// <param name="reason"> Failed reason of the deployment instance. </param>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformDeploymentInstance(name, status, reason, discoveryStatus, startedOn, zone);
         }
 
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationRemoteDebuggingConfig"/>. </summary>
         /// <param name="port"> Application debugging port. </param>
         /// <param name="isEnabled"> Indicate if remote debugging is enabled. </param>
         /// <returns> A new <see cref="Models.ApplicationRemoteDebuggingConfig"/> instance for mocking. </returns>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new ApplicationRemoteDebuggingConfig(port, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformLogFileUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformLogFileUriResult"/>. </summary>
         /// <param name="uri"> URL of the log file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppPlatformLogFileUriResult"/> instance for mocking. </returns>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformLogFileUriResult(uri);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSupportedRuntimeVersion"/>. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
         /// <param name="platform"> The platform of this runtime version (possible values: "Java" or ".NET"). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSupportedRuntimeVersion(value, platform, version);
         }
 
-        /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableAppPlatformSku"/>. </summary>
         /// <param name="resourceType"> Gets the type of resource the SKU applies to. </param>
         /// <param name="name"> Gets the name of SKU. </param>
         /// <param name="tier"> Gets the tier of SKU. </param>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AvailableAppPlatformSku(resourceType, name, tier, capacity, locations?.ToList(), locationInfo?.ToList(), restrictions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default. </param>
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuLocationInfo"/>. </summary>
         /// <param name="location"> Gets location of the SKU. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuZoneDetails"/>. </summary>
         /// <param name="name">
         /// Gets the set of zones that the SKU is available in with the
         /// specified capabilities.
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuZoneDetails(name?.ToList(), capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuCapabilities"/>. </summary>
         /// <param name="name"> Gets an invariant to describe the feature. </param>
         /// <param name="value"> Gets an invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.AppPlatformSkuCapabilities"/> instance for mocking. </returns>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuCapabilities(name, value);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Gets locations where the SKU is restricted. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.AppPlatformSkuRestrictionInfo"/> instance for mocking. </returns>
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
         /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when 'public' is true. </param>
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayProperties(provisioningState, isPublic, uri, isHttpsOnly, ssoProperties, apiMetadataProperties, corsProperties, resourceRequests, instances?.ToList(), operatorProperties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayInstance"/>. </summary>
         /// <param name="name"> Name of the Spring Cloud Gateway instance. </param>
         /// <param name="status"> Status of the Spring Cloud Gateway instance. </param>
         /// <returns> A new <see cref="Models.AppPlatformGatewayInstance"/> instance for mocking. </returns>
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayOperatorProperties"/>. </summary>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway operator. </param>
         /// <returns> A new <see cref="Models.AppPlatformGatewayOperatorProperties"/> instance for mocking. </returns>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayOperatorProperties(resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayOperatorResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="memory"> Memory allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="instanceCount"> Instance count of the Spring Cloud Gateway Operator. </param>
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayOperatorResourceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayRouteConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayRouteConfigData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayRouteConfigProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway route config. </param>
         /// <param name="appResourceId"> The resource Id of the Azure Spring Apps app, required unless route defines `uri`. </param>
         /// <param name="openApiUri"> OpenAPI properties of Spring Cloud Gateway route config. </param>
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayRouteConfigProperties(provisioningState, appResourceId, openApiUri != null ? new GatewayRouteConfigOpenApiProperties(openApiUri) : null, protocol, routes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayCustomDomainData(id, name, resourceType, systemData, gatewayCustomDomainThumbprint != null ? new GatewayCustomDomainProperties(gatewayCustomDomainThumbprint) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformApiPortalData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformApiPortalData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalProperties"/>. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformApiPortalProperties(provisioningState, isPublic, uri, isHttpsOnly, gatewayIds?.ToList(), sourceUris?.ToList(), ssoProperties, resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each API portal instance. </param>
         /// <param name="memory"> Memory allocated to each API portal instance. </param>
         /// <returns> A new <see cref="Models.AppPlatformApiPortalResourceRequirements"/> instance for mocking. </returns>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformApiPortalResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalInstance"/>. </summary>
         /// <param name="name"> Name of the API portal instance. </param>
         /// <param name="status"> Status of the API portal instance. </param>
         /// <returns> A new <see cref="Models.AppPlatformApiPortalInstance"/> instance for mocking. </returns>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformApiPortalInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformApiPortalCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformApiPortalCustomDomainData(id, name, resourceType, systemData, apiPortalCustomDomainThumbprint != null ? new ApiPortalCustomDomainProperties(apiPortalCustomDomainThumbprint) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformKeyVaultCertificateProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
         /// <param name="issuedOn"> The issue date of certificate. </param>
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformKeyVaultCertificateProperties("KeyVaultCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, vaultUri, keyVaultCertName, certVersion, isPrivateKeyExcluded);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformContentCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformContentCertificateProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
         /// <param name="issuedOn"> The issue date of certificate. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A matching criteria which matches routes based on route prefix, community, and AS path. </summary>
     public partial class RouteCriterion
     {
-        /// <summary> Initializes a new instance of RouteCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteCriterion"/>. </summary>
         public RouteCriterion()
         {
             RoutePrefix = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             AsPath = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RouteCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteCriterion"/>. </summary>
         /// <param name="routePrefix"> List of route prefixes which this criteria matches. </param>
         /// <param name="community"> List of BGP communities which this criteria matches. </param>
         /// <param name="asPath"> List of AS paths which this criteria matches. </param>

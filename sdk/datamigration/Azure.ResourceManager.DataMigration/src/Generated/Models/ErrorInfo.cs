@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Error details. </summary>
     public partial class ErrorInfo
     {
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         internal ErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         internal ErrorInfo(string code, string message)

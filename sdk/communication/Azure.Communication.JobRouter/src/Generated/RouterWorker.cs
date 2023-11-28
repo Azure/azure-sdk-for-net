@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         internal RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
@@ -25,15 +25,15 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
         }
 
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <param name="id"> Id of the worker. </param>
-        /// <param name="state"> The current state of the worker. </param>
-        /// <param name="queues"> The queue(s) that this worker can receive work from. </param>
+        /// <param name="id"> Id of a worker. </param>
+        /// <param name="state"> Current state of a worker. </param>
+        /// <param name="queues"> Collection of queue(s) that this worker can receive work from. </param>
         /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
         /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
         /// <param name="tags"> A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean. </param>
-        /// <param name="channels"> The channel(s) this worker can handle and their impact on the workers capacity. </param>
+        /// <param name="channels"> Collection of channel(s) this worker can handle and their impact on the workers capacity. </param>
         /// <param name="offers"> A list of active offers issued to this worker. </param>
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
@@ -53,9 +53,9 @@ namespace Azure.Communication.JobRouter
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
         }
-        /// <summary> Id of the worker. </summary>
+        /// <summary> Id of a worker. </summary>
         public string Id { get; }
-        /// <summary> The current state of the worker. </summary>
+        /// <summary> Current state of a worker. </summary>
         public RouterWorkerState? State { get; }
         /// <summary> A list of active offers issued to this worker. </summary>
         public IReadOnlyList<RouterJobOffer> Offers { get; }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the topic spaces configuration info of a namespace. </summary>
     public partial class UpdateTopicSpacesConfigurationInfo
     {
-        /// <summary> Initializes a new instance of UpdateTopicSpacesConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateTopicSpacesConfigurationInfo"/>. </summary>
         public UpdateTopicSpacesConfigurationInfo()
         {
         }

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsARecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsARecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsARecordResource"/> object. </returns>
         public virtual DnsARecordResource GetDnsARecordResource(ResourceIdentifier id)
         {
             DnsARecordResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsAaaaRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsAaaaRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsAaaaRecordResource"/> object. </returns>
         public virtual DnsAaaaRecordResource GetDnsAaaaRecordResource(ResourceIdentifier id)
         {
             DnsAaaaRecordResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsCaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsCaaRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsCaaRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsCaaRecordResource"/> object. </returns>
         public virtual DnsCaaRecordResource GetDnsCaaRecordResource(ResourceIdentifier id)
         {
             DnsCaaRecordResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsCnameRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsCnameRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsCnameRecordResource"/> object. </returns>
         public virtual DnsCnameRecordResource GetDnsCnameRecordResource(ResourceIdentifier id)
         {
             DnsCnameRecordResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsMXRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsMXRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsMXRecordResource"/> object. </returns>
         public virtual DnsMXRecordResource GetDnsMXRecordResource(ResourceIdentifier id)
         {
             DnsMXRecordResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsNSRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsNSRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsNSRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsNSRecordResource"/> object. </returns>
         public virtual DnsNSRecordResource GetDnsNSRecordResource(ResourceIdentifier id)
         {
             DnsNSRecordResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsPtrRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsPtrRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsPtrRecordResource"/> object. </returns>
         public virtual DnsPtrRecordResource GetDnsPtrRecordResource(ResourceIdentifier id)
         {
             DnsPtrRecordResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsSoaRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsSoaRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsSoaRecordResource"/> object. </returns>
         public virtual DnsSoaRecordResource GetDnsSoaRecordResource(ResourceIdentifier id)
         {
             DnsSoaRecordResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsSrvRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsSrvRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsSrvRecordResource"/> object. </returns>
         public virtual DnsSrvRecordResource GetDnsSrvRecordResource(ResourceIdentifier id)
         {
             DnsSrvRecordResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsTxtRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsTxtRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsTxtRecordResource"/> object. </returns>
         public virtual DnsTxtRecordResource GetDnsTxtRecordResource(ResourceIdentifier id)
         {
             DnsTxtRecordResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsZoneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DnsZoneResource"/> object. </returns>
         public virtual DnsZoneResource GetDnsZoneResource(ResourceIdentifier id)
         {
             DnsZoneResource.ValidateResourceId(id);

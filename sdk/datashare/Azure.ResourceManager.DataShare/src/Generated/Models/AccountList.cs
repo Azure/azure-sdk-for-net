@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get Accounts. </summary>
     internal partial class AccountList
     {
-        /// <summary> Initializes a new instance of AccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AccountList(IEnumerable<DataShareAccountData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal AccountList(string nextLink, IReadOnlyList<DataShareAccountData> value)

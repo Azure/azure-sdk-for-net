@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Property definition. </summary>
     public partial class PropertyDefinition
     {
-        /// <summary> Initializes a new instance of PropertyDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyDefinition"/>. </summary>
         /// <param name="fieldName"> Name of the property. </param>
         /// <param name="fieldType"> Type of the property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="fieldType"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
         }
 
-        /// <summary> Initializes a new instance of PropertyDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyDefinition"/>. </summary>
         /// <param name="arrayValueSeparator"> Array value separator for properties with isArray set. </param>
         /// <param name="enumValidValues"> Describes valid values for an enum property. </param>
         /// <param name="fieldName"> Name of the property. </param>

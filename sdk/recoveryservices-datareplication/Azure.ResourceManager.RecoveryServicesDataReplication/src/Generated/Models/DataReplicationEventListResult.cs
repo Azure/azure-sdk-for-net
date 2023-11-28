@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Event model collection. </summary>
     internal partial class DataReplicationEventListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventListResult"/>. </summary>
         internal DataReplicationEventListResult()
         {
             Value = new ChangeTrackingList<DataReplicationEventData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of events. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationEventListResult(IReadOnlyList<DataReplicationEventData> value, string nextLink)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of virtual network rules. </summary>
     internal partial class MySqlVirtualNetworkRuleListResult
     {
-        /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlVirtualNetworkRuleListResult"/>. </summary>
         internal MySqlVirtualNetworkRuleListResult()
         {
             Value = new ChangeTrackingList<MySqlVirtualNetworkRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlVirtualNetworkRuleListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal MySqlVirtualNetworkRuleListResult(IReadOnlyList<MySqlVirtualNetworkRuleData> value, string nextLink)

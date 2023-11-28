@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a LoadBalancer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LoadBalancerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLoadBalancerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLoadBalancer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadBalancerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLoadBalancerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLoadBalancer method.
     /// </summary>
     public partial class LoadBalancerResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LoadBalancerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadBalancerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LoadBalancerResource(ArmClient client, LoadBalancerData data) : this(client, data.Id)
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerNetworkInterfacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerNetworkInterfacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

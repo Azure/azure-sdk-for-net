@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSliceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkSliceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snssai"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Snssai = snssai;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSliceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

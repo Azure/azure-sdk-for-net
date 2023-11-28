@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request contract for compose operation. </summary>
     internal partial class ComposeRequest
     {
-        /// <summary> Initializes a new instance of ComposeRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComposeRequest"/>. </summary>
         /// <param name="modelIds"> List of model ids to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelIds"/> is null. </exception>
         public ComposeRequest(IEnumerable<Guid> modelIds)

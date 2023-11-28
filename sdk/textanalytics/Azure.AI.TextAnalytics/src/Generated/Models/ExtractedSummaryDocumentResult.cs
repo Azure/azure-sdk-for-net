@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ExtractedSummaryDocumentResult. </summary>
     internal partial class ExtractedSummaryDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of ExtractedSummaryDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummaryDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Sentences = sentences.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExtractedSummaryDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummaryDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

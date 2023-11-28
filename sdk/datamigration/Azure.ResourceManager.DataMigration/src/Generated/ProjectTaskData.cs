@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class ProjectTaskData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProjectTaskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskData"/>. </summary>
         public ProjectTaskData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectTaskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

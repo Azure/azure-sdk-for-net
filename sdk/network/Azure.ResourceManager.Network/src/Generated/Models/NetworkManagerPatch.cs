@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Object for patch operations. </summary>
     public partial class NetworkManagerPatch
     {
-        /// <summary> Initializes a new instance of NetworkManagerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerPatch"/>. </summary>
         public NetworkManagerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

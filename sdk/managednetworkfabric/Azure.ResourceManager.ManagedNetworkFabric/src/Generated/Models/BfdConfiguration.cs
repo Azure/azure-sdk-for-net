@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BFD configuration properties. </summary>
     public partial class BfdConfiguration
     {
-        /// <summary> Initializes a new instance of BfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BfdConfiguration"/>. </summary>
         public BfdConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BfdConfiguration"/>. </summary>
         /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
         /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
         /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the named partition scheme of the service. </summary>
     public partial class NamedPartitionSchemeDescription : PartitionSchemeDescription
     {
-        /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/>. </summary>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             PartitionScheme = ApplicationPartitionScheme.Named;
         }
 
-        /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>

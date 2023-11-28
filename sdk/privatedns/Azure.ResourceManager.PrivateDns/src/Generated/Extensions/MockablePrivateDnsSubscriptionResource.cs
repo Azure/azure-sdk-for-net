@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);

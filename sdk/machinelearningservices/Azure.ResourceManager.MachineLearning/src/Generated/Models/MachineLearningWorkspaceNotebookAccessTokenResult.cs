@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
     public partial class MachineLearningWorkspaceNotebookAccessTokenResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         internal MachineLearningWorkspaceNotebookAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         /// <param name="accessToken"></param>
         /// <param name="expiresIn"></param>
         /// <param name="hostName"></param>

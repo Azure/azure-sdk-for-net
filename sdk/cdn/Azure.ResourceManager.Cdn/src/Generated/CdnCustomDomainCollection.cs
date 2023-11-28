@@ -21,9 +21,9 @@ using Azure.ResourceManager.Cdn.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CdnCustomDomainResource" /> and their operations.
-    /// Each <see cref="CdnCustomDomainResource" /> in the collection will belong to the same instance of <see cref="CdnEndpointResource" />.
-    /// To get a <see cref="CdnCustomDomainCollection" /> instance call the GetCdnCustomDomains method from an instance of <see cref="CdnEndpointResource" />.
+    /// A class representing a collection of <see cref="CdnCustomDomainResource"/> and their operations.
+    /// Each <see cref="CdnCustomDomainResource"/> in the collection will belong to the same instance of <see cref="CdnEndpointResource"/>.
+    /// To get a <see cref="CdnCustomDomainCollection"/> instance call the GetCdnCustomDomains method from an instance of <see cref="CdnEndpointResource"/>.
     /// </summary>
     public partial class CdnCustomDomainCollection : ArmCollection, IEnumerable<CdnCustomDomainResource>, IAsyncEnumerable<CdnCustomDomainResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CdnCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnCustomDomainRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CdnCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnCustomDomainRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
