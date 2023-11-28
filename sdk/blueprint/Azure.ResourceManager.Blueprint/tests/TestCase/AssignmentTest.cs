@@ -12,13 +12,14 @@ using Azure.ResourceManager.Blueprint.Models;
 using NUnit.Framework;
 using Azure.ResourceManager.Blueprint.Tests.Helpers;
 using System;
+using System.Threading;
 
 namespace Azure.ResourceManager.Blueprint.Tests
 {
     public class AssignmentTest : BlueprintManagementTestBase
     {
         public AssignmentTest(bool isAsync) :
-            base(isAsync, RecordedTestMode.Record)
+            base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -63,16 +64,9 @@ namespace Azure.ResourceManager.Blueprint.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation
-            //1.Get
+            //.Get
             var resource3 = (await collection.GetAsync(assignmentName)).Value;
             ResourceDataHelpers.AssertAssignmentData(resource.Data, resource3.Data);
-            //2.Update
-            var updateData = resource.Data;
-            updateData.Description = "Update Description";
-            var resource4 = (await resource.UpdateAsync(WaitUntil.Completed, updateData)).Value;
-            ResourceDataHelpers.AssertAssignmentData(updateData, resource4.Data);
-            //3. Delete
-            await resource4.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

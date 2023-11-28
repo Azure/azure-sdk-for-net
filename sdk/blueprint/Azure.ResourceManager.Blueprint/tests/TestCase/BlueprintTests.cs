@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
     public class BlueprintTests : BlueprintManagementTestBase
     {
         public BlueprintTests(bool isAsync) :
-            base(isAsync, RecordedTestMode.Record)
+            base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

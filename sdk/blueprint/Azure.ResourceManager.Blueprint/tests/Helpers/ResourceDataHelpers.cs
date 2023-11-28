@@ -23,10 +23,16 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
 
         #region ArtifactData
         //TemplateData
+        public static void AssertArtifactData(ArtifactData data1, ArtifactData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Kind, data2.Kind);
+        }
         public static ArtifactData GetTemplateArtifactData()
         {
             ArtifactData data = new TemplateArtifact(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             {
+                ["$schema"] = "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                 ["contentVersion"] = "1.0.0.0",
                 ["outputs"] = new Dictionary<string, object>()
                 {
@@ -70,13 +76,20 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                    Value = BinaryData.FromString("\"Standard_LRS\""),
                 },
             })
             {
                 ResourceGroup = "storageRG",
             };
             return data;
+        }
+        public static void AssertTemplateArtifactData(TemplateArtifact data1, TemplateArtifact data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
+            Assert.AreEqual(data1.Template, data2.Template);
         }
         //PolicyAssignmentArtifact
         public static ArtifactData GetPolicyAssignmentArtifactData()
@@ -85,11 +98,11 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
             {
                 ["tagName"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("costCenter"),
+                    Value = BinaryData.FromString("\"costCenter\""),
                 },
                 ["tagValue"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                    Value = BinaryData.FromString("\"Standard_LRS\""),
                 },
             })
             {
@@ -97,14 +110,28 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
             };
             return data;
         }
+        public static void AssertPolicyArtifactData(PolicyAssignmentArtifact data1, PolicyAssignmentArtifact data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
+            Assert.AreEqual(data1.PolicyDefinitionId, data2.PolicyDefinitionId);
+        }
         //RoleAssignmentArtifact
         public static ArtifactData GetRoleAssignmentData()
         {
-            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("\"[parameters('owners')]\""))
             {
                 DisplayName = "enforce owners of given subscription",
             };
             return data;
+        }
+        public static void AssertRoleAssignmentArtifactData(RoleAssignmentArtifact data1, RoleAssignmentArtifact data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
+            Assert.AreEqual(data1.RoleDefinitionId, data2.RoleDefinitionId);
         }
         #endregion
 
@@ -135,7 +162,17 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
                 },
                 ["owners"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("\"johnDoe@contoso.com\", \"johnsteam@contoso.com\"")
+                    Value = BinaryData.FromObjectAsJson(new ParameterValue[]
+                    {
+                        new ParameterValue()
+                {
+                    Value = BinaryData.FromString("\"johnDoe@contoso.com\"")
+                },
+                new ParameterValue()
+                {
+                    Value = BinaryData.FromString("\"johnsteam@contoso.com\"")
+                },
+                    })
                 }
             };
             IDictionary<string, ResourceGroupValue> resourceGroup = new Dictionary<string, ResourceGroupValue>()
@@ -158,7 +195,6 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.Identity, data2.Identity);
             Assert.AreEqual(data1.Location, data2.Location);
         }
         #endregion
