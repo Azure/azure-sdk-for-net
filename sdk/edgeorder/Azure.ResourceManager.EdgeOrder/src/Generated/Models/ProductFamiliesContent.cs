@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             FilterableProperties = filterableProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesContent"/>. </summary>
+        /// <param name="filterableProperties"> Dictionary of filterable properties on product family. </param>
+        /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
+        internal ProductFamiliesContent(IDictionary<string, IList<FilterableProperty>> filterableProperties, CustomerSubscriptionDetails customerSubscriptionDetails)
+        {
+            FilterableProperties = filterableProperties;
+            CustomerSubscriptionDetails = customerSubscriptionDetails;
+        }
+
         /// <summary> Dictionary of filterable properties on product family. </summary>
         public IDictionary<string, IList<FilterableProperty>> FilterableProperties { get; }
         /// <summary> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
