@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function key info. </summary>
     public partial class WebAppKeyInfo
     {
-        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
         public WebAppKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
         /// <param name="properties"> Properties of function key info. </param>
         internal WebAppKeyInfo(WebAppKeyInfoProperties properties)
         {

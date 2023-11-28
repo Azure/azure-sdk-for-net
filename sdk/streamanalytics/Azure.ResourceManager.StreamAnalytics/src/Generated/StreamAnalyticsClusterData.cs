@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamAnalyticsClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamAnalyticsClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerGeographicHierarchyData : TrafficManagerProxyResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
         public TrafficManagerGeographicHierarchyData()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>

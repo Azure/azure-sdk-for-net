@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the PrometheusOS provider properties. </summary>
     public partial class PrometheusOSProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
         public PrometheusOSProviderInstanceProperties()
         {
             ProviderType = "PrometheusOS";
         }
 
-        /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>

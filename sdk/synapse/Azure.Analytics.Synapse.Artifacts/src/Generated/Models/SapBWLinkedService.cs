@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SAP Business Warehouse Linked Service. </summary>
     public partial class SapBWLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/>. </summary>
         /// <param name="server"> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </param>
         /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapBW";
         }
 
-        /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

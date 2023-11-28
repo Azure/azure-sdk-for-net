@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Parameters to regenerate the authentication key. </summary>
     public partial class IntegrationRuntimeRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeRegenerateKeyContent"/>. </summary>
         public IntegrationRuntimeRegenerateKeyContent()
         {
         }

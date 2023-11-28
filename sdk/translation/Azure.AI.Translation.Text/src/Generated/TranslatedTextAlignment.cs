@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Alignment information object. </summary>
     public partial class TranslatedTextAlignment
     {
-        /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextAlignment"/>. </summary>
         /// <param name="proj">
         /// Maps input text to translated text. The alignment information is only provided when the request
         /// parameter includeAlignment is true. Alignment is returned as a string value of the following

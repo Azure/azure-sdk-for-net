@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing data source used by the detectors. </summary>
     public partial class DetectorDataSource
     {
-        /// <summary> Initializes a new instance of DetectorDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         public DetectorDataSource()
         {
             Instructions = new ChangeTrackingList<string>();
             DataSourceUri = new ChangeTrackingList<AppServiceNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of DetectorDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         /// <param name="instructions"> Instructions if any for the data source. </param>
         /// <param name="dataSourceUri"> Datasource Uri Links. </param>
         internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri)

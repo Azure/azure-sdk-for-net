@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreContent : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedAppRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAppRestoreContent"/>. </summary>
         public DeletedAppRestoreContent()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAppRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAppRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

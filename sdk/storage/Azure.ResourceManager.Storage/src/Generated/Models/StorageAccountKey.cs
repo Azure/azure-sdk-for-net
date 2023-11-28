@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An access key for the storage account. </summary>
     public partial class StorageAccountKey
     {
-        /// <summary> Initializes a new instance of StorageAccountKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKey"/>. </summary>
         internal StorageAccountKey()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="value"> Base 64-encoded value of the key. </param>
         /// <param name="permissions"> Permissions for the key -- read-only or full permissions. </param>

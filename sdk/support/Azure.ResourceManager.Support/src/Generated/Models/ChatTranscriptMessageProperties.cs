@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Describes the properties of a Message Details resource. </summary>
     public partial class ChatTranscriptMessageProperties
     {
-        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/>. </summary>
         /// <param name="body"> Body of the communication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public ChatTranscriptMessageProperties(string body)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Support.Models
             Body = body;
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/>. </summary>
         /// <param name="contentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>

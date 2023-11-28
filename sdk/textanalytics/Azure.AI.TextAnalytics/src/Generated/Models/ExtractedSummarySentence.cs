@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ExtractedSummarySentence. </summary>
     internal partial class ExtractedSummarySentence
     {
-        /// <summary> Initializes a new instance of ExtractedSummarySentence. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/>. </summary>
         /// <param name="text"> The extracted sentence text. </param>
         /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
