@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override EventGridMqttClientEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

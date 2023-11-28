@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueModifiedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AppConfigurationKeyValueModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, AcsChatThreadPropertiesUpdatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsChatThreadPropertiesUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

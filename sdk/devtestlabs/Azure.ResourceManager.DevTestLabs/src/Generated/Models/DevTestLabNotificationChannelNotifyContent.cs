@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelNotifyContent"/>. </summary>
+        /// <param name="eventName"> The type of event (i.e. AutoShutdown, Cost). </param>
+        /// <param name="jsonPayload"> Properties for the notification in json format. </param>
+        internal DevTestLabNotificationChannelNotifyContent(DevTestLabNotificationChannelEventType? eventName, string jsonPayload)
+        {
+            EventName = eventName;
+            JsonPayload = jsonPayload;
+        }
+
         /// <summary> The type of event (i.e. AutoShutdown, Cost). </summary>
         public DevTestLabNotificationChannelEventType? EventName { get; set; }
         /// <summary> Properties for the notification in json format. </summary>

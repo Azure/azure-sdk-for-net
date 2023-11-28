@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
+        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
+        internal ContainerServiceFleetMemberPatch(string group)
+        {
+            Group = group;
+        }
+
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>
         public string Group { get; set; }
     }

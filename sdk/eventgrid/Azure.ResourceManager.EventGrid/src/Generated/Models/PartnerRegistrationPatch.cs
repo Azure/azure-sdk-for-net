@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationPatch"/>. </summary>
+        /// <param name="tags"> Tags of the partner registration resource. </param>
+        internal PartnerRegistrationPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Tags of the partner registration resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ApplicationGroupReferences = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspacePatch"/>. </summary>
+        /// <param name="tags"> tags to be updated. </param>
+        /// <param name="description"> Description of Workspace. </param>
+        /// <param name="friendlyName"> Friendly name of Workspace. </param>
+        /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
+        /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
+        internal VirtualWorkspacePatch(IDictionary<string, string> tags, string description, string friendlyName, IList<string> applicationGroupReferences, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess)
+        {
+            Tags = tags;
+            Description = description;
+            FriendlyName = friendlyName;
+            ApplicationGroupReferences = applicationGroupReferences;
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> tags to be updated. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Description of Workspace. </summary>

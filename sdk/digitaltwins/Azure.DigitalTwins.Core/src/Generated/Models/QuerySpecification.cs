@@ -15,6 +15,15 @@ namespace Azure.DigitalTwins.Core
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
+        /// <param name="query"> The query to execute. This value is ignored if a continuation token is provided. </param>
+        /// <param name="continuationToken"> A token which is used to retrieve the next set of results from a previous query. </param>
+        internal QuerySpecification(string query, string continuationToken)
+        {
+            Query = query;
+            ContinuationToken = continuationToken;
+        }
+
         /// <summary> The query to execute. This value is ignored if a continuation token is provided. </summary>
         public string Query { get; set; }
         /// <summary> A token which is used to retrieve the next set of results from a previous query. </summary>

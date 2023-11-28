@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A virtual network. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkPatch"/>. </summary>
         public DevTestLabVirtualNetworkPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabVirtualNetworkPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }
