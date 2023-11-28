@@ -10,7 +10,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
     public partial class StopOnDisconnectConfiguration
     {
-        /// <summary> Initializes a new instance of StopOnDisconnectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status">
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of StopOnDisconnectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status">
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.

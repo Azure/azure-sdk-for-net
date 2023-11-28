@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A Dev Box. </summary>
     public partial class DevBox
     {
-        /// <summary> Initializes a new instance of DevBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public DevBox(string poolName)
@@ -24,7 +24,7 @@ namespace Azure.Developer.DevCenter.Models
             PoolName = poolName;
         }
 
-        /// <summary> Initializes a new instance of DevBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>

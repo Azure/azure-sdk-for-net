@@ -10,12 +10,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Storage settings for the Dev Box's disks. </summary>
     public partial class StorageProfile
     {
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
         internal StorageProfile(OSDisk osDisk)
         {

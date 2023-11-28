@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> An environment definition. </summary>
     public partial class EnvironmentDefinitionModel
     {
-        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionModel"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -31,7 +31,7 @@ namespace Azure.Developer.DevCenter.Models
             Parameters = new ChangeTrackingList<EnvironmentDefinitionParameterModel>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionModel"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>

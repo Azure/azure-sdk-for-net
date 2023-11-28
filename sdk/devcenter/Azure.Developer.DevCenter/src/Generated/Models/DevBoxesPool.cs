@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A pool of Dev Boxes. </summary>
     public partial class DevBoxesPool
     {
-        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxesPool"/>. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
@@ -28,7 +28,7 @@ namespace Azure.Developer.DevCenter.Models
             HealthStatus = healthStatus;
         }
 
-        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxesPool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>

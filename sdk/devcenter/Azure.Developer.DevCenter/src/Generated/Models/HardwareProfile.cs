@@ -10,12 +10,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Hardware specifications for the Dev Box. </summary>
     public partial class HardwareProfile
     {
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         public HardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
         /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>

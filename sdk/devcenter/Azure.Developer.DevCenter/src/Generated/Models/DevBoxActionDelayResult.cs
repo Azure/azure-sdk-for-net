@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> The action delay result. </summary>
     public partial class DevBoxActionDelayResult
     {
-        /// <summary> Initializes a new instance of DevBoxActionDelayResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Developer.DevCenter.Models
             Result = result;
         }
 
-        /// <summary> Initializes a new instance of DevBoxActionDelayResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>

@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A catalog. </summary>
     public partial class DevCenterCatalog
     {
-        /// <summary> Initializes a new instance of DevCenterCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/>. </summary>
         /// <param name="name"> Name of the catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DevCenterCatalog(string name)

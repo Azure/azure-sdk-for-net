@@ -12,14 +12,14 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> The current status of an async operation. </summary>
     public partial class OperationStatus
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="status"> Provisioning state of the resource. </param>
         internal OperationStatus(OperationStatusValue status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the operation status. </param>
         /// <param name="name"> The operation id name. </param>
         /// <param name="status"> Provisioning state of the resource. </param>

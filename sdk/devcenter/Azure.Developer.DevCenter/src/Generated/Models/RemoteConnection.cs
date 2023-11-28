@@ -10,12 +10,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Provides remote connection information for a Dev Box. </summary>
     public partial class RemoteConnection
     {
-        /// <summary> Initializes a new instance of RemoteConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
         internal RemoteConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoteConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
         /// <param name="webUrl"> URL to open a browser based RDP session. </param>
         /// <param name="rdpConnectionUrl"> Link to open a Remote Desktop session. </param>
         internal RemoteConnection(string webUrl, string rdpConnectionUrl)

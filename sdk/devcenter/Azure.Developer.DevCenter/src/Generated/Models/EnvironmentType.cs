@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Properties of an environment type. </summary>
     public partial class EnvironmentType
     {
-        /// <summary> Initializes a new instance of EnvironmentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be

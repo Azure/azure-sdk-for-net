@@ -12,7 +12,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Details about the next run of an action. </summary>
     public partial class DevBoxNextAction
     {
-        /// <summary> Initializes a new instance of DevBoxNextAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/>. </summary>
         /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
         internal DevBoxNextAction(DateTimeOffset scheduledTime)
         {

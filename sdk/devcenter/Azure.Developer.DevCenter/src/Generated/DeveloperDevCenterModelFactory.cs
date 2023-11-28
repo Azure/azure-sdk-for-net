@@ -15,7 +15,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class DeveloperDevCenterModelFactory
     {
-        /// <summary> Initializes a new instance of DevCenterProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterProject"/>. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
@@ -28,7 +28,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevCenterProject(name, description, maxDevBoxesPerUser);
         }
 
-        /// <summary> Initializes a new instance of DevBoxesPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxesPool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -51,7 +51,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxesPool(name, location, osType, hardwareProfile, hibernateSupport, storageProfile, imageReference, localAdministrator, stopOnDisconnect, healthStatus);
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
         /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
@@ -61,7 +61,7 @@ namespace Azure.Developer.DevCenter.Models
             return new HardwareProfile(skuName, vcpUs, memoryGB);
         }
 
-        /// <summary> Initializes a new instance of OSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
         /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
         /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
         public static OSDisk OSDisk(int? diskSizeGB = null)
@@ -69,7 +69,7 @@ namespace Azure.Developer.DevCenter.Models
             return new OSDisk(diskSizeGB);
         }
 
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
@@ -81,7 +81,7 @@ namespace Azure.Developer.DevCenter.Models
             return new ImageReference(name, version, operatingSystem, osBuildNumber, publishedDate);
         }
 
-        /// <summary> Initializes a new instance of StopOnDisconnectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status">
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
@@ -96,7 +96,7 @@ namespace Azure.Developer.DevCenter.Models
             return new StopOnDisconnectConfiguration(status, gracePeriodMinutes);
         }
 
-        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxSchedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
@@ -108,7 +108,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxSchedule(name, type, frequency, time, timeZone);
         }
 
-        /// <summary> Initializes a new instance of DevBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
@@ -141,7 +141,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBox(name, projectName, poolName, hibernateSupport, provisioningState, actionState, powerState, uniqueId, error, location, osType, user, hardwareProfile, storageProfile, imageReference, createdTime, localAdministrator);
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the operation status. </param>
         /// <param name="name"> The operation id name. </param>
         /// <param name="status"> Provisioning state of the resource. </param>
@@ -157,7 +157,7 @@ namespace Azure.Developer.DevCenter.Models
             return new OperationStatus(id, name, status, resourceId, startTime, endTime, percentComplete, properties, error);
         }
 
-        /// <summary> Initializes a new instance of OperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.OperationStatusError"/> instance for mocking. </returns>
@@ -166,7 +166,7 @@ namespace Azure.Developer.DevCenter.Models
             return new OperationStatusError(code, message);
         }
 
-        /// <summary> Initializes a new instance of RemoteConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RemoteConnection"/>. </summary>
         /// <param name="webUrl"> URL to open a browser based RDP session. </param>
         /// <param name="rdpConnectionUrl"> Link to open a Remote Desktop session. </param>
         /// <returns> A new <see cref="Models.RemoteConnection"/> instance for mocking. </returns>
@@ -175,7 +175,7 @@ namespace Azure.Developer.DevCenter.Models
             return new RemoteConnection(webUrl, rdpConnectionUrl);
         }
 
-        /// <summary> Initializes a new instance of DevBoxAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxAction"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
@@ -187,7 +187,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxAction(name, actionType, sourceId, suspendedUntil, next);
         }
 
-        /// <summary> Initializes a new instance of DevBoxNextAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxNextAction"/>. </summary>
         /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
         /// <returns> A new <see cref="Models.DevBoxNextAction"/> instance for mocking. </returns>
         public static DevBoxNextAction DevBoxNextAction(DateTimeOffset scheduledTime = default)
@@ -195,7 +195,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxNextAction(scheduledTime);
         }
 
-        /// <summary> Initializes a new instance of DevBoxActionDelayResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionDelayResult"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
@@ -206,7 +206,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxActionDelayResult(name, result, action, error);
         }
 
-        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentType"> Environment type. </param>
@@ -222,7 +222,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevCenterEnvironment(parameters, name, environmentType, user, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error);
         }
 
-        /// <summary> Initializes a new instance of DevCenterCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterCatalog"/>. </summary>
         /// <param name="name"> Name of the catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Models.DevCenterCatalog"/> instance for mocking. </returns>
@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevCenterCatalog(name);
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinitionModel"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -252,7 +252,7 @@ namespace Azure.Developer.DevCenter.Models
             return new EnvironmentDefinitionModel(id, name, catalogName, description, parameters?.ToList(), parametersSchema, templatePath);
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinitionParameterModel"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
@@ -275,7 +275,7 @@ namespace Azure.Developer.DevCenter.Models
             return new EnvironmentDefinitionParameterModel(id, name, description, @default, type, readOnly, required, allowed?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EnvironmentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be

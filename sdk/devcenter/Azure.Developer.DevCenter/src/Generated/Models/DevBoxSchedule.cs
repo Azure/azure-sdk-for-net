@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A Schedule to execute action. </summary>
     public partial class DevBoxSchedule
     {
-        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
             TimeZone = timeZone;
         }
 
-        /// <summary> Initializes a new instance of DevBoxSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="type"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>

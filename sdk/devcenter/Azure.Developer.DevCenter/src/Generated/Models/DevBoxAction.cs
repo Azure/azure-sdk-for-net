@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> An action which will take place on a Dev Box. </summary>
     public partial class DevBoxAction
     {
-        /// <summary> Initializes a new instance of DevBoxAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Developer.DevCenter.Models
             SourceId = sourceId;
         }
 
-        /// <summary> Initializes a new instance of DevBoxAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>

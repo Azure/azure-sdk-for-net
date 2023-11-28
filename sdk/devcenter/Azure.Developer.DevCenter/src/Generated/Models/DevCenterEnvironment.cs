@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Properties of an environment. </summary>
     public partial class DevCenterEnvironment
     {
-        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="environmentType"> Environment type. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
             EnvironmentDefinitionName = environmentDefinitionName;
         }
 
-        /// <summary> Initializes a new instance of DevCenterEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentType"> Environment type. </param>

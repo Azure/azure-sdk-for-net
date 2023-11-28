@@ -10,12 +10,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Operation Error message. </summary>
     public partial class OperationStatusError
     {
-        /// <summary> Initializes a new instance of OperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
         internal OperationStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         internal OperationStatusError(string code, string message)

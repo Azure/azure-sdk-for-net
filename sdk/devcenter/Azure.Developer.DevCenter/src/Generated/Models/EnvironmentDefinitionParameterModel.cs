@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Properties of an Environment Definition parameter. </summary>
     public partial class EnvironmentDefinitionParameterModel
     {
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameterModel"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="type">
         /// A string of one of the basic JSON types (number, integer, array, object,
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Models
             Allowed = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionParameterModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameterModel"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>

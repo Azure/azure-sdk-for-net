@@ -12,12 +12,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Specifies information about the image used. </summary>
     public partial class ImageReference
     {
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
         public ImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>

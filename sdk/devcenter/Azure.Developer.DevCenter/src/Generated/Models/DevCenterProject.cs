@@ -10,12 +10,12 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Project details. </summary>
     public partial class DevCenterProject
     {
-        /// <summary> Initializes a new instance of DevCenterProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
         internal DevCenterProject()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
