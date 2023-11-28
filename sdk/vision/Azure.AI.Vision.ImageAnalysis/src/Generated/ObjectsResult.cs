@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Describes detected objects in an image. </summary>
+    /// <summary> Represents a list of physical object detected in an image and their location. </summary>
     public partial class ObjectsResult
     {
         /// <summary> Initializes a new instance of ObjectsResult. </summary>
-        /// <param name="values"> An array of detected objects. </param>
+        /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal ObjectsResult(IEnumerable<DetectedObject> values)
         {
@@ -26,13 +26,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of ObjectsResult. </summary>
-        /// <param name="values"> An array of detected objects. </param>
+        /// <param name="values"> A list of physical object detected in an image and their location. </param>
         internal ObjectsResult(IReadOnlyList<DetectedObject> values)
         {
             Values = values;
         }
 
-        /// <summary> An array of detected objects. </summary>
+        /// <summary> A list of physical object detected in an image and their location. </summary>
         public IReadOnlyList<DetectedObject> Values { get; }
     }
 }

@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A JSON document with a URL pointing to the image that is to be analyzed. </summary>
+    /// <summary> An object holding the publicly reachable URL of an image to analyze. </summary>
     internal partial class ImageUrl
     {
         /// <summary> Initializes a new instance of ImageUrl. </summary>
-        /// <param name="url"> Publicly reachable URL of an image. </param>
+        /// <param name="url"> Publicly reachable URL of an image to analyze. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ImageUrl(Uri url)
         {
@@ -23,7 +23,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Url = url;
         }
 
-        /// <summary> Publicly reachable URL of an image. </summary>
+        /// <summary> Publicly reachable URL of an image to analyze. </summary>
         public Uri Url { get; }
     }
 }

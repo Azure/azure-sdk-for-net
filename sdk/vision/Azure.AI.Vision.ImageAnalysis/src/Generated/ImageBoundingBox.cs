@@ -11,10 +11,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageBoundingBox
     {
         /// <summary> Initializes a new instance of ImageBoundingBox. </summary>
-        /// <param name="x"> X coordinate. </param>
-        /// <param name="y"> Y coordinate. </param>
-        /// <param name="width"> Width of the box. </param>
-        /// <param name="height"> Height of the box. </param>
+        /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
+        /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
+        /// <param name="width"> Width of the area, in pixels. </param>
+        /// <param name="height"> Height of the area, in pixels. </param>
         internal ImageBoundingBox(int x, int y, int width, int height)
         {
             X = x;
@@ -23,13 +23,13 @@ namespace Azure.AI.Vision.ImageAnalysis
             Height = height;
         }
 
-        /// <summary> X coordinate. </summary>
+        /// <summary> X-coordinate of the top left point of the area, in pixels. </summary>
         public int X { get; }
-        /// <summary> Y coordinate. </summary>
+        /// <summary> Y-coordinate of the top left point of the area, in pixels. </summary>
         public int Y { get; }
-        /// <summary> Width of the box. </summary>
+        /// <summary> Width of the area, in pixels. </summary>
         public int Width { get; }
-        /// <summary> Height of the box. </summary>
+        /// <summary> Height of the area, in pixels. </summary>
         public int Height { get; }
     }
 }

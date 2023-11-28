@@ -69,7 +69,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Get dense captions for the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.DenseCaptions,
     new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
 

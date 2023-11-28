@@ -10,12 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A region identified for smart cropping. There will be one region returned for each requested aspect ratio. </summary>
+    /// <summary>
+    /// A region at the desired aspect ratio that can be used as image thumbnail.
+    /// The region preserves as much content as possible from the analyzed image, with priority given to detected faces.
+    /// </summary>
     public partial class CropRegion
     {
         /// <summary> Initializes a new instance of CropRegion. </summary>
-        /// <param name="aspectRatio"> The aspect ratio of the crop region. </param>
-        /// <param name="boundingBox"> The bounding box of the crop region. </param>
+        /// <param name="aspectRatio">
+        /// The aspect ratio of the crop region.
+        /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
+        /// The aspect ratio will be in the range 0.75 to 1.8 (inclusive) if provided by the developer during the analyze call.
+        /// Otherwise, it will be in the range 0.5 to 2.0 (inclusive).
+        /// </param>
+        /// <param name="boundingBox"> The bounding box of the region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         internal CropRegion(float aspectRatio, ImageBoundingBox boundingBox)
         {
@@ -25,9 +33,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             BoundingBox = boundingBox;
         }
 
-        /// <summary> The aspect ratio of the crop region. </summary>
+        /// <summary>
+        /// The aspect ratio of the crop region.
+        /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
+        /// The aspect ratio will be in the range 0.75 to 1.8 (inclusive) if provided by the developer during the analyze call.
+        /// Otherwise, it will be in the range 0.5 to 2.0 (inclusive).
+        /// </summary>
         public float AspectRatio { get; }
-        /// <summary> The bounding box of the crop region. </summary>
+        /// <summary> The bounding box of the region. </summary>
         public ImageBoundingBox BoundingBox { get; }
     }
 }

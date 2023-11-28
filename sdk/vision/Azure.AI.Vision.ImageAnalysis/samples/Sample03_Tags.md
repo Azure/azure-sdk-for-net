@@ -65,7 +65,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Get the tags for the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.Tags);
 
 // Print tags results to the console
@@ -115,7 +115,7 @@ var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample
 
 try
 {
-    var result = client.Analyze(imageUrl, VisualFeatures.Tags);
+    var result = client.Analyze(imageUrl, VisualFeatures.DenseCaptions);
 }
 catch (RequestFailedException e)
 {

@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A brief description of what the image depicts. </summary>
+    /// <summary> Represents a generated phrase that describes the content of the whole image or a region in the image. </summary>
     public partial class DenseCaption
     {
         /// <summary> Initializes a new instance of DenseCaption. </summary>
-        /// <param name="confidence"> The level of confidence the service has in the caption. </param>
+        /// <param name="confidence">
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
+        /// Higher values indicating higher confidence.
+        /// </param>
         /// <param name="text"> The text of the caption. </param>
-        /// <param name="boundingBox"> The bounding box of the caption. </param>
+        /// <param name="boundingBox"> The image region of which this caption applies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal DenseCaption(float confidence, string text, ImageBoundingBox boundingBox)
         {
@@ -28,11 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             BoundingBox = boundingBox;
         }
 
-        /// <summary> The level of confidence the service has in the caption. </summary>
+        /// <summary>
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
+        /// Higher values indicating higher confidence.
+        /// </summary>
         public float Confidence { get; }
         /// <summary> The text of the caption. </summary>
         public string Text { get; }
-        /// <summary> The bounding box of the caption. </summary>
+        /// <summary> The image region of which this caption applies. </summary>
         public ImageBoundingBox BoundingBox { get; }
     }
 }

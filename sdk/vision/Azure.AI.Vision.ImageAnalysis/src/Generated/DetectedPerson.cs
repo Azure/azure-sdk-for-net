@@ -16,17 +16,23 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of DetectedPerson. </summary>
-        /// <param name="boundingBox"> Gets a rectangular boundary within which the person was detected. </param>
-        /// <param name="confidence"> Gets the confidence value of the detected person. </param>
+        /// <param name="boundingBox"> A rectangular boundary where the person was detected. </param>
+        /// <param name="confidence">
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
+        /// Higher values indicating higher confidence.
+        /// </param>
         internal DetectedPerson(ImageBoundingBox boundingBox, float confidence)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
         }
 
-        /// <summary> Gets a rectangular boundary within which the person was detected. </summary>
+        /// <summary> A rectangular boundary where the person was detected. </summary>
         public ImageBoundingBox BoundingBox { get; }
-        /// <summary> Gets the confidence value of the detected person. </summary>
+        /// <summary>
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
+        /// Higher values indicating higher confidence.
+        /// </summary>
         public float Confidence { get; }
     }
 }

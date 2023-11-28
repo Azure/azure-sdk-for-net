@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> The results of an Read operation. </summary>
+    /// <summary> The results of a Read (OCR) operation. </summary>
     public partial class ReadResult
     {
         /// <summary> Initializes a new instance of ReadResult. </summary>

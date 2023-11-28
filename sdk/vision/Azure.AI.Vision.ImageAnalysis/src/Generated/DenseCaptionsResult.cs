@@ -12,11 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A list of captions. </summary>
+    /// <summary>
+    /// Represents a list of up to 10 image captions for different regions of the image.
+    /// The first caption always applies to the whole image.
+    /// </summary>
     public partial class DenseCaptionsResult
     {
         /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
-        /// <param name="values"> The list of captions. </param>
+        /// <param name="values"> The list of image captions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal DenseCaptionsResult(IEnumerable<DenseCaption> values)
         {
@@ -26,13 +29,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
-        /// <param name="values"> The list of captions. </param>
+        /// <param name="values"> The list of image captions. </param>
         internal DenseCaptionsResult(IReadOnlyList<DenseCaption> values)
         {
             Values = values;
         }
 
-        /// <summary> The list of captions. </summary>
+        /// <summary> The list of image captions. </summary>
         public IReadOnlyList<DenseCaption> Values { get; }
     }
 }

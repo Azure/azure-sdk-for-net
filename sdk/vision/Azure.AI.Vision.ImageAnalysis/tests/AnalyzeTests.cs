@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,6 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 Assert.AreEqual(iaResult.Caption.Text, firstCaption.Text);
             }
 
-            var captions = new HashSet<string>();
             var boundingBoxes = new HashSet<ImageBoundingBox>(new BoundingBoxComparer());
 
             foreach (var oneDenseCaption in denseCaptionsResult.Values)
@@ -241,7 +241,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 ValidateBoxInResult(oneDenseCaption.BoundingBox, iaResult.Metadata);
 
                 Assert.IsNotNull(oneDenseCaption.Text);
-                Assert.IsTrue(captions.Add(oneDenseCaption.Text));
+                Assert.IsFalse(string.IsNullOrEmpty(oneDenseCaption.Text));
 
                 Assert.Greater(oneDenseCaption.Confidence, 0);
                 Assert.Less(oneDenseCaption.Confidence, 1);

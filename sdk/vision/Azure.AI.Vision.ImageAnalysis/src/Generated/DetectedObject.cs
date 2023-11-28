@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Describes a detected object in an image. </summary>
+    /// <summary> Represents a physical object detected in an image. </summary>
     public partial class DetectedObject
     {
         /// <summary> Initializes a new instance of DetectedObject. </summary>
-        /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
-        /// <param name="tags"> Classification confidences of the detected object. </param>
+        /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
+        /// <param name="tags"> A single-item list containing the object information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> or <paramref name="tags"/> is null. </exception>
         internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<DetectedTag> tags)
         {
@@ -29,17 +29,17 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of DetectedObject. </summary>
-        /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
-        /// <param name="tags"> Classification confidences of the detected object. </param>
+        /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
+        /// <param name="tags"> A single-item list containing the object information. </param>
         internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags)
         {
             BoundingBox = boundingBox;
             Tags = tags;
         }
 
-        /// <summary> Gets a rectangular boundary within which the object was detected. </summary>
+        /// <summary> A rectangular boundary where the object was detected. </summary>
         public ImageBoundingBox BoundingBox { get; }
-        /// <summary> Classification confidences of the detected object. </summary>
+        /// <summary> A single-item list containing the object information. </summary>
         public IReadOnlyList<DetectedTag> Tags { get; }
     }
 }

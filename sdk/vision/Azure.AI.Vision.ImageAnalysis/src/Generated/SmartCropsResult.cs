@@ -12,11 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Smart cropping result. </summary>
+    /// <summary>
+    /// Smart cropping result. A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.
+    /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
+    /// </summary>
     public partial class SmartCropsResult
     {
         /// <summary> Initializes a new instance of SmartCropsResult. </summary>
-        /// <param name="values"> Recommended regions for cropping the image. </param>
+        /// <param name="values"> A list of crop regions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal SmartCropsResult(IEnumerable<CropRegion> values)
         {
@@ -26,13 +29,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of SmartCropsResult. </summary>
-        /// <param name="values"> Recommended regions for cropping the image. </param>
+        /// <param name="values"> A list of crop regions. </param>
         internal SmartCropsResult(IReadOnlyList<CropRegion> values)
         {
             Values = values;
         }
 
-        /// <summary> Recommended regions for cropping the image. </summary>
+        /// <summary> A list of crop regions. </summary>
         public IReadOnlyList<CropRegion> Values { get; }
     }
 }

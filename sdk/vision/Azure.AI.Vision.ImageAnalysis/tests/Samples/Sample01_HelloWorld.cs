@@ -10,11 +10,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
     public class Sample01_HelloWorld : ImageAnalysisSampleBase
     {
         [TestCase]
-        public void ImageAnalysisGenerateCaptionFromFile()
+        public void ImageAnalysisCaptionFromFile()
         {
             var client = ImageAnalysisAuth();
 
-            #region Snippet:ImageAnalysisGenerateCaptionFromFile
+            #region Snippet:ImageAnalysisCaptionFromFile
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
             ImageAnalysisResult result = client.Analyze(
@@ -29,11 +29,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         }
 
         [TestCase]
-        public void ImageAnalysisGenerateCaptionFromUrl()
+        public void ImageAnalysisCaptionFromUrl()
         {
             var client = ImageAnalysisAuth();
 
-            #region Snippet:ImageAnalysisGenerateCaptionFromUrl
+            #region Snippet:ImageAnalysisCaptionFromUrl
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Caption,

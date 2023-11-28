@@ -12,11 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A list of tags with confidence level. </summary>
+    /// <summary>
+    /// A list of entities observed in the image. Tags can be physical objects, living being, scenery, or actions
+    /// that appear in the image.
+    /// </summary>
     public partial class TagsResult
     {
         /// <summary> Initializes a new instance of TagsResult. </summary>
-        /// <param name="values"> A list of tags with confidence level. </param>
+        /// <param name="values"> A list of tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal TagsResult(IEnumerable<DetectedTag> values)
         {
@@ -26,13 +29,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of TagsResult. </summary>
-        /// <param name="values"> A list of tags with confidence level. </param>
+        /// <param name="values"> A list of tags. </param>
         internal TagsResult(IReadOnlyList<DetectedTag> values)
         {
             Values = values;
         }
 
-        /// <summary> A list of tags with confidence level. </summary>
+        /// <summary> A list of tags. </summary>
         public IReadOnlyList<DetectedTag> Values { get; }
     }
 }

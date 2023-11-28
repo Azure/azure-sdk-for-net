@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> The visual features requested: tags, objects, caption, denseCaptions, read, smartCrops, people. </summary>
+    /// <summary> The visual features supported by the Image Analysis service. </summary>
     internal readonly partial struct VisualFeaturesImpl : IEquatable<VisualFeaturesImpl>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.AI.Vision.ImageAnalysis
         private const string SmartCropsValue = "smartCrops";
         private const string PeopleValue = "people";
 
-        /// <summary> Tags. </summary>
+        /// <summary> Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image. </summary>
         public static VisualFeaturesImpl Tags { get; } = new VisualFeaturesImpl(TagsValue);
-        /// <summary> Caption. </summary>
+        /// <summary> Generate a human-readable caption sentence that describes the content of the image. </summary>
         public static VisualFeaturesImpl Caption { get; } = new VisualFeaturesImpl(CaptionValue);
-        /// <summary> DenseCaptions. </summary>
+        /// <summary> Generate human-readable caption sentences for up to 10 different regions in the image, including one for the whole image. </summary>
         public static VisualFeaturesImpl DenseCaptions { get; } = new VisualFeaturesImpl(DenseCaptionsValue);
-        /// <summary> Objects. </summary>
+        /// <summary> Object detection. This is similar to tags, but focused on detecting physical objects in the image and returning their location. </summary>
         public static VisualFeaturesImpl Objects { get; } = new VisualFeaturesImpl(ObjectsValue);
-        /// <summary> Read. </summary>
+        /// <summary> Extract printed or handwritten text from the image. Also known as Optical Character Recognition (OCR). </summary>
         public static VisualFeaturesImpl Read { get; } = new VisualFeaturesImpl(ReadValue);
-        /// <summary> SmartCrops. </summary>
+        /// <summary> Find representative sub-regions of the image for thumbnail generation, at desired aspect ratios, with priority given to detected faces. </summary>
         public static VisualFeaturesImpl SmartCrops { get; } = new VisualFeaturesImpl(SmartCropsValue);
-        /// <summary> People. </summary>
+        /// <summary> Detect people in the image and return their location. </summary>
         public static VisualFeaturesImpl People { get; } = new VisualFeaturesImpl(PeopleValue);
         /// <summary> Determines if two <see cref="VisualFeaturesImpl"/> values are the same. </summary>
         public static bool operator ==(VisualFeaturesImpl left, VisualFeaturesImpl right) => left.Equals(right);

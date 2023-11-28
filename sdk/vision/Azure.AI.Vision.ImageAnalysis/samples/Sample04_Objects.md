@@ -64,7 +64,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Detect objects in the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.Objects);
 
 // Print object detection results to the console
@@ -72,8 +72,7 @@ Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Objects:");
 foreach (DetectedObject detectedObject in result.Objects.Values)
 {
-    string pointsString = "{" + string.Join(", ", detectedObject.BoundingBox.Select(point => point.ToString())) + "}";
-    Console.WriteLine($"   Object: '{detectedObject.Name}', Confidence {detectedObject.Confidence:F4}, Bounding box {pointsString}");
+    Console.WriteLine($"   Object: '{detectedObject.Tags.First().Name}', Bounding box {detectedObject.BoundingBox.ToString()}");
 }
 ```
 
@@ -92,8 +91,7 @@ Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Objects:");
 foreach (DetectedObject detectedObject in result.Objects.Values)
 {
-    string pointsString = "{" + string.Join(", ", detectedObject.BoundingBox.Select(point => point.ToString())) + "}";
-    Console.WriteLine($"   Object: '{detectedObject.Name}', Confidence {detectedObject.Confidence:F4}, Bounding box {pointsString}");
+    Console.WriteLine($"   Object: '{detectedObject.Tags.First().Name}', Bounding box {detectedObject.BoundingBox.ToString()}");
 }
 ```
 

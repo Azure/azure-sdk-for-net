@@ -65,7 +65,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Detect people in the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.People);
 
 // Print people detection results to the console
@@ -73,8 +73,7 @@ Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" People:");
 foreach (DetectedPerson person in result.People.Values)
 {
-    string pointsString = "{" + string.Join(", ", person.BoundingBox.Select(point => point.ToString())) + "}";
-    Console.WriteLine($"   Person: Bounding box {pointsString}, Confidence {person.Confidence:F4}");
+    Console.WriteLine($"   Person: Bounding box {person.BoundingBox.ToString()}, Confidence {person.Confidence:F4}");
 }
 ```
 
@@ -93,8 +92,7 @@ Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" People:");
 foreach (DetectedPerson person in result.People.Values)
 {
-    string pointsString = "{" + string.Join(", ", person.BoundingBox.Select(point => point.ToString())) + "}";
-    Console.WriteLine($"   Person: Bounding box {pointsString}, Confidence {person.Confidence:F4}");
+    Console.WriteLine($"   Person: Bounding box {person.BoundingBox.ToString()}, Confidence {person.Confidence:F4}");
 }
 ```
 

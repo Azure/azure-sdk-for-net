@@ -37,8 +37,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests.Samples
             imagePath = TestEnvironment.TestImageInputUrl;
 #endif
             // Analyze the image and get caption
-            var visualFeatures = new List<VisualFeatures> { VisualFeatures.Caption };
-            var result = client.Analyze(imagePath, visualFeatures);
+            var result = client.Analyze(imagePath, VisualFeatures.Caption);
 
             // Print the caption
             Console.WriteLine("Caption: " + result.Value.Caption.Text);

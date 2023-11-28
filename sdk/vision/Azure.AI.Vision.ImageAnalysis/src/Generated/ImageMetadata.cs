@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> The image metadata information such as height and width. </summary>
+    /// <summary> Metadata associated with the analyzed image. </summary>
     public partial class ImageMetadata
     {
         /// <summary> Initializes a new instance of ImageMetadata. </summary>

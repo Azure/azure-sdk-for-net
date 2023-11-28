@@ -10,11 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A brief description of what the image depicts. </summary>
+    /// <summary> Represents a generated phrase that describes the content of the whole image. </summary>
     public partial class CaptionResult
     {
         /// <summary> Initializes a new instance of CaptionResult. </summary>
-        /// <param name="confidence"> The level of confidence the service has in the caption. </param>
+        /// <param name="confidence">
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
+        /// Higher values indicating higher confidence.
+        /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal CaptionResult(float confidence, string text)
@@ -25,7 +28,10 @@ namespace Azure.AI.Vision.ImageAnalysis
             Text = text;
         }
 
-        /// <summary> The level of confidence the service has in the caption. </summary>
+        /// <summary>
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
+        /// Higher values indicating higher confidence.
+        /// </summary>
         public float Confidence { get; }
         /// <summary> The text of the caption. </summary>
         public string Text { get; }

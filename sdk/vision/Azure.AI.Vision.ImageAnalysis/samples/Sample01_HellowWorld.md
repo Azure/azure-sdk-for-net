@@ -64,16 +64,13 @@ Notes:
 * Caption is only supported in English at the moment.
 
 ```C# Snippet:ImageAnalysisCaptionFromFile
-// Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get a caption for the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+    new ImageAnalysisOptions { genderNeutralCaption = true });
 
-// Print caption results to the console
 Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Caption:");
 Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");
@@ -84,13 +81,11 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisCaptionFromUrl
-// Get a caption for the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+    new ImageAnalysisOptions { genderNeutralCaption = true });
 
-// Print caption results to the console
 Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Caption:");
 Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");

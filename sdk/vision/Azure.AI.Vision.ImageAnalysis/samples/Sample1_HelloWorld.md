@@ -13,6 +13,7 @@ To interact with Azure AI Vision Image Analysis, you need to instantiate an `Ima
 For the sample below, you can set `endpointString` and `keyString` in an environment variable, a configuration setting, or any way that works for your application. The endpoint URL and API key are available from the Azure AI Vision Image Analysis Access Keys view in the Azure Portal.
 
 ```C# Snippet:CreateImageAnalysisClient
+// Replace the endpoint and API key with your own
 string endpointString = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
 string keyString = Environment.GetEnvironmentVariable("VISION_KEY");
 
@@ -30,10 +31,8 @@ Once you've created an `ImageAnalysisClient`, you can analyze an image to get a 
 ```C# Snippet:GetCaptionForImage
 // Read image file content
 Uri imagePath = new Uri("https://url/to/your/image.jpg");
-
 // Analyze the image and get caption
-var visualFeatures = new List<VisualFeatures> { VisualFeatures.Caption };
-var result = client.Analyze(imagePath, visualFeatures);
+var result = client.Analyze(imagePath, VisualFeatures.Caption);
 
 // Print the caption
 Console.WriteLine("Caption: " + result.Value.Caption.Text);

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> An entity observation in the image, along with the confidence score. </summary>
+    /// <summary>
+    /// A content entity observation in the image. A tag can be a physical object, living being, scenery, or action
+    /// that appear in the image.
+    /// </summary>
     public partial class DetectedTag
     {
         /// <summary> Initializes a new instance of DetectedTag. </summary>
-        /// <param name="confidence"> The level of confidence that the entity was observed. </param>
+        /// <param name="confidence">
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
+        /// Higher values indicating higher confidence.
+        /// </param>
         /// <param name="name"> Name of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DetectedTag(float confidence, string name)
@@ -25,7 +31,10 @@ namespace Azure.AI.Vision.ImageAnalysis
             Name = name;
         }
 
-        /// <summary> The level of confidence that the entity was observed. </summary>
+        /// <summary>
+        /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
+        /// Higher values indicating higher confidence.
+        /// </summary>
         public float Confidence { get; }
         /// <summary> Name of the entity. </summary>
         public string Name { get; }

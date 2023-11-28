@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> An object describing whether the image contains people. </summary>
+    /// <summary> Represents a list of people detected in an image and their location. </summary>
     public partial class PeopleResult
     {
         /// <summary> Initializes a new instance of PeopleResult. </summary>
-        /// <param name="values"> An array of detected people. </param>
+        /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal PeopleResult(IEnumerable<DetectedPerson> values)
         {
@@ -26,13 +26,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of PeopleResult. </summary>
-        /// <param name="values"> An array of detected people. </param>
+        /// <param name="values"> A list of people detected in an image and their location. </param>
         internal PeopleResult(IReadOnlyList<DetectedPerson> values)
         {
             Values = values;
         }
 
-        /// <summary> An array of detected people. </summary>
+        /// <summary> A list of people detected in an image and their location. </summary>
         public IReadOnlyList<DetectedPerson> Values { get; }
     }
 }

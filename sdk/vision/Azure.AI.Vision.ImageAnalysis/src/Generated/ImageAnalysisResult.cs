@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Describe the combined results of different types of image analysis. </summary>
+    /// <summary> Represents the outcome of an Image Analysis operation. </summary>
     public partial class ImageAnalysisResult
     {
         /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
-        /// <param name="metadata"> The model used for the analysis. </param>
-        /// <param name="modelVersion"> The model used for the analysis. </param>
+        /// <param name="metadata"> Metadata associated with the analyzed image. </param>
+        /// <param name="modelVersion"> The cloud AI model used for the analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modelVersion"/> is null. </exception>
         internal ImageAnalysisResult(ImageMetadata metadata, string modelVersion)
         {
@@ -27,15 +27,21 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
-        /// <param name="caption"> A CaptionResult for the image. </param>
-        /// <param name="denseCaptions"> A denseCaptionsResult for the image. </param>
-        /// <param name="metadata"> The model used for the analysis. </param>
-        /// <param name="modelVersion"> The model used for the analysis. </param>
-        /// <param name="objects"> A list of objects for the image. </param>
-        /// <param name="people"> A list of people for the image. </param>
-        /// <param name="read"> A readResult for the image. </param>
-        /// <param name="smartCrops"> A list of regions for the image. </param>
-        /// <param name="tags"> A list of tags for the image. </param>
+        /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>
+        /// <param name="denseCaptions">
+        /// The up to 10 generated phrases, the first describing the content of the whole image,
+        /// and the others describing the content of different regions of the image.
+        /// </param>
+        /// <param name="metadata"> Metadata associated with the analyzed image. </param>
+        /// <param name="modelVersion"> The cloud AI model used for the analysis. </param>
+        /// <param name="objects"> A list of detected physical objects in the analyzed image, and their location. </param>
+        /// <param name="people"> A list of detected people in the analyzed image, and their location. </param>
+        /// <param name="read"> The extracted printed and hand-written text in the analyze image. Also knows as OCR. </param>
+        /// <param name="smartCrops">
+        /// A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.
+        /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
+        /// </param>
+        /// <param name="tags"> A list of content tags in the analyzed image. </param>
         internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags)
         {
             Caption = caption;
@@ -49,23 +55,29 @@ namespace Azure.AI.Vision.ImageAnalysis
             Tags = tags;
         }
 
-        /// <summary> A CaptionResult for the image. </summary>
+        /// <summary> The generated phrase that describes the content of the analyzed image. </summary>
         public CaptionResult Caption { get; }
-        /// <summary> A denseCaptionsResult for the image. </summary>
+        /// <summary>
+        /// The up to 10 generated phrases, the first describing the content of the whole image,
+        /// and the others describing the content of different regions of the image.
+        /// </summary>
         public DenseCaptionsResult DenseCaptions { get; }
-        /// <summary> The model used for the analysis. </summary>
+        /// <summary> Metadata associated with the analyzed image. </summary>
         public ImageMetadata Metadata { get; }
-        /// <summary> The model used for the analysis. </summary>
+        /// <summary> The cloud AI model used for the analysis. </summary>
         public string ModelVersion { get; }
-        /// <summary> A list of objects for the image. </summary>
+        /// <summary> A list of detected physical objects in the analyzed image, and their location. </summary>
         public ObjectsResult Objects { get; }
-        /// <summary> A list of people for the image. </summary>
+        /// <summary> A list of detected people in the analyzed image, and their location. </summary>
         public PeopleResult People { get; }
-        /// <summary> A readResult for the image. </summary>
+        /// <summary> The extracted printed and hand-written text in the analyze image. Also knows as OCR. </summary>
         public ReadResult Read { get; }
-        /// <summary> A list of regions for the image. </summary>
+        /// <summary>
+        /// A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.
+        /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
+        /// </summary>
         public SmartCropsResult SmartCrops { get; }
-        /// <summary> A list of tags for the image. </summary>
+        /// <summary> A list of content tags in the analyzed image. </summary>
         public TagsResult Tags { get; }
     }
 }
