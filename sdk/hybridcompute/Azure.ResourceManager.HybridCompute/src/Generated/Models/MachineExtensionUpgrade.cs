@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ExtensionTargets = new ChangeTrackingDictionary<string, ExtensionTargetProperties>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpgrade"/>. </summary>
+        /// <param name="extensionTargets"> Describes the Extension Target Properties. </param>
+        internal MachineExtensionUpgrade(IDictionary<string, ExtensionTargetProperties> extensionTargets)
+        {
+            ExtensionTargets = extensionTargets;
+        }
+
         /// <summary> Describes the Extension Target Properties. </summary>
         public IDictionary<string, ExtensionTargetProperties> ExtensionTargets { get; }
     }

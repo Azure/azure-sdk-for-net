@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
+        /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        internal UpdateAdministrativeStateOnResources(IList<ResourceIdentifier> resourceIds)
+        {
+            ResourceIds = resourceIds;
+        }
+
         /// <summary> Network Fabrics or Network Rack resource Id. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }
     }

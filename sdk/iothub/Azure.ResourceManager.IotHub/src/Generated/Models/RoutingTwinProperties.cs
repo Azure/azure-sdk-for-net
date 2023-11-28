@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoutingTwinProperties"/>. </summary>
+        /// <param name="desired"> Twin desired properties. </param>
+        /// <param name="reported"> Twin desired properties. </param>
+        internal RoutingTwinProperties(BinaryData desired, BinaryData reported)
+        {
+            Desired = desired;
+            Reported = reported;
+        }
+
         /// <summary>
         /// Twin desired properties
         /// <para>

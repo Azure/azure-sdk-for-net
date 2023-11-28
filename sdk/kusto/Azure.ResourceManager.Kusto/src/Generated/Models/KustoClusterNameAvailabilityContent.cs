@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType = KustoClusterType.MicrosoftKustoClusters;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Cluster name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
+        internal KustoClusterNameAvailabilityContent(string name, KustoClusterType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Cluster name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Kusto/clusters. </summary>

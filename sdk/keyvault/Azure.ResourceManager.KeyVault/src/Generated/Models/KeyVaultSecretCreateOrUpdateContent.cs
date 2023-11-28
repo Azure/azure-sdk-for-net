@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the secret. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        internal KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags, SecretProperties properties)
+        {
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The tags that will be assigned to the secret. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the secret. </summary>

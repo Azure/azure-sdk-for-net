@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType = KustoDatabasePrincipalAssignmentType.MicrosoftKustoClustersDatabasesPrincipalAssignments;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </param>
+        internal KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name, KustoDatabasePrincipalAssignmentType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Principal Assignment resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </summary>

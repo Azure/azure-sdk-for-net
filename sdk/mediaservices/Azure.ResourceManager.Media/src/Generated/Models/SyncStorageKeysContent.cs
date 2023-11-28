@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Media.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SyncStorageKeysContent"/>. </summary>
+        /// <param name="id"> The ID of the storage account resource. </param>
+        internal SyncStorageKeysContent(string id)
+        {
+            Id = id;
+        }
+
         /// <summary> The ID of the storage account resource. </summary>
         public string Id { get; set; }
     }

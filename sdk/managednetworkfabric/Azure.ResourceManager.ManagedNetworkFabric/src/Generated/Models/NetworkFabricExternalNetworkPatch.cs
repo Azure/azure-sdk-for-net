@@ -17,6 +17,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties object. </param>
+        /// <param name="optionAProperties"> option A properties object. </param>
+        internal NetworkFabricExternalNetworkPatch(string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties)
+        {
+            Annotation = annotation;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
+            ImportRoutePolicy = importRoutePolicy;
+            ExportRoutePolicy = exportRoutePolicy;
+            PeeringOption = peeringOption;
+            OptionBProperties = optionBProperties;
+            OptionAProperties = optionAProperties;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>

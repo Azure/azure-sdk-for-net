@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="statements"> Route Policy statements. </param>
+        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements) : base(tags)
+        {
+            DefaultAction = defaultAction;
+            Statements = statements;
+        }
+
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
         public CommunityActionType? DefaultAction { get; set; }
         /// <summary> Route Policy statements. </summary>
