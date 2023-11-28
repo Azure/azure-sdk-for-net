@@ -16,6 +16,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.StreamAnalytics/CLRUdf";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        /// <param name="script"> The CSharp code containing a single function definition. </param>
+        /// <param name="udfType"> The function type. </param>
+        internal CSharpFunctionRetrieveDefaultDefinitionContent(string bindingType, string script, StreamingJobFunctionUdfType? udfType) : base(bindingType)
+        {
+            Script = script;
+            UdfType = udfType;
+            BindingType = bindingType ?? "Microsoft.StreamAnalytics/CLRUdf";
+        }
+
         /// <summary> The CSharp code containing a single function definition. </summary>
         public string Script { get; set; }
         /// <summary> The function type. </summary>

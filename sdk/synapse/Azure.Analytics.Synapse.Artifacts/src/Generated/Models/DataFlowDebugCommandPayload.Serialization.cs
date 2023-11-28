@@ -51,7 +51,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override DataFlowDebugCommandPayload Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugCommandPayload(document.RootElement);
             }
         }
     }

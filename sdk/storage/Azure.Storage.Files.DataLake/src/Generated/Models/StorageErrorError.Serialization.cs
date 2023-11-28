@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class StorageErrorError
     {
-        internal static StorageErrorError DeserializeStorageErrorError(XElement element)
+        internal static StorageErrorError DeserializeStorageErrorError(XElement element, ModelReaderWriterOptions options = null)
         {
             string code = default;
             string message = default;

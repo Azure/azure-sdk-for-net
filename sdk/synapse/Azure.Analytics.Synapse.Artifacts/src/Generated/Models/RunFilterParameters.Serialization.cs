@@ -58,7 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRunFilterParameters(document.RootElement);
             }
         }
     }

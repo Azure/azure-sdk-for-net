@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Queues.Models
 {
     public partial class QueueGeoReplication
     {
-        internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element)
+        internal static QueueGeoReplication DeserializeQueueGeoReplication(XElement element, ModelReaderWriterOptions options = null)
         {
             QueueGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;

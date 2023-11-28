@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSizeContent"/>. </summary>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. </param>
+        /// <param name="sku"> SKU for the resource. </param>
+        internal RequiredAmlFileSystemSubnetsSizeContent(float? storageCapacityTiB, StorageCacheSkuName sku)
+        {
+            StorageCapacityTiB = storageCapacityTiB;
+            Sku = sku;
+        }
+
         /// <summary> The size of the AML file system, in TiB. </summary>
         public float? StorageCapacityTiB { get; set; }
         /// <summary> SKU for the resource. </summary>

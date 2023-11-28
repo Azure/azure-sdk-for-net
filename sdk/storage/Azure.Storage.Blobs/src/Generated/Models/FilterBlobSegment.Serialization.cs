@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class FilterBlobSegment
     {
-        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element)
+        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string @where = default;

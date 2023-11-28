@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class BlobServiceProperties : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Optional.IsDefined(Logging))
@@ -55,7 +56,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobAnalyticsLogging logging = default;
             BlobMetrics hourMetrics = default;

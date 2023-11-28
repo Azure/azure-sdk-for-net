@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlobName
     {
-        internal static BlobName DeserializeBlobName(XElement element)
+        internal static BlobName DeserializeBlobName(XElement element, ModelReaderWriterOptions options = null)
         {
             bool? encoded = default;
             string content = default;

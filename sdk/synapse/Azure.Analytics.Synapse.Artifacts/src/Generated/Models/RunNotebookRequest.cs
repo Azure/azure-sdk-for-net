@@ -19,6 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, RunNotebookParameter>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RunNotebookRequest"/>. </summary>
+        /// <param name="notebook"> Notebook name. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <param name="sessionOptions"> Session properties. </param>
+        /// <param name="honorSessionTimeToLive"> Whether session should run till time to live after run completes. </param>
+        /// <param name="parameters"> Run notebook parameters. </param>
+        internal RunNotebookRequest(string notebook, string sparkPool, RunNotebookSparkSessionOptions sessionOptions, bool? honorSessionTimeToLive, IDictionary<string, RunNotebookParameter> parameters)
+        {
+            Notebook = notebook;
+            SparkPool = sparkPool;
+            SessionOptions = sessionOptions;
+            HonorSessionTimeToLive = honorSessionTimeToLive;
+            Parameters = parameters;
+        }
+
         /// <summary> Notebook name. </summary>
         public string Notebook { get; set; }
         /// <summary> SparkPool name. </summary>

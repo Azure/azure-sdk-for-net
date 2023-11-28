@@ -15,6 +15,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="OutputColumn"/>. </summary>
+        /// <param name="name"> Name of the table column. Type: string. </param>
+        internal OutputColumn(string name)
+        {
+            Name = name;
+        }
+
         /// <summary> Name of the table column. Type: string. </summary>
         public string Name { get; }
     }

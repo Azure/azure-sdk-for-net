@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Azure.Core;
@@ -14,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class HandleItem
     {
-        internal static HandleItem DeserializeHandleItem(XElement element)
+        internal static HandleItem DeserializeHandleItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string handleId = default;
             StringEncoded path = default;

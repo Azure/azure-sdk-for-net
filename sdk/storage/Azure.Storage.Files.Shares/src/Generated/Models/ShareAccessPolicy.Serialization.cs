@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -14,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     public partial class ShareAccessPolicy : IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (Optional.IsDefined(PolicyStartsOn))
@@ -38,7 +39,9 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;
