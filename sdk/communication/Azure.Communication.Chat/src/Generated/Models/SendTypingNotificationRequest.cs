@@ -15,6 +15,13 @@ namespace Azure.Communication.Chat
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
+        /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
+        internal SendTypingNotificationRequest(string senderDisplayName)
+        {
+            SenderDisplayName = senderDisplayName;
+        }
+
         /// <summary> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </summary>
         public string SenderDisplayName { get; set; }
     }

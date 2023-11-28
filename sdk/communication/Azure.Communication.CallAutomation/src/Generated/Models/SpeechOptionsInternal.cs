@@ -15,6 +15,13 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
+        /// <param name="endSilenceTimeoutInMs"> The length of end silence when user stops speaking and cogservice send response. </param>
+        internal SpeechOptionsInternal(long? endSilenceTimeoutInMs)
+        {
+            EndSilenceTimeoutInMs = endSilenceTimeoutInMs;
+        }
+
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
         public long? EndSilenceTimeoutInMs { get; set; }
     }

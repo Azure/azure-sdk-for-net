@@ -27,6 +27,17 @@ namespace Azure.ResourceManager.Attestation.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
+        /// <param name="properties"> Properties of the attestation provider. </param>
+        internal AttestationProviderCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, AttestationServiceCreationSpecificParams properties)
+        {
+            Location = location;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The supported Azure location where the attestation provider should be created. </summary>
         public AzureLocation Location { get; }
         /// <summary> The tags that will be assigned to the attestation provider. </summary>

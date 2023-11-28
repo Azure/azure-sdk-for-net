@@ -17,6 +17,19 @@ namespace Azure.Security.Attestation
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AttestOpenEnclaveRequest"/>. </summary>
+        /// <param name="report"> OpenEnclave report from the enclave to be attested. </param>
+        /// <param name="runtimeData"> Runtime data provided by the enclave at the time of report generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </param>
+        /// <param name="initTimeData"> Base64Url encoded "InitTime data". The MAA will verify that the init data was known to the enclave. Note that InitTimeData is invalid for CoffeeLake processors. </param>
+        /// <param name="draftPolicyForAttestation"> Attest against the provided draft policy. Note that the resulting token cannot be validated. </param>
+        internal AttestOpenEnclaveRequest(byte[] report, RuntimeData runtimeData, InitTimeData initTimeData, string draftPolicyForAttestation)
+        {
+            Report = report;
+            RuntimeData = runtimeData;
+            InitTimeData = initTimeData;
+            DraftPolicyForAttestation = draftPolicyForAttestation;
+        }
+
         /// <summary> OpenEnclave report from the enclave to be attested. </summary>
         public byte[] Report { get; set; }
         /// <summary> Runtime data provided by the enclave at the time of report generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </summary>

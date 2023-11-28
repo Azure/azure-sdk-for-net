@@ -303,7 +303,7 @@ namespace Azure.Security.Attestation
         {
             public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

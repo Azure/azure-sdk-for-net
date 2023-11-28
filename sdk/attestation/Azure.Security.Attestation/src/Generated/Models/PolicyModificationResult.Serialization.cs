@@ -63,7 +63,7 @@ namespace Azure.Security.Attestation
         {
             public override void Write(Utf8JsonWriter writer, PolicyModificationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

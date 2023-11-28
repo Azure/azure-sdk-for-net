@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeContent"/>. </summary>
+        /// <param name="properties"></param>
+        internal SoftwareAssuranceChangeContent(SoftwareAssuranceChangeRequestProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Gets or sets the properties. </summary>
         internal SoftwareAssuranceChangeRequestProperties Properties { get; set; }
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>

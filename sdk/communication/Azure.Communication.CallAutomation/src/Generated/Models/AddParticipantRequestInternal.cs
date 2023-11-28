@@ -24,6 +24,34 @@ namespace Azure.Communication.CallAutomation
             ParticipantToAdd = participantToAdd;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
+        /// <param name="sourceCallerIdNumber">
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
+        /// Required only when inviting a PSTN participant.
+        /// </param>
+        /// <param name="sourceDisplayName">
+        /// (Optional) The display name of the source that is associated with this invite operation when
+        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
+        /// </param>
+        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="invitationTimeoutInSeconds">
+        /// Gets or sets the timeout to wait for the invited participant to pickup.
+        /// The maximum value of this is 180 seconds
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, CustomContextInternal customContext, string callbackUri)
+        {
+            SourceCallerIdNumber = sourceCallerIdNumber;
+            SourceDisplayName = sourceDisplayName;
+            ParticipantToAdd = participantToAdd;
+            InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            OperationContext = operationContext;
+            CustomContext = customContext;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary>
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when inviting a PSTN participant.
