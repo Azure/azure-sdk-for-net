@@ -20,6 +20,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationPatch"/>. </summary>
+        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
+        /// <param name="suspend"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
+        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
+        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
+        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
+        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
+        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
+        internal KubernetesFluxConfigurationPatch(KubernetesConfigurationSourceKind? sourceKind, bool? suspend, KubernetesGitRepositoryUpdateContent gitRepository, KubernetesBucketUpdateContent bucket, KubernetesAzureBlobUpdateContent azureBlob, IDictionary<string, KustomizationUpdateContent> kustomizations, IDictionary<string, string> configurationProtectedSettings)
+        {
+            SourceKind = sourceKind;
+            Suspend = suspend;
+            GitRepository = gitRepository;
+            Bucket = bucket;
+            AzureBlob = azureBlob;
+            Kustomizations = kustomizations;
+            ConfigurationProtectedSettings = configurationProtectedSettings;
+        }
+
         /// <summary> Source Kind to pull the configuration data from. </summary>
         public KubernetesConfigurationSourceKind? SourceKind { get; set; }
         /// <summary> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </summary>

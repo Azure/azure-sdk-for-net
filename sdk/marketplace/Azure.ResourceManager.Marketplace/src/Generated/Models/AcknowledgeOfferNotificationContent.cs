@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.Marketplace.Models
             RemovePlans = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeOfferNotificationContent"/>. </summary>
+        /// <param name="isAcknowledgeActionFlagEnabled"> Gets or sets a value indicating whether acknowledge action flag is enabled. </param>
+        /// <param name="isDismissActionFlagEnabled"> Gets or sets a value indicating whether dismiss action flag is enabled. </param>
+        /// <param name="isRemoveOfferActionFlagEnabled"> Gets or sets a value indicating whether remove offer action flag is enabled. </param>
+        /// <param name="addPlans"> Gets or sets added plans. </param>
+        /// <param name="removePlans"> Gets or sets remove plans. </param>
+        internal AcknowledgeOfferNotificationContent(bool? isAcknowledgeActionFlagEnabled, bool? isDismissActionFlagEnabled, bool? isRemoveOfferActionFlagEnabled, IList<string> addPlans, IList<string> removePlans)
+        {
+            IsAcknowledgeActionFlagEnabled = isAcknowledgeActionFlagEnabled;
+            IsDismissActionFlagEnabled = isDismissActionFlagEnabled;
+            IsRemoveOfferActionFlagEnabled = isRemoveOfferActionFlagEnabled;
+            AddPlans = addPlans;
+            RemovePlans = removePlans;
+        }
+
         /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>
         public bool? IsAcknowledgeActionFlagEnabled { get; set; }
         /// <summary> Gets or sets a value indicating whether dismiss action flag is enabled. </summary>

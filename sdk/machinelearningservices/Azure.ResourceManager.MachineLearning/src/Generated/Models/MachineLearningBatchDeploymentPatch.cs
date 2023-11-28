@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentPatch"/>. </summary>
+        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal MachineLearningBatchDeploymentPatch(PartialBatchDeployment properties, IDictionary<string, string> tags)
+        {
+            Properties = properties;
+            Tags = tags;
+        }
+
         /// <summary> Additional attributes of the entity. </summary>
         internal PartialBatchDeployment Properties { get; set; }
         /// <summary> Description of the endpoint deployment. </summary>

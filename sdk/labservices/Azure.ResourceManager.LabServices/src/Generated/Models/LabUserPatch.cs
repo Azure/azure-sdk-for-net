@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LabUserPatch"/>. </summary>
+        /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
+        internal LabUserPatch(TimeSpan? additionalUsageQuota)
+        {
+            AdditionalUsageQuota = additionalUsageQuota;
+        }
+
         /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>
         public TimeSpan? AdditionalUsageQuota { get; set; }
     }

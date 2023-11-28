@@ -19,6 +19,13 @@ namespace Azure.Maps.Search.Models
             BatchItems = new ChangeTrackingList<BatchRequestItemInternal>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="BatchRequestInternal"/>. </summary>
+        /// <param name="batchItems"> The list of queries to process. </param>
+        internal BatchRequestInternal(IList<BatchRequestItemInternal> batchItems)
+        {
+            BatchItems = batchItems;
+        }
+
         /// <summary> The list of queries to process. </summary>
         public IList<BatchRequestItemInternal> BatchItems { get; }
     }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExtensionTargetProperties"/>. </summary>
+        /// <param name="targetVersion"> Properties for the specified Extension to Upgrade. </param>
+        internal ExtensionTargetProperties(string targetVersion)
+        {
+            TargetVersion = targetVersion;
+        }
+
         /// <summary> Properties for the specified Extension to Upgrade. </summary>
         public string TargetVersion { get; set; }
     }

@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartialJobBase"/>. </summary>
+        /// <param name="notificationSetting"> Mutable notification setting for the job. </param>
+        internal PartialJobBase(PartialNotificationSetting notificationSetting)
+        {
+            NotificationSetting = notificationSetting;
+        }
+
         /// <summary> Mutable notification setting for the job. </summary>
         internal PartialNotificationSetting NotificationSetting { get; set; }
         /// <summary>

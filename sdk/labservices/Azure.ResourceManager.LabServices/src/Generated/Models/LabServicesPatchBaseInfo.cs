@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.LabServices.Models
             Tags = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LabServicesPatchBaseInfo"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal LabServicesPatchBaseInfo(IList<string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IList<string> Tags { get; }
     }

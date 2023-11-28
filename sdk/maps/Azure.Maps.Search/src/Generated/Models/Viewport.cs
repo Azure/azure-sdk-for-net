@@ -14,5 +14,14 @@ namespace Azure.Maps.Search.Models
         internal Viewport()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="Viewport"/>. </summary>
+        /// <param name="topLeftPointInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
+        /// <param name="btmRightPointInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
+        internal Viewport(LatLongPairAbbreviated topLeftPointInternal, LatLongPairAbbreviated btmRightPointInternal)
+        {
+            TopLeftPointInternal = topLeftPointInternal;
+            BtmRightPointInternal = btmRightPointInternal;
+        }
     }
 }
