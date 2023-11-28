@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The response of the list schema operation. </summary>
     internal partial class GlobalSchemaListResult
     {
-        /// <summary> Initializes a new instance of GlobalSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalSchemaListResult"/>. </summary>
         internal GlobalSchemaListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGlobalSchemaData>();
         }
 
-        /// <summary> Initializes a new instance of GlobalSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalSchemaListResult"/>. </summary>
         /// <param name="value"> Global Schema Contract value. </param>
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>

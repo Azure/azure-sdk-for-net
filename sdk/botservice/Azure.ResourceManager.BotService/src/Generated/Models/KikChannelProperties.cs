@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Kik channel. </summary>
     public partial class KikChannelProperties
     {
-        /// <summary> Initializes a new instance of KikChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KikChannelProperties"/>. </summary>
         /// <param name="userName"> The Kik user name. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of KikChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KikChannelProperties"/>. </summary>
         /// <param name="userName"> The Kik user name. </param>
         /// <param name="apiKey"> Kik API key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>

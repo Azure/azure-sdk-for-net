@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TranscriptionUpdate. </summary>
     public partial class TranscriptionUpdate
     {
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
         internal TranscriptionUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
         internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The private link scope resource reference. </summary>
     public partial class PrivateLinkScopedResourceContent
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopedResourceContent"/>. </summary>
         internal PrivateLinkScopedResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopedResourceContent"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
         internal PrivateLinkScopedResourceContent(string resourceId, string scopeId)

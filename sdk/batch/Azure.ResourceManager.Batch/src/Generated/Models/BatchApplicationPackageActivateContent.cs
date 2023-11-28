@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for an activating an application package. </summary>
     public partial class BatchApplicationPackageActivateContent
     {
-        /// <summary> Initializes a new instance of BatchApplicationPackageActivateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageActivateContent"/>. </summary>
         /// <param name="format"> The format of the application package binary file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public BatchApplicationPackageActivateContent(string format)

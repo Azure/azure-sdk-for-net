@@ -13,13 +13,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for getting participants of the call. </summary>
     internal partial class GetParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         internal GetParticipantsResponseInternal()
         {
             Values = new ChangeTrackingList<CallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         /// <param name="values"> List of the current participants in the call. </param>
         /// <param name="nextLink"> Continue of the list of participants. </param>
         internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink)

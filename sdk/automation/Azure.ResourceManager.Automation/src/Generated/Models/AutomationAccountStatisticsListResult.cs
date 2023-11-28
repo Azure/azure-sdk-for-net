@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list statistics operation. </summary>
     internal partial class AutomationAccountStatisticsListResult
     {
-        /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatisticsListResult"/>. </summary>
         internal AutomationAccountStatisticsListResult()
         {
             Value = new ChangeTrackingList<AutomationAccountStatistics>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatisticsListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of statistics. </param>
         internal AutomationAccountStatisticsListResult(IReadOnlyList<AutomationAccountStatistics> value)
         {

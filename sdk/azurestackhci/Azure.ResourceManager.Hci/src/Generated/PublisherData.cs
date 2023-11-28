@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class PublisherData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         public PublisherData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

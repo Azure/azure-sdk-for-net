@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesAccountDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentData"/>. </summary>
         public CognitiveServicesAccountDeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

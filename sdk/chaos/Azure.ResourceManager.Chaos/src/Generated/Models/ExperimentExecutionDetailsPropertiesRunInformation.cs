@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> The information of the experiment run. </summary>
     internal partial class ExperimentExecutionDetailsPropertiesRunInformation
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailsPropertiesRunInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         internal ExperimentExecutionDetailsPropertiesRunInformation()
         {
             Steps = new ChangeTrackingList<StepStatus>();
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailsPropertiesRunInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         /// <param name="steps"> The steps of the experiment run. </param>
         internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<StepStatus> steps)
         {

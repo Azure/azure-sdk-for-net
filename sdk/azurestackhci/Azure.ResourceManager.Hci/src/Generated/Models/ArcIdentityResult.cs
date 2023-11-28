@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> ArcIdentity details. </summary>
     public partial class ArcIdentityResult
     {
-        /// <summary> Initializes a new instance of ArcIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcIdentityResult"/>. </summary>
         internal ArcIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcIdentityResult"/>. </summary>
         /// <param name="arcApplicationClientId"></param>
         /// <param name="arcApplicationTenantId"></param>
         /// <param name="arcServicePrincipalObjectId"></param>

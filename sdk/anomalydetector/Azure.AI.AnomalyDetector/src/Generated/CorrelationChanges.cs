@@ -13,13 +13,13 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Correlation changes among the anomalous variables. </summary>
     public partial class CorrelationChanges
     {
-        /// <summary> Initializes a new instance of CorrelationChanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
         internal CorrelationChanges()
         {
             ChangedVariables = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CorrelationChanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
         internal CorrelationChanges(IReadOnlyList<string> changedVariables)
         {

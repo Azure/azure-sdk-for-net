@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the source control sync job stream. </summary>
     public partial class SourceControlSyncJobStream
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStream"/>. </summary>
         internal SourceControlSyncJobStream()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStream"/>. </summary>
         /// <param name="id"> Resource id. </param>
         /// <param name="sourceControlSyncJobStreamId"> The sync job stream id. </param>
         /// <param name="summary"> The summary of the sync job stream. </param>

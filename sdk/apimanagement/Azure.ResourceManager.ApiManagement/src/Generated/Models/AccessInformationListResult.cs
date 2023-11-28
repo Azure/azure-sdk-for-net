@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged AccessInformation list representation. </summary>
     internal partial class AccessInformationListResult
     {
-        /// <summary> Initializes a new instance of AccessInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessInformationListResult"/>. </summary>
         internal AccessInformationListResult()
         {
             Value = new ChangeTrackingList<TenantAccessInfoData>();
         }
 
-        /// <summary> Initializes a new instance of AccessInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessInformationListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

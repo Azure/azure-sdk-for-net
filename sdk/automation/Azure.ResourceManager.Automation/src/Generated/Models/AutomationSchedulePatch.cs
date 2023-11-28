@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update schedule operation. </summary>
     public partial class AutomationSchedulePatch
     {
-        /// <summary> Initializes a new instance of AutomationSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSchedulePatch"/>. </summary>
         public AutomationSchedulePatch()
         {
         }

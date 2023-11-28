@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> FarmBeats ARM Resource properties. </summary>
     public partial class FarmBeatsUpdateProperties
     {
-        /// <summary> Initializes a new instance of FarmBeatsUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsUpdateProperties"/>. </summary>
         public FarmBeatsUpdateProperties()
         {
         }

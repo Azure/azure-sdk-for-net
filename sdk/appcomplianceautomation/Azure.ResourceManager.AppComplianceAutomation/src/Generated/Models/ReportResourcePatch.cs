@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent a AppComplianceAutomation report resource update properties. </summary>
     public partial class ReportResourcePatch
     {
-        /// <summary> Initializes a new instance of ReportResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportResourcePatch"/>. </summary>
         public ReportResourcePatch()
         {
         }

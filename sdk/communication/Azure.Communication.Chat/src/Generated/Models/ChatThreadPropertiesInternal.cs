@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     /// <summary> Chat thread. </summary>
     internal partial class ChatThreadPropertiesInternal
     {
-        /// <summary> Initializes a new instance of ChatThreadPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatThreadPropertiesInternal"/>. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
@@ -32,7 +32,7 @@ namespace Azure.Communication.Chat
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
         }
 
-        /// <summary> Initializes a new instance of ChatThreadPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatThreadPropertiesInternal"/>. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>

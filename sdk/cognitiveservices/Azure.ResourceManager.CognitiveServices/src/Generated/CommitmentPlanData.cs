@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CommitmentPlanData : ResourceData
     {
-        /// <summary> Initializes a new instance of CommitmentPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanData"/>. </summary>
         public CommitmentPlanData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

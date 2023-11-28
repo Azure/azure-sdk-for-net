@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallSource. </summary>
     internal partial class CallSourceInternal
     {
-        /// <summary> Initializes a new instance of CallSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallSourceInternal"/>. </summary>
         /// <param name="identifier"> The identifier of the source of the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public CallSourceInternal(CommunicationIdentifierModel identifier)
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
             Identifier = identifier;
         }
 
-        /// <summary> Initializes a new instance of CallSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallSourceInternal"/>. </summary>
         /// <param name="callerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
         /// <param name="displayName"> Display name of the call if dialing out to a pstn number. </param>
         /// <param name="identifier"> The identifier of the source of the call. </param>

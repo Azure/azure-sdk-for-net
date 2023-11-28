@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The parameters that can be provided when updating workbook template. </summary>
     public partial class WorkbookTemplatePatch
     {
-        /// <summary> Initializes a new instance of WorkbookTemplatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatePatch"/>. </summary>
         public WorkbookTemplatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

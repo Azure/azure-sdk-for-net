@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX dhcp entities. </summary>
     internal partial class WorkloadNetworkDhcpList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpList"/>. </summary>
         internal WorkloadNetworkDhcpList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkDhcpData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkDhcpList(IReadOnlyList<WorkloadNetworkDhcpData> value, string nextLink)

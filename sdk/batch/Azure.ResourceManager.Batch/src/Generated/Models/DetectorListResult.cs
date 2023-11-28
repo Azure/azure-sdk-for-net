@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class DetectorListResult
     {
-        /// <summary> Initializes a new instance of DetectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorListResult"/>. </summary>
         internal DetectorListResult()
         {
             Value = new ChangeTrackingList<BatchAccountDetectorData>();
         }
 
-        /// <summary> Initializes a new instance of DetectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorListResult"/>. </summary>
         /// <param name="value"> The collection of Batch account detectors returned by the listing operation. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal DetectorListResult(IReadOnlyList<BatchAccountDetectorData> value, string nextLink)
