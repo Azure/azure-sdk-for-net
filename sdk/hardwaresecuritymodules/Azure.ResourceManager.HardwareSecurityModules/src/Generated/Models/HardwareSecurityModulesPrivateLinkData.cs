@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public partial class HardwareSecurityModulesPrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkData. </summary>
-        public HardwareSecurityModulesPrivateLinkData()
+        internal HardwareSecurityModulesPrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        internal HardwareSecurityModulesPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal HardwareSecurityModulesPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }
