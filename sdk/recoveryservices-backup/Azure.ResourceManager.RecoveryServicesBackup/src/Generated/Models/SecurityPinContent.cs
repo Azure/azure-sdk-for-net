@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityPinContent"/>. </summary>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        internal SecurityPinContent(IList<string> resourceGuardOperationRequests)
+        {
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
+        }
+
         /// <summary> ResourceGuard Operation Requests. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
     }

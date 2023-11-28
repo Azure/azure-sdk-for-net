@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
+        /// <param name="kind"> The kind of alert simulation. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal SecurityAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties)
+        {
+            Kind = kind;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> The kind of alert simulation. </summary>
         internal SecurityCenterKind Kind { get; set; }
         /// <summary>

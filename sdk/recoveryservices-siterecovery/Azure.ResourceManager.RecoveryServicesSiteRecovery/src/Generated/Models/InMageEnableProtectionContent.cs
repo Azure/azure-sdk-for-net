@@ -37,6 +37,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="vmFriendlyName"> The VM Name. </param>
+        /// <param name="masterTargetId"> The Master Target Id. </param>
+        /// <param name="processServerId"> The Process Server Id. </param>
+        /// <param name="retentionDrive"> The retention drive to use on the MT. </param>
+        /// <param name="runAsAccountId"> The CS account Id. </param>
+        /// <param name="multiVmGroupId"> The multi VM group Id. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="datastoreName"> The target datastore name. </param>
+        /// <param name="diskExclusionContent"> The enable disk exclusion input. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        internal InMageEnableProtectionContent(string instanceType, string vmFriendlyName, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, string datastoreName, InMageDiskExclusionContent diskExclusionContent, IList<string> disksToInclude) : base(instanceType)
+        {
+            VmFriendlyName = vmFriendlyName;
+            MasterTargetId = masterTargetId;
+            ProcessServerId = processServerId;
+            RetentionDrive = retentionDrive;
+            RunAsAccountId = runAsAccountId;
+            MultiVmGroupId = multiVmGroupId;
+            MultiVmGroupName = multiVmGroupName;
+            DatastoreName = datastoreName;
+            DiskExclusionContent = diskExclusionContent;
+            DisksToInclude = disksToInclude;
+            InstanceType = instanceType ?? "InMage";
+        }
+
         /// <summary> The VM Name. </summary>
         public string VmFriendlyName { get; set; }
         /// <summary> The Master Target Id. </summary>

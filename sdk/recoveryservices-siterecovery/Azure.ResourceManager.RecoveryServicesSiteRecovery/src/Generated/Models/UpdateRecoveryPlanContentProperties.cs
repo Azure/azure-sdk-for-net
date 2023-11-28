@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateRecoveryPlanContentProperties"/>. </summary>
+        /// <param name="groups"> The recovery plan groups. </param>
+        internal UpdateRecoveryPlanContentProperties(IList<SiteRecoveryPlanGroup> groups)
+        {
+            Groups = groups;
+        }
+
         /// <summary> The recovery plan groups. </summary>
         public IList<SiteRecoveryPlanGroup> Groups { get; }
     }

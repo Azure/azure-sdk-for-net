@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Fabric creation input. </param>
+        internal SiteRecoveryFabricCreateOrUpdateContent(FabricCreationProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Fabric creation input. </summary>
         internal FabricCreationProperties Properties { get; set; }
         /// <summary>

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ThreatIntelligenceTags = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceAppendTags"/>. </summary>
+        /// <param name="threatIntelligenceTags"> List of tags to be appended. </param>
+        internal ThreatIntelligenceAppendTags(IList<string> threatIntelligenceTags)
+        {
+            ThreatIntelligenceTags = threatIntelligenceTags;
+        }
+
         /// <summary> List of tags to be appended. </summary>
         public IList<string> ThreatIntelligenceTags { get; }
     }

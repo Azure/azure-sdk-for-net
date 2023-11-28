@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageDiskSignatureExclusionOptions"/>. </summary>
+        /// <param name="diskSignature"> The guest signature of disk to be excluded from replication. </param>
+        internal InMageDiskSignatureExclusionOptions(string diskSignature)
+        {
+            DiskSignature = diskSignature;
+        }
+
         /// <summary> The guest signature of disk to be excluded from replication. </summary>
         public string DiskSignature { get; set; }
     }

@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingCriteria"/>. </summary>
+        /// <param name="itemKey"> Column name. </param>
+        /// <param name="sortOrder"> Sorting order (ascending/descending/unsorted). </param>
+        internal ThreatIntelligenceSortingCriteria(string itemKey, ThreatIntelligenceSortingOrder? sortOrder)
+        {
+            ItemKey = itemKey;
+            SortOrder = sortOrder;
+        }
+
         /// <summary> Column name. </summary>
         public string ItemKey { get; set; }
         /// <summary> Sorting order (ascending/descending/unsorted). </summary>

@@ -30,6 +30,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
+        internal InMageRcmFabricCreationContent(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base(instanceType)
+        {
+            VMwareSiteId = vmwareSiteId;
+            PhysicalSiteId = physicalSiteId;
+            SourceAgentIdentity = sourceAgentIdentity;
+            InstanceType = instanceType ?? "InMageRcm";
+        }
+
         /// <summary> The ARM Id of the VMware site. </summary>
         public ResourceIdentifier VMwareSiteId { get; }
         /// <summary> The ARM Id of the physical site. </summary>

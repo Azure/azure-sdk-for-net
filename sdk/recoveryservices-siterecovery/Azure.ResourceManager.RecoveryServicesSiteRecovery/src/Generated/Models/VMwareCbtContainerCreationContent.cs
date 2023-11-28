@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             InstanceType = "VMwareCbt";
         }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal VMwareCbtContainerCreationContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
     }
 }

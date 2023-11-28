@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverContent"/>. </summary>
+        /// <param name="properties"> Planned failover input properties. </param>
+        internal PlannedFailoverContent(PlannedFailoverProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Planned failover input properties. </summary>
         public PlannedFailoverProperties Properties { get; set; }
     }

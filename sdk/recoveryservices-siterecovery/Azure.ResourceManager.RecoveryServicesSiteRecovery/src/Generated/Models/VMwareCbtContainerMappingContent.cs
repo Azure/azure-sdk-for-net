@@ -27,6 +27,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="keyVaultId"> The target key vault ARM Id. </param>
+        /// <param name="keyVaultUri"> The target key vault URL. </param>
+        /// <param name="storageAccountId"> The storage account ARM Id. </param>
+        /// <param name="storageAccountSasSecretName"> The secret name of the storage account. </param>
+        /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        internal VMwareCbtContainerMappingContent(string instanceType, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation) : base(instanceType)
+        {
+            KeyVaultId = keyVaultId;
+            KeyVaultUri = keyVaultUri;
+            StorageAccountId = storageAccountId;
+            StorageAccountSasSecretName = storageAccountSasSecretName;
+            ServiceBusConnectionStringSecretName = serviceBusConnectionStringSecretName;
+            TargetLocation = targetLocation;
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
+
         /// <summary> The target key vault ARM Id. </summary>
         public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> The target key vault URL. </summary>

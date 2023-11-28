@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
+        /// <param name="override"> Describe if governance rule should be override. </param>
+        internal ExecuteGovernanceRuleParams(bool? @override)
+        {
+            Override = @override;
+        }
+
         /// <summary> Describe if governance rule should be override. </summary>
         public bool? Override { get; set; }
     }

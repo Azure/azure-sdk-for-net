@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AssociationPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="associationType"> Association Type. </param>
+        /// <param name="subnet"> Association Subnet. </param>
+        internal AssociationPatch(IDictionary<string, string> tags, AssociationType? associationType, WritableSubResource subnet)
+        {
+            Tags = tags;
+            AssociationType = associationType;
+            Subnet = subnet;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Association Type. </summary>

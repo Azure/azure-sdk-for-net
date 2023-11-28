@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesCertificateContent"/>. </summary>
+        /// <param name="properties"> Raw certificate data. </param>
+        internal RecoveryServicesCertificateContent(RawCertificateData properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Raw certificate data. </summary>
         public RawCertificateData Properties { get; set; }
     }
