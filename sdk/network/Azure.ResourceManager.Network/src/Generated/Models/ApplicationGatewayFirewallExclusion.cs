@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
     public partial class ApplicationGatewayFirewallExclusion
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallExclusion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallExclusion"/>. </summary>
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>

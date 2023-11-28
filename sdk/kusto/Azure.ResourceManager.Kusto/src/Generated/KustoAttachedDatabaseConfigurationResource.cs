@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoAttachedDatabaseConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoAttachedDatabaseConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoAttachedDatabaseConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource" /> using the GetKustoAttachedDatabaseConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoAttachedDatabaseConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoAttachedDatabaseConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource"/> using the GetKustoAttachedDatabaseConfiguration method.
     /// </summary>
     public partial class KustoAttachedDatabaseConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoAttachedDatabaseConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoAttachedDatabaseConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoAttachedDatabaseConfigurationResource(ArmClient client, KustoAttachedDatabaseConfigurationData data) : this(client, data.Id)

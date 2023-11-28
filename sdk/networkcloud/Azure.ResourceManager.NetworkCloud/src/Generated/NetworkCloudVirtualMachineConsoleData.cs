@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudVirtualMachineConsoleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudVirtualMachineConsoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster this virtual machine is created on. </param>
         /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SshPublicKey = sshPublicKey;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudVirtualMachineConsoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
         public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
         {
             EndpointResource.ValidateResourceId(id);

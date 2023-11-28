@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Storage workload-specific additional information for job. </summary>
     public partial class StorageBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of StorageBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobExtendedInfo"/>. </summary>
         public StorageBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<StorageBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobExtendedInfo"/>. </summary>
         /// <param name="tasksList"> List of tasks for this job. </param>
         /// <param name="propertyBag"> Job properties. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>

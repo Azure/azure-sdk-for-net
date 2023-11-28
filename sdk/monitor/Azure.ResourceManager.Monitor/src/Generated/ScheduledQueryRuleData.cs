@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class ScheduledQueryRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ScheduledQueryRuleData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             TargetResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

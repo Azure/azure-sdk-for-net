@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the IP flow to be verified. </summary>
     public partial class VerificationIPFlowContent
     {
-        /// <summary> Initializes a new instance of VerificationIPFlowContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowContent"/>. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform next-hop on. </param>
         /// <param name="direction"> The direction of the packet represented as a 5-tuple. </param>
         /// <param name="protocol"> Protocol to be verified on. </param>

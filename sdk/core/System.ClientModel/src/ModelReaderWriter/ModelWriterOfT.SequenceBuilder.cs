@@ -6,10 +6,16 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel.Internal
 {
     internal partial class ModelWriter<T> : IDisposable
     {
+        /// <summary>
+        /// This class is a helper to write to a <see cref="IBufferWriter{T}"/> in a thread safe manner.
+        /// It uses the shared pool to allocate buffers and returns them to the pool when disposed.
+        /// Since there is no way to ensure someone didn't keep a reference to one of the buffers
+        /// it must be disposed of in the same context it was created and its referenced should not be stored or shared.
+        /// </summary>
         private sealed class SequenceBuilder : IBufferWriter<byte>, IDisposable
         {
             private struct Buffer
@@ -147,6 +153,8 @@ namespace System.ClientModel.Primitives
             {
                 for (int i = 0; i < _count; i++)
                 {
+                    cancellation.ThrowIfCancellationRequested();
+
                     Buffer buffer = _buffers[i];
                     stream.Write(buffer.Array, 0, buffer.Written);
                 }
@@ -156,8 +164,10 @@ namespace System.ClientModel.Primitives
             {
                 for (int i = 0; i < _count; i++)
                 {
+                    cancellation.ThrowIfCancellationRequested();
+
                     Buffer buffer = _buffers[i];
-                    await stream.WriteAsync(buffer.Array, 0, buffer.Written).ConfigureAwait(false);
+                    await stream.WriteAsync(buffer.Array, 0, buffer.Written, cancellation).ConfigureAwait(false);
                 }
             }
         }

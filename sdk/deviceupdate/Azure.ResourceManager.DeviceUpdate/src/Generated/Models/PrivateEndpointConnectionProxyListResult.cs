@@ -14,23 +14,23 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> The available private endpoint connection proxies for an Account (not to be used by anyone, here because of ARM requirements). </summary>
     internal partial class PrivateEndpointConnectionProxyListResult
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyListResult"/>. </summary>
         internal PrivateEndpointConnectionProxyListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionProxyData>();
+            Value = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionProxyData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProxyListResult"/>. </summary>
         /// <param name="value"> The list of available private endpoint connection proxies for an Account. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private endpoint connection proxies. </param>
-        internal PrivateEndpointConnectionProxyListResult(IReadOnlyList<PrivateEndpointConnectionProxyData> value, string nextLink)
+        internal PrivateEndpointConnectionProxyListResult(IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of available private endpoint connection proxies for an Account. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionProxyData> Value { get; }
+        public IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData> Value { get; }
         /// <summary> The URI that can be used to request the next list of private endpoint connection proxies. </summary>
         public string NextLink { get; }
     }

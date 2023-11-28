@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The UnknownResourceCertificateDetails. </summary>
     internal partial class UnknownResourceCertificateDetails : ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of UnknownResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>

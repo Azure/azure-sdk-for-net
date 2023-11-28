@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Highlighted text of time series instance to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use any of the highlighted properties to do further API calls. </summary>
     internal partial class InstanceHitHighlights
     {
-        /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHitHighlights"/>. </summary>
         internal InstanceHitHighlights()
         {
             TimeSeriesId = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             InstanceFieldValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHitHighlights"/>. </summary>
         /// <param name="timeSeriesId"> List of highlighted string values of Time Series ID for displaying. Cannot be used to lookup instance. </param>
         /// <param name="typeName"> Highlighted time series type name that this instance belongs to. </param>
         /// <param name="name"> Highlighted name of time series instance. May be null. </param>

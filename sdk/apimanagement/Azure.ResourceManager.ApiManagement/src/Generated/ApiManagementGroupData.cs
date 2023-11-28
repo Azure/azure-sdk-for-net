@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
         public ApiManagementGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

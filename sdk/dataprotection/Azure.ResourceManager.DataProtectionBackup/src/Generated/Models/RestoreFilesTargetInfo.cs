@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class encapsulating restore as files target parameters. </summary>
     public partial class RestoreFilesTargetInfo : RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of RestoreFilesTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetInfo"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDetails"/> is null. </exception>

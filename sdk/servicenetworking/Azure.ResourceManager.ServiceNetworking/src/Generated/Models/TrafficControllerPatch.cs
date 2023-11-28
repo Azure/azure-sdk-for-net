@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The type used for update operations of the TrafficController. </summary>
     public partial class TrafficControllerPatch
     {
-        /// <summary> Initializes a new instance of TrafficControllerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
         public TrafficControllerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

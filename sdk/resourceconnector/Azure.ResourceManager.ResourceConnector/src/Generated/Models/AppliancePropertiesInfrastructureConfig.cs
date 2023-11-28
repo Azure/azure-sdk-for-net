@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Contains infrastructure information about the Appliance. </summary>
     internal partial class AppliancePropertiesInfrastructureConfig
     {
-        /// <summary> Initializes a new instance of AppliancePropertiesInfrastructureConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliancePropertiesInfrastructureConfig"/>. </summary>
         public AppliancePropertiesInfrastructureConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliancePropertiesInfrastructureConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliancePropertiesInfrastructureConfig"/>. </summary>
         /// <param name="provider"> Information about the connected appliance. </param>
         internal AppliancePropertiesInfrastructureConfig(ApplianceProvider? provider)
         {

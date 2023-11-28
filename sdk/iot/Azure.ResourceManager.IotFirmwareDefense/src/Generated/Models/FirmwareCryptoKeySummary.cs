@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Cryptographic key summary values. </summary>
     public partial class FirmwareCryptoKeySummary
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
         internal FirmwareCryptoKeySummary()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
         /// <param name="privateKeys"> Total number of private keys found. </param>

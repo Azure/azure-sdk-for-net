@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Authorize request. </summary>
     public partial class NetAppVolumeAuthorizeReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeAuthorizeReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
         public NetAppVolumeAuthorizeReplicationContent()
         {
         }

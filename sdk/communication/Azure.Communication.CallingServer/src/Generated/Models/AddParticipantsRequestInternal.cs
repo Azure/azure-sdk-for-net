@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AddParticipantsRequest. </summary>
     internal partial class AddParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsRequestInternal"/>. </summary>
         /// <param name="participantsToAdd"> The participants to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
         public AddParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToAdd)

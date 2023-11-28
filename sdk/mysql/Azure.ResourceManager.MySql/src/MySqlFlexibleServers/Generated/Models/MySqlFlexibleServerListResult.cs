@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A list of servers. </summary>
     internal partial class MySqlFlexibleServerListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerListResult"/>. </summary>
         internal MySqlFlexibleServerListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerListResult"/>. </summary>
         /// <param name="value"> The list of servers. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal MySqlFlexibleServerListResult(IReadOnlyList<MySqlFlexibleServerData> value, string nextLink)

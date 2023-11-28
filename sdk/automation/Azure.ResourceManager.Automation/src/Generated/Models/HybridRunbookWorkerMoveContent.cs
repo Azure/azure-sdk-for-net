@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Parameters supplied to move hybrid worker operation. </summary>
     public partial class HybridRunbookWorkerMoveContent
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerMoveContent"/>. </summary>
         public HybridRunbookWorkerMoveContent()
         {
         }

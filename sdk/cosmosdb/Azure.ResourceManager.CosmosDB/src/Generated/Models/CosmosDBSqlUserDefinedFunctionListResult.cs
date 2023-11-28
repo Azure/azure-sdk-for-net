@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the userDefinedFunctions and their properties. </summary>
     internal partial class CosmosDBSqlUserDefinedFunctionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionListResult"/>. </summary>
         internal CosmosDBSqlUserDefinedFunctionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionListResult"/>. </summary>
         /// <param name="value"> List of userDefinedFunctions and their properties. </param>
         internal CosmosDBSqlUserDefinedFunctionListResult(IReadOnlyList<CosmosDBSqlUserDefinedFunctionData> value)
         {

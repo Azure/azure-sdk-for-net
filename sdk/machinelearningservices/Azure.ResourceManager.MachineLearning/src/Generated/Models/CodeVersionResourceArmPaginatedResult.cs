@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of CodeVersion entities. </summary>
     internal partial class CodeVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeVersionResourceArmPaginatedResult"/>. </summary>
         internal CodeVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningCodeVersionData>();
         }
 
-        /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of CodeVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type CodeVersion. </param>
         internal CodeVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningCodeVersionData> value)

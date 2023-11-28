@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class BastionHostData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of BastionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         public BastionHostData()
         {
             IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of BastionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

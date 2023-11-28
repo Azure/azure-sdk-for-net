@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningIdentityConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningIdentityConfiguration"/>. </summary>
         protected MachineLearningIdentityConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningIdentityConfiguration"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal MachineLearningIdentityConfiguration(IdentityConfigurationType identityType)
         {

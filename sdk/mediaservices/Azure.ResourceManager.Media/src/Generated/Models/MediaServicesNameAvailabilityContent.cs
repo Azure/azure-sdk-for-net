@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The input to the check name availability request. </summary>
     public partial class MediaServicesNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MediaServicesNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesNameAvailabilityContent"/>. </summary>
         public MediaServicesNameAvailabilityContent()
         {
         }

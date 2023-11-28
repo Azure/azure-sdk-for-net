@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformConfigServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerData"/>. </summary>
         public AppPlatformConfigServerData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> The JsonWebKey. </summary>
     public partial class JsonWebKey
     {
-        /// <summary> Initializes a new instance of JsonWebKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should

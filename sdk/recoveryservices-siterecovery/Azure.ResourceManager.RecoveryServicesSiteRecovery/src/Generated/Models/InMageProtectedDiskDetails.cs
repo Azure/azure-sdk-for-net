@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage protected disk details. </summary>
     public partial class InMageProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageProtectedDiskDetails"/>. </summary>
         internal InMageProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="protectionStage"> The protection stage. </param>

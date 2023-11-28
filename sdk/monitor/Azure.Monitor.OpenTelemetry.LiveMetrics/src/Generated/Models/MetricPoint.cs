@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Metric data point. </summary>
     internal partial class MetricPoint
     {
-        /// <summary> Initializes a new instance of MetricPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricPoint"/>. </summary>
         public MetricPoint()
         {
         }

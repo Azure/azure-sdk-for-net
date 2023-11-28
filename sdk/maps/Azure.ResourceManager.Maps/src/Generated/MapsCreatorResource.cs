@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Maps
 {
     /// <summary>
     /// A Class representing a MapsCreator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MapsCreatorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMapsCreatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MapsAccountResource" /> using the GetMapsCreator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MapsCreatorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMapsCreatorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MapsAccountResource"/> using the GetMapsCreator method.
     /// </summary>
     public partial class MapsCreatorResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maps
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MapsCreatorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsCreatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MapsCreatorResource(ArmClient client, MapsCreatorData data) : this(client, data.Id)

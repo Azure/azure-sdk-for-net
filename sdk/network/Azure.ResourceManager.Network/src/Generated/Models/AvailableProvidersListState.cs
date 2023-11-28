@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> State details. </summary>
     public partial class AvailableProvidersListState
     {
-        /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListState"/>. </summary>
         internal AvailableProvidersListState()
         {
             Providers = new ChangeTrackingList<string>();
             Cities = new ChangeTrackingList<AvailableProvidersListCity>();
         }
 
-        /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListState"/>. </summary>
         /// <param name="stateName"> The state name. </param>
         /// <param name="providers"> A list of Internet service providers. </param>
         /// <param name="cities"> List of available cities or towns in the state. </param>

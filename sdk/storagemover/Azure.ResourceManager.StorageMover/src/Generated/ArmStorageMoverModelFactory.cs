@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageMoverModelFactory
     {
-        /// <summary> Initializes a new instance of StorageMoverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverData(id, name, resourceType, systemData, tags, location, description, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverAgentData(id, name, resourceType, systemData, description, agentVersion, arcResourceId, arcVmUuid, agentStatus, lastStatusUpdate, localIPAddress, memoryInMB, numberOfCores, uptimeInSeconds, errorDetails, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of StorageMoverAgentPropertiesErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageMoverAgentPropertiesErrorDetails"/>. </summary>
         /// <param name="code"> Error code reported by Agent. </param>
         /// <param name="message"> Expanded description of reported error code. </param>
         /// <returns> A new <see cref="Models.StorageMoverAgentPropertiesErrorDetails"/> instance for mocking. </returns>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverAgentPropertiesErrorDetails(code, message);
         }
 
-        /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverEndpointData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of EndpointBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EndpointBaseProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new UnknownEndpointBaseProperties(endpointType, description, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverProjectData(id, name, resourceType, systemData, description, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of JobDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.JobDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobDefinitionData(id, name, resourceType, systemData, description, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of JobRunResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobRunResourceId"/>. </summary>
         /// <param name="jobRunResourceIdValue"> Fully qualified resource id of the Job Run. </param>
         /// <returns> A new <see cref="Models.JobRunResourceId"/> instance for mocking. </returns>
         public static JobRunResourceId JobRunResourceId(ResourceIdentifier jobRunResourceIdValue = null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobRunResourceId(jobRunResourceIdValue);
         }
 
-        /// <summary> Initializes a new instance of JobRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMover.JobRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobRunData(id, name, resourceType, systemData, status, scanStatus, agentName, agentResourceId, executionStartOn, executionEndOn, lastStatusUpdate, itemsScanned, itemsExcluded, itemsUnsupported, itemsNoTransferNeeded, itemsFailed, itemsTransferred, bytesScanned, bytesExcluded, bytesUnsupported, bytesNoTransferNeeded, bytesFailed, bytesTransferred, sourceName, sourceResourceId, sourceProperties, targetName, targetResourceId, targetProperties, jobDefinitionProperties, error, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of JobRunError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobRunError"/>. </summary>
         /// <param name="code"> Error code of the given entry. </param>
         /// <param name="message"> Error message of the given entry. </param>
         /// <param name="target"> Target of the given error entry. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobRunError(code, message, target);
         }
 
-        /// <summary> Initializes a new instance of AzureStorageBlobContainerEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new AzureStorageBlobContainerEndpointProperties(EndpointType.AzureStorageBlobContainer, description, provisioningState, storageAccountResourceId, blobContainerName);
         }
 
-        /// <summary> Initializes a new instance of NfsMountEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new NfsMountEndpointProperties(EndpointType.NfsMount, description, provisioningState, host, nfsVersion, export);
         }
 
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new AzureStorageSmbFileShareEndpointProperties(EndpointType.AzureStorageSmbFileShare, description, provisioningState, storageAccountResourceId, fileShareName);
         }
 
-        /// <summary> Initializes a new instance of SmbMountEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>

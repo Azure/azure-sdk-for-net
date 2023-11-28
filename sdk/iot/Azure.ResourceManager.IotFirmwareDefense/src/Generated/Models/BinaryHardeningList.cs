@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List result for binary hardening. </summary>
     internal partial class BinaryHardeningList
     {
-        /// <summary> Initializes a new instance of BinaryHardeningList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningList"/>. </summary>
         internal BinaryHardeningList()
         {
             Value = new ChangeTrackingList<BinaryHardening>();
         }
 
-        /// <summary> Initializes a new instance of BinaryHardeningList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningList"/>. </summary>
         /// <param name="value"> The list of binary hardening results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal BinaryHardeningList(IReadOnlyList<BinaryHardening> value, string nextLink)

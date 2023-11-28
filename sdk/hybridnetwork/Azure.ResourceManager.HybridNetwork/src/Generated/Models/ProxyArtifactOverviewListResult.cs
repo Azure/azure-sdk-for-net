@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The proxy artifact list result. </summary>
     internal partial class ProxyArtifactOverviewListResult
     {
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewListResult"/>. </summary>
         internal ProxyArtifactOverviewListResult()
         {
             Value = new ChangeTrackingList<ProxyArtifactListOverview>();
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewListResult"/>. </summary>
         /// <param name="value"> A list of available proxy artifacts. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ProxyArtifactOverviewListResult(IReadOnlyList<ProxyArtifactListOverview> value, string nextLink)

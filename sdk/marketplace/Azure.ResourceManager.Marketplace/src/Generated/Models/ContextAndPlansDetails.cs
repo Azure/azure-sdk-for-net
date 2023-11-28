@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Object of plans per context. </summary>
     public partial class ContextAndPlansDetails
     {
-        /// <summary> Initializes a new instance of ContextAndPlansDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContextAndPlansDetails"/>. </summary>
         public ContextAndPlansDetails()
         {
             PlanIds = new ChangeTrackingList<string>();

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public partial class HyperVVmDetails : SiteRecoveryReplicationProviderSettings
     {
-        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
         internal HyperVVmDetails()
         {
             DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVVirtualMachine";
         }
 
-        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>

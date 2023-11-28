@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceHealthEventImpactedResource" /> and their operations.
-    /// Each <see cref="ResourceHealthEventImpactedResource" /> in the collection will belong to the same instance of <see cref="ResourceHealthEventResource" />.
-    /// To get a <see cref="ResourceHealthEventImpactedResourceCollection" /> instance call the GetResourceHealthEventImpactedResources method from an instance of <see cref="ResourceHealthEventResource" />.
+    /// A class representing a collection of <see cref="ResourceHealthEventImpactedResource"/> and their operations.
+    /// Each <see cref="ResourceHealthEventImpactedResource"/> in the collection will belong to the same instance of <see cref="ResourceHealthEventResource"/>.
+    /// To get a <see cref="ResourceHealthEventImpactedResourceCollection"/> instance call the GetResourceHealthEventImpactedResources method from an instance of <see cref="ResourceHealthEventResource"/>.
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceCollection : ArmCollection, IEnumerable<ResourceHealthEventImpactedResource>, IAsyncEnumerable<ResourceHealthEventImpactedResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthEventImpactedResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthEventImpactedResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);

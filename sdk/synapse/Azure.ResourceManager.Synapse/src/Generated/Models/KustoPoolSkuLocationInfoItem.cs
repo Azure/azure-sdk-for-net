@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The locations and zones info for SKU. </summary>
     public partial class KustoPoolSkuLocationInfoItem
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         internal KustoPoolSkuLocationInfoItem(AzureLocation location)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
         internal KustoPoolSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones)

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class SiteNetworkServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SiteNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SiteNetworkServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

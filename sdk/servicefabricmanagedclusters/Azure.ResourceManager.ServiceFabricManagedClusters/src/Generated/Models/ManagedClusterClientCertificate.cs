@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Client certificate definition. </summary>
     public partial class ManagedClusterClientCertificate
     {
-        /// <summary> Initializes a new instance of ManagedClusterClientCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         public ManagedClusterClientCertificate(bool isAdmin)
         {
             IsAdmin = isAdmin;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterClientCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="commonName"> Certificate common name. </param>

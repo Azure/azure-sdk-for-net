@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HyperVReplicaAzureFailback specific planned failover input. </summary>
     public partial class HyperVReplicaAzureFailbackProviderContent : PlannedFailoverProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureFailbackProviderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureFailbackProviderContent"/>. </summary>
         public HyperVReplicaAzureFailbackProviderContent()
         {
             InstanceType = "HyperVReplicaAzureFailback";

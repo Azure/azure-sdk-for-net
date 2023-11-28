@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
     public partial class TrafficManagerMonitorConfig
     {
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfig"/>. </summary>
         public TrafficManagerMonitorConfig()
         {
             CustomHeaders = new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>();
             ExpectedStatusCodeRanges = new ChangeTrackingList<ExpectedStatusCodeRangeInfo>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfig"/>. </summary>
         /// <param name="profileMonitorStatus"> The profile-level monitoring status of the Traffic Manager profile. </param>
         /// <param name="protocol"> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </param>
         /// <param name="port"> The TCP port used to probe for endpoint health. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Fulfills ARM Contract requirement to list all available SKUS for a resource. </summary>
     public partial class MachineLearningSkuDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         internal MachineLearningSkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>

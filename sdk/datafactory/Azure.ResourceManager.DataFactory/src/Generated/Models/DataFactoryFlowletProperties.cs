@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow flowlet. </summary>
     public partial class DataFactoryFlowletProperties : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryFlowletProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
         public DataFactoryFlowletProperties()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = "Flowlet";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryFlowletProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan HVR Azure failback input. </summary>
     public partial class RecoveryPlanHyperVReplicaAzureFailbackContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanHyperVReplicaAzureFailbackContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailbackContent"/>. </summary>
         /// <param name="dataSyncOption"> The data sync option. </param>
         /// <param name="recoveryVmCreationOption"> The ALR option. </param>
         public RecoveryPlanHyperVReplicaAzureFailbackContent(SiteRecoveryDataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption)

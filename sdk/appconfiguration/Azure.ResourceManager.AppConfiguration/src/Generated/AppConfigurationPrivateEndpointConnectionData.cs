@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class AppConfigurationPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionData"/>. </summary>
         public AppConfigurationPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

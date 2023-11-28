@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
     /// A Class representing a NewRelicObservabilityTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NewRelicObservabilityTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNewRelicObservabilityTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource" /> using the GetNewRelicObservabilityTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicObservabilityTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNewRelicObservabilityTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource"/> using the GetNewRelicObservabilityTagRule method.
     /// </summary>
     public partial class NewRelicObservabilityTagRuleResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NewRelicObservabilityTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NewRelicObservabilityTagRuleResource(ArmClient client, NewRelicObservabilityTagRuleData data) : this(client, data.Id)

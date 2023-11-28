@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CdnOriginGroupResource" /> and their operations.
-    /// Each <see cref="CdnOriginGroupResource" /> in the collection will belong to the same instance of <see cref="CdnEndpointResource" />.
-    /// To get a <see cref="CdnOriginGroupCollection" /> instance call the GetCdnOriginGroups method from an instance of <see cref="CdnEndpointResource" />.
+    /// A class representing a collection of <see cref="CdnOriginGroupResource"/> and their operations.
+    /// Each <see cref="CdnOriginGroupResource"/> in the collection will belong to the same instance of <see cref="CdnEndpointResource"/>.
+    /// To get a <see cref="CdnOriginGroupCollection"/> instance call the GetCdnOriginGroups method from an instance of <see cref="CdnEndpointResource"/>.
     /// </summary>
     public partial class CdnOriginGroupCollection : ArmCollection, IEnumerable<CdnOriginGroupResource>, IAsyncEnumerable<CdnOriginGroupResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnOriginGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CdnOriginGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnOriginGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnOriginGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CdnOriginGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnOriginGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Quickbase. </summary>
     public partial class QuickbaseLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken"> The user token for the Quickbase source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Quickbase";
         }
 
-        /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

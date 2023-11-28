@@ -12,7 +12,7 @@ namespace Azure.Security.Attestation
     /// <summary> Defines the "run time data" provided by the attestation target for use by the MAA. </summary>
     internal partial class RuntimeData
     {
-        /// <summary> Initializes a new instance of RuntimeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeData"/>. </summary>
         public RuntimeData()
         {
         }

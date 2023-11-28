@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> The settings for the long term backup. </summary>
     public partial class PostgreSqlFlexibleServerBackupSettings
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupSettings"/>. </summary>
         /// <param name="backupName"> Backup Name for the current backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public PostgreSqlFlexibleServerBackupSettings(string backupName)

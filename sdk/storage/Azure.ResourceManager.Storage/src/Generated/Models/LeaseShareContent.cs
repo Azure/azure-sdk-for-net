@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Lease Share request schema. </summary>
     public partial class LeaseShareContent
     {
-        /// <summary> Initializes a new instance of LeaseShareContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LeaseShareContent"/>. </summary>
         /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
         public LeaseShareContent(LeaseShareAction action)
         {

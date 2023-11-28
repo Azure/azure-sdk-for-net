@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a daily schedule. </summary>
     internal partial class DayDetails
     {
-        /// <summary> Initializes a new instance of DayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DayDetails"/>. </summary>
         public DayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DayDetails"/>. </summary>
         /// <param name="time"> The time of day the schedule will occur. </param>
         internal DayDetails(string time)
         {

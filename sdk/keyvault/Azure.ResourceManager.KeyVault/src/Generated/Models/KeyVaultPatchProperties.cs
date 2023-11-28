@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault. </summary>
     public partial class KeyVaultPatchProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPatchProperties"/>. </summary>
         public KeyVaultPatchProperties()
         {
             AccessPolicies = new ChangeTrackingList<KeyVaultAccessPolicy>();

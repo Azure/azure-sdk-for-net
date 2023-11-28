@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The request that generated the event. </summary>
     public partial class ContainerRegistryEventRequest
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
         internal ContainerRegistryEventRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>

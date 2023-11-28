@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters for VirtualNetworkGatewayPolicyGroup. </summary>
     public partial class VirtualNetworkGatewayPolicyGroup : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         public VirtualNetworkGatewayPolicyGroup()
         {
             PolicyMembers = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
             VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

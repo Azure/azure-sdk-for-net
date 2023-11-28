@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A Blob folder data set mapping. </summary>
     public partial class BlobFolderDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of BlobFolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFolderDataSetMapping"/>. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="prefix"> Prefix for blob folder. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.BlobFolder;
         }
 
-        /// <summary> Initializes a new instance of BlobFolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

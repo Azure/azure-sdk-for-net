@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm specific enable protection input. </summary>
     public partial class InMageRcmEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmEnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/>. </summary>
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
         /// <param name="processServerId"> The process server Id. </param>

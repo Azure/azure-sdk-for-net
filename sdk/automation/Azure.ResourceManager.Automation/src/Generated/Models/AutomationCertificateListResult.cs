@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list certificate operation. </summary>
     internal partial class AutomationCertificateListResult
     {
-        /// <summary> Initializes a new instance of AutomationCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateListResult"/>. </summary>
         internal AutomationCertificateListResult()
         {
             Value = new ChangeTrackingList<AutomationCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of certificates. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationCertificateListResult(IReadOnlyList<AutomationCertificateData> value, string nextLink)

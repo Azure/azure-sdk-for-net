@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of restorable table names. </summary>
     internal partial class RestorableTableResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourcesListResult"/>. </summary>
         internal RestorableTableResourcesListResult()
         {
             Value = new ChangeTrackingList<RestorableTableResourceData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourcesListResult"/>. </summary>
         /// <param name="value"> List of restorable table names. </param>
         internal RestorableTableResourcesListResult(IReadOnlyList<RestorableTableResourceData> value)
         {

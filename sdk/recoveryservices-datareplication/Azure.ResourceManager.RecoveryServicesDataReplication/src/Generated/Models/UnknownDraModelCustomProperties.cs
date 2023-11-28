@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownDraModelCustomProperties. </summary>
     internal partial class UnknownDraModelCustomProperties : DraModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownDraModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDraModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal UnknownDraModelCustomProperties(string instanceType) : base(instanceType)
         {

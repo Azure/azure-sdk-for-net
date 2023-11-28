@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account partner's business identity. </summary>
     public partial class IntegrationAccountBusinessIdentity
     {
-        /// <summary> Initializes a new instance of IntegrationAccountBusinessIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBusinessIdentity"/>. </summary>
         /// <param name="qualifier"> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </param>
         /// <param name="value"> The user defined business identity value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="qualifier"/> or <paramref name="value"/> is null. </exception>

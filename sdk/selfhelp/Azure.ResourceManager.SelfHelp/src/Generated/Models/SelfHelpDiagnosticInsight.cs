@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
     public partial class SelfHelpDiagnosticInsight
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
         public SelfHelpDiagnosticInsight()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>

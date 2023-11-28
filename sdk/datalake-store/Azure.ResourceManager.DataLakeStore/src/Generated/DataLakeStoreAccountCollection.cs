@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeStoreAccountResource" /> and their operations.
-    /// Each <see cref="DataLakeStoreAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataLakeStoreAccountCollection" /> instance call the GetDataLakeStoreAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataLakeStoreAccountResource"/> and their operations.
+    /// Each <see cref="DataLakeStoreAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataLakeStoreAccountCollection"/> instance call the GetDataLakeStoreAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataLakeStoreAccountCollection : ArmCollection, IEnumerable<DataLakeStoreAccountBasicData>, IAsyncEnumerable<DataLakeStoreAccountBasicData>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAllAsync(DataLakeStoreAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeStoreAccountCollectionGetAllOptions();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreAccountBasicData> GetAll(DataLakeStoreAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeStoreAccountCollectionGetAllOptions();

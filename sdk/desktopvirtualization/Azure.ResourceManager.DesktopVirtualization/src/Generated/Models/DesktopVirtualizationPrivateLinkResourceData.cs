@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> A private link resource. </summary>
     public partial class DesktopVirtualizationPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
         public DesktopVirtualizationPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

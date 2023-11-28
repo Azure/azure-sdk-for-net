@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Attribute reference details for the referred column. </summary>
     public partial class MapperAttributeReference
     {
-        /// <summary> Initializes a new instance of MapperAttributeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeReference"/>. </summary>
         public MapperAttributeReference()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperAttributeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeReference"/>. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="entity"> Name of the table. </param>
         /// <param name="entityConnectionReference"> The connection reference for the connection. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Validation for inquired protectable items under a given container. </summary>
     public partial class InquiryValidation
     {
-        /// <summary> Initializes a new instance of InquiryValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="InquiryValidation"/>. </summary>
         public InquiryValidation()
         {
         }
 
-        /// <summary> Initializes a new instance of InquiryValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="InquiryValidation"/>. </summary>
         /// <param name="status"> Status for the Inquiry Validation. </param>
         /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
         /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>

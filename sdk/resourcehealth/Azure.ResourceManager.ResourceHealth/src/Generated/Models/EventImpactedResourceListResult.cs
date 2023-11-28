@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The List of eventImpactedResources operation response. </summary>
     internal partial class EventImpactedResourceListResult
     {
-        /// <summary> Initializes a new instance of EventImpactedResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventImpactedResourceListResult"/>. </summary>
         /// <param name="value"> The list of eventImpactedResources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal EventImpactedResourceListResult(IEnumerable<ResourceHealthEventImpactedResourceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of EventImpactedResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventImpactedResourceListResult"/>. </summary>
         /// <param name="value"> The list of eventImpactedResources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of events. Call ListNext() with this URI to fetch the next page of impacted resource. </param>
         internal EventImpactedResourceListResult(IReadOnlyList<ResourceHealthEventImpactedResourceData> value, string nextLink)

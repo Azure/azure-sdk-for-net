@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Private endpoint which the connection belongs to. </summary>
     internal partial class PrivateEndpointProperty
     {
-        /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointProperty"/>. </summary>
         public PrivateEndpointProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointProperty"/>. </summary>
         /// <param name="id"> Resource id of the private endpoint. </param>
         internal PrivateEndpointProperty(ResourceIdentifier id)
         {

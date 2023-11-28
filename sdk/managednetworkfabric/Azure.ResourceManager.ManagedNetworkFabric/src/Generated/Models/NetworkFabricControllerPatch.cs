@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Network Fabric Controller Patch payload definition. </summary>
     public partial class NetworkFabricControllerPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricControllerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatch"/>. </summary>
         public NetworkFabricControllerPatch()
         {
             InfrastructureExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();

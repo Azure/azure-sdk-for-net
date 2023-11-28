@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel.Primitives
+using System.ClientModel.Primitives;
+
+namespace System.ClientModel.Internal
 {
     internal class ModelWriter : ModelWriter<object>
     {

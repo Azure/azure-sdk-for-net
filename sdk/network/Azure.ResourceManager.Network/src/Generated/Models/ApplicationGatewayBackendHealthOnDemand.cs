@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of on demand test probe. </summary>
     public partial class ApplicationGatewayBackendHealthOnDemand
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         internal ApplicationGatewayBackendHealthOnDemand()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
         internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings)

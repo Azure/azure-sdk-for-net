@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> A set of rules governing the network accessibility. </summary>
     internal partial class NetworkRuleSet
     {
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         public NetworkRuleSet()
         {
             VirtualNetworkRules = new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         internal NetworkRuleSet(IList<ElasticSanVirtualNetworkRule> virtualNetworkRules)
         {

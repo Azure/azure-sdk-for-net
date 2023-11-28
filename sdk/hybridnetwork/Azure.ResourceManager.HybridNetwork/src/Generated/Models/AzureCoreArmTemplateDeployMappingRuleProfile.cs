@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure template deploy mapping rule profile. </summary>
     public partial class AzureCoreArmTemplateDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateDeployMappingRuleProfile"/>. </summary>
         public AzureCoreArmTemplateDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <param name="templateMappingRuleProfile"> The template mapping rule profile. </param>
         internal AzureCoreArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement)

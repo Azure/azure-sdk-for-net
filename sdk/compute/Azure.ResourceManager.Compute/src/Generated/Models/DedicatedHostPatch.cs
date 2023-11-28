@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
     public partial class DedicatedHostPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of DedicatedHostPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostPatch"/>. </summary>
         public DedicatedHostPatch()
         {
             VirtualMachines = new ChangeTrackingList<SubResource>();

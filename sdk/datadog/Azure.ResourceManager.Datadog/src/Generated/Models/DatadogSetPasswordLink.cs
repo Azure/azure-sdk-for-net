@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogSetPasswordLink. </summary>
     public partial class DatadogSetPasswordLink
     {
-        /// <summary> Initializes a new instance of DatadogSetPasswordLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSetPasswordLink"/>. </summary>
         internal DatadogSetPasswordLink()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogSetPasswordLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSetPasswordLink"/>. </summary>
         /// <param name="setPasswordLink"></param>
         internal DatadogSetPasswordLink(string setPasswordLink)
         {

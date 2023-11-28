@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> configuration for the servers offering subPlan. </summary>
     internal partial class DefenderForServersGcpOfferingSubPlan
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingSubPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingSubPlan"/>. </summary>
         public DefenderForServersGcpOfferingSubPlan()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingSubPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingSubPlan"/>. </summary>
         /// <param name="availableSubPlanType"> The available sub plans. </param>
         internal DefenderForServersGcpOfferingSubPlan(AvailableSubPlanType? availableSubPlanType)
         {

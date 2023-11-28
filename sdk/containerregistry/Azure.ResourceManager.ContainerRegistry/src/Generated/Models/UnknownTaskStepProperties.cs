@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The UnknownTaskStepProperties. </summary>
     internal partial class UnknownTaskStepProperties : ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of UnknownTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTaskStepProperties"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>

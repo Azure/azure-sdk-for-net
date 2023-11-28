@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Data regarding 3rd party partner integration. </summary>
     public partial class SecurityAssessmentPartner
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentPartner. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPartner"/>. </summary>
         /// <param name="partnerName"> Name of the company of the partner. </param>
         /// <param name="secret"> secret to authenticate the partner - write only. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="secret"/> is null. </exception>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an update to a Kusto cluster. </summary>
     public partial class KustoClusterPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of KustoClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public KustoClusterPatch(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KustoClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

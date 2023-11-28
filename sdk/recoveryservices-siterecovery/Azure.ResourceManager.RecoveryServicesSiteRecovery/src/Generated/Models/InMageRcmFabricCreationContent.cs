@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm fabric provider specific settings. </summary>
     public partial class InMageRcmFabricCreationContent : FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of InMageRcmFabricCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>

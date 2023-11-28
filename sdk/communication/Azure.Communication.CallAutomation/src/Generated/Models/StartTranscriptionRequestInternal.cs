@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartTranscriptionRequest. </summary>
     internal partial class StartTranscriptionRequestInternal
     {
-        /// <summary> Initializes a new instance of StartTranscriptionRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
         public StartTranscriptionRequestInternal()
         {
         }

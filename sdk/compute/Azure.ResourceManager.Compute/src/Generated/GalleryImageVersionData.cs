@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryImageVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryImageVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

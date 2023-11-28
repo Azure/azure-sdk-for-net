@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetworkAnalytics
     /// </summary>
     public partial class DataProductsCatalogData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogData"/>. </summary>
         public DataProductsCatalogData()
         {
             Publishers = new ChangeTrackingList<PublisherInformation>();
         }
 
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

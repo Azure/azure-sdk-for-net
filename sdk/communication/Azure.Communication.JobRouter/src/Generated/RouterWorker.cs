@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         internal RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
         }
 
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a worker. </param>
         /// <param name="state"> Current state of a worker. </param>

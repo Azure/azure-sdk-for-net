@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The language extension object. </summary>
     public partial class KustoLanguageExtension
     {
-        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         public KustoLanguageExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
         /// <param name="languageExtensionImageName"> The language extension image name. </param>
         /// <param name="languageExtensionCustomImageName"> The language extension custom image name. </param>

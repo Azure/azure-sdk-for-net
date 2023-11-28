@@ -10,12 +10,12 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Provides the state of the media composition. </summary>
     public partial class CompositionStreamState
     {
-        /// <summary> Initializes a new instance of CompositionStreamState. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompositionStreamState"/>. </summary>
         public CompositionStreamState()
         {
         }
 
-        /// <summary> Initializes a new instance of CompositionStreamState. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompositionStreamState"/>. </summary>
         /// <param name="status"> State of the composition stream. </param>
         internal CompositionStreamState(StreamStatus? status)
         {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(PrivateLinkServiceArmRegion))
             {
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
-                writer.WriteStringValue(PrivateLinkServiceArmRegion);
+                writer.WriteStringValue(PrivateLinkServiceArmRegion.Value);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Optional<IList<string>> customerVisibleFqdns = default;
             Optional<string> internalFqdn = default;
             Optional<string> redirectMapId = default;
-            Optional<string> privateLinkServiceArmRegion = default;
+            Optional<AzureLocation> privateLinkServiceArmRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -89,11 +89,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (property.NameEquals("privateLinkServiceArmRegion"u8))
                 {
-                    privateLinkServiceArmRegion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkServiceArmRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, privateLinkServiceArmRegion.Value);
+            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, Optional.ToNullable(privateLinkServiceArmRegion));
         }
     }
 }

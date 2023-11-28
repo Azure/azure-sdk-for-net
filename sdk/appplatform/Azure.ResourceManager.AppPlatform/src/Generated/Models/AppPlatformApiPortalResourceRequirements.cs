@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Resource requests of the API portal. </summary>
     public partial class AppPlatformApiPortalResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalResourceRequirements"/>. </summary>
         internal AppPlatformApiPortalResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each API portal instance. </param>
         /// <param name="memory"> Memory allocated to each API portal instance. </param>
         internal AppPlatformApiPortalResourceRequirements(string cpu, string memory)

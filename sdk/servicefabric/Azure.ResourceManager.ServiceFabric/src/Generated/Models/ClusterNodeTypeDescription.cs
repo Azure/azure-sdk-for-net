@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
     public partial class ClusterNodeTypeDescription
     {
-        /// <summary> Initializes a new instance of ClusterNodeTypeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
         /// <param name="clientConnectionEndpointPort"> The TCP cluster management endpoint port. </param>
         /// <param name="httpGatewayEndpointPort"> The HTTP cluster management endpoint port. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             VmInstanceCount = vmInstanceCount;
         }
 
-        /// <summary> Initializes a new instance of ClusterNodeTypeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
         /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
         /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>

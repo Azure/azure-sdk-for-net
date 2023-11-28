@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetadataTableColumnsItem. </summary>
     internal partial class MetadataTableColumnsItem
     {
-        /// <summary> Initializes a new instance of MetadataTableColumnsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataTableColumnsItem"/>. </summary>
         /// <param name="name"> The name of the column. </param>
         /// <param name="type"> The data type of the column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

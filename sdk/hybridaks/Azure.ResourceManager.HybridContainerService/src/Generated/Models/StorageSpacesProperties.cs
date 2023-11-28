@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSStorageSpec defines the desired state of HybridAKSStorage. </summary>
     public partial class StorageSpacesProperties
     {
-        /// <summary> Initializes a new instance of StorageSpacesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesProperties"/>. </summary>
         public StorageSpacesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesProperties"/>. </summary>
         /// <param name="hciStorageProfile"></param>
         /// <param name="vmwareStorageProfile"></param>
         /// <param name="provisioningState"></param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list watcher operation. </summary>
     internal partial class AutomationWatcherListResult
     {
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         internal AutomationWatcherListResult()
         {
             Value = new ChangeTrackingList<AutomationWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of watchers. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific input for unplanned failover. </summary>
     public partial class A2AUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AUnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUnplannedFailoverContent"/>. </summary>
         public A2AUnplannedFailoverContent()
         {
             InstanceType = "A2A";

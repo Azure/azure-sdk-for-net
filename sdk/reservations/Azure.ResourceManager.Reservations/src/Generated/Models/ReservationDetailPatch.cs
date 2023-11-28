@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation patch. </summary>
     public partial class ReservationDetailPatch
     {
-        /// <summary> Initializes a new instance of ReservationDetailPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationDetailPatch"/>. </summary>
         public ReservationDetailPatch()
         {
             AppliedScopes = new ChangeTrackingList<string>();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class OutboundEnvironmentEndpointListResult
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointListResult(IEnumerable<OutboundEnvironmentEndpoint> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal OutboundEnvironmentEndpointListResult(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)

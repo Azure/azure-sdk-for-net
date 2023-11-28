@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of RoutePolicies. </summary>
     internal partial class RoutePoliciesListResult
     {
-        /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
         internal RoutePoliciesListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricRoutePolicyData>();
         }
 
-        /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
         /// <param name="value"> List of RoutePolicy resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, string nextLink)

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Network.Models
     /// </summary>
     public abstract partial class EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of EffectiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveBaseSecurityAdminRule"/>. </summary>
         protected EffectiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
             RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>

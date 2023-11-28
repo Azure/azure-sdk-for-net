@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a user's secret store. </summary>
     public partial class DevTestLabUserSecretStore
     {
-        /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserSecretStore"/>. </summary>
         public DevTestLabUserSecretStore()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserSecretStore"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the user's Key vault. </param>
         /// <param name="keyVaultId"> The ID of the user's Key vault. </param>
         internal DevTestLabUserSecretStore(Uri keyVaultUri, ResourceIdentifier keyVaultId)

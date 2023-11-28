@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide parameters when requesting an import of all devices in the hub. </summary>
     public partial class IotHubImportDevicesContent
     {
-        /// <summary> Initializes a new instance of IotHubImportDevicesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/>. </summary>
         /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
         /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobContainerUri"/> or <paramref name="outputBlobContainerUri"/> is null. </exception>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Endpoints accessed for a common purpose that the Api Management Service requires outbound network access to. </summary>
     public partial class OutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         internal OutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the Api Management Service reaches the service at. </param>
         internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints)

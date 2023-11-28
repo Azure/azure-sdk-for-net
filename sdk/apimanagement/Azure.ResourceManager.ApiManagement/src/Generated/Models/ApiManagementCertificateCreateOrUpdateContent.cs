@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Certificate create or update details. </summary>
     public partial class ApiManagementCertificateCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
         public ApiManagementCertificateCreateOrUpdateContent()
         {
         }

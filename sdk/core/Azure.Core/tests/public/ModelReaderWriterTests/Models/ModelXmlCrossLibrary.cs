@@ -118,7 +118,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 BinaryData data = stream.Position > int.MaxValue
                     ? BinaryData.FromStream(stream)
                     : new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                childModelXml = System.ClientModel.ModelReaderWriter.Read<ChildModelXml>(data, options);
+                childModelXml = ModelReaderWriter.Read<ChildModelXml>(data, options);
             }
             return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
@@ -178,7 +178,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("childTag"u8))
                 {
-                    childModelXml = System.ClientModel.ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
+                    childModelXml = ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
                     continue;
                 }
             }

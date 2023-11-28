@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common response for the state updates. </summary>
     public partial class StateUpdateCommonPostActionResult : NetworkFabricErrorResult
     {
-        /// <summary> Initializes a new instance of StateUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StateUpdateCommonPostActionResult"/>. </summary>
         internal StateUpdateCommonPostActionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StateUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StateUpdateCommonPostActionResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         internal StateUpdateCommonPostActionResult(ResponseError error, NetworkFabricConfigurationState? configurationState) : base(error)

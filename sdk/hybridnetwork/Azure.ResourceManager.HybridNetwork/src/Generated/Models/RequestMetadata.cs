@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Request metadata of execute request post call payload. </summary>
     public partial class RequestMetadata
     {
-        /// <summary> Initializes a new instance of RequestMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestMetadata"/>. </summary>
         /// <param name="relativePath"> The relative path of the request. </param>
         /// <param name="httpMethod"> The http method of the request. </param>
         /// <param name="serializedBody"> The serialized body of the request. </param>

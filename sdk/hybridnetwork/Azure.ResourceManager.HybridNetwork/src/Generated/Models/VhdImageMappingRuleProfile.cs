@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Vhd mapping rule profile. </summary>
     internal partial class VhdImageMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of VhdImageMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageMappingRuleProfile"/>. </summary>
         public VhdImageMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VhdImageMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageMappingRuleProfile"/>. </summary>
         /// <param name="userConfiguration"> List of values. </param>
         internal VhdImageMappingRuleProfile(string userConfiguration)
         {

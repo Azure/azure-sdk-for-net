@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Firmware analysis workspace. </summary>
     public partial class FirmwareWorkspacePatch
     {
-        /// <summary> Initializes a new instance of FirmwareWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspacePatch"/>. </summary>
         public FirmwareWorkspacePatch()
         {
         }

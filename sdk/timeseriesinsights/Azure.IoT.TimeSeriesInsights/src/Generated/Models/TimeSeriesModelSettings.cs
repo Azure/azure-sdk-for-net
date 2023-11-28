@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series model settings including model name, Time Series ID properties and default type ID. </summary>
     public partial class TimeSeriesModelSettings
     {
-        /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesModelSettings"/>. </summary>
         internal TimeSeriesModelSettings()
         {
             TimeSeriesIdProperties = new ChangeTrackingList<TimeSeriesIdProperty>();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesModelSettings"/>. </summary>
         /// <param name="name"> Time series model display name which is shown in the UX. Examples: "Temperature Sensors", "MyDevices". </param>
         /// <param name="timeSeriesIdProperties"> Time series ID properties defined during environment creation. </param>
         /// <param name="defaultTypeId"> Default type ID of the model that new time series instances will automatically belong to. </param>

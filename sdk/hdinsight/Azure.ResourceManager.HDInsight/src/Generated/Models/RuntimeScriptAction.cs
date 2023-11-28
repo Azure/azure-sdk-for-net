@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes a script action on a running cluster. </summary>
     public partial class RuntimeScriptAction
     {
-        /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptAction"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="roles"> The list of roles where script will be executed. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Roles = roles.ToList();
         }
 
-        /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptAction"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script. </param>

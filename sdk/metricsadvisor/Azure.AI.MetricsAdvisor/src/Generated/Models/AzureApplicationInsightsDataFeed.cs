@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureApplicationInsightsDataFeed. </summary>
     internal partial class AzureApplicationInsightsDataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of AzureApplicationInsightsDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsDataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureApplicationInsights;
         }
 
-        /// <summary> Initializes a new instance of AzureApplicationInsightsDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsDataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

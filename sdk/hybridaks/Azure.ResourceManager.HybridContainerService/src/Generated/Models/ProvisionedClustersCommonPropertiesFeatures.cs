@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Additional features specs like Arc Agent Onboarding. </summary>
     internal partial class ProvisionedClustersCommonPropertiesFeatures
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesFeatures"/>. </summary>
         public ProvisionedClustersCommonPropertiesFeatures()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesFeatures"/>. </summary>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
         internal ProvisionedClustersCommonPropertiesFeatures(ArcAgentProfile arcAgentProfile)
         {

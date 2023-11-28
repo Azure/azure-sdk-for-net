@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerAdvisorResource" /> and their operations.
-    /// Each <see cref="SqlServerAdvisorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerAdvisorCollection" /> instance call the GetSqlServerAdvisors method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerAdvisorResource"/> and their operations.
+    /// Each <see cref="SqlServerAdvisorResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerAdvisorCollection"/> instance call the GetSqlServerAdvisors method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerAdvisorCollection : ArmCollection, IEnumerable<SqlServerAdvisorResource>, IAsyncEnumerable<SqlServerAdvisorResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerAdvisorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerAdvisorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);

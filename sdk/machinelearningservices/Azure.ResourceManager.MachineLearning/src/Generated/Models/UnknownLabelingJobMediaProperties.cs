@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownLabelingJobMediaProperties. </summary>
     internal partial class UnknownLabelingJobMediaProperties : LabelingJobMediaProperties
     {
-        /// <summary> Initializes a new instance of UnknownLabelingJobMediaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLabelingJobMediaProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
         internal UnknownLabelingJobMediaProperties(MediaType mediaType) : base(mediaType)
         {

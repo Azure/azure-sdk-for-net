@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure arc kubernetes deploy mapping rule profile. </summary>
     public partial class AzureArcKubernetesDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureArcKubernetesDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesDeployMappingRuleProfile"/>. </summary>
         public AzureArcKubernetesDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureArcKubernetesDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <param name="helmMappingRuleProfile"> The helm mapping rule profile. </param>
         internal AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, HelmMappingRuleProfile helmMappingRuleProfile) : base(applicationEnablement)

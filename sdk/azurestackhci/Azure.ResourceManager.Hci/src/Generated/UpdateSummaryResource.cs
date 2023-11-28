@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an UpdateSummary along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UpdateSummaryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetUpdateSummaryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetUpdateSummary method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="UpdateSummaryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetUpdateSummaryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetUpdateSummary method.
     /// </summary>
     public partial class UpdateSummaryResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "UpdateSummaryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UpdateSummaryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal UpdateSummaryResource(ArmClient client, UpdateSummaryData data) : this(client, data.Id)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in custom format. </summary>
     public partial class CustomClrFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomClrFormatSerialization"/>. </summary>
         public CustomClrFormatSerialization()
         {
             EventSerializationType = EventSerializationType.CustomClr;
         }
 
-        /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomClrFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serializationDllPath"> The serialization library path. </param>
         /// <param name="serializationClassName"> The serialization class name. </param>

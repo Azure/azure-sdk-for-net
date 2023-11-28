@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Generate SSO Url operations response details. </summary>
     public partial class GenerateSsoUriResult
     {
-        /// <summary> Initializes a new instance of GenerateSsoUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateSsoUriResult"/>. </summary>
         internal GenerateSsoUriResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateSsoUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateSsoUriResult"/>. </summary>
         /// <param name="value"> Redirect Url containing the SSO URL value. </param>
         internal GenerateSsoUriResult(string value)
         {

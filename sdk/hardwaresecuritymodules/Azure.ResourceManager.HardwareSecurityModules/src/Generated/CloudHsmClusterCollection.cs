@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudHsmClusterResource" /> and their operations.
-    /// Each <see cref="CloudHsmClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CloudHsmClusterCollection" /> instance call the GetCloudHsmClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CloudHsmClusterResource"/> and their operations.
+    /// Each <see cref="CloudHsmClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CloudHsmClusterCollection"/> instance call the GetCloudHsmClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CloudHsmClusterCollection : ArmCollection, IEnumerable<CloudHsmClusterResource>, IAsyncEnumerable<CloudHsmClusterResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudHsmClusterResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudHsmClusterResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific migrate input. </summary>
     public partial class VMwareCbtMigrateContent : MigrateProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtMigrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrateContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public VMwareCbtMigrateContent(string performShutdown)

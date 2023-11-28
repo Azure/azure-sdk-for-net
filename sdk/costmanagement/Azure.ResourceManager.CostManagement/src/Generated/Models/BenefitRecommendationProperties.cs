@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// </summary>
     public abstract partial class BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
         protected BenefitRecommendationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>

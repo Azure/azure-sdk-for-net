@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A Class representing a ProvisionedClusterUpgradeProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProvisionedClusterUpgradeProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProvisionedClusterUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClusterResource" /> using the GetProvisionedClusterUpgradeProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedClusterUpgradeProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProvisionedClusterUpgradeProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProvisionedClusterResource"/> using the GetProvisionedClusterUpgradeProfile method.
     /// </summary>
     public partial class ProvisionedClusterUpgradeProfileResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProvisionedClusterUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProvisionedClusterUpgradeProfileResource(ArmClient client, ProvisionedClusterUpgradeProfileData data) : this(client, data.Id)

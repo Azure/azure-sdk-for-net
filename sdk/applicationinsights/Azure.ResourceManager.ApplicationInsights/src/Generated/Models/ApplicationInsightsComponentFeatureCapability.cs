@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component feature capability. </summary>
     public partial class ApplicationInsightsComponentFeatureCapability
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapability"/>. </summary>
         internal ApplicationInsightsComponentFeatureCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapability"/>. </summary>
         /// <param name="name"> The name of the capability. </param>
         /// <param name="description"> The description of the capability. </param>
         /// <param name="value"> The value of the capability. </param>

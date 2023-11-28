@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item model properties. </summary>
     public partial class DataReplicationProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemProperties"/>. </summary>
         /// <param name="policyName"> Gets or sets the policy name. </param>
         /// <param name="replicationExtensionName"> Gets or sets the replication extension name. </param>
         /// <param name="customProperties">
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemProperties"/>. </summary>
         /// <param name="policyName"> Gets or sets the policy name. </param>
         /// <param name="replicationExtensionName"> Gets or sets the replication extension name. </param>
         /// <param name="correlationId"> Gets or sets the protected item correlation Id. </param>

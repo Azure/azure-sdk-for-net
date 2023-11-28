@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Authorized groundstation. </summary>
     public partial class AuthorizedGroundStation
     {
-        /// <summary> Initializes a new instance of AuthorizedGroundStation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedGroundStation"/>. </summary>
         internal AuthorizedGroundStation()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizedGroundStation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedGroundStation"/>. </summary>
         /// <param name="groundStationName"> Groundstation name. </param>
         /// <param name="expireOn"> Date of authorization expiration. </param>
         internal AuthorizedGroundStation(string groundStationName, DateTimeOffset? expireOn)

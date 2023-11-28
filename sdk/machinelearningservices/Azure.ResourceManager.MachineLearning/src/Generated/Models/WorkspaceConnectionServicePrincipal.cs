@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionServicePrincipal. </summary>
     public partial class WorkspaceConnectionServicePrincipal
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionServicePrincipal"/>. </summary>
         public WorkspaceConnectionServicePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionServicePrincipal"/>. </summary>
         /// <param name="clientId"></param>
         /// <param name="clientSecret"></param>
         /// <param name="tenantId"></param>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel.Internal
 {
     /// <summary>
     /// Provides an efficient way to write <see cref="IJsonModel{T}"/> into a <see cref="BinaryData"/> using multiple pooled buffers.
@@ -168,7 +169,7 @@ namespace System.ClientModel.Primitives
 
             lock (_readLock)
             {
-                Interlocked.Increment(ref _readCount);
+                _readCount++;
                 ReadersFinished.Reset();
             }
 
@@ -184,7 +185,8 @@ namespace System.ClientModel.Primitives
         {
             lock (_readLock)
             {
-                if (Interlocked.Decrement(ref _readCount) == 0)
+                _readCount--;
+                if (_readCount == 0)
                 {
                     // notify we reached zero readers in case dispose is waiting
                     ReadersFinished.Set();

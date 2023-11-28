@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabServiceFabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabServiceFabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabServiceFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource" /> using the GetDevTestLabServiceFabric method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabServiceFabricResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabServiceFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabServiceFabric method.
     /// </summary>
     public partial class DevTestLabServiceFabricResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabServiceFabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabServiceFabricResource(ArmClient client, DevTestLabServiceFabricData data) : this(client, data.Id)

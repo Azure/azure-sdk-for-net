@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
     public partial class LocationData
     {
-        /// <summary> Initializes a new instance of LocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationData"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LocationData(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationData"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <param name="city"> The city or locality where the resource is located. </param>
         /// <param name="district"> The district, state, or province where the resource is located. </param>

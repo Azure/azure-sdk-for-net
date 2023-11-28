@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store firewall rule list information. </summary>
     internal partial class DataLakeStoreFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleListResult"/>. </summary>
         internal DataLakeStoreFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The results of the list operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeStoreFirewallRuleListResult(IReadOnlyList<DataLakeStoreFirewallRuleData> value, string nextLink)

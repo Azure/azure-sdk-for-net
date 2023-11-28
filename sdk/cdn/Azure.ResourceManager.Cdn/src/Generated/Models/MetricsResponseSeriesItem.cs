@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The MetricsResponseSeriesItem. </summary>
     public partial class MetricsResponseSeriesItem
     {
-        /// <summary> Initializes a new instance of MetricsResponseSeriesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesItem"/>. </summary>
         internal MetricsResponseSeriesItem()
         {
             Groups = new ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>();
             Data = new ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
         }
 
-        /// <summary> Initializes a new instance of MetricsResponseSeriesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="unit"></param>
         /// <param name="groups"></param>

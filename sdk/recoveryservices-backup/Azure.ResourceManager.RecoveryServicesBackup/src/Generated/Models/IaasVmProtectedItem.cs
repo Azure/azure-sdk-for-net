@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class IaasVmProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of IaasVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItem"/>. </summary>
         public IaasVmProtectedItem()
         {
             HealthDetails = new ChangeTrackingList<IaasVmHealthDetails>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemType = "AzureIaaSVMProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

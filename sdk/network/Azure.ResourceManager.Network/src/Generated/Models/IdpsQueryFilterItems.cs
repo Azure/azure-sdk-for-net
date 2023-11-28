@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will contain the filter name and values to operate on. </summary>
     public partial class IdpsQueryFilterItems
     {
-        /// <summary> Initializes a new instance of IdpsQueryFilterItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryFilterItems"/>. </summary>
         public IdpsQueryFilterItems()
         {
             Values = new ChangeTrackingList<string>();

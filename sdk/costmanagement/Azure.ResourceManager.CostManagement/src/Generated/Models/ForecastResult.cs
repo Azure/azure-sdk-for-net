@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of forecast. It contains all columns listed under groupings and aggregation. </summary>
     public partial class ForecastResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ForecastResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastResult"/>. </summary>
         internal ForecastResult()
         {
             Columns = new ChangeTrackingList<ForecastColumn>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ForecastResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
     public partial class VirtualMachineStorageProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineStorageProfile"/>. </summary>
         public VirtualMachineStorageProfile()
         {
             DataDisks = new ChangeTrackingList<VirtualMachineDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineStorageProfile"/>. </summary>
         /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The API deployment parameters metadata. </summary>
     public partial class LogicApiDeploymentParameterMetadataSet
     {
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiDeploymentParameterMetadataSet"/>. </summary>
         internal LogicApiDeploymentParameterMetadataSet()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiDeploymentParameterMetadataSet"/>. </summary>
         /// <param name="packageContentLink"> The package content link parameter. </param>
         /// <param name="redisCacheConnectionString"> The package content link parameter. </param>
         internal LogicApiDeploymentParameterMetadataSet(LogicApiDeploymentParameterMetadata packageContentLink, LogicApiDeploymentParameterMetadata redisCacheConnectionString)

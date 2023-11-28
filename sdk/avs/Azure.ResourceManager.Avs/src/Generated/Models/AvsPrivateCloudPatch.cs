@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update to a private cloud resource. </summary>
     public partial class AvsPrivateCloudPatch
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
         public AvsPrivateCloudPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

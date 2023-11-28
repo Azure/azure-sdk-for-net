@@ -13,7 +13,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This object is returned from a successful Route Directions Batch service call. </summary>
     public partial class RouteDirectionsBatchResult : BatchResult
     {
-        /// <summary> Initializes a new instance of RouteDirectionsBatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchResult"/>. </summary>
         internal RouteDirectionsBatchResult()
         {
             BatchItems = new ChangeTrackingList<RouteDirectionsBatchItem>();

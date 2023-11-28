@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Gets or sets the virtual machine resource settings. </summary>
     public partial class VirtualMachineResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceSettings"/>. </summary>
         public VirtualMachineResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Compute/virtualMachines";
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

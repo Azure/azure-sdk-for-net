@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The Authentication properties for the client. </summary>
     public partial class EventGridNamespaceClientAuthentication
     {
-        /// <summary> Initializes a new instance of EventGridNamespaceClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientAuthentication"/>. </summary>
         public EventGridNamespaceClientAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridNamespaceClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientAuthentication"/>. </summary>
         /// <param name="certificateThumbprint"> The self signed certificate's thumbprints data used for authentication. </param>
         /// <param name="certificateSubject"> The CA certificate subject name used for authentication. </param>
         internal EventGridNamespaceClientAuthentication(ClientCertificateThumbprint certificateThumbprint, ClientCertificateSubjectDistinguishedName certificateSubject)

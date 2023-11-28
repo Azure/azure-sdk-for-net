@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Resource model definition. </summary>
     public partial class PirResourceData
     {
-        /// <summary> Initializes a new instance of PirResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
         internal PirResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         internal PirResourceData(string name, AzureLocation? location)

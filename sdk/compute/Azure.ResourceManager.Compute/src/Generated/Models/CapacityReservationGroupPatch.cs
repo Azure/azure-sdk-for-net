@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
     public partial class CapacityReservationGroupPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of CapacityReservationGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
         public CapacityReservationGroupPatch()
         {
             CapacityReservations = new ChangeTrackingList<SubResource>();

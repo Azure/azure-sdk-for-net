@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningResourcePatchWithIdentity : MachineLearningResourcePatch
     {
-        /// <summary> Initializes a new instance of MachineLearningResourcePatchWithIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourcePatchWithIdentity"/>. </summary>
         public MachineLearningResourcePatchWithIdentity()
         {
         }

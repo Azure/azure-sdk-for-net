@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The connection strings for the given mongo cluster. </summary>
     public partial class ListConnectionStringsResult
     {
-        /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
         internal ListConnectionStringsResult()
         {
             ConnectionStrings = new ChangeTrackingList<CosmosDBConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
         internal ListConnectionStringsResult(IReadOnlyList<CosmosDBConnectionString> connectionStrings)
         {

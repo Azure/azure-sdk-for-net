@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Cloud endpoint AFS file share metadata signing certificate public keys. </summary>
     public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys
     {
-        /// <summary> Initializes a new instance of CloudEndpointAfsShareMetadataCertificatePublicKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/>. </summary>
         internal CloudEndpointAfsShareMetadataCertificatePublicKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointAfsShareMetadataCertificatePublicKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/>. </summary>
         /// <param name="firstKey"> The first public key. </param>
         /// <param name="secondKey"> The second public key. </param>
         internal CloudEndpointAfsShareMetadataCertificatePublicKeys(string firstKey, string secondKey)

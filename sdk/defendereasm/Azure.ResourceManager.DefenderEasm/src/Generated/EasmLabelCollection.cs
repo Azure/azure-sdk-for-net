@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EasmLabelResource" /> and their operations.
-    /// Each <see cref="EasmLabelResource" /> in the collection will belong to the same instance of <see cref="EasmWorkspaceResource" />.
-    /// To get an <see cref="EasmLabelCollection" /> instance call the GetEasmLabels method from an instance of <see cref="EasmWorkspaceResource" />.
+    /// A class representing a collection of <see cref="EasmLabelResource"/> and their operations.
+    /// Each <see cref="EasmLabelResource"/> in the collection will belong to the same instance of <see cref="EasmWorkspaceResource"/>.
+    /// To get an <see cref="EasmLabelCollection"/> instance call the GetEasmLabels method from an instance of <see cref="EasmWorkspaceResource"/>.
     /// </summary>
     public partial class EasmLabelCollection : ArmCollection, IEnumerable<EasmLabelResource>, IAsyncEnumerable<EasmLabelResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EasmLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EasmLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EasmLabelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmLabelLabelsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EasmLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EasmLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EasmLabelResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmLabelLabelsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Customer Key vault properties. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
         /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultArmId = keyVaultArmId;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="identityClientId">
         /// Currently, we support only SystemAssigned MSI.
         /// We need this when we support UserAssignedIdentities

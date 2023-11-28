@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class RelationshipLinkResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelationshipLinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkResourceFormatData"/>. </summary>
         public RelationshipLinkResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RelatedProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

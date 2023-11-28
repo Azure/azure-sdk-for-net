@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class DeviceSecurityGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupData"/>. </summary>
         public DeviceSecurityGroupData()
         {
             ThresholdRules = new ChangeTrackingList<ThresholdCustomAlertRule>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
             DenylistRules = new ChangeTrackingList<DenylistCustomAlertRule>();
         }
 
-        /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

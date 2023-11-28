@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that migrates SSIS packages from SQL Server to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSsisTaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="ssisMigrationInfo"> SSIS package migration information. </param>

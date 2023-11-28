@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update policy input. </summary>
     public partial class SiteRecoveryPolicyPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyPatch"/>. </summary>
         public SiteRecoveryPolicyPatch()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Error model that can be exposed to the user. </summary>
     public partial class ReplicationEligibilityResultErrorInfo
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultErrorInfo"/>. </summary>
         internal ReplicationEligibilityResultErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>

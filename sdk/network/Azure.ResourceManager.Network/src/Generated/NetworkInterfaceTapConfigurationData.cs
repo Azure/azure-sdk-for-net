@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkInterfaceTapConfigurationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceTapConfigurationData"/>. </summary>
         public NetworkInterfaceTapConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceTapConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

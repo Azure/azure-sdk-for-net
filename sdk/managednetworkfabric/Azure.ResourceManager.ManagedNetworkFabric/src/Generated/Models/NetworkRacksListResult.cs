@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Network Racks. </summary>
     internal partial class NetworkRacksListResult
     {
-        /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRacksListResult"/>. </summary>
         internal NetworkRacksListResult()
         {
             Value = new ChangeTrackingList<NetworkRackData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRacksListResult"/>. </summary>
         /// <param name="value"> List of Network Rack resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkRacksListResult(IReadOnlyList<NetworkRackData> value, string nextLink)

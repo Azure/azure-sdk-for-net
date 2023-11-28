@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Single resource Id's metadata. </summary>
     public partial class ResourceMetadata
     {
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ResourceMetadata(string resourceId)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceKind"> Resource kind. </param>

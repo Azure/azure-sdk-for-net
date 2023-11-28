@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> General Protected item model custom properties. </summary>
     public partial class GeneralProtectedItemModelCustomProperties : ProtectedItemModelCustomProperties
     {
-        /// <summary> Initializes a new instance of GeneralProtectedItemModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralProtectedItemModelCustomProperties"/>. </summary>
         public GeneralProtectedItemModelCustomProperties()
         {
             InstanceType = "ProtectedItemModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of GeneralProtectedItemModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralProtectedItemModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal GeneralProtectedItemModelCustomProperties(string instanceType) : base(instanceType)
         {

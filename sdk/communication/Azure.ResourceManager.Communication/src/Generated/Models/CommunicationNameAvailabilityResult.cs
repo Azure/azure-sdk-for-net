@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> The check availability result. </summary>
     public partial class CommunicationNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationNameAvailabilityResult"/>. </summary>
         internal CommunicationNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>

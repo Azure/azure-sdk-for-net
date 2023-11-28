@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectedItem. </summary>
     internal partial class UnknownProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of UnknownProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

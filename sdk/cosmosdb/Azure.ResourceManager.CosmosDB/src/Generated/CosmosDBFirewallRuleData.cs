@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFirewallRuleData"/>. </summary>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

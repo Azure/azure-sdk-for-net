@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDatabaseRestoreDetailResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseRestoreDetailResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedDatabaseRestoreDetailCollection" /> instance call the GetManagedDatabaseRestoreDetails method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedDatabaseRestoreDetailResource"/> and their operations.
+    /// Each <see cref="ManagedDatabaseRestoreDetailResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedDatabaseRestoreDetailCollection"/> instance call the GetManagedDatabaseRestoreDetails method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedDatabaseRestoreDetailCollection : ArmCollection
     {

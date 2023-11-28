@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Gets the count of nodes by count type. </summary>
     internal partial class DscNodeCountListResult
     {
-        /// <summary> Initializes a new instance of DscNodeCountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountListResult"/>. </summary>
         internal DscNodeCountListResult()
         {
             Value = new ChangeTrackingList<DscNodeCount>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeCountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountListResult"/>. </summary>
         /// <param name="value"> Gets an array of counts. </param>
         /// <param name="totalCount"> Gets the total number of records matching countType criteria. </param>
         internal DscNodeCountListResult(IReadOnlyList<DscNodeCount> value, int? totalCount)

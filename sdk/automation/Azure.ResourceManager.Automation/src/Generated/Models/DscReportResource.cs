@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the DSC Report Resource. </summary>
     public partial class DscReportResource
     {
-        /// <summary> Initializes a new instance of DscReportResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportResource"/>. </summary>
         internal DscReportResource()
         {
             DependsOn = new ChangeTrackingList<DscReportResourceNavigation>();
         }
 
-        /// <summary> Initializes a new instance of DscReportResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportResource"/>. </summary>
         /// <param name="resourceId"> Gets or sets the ID of the resource. </param>
         /// <param name="sourceInfo"> Gets or sets the source info of the resource. </param>
         /// <param name="dependsOn"> Gets or sets the Resource Navigation values for resources the resource depends on. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DigitalTwins
     /// </summary>
     public partial class DigitalTwinsPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceData"/>. </summary>
         /// <param name="properties"> The group information properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DigitalTwinsPrivateLinkResourceData(DigitalTwinsPrivateLinkResourceProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DigitalTwins
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Capabilities response for Microsoft.RecoveryServices. </summary>
     public partial class CapabilitiesResult : ResourceCapabilitiesBase
     {
-        /// <summary> Initializes a new instance of CapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         public CapabilitiesResult(ResourceType resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         /// <param name="properties"> Capabilities properties in response. </param>
         internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType)

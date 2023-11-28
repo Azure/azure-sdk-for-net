@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Dra model collection. </summary>
     internal partial class DataReplicationDraListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationDraListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraListResult"/>. </summary>
         internal DataReplicationDraListResult()
         {
             Value = new ChangeTrackingList<DataReplicationDraData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationDraListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Dras. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationDraListResult(IReadOnlyList<DataReplicationDraData> value, string nextLink)

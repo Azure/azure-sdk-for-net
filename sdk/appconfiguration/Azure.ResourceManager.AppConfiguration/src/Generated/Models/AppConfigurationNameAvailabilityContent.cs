@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> Parameters used for checking whether a resource name is available. </summary>
     public partial class AppConfigurationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AppConfigurationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <param name="resourceType"> The resource type to check for name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

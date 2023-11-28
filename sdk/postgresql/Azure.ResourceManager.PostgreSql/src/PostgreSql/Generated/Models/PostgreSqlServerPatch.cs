@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class PostgreSqlServerPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
         public PostgreSqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

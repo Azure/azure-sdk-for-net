@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KubernetesSourceControlConfigurationResource" /> and their operations.
-    /// Each <see cref="KubernetesSourceControlConfigurationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="KubernetesSourceControlConfigurationCollection" /> instance call the GetKubernetesSourceControlConfigurations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="KubernetesSourceControlConfigurationResource"/> and their operations.
+    /// Each <see cref="KubernetesSourceControlConfigurationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="KubernetesSourceControlConfigurationCollection"/> instance call the GetKubernetesSourceControlConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class KubernetesSourceControlConfigurationCollection : ArmCollection, IEnumerable<KubernetesSourceControlConfigurationResource>, IAsyncEnumerable<KubernetesSourceControlConfigurationResource>
     {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubernetesSourceControlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KubernetesSourceControlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubernetesSourceControlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesSourceControlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KubernetesSourceControlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubernetesSourceControlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);

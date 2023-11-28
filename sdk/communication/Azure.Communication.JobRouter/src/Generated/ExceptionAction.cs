@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class ExceptionAction
     {
-        /// <summary> Initializes a new instance of ExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionAction"/>. </summary>
         protected ExceptionAction()
         {
         }
 
-        /// <summary> Initializes a new instance of ExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         internal ExceptionAction(string id, ExceptionActionKind kind)

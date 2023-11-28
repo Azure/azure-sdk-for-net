@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Updates. </summary>
     internal partial class HciUpdateList
     {
-        /// <summary> Initializes a new instance of HciUpdateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateList"/>. </summary>
         internal HciUpdateList()
         {
             Value = new ChangeTrackingList<UpdateData>();
         }
 
-        /// <summary> Initializes a new instance of HciUpdateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateList"/>. </summary>
         /// <param name="value"> List of Updates. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal HciUpdateList(IReadOnlyList<UpdateData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration associated with an application insights resource. </summary>
     public partial class WorkItemConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         internal WorkItemConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         /// <param name="connectorId"> Connector identifier where work item is created. </param>
         /// <param name="configDisplayName"> Configuration friendly name. </param>
         /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>

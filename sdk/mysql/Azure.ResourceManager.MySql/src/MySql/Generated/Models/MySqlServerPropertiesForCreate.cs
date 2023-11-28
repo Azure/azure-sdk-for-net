@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// </summary>
     public abstract partial class MySqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of MySqlServerPropertiesForCreate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForCreate"/>. </summary>
         protected MySqlServerPropertiesForCreate()
         {
         }

@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace System.ClientModel.Primitives
 {
     /// <summary>
-    /// Attribute class that indicates a proxy <see cref="Type"/> to use for reading.
+    /// Attribute that indicates a proxy <see cref="Type"/> to use for reading a model.
     /// The proxy <see cref="Type"/> must implement <see cref="IPersistableModel{T}"/> and have a public or non-public parameterless constructor.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
