@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. Contents are defined by setting name, component name, and the pass in which the content is applied. </summary>
     public partial class AdditionalUnattendContent
     {
-        /// <summary> Initializes a new instance of AdditionalUnattendContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalUnattendContent"/>. </summary>
         public AdditionalUnattendContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalUnattendContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalUnattendContent"/>. </summary>
         /// <param name="passName"> The pass name. Currently, the only allowable value is OobeSystem. </param>
         /// <param name="componentName"> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </param>
         /// <param name="settingName"> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </param>

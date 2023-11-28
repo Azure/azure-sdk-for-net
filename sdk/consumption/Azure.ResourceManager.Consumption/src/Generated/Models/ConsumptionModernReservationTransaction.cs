@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern Reservation transaction resource. </summary>
     public partial class ConsumptionModernReservationTransaction : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         internal ConsumptionModernReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

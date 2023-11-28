@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
     internal partial class ManagedClusterManagedOutboundIPProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterManagedOutboundIPProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
         public ManagedClusterManagedOutboundIPProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterManagedOutboundIPProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
         /// <param name="count"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
         internal ManagedClusterManagedOutboundIPProfile(int? count)
         {

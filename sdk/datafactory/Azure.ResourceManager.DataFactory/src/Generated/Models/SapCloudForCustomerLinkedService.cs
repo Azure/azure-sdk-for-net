@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for SAP Cloud for Customer. </summary>
     public partial class SapCloudForCustomerLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedService"/>. </summary>
         /// <param name="uri"> The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public SapCloudForCustomerLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "SapCloudForCustomer";
         }
 
-        /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

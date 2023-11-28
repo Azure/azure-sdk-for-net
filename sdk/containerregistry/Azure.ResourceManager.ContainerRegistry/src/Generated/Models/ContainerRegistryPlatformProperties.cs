@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The platform properties against which the run has to happen. </summary>
     public partial class ContainerRegistryPlatformProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformProperties"/>. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         public ContainerRegistryPlatformProperties(ContainerRegistryOS os)
         {
             OS = os;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformProperties"/>. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         /// <param name="architecture"> The OS architecture. </param>
         /// <param name="variant"> Variant of the CPU. </param>

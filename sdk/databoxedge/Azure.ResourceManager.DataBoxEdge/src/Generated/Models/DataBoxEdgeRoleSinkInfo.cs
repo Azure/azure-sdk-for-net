@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Compute role against which events will be raised. </summary>
     public partial class DataBoxEdgeRoleSinkInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeRoleSinkInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/>. </summary>
         /// <param name="roleId"> Compute role ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
         public DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId)

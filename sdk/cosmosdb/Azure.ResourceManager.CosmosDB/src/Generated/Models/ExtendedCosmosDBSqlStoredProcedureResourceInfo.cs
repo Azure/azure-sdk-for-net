@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
     public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : CosmosDBSqlStoredProcedureResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>

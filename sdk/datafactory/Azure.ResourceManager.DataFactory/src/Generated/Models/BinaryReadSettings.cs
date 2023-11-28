@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Binary read settings. </summary>
     public partial class BinaryReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of BinaryReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryReadSettings"/>. </summary>
         public BinaryReadSettings()
         {
             FormatReadSettingsType = "BinaryReadSettings";
         }
 
-        /// <summary> Initializes a new instance of BinaryReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

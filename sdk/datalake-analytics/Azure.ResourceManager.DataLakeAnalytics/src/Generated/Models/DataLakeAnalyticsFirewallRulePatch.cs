@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRulePatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRulePatch"/>. </summary>
         public DataLakeAnalyticsFirewallRulePatch()
         {
         }

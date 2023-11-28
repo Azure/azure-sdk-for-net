@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownBaseResourceProperties. </summary>
     internal partial class UnknownBaseResourceProperties : BaseResourceProperties
     {
-        /// <summary> Initializes a new instance of UnknownBaseResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseResourceProperties"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownBaseResourceProperties(ResourcePropertiesObjectType objectType) : base(objectType)
         {

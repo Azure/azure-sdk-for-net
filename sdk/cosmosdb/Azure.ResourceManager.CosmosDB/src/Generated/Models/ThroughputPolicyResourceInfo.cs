@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB resource throughput policy. </summary>
     public partial class ThroughputPolicyResourceInfo
     {
-        /// <summary> Initializes a new instance of ThroughputPolicyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputPolicyResourceInfo"/>. </summary>
         public ThroughputPolicyResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ThroughputPolicyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputPolicyResourceInfo"/>. </summary>
         /// <param name="isEnabled"> Determines whether the ThroughputPolicy is active or not. </param>
         /// <param name="incrementPercent"> Represents the percentage by which throughput can increase every time throughput policy kicks in. </param>
         internal ThroughputPolicyResourceInfo(bool? isEnabled, int? incrementPercent)

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// </summary>
     public partial class BenefitUtilizationSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of BenefitUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummary"/>. </summary>
         public BenefitUtilizationSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

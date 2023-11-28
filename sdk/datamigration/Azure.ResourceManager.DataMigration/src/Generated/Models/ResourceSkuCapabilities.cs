@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes The SKU capabilities object. </summary>
     public partial class ResourceSkuCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCapabilities"/>. </summary>
         internal ResourceSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         internal ResourceSkuCapabilities(string name, string value)

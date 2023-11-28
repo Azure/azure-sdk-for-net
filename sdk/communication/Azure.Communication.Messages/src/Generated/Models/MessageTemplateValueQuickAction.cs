@@ -10,7 +10,7 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's quick action value information. </summary>
     internal partial class MessageTemplateValueQuickAction
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueQuickAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueQuickAction"/>. </summary>
         public MessageTemplateValueQuickAction()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service debug resource. </summary>
     public partial class DataFactoryLinkedServiceDebugInfo : DataFactoryDebugInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryLinkedServiceDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceDebugInfo"/>. </summary>
         /// <param name="properties">
         /// Properties of linked service.
         /// Please note <see cref="DataFactoryLinkedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

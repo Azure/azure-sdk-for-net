@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for PostgreSQL to Azure Database for PostgreSQL migration task inputs. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
         public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput()
         {
             MigrationSetting = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedTables = new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>

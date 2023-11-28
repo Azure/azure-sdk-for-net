@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Graph resource and their properties. </summary>
     internal partial class GraphResourcesListResult
     {
-        /// <summary> Initializes a new instance of GraphResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphResourcesListResult"/>. </summary>
         internal GraphResourcesListResult()
         {
             Value = new ChangeTrackingList<GraphResourceGetResultData>();
         }
 
-        /// <summary> Initializes a new instance of GraphResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphResourcesListResult"/>. </summary>
         /// <param name="value"> List of Graph resource and their properties. </param>
         internal GraphResourcesListResult(IReadOnlyList<GraphResourceGetResultData> value)
         {

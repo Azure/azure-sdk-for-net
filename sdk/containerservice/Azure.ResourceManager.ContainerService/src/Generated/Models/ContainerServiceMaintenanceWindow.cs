@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Maintenance window used to configure scheduled auto-upgrade for a Managed Cluster. </summary>
     public partial class ContainerServiceMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWindow"/>. </summary>
         /// <param name="schedule"> Recurrence schedule for the maintenance window. </param>
         /// <param name="durationHours"> Length of maintenance window range from 4 to 24 hours. </param>
         /// <param name="startTime"> The start time of the maintenance window. Accepted values are from '00:00' to '23:59'. 'utcOffset' applies to this field. For example: '02:00' with 'utcOffset: +02:00' means UTC time '00:00'. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NotAllowedDates = new ChangeTrackingList<ContainerServiceDateSpan>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWindow"/>. </summary>
         /// <param name="schedule"> Recurrence schedule for the maintenance window. </param>
         /// <param name="durationHours"> Length of maintenance window range from 4 to 24 hours. </param>
         /// <param name="utcOffset"> The UTC offset in format +/-HH:mm. For example, '+05:30' for IST and '-07:00' for PST. If not specified, the default is '+00:00'. </param>

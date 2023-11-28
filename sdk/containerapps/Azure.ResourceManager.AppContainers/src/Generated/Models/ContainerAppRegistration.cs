@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
     public partial class ContainerAppRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         public ContainerAppRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         /// <param name="appId"> The App ID of the app used for login. </param>
         /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
         internal ContainerAppRegistration(string appId, string appSecretSettingName)

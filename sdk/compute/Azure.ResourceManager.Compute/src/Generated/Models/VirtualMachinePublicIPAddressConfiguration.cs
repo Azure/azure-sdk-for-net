@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachinePublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachinePublicIPAddressConfiguration(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             IPTags = new ChangeTrackingList<VirtualMachineIPTag>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>

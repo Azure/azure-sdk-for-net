@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The fields mapping for Relationships. </summary>
     public partial class RelationshipLinkFieldMapping
     {
-        /// <summary> Initializes a new instance of RelationshipLinkFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkFieldMapping"/>. </summary>
         /// <param name="interactionFieldName"> The field name on the Interaction Type. </param>
         /// <param name="relationshipFieldName"> The field name on the Relationship metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="interactionFieldName"/> or <paramref name="relationshipFieldName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             RelationshipFieldName = relationshipFieldName;
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkFieldMapping"/>. </summary>
         /// <param name="interactionFieldName"> The field name on the Interaction Type. </param>
         /// <param name="linkType"> Link type. </param>
         /// <param name="relationshipFieldName"> The field name on the Relationship metadata. </param>

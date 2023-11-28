@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Metadata for a Link's property mapping. </summary>
     public partial class TypePropertiesMapping
     {
-        /// <summary> Initializes a new instance of TypePropertiesMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypePropertiesMapping"/>. </summary>
         /// <param name="sourcePropertyName"> Property name on the source Entity Type. </param>
         /// <param name="targetPropertyName"> Property name on the target Entity Type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePropertyName"/> or <paramref name="targetPropertyName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             TargetPropertyName = targetPropertyName;
         }
 
-        /// <summary> Initializes a new instance of TypePropertiesMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypePropertiesMapping"/>. </summary>
         /// <param name="sourcePropertyName"> Property name on the source Entity Type. </param>
         /// <param name="targetPropertyName"> Property name on the target Entity Type. </param>
         /// <param name="linkType"> Link type. </param>

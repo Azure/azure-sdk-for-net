@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Object that includes an array of CommunicationServices and a possible link for next set. </summary>
     internal partial class CommunicationServiceResourceList
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceList"/>. </summary>
         internal CommunicationServiceResourceList()
         {
             Value = new ChangeTrackingList<CommunicationServiceResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceList"/>. </summary>
         /// <param name="value"> List of CommunicationService. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing event summary. </summary>
     internal partial class Events
     {
-        /// <summary> Initializes a new instance of Events. </summary>
+        /// <summary> Initializes a new instance of <see cref="Events"/>. </summary>
         internal Events()
         {
             Value = new ChangeTrackingList<ConsumptionEventSummary>();
         }
 
-        /// <summary> Initializes a new instance of Events. </summary>
+        /// <summary> Initializes a new instance of <see cref="Events"/>. </summary>
         /// <param name="value"> The list of event summary. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal Events(IReadOnlyList<ConsumptionEventSummary> value, string nextLink)

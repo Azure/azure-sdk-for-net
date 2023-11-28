@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Source and target column mapping details. </summary>
     public partial class MapperAttributeMapping
     {
-        /// <summary> Initializes a new instance of MapperAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeMapping"/>. </summary>
         public MapperAttributeMapping()
         {
             AttributeReferences = new ChangeTrackingList<MapperAttributeReference>();
         }
 
-        /// <summary> Initializes a new instance of MapperAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the target column. </param>
         /// <param name="mappingType"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
         /// <param name="functionName"> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </param>

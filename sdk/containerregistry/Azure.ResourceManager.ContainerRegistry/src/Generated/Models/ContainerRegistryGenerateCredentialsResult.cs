@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The response from the GenerateCredentials operation. </summary>
     public partial class ContainerRegistryGenerateCredentialsResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsResult"/>. </summary>
         internal ContainerRegistryGenerateCredentialsResult()
         {
             Passwords = new ChangeTrackingList<ContainerRegistryTokenPassword>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsResult"/>. </summary>
         /// <param name="username"> The username for a container registry. </param>
         /// <param name="passwords"> The list of passwords for a container registry. </param>
         internal ContainerRegistryGenerateCredentialsResult(string username, IReadOnlyList<ContainerRegistryTokenPassword> passwords)

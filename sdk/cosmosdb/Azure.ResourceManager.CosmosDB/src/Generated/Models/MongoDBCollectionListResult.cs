@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the MongoDB collections and their properties. </summary>
     internal partial class MongoDBCollectionListResult
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         internal MongoDBCollectionListResult()
         {
             Value = new ChangeTrackingList<MongoDBCollectionData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         /// <param name="value"> List of MongoDB collections and their properties. </param>
         internal MongoDBCollectionListResult(IReadOnlyList<MongoDBCollectionData> value)
         {

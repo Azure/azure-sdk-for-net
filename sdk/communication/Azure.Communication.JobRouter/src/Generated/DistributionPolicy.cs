@@ -10,12 +10,12 @@ namespace Azure.Communication.JobRouter
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy
     {
-        /// <summary> Initializes a new instance of DistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
         internal DistributionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>

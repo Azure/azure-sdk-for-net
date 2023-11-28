@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskProperties"/>. </summary>
         protected ProjectTaskProperties()
         {
             Errors = new ChangeTrackingList<ODataError>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ClientData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
