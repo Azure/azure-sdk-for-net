@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the firewall rule to update. </param>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        internal FirewallRuleForDataLakeStoreAccountUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress)
+        {
+            Name = name;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+        }
+
         /// <summary> The unique name of the firewall rule to update. </summary>
         public string Name { get; }
         /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>

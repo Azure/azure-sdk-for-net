@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerExecContent"/>. </summary>
+        /// <param name="command"> The command to be executed. </param>
+        /// <param name="terminalSize"> The size of the terminal. </param>
+        internal ContainerExecContent(string command, ContainerExecRequestTerminalSize terminalSize)
+        {
+            Command = command;
+            TerminalSize = terminalSize;
+        }
+
         /// <summary> The command to be executed. </summary>
         public string Command { get; set; }
         /// <summary> The size of the terminal. </summary>

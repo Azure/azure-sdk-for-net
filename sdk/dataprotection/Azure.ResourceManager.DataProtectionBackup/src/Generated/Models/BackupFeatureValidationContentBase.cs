@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContentBase"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        internal BackupFeatureValidationContentBase(string objectType)
+        {
+            ObjectType = objectType;
+        }
+
         /// <summary> Type of the specific object - used for deserializing. </summary>
         internal string ObjectType { get; set; }
     }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Datadog.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
+        /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
+        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus)
+        {
+            MonitoringStatus = monitoringStatus;
+        }
+
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public MonitoringStatus? MonitoringStatus { get; set; }
     }

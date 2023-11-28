@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRulePatch"/>. </summary>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        internal DataLakeStoreVirtualNetworkRulePatch(ResourceIdentifier subnetId)
+        {
+            SubnetId = subnetId;
+        }
+
         /// <summary> The resource identifier for the subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
     }
