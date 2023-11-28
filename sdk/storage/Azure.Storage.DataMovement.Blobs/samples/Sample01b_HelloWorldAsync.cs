@@ -861,11 +861,25 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
                 await sourceBlob.DownloadToAsync(downloadPath);
 
-                // Create transfer manager
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+                // Create a token credential that can use our Azure Active
+                // Directory application to authenticate with Azure Storage
+                TokenCredential tokenCredential =
+                new ClientSecretCredential(
+                    ActiveDirectoryTenantId,
+                    ActiveDirectoryApplicationId,
+                    ActiveDirectoryApplicationSecret,
+                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
-                BlobsStorageResourceProvider blobs = new();
+                // Create transfer manager
+                #region Snippet:SetupTransferManagerForResume
                 LocalFilesStorageResourceProvider files = new();
+                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                TransferManager transferManager = new(new TransferManagerOptions()
+                {
+                    ResumeProviders = new List<StorageResourceProvider>() { files, blobs },
+                });
+                #endregion
+
                 // Create source and destination resource
                 StorageResource sourceResource = blobs.FromClient(sourceBlob);
                 StorageResource destinationResource = files.FromFile(downloadPath);
@@ -879,8 +893,15 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Pause from the Transfer Manager using the Transfer Id
                 await transferManager.PauseTransferIfRunningAsync(transferId);
 
-                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: transferId);
+                // Resume all transfers
+                #region Snippet:ResumeAllTransfers
+                List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
+                #endregion
+
+                // Resume a single transfer
+                #region Snippet:ResumeSingleTransfer
+                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
+                #endregion
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();

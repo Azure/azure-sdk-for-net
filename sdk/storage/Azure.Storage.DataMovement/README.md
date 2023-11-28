@@ -104,26 +104,24 @@ The below sample initializes the `TransferManager` such that it's capable of res
 **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
 
 ```C# Snippet:SetupTransferManagerForResume
-TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+LocalFilesStorageResourceProvider files = new();
+BlobsStorageResourceProvider blobs = new(tokenCredential);
+TransferManager transferManager = new(new TransferManagerOptions()
 {
-    ResumeProviders = new List<StorageResourceProvider>()
-    {
-        new LocalFilesStorageResourceProvider(),
-        new BlobsStorageResourceProvider(tokenCredential),
-    },
+    ResumeProviders = new List<StorageResourceProvider>() { files, blobs },
 });
 ```
 
 With a transfer manager configured as above, resuming all transfers is done as follows:
 
 ```C# Snippet:ResumeAllTransfers
-List<DataTransfer> transfers = await transferManger.ResumeAllTransfersAsync();
+List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
 ```
 
 An individual transfer can be resumed by transfer ID:
 
 ```C# Snippet:ResumeSingleTransfer
-List<DataTransfer> transfers = await transferManger.ResumeTransferAsync(transferId);
+DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
 
 Note: the location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
