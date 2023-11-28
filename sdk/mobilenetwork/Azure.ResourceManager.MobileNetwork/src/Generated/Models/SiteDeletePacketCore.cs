@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteDeletePacketCore"/>. </summary>
+        /// <param name="packetCore"> Reference to an packet core control plane resource. </param>
+        internal SiteDeletePacketCore(SubResource packetCore)
+        {
+            PacketCore = packetCore;
+        }
+
         /// <summary> Reference to an packet core control plane resource. </summary>
         internal SubResource PacketCore { get; set; }
         /// <summary> Gets Id. </summary>

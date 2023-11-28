@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Sims = sims.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
+        /// <param name="sims"> A list of SIMs to upload. </param>
+        internal SimUploadList(IList<SimNameAndProperties> sims)
+        {
+            Sims = sims;
+        }
+
         /// <summary> A list of SIMs to upload. </summary>
         public IList<SimNameAndProperties> Sims { get; }
     }

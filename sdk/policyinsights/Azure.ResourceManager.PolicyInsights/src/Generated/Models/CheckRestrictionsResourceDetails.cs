@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             ResourceContent = resourceContent;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
+        /// <param name="apiVersion"> The api-version of the resource content. </param>
+        /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
+        internal CheckRestrictionsResourceDetails(BinaryData resourceContent, string apiVersion, string scope)
+        {
+            ResourceContent = resourceContent;
+            ApiVersion = apiVersion;
+            Scope = scope;
+        }
+
         /// <summary>
         /// The resource content. This should include whatever properties are already known and can be a partial set of all resource properties.
         /// <para>

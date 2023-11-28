@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             UserEmail = userEmail;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
+        /// <param name="vmIds"> VM resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        internal NewRelicHostsGetContent(IList<ResourceIdentifier> vmIds, string userEmail)
+        {
+            VmIds = vmIds;
+            UserEmail = userEmail;
+        }
+
         /// <summary> VM resource IDs. </summary>
         public IList<ResourceIdentifier> VmIds { get; }
         /// <summary> User Email. </summary>

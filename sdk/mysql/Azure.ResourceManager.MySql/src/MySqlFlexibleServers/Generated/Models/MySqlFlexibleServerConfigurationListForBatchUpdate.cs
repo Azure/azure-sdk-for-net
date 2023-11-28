@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Values = new ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationListForBatchUpdate"/>. </summary>
+        /// <param name="values"> The list of server configurations. </param>
+        /// <param name="resetAllToDefault"> Whether to reset all server parameters to default. </param>
+        internal MySqlFlexibleServerConfigurationListForBatchUpdate(IList<MySqlFlexibleServerConfigurationForBatchUpdate> values, MySqlFlexibleServerConfigurationResetAllToDefault? resetAllToDefault)
+        {
+            Values = values;
+            ResetAllToDefault = resetAllToDefault;
+        }
+
         /// <summary> The list of server configurations. </summary>
         public IList<MySqlFlexibleServerConfigurationForBatchUpdate> Values { get; }
         /// <summary> Whether to reset all server parameters to default. </summary>

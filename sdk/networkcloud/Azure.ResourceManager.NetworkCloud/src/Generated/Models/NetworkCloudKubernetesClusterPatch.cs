@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. Accepts n.n, n.n.n, and n.n.n-n format. The interpreted version used will be resolved into this field after creation or update. </param>
+        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion)
+        {
+            Tags = tags;
+            ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
+            KubernetesVersion = kubernetesVersion;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </summary>

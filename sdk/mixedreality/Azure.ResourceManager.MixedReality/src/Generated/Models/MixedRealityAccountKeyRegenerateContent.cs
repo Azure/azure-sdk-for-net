@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MixedReality.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeyRegenerateContent"/>. </summary>
+        /// <param name="serial"> serial of key to be regenerated. </param>
+        internal MixedRealityAccountKeyRegenerateContent(MixedRealityAccountKeySerial? serial)
+        {
+            Serial = serial;
+        }
+
         /// <summary> serial of key to be regenerated. </summary>
         public MixedRealityAccountKeySerial? Serial { get; set; }
     }

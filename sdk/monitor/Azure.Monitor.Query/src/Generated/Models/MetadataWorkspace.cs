@@ -32,6 +32,21 @@ namespace Azure.Monitor.Query.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataWorkspace"/>. </summary>
+        /// <param name="id"> The ID of the Log Analytics workspace. </param>
+        /// <param name="resourceId"> The ARM resource ID of the Log Analytics workspace. </param>
+        /// <param name="name"> The name of the Log Analytics workspace. </param>
+        /// <param name="region"> The Azure region of the Log Analytics workspace. </param>
+        /// <param name="related"> The related metadata items for the Log Analytics workspace. </param>
+        internal MetadataWorkspace(string id, string resourceId, string name, string region, MetadataWorkspaceRelated related)
+        {
+            Id = id;
+            ResourceId = resourceId;
+            Name = name;
+            Region = region;
+            Related = related;
+        }
+
         /// <summary> The ID of the Log Analytics workspace. </summary>
         public string Id { get; }
         /// <summary> The ARM resource ID of the Log Analytics workspace. </summary>

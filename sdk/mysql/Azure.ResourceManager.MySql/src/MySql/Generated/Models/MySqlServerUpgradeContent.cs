@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MySql.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlServerUpgradeContent"/>. </summary>
+        /// <param name="targetServerVersion"> Represents an server storage profile. </param>
+        internal MySqlServerUpgradeContent(string targetServerVersion)
+        {
+            TargetServerVersion = targetServerVersion;
+        }
+
         /// <summary> Represents an server storage profile. </summary>
         public string TargetServerVersion { get; set; }
     }
