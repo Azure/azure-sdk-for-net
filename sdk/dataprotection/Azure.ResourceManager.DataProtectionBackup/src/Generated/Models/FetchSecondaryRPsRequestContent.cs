@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -20,8 +22,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Source region in which BackupInstance is located. </summary>
-        public string SourceRegion { get; set; }
+        public AzureLocation? SourceRegion { get; set; }
         /// <summary> ARM Path of BackupInstance. </summary>
-        public string SourceBackupInstanceId { get; set; }
+        public ResourceIdentifier SourceBackupInstanceId { get; set; }
     }
 }

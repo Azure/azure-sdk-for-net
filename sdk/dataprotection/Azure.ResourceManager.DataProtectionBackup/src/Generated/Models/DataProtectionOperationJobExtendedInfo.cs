@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Operation Job Extended Info. </summary>
@@ -21,13 +19,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="jobResourceId"> Name or Arm Id of the job created for this operation. </param>
-        internal DataProtectionOperationJobExtendedInfo(string objectType, ResourceIdentifier jobResourceId) : base(objectType)
+        internal DataProtectionOperationJobExtendedInfo(string objectType, string jobResourceId) : base(objectType)
         {
             JobResourceId = jobResourceId;
             ObjectType = objectType ?? "OperationJobExtendedInfo";
         }
 
         /// <summary> Name or Arm Id of the job created for this operation. </summary>
-        public ResourceIdentifier JobResourceId { get; }
+        public string JobResourceId { get; }
     }
 }

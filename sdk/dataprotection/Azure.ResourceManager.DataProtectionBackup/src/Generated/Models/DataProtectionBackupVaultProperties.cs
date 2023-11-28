@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(storageSettings, nameof(storageSettings));
 
             StorageSettings = storageSettings.ToList();
-            ReplicatedRegions = new ChangeTrackingList<string>();
+            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IList<string> replicatedRegions)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IList<AzureLocation> replicatedRegions)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Secure Score of Backup Vault. </summary>
         public BackupVaultSecureScoreLevel? SecureScore { get; }
         /// <summary> List of replicated regions for Backup Vault. </summary>
-        public IList<string> ReplicatedRegions { get; }
+        public IList<AzureLocation> ReplicatedRegions { get; }
     }
 }

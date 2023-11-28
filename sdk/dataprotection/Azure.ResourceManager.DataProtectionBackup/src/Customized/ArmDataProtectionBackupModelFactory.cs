@@ -126,5 +126,36 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType, deletionInfo);
         }
+
+        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <param name="additionalDetails"> Job's Additional Details. </param>
+        /// <param name="backupInstanceState"> State of the Backup Instance. </param>
+        /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
+        /// <param name="recoveryDestination"> Destination where restore is done. </param>
+        /// <param name="sourceRecoverPoint"> Details of the Source Recovery Point. </param>
+        /// <param name="subTasks"> List of Sub Tasks of the job. </param>
+        /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
+        /// <returns> A new <see cref="Models.BackupJobExtendedInfo"/> instance for mocking. </returns>
+        public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = null, string recoveryDestination = null, RestoreJobRecoveryPointDetails sourceRecoverPoint = null, IEnumerable<BackupJobSubTask> subTasks = null, RestoreJobRecoveryPointDetails targetRecoverPoint = null)
+        {
+            return BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks, targetRecoverPoint, null);
+        }
+
+        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="recoveryPointDataStoresDetails"></param>
+        /// <param name="recoverOn"></param>
+        /// <param name="policyName"></param>
+        /// <param name="policyVersion"></param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="recoveryPointType"></param>
+        /// <param name="retentionTagName"></param>
+        /// <param name="retentionTagVersion"></param>
+        /// <param name="expireOn"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, DateTimeOffset recoverOn = default, string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, DateTimeOffset? expireOn = null)
+        {
+            return DataProtectionBackupDiscreteRecoveryPointProperties(friendlyName, recoveryPointDataStoresDetails, recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, null);
+        }
     }
 }

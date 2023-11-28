@@ -101,7 +101,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: JobResourceId|arm-id
+  OperationJobExtendedInfo.jobId: JobResourceId
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -252,6 +252,17 @@ rename-mapping:
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
   NamespacedNameResource: NamespacedName
+  CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
+  CrossRegionRestoreDetails.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobRequest.jobId : -|uuid
+  CrossRegionRestoreJobRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobRequest.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobsRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobsRequest.sourceRegion  : -|azure-location
+  FetchSecondaryRPsRequestParameters.sourceBackupInstanceId : -|arm-id
+  FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
+  BackupVault.replicatedRegions : -|azure-location
+  RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
 
 directive:
 # Correct the type of properties

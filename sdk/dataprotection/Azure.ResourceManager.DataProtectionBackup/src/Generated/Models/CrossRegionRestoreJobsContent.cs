@@ -16,10 +16,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of CrossRegionRestoreJobsContent. </summary>
         /// <param name="sourceRegion"></param>
         /// <param name="sourceBackupVaultId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/> or <paramref name="sourceBackupVaultId"/> is null. </exception>
-        public CrossRegionRestoreJobsContent(string sourceRegion, string sourceBackupVaultId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupVaultId"/> is null. </exception>
+        public CrossRegionRestoreJobsContent(AzureLocation sourceRegion, ResourceIdentifier sourceBackupVaultId)
         {
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(sourceBackupVaultId, nameof(sourceBackupVaultId));
 
             SourceRegion = sourceRegion;
@@ -27,8 +26,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets the source region. </summary>
-        public string SourceRegion { get; }
+        public AzureLocation SourceRegion { get; }
         /// <summary> Gets the source backup vault id. </summary>
-        public string SourceBackupVaultId { get; }
+        public ResourceIdentifier SourceBackupVaultId { get; }
     }
 }

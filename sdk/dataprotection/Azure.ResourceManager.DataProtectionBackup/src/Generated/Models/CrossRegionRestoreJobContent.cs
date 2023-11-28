@@ -17,12 +17,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceRegion"></param>
         /// <param name="sourceBackupVaultId"></param>
         /// <param name="jobId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="sourceBackupVaultId"/> or <paramref name="jobId"/> is null. </exception>
-        public CrossRegionRestoreJobContent(string sourceRegion, string sourceBackupVaultId, string jobId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupVaultId"/> is null. </exception>
+        public CrossRegionRestoreJobContent(AzureLocation sourceRegion, ResourceIdentifier sourceBackupVaultId, Guid jobId)
         {
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(sourceBackupVaultId, nameof(sourceBackupVaultId));
-            Argument.AssertNotNull(jobId, nameof(jobId));
 
             SourceRegion = sourceRegion;
             SourceBackupVaultId = sourceBackupVaultId;
@@ -30,10 +28,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets the source region. </summary>
-        public string SourceRegion { get; }
+        public AzureLocation SourceRegion { get; }
         /// <summary> Gets the source backup vault id. </summary>
-        public string SourceBackupVaultId { get; }
+        public ResourceIdentifier SourceBackupVaultId { get; }
         /// <summary> Gets the job id. </summary>
-        public string JobId { get; }
+        public Guid JobId { get; }
     }
 }

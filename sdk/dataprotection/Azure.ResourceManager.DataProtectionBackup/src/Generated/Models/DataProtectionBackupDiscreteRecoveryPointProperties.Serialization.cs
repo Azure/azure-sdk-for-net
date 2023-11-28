@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> retentionTagName = default;
             Optional<string> retentionTagVersion = default;
             Optional<DateTimeOffset> expiryTime = default;
-            Optional<RecoveryPointCompletionState> recoveryPointState = default;
+            Optional<DataProtectionBackupRecoveryPointCompletionState> recoveryPointState = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointState = new RecoveryPointCompletionState(property.Value.GetString());
+                    recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

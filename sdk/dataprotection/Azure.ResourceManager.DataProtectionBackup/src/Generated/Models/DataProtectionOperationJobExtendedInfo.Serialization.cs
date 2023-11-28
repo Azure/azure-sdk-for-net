@@ -18,17 +18,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
+            Optional<string> jobId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

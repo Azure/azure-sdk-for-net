@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<bool> isVaultProtectedByResourceGuard = default;
             Optional<BackupVaultFeatureSettings> featureSettings = default;
             Optional<BackupVaultSecureScoreLevel> secureScore = default;
-            Optional<IList<string>> replicatedRegions = default;
+            Optional<IList<AzureLocation>> replicatedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     replicatedRegions = array;
                     continue;

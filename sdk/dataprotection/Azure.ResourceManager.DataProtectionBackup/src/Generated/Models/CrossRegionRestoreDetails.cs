@@ -16,10 +16,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of CrossRegionRestoreDetails. </summary>
         /// <param name="sourceRegion"></param>
         /// <param name="sourceBackupInstanceId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/> or <paramref name="sourceBackupInstanceId"/> is null. </exception>
-        public CrossRegionRestoreDetails(string sourceRegion, string sourceBackupInstanceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupInstanceId"/> is null. </exception>
+        public CrossRegionRestoreDetails(AzureLocation sourceRegion, ResourceIdentifier sourceBackupInstanceId)
         {
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(sourceBackupInstanceId, nameof(sourceBackupInstanceId));
 
             SourceRegion = sourceRegion;
@@ -27,8 +26,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets the source region. </summary>
-        public string SourceRegion { get; }
+        public AzureLocation SourceRegion { get; }
         /// <summary> Gets the source backup instance id. </summary>
-        public string SourceBackupInstanceId { get; }
+        public ResourceIdentifier SourceBackupInstanceId { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SourceRegion))
             {
                 writer.WritePropertyName("sourceRegion"u8);
-                writer.WriteStringValue(SourceRegion);
+                writer.WriteStringValue(SourceRegion.Value);
             }
             if (Optional.IsDefined(SourceBackupInstanceId))
             {
