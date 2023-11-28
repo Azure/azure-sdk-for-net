@@ -22,6 +22,19 @@ namespace Azure.Monitor.Query.Models
             Tables = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataQueryRelated"/>. </summary>
+        /// <param name="categories"> The related categories for the query. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the query. </param>
+        /// <param name="resourceTypes"> The related resource types for the query. </param>
+        /// <param name="tables"> The related tables for the query. </param>
+        internal MetadataQueryRelated(IReadOnlyList<string> categories, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> tables)
+        {
+            Categories = categories;
+            Solutions = solutions;
+            ResourceTypes = resourceTypes;
+            Tables = tables;
+        }
+
         /// <summary> The related categories for the query. </summary>
         public IReadOnlyList<string> Categories { get; }
         /// <summary> The related Log Analytics solutions for the query. </summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeRevertContent"/>. </summary>
+        /// <param name="snapshotId"> Resource id of the snapshot. </param>
+        internal NetAppVolumeRevertContent(string snapshotId)
+        {
+            SnapshotId = snapshotId;
+        }
+
         /// <summary> Resource id of the snapshot. </summary>
         public string SnapshotId { get; set; }
     }

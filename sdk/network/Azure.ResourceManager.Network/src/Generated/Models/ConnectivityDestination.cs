@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivityDestination"/>. </summary>
+        /// <param name="resourceId"> The ID of the resource to which a connection attempt will be made. </param>
+        /// <param name="address"> The IP address or URI the resource to which a connection attempt will be made. </param>
+        /// <param name="port"> Port on which check connectivity will be performed. </param>
+        internal ConnectivityDestination(ResourceIdentifier resourceId, string address, int? port)
+        {
+            ResourceId = resourceId;
+            Address = address;
+            Port = port;
+        }
+
         /// <summary> The ID of the resource to which a connection attempt will be made. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The IP address or URI the resource to which a connection attempt will be made. </summary>

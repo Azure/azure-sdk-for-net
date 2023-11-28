@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
             Pools = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MigrateLoadBalancerToIPBasedContent"/>. </summary>
+        /// <param name="pools"> A list of pool names that should be migrated from Nic based to IP based pool. </param>
+        internal MigrateLoadBalancerToIPBasedContent(IList<string> pools)
+        {
+            Pools = pools;
+        }
+
         /// <summary> A list of pool names that should be migrated from Nic based to IP based pool. </summary>
         public IList<string> Pools { get; }
     }
