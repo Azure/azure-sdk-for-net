@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation split. </summary>
     public partial class SplitContent
     {
-        /// <summary> Initializes a new instance of SplitContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SplitContent"/>. </summary>
         public SplitContent()
         {
             Quantities = new ChangeTrackingList<int>();

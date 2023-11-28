@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of roles. </summary>
     internal partial class CosmosDBForPostgreSqlRoleListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleListResult"/>. </summary>
         internal CosmosDBForPostgreSqlRoleListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlRoleData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleListResult"/>. </summary>
         /// <param name="value"> The list of roles in a cluster. </param>
         internal CosmosDBForPostgreSqlRoleListResult(IReadOnlyList<CosmosDBForPostgreSqlRoleData> value)
         {

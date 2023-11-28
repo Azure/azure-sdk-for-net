@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the database configuration. </summary>
     public partial class DatabaseConfiguration
     {
-        /// <summary> Initializes a new instance of DatabaseConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             InstanceCount = instanceCount;
         }
 
-        /// <summary> Initializes a new instance of DatabaseConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseConfiguration"/>. </summary>
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>

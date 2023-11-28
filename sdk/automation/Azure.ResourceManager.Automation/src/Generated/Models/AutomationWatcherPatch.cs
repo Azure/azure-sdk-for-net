@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The AutomationWatcherPatch. </summary>
     public partial class AutomationWatcherPatch
     {
-        /// <summary> Initializes a new instance of AutomationWatcherPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherPatch"/>. </summary>
         public AutomationWatcherPatch()
         {
         }

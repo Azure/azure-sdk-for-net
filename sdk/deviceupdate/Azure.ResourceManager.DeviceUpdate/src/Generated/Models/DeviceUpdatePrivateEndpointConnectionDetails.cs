@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private endpoint connection proxy object properties. </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionDetails
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
         public DeviceUpdatePrivateEndpointConnectionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
         /// <param name="id"> Connection details ID. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="linkIdentifier"> Link ID. </param>

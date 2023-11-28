@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupDeleteSetting
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         protected DataProtectionBackupDeleteSetting(TimeSpan duration)
         {
             Duration = duration;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupDeleteSetting(TimeSpan duration, string objectType)

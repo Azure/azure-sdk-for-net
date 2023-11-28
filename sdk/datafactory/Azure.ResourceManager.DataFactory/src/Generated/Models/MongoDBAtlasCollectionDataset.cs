@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The MongoDB Atlas database dataset. </summary>
     public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of MongoDBAtlasCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "MongoDbAtlasCollection";
         }
 
-        /// <summary> Initializes a new instance of MongoDBAtlasCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

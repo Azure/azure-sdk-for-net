@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of lab plans. </summary>
     internal partial class PagedLabPlans
     {
-        /// <summary> Initializes a new instance of PagedLabPlans. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedLabPlans"/>. </summary>
         internal PagedLabPlans()
         {
             Value = new ChangeTrackingList<LabPlanData>();
         }
 
-        /// <summary> Initializes a new instance of PagedLabPlans. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedLabPlans"/>. </summary>
         /// <param name="value"> The array page of lab plans. </param>
         /// <param name="nextLink"> The link to get the next page of lab plan results. </param>
         internal PagedLabPlans(IReadOnlyList<LabPlanData> value, string nextLink)

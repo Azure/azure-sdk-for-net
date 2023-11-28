@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The available private link resources for a Digital Twin. </summary>
     internal partial class GroupIdInformationResponse
     {
-        /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupIdInformationResponse"/>. </summary>
         internal GroupIdInformationResponse()
         {
             Value = new ChangeTrackingList<DigitalTwinsPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupIdInformationResponse"/>. </summary>
         /// <param name="value"> The list of available private link resources for a Digital Twin. </param>
         internal GroupIdInformationResponse(IReadOnlyList<DigitalTwinsPrivateLinkResourceData> value)
         {

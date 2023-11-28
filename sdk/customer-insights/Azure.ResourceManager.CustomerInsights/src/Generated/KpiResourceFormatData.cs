@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class KpiResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceFormatData"/>. </summary>
         public KpiResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Extracts = new ChangeTrackingList<KpiExtract>();
         }
 
-        /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

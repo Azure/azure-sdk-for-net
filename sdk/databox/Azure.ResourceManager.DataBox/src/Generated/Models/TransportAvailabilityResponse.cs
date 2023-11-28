@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Transport options available for given sku in a region. </summary>
     internal partial class TransportAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
         internal TransportAvailabilityResponse()
         {
             TransportAvailabilityDetails = new ChangeTrackingList<TransportAvailabilityDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
         /// <param name="transportAvailabilityDetails"> List of transport availability details for given region. </param>
         internal TransportAvailabilityResponse(IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails)
         {

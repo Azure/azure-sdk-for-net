@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains security profile for an OS disk image. </summary>
     public partial class OSDiskImageSecurityProfile
     {
-        /// <summary> Initializes a new instance of OSDiskImageSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         public OSDiskImageSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSDiskImageSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         /// <param name="confidentialVmEncryptionType"> confidential VM encryption types. </param>
         /// <param name="secureVmDiskEncryptionSetId"> secure VM disk encryption set id. </param>
         internal OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVmEncryptionType, string secureVmDiskEncryptionSetId)

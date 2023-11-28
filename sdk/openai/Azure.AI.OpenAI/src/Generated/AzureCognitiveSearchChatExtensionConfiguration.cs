@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureCognitiveSearchChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
         /// default value for Azure Cognitive Search.

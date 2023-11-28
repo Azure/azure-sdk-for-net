@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TextSource. </summary>
     internal partial class TextSourceInternal
     {
-        /// <summary> Initializes a new instance of TextSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
         /// <param name="text"> Text for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public TextSourceInternal(string text)

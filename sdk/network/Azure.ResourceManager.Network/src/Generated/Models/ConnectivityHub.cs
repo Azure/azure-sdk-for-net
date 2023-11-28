@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Hub Item. </summary>
     public partial class ConnectivityHub
     {
-        /// <summary> Initializes a new instance of ConnectivityHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
         public ConnectivityHub()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectivityHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="resourceType"> Resource Type. </param>
         internal ConnectivityHub(ResourceIdentifier resourceId, ResourceType? resourceType)

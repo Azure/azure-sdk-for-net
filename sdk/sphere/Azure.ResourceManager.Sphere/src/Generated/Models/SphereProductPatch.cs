@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereProductPatch
     {
-        /// <summary> Initializes a new instance of SphereProductPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
         public SphereProductPatch()
         {
         }

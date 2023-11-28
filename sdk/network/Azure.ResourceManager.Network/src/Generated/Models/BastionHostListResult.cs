@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListBastionHosts API service call. </summary>
     internal partial class BastionHostListResult
     {
-        /// <summary> Initializes a new instance of BastionHostListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostListResult"/>. </summary>
         internal BastionHostListResult()
         {
             Value = new ChangeTrackingList<BastionHostData>();
         }
 
-        /// <summary> Initializes a new instance of BastionHostListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostListResult"/>. </summary>
         /// <param name="value"> List of Bastion Hosts in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal BastionHostListResult(IReadOnlyList<BastionHostData> value, string nextLink)

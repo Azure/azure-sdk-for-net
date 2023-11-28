@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container Azure Queue based scaling rule. </summary>
     public partial class ContainerAppQueueScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppQueueScaleRule"/>. </summary>
         public ContainerAppQueueScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppQueueScaleRule"/>. </summary>
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>

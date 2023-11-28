@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the notification target properties. </summary>
     public partial class ClusterNotificationTarget
     {
-        /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotificationTarget"/>. </summary>
         /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
         /// <param name="receivers"> List of targets that subscribe to the notification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivers"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Receivers = receivers.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotificationTarget"/>. </summary>
         /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
         /// <param name="receivers"> List of targets that subscribe to the notification. </param>
         internal ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IList<string> receivers)

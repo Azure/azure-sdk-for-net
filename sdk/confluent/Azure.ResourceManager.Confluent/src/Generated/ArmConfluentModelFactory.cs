@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConfluentModelFactory
     {
-        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentAgreement"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentAgreement(id, name, resourceType, systemData, publisher, product, plan, licenseTextLink, privacyPolicyLink, retrieveOn, signature, isAccepted);
         }
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Confluent.ConfluentOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail);
         }
 
-        /// <summary> Initializes a new instance of ConfluentOfferDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentOfferDetail"/>. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>

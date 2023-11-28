@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class VmWorkloadItem : WorkloadItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
         public VmWorkloadItem()
         {
             WorkloadItemType = "AzureVmWorkloadItem";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>

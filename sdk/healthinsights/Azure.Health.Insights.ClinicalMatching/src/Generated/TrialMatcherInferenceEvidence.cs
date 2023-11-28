@@ -10,12 +10,12 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A piece of evidence corresponding to a Trial Matcher inference. </summary>
     public partial class TrialMatcherInferenceEvidence
     {
-        /// <summary> Initializes a new instance of TrialMatcherInferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInferenceEvidence"/>. </summary>
         internal TrialMatcherInferenceEvidence()
         {
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherInferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInferenceEvidence"/>. </summary>
         /// <param name="eligibilityCriteriaEvidence"> A piece of evidence from the eligibility criteria text of a clinical trial. </param>
         /// <param name="patientDataEvidence"> A piece of evidence from a clinical note (text document). </param>
         /// <param name="patientInfoEvidence">

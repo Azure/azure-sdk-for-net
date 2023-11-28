@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// </summary>
     public abstract partial class Action
     {
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected Action(string name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
         internal Action(string actionType, string name)

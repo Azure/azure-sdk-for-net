@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>

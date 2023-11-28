@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class SqlMigrationServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SqlMigrationServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SqlMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

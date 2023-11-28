@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Metadata information used by account encryption. </summary>
     public partial class DataLakeStoreAccountKeyVaultMetaInfo
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountKeyVaultMetaInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountKeyVaultMetaInfo"/>. </summary>
         /// <param name="keyVaultResourceId"> The resource identifier for the user managed Key Vault being used to encrypt. </param>
         /// <param name="encryptionKeyName"> The name of the user managed encryption key. </param>
         /// <param name="encryptionKeyVersion"> The version of the user managed encryption key. </param>

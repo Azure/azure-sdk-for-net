@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> RackDefinition represents details regarding the rack. </summary>
     public partial class NetworkCloudRackDefinition
     {
-        /// <summary> Initializes a new instance of NetworkCloudRackDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackDefinition"/>. </summary>
         /// <param name="networkRackId"> The resource ID of the network rack that matches this rack definition. </param>
         /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
         /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StorageApplianceConfigurationData = new ChangeTrackingList<StorageApplianceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudRackDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackDefinition"/>. </summary>
         /// <param name="availabilityZone"> The zone name used for this rack when created. Availability zones are used for workload placement. </param>
         /// <param name="bareMetalMachineConfigurationData"> The unordered list of bare metal machine configuration. </param>
         /// <param name="networkRackId"> The resource ID of the network rack that matches this rack definition. </param>

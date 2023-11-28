@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties of Cognitive Services account deployment model. </summary>
     public partial class CognitiveServicesAccountDeploymentModel
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
         public CognitiveServicesAccountDeploymentModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>

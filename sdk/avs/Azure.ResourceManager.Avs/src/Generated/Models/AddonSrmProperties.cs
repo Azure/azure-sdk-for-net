@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
     public partial class AddonSrmProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonSrmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
         public AddonSrmProperties()
         {
             AddonType = AddonType.SRM;
         }
 
-        /// <summary> Initializes a new instance of AddonSrmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="licenseKey"> The Site Recovery Manager (SRM) license. </param>

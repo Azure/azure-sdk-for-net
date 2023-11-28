@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayData"/>. </summary>
         public AppPlatformGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

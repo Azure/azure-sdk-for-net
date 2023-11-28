@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Uploaded Java source code binary for a deployment. </summary>
     public partial class SourceUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
-        /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceUploadedUserSourceInfo"/>. </summary>
         public SourceUploadedUserSourceInfo()
         {
             UserSourceInfoType = "Source";
         }
 
-        /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>

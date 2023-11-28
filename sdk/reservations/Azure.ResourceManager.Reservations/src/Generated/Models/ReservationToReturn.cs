@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation to return. </summary>
     public partial class ReservationToReturn
     {
-        /// <summary> Initializes a new instance of ReservationToReturn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToReturn"/>. </summary>
         public ReservationToReturn()
         {
         }

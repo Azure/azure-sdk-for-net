@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </summary>
     internal partial class JobManifestTasks
     {
-        /// <summary> Initializes a new instance of JobManifestTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobManifestTasks"/>. </summary>
         public JobManifestTasks()
         {
             EntityRecognitionTasks = new ChangeTrackingList<EntitiesTask>();

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The linked integration runtime information. </summary>
     public partial class CreateLinkedIntegrationRuntimeContent
     {
-        /// <summary> Initializes a new instance of CreateLinkedIntegrationRuntimeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
         public CreateLinkedIntegrationRuntimeContent()
         {
         }

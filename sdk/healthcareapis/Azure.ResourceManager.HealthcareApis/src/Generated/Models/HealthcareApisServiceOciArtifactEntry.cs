@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> An Open Container Initiative (OCI) artifact. </summary>
     public partial class HealthcareApisServiceOciArtifactEntry
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceOciArtifactEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceOciArtifactEntry"/>. </summary>
         public HealthcareApisServiceOciArtifactEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceOciArtifactEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceOciArtifactEntry"/>. </summary>
         /// <param name="loginServer"> The Azure Container Registry login server. </param>
         /// <param name="imageName"> The artifact name. </param>
         /// <param name="digest"> The artifact digest. </param>

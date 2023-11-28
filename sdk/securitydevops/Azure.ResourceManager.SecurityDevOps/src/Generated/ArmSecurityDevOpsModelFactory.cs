@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityDevOpsModelFactory
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsConnectorData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsRepoData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsConnectorStats(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsOrgData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new GitHubConnectorData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new GitHubRepoData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitHubConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new GitHubConnectorStats(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubOwnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
     public partial class DataBoxValidateAddressContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidateAddressContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shippingAddress"/> is null. </exception>

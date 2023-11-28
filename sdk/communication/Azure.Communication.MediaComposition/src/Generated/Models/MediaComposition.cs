@@ -14,14 +14,14 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Body of a media composition. </summary>
     public partial class MediaComposition
     {
-        /// <summary> Initializes a new instance of MediaComposition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaComposition"/>. </summary>
         public MediaComposition()
         {
             Inputs = new ChangeTrackingDictionary<string, MediaInput>();
             Outputs = new ChangeTrackingDictionary<string, MediaOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaComposition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaComposition"/>. </summary>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout">
         /// Configure a layout

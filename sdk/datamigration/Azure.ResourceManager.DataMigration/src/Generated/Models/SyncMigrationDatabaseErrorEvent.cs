@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database migration errors for online migration. </summary>
     public partial class SyncMigrationDatabaseErrorEvent
     {
-        /// <summary> Initializes a new instance of SyncMigrationDatabaseErrorEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMigrationDatabaseErrorEvent"/>. </summary>
         internal SyncMigrationDatabaseErrorEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncMigrationDatabaseErrorEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMigrationDatabaseErrorEvent"/>. </summary>
         /// <param name="timestampString"> String value of timestamp. </param>
         /// <param name="eventTypeString"> Event type. </param>
         /// <param name="eventText"> Event text. </param>

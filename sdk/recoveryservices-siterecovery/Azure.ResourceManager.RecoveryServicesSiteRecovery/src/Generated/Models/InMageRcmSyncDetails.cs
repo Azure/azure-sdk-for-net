@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk level sync details. </summary>
     public partial class InMageRcmSyncDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmSyncDetails"/>. </summary>
         internal InMageRcmSyncDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmSyncDetails"/>. </summary>
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>

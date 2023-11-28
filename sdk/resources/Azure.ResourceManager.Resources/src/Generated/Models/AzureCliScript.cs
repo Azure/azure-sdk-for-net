@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Object model for the Azure CLI script. </summary>
     public partial class AzureCliScript : ArmDeploymentScriptData
     {
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCliScript"/>. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
             Kind = ScriptType.AzureCLI;
         }
 
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCliScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

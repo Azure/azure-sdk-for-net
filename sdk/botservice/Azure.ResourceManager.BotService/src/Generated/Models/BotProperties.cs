@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Bot. </summary>
     public partial class BotProperties
     {
-        /// <summary> Initializes a new instance of BotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
             PrivateEndpointConnections = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of BotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>

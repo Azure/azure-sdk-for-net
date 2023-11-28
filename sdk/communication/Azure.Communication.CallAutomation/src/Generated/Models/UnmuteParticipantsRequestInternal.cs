@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for unmuting participant from the call. </summary>
     internal partial class UnmuteParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of UnmuteParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants">
         /// Participants to be unmuted from the call.
         /// Only ACS Users are supported.

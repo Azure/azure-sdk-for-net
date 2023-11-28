@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountPatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountPatch"/>. </summary>
         public DataLakeAnalyticsAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

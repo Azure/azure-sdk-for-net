@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
     public partial class JobConfigurationScheduleTriggerConfig
     {
-        /// <summary> Initializes a new instance of JobConfigurationScheduleTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationScheduleTriggerConfig"/>. </summary>
         /// <param name="cronExpression"> Cron formatted repeating schedule ("* * * * *") of a Cron Job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
         public JobConfigurationScheduleTriggerConfig(string cronExpression)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             CronExpression = cronExpression;
         }
 
-        /// <summary> Initializes a new instance of JobConfigurationScheduleTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationScheduleTriggerConfig"/>. </summary>
         /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
         /// <param name="cronExpression"> Cron formatted repeating schedule ("* * * * *") of a Cron Job. </param>
         /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>

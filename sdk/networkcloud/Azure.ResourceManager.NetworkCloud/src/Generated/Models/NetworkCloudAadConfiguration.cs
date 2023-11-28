@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AadConfiguration represents the Azure Active Directory Integration properties. </summary>
     internal partial class NetworkCloudAadConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkCloudAadConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAadConfiguration"/>. </summary>
         /// <param name="adminGroupObjectIds"> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminGroupObjectIds"/> is null. </exception>
         public NetworkCloudAadConfiguration(IEnumerable<string> adminGroupObjectIds)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdminGroupObjectIds = adminGroupObjectIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudAadConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAadConfiguration"/>. </summary>
         /// <param name="adminGroupObjectIds"> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </param>
         internal NetworkCloudAadConfiguration(IList<string> adminGroupObjectIds)
         {

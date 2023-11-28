@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call GetJobDetailsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetJobDetailsAsync("<jobId>", null);
 
@@ -17,8 +18,9 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call GetJobDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetJobDetailsAsync("<jobId>", null);
 
@@ -48,8 +50,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetJobDetails and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetJobDetails("<jobId>", null);
 
@@ -60,8 +63,9 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call GetJobDetails with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetJobDetails("<jobId>", null);
 
@@ -91,8 +95,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateJobAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -110,8 +115,9 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call CreateJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -159,8 +165,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateJob and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -178,8 +185,9 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call CreateJob with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

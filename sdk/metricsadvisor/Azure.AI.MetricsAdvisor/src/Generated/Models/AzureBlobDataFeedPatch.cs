@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureBlobDataFeedPatch. </summary>
     internal partial class AzureBlobDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureBlobDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDataFeedPatch"/>. </summary>
         public AzureBlobDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureBlob;

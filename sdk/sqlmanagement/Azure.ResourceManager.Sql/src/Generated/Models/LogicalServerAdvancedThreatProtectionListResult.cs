@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of the server's Advanced Threat Protection configurations. </summary>
     internal partial class LogicalServerAdvancedThreatProtectionListResult
     {
-        /// <summary> Initializes a new instance of LogicalServerAdvancedThreatProtectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalServerAdvancedThreatProtectionListResult"/>. </summary>
         internal LogicalServerAdvancedThreatProtectionListResult()
         {
             Value = new ChangeTrackingList<ServerAdvancedThreatProtectionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicalServerAdvancedThreatProtectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalServerAdvancedThreatProtectionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal LogicalServerAdvancedThreatProtectionListResult(IReadOnlyList<ServerAdvancedThreatProtectionData> value, string nextLink)

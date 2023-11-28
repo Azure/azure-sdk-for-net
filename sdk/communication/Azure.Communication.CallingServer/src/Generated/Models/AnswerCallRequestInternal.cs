@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>

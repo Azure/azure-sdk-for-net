@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the SecurityMLAnalyticsSettings. </summary>
     internal partial class SecurityMLAnalyticsSettingsList
     {
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of SecurityMLAnalyticsSettings. </param>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings

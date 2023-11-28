@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogStateResponse. </summary>
     internal partial class DialogStateResponseInternal
     {
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         internal DialogStateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         /// <param name="dialogId"> The dialog ID. </param>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>

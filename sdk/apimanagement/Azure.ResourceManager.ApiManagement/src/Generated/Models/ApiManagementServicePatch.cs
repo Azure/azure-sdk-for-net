@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameter supplied to Update Api Management Service. </summary>
     public partial class ApiManagementServicePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
         public ApiManagementServicePatch()
         {
             Zones = new ChangeTrackingList<string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

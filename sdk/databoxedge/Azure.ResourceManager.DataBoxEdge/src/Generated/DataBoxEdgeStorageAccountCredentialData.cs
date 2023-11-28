@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         /// <param name="alias"> Alias for the storage account. </param>
         /// <param name="sslStatus"> Signifies whether SSL needs to be enabled or not. </param>
         /// <param name="accountType"> Type of storage accessed on the storage account. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             AccountType = accountType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

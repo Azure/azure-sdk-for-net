@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information on the connectivity status. </summary>
     public partial class ConnectivityInformation
     {
-        /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityInformation"/>. </summary>
         internal ConnectivityInformation()
         {
             Hops = new ChangeTrackingList<ConnectivityHopInfo>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityInformation"/>. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="networkConnectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>

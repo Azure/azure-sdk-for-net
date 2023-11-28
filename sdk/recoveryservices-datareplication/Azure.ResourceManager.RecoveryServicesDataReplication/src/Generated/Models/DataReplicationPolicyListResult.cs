@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Policy model collection. </summary>
     internal partial class DataReplicationPolicyListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyListResult"/>. </summary>
         internal DataReplicationPolicyListResult()
         {
             Value = new ChangeTrackingList<DataReplicationPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of policies. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationPolicyListResult(IReadOnlyList<DataReplicationPolicyData> value, string nextLink)

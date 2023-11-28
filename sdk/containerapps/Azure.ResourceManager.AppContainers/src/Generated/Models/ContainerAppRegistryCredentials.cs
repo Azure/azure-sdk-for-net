@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App Private Registry. </summary>
     public partial class ContainerAppRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryCredentials"/>. </summary>
         public ContainerAppRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryCredentials"/>. </summary>
         /// <param name="server"> Container Registry Server. </param>
         /// <param name="username"> Container Registry Username. </param>
         /// <param name="passwordSecretRef"> The name of the Secret that contains the registry login password. </param>

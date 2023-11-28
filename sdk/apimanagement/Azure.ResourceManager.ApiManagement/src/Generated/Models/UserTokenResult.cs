@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Get User Token response details. </summary>
     public partial class UserTokenResult
     {
-        /// <summary> Initializes a new instance of UserTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserTokenResult"/>. </summary>
         internal UserTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of UserTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserTokenResult"/>. </summary>
         /// <param name="value"> Shared Access Authorization token for the User. </param>
         internal UserTokenResult(string value)
         {

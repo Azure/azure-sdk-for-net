@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> The response of the List Namespace operation. </summary>
     internal partial class NotificationHubNamespaceListResult
     {
-        /// <summary> Initializes a new instance of NotificationHubNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceListResult"/>. </summary>
         internal NotificationHubNamespaceListResult()
         {
             Value = new ChangeTrackingList<NotificationHubNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceListResult"/>. </summary>
         /// <param name="value"> Result of the List Namespace operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Namespaces. </param>
         internal NotificationHubNamespaceListResult(IReadOnlyList<NotificationHubNamespaceData> value, string nextLink)

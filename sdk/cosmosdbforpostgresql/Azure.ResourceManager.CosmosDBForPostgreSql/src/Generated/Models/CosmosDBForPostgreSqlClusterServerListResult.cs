@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of servers in a cluster. </summary>
     internal partial class CosmosDBForPostgreSqlClusterServerListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
         internal CosmosDBForPostgreSqlClusterServerListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlClusterServerData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
         /// <param name="value"> The list of servers in a cluster. </param>
         internal CosmosDBForPostgreSqlClusterServerListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> value)
         {

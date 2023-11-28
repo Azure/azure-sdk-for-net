@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryDatasetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetProperties"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DataFactoryDatasetProperties(DataFactoryLinkedServiceReference linkedServiceName)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDatasetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetProperties"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

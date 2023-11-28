@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model configuration options. </summary>
     public partial class ModelConfiguration
     {
-        /// <summary> Initializes a new instance of ModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelConfiguration"/>. </summary>
         public ModelConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelConfiguration"/>. </summary>
         /// <param name="mode"> Input delivery mode for the model. </param>
         /// <param name="mountPath"> Relative mounting path of the model in the target image. </param>
         internal ModelConfiguration(PackageInputDeliveryMode? mode, string mountPath)

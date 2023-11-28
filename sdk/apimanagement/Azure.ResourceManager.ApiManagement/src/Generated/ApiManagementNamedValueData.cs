@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
         public ApiManagementNamedValueData()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

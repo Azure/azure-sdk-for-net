@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseTransparentDataEncryptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionData"/>. </summary>
         public SynapseTransparentDataEncryptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

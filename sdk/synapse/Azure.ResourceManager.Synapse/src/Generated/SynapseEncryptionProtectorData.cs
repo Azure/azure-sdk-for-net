@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseEncryptionProtectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionProtectorData"/>. </summary>
         public SynapseEncryptionProtectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

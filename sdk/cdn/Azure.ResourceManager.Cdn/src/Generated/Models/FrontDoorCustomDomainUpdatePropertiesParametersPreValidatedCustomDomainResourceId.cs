@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
     internal partial class FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         public FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id)
         {

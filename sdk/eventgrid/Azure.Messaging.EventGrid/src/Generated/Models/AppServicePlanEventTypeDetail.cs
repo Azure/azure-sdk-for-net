@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Detail of action on the app service plan. </summary>
     public partial class AppServicePlanEventTypeDetail
     {
-        /// <summary> Initializes a new instance of AppServicePlanEventTypeDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
         internal AppServicePlanEventTypeDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanEventTypeDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
         /// <param name="stampKind"> Kind of environment where app service plan is. </param>
         /// <param name="action"> Type of action on the app service plan. </param>
         /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>

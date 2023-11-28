@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for creating a webhook. </summary>
     public partial class ContainerRegistryWebhookCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
         public ContainerRegistryWebhookCreateOrUpdateContent(AzureLocation location)
         {

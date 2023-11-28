@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of subscription tags. </summary>
     internal partial class PredefinedTagsListResult
     {
-        /// <summary> Initializes a new instance of PredefinedTagsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagsListResult"/>. </summary>
         internal PredefinedTagsListResult()
         {
             Value = new ChangeTrackingList<PredefinedTag>();
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagsListResult"/>. </summary>
         /// <param name="value"> An array of tags. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal PredefinedTagsListResult(IReadOnlyList<PredefinedTag> value, string nextLink)

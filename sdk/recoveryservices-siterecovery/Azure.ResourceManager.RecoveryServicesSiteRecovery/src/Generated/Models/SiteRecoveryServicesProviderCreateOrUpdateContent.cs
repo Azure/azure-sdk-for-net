@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input required to add a provider. </summary>
     public partial class SiteRecoveryServicesProviderCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> The properties of an add provider request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryServicesProviderCreateOrUpdateContent(SiteRecoveryAddRecoveryServicesProviderProperties properties)

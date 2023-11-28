@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Private plans subscriptions. </summary>
     public partial class StopSellSubscriptions
     {
-        /// <summary> Initializes a new instance of StopSellSubscriptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopSellSubscriptions"/>. </summary>
         public StopSellSubscriptions()
         {
             Subscriptions = new ChangeTrackingList<string>();

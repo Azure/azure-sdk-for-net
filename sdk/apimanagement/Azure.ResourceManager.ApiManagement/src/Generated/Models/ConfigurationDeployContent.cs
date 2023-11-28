@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Deploy Tenant Configuration Contract. </summary>
     public partial class ConfigurationDeployContent
     {
-        /// <summary> Initializes a new instance of ConfigurationDeployContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationDeployContent"/>. </summary>
         public ConfigurationDeployContent()
         {
         }

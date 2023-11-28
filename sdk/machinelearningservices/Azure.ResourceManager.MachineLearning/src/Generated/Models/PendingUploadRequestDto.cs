@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The PendingUploadRequestDto. </summary>
     public partial class PendingUploadRequestDto
     {
-        /// <summary> Initializes a new instance of PendingUploadRequestDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadRequestDto"/>. </summary>
         public PendingUploadRequestDto()
         {
         }

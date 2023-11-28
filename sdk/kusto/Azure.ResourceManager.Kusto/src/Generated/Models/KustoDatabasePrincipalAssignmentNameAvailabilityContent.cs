@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A principal assignment check name availability request. </summary>
     public partial class KustoDatabasePrincipalAssignmentNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Principal Assignment resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name)

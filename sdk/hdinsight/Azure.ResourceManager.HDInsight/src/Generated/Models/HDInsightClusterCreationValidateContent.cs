@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster create request specification. </summary>
     public partial class HDInsightClusterCreationValidateContent : HDInsightClusterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreationValidateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateContent"/>. </summary>
         public HDInsightClusterCreationValidateContent()
         {
         }

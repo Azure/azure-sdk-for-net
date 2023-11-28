@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Account key datastore credentials configuration. </summary>
     public partial class MachineLearningAccountKeyDatastoreCredentials : MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningAccountKeyDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreCredentials"/>. </summary>
         /// <param name="secrets"> [Required] Storage account secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public MachineLearningAccountKeyDatastoreCredentials(MachineLearningAccountKeyDatastoreSecrets secrets)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = CredentialsType.AccountKey;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAccountKeyDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="secrets"> [Required] Storage account secrets. </param>
         internal MachineLearningAccountKeyDatastoreCredentials(CredentialsType credentialsType, MachineLearningAccountKeyDatastoreSecrets secrets) : base(credentialsType)

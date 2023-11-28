@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration properties for apps environment to join a Virtual Network. </summary>
     public partial class ContainerAppVnetConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVnetConfiguration"/>. </summary>
         public ContainerAppVnetConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVnetConfiguration"/>. </summary>
         /// <param name="isInternal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </param>
         /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. Must not overlap with any other provided IP ranges. </param>
         /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge, network. Must not overlap with any other provided IP ranges. </param>

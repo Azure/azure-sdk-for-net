@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualMachineInstances. </summary>
     internal partial class VMwareVmInstanceListResult
     {
-        /// <summary> Initializes a new instance of VMwareVmInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstanceListResult"/>. </summary>
         /// <param name="value"> Array of VirtualMachines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVmInstanceListResult(IEnumerable<VMwareVmInstanceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareVmInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstanceListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualMachines. </param>
         /// <param name="value"> Array of VirtualMachines. </param>
         internal VMwareVmInstanceListResult(string nextLink, IReadOnlyList<VMwareVmInstanceData> value)

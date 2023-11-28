@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameter supplied to the Apply Network configuration operation. </summary>
     public partial class ApiManagementServiceApplyNetworkConfigurationContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceApplyNetworkConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
         public ApiManagementServiceApplyNetworkConfigurationContent()
         {
         }

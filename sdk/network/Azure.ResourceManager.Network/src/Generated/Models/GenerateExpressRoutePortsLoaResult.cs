@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for GenerateExpressRoutePortsLOA API service call. </summary>
     public partial class GenerateExpressRoutePortsLoaResult
     {
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
         internal GenerateExpressRoutePortsLoaResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
         /// <param name="encodedContent"> The content as a base64 encoded string. </param>
         internal GenerateExpressRoutePortsLoaResult(string encodedContent)
         {

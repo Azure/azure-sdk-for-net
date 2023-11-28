@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ListSphereDeviceGroupsContent
     {
-        /// <summary> Initializes a new instance of ListSphereDeviceGroupsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSphereDeviceGroupsContent"/>. </summary>
         public ListSphereDeviceGroupsContent()
         {
         }

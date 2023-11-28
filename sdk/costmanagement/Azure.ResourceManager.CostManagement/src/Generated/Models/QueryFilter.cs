@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The filter expression to be used in the export. </summary>
     public partial class QueryFilter
     {
-        /// <summary> Initializes a new instance of QueryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryFilter"/>. </summary>
         public QueryFilter()
         {
             And = new ChangeTrackingList<QueryFilter>();

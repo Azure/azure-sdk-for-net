@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DigitalTwins
     /// </summary>
     public partial class DigitalTwinsEndpointResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceData"/>. </summary>
         /// <param name="properties">
         /// DigitalTwinsInstance endpoint resource properties.
         /// Please note <see cref="DigitalTwinsEndpointResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DigitalTwins
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

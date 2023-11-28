@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A query specification containing either a query statement or a continuation token from a previous query result. </summary>
     internal partial class QuerySpecification
     {
-        /// <summary> Initializes a new instance of QuerySpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
         public QuerySpecification()
         {
         }

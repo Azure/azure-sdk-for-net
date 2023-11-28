@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class IssueContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of IssueContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueContractData"/>. </summary>
         public IssueContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of IssueContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

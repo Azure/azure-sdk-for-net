@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The RoleManagementExpandedProperties. </summary>
     public partial class RoleManagementExpandedProperties
     {
-        /// <summary> Initializes a new instance of RoleManagementExpandedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementExpandedProperties"/>. </summary>
         internal RoleManagementExpandedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleManagementExpandedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementExpandedProperties"/>. </summary>
         /// <param name="principalId"> Id of the principal. </param>
         /// <param name="principalDisplayName"> Display name of the principal. </param>
         /// <param name="email"> Email id of the principal. </param>

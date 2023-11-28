@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment What-if operation parameters. </summary>
     public partial class ArmDeploymentWhatIfContent
     {
-        /// <summary> Initializes a new instance of ArmDeploymentWhatIfContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentWhatIfContent(ArmDeploymentWhatIfProperties properties)

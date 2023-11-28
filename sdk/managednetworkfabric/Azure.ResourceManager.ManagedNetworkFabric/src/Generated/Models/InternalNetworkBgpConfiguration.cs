@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BGP configuration properties. </summary>
     public partial class InternalNetworkBgpConfiguration : BgpConfiguration
     {
-        /// <summary> Initializes a new instance of InternalNetworkBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpConfiguration"/>. </summary>
         public InternalNetworkBgpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>

@@ -7,13 +7,14 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
         public CloudHsmClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -23,5 +24,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> SKU details. </summary>
         public CloudHsmClusterSku Sku { get; set; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Cloud Hsm Cluster backup information. </summary>
+        public BackupProperties BackupProperties { get; set; }
     }
 }

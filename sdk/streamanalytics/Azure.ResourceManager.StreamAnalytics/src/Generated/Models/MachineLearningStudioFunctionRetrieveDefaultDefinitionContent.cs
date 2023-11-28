@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The parameters needed to retrieve the default function definition for an Azure Machine Learning Studio function. </summary>
     public partial class MachineLearningStudioFunctionRetrieveDefaultDefinitionContent : FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of MachineLearningStudioFunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioFunctionRetrieveDefaultDefinitionContent"/>. </summary>
         public MachineLearningStudioFunctionRetrieveDefaultDefinitionContent()
         {
             BindingType = "Microsoft.MachineLearning/WebService";

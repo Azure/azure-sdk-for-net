@@ -10,7 +10,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> Text analysis result. </summary>
     public partial class TextAnalyzeSeverityResult
     {
-        /// <summary> Initializes a new instance of TextAnalyzeSeverityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnalyzeSeverityResult"/>. </summary>
         /// <param name="category"> The text category. </param>
         /// <param name="severity"> The higher the severity of input content, the larger this value is. The values could be: 0,2,4,6. </param>
         internal TextAnalyzeSeverityResult(TextCategory category, int severity)

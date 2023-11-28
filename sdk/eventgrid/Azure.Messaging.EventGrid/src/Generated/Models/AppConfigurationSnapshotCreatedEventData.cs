@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotCreated event. </summary>
     public partial class AppConfigurationSnapshotCreatedEventData : AppConfigurationSnapshotEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotCreatedEventData"/>. </summary>
         internal AppConfigurationSnapshotCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotCreatedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>

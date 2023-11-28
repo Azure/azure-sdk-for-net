@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The upload certificate request. </summary>
     public partial class UploadCertificateContent
     {
-        /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
         public UploadCertificateContent(string certificate)

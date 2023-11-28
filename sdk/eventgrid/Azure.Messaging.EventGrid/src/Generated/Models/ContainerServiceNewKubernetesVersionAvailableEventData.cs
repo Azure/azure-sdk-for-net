@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NewKubernetesVersionAvailable event. </summary>
     public partial class ContainerServiceNewKubernetesVersionAvailableEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceNewKubernetesVersionAvailableEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/>. </summary>
         internal ContainerServiceNewKubernetesVersionAvailableEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNewKubernetesVersionAvailableEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/>. </summary>
         /// <param name="latestSupportedKubernetesVersion"> The highest PATCH Kubernetes version for the highest MINOR version supported by ManagedCluster resource. </param>
         /// <param name="latestStableKubernetesVersion"> The highest PATCH Kubernetes version for the MINOR version considered stable for the ManagedCluster resource. </param>
         /// <param name="lowestMinorKubernetesVersion"> The highest PATCH Kubernetes version for the lowest applicable MINOR version available for the ManagedCluster resource. </param>

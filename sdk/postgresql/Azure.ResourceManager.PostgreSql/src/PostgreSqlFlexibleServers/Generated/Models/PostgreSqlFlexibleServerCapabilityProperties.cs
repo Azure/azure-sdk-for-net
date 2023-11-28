@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Capability for the PostgreSQL server. </summary>
     public partial class PostgreSqlFlexibleServerCapabilityProperties : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         internal PostgreSqlFlexibleServerCapabilityProperties()
         {
             SupportedServerEditions = new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedFastProvisioningEditions = new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name of flexible servers capability. </param>

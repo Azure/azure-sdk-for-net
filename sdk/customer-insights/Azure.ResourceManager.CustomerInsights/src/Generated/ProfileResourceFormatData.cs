@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ProfileResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         public ProfileResourceFormatData()
         {
             Attributes = new ChangeTrackingDictionary<string, IList<string>>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights
             StrongIds = new ChangeTrackingList<StrongId>();
         }
 
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

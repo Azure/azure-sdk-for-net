@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecurityAssessmentPublishDates. </summary>
     public partial class SecurityAssessmentPublishDates
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentPublishDates. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="public"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="public"/> is null. </exception>
         public SecurityAssessmentPublishDates(string @public)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Public = @public;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentPublishDates. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="ga"></param>
         /// <param name="public"></param>
         internal SecurityAssessmentPublishDates(string ga, string @public)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a Provisioning Service instance. </summary>
     public partial class DeviceProvisioningServicePatch
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicePatch"/>. </summary>
         public DeviceProvisioningServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

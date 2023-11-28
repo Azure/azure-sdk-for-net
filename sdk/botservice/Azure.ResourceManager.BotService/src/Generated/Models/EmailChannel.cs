@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Email channel definition. </summary>
     public partial class EmailChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of EmailChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailChannel"/>. </summary>
         public EmailChannel()
         {
             ChannelName = "EmailChannel";
         }
 
-        /// <summary> Initializes a new instance of EmailChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

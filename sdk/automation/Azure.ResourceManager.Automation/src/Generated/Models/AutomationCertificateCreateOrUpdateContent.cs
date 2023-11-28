@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update or replace certificate operation. </summary>
     public partial class AutomationCertificateCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the certificate. </param>
         /// <param name="base64Value"> Gets or sets the base64 encoded value of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="base64Value"/> is null. </exception>

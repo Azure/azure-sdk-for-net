@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleEligibilityScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleData"/>. </summary>
         internal RoleEligibilityScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

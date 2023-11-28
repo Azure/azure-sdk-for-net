@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the SAP Enqueue Server properties. </summary>
     public partial class EnqueueServerProperties
     {
-        /// <summary> Initializes a new instance of EnqueueServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnqueueServerProperties"/>. </summary>
         public EnqueueServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EnqueueServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnqueueServerProperties"/>. </summary>
         /// <param name="hostname"> Enqueue Server SAP Hostname. </param>
         /// <param name="ipAddress"> Enqueue Server SAP IP Address. </param>
         /// <param name="port"> Enqueue Server Port. </param>

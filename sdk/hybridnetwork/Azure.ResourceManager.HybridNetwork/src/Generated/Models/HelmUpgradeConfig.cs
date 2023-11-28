@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The helm deployment install options. </summary>
     public partial class HelmUpgradeConfig
     {
-        /// <summary> Initializes a new instance of HelmUpgradeConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmUpgradeConfig"/>. </summary>
         public HelmUpgradeConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmUpgradeConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmUpgradeConfig"/>. </summary>
         /// <param name="atomic"> The helm deployment atomic options. </param>
         /// <param name="wait"> The helm deployment wait options. </param>
         /// <param name="timeout"> The helm deployment timeout options. </param>

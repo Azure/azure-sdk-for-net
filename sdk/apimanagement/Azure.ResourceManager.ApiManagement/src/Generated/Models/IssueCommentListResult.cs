@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Issue Comment list representation. </summary>
     internal partial class IssueCommentListResult
     {
-        /// <summary> Initializes a new instance of IssueCommentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueCommentListResult"/>. </summary>
         internal IssueCommentListResult()
         {
             Value = new ChangeTrackingList<ApiIssueCommentData>();
         }
 
-        /// <summary> Initializes a new instance of IssueCommentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueCommentListResult"/>. </summary>
         /// <param name="value"> Issue Comment values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Managed data disk description. </summary>
     public partial class NodeTypeVmssDataDisk
     {
-        /// <summary> Initializes a new instance of NodeTypeVmssDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. Lun 0 is reserved for the service fabric data disk. </param>
         /// <param name="diskSizeInGB"> Disk size for each vm in the node type in GBs. </param>
         /// <param name="diskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>

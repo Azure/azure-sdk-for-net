@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to list management groups. </summary>
     internal partial class ManagementGroupListResult
     {
-        /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
         internal ManagementGroupListResult()
         {
             Value = new ChangeTrackingList<ManagementGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
         /// <param name="value"> The list of management groups. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink)

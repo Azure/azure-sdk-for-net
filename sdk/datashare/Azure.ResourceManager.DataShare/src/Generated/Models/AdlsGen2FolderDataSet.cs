@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An ADLS Gen 2 folder data set. </summary>
     public partial class AdlsGen2FolderDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="fileSystem"> File system to which the folder belongs. </param>
         /// <param name="folderPath"> Folder path within the file system. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.AdlsGen2Folder;
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

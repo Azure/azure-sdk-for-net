@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The storage profile. </summary>
     public partial class FlinkStorageProfile
     {
-        /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkStorageProfile"/>. </summary>
         /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageUriString"/> is null. </exception>
         public FlinkStorageProfile(string storageUriString)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             StorageUriString = storageUriString;
         }
 
-        /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkStorageProfile"/>. </summary>
         /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
         /// <param name="storagekey"> Storage key is only required for wasb(s) storage. </param>
         internal FlinkStorageProfile(string storageUriString, string storagekey)

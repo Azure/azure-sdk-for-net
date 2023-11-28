@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Request from client to check resource name availability. </summary>
     public partial class PostgreSqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlNameAvailabilityContent(string name)

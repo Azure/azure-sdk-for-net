@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Notification list representation. </summary>
     internal partial class NotificationListResult
     {
-        /// <summary> Initializes a new instance of NotificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationListResult"/>. </summary>
         internal NotificationListResult()
         {
             Value = new ChangeTrackingList<ApiManagementNotificationData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

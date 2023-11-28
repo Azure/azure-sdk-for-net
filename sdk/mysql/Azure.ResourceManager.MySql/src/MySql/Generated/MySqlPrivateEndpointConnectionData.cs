@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionData"/>. </summary>
         public MySqlPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

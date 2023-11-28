@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.WorkloadMonitor
     /// </summary>
     public partial class HealthMonitorData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorData"/>. </summary>
         internal HealthMonitorData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

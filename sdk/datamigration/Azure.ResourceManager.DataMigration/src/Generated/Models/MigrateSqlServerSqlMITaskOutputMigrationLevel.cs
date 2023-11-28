@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputMigrationLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputMigrationLevel()
         {
             OrphanedUsersInfo = new ChangeTrackingList<OrphanedUserInfo>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>

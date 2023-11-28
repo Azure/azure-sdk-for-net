@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Remote debugging payload. </summary>
     public partial class ApplicationRemoteDebuggingContent
     {
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingContent"/>. </summary>
         public ApplicationRemoteDebuggingContent()
         {
         }

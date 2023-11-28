@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes a column to sort. </summary>
     public partial class IdpsQueryOrderBy
     {
-        /// <summary> Initializes a new instance of IdpsQueryOrderBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryOrderBy"/>. </summary>
         public IdpsQueryOrderBy()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Retention tag. </summary>
     public partial class DataProtectionBackupRetentionTag
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public DataProtectionBackupRetentionTag(string tagName)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TagName = tagName;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="eTag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>

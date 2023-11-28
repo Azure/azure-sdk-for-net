@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery Application Version that you want to update. </summary>
     public partial class GalleryApplicationVersionPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPatch"/>. </summary>
         public GalleryApplicationVersionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

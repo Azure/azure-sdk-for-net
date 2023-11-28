@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List partner configurations operation. </summary>
     internal partial class PartnerConfigurationsListResult
     {
-        /// <summary> Initializes a new instance of PartnerConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationsListResult"/>. </summary>
         internal PartnerConfigurationsListResult()
         {
             Value = new ChangeTrackingList<PartnerConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of PartnerConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationsListResult"/>. </summary>
         /// <param name="value"> A collection of partner configurations. </param>
         /// <param name="nextLink"> A link for the next page of partner configurations. </param>
         internal PartnerConfigurationsListResult(IReadOnlyList<PartnerConfigurationData> value, string nextLink)

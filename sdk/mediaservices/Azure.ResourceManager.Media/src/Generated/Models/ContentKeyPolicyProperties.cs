@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The properties of the Content Key Policy. </summary>
     public partial class ContentKeyPolicyProperties
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyProperties"/>. </summary>
         /// <param name="options"> The Key Policy options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             Options = options.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyProperties"/>. </summary>
         /// <param name="policyId"> The legacy Policy ID. </param>
         /// <param name="createdOn"> The creation date of the Policy. </param>
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>

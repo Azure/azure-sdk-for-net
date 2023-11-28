@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         protected WorkerSelectorAttachment()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         internal WorkerSelectorAttachment(WorkerSelectorAttachmentKind kind)
         {

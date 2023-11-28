@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource selector to filter policies by resource properties. </summary>
     public partial class ResourceSelector
     {
-        /// <summary> Initializes a new instance of ResourceSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
         public ResourceSelector()
         {
             Selectors = new ChangeTrackingList<ResourceSelectorExpression>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
         /// <param name="name"> The name of the resource selector. </param>
         /// <param name="selectors"> The list of the selector expressions. </param>
         internal ResourceSelector(string name, IList<ResourceSelectorExpression> selectors)

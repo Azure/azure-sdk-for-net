@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Resource operation. </summary>
     public partial class ResourceOperation
     {
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         internal ResourceOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         /// <param name="name"> Name of this operation. </param>
         /// <param name="display"> Display of the operation. </param>
         /// <param name="origin"> The operation origin. </param>

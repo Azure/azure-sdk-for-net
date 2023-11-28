@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderAuthentication. </summary>
     internal partial class ResourceProviderAuthentication
     {
-        /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
         /// <param name="allowedAudiences"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderAuthentication(IEnumerable<string> allowedAudiences)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             AllowedAudiences = allowedAudiences.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
         /// <param name="allowedAudiences"></param>
         internal ResourceProviderAuthentication(IList<string> allowedAudiences)
         {

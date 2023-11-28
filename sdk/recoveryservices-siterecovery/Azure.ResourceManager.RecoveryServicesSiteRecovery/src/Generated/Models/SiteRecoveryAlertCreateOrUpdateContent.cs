@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Request to configure alerts for the system. </summary>
     public partial class SiteRecoveryAlertCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryAlertCreateOrUpdateContent()
         {
         }

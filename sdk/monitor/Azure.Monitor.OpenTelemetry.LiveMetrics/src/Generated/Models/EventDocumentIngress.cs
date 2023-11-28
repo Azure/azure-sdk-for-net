@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Event type document. </summary>
     internal partial class EventDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of EventDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDocumentIngress"/>. </summary>
         public EventDocumentIngress()
         {
         }

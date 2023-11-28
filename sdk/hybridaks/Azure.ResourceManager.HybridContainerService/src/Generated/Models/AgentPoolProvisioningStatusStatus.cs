@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSNodePoolStatus defines the observed state of HybridAKSNodePool. </summary>
     public partial class AgentPoolProvisioningStatusStatus
     {
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatus"/>. </summary>
         public AgentPoolProvisioningStatusStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatus"/>. </summary>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
         /// <param name="readyReplicas"> Total number of ready machines targeted by this deployment. </param>

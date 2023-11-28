@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute data flow activity. </summary>
     public partial class ExecuteDataFlowActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataFlow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecuteDataFlow";
         }
 
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Update integration runtime request. </summary>
     public partial class SynapseIntegrationRuntimePatch
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimePatch"/>. </summary>
         public SynapseIntegrationRuntimePatch()
         {
         }

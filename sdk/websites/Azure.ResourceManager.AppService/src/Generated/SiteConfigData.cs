@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigData"/>. </summary>
         public SiteConfigData()
         {
             DefaultDocuments = new ChangeTrackingList<string>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
             AzureStorageAccounts = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
-        /// <summary> Initializes a new instance of SiteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

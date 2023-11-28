@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Report records list representation. </summary>
     internal partial class ReportListResult
     {
-        /// <summary> Initializes a new instance of ReportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportListResult"/>. </summary>
         internal ReportListResult()
         {
             Value = new ChangeTrackingList<ReportRecordContract>();
         }
 
-        /// <summary> Initializes a new instance of ReportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ServiceAssociationLink resource. </summary>
     public partial class ServiceAssociationLink : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         public ServiceAssociationLink()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

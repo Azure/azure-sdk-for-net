@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> The JsonWebKeySet. </summary>
     internal partial class JsonWebKeySet
     {
-        /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         public JsonWebKeySet()
         {
             Keys = new ChangeTrackingList<JsonWebKey>();

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged API list representation. </summary>
     internal partial class ApiManagementProductApiListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementProductApiListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductApiListResult"/>. </summary>
         internal ApiManagementProductApiListResult()
         {
             Value = new ChangeTrackingList<ProductApiData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementProductApiListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductApiListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

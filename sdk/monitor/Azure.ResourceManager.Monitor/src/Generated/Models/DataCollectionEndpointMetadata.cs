@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Metadata for the resource. This property is READ-ONLY. </summary>
     public partial class DataCollectionEndpointMetadata : DataCollectionRuleRelatedResourceMetadata
     {
-        /// <summary> Initializes a new instance of DataCollectionEndpointMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointMetadata"/>. </summary>
         internal DataCollectionEndpointMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         internal DataCollectionEndpointMetadata(string provisionedBy, string provisionedByResourceId) : base(provisionedBy, provisionedByResourceId)

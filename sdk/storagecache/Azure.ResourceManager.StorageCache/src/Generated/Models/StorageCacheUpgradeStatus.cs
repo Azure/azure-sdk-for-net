@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties describing the software upgrade state of the cache. </summary>
     public partial class StorageCacheUpgradeStatus
     {
-        /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUpgradeStatus"/>. </summary>
         internal StorageCacheUpgradeStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUpgradeStatus"/>. </summary>
         /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this cache. </param>
         /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
         /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the cache. </param>
