@@ -19,7 +19,7 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
@@ -73,17 +73,16 @@ namespace Azure.Search.Documents
             Size = size;
 
             SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null) ? new SemanticSearchOptions() : null;
-            SemanticConfigurationName = semanticConfigurationName;
-            SemanticErrorMode = semanticErrorMode;
-            SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
             if (SemanticSearch != null)
             {
                 SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
-                QueryAnswerRaw = queryAnswerRaw;
-
                 SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
-                QueryCaptionRaw = queryCaptionRaw;
             }
+            SemanticConfigurationName = semanticConfigurationName;
+            SemanticErrorMode = semanticErrorMode;
+            SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
+            QueryAnswerRaw = queryAnswerRaw;
+            QueryCaptionRaw = queryCaptionRaw;
 
             VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
             VectorQueries = vectorQueries;
