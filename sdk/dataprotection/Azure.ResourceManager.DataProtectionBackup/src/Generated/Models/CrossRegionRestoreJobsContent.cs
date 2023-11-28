@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Details of Backup Vault for which CRR Jobs are to be fetched. </summary>
     public partial class CrossRegionRestoreJobsContent
     {
-        /// <summary> Initializes a new instance of CrossRegionRestoreJobsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossRegionRestoreJobsContent"/>. </summary>
         /// <param name="sourceRegion"></param>
         /// <param name="sourceBackupVaultId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupVaultId"/> is null. </exception>

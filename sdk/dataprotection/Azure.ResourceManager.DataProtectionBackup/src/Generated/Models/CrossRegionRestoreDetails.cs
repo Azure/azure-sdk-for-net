@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Cross Region Restore details. </summary>
     public partial class CrossRegionRestoreDetails
     {
-        /// <summary> Initializes a new instance of CrossRegionRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossRegionRestoreDetails"/>. </summary>
         /// <param name="sourceRegion"></param>
         /// <param name="sourceBackupInstanceId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupInstanceId"/> is null. </exception>

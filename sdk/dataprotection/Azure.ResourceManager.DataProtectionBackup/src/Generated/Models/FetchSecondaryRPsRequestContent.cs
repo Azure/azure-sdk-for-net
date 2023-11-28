@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public partial class FetchSecondaryRPsRequestContent
     {
-        /// <summary> Initializes a new instance of FetchSecondaryRPsRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsRequestContent"/>. </summary>
         public FetchSecondaryRPsRequestContent()
         {
         }

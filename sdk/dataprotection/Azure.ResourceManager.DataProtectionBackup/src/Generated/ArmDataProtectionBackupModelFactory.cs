@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupJobSubTask(additionalDetails, taskId, taskName, taskProgress, taskStatus);
         }
 
-        /// <summary> Initializes a new instance of UserFacingWarningDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserFacingWarningDetail"/>. </summary>
         /// <param name="resourceName"> Name of resource for which warning is raised. </param>
         /// <param name="warning"> Error details for the warning. </param>
         /// <returns> A new <see cref="Models.UserFacingWarningDetail"/> instance for mocking. </returns>

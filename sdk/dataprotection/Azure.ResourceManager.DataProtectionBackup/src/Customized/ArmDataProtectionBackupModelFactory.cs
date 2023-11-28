@@ -44,6 +44,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, null, null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupVaultProperties"/>. </summary>
+        /// <param name="alertSettingsForAllJobFailures"> Monitoring Settings. </param>
+        /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
+        /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
+        /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null)
+        {
+            return DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings, isVaultProtectedByResourceGuard, featureSettings, secureScore, null);
+        }
+
         /// <summary>
         /// Initializes a new instance of DataProtectionBackupInstanceProperties.
         /// </summary>
@@ -156,6 +172,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, DateTimeOffset recoverOn = default, string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, DateTimeOffset? expireOn = null)
         {
             return DataProtectionBackupDiscreteRecoveryPointProperties(friendlyName, recoveryPointDataStoresDetails, recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationJobExtendedInfo"/>. </summary>
+        /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
+        /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
+        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(Azure.Core.ResourceIdentifier jobResourceId = null)
+        {
+            return DataProtectionOperationJobExtendedInfo(jobResourceId.ToString());
         }
     }
 }

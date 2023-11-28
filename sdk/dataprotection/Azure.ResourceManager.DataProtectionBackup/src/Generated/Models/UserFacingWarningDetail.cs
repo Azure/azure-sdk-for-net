@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Warning object used by layers that have access to localized content, and propagate that to user. </summary>
     public partial class UserFacingWarningDetail
     {
-        /// <summary> Initializes a new instance of UserFacingWarningDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserFacingWarningDetail"/>. </summary>
         /// <param name="warning"> Error details for the warning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="warning"/> is null. </exception>
         internal UserFacingWarningDetail(ResponseError warning)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Warning = warning;
         }
 
-        /// <summary> Initializes a new instance of UserFacingWarningDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserFacingWarningDetail"/>. </summary>
         /// <param name="resourceName"> Name of resource for which warning is raised. </param>
         /// <param name="warning"> Error details for the warning. </param>
         internal UserFacingWarningDetail(string resourceName, ResponseError warning)

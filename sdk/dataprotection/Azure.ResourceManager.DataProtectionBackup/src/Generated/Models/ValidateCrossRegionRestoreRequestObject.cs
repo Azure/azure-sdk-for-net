@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Cross Region Restore Request Object. </summary>
     public partial class ValidateCrossRegionRestoreRequestObject
     {
-        /// <summary> Initializes a new instance of ValidateCrossRegionRestoreRequestObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateCrossRegionRestoreRequestObject"/>. </summary>
         /// <param name="restoreRequestObject">
         /// Gets or sets the restore request object.
         /// Please note <see cref="BackupRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
