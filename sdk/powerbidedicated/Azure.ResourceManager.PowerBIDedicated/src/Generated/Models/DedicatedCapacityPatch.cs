@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityPatch"/>. </summary>
+        /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
+        /// <param name="friendlyName"> Capacity name. </param>
+        internal DedicatedCapacityPatch(CapacitySku sku, IDictionary<string, string> tags, DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName)
+        {
+            Sku = sku;
+            Tags = tags;
+            Administration = administration;
+            Mode = mode;
+            TenantId = tenantId;
+            FriendlyName = friendlyName;
+        }
+
         /// <summary> The SKU of the Dedicated capacity resource. </summary>
         public CapacitySku Sku { get; set; }
         /// <summary> Key-value pairs of additional provisioning properties. </summary>

@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.Network.Models
             ValidStatusCodes = new ChangeTrackingList<int>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkHttpConfiguration"/>. </summary>
+        /// <param name="method"> HTTP method. </param>
+        /// <param name="headers"> List of HTTP headers. </param>
+        /// <param name="validStatusCodes"> Valid status codes. </param>
+        internal NetworkHttpConfiguration(NetworkWatcherHttpMethod? method, IList<NetworkWatcherHttpHeader> headers, IList<int> validStatusCodes)
+        {
+            Method = method;
+            Headers = headers;
+            ValidStatusCodes = validStatusCodes;
+        }
+
         /// <summary> HTTP method. </summary>
         public NetworkWatcherHttpMethod? Method { get; set; }
         /// <summary> List of HTTP headers. </summary>

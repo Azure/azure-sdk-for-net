@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="count"> The number of virtual machines that use this configuration. </param>
+        /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
+        internal NetworkCloudAgentPoolPatch(IDictionary<string, string> tags, long? count, AgentPoolUpgradeSettings upgradeSettings)
+        {
+            Tags = tags;
+            Count = count;
+            UpgradeSettings = upgradeSettings;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The number of virtual machines that use this configuration. </summary>

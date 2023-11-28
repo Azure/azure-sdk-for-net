@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        internal PostgreSqlNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Resource name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>

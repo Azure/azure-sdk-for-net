@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             EnabledMetrics = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
+        /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
+        internal NetworkCloudClusterMetricsConfigurationPatch(IDictionary<string, string> tags, long? collectionInterval, IList<string> enabledMetrics)
+        {
+            Tags = tags;
+            CollectionInterval = collectionInterval;
+            EnabledMetrics = enabledMetrics;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The interval in minutes by which metrics will be collected. </summary>

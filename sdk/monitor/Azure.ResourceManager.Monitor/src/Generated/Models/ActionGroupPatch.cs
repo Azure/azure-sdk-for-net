@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </param>
+        internal ActionGroupPatch(IDictionary<string, string> tags, bool? isEnabled)
+        {
+            Tags = tags;
+            IsEnabled = isEnabled;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>

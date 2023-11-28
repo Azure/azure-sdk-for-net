@@ -39,6 +39,23 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Role = role;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCommonProperties"/>. </summary>
+        /// <param name="roleId"> Role Id of the Built-In Role. </param>
+        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <param name="userName"> User name. </param>
+        /// <param name="dataTypeScope"> Data Type Scope at which the role assignment is created. </param>
+        /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
+        /// <param name="role"> Data Product role to be assigned to a user. </param>
+        internal RoleAssignmentCommonProperties(string roleId, string principalId, string userName, IList<string> dataTypeScope, string principalType, DataProductUserRole role)
+        {
+            RoleId = roleId;
+            PrincipalId = principalId;
+            UserName = userName;
+            DataTypeScope = dataTypeScope;
+            PrincipalType = principalType;
+            Role = role;
+        }
+
         /// <summary> Role Id of the Built-In Role. </summary>
         public string RoleId { get; }
         /// <summary> Object ID of the AAD principal or security-group. </summary>

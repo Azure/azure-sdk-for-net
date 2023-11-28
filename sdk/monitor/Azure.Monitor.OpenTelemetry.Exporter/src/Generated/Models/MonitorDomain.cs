@@ -21,6 +21,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal MonitorDomain(int version, IDictionary<string, object> additionalProperties)
+        {
+            Version = version;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> Schema version. </summary>
         public int Version { get; }
         /// <summary> Additional Properties. </summary>

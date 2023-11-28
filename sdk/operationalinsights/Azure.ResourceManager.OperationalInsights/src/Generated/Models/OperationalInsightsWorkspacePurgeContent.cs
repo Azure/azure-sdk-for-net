@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Filters = filters.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeContent"/>. </summary>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
+        internal OperationalInsightsWorkspacePurgeContent(string table, IList<OperationalInsightsWorkspacePurgeFilter> filters)
+        {
+            Table = table;
+            Filters = filters;
+        }
+
         /// <summary> Table from which to purge data. </summary>
         public string Table { get; }
         /// <summary> The set of columns and filters (queries) to run over them to purge the resulting data. </summary>
