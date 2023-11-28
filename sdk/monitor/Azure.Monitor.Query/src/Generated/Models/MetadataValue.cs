@@ -16,17 +16,17 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataValue"/>. </summary>
-        /// <param name="name"> the name of the metadata. </param>
-        /// <param name="value"> the value of the metadata. </param>
+        /// <param name="name"> The name of the metadata. </param>
+        /// <param name="value"> The value of the metadata. </param>
         internal MetadataValue(LocalizableString name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> the name of the metadata. </summary>
+        /// <summary> The name of the metadata. </summary>
         public LocalizableString Name { get; }
-        /// <summary> the value of the metadata. </summary>
+        /// <summary> The value of the metadata. </summary>
         public string Value { get; }
     }
 }

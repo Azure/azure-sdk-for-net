@@ -31,7 +31,10 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of <see cref="MetricsQueryResult"/>. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="granularity">
+        /// The interval (window size) for which the metric data was returned in ISO 8601 duration format with a special case for 'FULL' value that returns single datapoint for entire time span requested (*Examples: PT15M, PT1H, P1D, FULL*).
+        /// This may be adjusted and different from what was originally requested if AutoAdjustTimegrain=true is specified. This is not present if a metadata request was made.
+        /// </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>

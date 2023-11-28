@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> The BatchQueryResponse. </summary>
+    /// <summary> Contains the batch query response and the headers, id, and status of the request. </summary>
     internal partial class BatchQueryResponse
     {
         /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
