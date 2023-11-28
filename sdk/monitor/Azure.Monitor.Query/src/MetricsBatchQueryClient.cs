@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query
             var subscriptionId = GetSubscriptionId(resourceIds[0]);
 
             string filter = null;
-            string granularity = null;
+            TimeSpan? granularity = null;
             string aggregations = null;
             string startTime = null;
             int? top = null;
@@ -115,7 +115,7 @@ namespace Azure.Monitor.Query
                 top = options.Size;
                 orderBy = options.OrderBy;
                 filter = options.Filter;
-                granularity = options.GranularityDuration;
+                granularity = options.Granularity;
             }
 
             if (!isAsync)

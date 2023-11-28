@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
         }
 
-        internal HttpMessage CreateListRequest(string resourceUri, string timespan, string interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace)
+        internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,7 +52,7 @@ namespace Azure.Monitor.Query
             }
             if (interval != null)
             {
-                uri.AppendQuery("interval", interval, true);
+                uri.AppendQuery("interval", interval.Value, "P", true);
             }
             if (metricnames != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<MetricsQueryResult>> ListAsync(string resourceUri, string timespan = null, string interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsQueryResult>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -159,7 +159,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<MetricsQueryResult> List(string resourceUri, string timespan = null, string interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public Response<MetricsQueryResult> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {

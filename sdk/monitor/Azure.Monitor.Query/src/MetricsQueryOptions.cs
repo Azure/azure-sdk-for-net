@@ -24,13 +24,7 @@ namespace Azure.Monitor.Query
         /// Gets or sets the interval at which to sample metrics.
         /// </summary>
         [CodeGenMember("Interval")]
-        public string GranularityDuration { get; set; }
-
-        /// <summary>
-        /// pass
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public TimeSpan? Granularity { get => TimeSpan.Parse(GranularityDuration); set => GranularityDuration = value.ToString(); } //convert to iso 8601 duration
+        public TimeSpan? Granularity { get; set; }
 
         /// <summary>
         /// <para>

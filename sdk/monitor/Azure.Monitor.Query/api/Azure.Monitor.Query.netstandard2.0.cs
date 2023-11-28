@@ -85,9 +85,7 @@ namespace Azure.Monitor.Query
         public MetricsQueryOptions() { }
         public System.Collections.Generic.IList<Azure.Monitor.Query.Models.MetricAggregationType> Aggregations { get { throw null; } }
         public string Filter { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.TimeSpan? Granularity { get { throw null; } set { } }
-        public string GranularityDuration { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }

@@ -94,3 +94,21 @@ directive:
     $.properties.path["x-ms-constant"] = true;
     $.properties.method["x-ms-constant"] = true;
 ```
+
+### Change Interval to type 'Duration'
+
+```yaml
+directive:
+- from: swagger-document
+  where: $.definitions.MetricsResponse.properties.interval
+  transform: >
+    $["format"] = "duration";
+```
+
+```yaml
+directive:
+- from: swagger-document
+  where: $.parameters.IntervalParameter
+  transform: >
+    $["format"] = "duration";
+```
