@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model package input options. </summary>
     public partial class ModelPackageInput
     {
-        /// <summary> Initializes a new instance of ModelPackageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageInput"/>. </summary>
         /// <param name="inputType"> [Required] Type of the input included in the target image. </param>
         /// <param name="path">
         /// [Required] Location of the input.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of ModelPackageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageInput"/>. </summary>
         /// <param name="inputType"> [Required] Type of the input included in the target image. </param>
         /// <param name="mode"> Input delivery mode of the input. </param>
         /// <param name="mountPath"> Relative mount path of the input in the target image. </param>

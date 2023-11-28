@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Body for the save image POST. </summary>
     public partial class LabVirtualMachineImageContent
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageContent"/>. </summary>
         public LabVirtualMachineImageContent()
         {
         }

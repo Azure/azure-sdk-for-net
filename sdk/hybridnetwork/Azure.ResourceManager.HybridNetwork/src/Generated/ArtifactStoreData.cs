@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class ArtifactStoreData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ArtifactStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ArtifactStoreData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

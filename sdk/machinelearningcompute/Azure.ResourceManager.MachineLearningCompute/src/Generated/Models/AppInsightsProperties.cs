@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Properties of App Insights. </summary>
     internal partial class AppInsightsProperties
     {
-        /// <summary> Initializes a new instance of AppInsightsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
         public AppInsightsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInsightsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
         /// <param name="resourceId"> ARM resource ID of the App Insights. </param>
         internal AppInsightsProperties(string resourceId)
         {

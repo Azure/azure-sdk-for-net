@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataLakeGen2SharedKeyParamPatch. </summary>
     internal partial class DataLakeGen2SharedKeyParamPatch
     {
-        /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParamPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParamPatch"/>. </summary>
         public DataLakeGen2SharedKeyParamPatch()
         {
         }

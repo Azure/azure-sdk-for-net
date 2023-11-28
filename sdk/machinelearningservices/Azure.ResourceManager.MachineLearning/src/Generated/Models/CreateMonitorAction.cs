@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CreateMonitorAction. </summary>
     public partial class CreateMonitorAction : MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of CreateMonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorDefinition"/> is null. </exception>
         public CreateMonitorAction(MonitorDefinition monitorDefinition)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ActionType = ScheduleActionType.CreateMonitor;
         }
 
-        /// <summary> Initializes a new instance of CreateMonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
         internal CreateMonitorAction(ScheduleActionType actionType, MonitorDefinition monitorDefinition) : base(actionType)

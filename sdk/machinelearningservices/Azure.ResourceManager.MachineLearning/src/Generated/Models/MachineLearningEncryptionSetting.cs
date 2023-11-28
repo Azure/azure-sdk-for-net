@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEncryptionSetting. </summary>
     public partial class MachineLearningEncryptionSetting
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="cosmosDBResourceId">
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption

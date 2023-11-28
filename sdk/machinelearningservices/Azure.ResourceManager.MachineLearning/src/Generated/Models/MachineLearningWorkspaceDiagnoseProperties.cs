@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceDiagnoseProperties. </summary>
     public partial class MachineLearningWorkspaceDiagnoseProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseProperties"/>. </summary>
         public MachineLearningWorkspaceDiagnoseProperties()
         {
             ApplicationInsights = new ChangeTrackingDictionary<string, BinaryData>();

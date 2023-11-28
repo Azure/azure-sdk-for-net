@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     public partial class MapsAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MapsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maps
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of MapsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

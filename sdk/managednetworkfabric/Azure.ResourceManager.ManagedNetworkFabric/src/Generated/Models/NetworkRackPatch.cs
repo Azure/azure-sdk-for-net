@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Base tracked resource type for PATCH updates. </summary>
     public partial class NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkRackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRackPatch"/>. </summary>
         public NetworkRackPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

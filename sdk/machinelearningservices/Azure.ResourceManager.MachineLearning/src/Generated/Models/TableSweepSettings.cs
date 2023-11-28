@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The TableSweepSettings. </summary>
     public partial class TableSweepSettings
     {
-        /// <summary> Initializes a new instance of TableSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of sampling algorithm. </param>
         public TableSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of TableSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableSweepSettings"/>. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy for the sweeping job.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

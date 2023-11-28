@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Manifest artifact properties. </summary>
     public partial class ManifestArtifactFormat
     {
-        /// <summary> Initializes a new instance of ManifestArtifactFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestArtifactFormat"/>. </summary>
         public ManifestArtifactFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ManifestArtifactFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestArtifactFormat"/>. </summary>
         /// <param name="artifactName"> The artifact name. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>

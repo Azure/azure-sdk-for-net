@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The UnknownNetworkFunctionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionPropertiesFormat : NetworkFunctionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of UnknownNetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

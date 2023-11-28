@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The AzureArcK8sCluster NFVI detail. </summary>
     public partial class AzureArcK8SClusterNfviDetails : NFVIs
     {
-        /// <summary> Initializes a new instance of AzureArcK8SClusterNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcK8SClusterNfviDetails"/>. </summary>
         public AzureArcK8SClusterNfviDetails()
         {
             NfviType = NfviType.AzureArcKubernetes;
         }
 
-        /// <summary> Initializes a new instance of AzureArcK8SClusterNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcK8SClusterNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="customLocationReference"> The reference to the custom location. </param>

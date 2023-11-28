@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The List Extension Metadata response. </summary>
     internal partial class ExtensionValueListResult
     {
-        /// <summary> Initializes a new instance of ExtensionValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionValueListResult"/>. </summary>
         internal ExtensionValueListResult()
         {
             Value = new ChangeTrackingList<ExtensionValueData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionValueListResult"/>. </summary>
         /// <param name="value"> The list of extension metadata. </param>
         internal ExtensionValueListResult(IReadOnlyList<ExtensionValueData> value)
         {

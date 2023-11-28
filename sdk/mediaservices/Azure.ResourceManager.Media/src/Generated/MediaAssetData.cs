@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaAssetData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaAssetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetData"/>. </summary>
         public MediaAssetData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaAssetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

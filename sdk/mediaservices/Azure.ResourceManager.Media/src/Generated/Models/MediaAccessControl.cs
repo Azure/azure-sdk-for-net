@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The MediaAccessControl. </summary>
     public partial class MediaAccessControl
     {
-        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAccessControl"/>. </summary>
         public MediaAccessControl()
         {
             IPAllowList = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAccessControl"/>. </summary>
         /// <param name="defaultAction"> The behavior for IP access control in Key Delivery. </param>
         /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to 'Allow', the IP allow list must be empty. </param>
         internal MediaAccessControl(IPAccessControlDefaultAction? defaultAction, IList<IPAddress> ipAllowList)

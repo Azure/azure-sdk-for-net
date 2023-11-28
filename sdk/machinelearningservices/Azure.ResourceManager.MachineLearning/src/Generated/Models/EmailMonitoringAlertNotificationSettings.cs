@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EmailMonitoringAlertNotificationSettings. </summary>
     public partial class EmailMonitoringAlertNotificationSettings : MonitoringAlertNotificationSettingsBase
     {
-        /// <summary> Initializes a new instance of EmailMonitoringAlertNotificationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailMonitoringAlertNotificationSettings"/>. </summary>
         public EmailMonitoringAlertNotificationSettings()
         {
             AlertNotificationType = MonitoringAlertNotificationType.Email;
         }
 
-        /// <summary> Initializes a new instance of EmailMonitoringAlertNotificationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailMonitoringAlertNotificationSettings"/>. </summary>
         /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="emailNotificationSetting"> Configuration for notification. </param>
         internal EmailMonitoringAlertNotificationSettings(MonitoringAlertNotificationType alertNotificationType, NotificationSetting emailNotificationSetting) : base(alertNotificationType)

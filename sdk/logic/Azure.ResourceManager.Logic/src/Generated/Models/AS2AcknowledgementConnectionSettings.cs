@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement acknowledgement connection settings. </summary>
     public partial class AS2AcknowledgementConnectionSettings
     {
-        /// <summary> Initializes a new instance of AS2AcknowledgementConnectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2AcknowledgementConnectionSettings"/>. </summary>
         /// <param name="ignoreCertificateNameMismatch"> Indicates whether to ignore mismatch in certificate name. </param>
         /// <param name="supportHttpStatusCodeContinue"> Indicates whether to support HTTP status code 'CONTINUE'. </param>
         /// <param name="keepHttpConnectionAlive"> Indicates whether to keep the connection alive. </param>

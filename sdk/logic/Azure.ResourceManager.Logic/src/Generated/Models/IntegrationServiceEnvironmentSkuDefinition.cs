@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration service environment sku definition. </summary>
     public partial class IntegrationServiceEnvironmentSkuDefinition
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
         internal IntegrationServiceEnvironmentSkuDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="capacity"> The sku capacity. </param>

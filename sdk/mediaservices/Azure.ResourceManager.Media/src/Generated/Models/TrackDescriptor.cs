@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class TrackDescriptor
     {
-        /// <summary> Initializes a new instance of TrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackDescriptor"/>. </summary>
         protected TrackDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal TrackDescriptor(string odataType)
         {

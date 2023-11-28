@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The RoutingTwinProperties. </summary>
     public partial class RoutingTwinProperties
     {
-        /// <summary> Initializes a new instance of RoutingTwinProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingTwinProperties"/>. </summary>
         public RoutingTwinProperties()
         {
         }
