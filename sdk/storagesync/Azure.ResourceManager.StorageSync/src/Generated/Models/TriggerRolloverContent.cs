@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Trigger Rollover Request. </summary>
     public partial class TriggerRolloverContent
     {
-        /// <summary> Initializes a new instance of TriggerRolloverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
         public TriggerRolloverContent()
         {
         }

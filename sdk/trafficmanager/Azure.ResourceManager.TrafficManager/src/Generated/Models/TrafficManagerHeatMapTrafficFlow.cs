@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager HeatMap traffic flow properties. </summary>
     public partial class TrafficManagerHeatMapTrafficFlow
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapTrafficFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapTrafficFlow"/>. </summary>
         public TrafficManagerHeatMapTrafficFlow()
         {
             QueryExperiences = new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapTrafficFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapTrafficFlow"/>. </summary>
         /// <param name="sourceIP"> The IP address that this query experience originated from. </param>
         /// <param name="latitude"> The approximate latitude that these queries originated from. </param>
         /// <param name="longitude"> The approximate longitude that these queries originated from. </param>

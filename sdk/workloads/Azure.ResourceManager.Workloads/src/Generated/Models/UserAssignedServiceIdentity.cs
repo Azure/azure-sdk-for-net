@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </summary>
     public partial class UserAssignedServiceIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedServiceIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         public UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedServiceIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
         internal UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)

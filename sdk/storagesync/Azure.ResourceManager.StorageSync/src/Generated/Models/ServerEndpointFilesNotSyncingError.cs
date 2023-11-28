@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Files not syncing error object. </summary>
     public partial class ServerEndpointFilesNotSyncingError
     {
-        /// <summary> Initializes a new instance of ServerEndpointFilesNotSyncingError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointFilesNotSyncingError"/>. </summary>
         internal ServerEndpointFilesNotSyncingError()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointFilesNotSyncingError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointFilesNotSyncingError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="persistentCount"> Count of persistent files not syncing with the specified error code. </param>
         /// <param name="transientCount"> Count of transient files not syncing with the specified error code. </param>

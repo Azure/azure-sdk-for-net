@@ -17,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
         public FormatWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatWriteSettings(string type, IDictionary<string, object> additionalProperties)

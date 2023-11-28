@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class ContinuousWebJobListResult
     {
-        /// <summary> Initializes a new instance of ContinuousWebJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousWebJobListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContinuousWebJobListResult(IEnumerable<ContinuousWebJobData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContinuousWebJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousWebJobListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ContinuousWebJobListResult(IReadOnlyList<ContinuousWebJobData> value, string nextLink)

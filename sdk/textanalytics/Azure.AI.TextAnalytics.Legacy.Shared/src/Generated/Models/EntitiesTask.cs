@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The EntitiesTask. </summary>
     internal partial class EntitiesTask
     {
-        /// <summary> Initializes a new instance of EntitiesTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTask"/>. </summary>
         public EntitiesTask()
         {
         }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebAppDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
         public WebAppDeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

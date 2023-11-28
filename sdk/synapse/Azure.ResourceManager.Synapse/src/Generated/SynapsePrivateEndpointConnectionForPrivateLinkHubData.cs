@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class representing the SynapsePrivateEndpointConnectionForPrivateLinkHub data model. </summary>
     public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionForPrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubData"/>. </summary>
         internal SynapsePrivateEndpointConnectionForPrivateLinkHubData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionForPrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

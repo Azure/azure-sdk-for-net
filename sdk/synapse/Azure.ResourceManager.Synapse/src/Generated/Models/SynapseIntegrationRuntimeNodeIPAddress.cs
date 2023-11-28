@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
     public partial class SynapseIntegrationRuntimeNodeIPAddress
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeNodeIPAddress"/>. </summary>
         internal SynapseIntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeNodeIPAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         internal SynapseIntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {

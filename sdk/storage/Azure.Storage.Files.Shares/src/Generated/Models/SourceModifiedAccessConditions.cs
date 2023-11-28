@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Parameter group. </summary>
     internal partial class SourceModifiedAccessConditions
     {
-        /// <summary> Initializes a new instance of SourceModifiedAccessConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceModifiedAccessConditions"/>. </summary>
         public SourceModifiedAccessConditions()
         {
         }

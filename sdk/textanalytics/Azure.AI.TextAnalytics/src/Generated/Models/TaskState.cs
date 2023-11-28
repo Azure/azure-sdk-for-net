@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The TaskState. </summary>
     internal partial class TaskState
     {
-        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         public TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)

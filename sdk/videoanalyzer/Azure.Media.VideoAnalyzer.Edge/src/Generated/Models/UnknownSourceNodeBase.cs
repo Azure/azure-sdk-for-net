@@ -10,7 +10,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownSourceNodeBase. </summary>
     internal partial class UnknownSourceNodeBase : SourceNodeBase
     {
-        /// <summary> Initializes a new instance of UnknownSourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         internal UnknownSourceNodeBase(string type, string name) : base(type, name)

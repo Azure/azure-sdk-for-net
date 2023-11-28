@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack minor version. </summary>
     public partial class WebAppMinorVersion
     {
-        /// <summary> Initializes a new instance of WebAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMinorVersion"/>. </summary>
         internal WebAppMinorVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack minor version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>

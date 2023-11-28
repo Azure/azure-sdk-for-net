@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Response that identifies a Job Run. </summary>
     public partial class JobRunResourceId
     {
-        /// <summary> Initializes a new instance of JobRunResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunResourceId"/>. </summary>
         internal JobRunResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunResourceId"/>. </summary>
         /// <param name="jobRunResourceIdValue"> Fully qualified resource id of the Job Run. </param>
         internal JobRunResourceId(ResourceIdentifier jobRunResourceIdValue)
         {

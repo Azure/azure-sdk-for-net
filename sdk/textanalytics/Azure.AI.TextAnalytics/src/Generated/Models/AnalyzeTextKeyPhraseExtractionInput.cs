@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextKeyPhraseExtractionInput. </summary>
     internal partial class AnalyzeTextKeyPhraseExtractionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextKeyPhraseExtractionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseExtractionInput"/>. </summary>
         public AnalyzeTextKeyPhraseExtractionInput()
         {
             Kind = AnalyzeTextTaskKind.KeyPhraseExtraction;
