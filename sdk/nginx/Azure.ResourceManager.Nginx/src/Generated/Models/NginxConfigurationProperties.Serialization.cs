@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NginxProvisioningState> provisioningState = default;
             Optional<IList<NginxConfigurationFile>> files = default;
             Optional<IList<NginxConfigurationFile>> protectedFiles = default;
             Optional<NginxConfigurationPackage> package = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NginxProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("files"u8))

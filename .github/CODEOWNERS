@@ -645,9 +645,6 @@
 # ServiceLabel: %Network - Private Link %Service Attention
 #/<NotInRepo>/                                                     @privlinksuppgithub
 
-# PRLabel: %Nginx
-/sdk/nginx/														   @sofwiti @limgu @yashi
-
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/ @tjsomasundaram
 

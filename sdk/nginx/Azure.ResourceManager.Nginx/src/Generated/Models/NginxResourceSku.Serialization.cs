@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class ResourceSku : IUtf8JsonSerializable
+    internal partial class NginxResourceSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static NginxResourceSku DeserializeNginxResourceSku(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new ResourceSku(name);
+            return new NginxResourceSku(name);
         }
     }
 }

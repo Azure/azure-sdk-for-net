@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="logging"></param>
         /// <param name="scalingProperties"></param>
         /// <param name="userProfile"></param>
-        internal NginxDeploymentProperties(ProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile)
+        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile)
         {
             ProvisioningState = provisioningState;
             NginxVersion = nginxVersion;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the nginx version. </summary>
         public string NginxVersion { get; }
         /// <summary> The managed resource group to deploy VNet injection related network resources. </summary>

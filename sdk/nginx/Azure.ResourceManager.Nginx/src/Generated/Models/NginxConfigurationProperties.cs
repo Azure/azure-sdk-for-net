@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="protectedFiles"></param>
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
-        internal NginxConfigurationProperties(ProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationFile> protectedFiles, NginxConfigurationPackage package, string rootFile)
+        internal NginxConfigurationProperties(NginxProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationFile> protectedFiles, NginxConfigurationPackage package, string rootFile)
         {
             ProvisioningState = provisioningState;
             Files = files;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the files. </summary>
         public IList<NginxConfigurationFile> Files { get; }
         /// <summary> Gets the protected files. </summary>

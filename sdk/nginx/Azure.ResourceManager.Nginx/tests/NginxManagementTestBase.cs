@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Nginx.Tests
 
             NetworkSecurityGroupResource nsg = await CreateNetworkSecurityGroup(resourceGroup, location);
             VirtualNetworkResource vnet = await CreateVirtualNetwork(resourceGroup, location, nsg.Data);
-            string subnetId = GetSubnetId(vnet);
+            ResourceIdentifier subnetId = GetSubnetId(vnet);
 
             NginxNetworkProfile networkProfile = new NginxNetworkProfile
             {
