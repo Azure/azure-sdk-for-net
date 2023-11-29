@@ -15,6 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StoredProcedureParameter"/>. </summary>
+        /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
+        /// <param name="type"> Stored procedure parameter type. </param>
+        internal StoredProcedureParameter(object value, StoredProcedureParameterType? type)
+        {
+            Value = value;
+            Type = type;
+        }
+
         /// <summary> Stored procedure parameter value. Type: string (or Expression with resultType string). </summary>
         public object Value { get; }
         /// <summary> Stored procedure parameter type. </summary>

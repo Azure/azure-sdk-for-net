@@ -17,6 +17,23 @@ namespace Azure.Storage.Files.Shares.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileHttpHeaders"/>. </summary>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> Sets the file's MD5 hash. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        internal FileHttpHeaders(string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, byte[] fileContentMD5, string fileContentDisposition)
+        {
+            FileContentType = fileContentType;
+            FileContentEncoding = fileContentEncoding;
+            FileContentLanguage = fileContentLanguage;
+            FileCacheControl = fileCacheControl;
+            FileContentMD5 = fileContentMD5;
+            FileContentDisposition = fileContentDisposition;
+        }
+
         /// <summary> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </summary>
         public string FileContentType { get; set; }
         /// <summary> Specifies which content encodings have been applied to the file. </summary>

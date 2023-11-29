@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Output = output;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryFunction"/>. </summary>
+        /// <param name="name"> The name of the function. </param>
+        /// <param name="queryFunctionType"> The type of the function. </param>
+        /// <param name="bindingType"> The type of the function binding. </param>
+        /// <param name="inputs"> The inputs for the function. </param>
+        /// <param name="output"> An output for the function. </param>
+        internal StreamAnalyticsQueryFunction(string name, string queryFunctionType, string bindingType, IList<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output)
+        {
+            Name = name;
+            QueryFunctionType = queryFunctionType;
+            BindingType = bindingType;
+            Inputs = inputs;
+            Output = output;
+        }
+
         /// <summary> The name of the function. </summary>
         public string Name { get; }
         /// <summary> The type of the function. </summary>

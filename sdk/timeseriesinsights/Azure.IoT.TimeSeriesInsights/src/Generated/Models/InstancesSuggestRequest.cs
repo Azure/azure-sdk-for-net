@@ -23,6 +23,15 @@ namespace Azure.IoT.TimeSeriesInsights
             SearchString = searchString;
         }
 
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/>. </summary>
+        /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
+        /// <param name="take"> Maximum number of suggestions expected in the result. Defaults to 10 when not set. </param>
+        internal InstancesSuggestRequest(string searchString, int? take)
+        {
+            SearchString = searchString;
+            Take = take;
+        }
+
         /// <summary> Search string for which suggestions are required. Empty is allowed, but not null. </summary>
         public string SearchString { get; }
         /// <summary> Maximum number of suggestions expected in the result. Defaults to 10 when not set. </summary>

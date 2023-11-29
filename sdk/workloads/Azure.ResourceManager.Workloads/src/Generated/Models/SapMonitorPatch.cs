@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Workloads.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapMonitorPatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="identity"> [currently not in use] Managed service identity(user assigned identities). </param>
+        internal SapMonitorPatch(IDictionary<string, string> tags, UserAssignedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
+        }
+
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> [currently not in use] Managed service identity(user assigned identities). </summary>

@@ -15,6 +15,15 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTaskParameters"/>. </summary>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        internal KeyPhrasesTaskParameters(string modelVersion, bool? loggingOptOut)
+        {
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
+        }
+
         /// <summary> Gets or sets the model version. </summary>
         public string ModelVersion { get; set; }
         /// <summary> Gets or sets the logging opt out. </summary>

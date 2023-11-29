@@ -23,5 +23,21 @@ namespace Azure.AI.Translation.Document
 
             SourceUri = sourceUri;
         }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
+        /// <param name="filter"></param>
+        /// <param name="languageCode">
+        /// Language code
+        /// If none is specified, we will perform auto detect on the document
+        /// </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        internal TranslationSource(Uri sourceUri, DocumentFilter filter, string languageCode, string storageSource)
+        {
+            SourceUri = sourceUri;
+            Filter = filter;
+            LanguageCode = languageCode;
+            StorageSource = storageSource;
+        }
     }
 }
