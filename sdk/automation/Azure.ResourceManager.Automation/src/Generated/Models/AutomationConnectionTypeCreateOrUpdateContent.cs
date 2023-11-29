@@ -27,6 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitions = fieldDefinitions;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection type. </param>
+        /// <param name="isGlobal"> Gets or sets a Boolean value to indicate if the connection type is global. </param>
+        /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
+        internal AutomationConnectionTypeCreateOrUpdateContent(string name, bool? isGlobal, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions)
+        {
+            Name = name;
+            IsGlobal = isGlobal;
+            FieldDefinitions = fieldDefinitions;
+        }
+
         /// <summary> Gets or sets the name of the connection type. </summary>
         public string Name { get; }
         /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>

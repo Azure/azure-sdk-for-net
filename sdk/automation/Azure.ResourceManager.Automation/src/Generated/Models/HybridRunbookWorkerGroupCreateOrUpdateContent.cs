@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="credential"> Sets the credential of a worker group. </param>
+        internal HybridRunbookWorkerGroupCreateOrUpdateContent(string name, RunAsCredentialAssociationProperty credential)
+        {
+            Name = name;
+            Credential = credential;
+        }
+
         /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> Sets the credential of a worker group. </summary>

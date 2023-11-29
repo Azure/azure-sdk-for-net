@@ -26,6 +26,17 @@ namespace Azure.Communication.CallingServer
             CallbackUri = callbackUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+        }
+
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>

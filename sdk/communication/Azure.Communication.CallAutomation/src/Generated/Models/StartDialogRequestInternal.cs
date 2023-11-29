@@ -25,6 +25,17 @@ namespace Azure.Communication.CallAutomation
             DialogInputType = dialogInputType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
+        /// <param name="dialogOptions"> Defines options for dialog. </param>
+        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StartDialogRequestInternal(DialogOptionsInternal dialogOptions, DialogInputType dialogInputType, string operationContext)
+        {
+            DialogOptions = dialogOptions;
+            DialogInputType = dialogInputType;
+            OperationContext = operationContext;
+        }
+
         /// <summary> Defines options for dialog. </summary>
         public DialogOptionsInternal DialogOptions { get; }
         /// <summary> Determines the type of the dialog. </summary>

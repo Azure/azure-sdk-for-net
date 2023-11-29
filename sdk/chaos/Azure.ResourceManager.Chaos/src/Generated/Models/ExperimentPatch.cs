@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExperimentPatch"/>. </summary>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        internal ExperimentPatch(ManagedServiceIdentity identity)
+        {
+            Identity = identity;
+        }
+
         /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

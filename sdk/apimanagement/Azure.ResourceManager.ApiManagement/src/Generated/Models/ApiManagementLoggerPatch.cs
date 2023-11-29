@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Credentials = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
+        /// <param name="loggerType"> Logger type. </param>
+        /// <param name="description"> Logger description. </param>
+        /// <param name="credentials"> Logger credentials. </param>
+        /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
+        internal ApiManagementLoggerPatch(LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered)
+        {
+            LoggerType = loggerType;
+            Description = description;
+            Credentials = credentials;
+            IsBuffered = isBuffered;
+        }
+
         /// <summary> Logger type. </summary>
         public LoggerType? LoggerType { get; set; }
         /// <summary> Logger description. </summary>

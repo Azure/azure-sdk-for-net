@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.Automation.Models
             ContentLink = contentLink;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink)
+        {
+            Tags = tags;
+            ContentLink = contentLink;
+        }
+
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the module content link. </summary>

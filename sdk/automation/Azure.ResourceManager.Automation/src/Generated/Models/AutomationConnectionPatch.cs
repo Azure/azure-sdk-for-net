@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition values of the connection. </param>
+        internal AutomationConnectionPatch(string name, string description, IDictionary<string, string> fieldDefinitionValues)
+        {
+            Name = name;
+            Description = description;
+            FieldDefinitionValues = fieldDefinitionValues;
+        }
+
         /// <summary> Gets or sets the name of the connection. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the description of the connection. </summary>

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Automanage.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomanageResourceUpdateDetails"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal AutomanageResourceUpdateDetails(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }
