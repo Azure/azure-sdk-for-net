@@ -37,6 +37,8 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         _ownsClient = false;
     }
 
+    // TODO: We might be able to remove this, but we would need to revisit
+    // whether Azure.Core Response can inherit from PipelineResponse.
     public static PipelineResponse CreateResponse(HttpResponseMessage response)
         => new HttpPipelineResponse(response);
 
