@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EffectiveRoutesContent"/>. </summary>
+        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
+        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        internal EffectiveRoutesContent(ResourceIdentifier resourceId, string virtualWanResourceType)
+        {
+            ResourceId = resourceId;
+            VirtualWanResourceType = virtualWanResourceType;
+        }
+
         /// <summary> The resource whose effective routes are being requested. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </summary>

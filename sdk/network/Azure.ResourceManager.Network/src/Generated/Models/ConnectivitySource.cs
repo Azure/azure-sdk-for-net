@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.Network.Models
             ResourceId = resourceId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivitySource"/>. </summary>
+        /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
+        /// <param name="port"> The source port from which a connectivity check will be performed. </param>
+        internal ConnectivitySource(ResourceIdentifier resourceId, int? port)
+        {
+            ResourceId = resourceId;
+            Port = port;
+        }
+
         /// <summary> The ID of the resource from which a connectivity check will be initiated. </summary>
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The source port from which a connectivity check will be performed. </summary>

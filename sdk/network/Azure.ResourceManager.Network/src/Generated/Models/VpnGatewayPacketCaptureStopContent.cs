@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStopContent"/>. </summary>
+        /// <param name="sasUri"> SAS url for packet capture on vpn gateway. </param>
+        internal VpnGatewayPacketCaptureStopContent(Uri sasUri)
+        {
+            SasUri = sasUri;
+        }
+
         /// <summary> SAS url for packet capture on vpn gateway. </summary>
         public Uri SasUri { get; set; }
     }

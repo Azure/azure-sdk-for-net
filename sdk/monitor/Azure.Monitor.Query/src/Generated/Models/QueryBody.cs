@@ -25,6 +25,17 @@ namespace Azure.Monitor.Query.Models
             Workspaces = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
+        /// <param name="query"> The query to execute. </param>
+        /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
+        /// <param name="workspaces"> A list of workspaces that are included in the query. </param>
+        internal QueryBody(string query, string timespan, IList<string> workspaces)
+        {
+            Query = query;
+            Timespan = timespan;
+            Workspaces = workspaces;
+        }
+
         /// <summary> The query to execute. </summary>
         public string Query { get; }
         /// <summary> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </summary>

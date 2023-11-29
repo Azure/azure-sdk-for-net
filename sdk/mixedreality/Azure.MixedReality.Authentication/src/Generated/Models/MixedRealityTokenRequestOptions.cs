@@ -15,6 +15,13 @@ namespace Azure.MixedReality.Authentication
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MixedRealityTokenRequestOptions"/>. </summary>
+        /// <param name="clientRequestId"> The client request correlation vector, which should be set to a new value for each request. Useful when debugging with Microsoft. </param>
+        internal MixedRealityTokenRequestOptions(string clientRequestId)
+        {
+            ClientRequestId = clientRequestId;
+        }
+
         /// <summary> The client request correlation vector, which should be set to a new value for each request. Useful when debugging with Microsoft. </summary>
         public string ClientRequestId { get; set; }
     }

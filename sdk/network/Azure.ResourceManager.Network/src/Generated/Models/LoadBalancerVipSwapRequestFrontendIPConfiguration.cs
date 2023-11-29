@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
+        /// <param name="id"> The ID of frontend IP configuration resource. </param>
+        /// <param name="publicIPAddress"> A reference to public IP address resource. </param>
+        internal LoadBalancerVipSwapRequestFrontendIPConfiguration(string id, WritableSubResource publicIPAddress)
+        {
+            Id = id;
+            PublicIPAddress = publicIPAddress;
+        }
+
         /// <summary> The ID of frontend IP configuration resource. </summary>
         public string Id { get; set; }
         /// <summary> A reference to public IP address resource. </summary>

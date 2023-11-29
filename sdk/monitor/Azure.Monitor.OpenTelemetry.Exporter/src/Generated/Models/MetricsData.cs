@@ -27,6 +27,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricsData"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="metrics"> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        internal MetricsData(int version, IDictionary<string, object> additionalProperties, IList<MetricDataPoint> metrics, IDictionary<string, string> properties) : base(version, additionalProperties)
+        {
+            Metrics = metrics;
+            Properties = properties;
+        }
+
         /// <summary> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </summary>
         public IList<MetricDataPoint> Metrics { get; }
         /// <summary> Collection of custom properties. </summary>
