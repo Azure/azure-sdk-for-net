@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-// Introduces the dependency on System.Net.Http;
-
 public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
     /// <summary>
@@ -39,6 +37,9 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         _ownsClient = false;
     }
 
+    public static PipelineResponse CreateResponse(HttpResponseMessage response)
+        => new HttpPipelineResponse(response);
+
     private static HttpClient CreateDefaultClient()
     {
         // TODO:
@@ -59,7 +60,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         };
     }
 
-    protected override PipelineMessage CreateMessageCore()
+    protected override sealed PipelineMessage CreateMessageCore()
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
@@ -92,9 +93,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
-#pragma warning disable CA1801 // async parameter unused on netstandard
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
-#pragma warning restore CA1801
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 

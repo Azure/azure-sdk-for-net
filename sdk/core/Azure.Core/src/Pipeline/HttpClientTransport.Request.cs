@@ -36,9 +36,9 @@ namespace Azure.Core.Pipeline
             private RequestUriBuilder? _uriBuilder;
             private readonly PipelineRequest _httpPipelineRequest;
 
-            public HttpClientTransportRequest()
+            public HttpClientTransportRequest(PipelineRequest request)
             {
-                _httpPipelineRequest = Create();
+                _httpPipelineRequest = request;
             }
 
             public override Uri Uri
@@ -78,6 +78,7 @@ namespace Azure.Core.Pipeline
                 get => _httpPipelineRequest.Method;
                 set => _httpPipelineRequest.Method = value;
             }
+
             public override InputContent? Content
             {
                 get => _httpPipelineRequest.Content;

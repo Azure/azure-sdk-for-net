@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -39,7 +38,7 @@ namespace Azure.Core.Pipeline
                 Argument.AssertNotNull(requestId, nameof(requestId));
 
                 ClientRequestId = requestId;
-                _httpPipelineResponse = Create(httpResponse);
+                _httpPipelineResponse = HttpClientPipelineTransport.CreateResponse(httpResponse);
             }
 
             public string ClientRequestId { get; internal set; }
