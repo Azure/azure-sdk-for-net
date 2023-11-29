@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Resources.Models
             Resources = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourcesMoveContent"/>. </summary>
+        /// <param name="resources"> The IDs of the resources. </param>
+        /// <param name="targetResourceGroupId"> The target resource group. </param>
+        internal ResourcesMoveContent(IList<string> resources, ResourceIdentifier targetResourceGroupId)
+        {
+            Resources = resources;
+            TargetResourceGroupId = targetResourceGroupId;
+        }
+
         /// <summary> The IDs of the resources. </summary>
         public IList<string> Resources { get; }
         /// <summary> The target resource group. </summary>

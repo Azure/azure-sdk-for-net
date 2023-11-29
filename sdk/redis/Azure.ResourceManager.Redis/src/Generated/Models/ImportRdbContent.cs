@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.Redis.Models
             Files = files.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
+        /// <param name="format"> File format. </param>
+        /// <param name="files"> files to import. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="storageSubscriptionId"> Subscription id of the storage container containing files to import using Managed Identity. </param>
+        internal ImportRdbContent(string format, IList<string> files, string preferredDataArchiveAuthMethod, string storageSubscriptionId)
+        {
+            Format = format;
+            Files = files;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
+            StorageSubscriptionId = storageSubscriptionId;
+        }
+
         /// <summary> File format. </summary>
         public string Format { get; set; }
         /// <summary> files to import. </summary>

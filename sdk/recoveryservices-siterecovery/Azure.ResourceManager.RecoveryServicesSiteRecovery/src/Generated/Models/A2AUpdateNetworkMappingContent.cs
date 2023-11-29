@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "AzureToAzure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
+        internal A2AUpdateNetworkMappingContent(string instanceType, ResourceIdentifier primaryNetworkId) : base(instanceType)
+        {
+            PrimaryNetworkId = primaryNetworkId;
+            InstanceType = instanceType ?? "AzureToAzure";
+        }
+
         /// <summary> The primary azure vnet Id. </summary>
         public ResourceIdentifier PrimaryNetworkId { get; set; }
     }

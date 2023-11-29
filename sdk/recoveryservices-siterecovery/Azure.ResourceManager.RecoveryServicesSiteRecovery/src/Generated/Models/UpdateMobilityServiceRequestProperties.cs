@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceRequestProperties"/>. </summary>
+        /// <param name="runAsAccountId"> The CS run as account Id. </param>
+        internal UpdateMobilityServiceRequestProperties(string runAsAccountId)
+        {
+            RunAsAccountId = runAsAccountId;
+        }
+
         /// <summary> The CS run as account Id. </summary>
         public string RunAsAccountId { get; set; }
     }

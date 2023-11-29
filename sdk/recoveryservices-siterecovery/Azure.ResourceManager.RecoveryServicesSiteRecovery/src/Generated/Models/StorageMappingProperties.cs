@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
+        /// <param name="targetStorageClassificationId"> The ID of the storage object. </param>
+        internal StorageMappingProperties(ResourceIdentifier targetStorageClassificationId)
+        {
+            TargetStorageClassificationId = targetStorageClassificationId;
+        }
+
         /// <summary> The ID of the storage object. </summary>
         public ResourceIdentifier TargetStorageClassificationId { get; set; }
     }

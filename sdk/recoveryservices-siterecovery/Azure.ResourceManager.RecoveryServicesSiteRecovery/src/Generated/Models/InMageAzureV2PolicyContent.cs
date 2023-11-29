@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2PolicyContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
+        internal InMageAzureV2PolicyContent(string instanceType, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(instanceType)
+        {
+            RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
+            RecoveryPointHistory = recoveryPointHistory;
+            CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
+            AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
+            MultiVmSyncStatus = multiVmSyncStatus;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
         /// <summary> The recovery point threshold in minutes. </summary>
         public int? RecoveryPointThresholdInMinutes { get; set; }
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>

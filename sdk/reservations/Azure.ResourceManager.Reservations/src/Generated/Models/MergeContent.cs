@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Reservations.Models
             Sources = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MergeContent"/>. </summary>
+        /// <param name="sources"> Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        internal MergeContent(IList<string> sources)
+        {
+            Sources = sources;
+        }
+
         /// <summary> Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public IList<string> Sources { get; }
     }

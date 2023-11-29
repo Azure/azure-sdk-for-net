@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
+        /// <param name="consentToAuthorization"> A value indicating whether authorization is consented or not. </param>
+        internal ProviderConsentDefinition(bool? consentToAuthorization)
+        {
+            ConsentToAuthorization = consentToAuthorization;
+        }
+
         /// <summary> A value indicating whether authorization is consented or not. </summary>
         public bool? ConsentToAuthorization { get; set; }
     }
