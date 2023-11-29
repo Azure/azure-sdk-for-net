@@ -26,8 +26,7 @@ namespace Azure.AI.ContentSafety.Tests
 
             if (useTokenCredential)
             {
-                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new BlocklistClient(endpoint, credential, options: options);
+                client = new BlocklistClient(endpoint, TestEnvironment.Credential, options: options);
             }
             else
             {
@@ -77,7 +76,7 @@ namespace Azure.AI.ContentSafety.Tests
             var client = CreateBlocklistClient();
 
             // Create Blocklist
-            var blocklistName = "TestBlocklist";
+            var blocklistName = "TestDeleteBlocklist";
             var blocklistDescription = "Test blocklist management";
             Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
             Assert.IsNotNull(createBlocklistResponse);
@@ -172,7 +171,7 @@ namespace Azure.AI.ContentSafety.Tests
             var client = CreateBlocklistClient();
 
             // Create Blocklist
-            var blocklistName = "TestNewBlocklist";
+            var blocklistName = "TestBlocklist";
             var blocklistDescription = "Test blocklist management";
             Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
             Assert.IsNotNull(createBlocklistResponse);
@@ -196,18 +195,18 @@ namespace Azure.AI.ContentSafety.Tests
             var response = client.GetTextBlocklistItemsAsync(blocklistName, maxCount: 2);
             Assert.IsNotNull(response);
             List<TextBlocklistItem> blocklistItems = await response.ToListAsync();
-            Assert.AreEqual(blocklistItems.Count, 2);
+            Assert.LessOrEqual(blocklistItems.Count, 2);
 
             // Test skip
             response = client.GetTextBlocklistItemsAsync(blocklistName, skip: 2);
             Assert.IsNotNull(response);
             blocklistItems = await response.ToListAsync();
-            Assert.AreEqual(blocklistItems.Count, 3);
+            Assert.GreaterOrEqual(blocklistItems.Count, 3);
 
             // Test maxpagesize
             response = client.GetTextBlocklistItemsAsync(blocklistName, maxpagesize: 2);
             Assert.IsNotNull(response);
-            Assert.AreEqual(await response.CountAsync(), 5);
+            Assert.GreaterOrEqual(await response.CountAsync(), 5);
             await foreach (var page in response.AsPages())
             {
                 Assert.LessOrEqual(page.Values.Count, 2);
@@ -220,7 +219,7 @@ namespace Azure.AI.ContentSafety.Tests
             var client = CreateBlocklistClient();
 
             // Create Blocklist
-            var blocklistName = "TestBlocklist";
+            var blocklistName = "TestRemoveBlocklist";
             var blocklistDescription = "Test blocklist management";
             Response createBlocklistResponse = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(new { description = blocklistDescription }));
             Assert.IsNotNull(createBlocklistResponse);

@@ -34,24 +34,43 @@ You can find the endpoint for your Azure AI Content Safety service resource usin
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
 ```
 
-#### Get the API key
+#### Create a ContentSafetyClient with API key
 
-The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
+- Step 1: Get the API key
 
-```bash
-az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
-```
+    The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
 
-#### Create a ContentSafetyClient with AzureKeyCredential
+    ```bash
+    az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
+    ```
 
-Pass the API key as a string into an instance of `AzureKeyCredential`.
+- Step 2: Create a ContentSafetyClient with AzureKeyCredential
 
-```csharp
-string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
-string key = "<api_key>";
+    Pass the API key as a string into an instance of `AzureKeyCredential`.
 
-ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
-```
+    ```csharp
+    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
+    string key = "<api_key>";
+
+    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    ```
+
+#### Create a ContentSafetyClient with Azure Active Directory credential
+
+- Step 1: Enable AAD for your resource Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id]. for the steps to enable AAD for your resource.
+
+    The main steps are:
+
+    - Create resource with a custom subdomain.
+    - Create Service Principal and assign `Cognitive Services User` role to it.
+
+- Step 2: Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
+   DefaultAzureCredential will use the values from these environment variables.
+   ```csharp
+    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
+
+    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    ```
 
 ## Key concepts
 
@@ -381,5 +400,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[authenticate_with_microsoft_entra_id]: https://learn.microsoft.com/en-us/azure/ai-services/authentication?tabs=powershell#authenticate-with-microsoft-entra-id
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk//Azure.AI/README.png)

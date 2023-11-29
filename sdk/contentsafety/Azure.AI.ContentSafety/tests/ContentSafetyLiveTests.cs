@@ -46,8 +46,7 @@ namespace Azure.AI.ContentSafety.Tests
 
             if (useTokenCredential)
             {
-                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new BlocklistClient(endpoint, credential, options: options);
+                client = new BlocklistClient(endpoint, TestEnvironment.Credential, options: options);
             }
             else
             {
