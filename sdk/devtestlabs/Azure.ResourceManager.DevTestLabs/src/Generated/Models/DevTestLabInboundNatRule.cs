@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A rule for NAT - exposing a VM's port (backendPort) on the public IP address using a load balancer. </summary>
     public partial class DevTestLabInboundNatRule
     {
-        /// <summary> Initializes a new instance of DevTestLabInboundNatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabInboundNatRule"/>. </summary>
         public DevTestLabInboundNatRule()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabInboundNatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabInboundNatRule"/>. </summary>
         /// <param name="transportProtocol"> The transport protocol for the endpoint. </param>
         /// <param name="frontendPort"> The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically. </param>
         /// <param name="backendPort"> The port to which the external traffic will be redirected. </param>

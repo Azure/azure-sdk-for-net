@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Details of a research facility where a clinical trial is conducted. </summary>
     public partial class ClinicalTrialResearchFacility
     {
-        /// <summary> Initializes a new instance of ClinicalTrialResearchFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialResearchFacility"/>. </summary>
         /// <param name="name"> The facility's name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="countryOrRegion"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             CountryOrRegion = countryOrRegion;
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialResearchFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialResearchFacility"/>. </summary>
         /// <param name="name"> The facility's name. </param>
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>

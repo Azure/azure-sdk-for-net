@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabArmTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabArmTemplateData(AzureLocation location) : base(location)
         {
             ParametersValueFilesInfo = new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

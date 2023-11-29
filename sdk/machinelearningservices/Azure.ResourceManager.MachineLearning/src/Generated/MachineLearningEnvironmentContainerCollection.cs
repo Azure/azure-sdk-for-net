@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningEnvironmentContainerResource" /> and their operations.
-    /// Each <see cref="MachineLearningEnvironmentContainerResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningEnvironmentContainerCollection" /> instance call the GetMachineLearningEnvironmentContainers method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningEnvironmentContainerResource"/> and their operations.
+    /// Each <see cref="MachineLearningEnvironmentContainerResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningEnvironmentContainerCollection"/> instance call the GetMachineLearningEnvironmentContainers method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningEnvironmentContainerCollection : ArmCollection, IEnumerable<MachineLearningEnvironmentContainerResource>, IAsyncEnumerable<MachineLearningEnvironmentContainerResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningEnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningEnvironmentContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningEnvironmentContainerResource> GetAllAsync(string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningEnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningEnvironmentContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningEnvironmentContainerResource> GetAll(string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);

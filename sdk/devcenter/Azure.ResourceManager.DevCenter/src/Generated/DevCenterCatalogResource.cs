@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterCatalog along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterCatalogResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterCatalogResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetDevCenterCatalog method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterCatalogResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterCatalogResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetDevCenterCatalog method.
     /// </summary>
     public partial class DevCenterCatalogResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterCatalogResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterCatalogResource(ArmClient client, DevCenterCatalogData data) : this(client, data.Id)

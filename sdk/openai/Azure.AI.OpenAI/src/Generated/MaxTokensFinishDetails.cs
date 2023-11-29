@@ -13,13 +13,13 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class MaxTokensFinishDetails : ChatFinishDetails
     {
-        /// <summary> Initializes a new instance of MaxTokensFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxTokensFinishDetails"/>. </summary>
         internal MaxTokensFinishDetails()
         {
             Type = "max_tokens";
         }
 
-        /// <summary> Initializes a new instance of MaxTokensFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxTokensFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal MaxTokensFinishDetails(string type) : base(type)
         {

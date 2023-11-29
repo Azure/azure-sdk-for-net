@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes remote addresses that is recommended to communicate with the Azure resource on some (Protocol, Port, Direction). All other remote addresses are recommended to be blocked. </summary>
     public partial class RecommendedSecurityRule
     {
-        /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedSecurityRule"/>. </summary>
         public RecommendedSecurityRule()
         {
             Protocols = new ChangeTrackingList<SecurityTransportProtocol>();
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedSecurityRule"/>. </summary>
         /// <param name="name"> The name of the rule. </param>
         /// <param name="direction"> The rule's direction. </param>
         /// <param name="destinationPort"> The rule's destination port. </param>

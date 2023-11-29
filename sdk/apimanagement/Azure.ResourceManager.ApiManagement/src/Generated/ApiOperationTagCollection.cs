@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiOperationTagResource" /> and their operations.
-    /// Each <see cref="ApiOperationTagResource" /> in the collection will belong to the same instance of <see cref="ApiOperationResource" />.
-    /// To get an <see cref="ApiOperationTagCollection" /> instance call the GetApiOperationTags method from an instance of <see cref="ApiOperationResource" />.
+    /// A class representing a collection of <see cref="ApiOperationTagResource"/> and their operations.
+    /// Each <see cref="ApiOperationTagResource"/> in the collection will belong to the same instance of <see cref="ApiOperationResource"/>.
+    /// To get an <see cref="ApiOperationTagCollection"/> instance call the GetApiOperationTags method from an instance of <see cref="ApiOperationResource"/>.
     /// </summary>
     public partial class ApiOperationTagCollection : ArmCollection, IEnumerable<ApiOperationTagResource>, IAsyncEnumerable<ApiOperationTagResource>
     {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiOperationTagResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiOperationTagResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiOperationTagResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationTagTagRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiOperationTagResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiOperationTagResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiOperationTagResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationTagTagRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);

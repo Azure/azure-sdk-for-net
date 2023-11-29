@@ -35,12 +35,12 @@ public class ChatExtensionsTests : OpenAITestBase
 
         OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
         apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
-        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
+        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new(new(
+            searchEndpoint: new Uri("https://openaisdktestsearch.search.windows.net"),
+            indexName: "openai-test-index-carbon-wiki")
         {
-            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
-            IndexName = "openai-test-index-carbon-wiki",
             Authentication = apiKeyAuthentication,
-        };
+        });
         AzureChatExtensionsOptions extensionsOptions = new()
         {
             Extensions = { searchExtension },
@@ -86,13 +86,12 @@ public class ChatExtensionsTests : OpenAITestBase
 
         OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
         apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
-        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new()
+        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new(new(
+            searchEndpoint: new Uri("https://openaisdktestsearch.search.windows.net"),
+            indexName: "openai-test-index-carbon-wiki")
         {
-            Type = "AzureCognitiveSearch",
-            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
-            IndexName = "openai-test-index-carbon-wiki",
             Authentication = apiKeyAuthentication,
-        };
+        });
 
         var requestOptions = new ChatCompletionsOptions()
         {

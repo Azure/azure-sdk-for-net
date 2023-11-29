@@ -606,7 +606,7 @@ namespace Azure.AI.OpenAI
                 if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
                 {
                     Operation<ImageGenerations> imagesOperation
-                        = BeginAzureBatchImageGeneration(
+                        = BeginImageGenerations(
                             WaitUntil.Completed,
                             imageGenerationOptions,
                             cancellationToken);
@@ -668,7 +668,7 @@ namespace Azure.AI.OpenAI
                 if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
                 {
                     Operation<ImageGenerations> imagesOperation
-                        = await BeginAzureBatchImageGenerationAsync(
+                        = await BeginImageGenerationsAsync(
                             WaitUntil.Completed,
                             imageGenerationOptions,
                             cancellationToken)

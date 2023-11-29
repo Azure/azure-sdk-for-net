@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API Create or Update Parameters. </summary>
     public partial class ApiCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdateContent"/>. </summary>
         public ApiCreateOrUpdateContent()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();

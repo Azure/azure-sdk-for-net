@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item model collection. </summary>
     internal partial class DataReplicationProtectedItemListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemListResult"/>. </summary>
         internal DataReplicationProtectedItemListResult()
         {
             Value = new ChangeTrackingList<DataReplicationProtectedItemData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of protected items. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationProtectedItemListResult(IReadOnlyList<DataReplicationProtectedItemData> value, string nextLink)

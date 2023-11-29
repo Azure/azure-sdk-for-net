@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Details about the connection between the Batch service and the endpoint. </summary>
     public partial class BatchEndpointDetail
     {
-        /// <summary> Initializes a new instance of BatchEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointDetail"/>. </summary>
         internal BatchEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         internal BatchEndpointDetail(int? port)
         {

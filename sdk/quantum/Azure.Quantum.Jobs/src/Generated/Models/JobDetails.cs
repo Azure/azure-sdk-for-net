@@ -14,7 +14,7 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Job details. </summary>
     public partial class JobDetails
     {
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetails"/>. </summary>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
         /// <param name="inputDataFormat"> The format of the input data. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
@@ -35,7 +35,7 @@ namespace Azure.Quantum.Jobs.Models
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetails"/>. </summary>
         /// <param name="id"> The job id. </param>
         /// <param name="name"> The job name. Is not required for the name to be unique and it's only used for display purposes. </param>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>

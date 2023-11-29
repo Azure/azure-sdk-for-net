@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The NetworkTapRule resource definition. </summary>
     public partial class NetworkTapRulePatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkTapRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRulePatch"/>. </summary>
         public NetworkTapRulePatch()
         {
             MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();

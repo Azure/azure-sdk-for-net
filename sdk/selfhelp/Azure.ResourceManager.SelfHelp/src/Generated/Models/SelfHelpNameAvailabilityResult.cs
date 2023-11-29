@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Response for whether the requested resource name is available or not. </summary>
     public partial class SelfHelpNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityResult"/>. </summary>
         internal SelfHelpNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>

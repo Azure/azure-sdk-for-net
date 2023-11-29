@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class CapabilityData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityData"/>. </summary>
         public CapabilityData()
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

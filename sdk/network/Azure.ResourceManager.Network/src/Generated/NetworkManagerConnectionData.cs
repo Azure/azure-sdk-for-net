@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkManagerConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkManagerConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionData"/>. </summary>
         public NetworkManagerConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

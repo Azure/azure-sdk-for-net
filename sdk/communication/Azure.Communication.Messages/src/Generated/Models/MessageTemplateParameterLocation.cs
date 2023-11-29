@@ -10,7 +10,7 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's location value information. </summary>
     internal partial class MessageTemplateParameterLocation
     {
-        /// <summary> Initializes a new instance of MessageTemplateParameterLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateParameterLocation"/>. </summary>
         public MessageTemplateParameterLocation()
         {
         }

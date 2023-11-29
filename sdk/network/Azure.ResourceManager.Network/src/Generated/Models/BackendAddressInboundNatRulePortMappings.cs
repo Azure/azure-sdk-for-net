@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The response for a QueryInboundNatRulePortMapping API. </summary>
     public partial class BackendAddressInboundNatRulePortMappings
     {
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         internal BackendAddressInboundNatRulePortMappings()
         {
             InboundNatRulePortMappings = new ChangeTrackingList<InboundNatRulePortMapping>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         /// <param name="inboundNatRulePortMappings"> Collection of inbound NAT rule port mappings. </param>
         internal BackendAddressInboundNatRulePortMappings(IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings)
         {

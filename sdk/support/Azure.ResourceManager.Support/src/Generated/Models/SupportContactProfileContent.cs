@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Contact information associated with the support ticket. </summary>
     public partial class SupportContactProfileContent
     {
-        /// <summary> Initializes a new instance of SupportContactProfileContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfileContent"/>. </summary>
         public SupportContactProfileContent()
         {
             AdditionalEmailAddresses = new ChangeTrackingList<string>();

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Details of the certificate to be uploaded to the vault. </summary>
     public partial class RecoveryServicesCertificateContent
     {
-        /// <summary> Initializes a new instance of RecoveryServicesCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesCertificateContent"/>. </summary>
         public RecoveryServicesCertificateContent()
         {
         }

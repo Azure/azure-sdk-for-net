@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The CancelAddParticipantRequest. </summary>
     internal partial class CancelAddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of CancelAddParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
         /// <param name="invitationId"> Invitation ID used to add a participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         public CancelAddParticipantRequestInternal(string invitationId)

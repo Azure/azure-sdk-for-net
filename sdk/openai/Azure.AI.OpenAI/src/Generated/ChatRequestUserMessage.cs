@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A request chat message representing user input to the assistant. </summary>
     public partial class ChatRequestUserMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of ChatRequestUserMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestUserMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="content"> The contents of the user message, with available input types varying by selected model. </param>
         /// <param name="name"> An optional name for the participant. </param>

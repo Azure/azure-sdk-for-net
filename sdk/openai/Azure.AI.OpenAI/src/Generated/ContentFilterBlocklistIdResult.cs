@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the outcome of an evaluation against a custom blocklist as performed by content filtering. </summary>
     public partial class ContentFilterBlocklistIdResult
     {
-        /// <summary> Initializes a new instance of ContentFilterBlocklistIdResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/>. </summary>
         /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>

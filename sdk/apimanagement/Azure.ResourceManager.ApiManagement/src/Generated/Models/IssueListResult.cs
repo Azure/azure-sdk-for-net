@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Issue list representation. </summary>
     internal partial class IssueListResult
     {
-        /// <summary> Initializes a new instance of IssueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
         internal IssueListResult()
         {
             Value = new ChangeTrackingList<IssueContractData>();
         }
 
-        /// <summary> Initializes a new instance of IssueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
         /// <param name="value"> Issue values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

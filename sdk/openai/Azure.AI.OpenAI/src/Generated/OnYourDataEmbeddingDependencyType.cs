@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
         public static OnYourDataEmbeddingDependencyType Endpoint { get; } = new OnYourDataEmbeddingDependencyType(EndpointValue);
         /// <summary> Azure OpenAI Embedding deployment name. </summary>
         public static OnYourDataEmbeddingDependencyType DeploymentName { get; } = new OnYourDataEmbeddingDependencyType(DeploymentNameValue);
-        /// <summary> The embedding model id defined in the search service. Currently only supported by Elasticsearch. </summary>
+        /// <summary> The embedding model ID defined in the search service. Currently only supported by Elasticsearch. </summary>
         public static OnYourDataEmbeddingDependencyType ModelId { get; } = new OnYourDataEmbeddingDependencyType(ModelIdValue);
         /// <summary> Determines if two <see cref="OnYourDataEmbeddingDependencyType"/> values are the same. </summary>
         public static bool operator ==(OnYourDataEmbeddingDependencyType left, OnYourDataEmbeddingDependencyType right) => left.Equals(right);

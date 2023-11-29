@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataLakeStore.Models;
 namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeStoreFirewallRuleResource" /> and their operations.
-    /// Each <see cref="DataLakeStoreFirewallRuleResource" /> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource" />.
-    /// To get a <see cref="DataLakeStoreFirewallRuleCollection" /> instance call the GetDataLakeStoreFirewallRules method from an instance of <see cref="DataLakeStoreAccountResource" />.
+    /// A class representing a collection of <see cref="DataLakeStoreFirewallRuleResource"/> and their operations.
+    /// Each <see cref="DataLakeStoreFirewallRuleResource"/> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource"/>.
+    /// To get a <see cref="DataLakeStoreFirewallRuleCollection"/> instance call the GetDataLakeStoreFirewallRules method from an instance of <see cref="DataLakeStoreAccountResource"/>.
     /// </summary>
     public partial class DataLakeStoreFirewallRuleCollection : ArmCollection, IEnumerable<DataLakeStoreFirewallRuleResource>, IAsyncEnumerable<DataLakeStoreFirewallRuleResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

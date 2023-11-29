@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The Result of the CheckNameAvailability operation. </summary>
     public partial class EventHubsNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of EventHubsNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityResult"/>. </summary>
         internal EventHubsNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityResult"/>. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
         /// <param name="nameAvailable"> Value indicating Namespace is availability, true if the Namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a Namespace. </param>

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     ///   completions request that should use Azure OpenAI chat extensions to augment the response behavior.
     ///   The use of this configuration is compatible only with Azure OpenAI.
     /// </summary>
-    public readonly partial struct AzureChatExtensionType : IEquatable<AzureChatExtensionType>
+    internal readonly partial struct AzureChatExtensionType : IEquatable<AzureChatExtensionType>
     {
         private readonly string _value;
 

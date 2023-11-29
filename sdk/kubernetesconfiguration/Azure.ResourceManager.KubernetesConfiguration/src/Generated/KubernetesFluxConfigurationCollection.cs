@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KubernetesFluxConfigurationResource" /> and their operations.
-    /// Each <see cref="KubernetesFluxConfigurationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="KubernetesFluxConfigurationCollection" /> instance call the GetKubernetesFluxConfigurations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="KubernetesFluxConfigurationResource"/> and their operations.
+    /// Each <see cref="KubernetesFluxConfigurationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="KubernetesFluxConfigurationCollection"/> instance call the GetKubernetesFluxConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class KubernetesFluxConfigurationCollection : ArmCollection, IEnumerable<KubernetesFluxConfigurationResource>, IAsyncEnumerable<KubernetesFluxConfigurationResource>
     {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubernetesFluxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KubernetesFluxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubernetesFluxConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesFluxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KubernetesFluxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubernetesFluxConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);

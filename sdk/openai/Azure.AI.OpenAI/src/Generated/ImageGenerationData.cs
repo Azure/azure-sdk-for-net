@@ -15,12 +15,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ImageGenerationData
     {
-        /// <summary> Initializes a new instance of ImageGenerationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationData"/>. </summary>
         internal ImageGenerationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageGenerationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationData"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
         /// <param name="base64Data"> The complete data for an image, represented as a base64-encoded string. </param>
         /// <param name="revisedPrompt">

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ScheduleList
     {
-        /// <summary> Initializes a new instance of ScheduleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleList"/>. </summary>
         internal ScheduleList()
         {
             Value = new ChangeTrackingList<DevTestLabScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of ScheduleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal ScheduleList(IReadOnlyList<DevTestLabScheduleData> value, string nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the identity used for CMK. </summary>
     public partial class CmkKekIdentity
     {
-        /// <summary> Initializes a new instance of CmkKekIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
         public CmkKekIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of CmkKekIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmkKekIdentity"/>. </summary>
         /// <param name="useSystemAssignedIdentity"> Indicate that system assigned identity should be used. Mutually exclusive with 'userAssignedIdentity' field. </param>
         /// <param name="userAssignedIdentity"> The user assigned identity to be used to grant permissions in case the type of identity used is UserAssigned. </param>
         internal CmkKekIdentity(bool? useSystemAssignedIdentity, ResourceIdentifier userAssignedIdentity)

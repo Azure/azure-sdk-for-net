@@ -14,12 +14,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of ChatRequestMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestMessage"/>. </summary>
         protected ChatRequestMessage()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatRequestMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         internal ChatRequestMessage(ChatRole role)
         {

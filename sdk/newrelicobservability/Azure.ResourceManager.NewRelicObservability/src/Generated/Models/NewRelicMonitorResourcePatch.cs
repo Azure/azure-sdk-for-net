@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The type used for update operations of the NewRelicMonitorResource. </summary>
     public partial class NewRelicMonitorResourcePatch
     {
-        /// <summary> Initializes a new instance of NewRelicMonitorResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
         public NewRelicMonitorResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

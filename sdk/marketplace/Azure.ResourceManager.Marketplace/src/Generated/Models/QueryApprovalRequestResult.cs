@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Gets the request plans with indication on each plan whether is approved by the admin, has pending request or not requested yet. </summary>
     public partial class QueryApprovalRequestResult
     {
-        /// <summary> Initializes a new instance of QueryApprovalRequestResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestResult"/>. </summary>
         internal QueryApprovalRequestResult()
         {
             PlansDetails = new ChangeTrackingDictionary<string, PrivateStorePlanDetails>();
         }
 
-        /// <summary> Initializes a new instance of QueryApprovalRequestResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestResult"/>. </summary>
         /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="eTag"> Gets or sets e-tag field. </param>

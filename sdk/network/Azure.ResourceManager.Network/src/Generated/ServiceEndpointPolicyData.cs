@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ServiceEndpointPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         public ServiceEndpointPolicyData()
         {
             ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
             ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

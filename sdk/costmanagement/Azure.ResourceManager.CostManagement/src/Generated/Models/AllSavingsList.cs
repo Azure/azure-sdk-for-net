@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The list of all benefit recommendations with the recommendation details. </summary>
     public partial class AllSavingsList
     {
-        /// <summary> Initializes a new instance of AllSavingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllSavingsList"/>. </summary>
         internal AllSavingsList()
         {
             Value = new ChangeTrackingList<AllSavingsBenefitDetails>();
         }
 
-        /// <summary> Initializes a new instance of AllSavingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllSavingsList"/>. </summary>
         /// <param name="value"> The list of benefit recommendations with the recommendation details.. </param>
         /// <param name="nextLink"> The link (URL) to the next page of results. </param>
         internal AllSavingsList(IReadOnlyList<AllSavingsBenefitDetails> value, Uri nextLink)

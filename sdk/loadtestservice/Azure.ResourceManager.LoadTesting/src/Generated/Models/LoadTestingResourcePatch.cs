@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> LoadTest resource patch request body. </summary>
     public partial class LoadTestingResourcePatch
     {
-        /// <summary> Initializes a new instance of LoadTestingResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingResourcePatch"/>. </summary>
         public LoadTestingResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

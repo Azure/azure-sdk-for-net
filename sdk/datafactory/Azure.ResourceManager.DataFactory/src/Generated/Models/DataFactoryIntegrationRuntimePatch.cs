@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Update integration runtime request. </summary>
     public partial class DataFactoryIntegrationRuntimePatch
     {
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimePatch"/>. </summary>
         public DataFactoryIntegrationRuntimePatch()
         {
         }

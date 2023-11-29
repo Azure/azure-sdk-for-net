@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NVA Inbound Security Rule resource. </summary>
     public partial class InboundSecurityRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
         public InboundSecurityRule()
         {
             Rules = new ChangeTrackingList<InboundSecurityRules>();
         }
 
-        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

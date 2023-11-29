@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an add provider request. </summary>
     public partial class SiteRecoveryAddRecoveryServicesProviderProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAddRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
         /// <param name="authenticationIdentityContent"> The identity provider input for DRA authentication. </param>
         /// <param name="resourceAccessIdentityContent"> The identity provider input for resource access. </param>

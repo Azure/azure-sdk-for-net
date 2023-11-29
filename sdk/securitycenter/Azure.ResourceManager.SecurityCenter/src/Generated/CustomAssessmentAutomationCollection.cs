@@ -22,9 +22,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomAssessmentAutomationResource" /> and their operations.
-    /// Each <see cref="CustomAssessmentAutomationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CustomAssessmentAutomationCollection" /> instance call the GetCustomAssessmentAutomations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CustomAssessmentAutomationResource"/> and their operations.
+    /// Each <see cref="CustomAssessmentAutomationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CustomAssessmentAutomationCollection"/> instance call the GetCustomAssessmentAutomations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CustomAssessmentAutomationCollection : ArmCollection, IEnumerable<CustomAssessmentAutomationResource>, IAsyncEnumerable<CustomAssessmentAutomationResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomAssessmentAutomationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomAssessmentAutomationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

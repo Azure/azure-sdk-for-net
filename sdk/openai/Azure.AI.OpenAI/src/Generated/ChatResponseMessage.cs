@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A representation of a chat message as received in a response. </summary>
     public partial class ChatResponseMessage
     {
-        /// <summary> Initializes a new instance of ChatResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatResponseMessage"/>. </summary>
         /// <param name="role"> The chat role associated with the message. </param>
         /// <param name="content"> The content of the message. </param>
         internal ChatResponseMessage(ChatRole role, string content)
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             ToolCalls = new ChangeTrackingList<ChatCompletionsToolCall>();
         }
 
-        /// <summary> Initializes a new instance of ChatResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatResponseMessage"/>. </summary>
         /// <param name="role"> The chat role associated with the message. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="toolCalls">

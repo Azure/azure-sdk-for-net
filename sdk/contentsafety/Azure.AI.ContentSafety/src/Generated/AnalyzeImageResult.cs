@@ -10,12 +10,12 @@ namespace Azure.AI.ContentSafety
     /// <summary> The analysis response of the image. </summary>
     public partial class AnalyzeImageResult
     {
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         internal AnalyzeImageResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         /// <param name="hateResult"> Analysis result for Hate category. </param>
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>

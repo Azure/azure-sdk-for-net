@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details the service to which the subnet is delegated. </summary>
     public partial class ServiceDelegation : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of ServiceDelegation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
         public ServiceDelegation()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceDelegation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

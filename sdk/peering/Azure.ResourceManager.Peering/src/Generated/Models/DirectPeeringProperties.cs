@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct peering. </summary>
     public partial class DirectPeeringProperties
     {
-        /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         public DirectPeeringProperties()
         {
             Connections = new ChangeTrackingList<PeeringDirectConnection>();
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
         /// <param name="peerAsn"> The reference of the peer ASN. </param>

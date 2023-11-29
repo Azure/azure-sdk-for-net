@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAuthorizationModelFactory
     {
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationClassicAdministrator"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationClassicAdministrator(id, name, resourceType, systemData, emailAddress, role);
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.DenyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new DenyAssignmentData(id, name, resourceType, systemData, denyAssignmentName, description, permissions?.ToList(), scope, isAppliedToChildScopes, principals?.ToList(), excludePrincipals?.ToList(), isSystemProtected);
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DenyAssignmentPermission"/>. </summary>
         /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
         /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new DenyAssignmentPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList(), condition, conditionVersion);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPrincipal"/>. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of the principal. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPrincipal(id, displayName, principalType, email);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationProviderOperationsMetadataData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), operations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationProviderResourceType"/>. </summary>
         /// <param name="name"> The resource type name. </param>
         /// <param name="displayName"> The resource type display name. </param>
         /// <param name="operations"> The resource type operations. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationProviderResourceType(name, displayName, operations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationProviderOperationInfo"/>. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationProviderOperationInfo(name, displayName, description, origin, properties, isDataAction);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, description, condition, conditionVersion, createdOn, updatedOn, createdBy, updatedBy, delegatedManagedIdentityResourceId);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationRoleDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationRoleDefinitionData(id, name, resourceType, systemData, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EligibleChildResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EligibleChildResource"/>. </summary>
         /// <param name="id"> The resource scope Id. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new EligibleChildResource(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleRequestId, linkedRoleEligibilityScheduleId, assignmentType, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementExpandedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementExpandedProperties"/>. </summary>
         /// <param name="principalId"> Id of the principal. </param>
         /// <param name="principalDisplayName"> Display name of the principal. </param>
         /// <param name="email"> Email id of the principal. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementExpandedProperties(principalId, principalDisplayName, email, principalType, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleAssignmentScheduleId, originRoleAssignmentId, status, startOn, endOn, linkedRoleEligibilityScheduleId, linkedRoleEligibilityScheduleInstanceId, assignmentType, memberType, condition, conditionVersion, createdOn, expandedProperties);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleAssignmentScheduleRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleAssignmentScheduleId, targetRoleAssignmentScheduleInstanceId, linkedRoleEligibilityScheduleId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleEligibilityScheduleData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleRequestId, memberType, status, startOn, endOn, condition, conditionVersion, createdOn, updatedOn, expandedProperties);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleEligibilityScheduleInstanceData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, roleEligibilityScheduleId, status, startOn, endOn, memberType, condition, conditionVersion, createdOn, expandedProperties);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleEligibilityScheduleRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleEligibilityScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleEligibilityScheduleId, targetRoleEligibilityScheduleInstanceId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleManagementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyData(id, name, resourceType, systemData, scope, displayName, description, isOrganizationDefault, lastModifiedBy, lastModifiedOn, rules?.ToList(), effectiveRules?.ToList(), policyProperties);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPolicyProperties"/>. </summary>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyProperties(scopeId, scopeDisplayName, scopeType);
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authorization.RoleManagementPolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, policyId, effectiveRules?.ToList(), policyAssignmentProperties);
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> A group to be updated. </summary>
     public partial class ContainerServiceFleetUpdateGroup
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
         /// <param name="name">
         /// Name of the group.
         /// It must match a group name of an existing fleet member.

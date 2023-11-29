@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonMultiPolygonData. </summary>
     internal partial class GeoJsonMultiPolygonData
     {
-        /// <summary> Initializes a new instance of GeoJsonMultiPolygonData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPolygonData"/>. </summary>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonMultiPolygonData(IEnumerable<IList<IList<IList<double>>>> coordinates)

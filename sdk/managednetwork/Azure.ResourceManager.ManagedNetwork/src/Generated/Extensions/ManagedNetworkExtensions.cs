@@ -43,9 +43,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
         public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignments(scope);
         }
 
@@ -70,11 +73,13 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="scopeAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableManagedNetworkArmClient(client).GetScopeAssignmentAsync(scope, scopeAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -99,11 +104,13 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="scopeAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ScopeAssignmentResource> GetScopeAssignment(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignment(scope, scopeAssignmentName, cancellationToken);
         }
 
@@ -117,9 +124,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedNetworkResource"/> object. </returns>
         public static ManagedNetworkResource GetManagedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkResource(id);
         }
 
@@ -133,9 +143,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopeAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScopeAssignmentResource"/> object. </returns>
         public static ScopeAssignmentResource GetScopeAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignmentResource(id);
         }
 
@@ -149,9 +162,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedNetworkGroupResource"/> object. </returns>
         public static ManagedNetworkGroupResource GetManagedNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkGroupResource(id);
         }
 
@@ -165,9 +181,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource"/> object. </returns>
         public static ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkPeeringPolicyResource(id);
         }
 
@@ -179,9 +198,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
         public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworks();
         }
 
@@ -205,11 +227,13 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworkAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -233,11 +257,13 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ManagedNetworkResource> GetManagedNetwork(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetwork(managedNetworkName, cancellationToken);
         }
 
@@ -262,9 +288,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
         }
 
@@ -289,9 +318,12 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
         }
     }

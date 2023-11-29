@@ -13,12 +13,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatEnhancements
     {
-        /// <summary> Initializes a new instance of AzureChatEnhancements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatEnhancements"/>. </summary>
         internal AzureChatEnhancements()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureChatEnhancements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatEnhancements"/>. </summary>
         /// <param name="grounding"> The grounding enhancement that returns the bounding box of the objects detected in the image. </param>
         internal AzureChatEnhancements(AzureGroundingEnhancement grounding)
         {

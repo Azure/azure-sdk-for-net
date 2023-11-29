@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the outcome of a detection operation performed by content filtering. </summary>
     public partial class ContentFilterDetectionResult
     {
-        /// <summary> Initializes a new instance of ContentFilterDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterDetectionResult"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
         internal ContentFilterDetectionResult(bool filtered, bool detected)

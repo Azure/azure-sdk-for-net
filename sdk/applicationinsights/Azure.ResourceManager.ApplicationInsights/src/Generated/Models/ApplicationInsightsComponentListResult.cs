@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Describes the list of Application Insights Resources. </summary>
     internal partial class ApplicationInsightsComponentListResult
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentListResult"/>. </summary>
         /// <param name="value"> List of Application Insights component definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApplicationInsightsComponentListResult(IEnumerable<ApplicationInsightsComponentData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentListResult"/>. </summary>
         /// <param name="value"> List of Application Insights component definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Application Insights component definitions if too many components where returned in the result set. </param>
         internal ApplicationInsightsComponentListResult(IReadOnlyList<ApplicationInsightsComponentData> value, string nextLink)

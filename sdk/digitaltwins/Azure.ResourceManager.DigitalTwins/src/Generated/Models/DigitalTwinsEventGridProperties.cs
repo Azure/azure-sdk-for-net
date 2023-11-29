@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Properties related to EventGrid. </summary>
     public partial class DigitalTwinsEventGridProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventGridProperties"/>. </summary>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicEndpoint"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             EndpointType = EndpointType.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventGridProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>

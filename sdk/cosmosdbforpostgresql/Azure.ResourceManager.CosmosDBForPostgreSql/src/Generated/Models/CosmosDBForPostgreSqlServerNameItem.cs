@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> The name object for a server. </summary>
     public partial class CosmosDBForPostgreSqlServerNameItem
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerNameItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerNameItem"/>. </summary>
         internal CosmosDBForPostgreSqlServerNameItem()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerNameItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerNameItem"/>. </summary>
         /// <param name="name"> The name of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
         internal CosmosDBForPostgreSqlServerNameItem(string name, string fullyQualifiedDomainName)

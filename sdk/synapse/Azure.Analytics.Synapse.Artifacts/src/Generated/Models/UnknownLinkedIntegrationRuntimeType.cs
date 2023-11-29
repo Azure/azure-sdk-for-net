@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownLinkedIntegrationRuntimeType. </summary>
     internal partial class UnknownLinkedIntegrationRuntimeType : LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of UnknownLinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         internal UnknownLinkedIntegrationRuntimeType(string authorizationType) : base(authorizationType)
         {

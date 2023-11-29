@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a query metrics interval. </summary>
     public partial class QueryMetricInterval
     {
-        /// <summary> Initializes a new instance of QueryMetricInterval. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricInterval"/>. </summary>
         public QueryMetricInterval()
         {
             Metrics = new ChangeTrackingList<QueryMetricProperties>();
         }
 
-        /// <summary> Initializes a new instance of QueryMetricInterval. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricInterval"/>. </summary>
         /// <param name="intervalStartTime"> The start time for the metric interval (ISO-8601 format). </param>
         /// <param name="intervalType"> Interval type (length). </param>
         /// <param name="executionCount"> Execution count of a query in this interval. </param>

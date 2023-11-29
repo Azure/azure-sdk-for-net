@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCostManagementModelFactory
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new BenefitRecommendationModel(id, name, resourceType, systemData, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new UnknownBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope);
         }
 
-        /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationUsageDetails"/>. </summary>
         /// <param name="usageGrain"> The grain of the usage. Supported values: 'Hourly'. </param>
         /// <param name="charges"> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
         /// <returns> A new <see cref="Models.RecommendationUsageDetails"/> instance for mocking. </returns>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new RecommendationUsageDetails(usageGrain, charges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AllSavingsBenefitDetails"/>. </summary>
         /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
         /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new AllSavingsBenefitDetails(overageCost, benefitCost, totalCost, savingsAmount, savingsPercentage, coveragePercentage, commitmentAmount, averageUtilizationPercentage, wastageCost);
         }
 
-        /// <summary> Initializes a new instance of AllSavingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AllSavingsList"/>. </summary>
         /// <param name="value"> The list of benefit recommendations with the recommendation details.. </param>
         /// <param name="nextLink"> The link (URL) to the next page of results. </param>
         /// <returns> A new <see cref="Models.AllSavingsList"/> instance for mocking. </returns>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new AllSavingsList(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRunErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <returns> A new <see cref="Models.ExportRunErrorDetails"/> instance for mocking. </returns>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ExportRunErrorDetails(code, message);
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummariesOperationStatus"/>. </summary>
         /// <param name="input"> Input given to create the benefit utilization summaries report. </param>
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new BenefitUtilizationSummariesOperationStatus(input, status, properties);
         }
 
-        /// <summary> Initializes a new instance of AsyncOperationStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AsyncOperationStatusProperties"/>. </summary>
         /// <param name="reportUri"> Sas url to the async benefit utilization summaries report. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="secondaryReportUri"> Sas url to async benefit utilization summaries report in secondary storage in case of primary outage. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="validUntil"> The date that the sas url provided in reportUrl expires. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil);
         }
 
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementExportData(id, name, resourceType, systemData, format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList()) : null, partitionData, nextRunTimeEstimate, schedule, eTag);
         }
 
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommonExportProperties"/>. </summary>
         /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CommonExportProperties(format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList()) : null, partitionData, nextRunTimeEstimate);
         }
 
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag);
         }
 
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementViewData(id, name, resourceType, systemData, displayName, scope, createdOn, modifiedOn, dateRange, currency, chart, accumulated, metric, kpis?.ToList(), pivots?.ToList(), typePropertiesQueryType, timeframe, timePeriod, dataSet, includeMonetaryCommitment, eTag);
         }
 
-        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModifiedOn, eTag);
         }
 
-        /// <summary> Initializes a new instance of ForecastResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ForecastResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags);
         }
 
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="forecastColumnType"> The type of column. </param>
         /// <returns> A new <see cref="Models.ForecastColumn"/> instance for mocking. </returns>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ForecastColumn(name, forecastColumnType);
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CostManagementDimension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new QueryResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags);
         }
 
-        /// <summary> Initializes a new instance of QueryColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="queryColumnType"> The type of column. </param>
         /// <returns> A new <see cref="Models.QueryColumn"/> instance for mocking. </returns>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new QueryColumn(name, queryColumnType);
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="reportUri"> The CSV file from the reportUrl blob link consists of reservation usage data with the following schema at daily granularity. </param>
         /// <param name="validUntil"> The time at which report URL becomes invalid. </param>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new OperationStatus(status, reportUri, validUntil);
         }
 
-        /// <summary> Initializes a new instance of DownloadURL. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DownloadURL"/>. </summary>
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new DownloadURL(expiryOn, validTill, downloadUri);
         }
 
-        /// <summary> Initializes a new instance of ScheduledActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.ScheduledActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList()) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind);
         }
 
-        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CostManagementNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementNameAvailabilityResult(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SingleScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SingleScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Single, subscriptionId, resourceGroup);
         }
 
-        /// <summary> Initializes a new instance of SharedScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SharedScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SharedScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Shared);
         }
 
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IncludedQuantityUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new IncludedQuantityUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.IncludedQuantity, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, utilizationPercentage);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteFunction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteFunctionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteFunctionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteFunction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteFunctionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteFunctionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteFunction method.
     /// </summary>
     public partial class SiteFunctionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteFunctionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteFunctionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteFunctionResource(ArmClient client, FunctionEnvelopeData data) : this(client, data.Id)

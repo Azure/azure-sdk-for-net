@@ -1,14 +1,9 @@
 # Release History
 
-## 11.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 11.5.1 (2023-11-28)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix paging issue for semantic and vector search ([#40137](https://github.com/Azure/azure-sdk-for-net/issues/40137)).
 
 ## 11.5.0 (2023-11-10)
 

@@ -13,8 +13,8 @@ namespace Azure.AI.OpenAI
     /// <summary> The embedding dependency based on model id. </summary>
     public partial class OnYourDataEmbeddingModelIdDependency : OnYourDataEmbeddingDependency
     {
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingModelIdDependency. </summary>
-        /// <param name="modelId"> The embedding model id build inside the search service. Currently only supported by Elasticsearch. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingModelIdDependency"/>. </summary>
+        /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public OnYourDataEmbeddingModelIdDependency(string modelId)
         {
@@ -24,15 +24,15 @@ namespace Azure.AI.OpenAI
             ModelId = modelId;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingModelIdDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingModelIdDependency"/>. </summary>
         /// <param name="type"> Embedding dependency types for vector search. </param>
-        /// <param name="modelId"> The embedding model id build inside the search service. Currently only supported by Elasticsearch. </param>
+        /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch. </param>
         internal OnYourDataEmbeddingModelIdDependency(OnYourDataEmbeddingDependencyType type, string modelId) : base(type)
         {
             ModelId = modelId;
         }
 
-        /// <summary> The embedding model id build inside the search service. Currently only supported by Elasticsearch. </summary>
+        /// <summary> The embedding model ID build inside the search service. Currently only supported by Elasticsearch. </summary>
         public string ModelId { get; }
     }
 }

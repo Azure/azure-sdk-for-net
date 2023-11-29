@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SubscriptionSecurityApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionSecurityApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionSecurityApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionSecurityApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionSecurityApplication method.
     /// </summary>
     public partial class SubscriptionSecurityApplicationResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionSecurityApplicationResource(ArmClient client, SecurityApplicationData data) : this(client, data.Id)

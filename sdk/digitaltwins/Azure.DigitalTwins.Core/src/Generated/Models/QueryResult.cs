@@ -15,7 +15,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> The results of a query operation and an optional continuation token. </summary>
     internal partial class QueryResult
     {
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="value"> The query results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal QueryResult(IEnumerable<object> value)
@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="value"> The query results. </param>
         /// <param name="continuationToken"> A token which can be used to construct a new QuerySpecification to retrieve the next set of results. </param>
         internal QueryResult(IReadOnlyList<object> value, string continuationToken)

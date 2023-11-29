@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Specifies a metric to load balance a service during runtime. </summary>
     public partial class ManagedServiceScalingPolicy
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingPolicy"/>. </summary>
         /// <param name="scalingMechanism">
         /// Specifies the mechanism associated with this scaling policy
         /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

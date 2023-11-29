@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates Oracle database connection. </summary>
     public partial class ConnectToSourceOracleSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         internal ConnectToSourceOracleSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of schemas on source server. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>

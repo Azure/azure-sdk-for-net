@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> and their operations.
-    /// Each <see cref="ManagedBackupShortTermRetentionPolicyResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedBackupShortTermRetentionPolicyCollection" /> instance call the GetManagedBackupShortTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> and their operations.
+    /// Each <see cref="ManagedBackupShortTermRetentionPolicyResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedBackupShortTermRetentionPolicyCollection"/> instance call the GetManagedBackupShortTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedBackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedBackupShortTermRetentionPolicyResource>, IAsyncEnumerable<ManagedBackupShortTermRetentionPolicyResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedBackupShortTermRetentionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedBackupShortTermRetentionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

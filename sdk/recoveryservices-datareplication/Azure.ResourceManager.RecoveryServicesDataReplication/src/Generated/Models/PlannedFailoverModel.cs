@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Planned failover model. </summary>
     public partial class PlannedFailoverModel
     {
-        /// <summary> Initializes a new instance of PlannedFailoverModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverModel"/>. </summary>
         /// <param name="properties"> Planned failover model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public PlannedFailoverModel(PlannedFailoverModelProperties properties)

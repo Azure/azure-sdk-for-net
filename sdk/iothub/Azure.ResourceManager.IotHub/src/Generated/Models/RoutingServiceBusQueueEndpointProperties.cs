@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to service bus queue endpoint types. </summary>
     public partial class RoutingServiceBusQueueEndpointProperties
     {
-        /// <summary> Initializes a new instance of RoutingServiceBusQueueEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingServiceBusQueueEndpointProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingServiceBusQueueEndpointProperties(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RoutingServiceBusQueueEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingServiceBusQueueEndpointProperties"/>. </summary>
         /// <param name="id"> Id of the service bus queue endpoint. </param>
         /// <param name="connectionString"> The connection string of the service bus queue endpoint. </param>
         /// <param name="endpoint"> The url of the service bus queue endpoint. It must include the protocol sb://. </param>

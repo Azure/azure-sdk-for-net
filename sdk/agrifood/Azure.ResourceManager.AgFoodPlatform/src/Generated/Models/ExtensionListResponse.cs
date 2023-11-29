@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Paged response contains list of requested objects and a URL link to get the next set of results. </summary>
     internal partial class ExtensionListResponse
     {
-        /// <summary> Initializes a new instance of ExtensionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionListResponse"/>. </summary>
         internal ExtensionListResponse()
         {
             Value = new ChangeTrackingList<ExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionListResponse"/>. </summary>
         /// <param name="value"> List of requested objects. </param>
         /// <param name="nextLink"> Continuation link (absolute URI) to the next page of results in the list. </param>
         internal ExtensionListResponse(IReadOnlyList<ExtensionData> value, string nextLink)

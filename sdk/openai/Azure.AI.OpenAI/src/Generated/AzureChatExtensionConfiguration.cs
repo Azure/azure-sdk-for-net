@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -19,34 +16,25 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        protected AzureChatExtensionConfiguration(BinaryData parameters)
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionConfiguration"/>. </summary>
+        protected AzureChatExtensionConfiguration()
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        internal AzureChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters)
+        internal AzureChatExtensionConfiguration(AzureChatExtensionType type)
         {
             Type = type;
-            Parameters = parameters;
         }
+
+        /// <summary>
+        ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
+        /// </summary>
+        internal AzureChatExtensionType Type { get; set; }
     }
 }

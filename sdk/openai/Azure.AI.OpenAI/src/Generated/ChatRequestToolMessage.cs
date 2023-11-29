@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A request chat message representing requested output from a configured tool. </summary>
     public partial class ChatRequestToolMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of ChatRequestToolMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestToolMessage"/>. </summary>
         /// <param name="content"> The content of the message. </param>
         /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.AI.OpenAI
             ToolCallId = toolCallId;
         }
 
-        /// <summary> Initializes a new instance of ChatRequestToolMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestToolMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>

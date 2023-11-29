@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> HTTPHeader describes a custom header to be used in HTTP probes. </summary>
     public partial class ContainerAppHttpHeaderInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpHeaderInfo"/>. </summary>
         /// <param name="name"> The header field name. </param>
         /// <param name="value"> The header field value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

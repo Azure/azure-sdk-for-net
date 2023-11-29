@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The embedding dependency based on deployment name. </summary>
     public partial class OnYourDataEmbeddingDeploymentNameDependency : OnYourDataEmbeddingDependency
     {
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingDeploymentNameDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDeploymentNameDependency"/>. </summary>
         /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public OnYourDataEmbeddingDeploymentNameDependency(string deploymentName)
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingDeploymentNameDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDeploymentNameDependency"/>. </summary>
         /// <param name="type"> Embedding dependency types for vector search. </param>
         /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
         internal OnYourDataEmbeddingDeploymentNameDependency(OnYourDataEmbeddingDependencyType type, string deploymentName) : base(type)

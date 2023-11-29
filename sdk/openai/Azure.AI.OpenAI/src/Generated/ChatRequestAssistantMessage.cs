@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A request chat message representing response or action from the assistant. </summary>
     public partial class ChatRequestAssistantMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of ChatRequestAssistantMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/>. </summary>
         /// <param name="content"> The content of the message. </param>
         public ChatRequestAssistantMessage(string content)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             ToolCalls = new ChangeTrackingList<ChatCompletionsToolCall>();
         }
 
-        /// <summary> Initializes a new instance of ChatRequestAssistantMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="name"> An optional name for the participant. </param>

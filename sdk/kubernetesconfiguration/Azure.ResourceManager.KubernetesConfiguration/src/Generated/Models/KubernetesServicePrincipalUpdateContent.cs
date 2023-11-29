@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to authenticate using Service Principal. </summary>
     public partial class KubernetesServicePrincipalUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesServicePrincipalUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
         public KubernetesServicePrincipalUpdateContent()
         {
         }

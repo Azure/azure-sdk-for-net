@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Community patchable properties. </summary>
     public partial class IPCommunityRule
     {
-        /// <summary> Initializes a new instance of IPCommunityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="communityMembers"> List the community members of IP Community. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityMembers = communityMembers.ToList();
         }
 
-        /// <summary> Initializes a new instance of IPCommunityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="wellKnownCommunities"> Supported well known Community List. </param>

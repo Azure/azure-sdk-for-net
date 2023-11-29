@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> The response to a record set list operation. </summary>
     internal partial class PrivateDnsRecordListResult
     {
-        /// <summary> Initializes a new instance of PrivateDnsRecordListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
         internal PrivateDnsRecordListResult()
         {
             Value = new ChangeTrackingList<PrivateDnsRecordData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsRecordListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal PrivateDnsRecordListResult(IReadOnlyList<PrivateDnsRecordData> value, string nextLink)

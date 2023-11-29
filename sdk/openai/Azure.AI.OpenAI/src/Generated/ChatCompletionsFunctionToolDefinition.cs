@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The definition information for a chat completions function tool that can call a function in response to a tool call. </summary>
     public partial class ChatCompletionsFunctionToolDefinition : ChatCompletionsToolDefinition
     {
-        /// <summary> Initializes a new instance of ChatCompletionsFunctionToolDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
         /// <param name="function"> The function definition details for the function tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
         public ChatCompletionsFunctionToolDefinition(FunctionDefinition function)
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             Function = function;
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsFunctionToolDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="function"> The function definition details for the function tool. </param>
         internal ChatCompletionsFunctionToolDefinition(string type, FunctionDefinition function) : base(type)

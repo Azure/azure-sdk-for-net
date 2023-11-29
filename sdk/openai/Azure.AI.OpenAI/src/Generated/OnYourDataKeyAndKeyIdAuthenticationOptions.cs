@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The authentication option using Elasticsearch key and keyId pair. </summary>
+    /// <summary> The authentication options for Azure OpenAI On Your Data when using an Elasticsearch key and key ID pair. </summary>
     public partial class OnYourDataKeyAndKeyIdAuthenticationOptions : OnYourDataAuthenticationOptions
     {
-        /// <summary> Initializes a new instance of OnYourDataKeyAndKeyIdAuthenticationOptions. </summary>
-        /// <param name="type"> The Authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
         /// <param name="key"> The key to use for authentication. </param>
         /// <param name="keyId"> The key ID to use for authentication. </param>
         internal OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType type, string key, string keyId) : base(type)

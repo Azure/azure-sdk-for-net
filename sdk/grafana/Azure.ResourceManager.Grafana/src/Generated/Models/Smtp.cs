@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// </summary>
     public partial class Smtp
     {
-        /// <summary> Initializes a new instance of Smtp. </summary>
+        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
         public Smtp()
         {
         }
 
-        /// <summary> Initializes a new instance of Smtp. </summary>
+        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
         /// <param name="enabled"> Enable this to allow Grafana to send email. Default is false. </param>
         /// <param name="host"> SMTP server hostname with port, e.g. test.email.net:587. </param>
         /// <param name="user"> User of SMTP auth. </param>

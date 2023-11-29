@@ -14,13 +14,13 @@ namespace Azure.AI.OpenAI
     /// <summary> Information about content filtering evaluated against generated model output. </summary>
     public partial class ContentFilterResultsForChoice
     {
-        /// <summary> Initializes a new instance of ContentFilterResultsForChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForChoice"/>. </summary>
         internal ContentFilterResultsForChoice()
         {
             CustomBlocklists = new ChangeTrackingList<ContentFilterBlocklistIdResult>();
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResultsForChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForChoice"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including

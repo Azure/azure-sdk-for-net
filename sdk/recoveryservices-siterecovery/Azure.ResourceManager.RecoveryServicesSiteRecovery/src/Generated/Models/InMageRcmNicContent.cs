@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm NIC input. </summary>
     public partial class InMageRcmNicContent
     {
-        /// <summary> Initializes a new instance of InMageRcmNicContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicContent"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>

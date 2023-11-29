@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> The UnknownRouteConfiguration. </summary>
     internal partial class UnknownRouteConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/>. </summary>
         /// <param name="odataType"></param>
         internal UnknownRouteConfiguration(string odataType) : base(odataType)
         {

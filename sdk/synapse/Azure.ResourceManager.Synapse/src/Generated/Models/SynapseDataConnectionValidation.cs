@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an data connection validation. </summary>
     public partial class SynapseDataConnectionValidation
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidation"/>. </summary>
         public SynapseDataConnectionValidation()
         {
         }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventGridDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEventGridDomain method.
     /// </summary>
     public partial class EventGridDomainResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridDomainResource(ArmClient client, EventGridDomainData data) : this(client, data.Id)

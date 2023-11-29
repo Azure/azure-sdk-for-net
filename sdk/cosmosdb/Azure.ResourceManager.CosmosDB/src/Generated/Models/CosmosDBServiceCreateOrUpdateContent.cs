@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters for Create or Update Request for ServiceResource. </summary>
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBServiceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
         public CosmosDBServiceCreateOrUpdateContent()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Detailed information of the anomalous time stamp. </summary>
     public partial class AnomalyValue
     {
-        /// <summary> Initializes a new instance of AnomalyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
         /// Indicates the significance of the anomaly. The higher the severity, the more
@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             Interpretation = new ChangeTrackingList<AnomalyInterpretation>();
         }
 
-        /// <summary> Initializes a new instance of AnomalyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
         /// Indicates the significance of the anomaly. The higher the severity, the more

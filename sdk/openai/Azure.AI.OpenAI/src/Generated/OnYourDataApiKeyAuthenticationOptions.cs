@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The authentication option using API key. </summary>
+    /// <summary> The authentication options for Azure OpenAI On Your Data when using an API key. </summary>
     public partial class OnYourDataApiKeyAuthenticationOptions : OnYourDataAuthenticationOptions
     {
-        /// <summary> Initializes a new instance of OnYourDataApiKeyAuthenticationOptions. </summary>
-        /// <param name="type"> The Authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
         /// <param name="key"> The API key to use for authentication. </param>
         internal OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType type, string key) : base(type)
         {

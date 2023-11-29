@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> IP address for the container group. </summary>
     public partial class ContainerGroupIPAddress
     {
-        /// <summary> Initializes a new instance of ContainerGroupIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddress"/>. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ports"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             AddressType = addressType;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddress"/>. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>

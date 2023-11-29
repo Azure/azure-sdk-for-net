@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Represents a server to be created. </summary>
     public partial class PostgreSqlServerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerCreateOrUpdateContent"/>. </summary>
         /// <param name="properties">
         /// Properties of the server.
         /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

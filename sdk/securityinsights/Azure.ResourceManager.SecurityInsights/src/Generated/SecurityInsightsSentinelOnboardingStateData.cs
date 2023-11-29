@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsSentinelOnboardingStateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSentinelOnboardingStateData"/>. </summary>
         public SecurityInsightsSentinelOnboardingStateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsSentinelOnboardingStateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSentinelOnboardingStateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

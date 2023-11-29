@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The list of versions for supported orchestrators. </summary>
     public partial class OrchestratorVersionProfileListResult : ResourceData
     {
-        /// <summary> Initializes a new instance of OrchestratorVersionProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfileListResult"/>. </summary>
         internal OrchestratorVersionProfileListResult()
         {
             Orchestrators = new ChangeTrackingList<OrchestratorVersionProfile>();
         }
 
-        /// <summary> Initializes a new instance of OrchestratorVersionProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfileListResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

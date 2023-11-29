@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputeMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputeMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputeMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridComputeMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridComputeMachine method.
     /// </summary>
     public partial class HybridComputeMachineResource : ArmResource
     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputeMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeMachineResource(ArmClient client, HybridComputeMachineData data) : this(client, data.Id)

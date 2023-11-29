@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A span object that represents a detected object and its bounding box information. </summary>
     public partial class AzureGroundingEnhancementLineSpan
     {
-        /// <summary> Initializes a new instance of AzureGroundingEnhancementLineSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLineSpan"/>. </summary>
         /// <param name="text"> The text content of the span that represents the detected object. </param>
         /// <param name="offset">
         /// The character offset within the text where the span begins. This offset is defined as the position of the first
@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI
             Polygon = polygon.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureGroundingEnhancementLineSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLineSpan"/>. </summary>
         /// <param name="text"> The text content of the span that represents the detected object. </param>
         /// <param name="offset">
         /// The character offset within the text where the span begins. This offset is defined as the position of the first

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A structured representation of a stop reason that signifies natural termination by the model. </summary>
     public partial class StopFinishDetails : ChatFinishDetails
     {
-        /// <summary> Initializes a new instance of StopFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopFinishDetails"/>. </summary>
         /// <param name="stop"> The token sequence that the model terminated with. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stop"/> is null. </exception>
         internal StopFinishDetails(string stop)
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             Stop = stop;
         }
 
-        /// <summary> Initializes a new instance of StopFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="stop"> The token sequence that the model terminated with. </param>
         internal StopFinishDetails(string type, string stop) : base(type)

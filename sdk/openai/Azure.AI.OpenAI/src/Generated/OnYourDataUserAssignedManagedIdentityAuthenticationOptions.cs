@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The authentication option using user-assigned managed identity. </summary>
+    /// <summary> The authentication options for Azure OpenAI On Your Data when using a user-assigned managed identity. </summary>
     public partial class OnYourDataUserAssignedManagedIdentityAuthenticationOptions : OnYourDataAuthenticationOptions
     {
-        /// <summary> Initializes a new instance of OnYourDataUserAssignedManagedIdentityAuthenticationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
         /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityResourceId"/> is null. </exception>
         public OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId)
@@ -24,8 +24,8 @@ namespace Azure.AI.OpenAI
             ManagedIdentityResourceId = managedIdentityResourceId;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataUserAssignedManagedIdentityAuthenticationOptions. </summary>
-        /// <param name="type"> The Authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
         internal OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType type, string managedIdentityResourceId) : base(type)
         {

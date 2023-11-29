@@ -14,12 +14,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     internal abstract partial class ChatCompletionsNamedToolSelection
     {
-        /// <summary> Initializes a new instance of ChatCompletionsNamedToolSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolSelection"/>. </summary>
         protected ChatCompletionsNamedToolSelection()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsNamedToolSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolSelection"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal ChatCompletionsNamedToolSelection(string type)
         {

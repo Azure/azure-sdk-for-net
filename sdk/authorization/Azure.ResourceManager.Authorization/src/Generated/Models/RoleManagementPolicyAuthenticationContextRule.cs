@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy authentication context rule. </summary>
     public partial class RoleManagementPolicyAuthenticationContextRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyAuthenticationContextRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAuthenticationContextRule"/>. </summary>
         public RoleManagementPolicyAuthenticationContextRule()
         {
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyAuthenticationContextRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAuthenticationContextRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

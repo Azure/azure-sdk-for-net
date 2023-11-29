@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Object representing DeploymentType for Managed CCF. </summary>
     public partial class ConfidentialLedgerDeploymentType
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         public ConfidentialLedgerDeploymentType()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         /// <param name="languageRuntime"> Unique name for the Managed CCF. </param>
         /// <param name="appSourceUri"> Source Uri containing ManagedCCF code. </param>
         internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri)

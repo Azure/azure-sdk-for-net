@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> A single field mapping of the mapped entity. </summary>
     public partial class SecurityInsightsFieldMapping
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFieldMapping"/>. </summary>
         public SecurityInsightsFieldMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFieldMapping"/>. </summary>
         /// <param name="identifier"> the V3 identifier of the entity. </param>
         /// <param name="columnName"> the column name to be mapped to the identifier. </param>
         internal SecurityInsightsFieldMapping(string identifier, string columnName)

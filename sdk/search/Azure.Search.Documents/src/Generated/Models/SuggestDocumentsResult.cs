@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing suggestion query results from an index. </summary>
     internal partial class SuggestDocumentsResult
     {
-        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SuggestDocumentsResult(IEnumerable<SuggestResult> results)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
         internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage)

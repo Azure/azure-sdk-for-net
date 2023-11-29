@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A representation of the available options for the Azure OpenAI optical character recognition (OCR) enhancement. </summary>
     public partial class AzureChatOCREnhancementConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatOCREnhancementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatOCREnhancementConfiguration"/>. </summary>
         /// <param name="enabled"> Specifies whether the enhancement is enabled. </param>
         public AzureChatOCREnhancementConfiguration(bool enabled)
         {

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A structured chat content item containing an image reference. </summary>
     public partial class ChatMessageImageContentItem : ChatMessageContentItem
     {
-        /// <summary> Initializes a new instance of ChatMessageImageContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
         public ChatMessageImageContentItem(ChatMessageImageUrl imageUrl)
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             ImageUrl = imageUrl;
         }
 
-        /// <summary> Initializes a new instance of ChatMessageImageContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
         /// <param name="detail">

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorSecurityPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorSecurityPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorSecurityPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetFrontDoorSecurityPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorSecurityPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorSecurityPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetFrontDoorSecurityPolicy method.
     /// </summary>
     public partial class FrontDoorSecurityPolicyResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorSecurityPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorSecurityPolicyResource(ArmClient client, FrontDoorSecurityPolicyData data) : this(client, data.Id)

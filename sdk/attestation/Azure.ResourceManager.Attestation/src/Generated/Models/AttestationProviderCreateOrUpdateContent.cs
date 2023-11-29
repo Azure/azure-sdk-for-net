@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Parameters for creating an attestation provider. </summary>
     public partial class AttestationProviderCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AttestationProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>

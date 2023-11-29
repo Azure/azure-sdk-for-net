@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when calling recall action on server endpoint. </summary>
     public partial class RecallActionContent
     {
-        /// <summary> Initializes a new instance of RecallActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecallActionContent"/>. </summary>
         public RecallActionContent()
         {
         }

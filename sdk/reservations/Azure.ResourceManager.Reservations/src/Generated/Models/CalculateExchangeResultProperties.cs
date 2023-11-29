@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> CalculateExchange response properties. </summary>
     public partial class CalculateExchangeResultProperties
     {
-        /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResultProperties"/>. </summary>
         internal CalculateExchangeResultProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseCalculateExchange>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ReservationsToExchange = new ChangeTrackingList<ReservationToExchange>();
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResultProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
         /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>

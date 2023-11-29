@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Optional settings to control how fields are processed when using a configured Pinecone resource. </summary>
     public partial class PineconeFieldMappingOptions
     {
-        /// <summary> Initializes a new instance of PineconeFieldMappingOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
         public PineconeFieldMappingOptions()
         {
             ContentFieldNames = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             ImageVectorFieldNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PineconeFieldMappingOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
         /// <param name="titleFieldName"> The name of the index field to use as a title. </param>
         /// <param name="urlFieldName"> The name of the index field to use as a URL. </param>
         /// <param name="filepathFieldName"> The name of the index field to use as a filepath. </param>

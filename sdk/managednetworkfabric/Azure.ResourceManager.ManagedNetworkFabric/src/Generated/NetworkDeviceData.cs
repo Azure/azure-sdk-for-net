@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkDeviceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkDeviceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

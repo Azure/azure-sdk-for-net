@@ -10,12 +10,12 @@ namespace Azure.AI.OpenAI
     /// <summary> A representation of the available Azure OpenAI enhancement configurations. </summary>
     public partial class AzureChatEnhancementConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatEnhancementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatEnhancementConfiguration"/>. </summary>
         public AzureChatEnhancementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureChatEnhancementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatEnhancementConfiguration"/>. </summary>
         /// <param name="grounding"> A representation of the available options for the Azure OpenAI grounding enhancement. </param>
         /// <param name="ocr"> A representation of the available options for the Azure OpenAI optical character recognition (OCR) enhancement. </param>
         internal AzureChatEnhancementConfiguration(AzureChatGroundingEnhancementConfiguration grounding, AzureChatOCREnhancementConfiguration ocr)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload specific backup copy. </summary>
     public partial class IaasVmRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
         public IaasVmRecoveryPoint()
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "IaasVMRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformGatewayResource" /> and their operations.
-    /// Each <see cref="AppPlatformGatewayResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
-    /// To get an <see cref="AppPlatformGatewayCollection" /> instance call the GetAppPlatformGateways method from an instance of <see cref="AppPlatformServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformGatewayResource"/> and their operations.
+    /// Each <see cref="AppPlatformGatewayResource"/> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource"/>.
+    /// To get an <see cref="AppPlatformGatewayCollection"/> instance call the GetAppPlatformGateways method from an instance of <see cref="AppPlatformServiceResource"/>.
     /// </summary>
     public partial class AppPlatformGatewayCollection : ArmCollection, IEnumerable<AppPlatformGatewayResource>, IAsyncEnumerable<AppPlatformGatewayResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayGatewaysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayGatewaysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

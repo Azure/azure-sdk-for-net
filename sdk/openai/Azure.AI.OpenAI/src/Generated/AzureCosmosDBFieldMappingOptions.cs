@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Optional settings to control how fields are processed when using a configured Azure Cosmos DB resource. </summary>
     public partial class AzureCosmosDBFieldMappingOptions
     {
-        /// <summary> Initializes a new instance of AzureCosmosDBFieldMappingOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBFieldMappingOptions"/>. </summary>
         /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorFieldNames"/> is null. </exception>
         public AzureCosmosDBFieldMappingOptions(IEnumerable<string> vectorFieldNames)
@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI
             VectorFieldNames = vectorFieldNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureCosmosDBFieldMappingOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBFieldMappingOptions"/>. </summary>
         /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
         internal AzureCosmosDBFieldMappingOptions(IList<string> vectorFieldNames)
         {

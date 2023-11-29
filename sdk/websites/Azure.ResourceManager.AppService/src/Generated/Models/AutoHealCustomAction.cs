@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class AutoHealCustomAction
     {
-        /// <summary> Initializes a new instance of AutoHealCustomAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
         public AutoHealCustomAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoHealCustomAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
         /// <param name="exe"> Executable to be run. </param>
         /// <param name="parameters"> Parameters for the executable. </param>
         internal AutoHealCustomAction(string exe, string parameters)

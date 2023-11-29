@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Describes a query to be executed. </summary>
     public partial class ResourceQueryContent
     {
-        /// <summary> Initializes a new instance of ResourceQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryContent"/>. </summary>
         /// <param name="query"> The resources query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public ResourceQueryContent(string query)

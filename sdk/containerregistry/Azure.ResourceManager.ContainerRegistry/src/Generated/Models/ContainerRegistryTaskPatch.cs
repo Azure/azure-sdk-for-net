@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a task. </summary>
     public partial class ContainerRegistryTaskPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskPatch"/>. </summary>
         public ContainerRegistryTaskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

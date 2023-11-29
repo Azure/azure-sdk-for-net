@@ -14,12 +14,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class ChatMessageContentItem
     {
-        /// <summary> Initializes a new instance of ChatMessageContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContentItem"/>. </summary>
         protected ChatMessageContentItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatMessageContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         internal ChatMessageContentItem(string type)
         {

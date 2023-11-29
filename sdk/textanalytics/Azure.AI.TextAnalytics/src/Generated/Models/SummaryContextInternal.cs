@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The context of the summary. </summary>
     internal partial class SummaryContextInternal
     {
-        /// <summary> Initializes a new instance of SummaryContextInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummaryContextInternal"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         public SummaryContextInternal(int offset, int length)

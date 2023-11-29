@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Request payload for unassigning a job. </summary>
     public partial class UnassignJobOptions
     {
-        /// <summary> Initializes a new instance of UnassignJobOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnassignJobOptions"/>. </summary>
         /// <param name="suspendMatching"> If SuspendMatching is true, then a job is not queued for re-matching with a worker. </param>
         internal UnassignJobOptions(bool? suspendMatching)
         {

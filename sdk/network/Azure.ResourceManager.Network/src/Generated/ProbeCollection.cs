@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProbeResource" /> and their operations.
-    /// Each <see cref="ProbeResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
-    /// To get a <see cref="ProbeCollection" /> instance call the GetProbes method from an instance of <see cref="LoadBalancerResource" />.
+    /// A class representing a collection of <see cref="ProbeResource"/> and their operations.
+    /// Each <see cref="ProbeResource"/> in the collection will belong to the same instance of <see cref="LoadBalancerResource"/>.
+    /// To get a <see cref="ProbeCollection"/> instance call the GetProbes method from an instance of <see cref="LoadBalancerResource"/>.
     /// </summary>
     public partial class ProbeCollection : ArmCollection, IEnumerable<ProbeResource>, IAsyncEnumerable<ProbeResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProbeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProbeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProbeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProbeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

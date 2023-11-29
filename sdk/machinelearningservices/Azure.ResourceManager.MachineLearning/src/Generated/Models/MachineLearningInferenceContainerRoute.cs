@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningInferenceContainerRoute. </summary>
     public partial class MachineLearningInferenceContainerRoute
     {
-        /// <summary> Initializes a new instance of MachineLearningInferenceContainerRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerRoute"/>. </summary>
         /// <param name="path"> [Required] The path for the route. </param>
         /// <param name="port"> [Required] The port for the route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>

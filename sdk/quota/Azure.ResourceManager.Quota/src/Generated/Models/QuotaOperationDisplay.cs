@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The QuotaOperationDisplay. </summary>
     public partial class QuotaOperationDisplay
     {
-        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationDisplay"/>. </summary>
         internal QuotaOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationDisplay"/>. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>

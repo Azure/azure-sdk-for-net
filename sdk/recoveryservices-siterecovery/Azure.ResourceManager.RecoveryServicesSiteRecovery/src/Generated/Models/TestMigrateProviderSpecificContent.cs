@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class TestMigrateProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of TestMigrateProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestMigrateProviderSpecificContent"/>. </summary>
         protected TestMigrateProviderSpecificContent()
         {
         }

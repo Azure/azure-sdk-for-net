@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Functions are stored Kusto queries that can be specified as part of queries by using their name. </summary>
     internal partial class MetadataFunction
     {
-        /// <summary> Initializes a new instance of MetadataFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataFunction"/>. </summary>
         /// <param name="id"> The ID of the function. </param>
         /// <param name="name"> The name of the function, to be used in queries. </param>
         /// <param name="body"> The KQL body of the function. </param>

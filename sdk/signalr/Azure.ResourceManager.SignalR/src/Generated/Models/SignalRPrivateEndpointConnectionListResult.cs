@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class SignalRPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionListResult"/>. </summary>
         internal SignalRPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of the private endpoint connections. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
         internal SignalRPrivateEndpointConnectionListResult(IReadOnlyList<SignalRPrivateEndpointConnectionData> value, string nextLink)

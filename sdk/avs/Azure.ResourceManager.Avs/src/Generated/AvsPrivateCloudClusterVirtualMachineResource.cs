@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudClusterVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudClusterVirtualMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudClusterVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource" /> using the GetAvsPrivateCloudClusterVirtualMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterVirtualMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterVirtualMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetAvsPrivateCloudClusterVirtualMachine method.
     /// </summary>
     public partial class AvsPrivateCloudClusterVirtualMachineResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudClusterVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudClusterVirtualMachineResource(ArmClient client, AvsPrivateCloudClusterVirtualMachineData data) : this(client, data.Id)

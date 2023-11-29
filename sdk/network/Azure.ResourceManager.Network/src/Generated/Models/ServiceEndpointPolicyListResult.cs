@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListServiceEndpointPolicies API service call. </summary>
     internal partial class ServiceEndpointPolicyListResult
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyListResult"/>. </summary>
         internal ServiceEndpointPolicyListResult()
         {
             Value = new ChangeTrackingList<ServiceEndpointPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyListResult"/>. </summary>
         /// <param name="value"> A list of ServiceEndpointPolicy resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ServiceEndpointPolicyListResult(IReadOnlyList<ServiceEndpointPolicyData> value, string nextLink)

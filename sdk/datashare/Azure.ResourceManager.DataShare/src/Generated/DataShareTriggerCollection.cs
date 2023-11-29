@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareTriggerResource" /> and their operations.
-    /// Each <see cref="DataShareTriggerResource" /> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource" />.
-    /// To get a <see cref="DataShareTriggerCollection" /> instance call the GetDataShareTriggers method from an instance of <see cref="ShareSubscriptionResource" />.
+    /// A class representing a collection of <see cref="DataShareTriggerResource"/> and their operations.
+    /// Each <see cref="DataShareTriggerResource"/> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource"/>.
+    /// To get a <see cref="DataShareTriggerCollection"/> instance call the GetDataShareTriggers method from an instance of <see cref="ShareSubscriptionResource"/>.
     /// </summary>
     public partial class DataShareTriggerCollection : ArmCollection, IEnumerable<DataShareTriggerResource>, IAsyncEnumerable<DataShareTriggerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareTriggerResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareTriggerResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);

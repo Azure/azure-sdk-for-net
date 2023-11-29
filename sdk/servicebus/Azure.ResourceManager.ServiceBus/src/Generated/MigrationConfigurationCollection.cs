@@ -21,9 +21,9 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MigrationConfigurationResource" /> and their operations.
-    /// Each <see cref="MigrationConfigurationResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
-    /// To get a <see cref="MigrationConfigurationCollection" /> instance call the GetMigrationConfigurations method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// A class representing a collection of <see cref="MigrationConfigurationResource"/> and their operations.
+    /// Each <see cref="MigrationConfigurationResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="MigrationConfigurationCollection"/> instance call the GetMigrationConfigurations method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class MigrationConfigurationCollection : ArmCollection, IEnumerable<MigrationConfigurationResource>, IAsyncEnumerable<MigrationConfigurationResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MigrationConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MigrationConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MigrationConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MigrationConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

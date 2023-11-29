@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The resource usages value. </summary>
     public partial class QuotaUsagesObject
     {
-        /// <summary> Initializes a new instance of QuotaUsagesObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesObject"/>. </summary>
         /// <param name="value"> The usages value. </param>
         internal QuotaUsagesObject(int value)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesObject"/>. </summary>
         /// <param name="value"> The usages value. </param>
         /// <param name="usagesType"> The quota or usages limit types. </param>
         internal QuotaUsagesObject(int value, QuotaUsagesType? usagesType)

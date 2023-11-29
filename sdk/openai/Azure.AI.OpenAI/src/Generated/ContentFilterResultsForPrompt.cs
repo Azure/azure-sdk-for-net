@@ -10,14 +10,14 @@ namespace Azure.AI.OpenAI
     /// <summary> Content filtering results for a single prompt in the request. </summary>
     public partial class ContentFilterResultsForPrompt
     {
-        /// <summary> Initializes a new instance of ContentFilterResultsForPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         internal ContentFilterResultsForPrompt(int promptIndex)
         {
             PromptIndex = promptIndex;
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResultsForPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
         internal ContentFilterResultsForPrompt(int promptIndex, ContentFilterResultDetailsForPrompt contentFilterResults)

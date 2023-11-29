@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetAppConfigurationPrivateEndpointConnection method.
     /// </summary>
     public partial class AppConfigurationPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationPrivateEndpointConnectionResource(ArmClient client, AppConfigurationPrivateEndpointConnectionData data) : this(client, data.Id)

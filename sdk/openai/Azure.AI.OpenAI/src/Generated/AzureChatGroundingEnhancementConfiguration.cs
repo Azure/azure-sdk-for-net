@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A representation of the available options for the Azure OpenAI grounding enhancement. </summary>
     public partial class AzureChatGroundingEnhancementConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatGroundingEnhancementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatGroundingEnhancementConfiguration"/>. </summary>
         /// <param name="enabled"> Specifies whether the enhancement is enabled. </param>
         public AzureChatGroundingEnhancementConfiguration(bool enabled)
         {

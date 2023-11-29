@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The UnknownDataTransferDataSourceSink. </summary>
     internal partial class UnknownDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of UnknownDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         internal UnknownDataTransferDataSourceSink(DataTransferComponent component) : base(component)
         {

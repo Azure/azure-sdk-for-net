@@ -7,17 +7,17 @@
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The authentication option using system-assigned managed identity. </summary>
+    /// <summary> The authentication options for Azure OpenAI On Your Data when using a system-assigned managed identity. </summary>
     public partial class OnYourDataSystemAssignedManagedIdentityAuthenticationOptions : OnYourDataAuthenticationOptions
     {
-        /// <summary> Initializes a new instance of OnYourDataSystemAssignedManagedIdentityAuthenticationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
         public OnYourDataSystemAssignedManagedIdentityAuthenticationOptions()
         {
             Type = OnYourDataAuthenticationType.SystemAssignedManagedIdentity;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataSystemAssignedManagedIdentityAuthenticationOptions. </summary>
-        /// <param name="type"> The Authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
         internal OnYourDataSystemAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType type) : base(type)
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterList represents a list of Kubernetes clusters. </summary>
     internal partial class KubernetesClusterList
     {
-        /// <summary> Initializes a new instance of KubernetesClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterList"/>. </summary>
         internal KubernetesClusterList()
         {
             Value = new ChangeTrackingList<NetworkCloudKubernetesClusterData>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of additional details related to Kubernetes clusters. </param>
         internal KubernetesClusterList(string nextLink, IReadOnlyList<NetworkCloudKubernetesClusterData> value)

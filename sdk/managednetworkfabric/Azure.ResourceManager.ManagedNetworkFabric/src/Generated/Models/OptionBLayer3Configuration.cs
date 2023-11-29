@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> OptionB Layer3 Configuration properties. </summary>
     public partial class OptionBLayer3Configuration : Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of OptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
         public OptionBLayer3Configuration()
         {
         }
 
-        /// <summary> Initializes a new instance of OptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>

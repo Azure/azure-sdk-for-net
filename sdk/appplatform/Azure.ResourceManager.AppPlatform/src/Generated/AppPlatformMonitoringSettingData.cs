@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformMonitoringSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingData"/>. </summary>
         public AppPlatformMonitoringSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

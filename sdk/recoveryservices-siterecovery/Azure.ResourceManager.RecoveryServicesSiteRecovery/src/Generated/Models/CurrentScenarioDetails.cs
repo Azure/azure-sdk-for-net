@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Current scenario details of the protected entity. </summary>
     public partial class CurrentScenarioDetails
     {
-        /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         internal CurrentScenarioDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>

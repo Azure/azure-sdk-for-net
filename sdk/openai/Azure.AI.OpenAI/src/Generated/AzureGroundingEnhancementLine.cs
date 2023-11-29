@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A content line object consisting of an adjacent sequence of content elements, such as words and selection marks. </summary>
     public partial class AzureGroundingEnhancementLine
     {
-        /// <summary> Initializes a new instance of AzureGroundingEnhancementLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLine"/>. </summary>
         /// <param name="text"> The text within the line. </param>
         /// <param name="spans"> An array of spans that represent detected objects and its bounding box information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="spans"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureGroundingEnhancementLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLine"/>. </summary>
         /// <param name="text"> The text within the line. </param>
         /// <param name="spans"> An array of spans that represent detected objects and its bounding box information. </param>
         internal AzureGroundingEnhancementLine(string text, IReadOnlyList<AzureGroundingEnhancementLineSpan> spans)

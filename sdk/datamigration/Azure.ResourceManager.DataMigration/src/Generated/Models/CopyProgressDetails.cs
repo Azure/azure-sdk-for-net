@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Details on progress of ADF copy activity. </summary>
     public partial class CopyProgressDetails
     {
-        /// <summary> Initializes a new instance of CopyProgressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProgressDetails"/>. </summary>
         internal CopyProgressDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyProgressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProgressDetails"/>. </summary>
         /// <param name="tableName"> Table Name. </param>
         /// <param name="status"> Status of the Copy activity (InProgress, Succeeded, Failed, Canceled). </param>
         /// <param name="parallelCopyType"> Type of parallel copy (Dynamic range, Physical partition, none). </param>

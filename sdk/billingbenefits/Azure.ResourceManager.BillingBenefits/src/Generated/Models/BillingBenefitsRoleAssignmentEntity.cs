@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Role assignment entity. </summary>
     public partial class BillingBenefitsRoleAssignmentEntity
     {
-        /// <summary> Initializes a new instance of BillingBenefitsRoleAssignmentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         internal BillingBenefitsRoleAssignmentEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsRoleAssignmentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         /// <param name="id"> Role assignment entity id. </param>
         /// <param name="name"> Role assignment entity name. </param>
         /// <param name="principalId"> Principal Id. </param>

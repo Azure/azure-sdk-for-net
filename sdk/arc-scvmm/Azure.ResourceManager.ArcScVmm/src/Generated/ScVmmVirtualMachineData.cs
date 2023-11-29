@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmVirtualMachineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcScVmm
             AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -118,10 +118,7 @@ namespace Azure.AI.OpenAI
     }
     public abstract partial class AzureChatExtensionConfiguration
     {
-        public AzureChatExtensionConfiguration() { }
-        protected AzureChatExtensionConfiguration(System.BinaryData parameters) { }
-        public System.BinaryData Parameters { get { throw null; } set { } }
-        public virtual Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
+        protected AzureChatExtensionConfiguration() { }
     }
     public partial class AzureChatExtensionsMessageContext
     {
@@ -136,27 +133,6 @@ namespace Azure.AI.OpenAI
         public Azure.AI.OpenAI.AzureChatEnhancementConfiguration EnhancementOptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatExtensionConfiguration> Extensions { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzureChatExtensionType : System.IEquatable<Azure.AI.OpenAI.AzureChatExtensionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AzureChatExtensionType(string value) { throw null; }
-        public static Azure.AI.OpenAI.AzureChatExtensionType AzureCognitiveSearch { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureChatExtensionType AzureCosmosDB { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureChatExtensionType AzureMachineLearningIndex { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureChatExtensionType Elasticsearch { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureChatExtensionType Pinecone { get { throw null; } }
-        public bool Equals(Azure.AI.OpenAI.AzureChatExtensionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.AzureChatExtensionType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AzureChatGroundingEnhancementConfiguration
     {
         public AzureChatGroundingEnhancementConfiguration(bool enabled) { }
@@ -169,22 +145,27 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureCognitiveSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
-        public AzureCognitiveSearchChatExtensionConfiguration() { }
-        public AzureCognitiveSearchChatExtensionConfiguration(System.BinaryData parameters, System.Uri searchEndpoint, string indexName) { }
+        public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionParameters parameters) { }
+        public Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionParameters Parameters { get { throw null; } }
+    }
+    public partial class AzureCognitiveSearchChatExtensionParameters
+    {
+        public AzureCognitiveSearchChatExtensionParameters(System.Uri searchEndpoint, string indexName) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
         public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
         public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
+        public string EmbeddingKey { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        public string IndexName { get { throw null; } }
+        public string Key { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
         public string RoleInformation { get { throw null; } set { } }
-        public System.Uri SearchEndpoint { get { throw null; } set { } }
+        public System.Uri SearchEndpoint { get { throw null; } }
         public string SemanticConfiguration { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
-        public void SetEmbeddingKey(string embeddingKey) { }
     }
     public partial class AzureCognitiveSearchIndexFieldMappingOptions
     {
@@ -220,15 +201,19 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureCosmosDBChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
-        public AzureCosmosDBChatExtensionConfiguration() { }
-        public AzureCosmosDBChatExtensionConfiguration(System.BinaryData parameters, string databaseName, string containerName, string indexName, Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions fieldMappingOptions) { }
+        public AzureCosmosDBChatExtensionConfiguration(Azure.AI.OpenAI.AzureCosmosDBChatExtensionParameters parameters) { }
+        public Azure.AI.OpenAI.AzureCosmosDBChatExtensionParameters Parameters { get { throw null; } }
+    }
+    public partial class AzureCosmosDBChatExtensionParameters
+    {
+        public AzureCosmosDBChatExtensionParameters(string databaseName, string containerName, string indexName, Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions fieldMappingOptions) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
-        public string ContainerName { get { throw null; } set { } }
-        public string DatabaseName { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } }
+        public string DatabaseName { get { throw null; } }
         public int? DocumentCount { get { throw null; } set { } }
         public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
-        public Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions FieldMappingOptions { get { throw null; } }
+        public string IndexName { get { throw null; } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
@@ -265,17 +250,21 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureMachineLearningIndexChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
-        public AzureMachineLearningIndexChatExtensionConfiguration() { }
-        public AzureMachineLearningIndexChatExtensionConfiguration(System.BinaryData parameters, string projectResourceId, string name, string version) { }
+        public AzureMachineLearningIndexChatExtensionConfiguration(Azure.AI.OpenAI.AzureMachineLearningIndexChatExtensionParameters parameters) { }
+        public Azure.AI.OpenAI.AzureMachineLearningIndexChatExtensionParameters Parameters { get { throw null; } }
+    }
+    public partial class AzureMachineLearningIndexChatExtensionParameters
+    {
+        public AzureMachineLearningIndexChatExtensionParameters(string projectResourceId, string name, string version) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string ProjectResourceId { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public string ProjectResourceId { get { throw null; } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
+        public string Version { get { throw null; } }
     }
     public static partial class AzureOpenAIModelFactory
     {
@@ -654,14 +643,18 @@ namespace Azure.AI.OpenAI
     }
     public partial class ElasticsearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
-        public ElasticsearchChatExtensionConfiguration() { }
-        public ElasticsearchChatExtensionConfiguration(System.BinaryData parameters, System.Uri endpoint, string indexName) { }
+        public ElasticsearchChatExtensionConfiguration(Azure.AI.OpenAI.ElasticsearchChatExtensionParameters parameters) { }
+        public Azure.AI.OpenAI.ElasticsearchChatExtensionParameters Parameters { get { throw null; } }
+    }
+    public partial class ElasticsearchChatExtensionParameters
+    {
+        public ElasticsearchChatExtensionParameters(System.Uri endpoint, string indexName) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
         public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
-        public System.Uri Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } }
         public Azure.AI.OpenAI.ElasticsearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        public string IndexName { get { throw null; } }
         public Azure.AI.OpenAI.ElasticsearchQueryType? QueryType { get { throw null; } set { } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
@@ -915,14 +908,18 @@ namespace Azure.AI.OpenAI
     }
     public partial class PineconeChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
-        public PineconeChatExtensionConfiguration() { }
-        public PineconeChatExtensionConfiguration(System.BinaryData parameters, string environment, string indexName, Azure.AI.OpenAI.PineconeFieldMappingOptions fieldMappingOptions) { }
+        public PineconeChatExtensionConfiguration(Azure.AI.OpenAI.PineconeChatExtensionParameters parameters) { }
+        public Azure.AI.OpenAI.PineconeChatExtensionParameters Parameters { get { throw null; } }
+    }
+    public partial class PineconeChatExtensionParameters
+    {
+        public PineconeChatExtensionParameters(string environment, string indexName, Azure.AI.OpenAI.PineconeFieldMappingOptions fieldMappingOptions) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
         public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
-        public string Environment { get { throw null; } set { } }
-        public Azure.AI.OpenAI.PineconeFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        public string Environment { get { throw null; } }
+        public Azure.AI.OpenAI.PineconeFieldMappingOptions FieldMappingOptions { get { throw null; } }
+        public string IndexName { get { throw null; } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }

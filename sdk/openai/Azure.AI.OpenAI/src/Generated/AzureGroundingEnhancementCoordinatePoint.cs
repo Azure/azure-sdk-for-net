@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A representation of a single polygon point as used by the Azure grounding enhancement. </summary>
     public partial class AzureGroundingEnhancementCoordinatePoint
     {
-        /// <summary> Initializes a new instance of AzureGroundingEnhancementCoordinatePoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementCoordinatePoint"/>. </summary>
         /// <param name="x"> The x-coordinate (horizontal axis) of the point. </param>
         /// <param name="y"> The y-coordinate (vertical axis) of the point. </param>
         internal AzureGroundingEnhancementCoordinatePoint(float x, float y)

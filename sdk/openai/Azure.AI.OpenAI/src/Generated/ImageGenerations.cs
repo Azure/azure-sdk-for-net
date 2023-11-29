@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The result of a successful image generation operation. </summary>
     public partial class ImageGenerations
     {
-        /// <summary> Initializes a new instance of ImageGenerations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerations"/>. </summary>
         /// <param name="created">
         /// A timestamp representing when this operation was started.
         /// Expressed in seconds since the Unix epoch of 1970-01-01T00:00:00+0000.
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             Data = data.ToList();
         }
 
-        /// <summary> Initializes a new instance of ImageGenerations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerations"/>. </summary>
         /// <param name="created">
         /// A timestamp representing when this operation was started.
         /// Expressed in seconds since the Unix epoch of 1970-01-01T00:00:00+0000.

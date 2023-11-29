@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class AmlFileSystemData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AmlFileSystemData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

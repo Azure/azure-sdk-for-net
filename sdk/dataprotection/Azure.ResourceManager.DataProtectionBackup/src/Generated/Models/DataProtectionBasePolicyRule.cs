@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBasePolicyRule
     {
-        /// <summary> Initializes a new instance of DataProtectionBasePolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected DataProtectionBasePolicyRule(string name)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBasePolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
         internal DataProtectionBasePolicyRule(string name, string objectType)

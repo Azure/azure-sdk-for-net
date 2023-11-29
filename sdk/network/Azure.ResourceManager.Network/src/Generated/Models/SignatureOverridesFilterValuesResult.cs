@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the list of all possible values for a specific filter value. </summary>
     public partial class SignatureOverridesFilterValuesResult
     {
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesResult"/>. </summary>
         internal SignatureOverridesFilterValuesResult()
         {
             FilterValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesResult"/>. </summary>
         /// <param name="filterValues"> Describes the possible values. </param>
         internal SignatureOverridesFilterValuesResult(IReadOnlyList<string> filterValues)
         {

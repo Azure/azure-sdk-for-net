@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsIncidentCommentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentCommentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentCommentData"/>. </summary>
         public SecurityInsightsIncidentCommentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentCommentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

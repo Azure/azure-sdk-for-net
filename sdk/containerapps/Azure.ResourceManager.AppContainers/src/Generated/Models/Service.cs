@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App to be a dev service. </summary>
     internal partial class Service
     {
-        /// <summary> Initializes a new instance of Service. </summary>
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
         /// <param name="serviceType"> Dev ContainerApp service type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceType"/> is null. </exception>
         public Service(string serviceType)

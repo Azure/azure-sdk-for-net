@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Catalog information for managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeSsisCatalogInfo
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisCatalogInfo"/>. </summary>
         public SynapseIntegrationRuntimeSsisCatalogInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisCatalogInfo"/>. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorableCosmosDBAccountResource" /> and their operations.
-    /// Each <see cref="RestorableCosmosDBAccountResource" /> in the collection will belong to the same instance of <see cref="CosmosDBLocationResource" />.
-    /// To get a <see cref="RestorableCosmosDBAccountCollection" /> instance call the GetRestorableCosmosDBAccounts method from an instance of <see cref="CosmosDBLocationResource" />.
+    /// A class representing a collection of <see cref="RestorableCosmosDBAccountResource"/> and their operations.
+    /// Each <see cref="RestorableCosmosDBAccountResource"/> in the collection will belong to the same instance of <see cref="CosmosDBLocationResource"/>.
+    /// To get a <see cref="RestorableCosmosDBAccountCollection"/> instance call the GetRestorableCosmosDBAccounts method from an instance of <see cref="CosmosDBLocationResource"/>.
     /// </summary>
     public partial class RestorableCosmosDBAccountCollection : ArmCollection, IEnumerable<RestorableCosmosDBAccountResource>, IAsyncEnumerable<RestorableCosmosDBAccountResource>
     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));

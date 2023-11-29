@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Fabric model collection. </summary>
     internal partial class DataReplicationFabricListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationFabricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricListResult"/>. </summary>
         internal DataReplicationFabricListResult()
         {
             Value = new ChangeTrackingList<DataReplicationFabricData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationFabricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of fabrics. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationFabricListResult(IReadOnlyList<DataReplicationFabricData> value, string nextLink)

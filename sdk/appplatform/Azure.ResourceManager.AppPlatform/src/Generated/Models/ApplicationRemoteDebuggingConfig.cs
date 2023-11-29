@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Remote debugging config. </summary>
     public partial class ApplicationRemoteDebuggingConfig
     {
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingConfig"/>. </summary>
         internal ApplicationRemoteDebuggingConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingConfig"/>. </summary>
         /// <param name="port"> Application debugging port. </param>
         /// <param name="isEnabled"> Indicate if remote debugging is enabled. </param>
         internal ApplicationRemoteDebuggingConfig(int? port, bool? isEnabled)

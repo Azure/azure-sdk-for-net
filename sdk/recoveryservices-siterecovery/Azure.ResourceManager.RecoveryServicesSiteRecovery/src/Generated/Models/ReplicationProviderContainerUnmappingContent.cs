@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Provider specific input for unpairing operations. </summary>
     internal partial class ReplicationProviderContainerUnmappingContent
     {
-        /// <summary> Initializes a new instance of ReplicationProviderContainerUnmappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderContainerUnmappingContent"/>. </summary>
         public ReplicationProviderContainerUnmappingContent()
         {
         }

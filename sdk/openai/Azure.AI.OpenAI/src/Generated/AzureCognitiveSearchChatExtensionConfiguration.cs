@@ -16,97 +16,29 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureCognitiveSearchChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/>, <paramref name="searchEndpoint"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureCognitiveSearchChatExtensionConfiguration(BinaryData parameters, Uri searchEndpoint, string indexName) : base(parameters)
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure Cognitive Search. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public AzureCognitiveSearchChatExtensionConfiguration(AzureCognitiveSearchChatExtensionParameters parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
-            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
-            Argument.AssertNotNull(indexName, nameof(indexName));
 
             Type = AzureChatExtensionType.AzureCognitiveSearch;
-            SearchEndpoint = searchEndpoint;
-            IndexName = indexName;
+            Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        /// <param name="authentication"> The authentication option to access the data. </param>
-        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
-        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
-        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
-        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
-        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="queryType"> The query type to use with Azure Cognitive Search. </param>
-        /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
-        /// <param name="filter"> Search filter. </param>
-        /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </param>
-        /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
-        /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters, OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataEmbeddingDependency embeddingDependency) : base(type, parameters)
+        /// <param name="parameters"> The parameters to use when configuring Azure Cognitive Search. </param>
+        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, AzureCognitiveSearchChatExtensionParameters parameters) : base(type)
         {
-            Authentication = authentication;
-            DocumentCount = documentCount;
-            ShouldRestrictResultScope = shouldRestrictResultScope;
-            Strictness = strictness;
-            RoleInformation = roleInformation;
-            SearchEndpoint = searchEndpoint;
-            IndexName = indexName;
-            FieldMappingOptions = fieldMappingOptions;
-            QueryType = queryType;
-            SemanticConfiguration = semanticConfiguration;
-            Filter = filter;
-            EmbeddingEndpoint = embeddingEndpoint;
-            EmbeddingKey = embeddingKey;
-            EmbeddingDependency = embeddingDependency;
+            Parameters = parameters;
         }
 
-        /// <summary>
-        /// The authentication option to access the data.
-        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
-        /// </summary>
-        public OnYourDataAuthenticationOptions Authentication { get; set; }
-        /// <summary> The configured top number of documents to feature for the configured query. </summary>
-        public int? DocumentCount { get; set; }
-        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
-        public bool? ShouldRestrictResultScope { get; set; }
-        /// <summary> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </summary>
-        public int? Strictness { get; set; }
-        /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
-        public string RoleInformation { get; set; }
-        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
-        /// <summary> The query type to use with Azure Cognitive Search. </summary>
-        public AzureCognitiveSearchQueryType? QueryType { get; set; }
-        /// <summary> The additional semantic configuration for the query. </summary>
-        public string SemanticConfiguration { get; set; }
-        /// <summary> Search filter. </summary>
-        public string Filter { get; set; }
-        /// <summary> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </summary>
-        public Uri EmbeddingEndpoint { get; set; }
-        /// <summary>
-        /// The embedding dependency for vector search.
-        /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataEmbeddingEndpointDependency"/>, <see cref="OnYourDataEmbeddingDeploymentNameDependency"/> and <see cref="OnYourDataEmbeddingModelIdDependency"/>.
-        /// </summary>
-        public OnYourDataEmbeddingDependency EmbeddingDependency { get; set; }
+        /// <summary> The parameters to use when configuring Azure Cognitive Search. </summary>
+        public AzureCognitiveSearchChatExtensionParameters Parameters { get; }
     }
 }

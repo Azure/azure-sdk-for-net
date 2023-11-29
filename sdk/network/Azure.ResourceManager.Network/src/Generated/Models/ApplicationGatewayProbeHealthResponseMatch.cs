@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway probe health response match. </summary>
     public partial class ApplicationGatewayProbeHealthResponseMatch
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbeHealthResponseMatch"/>. </summary>
         public ApplicationGatewayProbeHealthResponseMatch()
         {
             StatusCodes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbeHealthResponseMatch"/>. </summary>
         /// <param name="body"> Body that must be contained in the health response. Default value is empty. </param>
         /// <param name="statusCodes"> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </param>
         internal ApplicationGatewayProbeHealthResponseMatch(BinaryData body, IList<string> statusCodes)

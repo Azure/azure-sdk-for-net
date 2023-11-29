@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
         internal CosmosDBForPostgreSqlPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value)
         {

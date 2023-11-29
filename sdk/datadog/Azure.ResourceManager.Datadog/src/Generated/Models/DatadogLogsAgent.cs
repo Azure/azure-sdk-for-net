@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogLogsAgent. </summary>
     internal partial class DatadogLogsAgent
     {
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         internal DatadogLogsAgent()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         /// <param name="transport"> The transport. </param>
         internal DatadogLogsAgent(string transport)
         {

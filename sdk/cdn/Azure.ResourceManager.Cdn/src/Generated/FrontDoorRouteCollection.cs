@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorRouteResource" /> and their operations.
-    /// Each <see cref="FrontDoorRouteResource" /> in the collection will belong to the same instance of <see cref="FrontDoorEndpointResource" />.
-    /// To get a <see cref="FrontDoorRouteCollection" /> instance call the GetFrontDoorRoutes method from an instance of <see cref="FrontDoorEndpointResource" />.
+    /// A class representing a collection of <see cref="FrontDoorRouteResource"/> and their operations.
+    /// Each <see cref="FrontDoorRouteResource"/> in the collection will belong to the same instance of <see cref="FrontDoorEndpointResource"/>.
+    /// To get a <see cref="FrontDoorRouteCollection"/> instance call the GetFrontDoorRoutes method from an instance of <see cref="FrontDoorEndpointResource"/>.
     /// </summary>
     public partial class FrontDoorRouteCollection : ArmCollection, IEnumerable<FrontDoorRouteResource>, IAsyncEnumerable<FrontDoorRouteResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorRouteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRouteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorRouteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRouteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

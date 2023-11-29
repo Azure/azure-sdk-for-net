@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownMonitoringSignalBase. </summary>
     internal partial class UnknownMonitoringSignalBase : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of UnknownMonitoringSignalBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringSignalBase"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

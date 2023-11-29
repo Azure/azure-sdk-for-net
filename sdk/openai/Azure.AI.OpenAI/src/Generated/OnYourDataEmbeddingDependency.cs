@@ -14,12 +14,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class OnYourDataEmbeddingDependency
     {
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDependency"/>. </summary>
         protected OnYourDataEmbeddingDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDependency"/>. </summary>
         /// <param name="type"> Embedding dependency types for vector search. </param>
         internal OnYourDataEmbeddingDependency(OnYourDataEmbeddingDependencyType type)
         {

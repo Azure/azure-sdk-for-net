@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Paypal Service dataset. </summary>
     public partial class PaypalObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public PaypalObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "PaypalObject";
         }
 
-        /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

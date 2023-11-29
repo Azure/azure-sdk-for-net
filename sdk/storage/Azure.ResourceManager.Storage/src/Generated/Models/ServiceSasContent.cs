@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The parameters to list service SAS credentials of a specific resource. </summary>
     public partial class ServiceSasContent
     {
-        /// <summary> Initializes a new instance of ServiceSasContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceSasContent"/>. </summary>
         /// <param name="canonicalizedResource"> The canonical path to the signed resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="canonicalizedResource"/> is null. </exception>
         public ServiceSasContent(string canonicalizedResource)

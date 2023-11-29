@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Virtual Machine operation response. </summary>
     internal partial class VirtualMachineSizeListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         internal VirtualMachineSizeListResult()
         {
             Value = new ChangeTrackingList<VirtualMachineSize>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine sizes. </param>
         internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value)
         {

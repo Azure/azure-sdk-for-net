@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The authentication option using connection string. </summary>
+    /// <summary> The authentication options for Azure OpenAI On Your Data when using a connection string. </summary>
     public partial class OnYourDataConnectionStringAuthenticationOptions : OnYourDataAuthenticationOptions
     {
-        /// <summary> Initializes a new instance of OnYourDataConnectionStringAuthenticationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataConnectionStringAuthenticationOptions"/>. </summary>
         /// <param name="connectionString"> The connection string to use for authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OnYourDataConnectionStringAuthenticationOptions(string connectionString)
@@ -24,8 +24,8 @@ namespace Azure.AI.OpenAI
             ConnectionString = connectionString;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataConnectionStringAuthenticationOptions. </summary>
-        /// <param name="type"> The Authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataConnectionStringAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
         /// <param name="connectionString"> The connection string to use for authentication. </param>
         internal OnYourDataConnectionStringAuthenticationOptions(OnYourDataAuthenticationType type, string connectionString) : base(type)
         {

@@ -14,12 +14,12 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class ChatFinishDetails
     {
-        /// <summary> Initializes a new instance of ChatFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatFinishDetails"/>. </summary>
         protected ChatFinishDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatFinishDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal ChatFinishDetails(string type)
         {

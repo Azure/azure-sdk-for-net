@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class SparkJobEntry
     {
-        /// <summary> Initializes a new instance of SparkJobEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobEntry"/>. </summary>
         protected SparkJobEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkJobEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
         internal SparkJobEntry(SparkJobEntryType sparkJobEntryType)
         {

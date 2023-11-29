@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The embedding dependency based on endpoint URL. </summary>
     public partial class OnYourDataEmbeddingEndpointDependency : OnYourDataEmbeddingDependency
     {
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingEndpointDependency"/>. </summary>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
         /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             Authentication = authentication;
         }
 
-        /// <summary> Initializes a new instance of OnYourDataEmbeddingEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingEndpointDependency"/>. </summary>
         /// <param name="type"> Embedding dependency types for vector search. </param>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
         /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>

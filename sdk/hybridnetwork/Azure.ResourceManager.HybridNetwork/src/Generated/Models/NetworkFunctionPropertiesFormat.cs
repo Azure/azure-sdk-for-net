@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NetworkFunctionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
         protected NetworkFunctionPropertiesFormat()
         {
             RoleOverrideValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

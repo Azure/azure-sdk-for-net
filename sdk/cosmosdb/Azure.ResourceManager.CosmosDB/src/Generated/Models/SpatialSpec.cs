@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The SpatialSpec. </summary>
     public partial class SpatialSpec
     {
-        /// <summary> Initializes a new instance of SpatialSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialSpec"/>. </summary>
         public SpatialSpec()
         {
             Types = new ChangeTrackingList<CosmosDBSpatialType>();
         }
 
-        /// <summary> Initializes a new instance of SpatialSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialSpec"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="types"> List of path's spatial type. </param>
         internal SpatialSpec(string path, IList<CosmosDBSpatialType> types)

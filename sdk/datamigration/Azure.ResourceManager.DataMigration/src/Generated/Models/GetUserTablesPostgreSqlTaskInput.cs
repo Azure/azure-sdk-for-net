@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that gets the list of tables for a provided list of PostgreSQL databases. </summary>
     public partial class GetUserTablesPostgreSqlTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to PostgreSQL source. </param>
         /// <param name="selectedDatabases"> List of PostgreSQL databases for which to collect tables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to PostgreSQL source. </param>
         /// <param name="selectedDatabases"> List of PostgreSQL databases for which to collect tables. </param>
         internal GetUserTablesPostgreSqlTaskInput(PostgreSqlConnectionInfo connectionInfo, IList<string> selectedDatabases)

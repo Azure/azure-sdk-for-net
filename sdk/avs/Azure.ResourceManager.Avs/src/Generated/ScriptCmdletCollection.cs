@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScriptCmdletResource" /> and their operations.
-    /// Each <see cref="ScriptCmdletResource" /> in the collection will belong to the same instance of <see cref="ScriptPackageResource" />.
-    /// To get a <see cref="ScriptCmdletCollection" /> instance call the GetScriptCmdlets method from an instance of <see cref="ScriptPackageResource" />.
+    /// A class representing a collection of <see cref="ScriptCmdletResource"/> and their operations.
+    /// Each <see cref="ScriptCmdletResource"/> in the collection will belong to the same instance of <see cref="ScriptPackageResource"/>.
+    /// To get a <see cref="ScriptCmdletCollection"/> instance call the GetScriptCmdlets method from an instance of <see cref="ScriptPackageResource"/>.
     /// </summary>
     public partial class ScriptCmdletCollection : ArmCollection, IEnumerable<ScriptCmdletResource>, IAsyncEnumerable<ScriptCmdletResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScriptCmdletResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScriptCmdletResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptCmdletResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptCmdletRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScriptCmdletResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScriptCmdletResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptCmdletResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptCmdletRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

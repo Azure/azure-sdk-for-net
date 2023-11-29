@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The settings to enable AAD authentication on the cluster. </summary>
     public partial class ClusterAadSetting
     {
-        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAadSetting"/>. </summary>
         public ClusterAadSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAadSetting"/>. </summary>
         /// <param name="tenantId"> Azure active directory tenant id. </param>
         /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
         /// <param name="clientApplication"> Azure active directory client application id. </param>

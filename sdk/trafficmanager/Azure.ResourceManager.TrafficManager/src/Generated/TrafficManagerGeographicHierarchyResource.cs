@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
     /// A Class representing a TrafficManagerGeographicHierarchy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficManagerGeographicHierarchyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficManagerGeographicHierarchyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTrafficManagerGeographicHierarchy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerGeographicHierarchyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerGeographicHierarchyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTrafficManagerGeographicHierarchy method.
     /// </summary>
     public partial class TrafficManagerGeographicHierarchyResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficManagerGeographicHierarchyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerGeographicHierarchyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerGeographicHierarchyResource(ArmClient client, TrafficManagerGeographicHierarchyData data) : this(client, data.Id)

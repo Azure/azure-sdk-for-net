@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Network Fabric resource definition. </summary>
     public partial class NetworkFabricPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
         {
         }

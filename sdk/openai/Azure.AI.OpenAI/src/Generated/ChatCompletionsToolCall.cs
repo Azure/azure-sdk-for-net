@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public abstract partial class ChatCompletionsToolCall
     {
-        /// <summary> Initializes a new instance of ChatCompletionsToolCall. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         protected ChatCompletionsToolCall(string id)
@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsToolCall. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. </param>
         internal ChatCompletionsToolCall(string type, string id)

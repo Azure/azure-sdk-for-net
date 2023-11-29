@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes all the possible response for the download operation. </summary>
     public partial class DownloadResponse
     {
-        /// <summary> Initializes a new instance of DownloadResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadResponse"/>. </summary>
         internal DownloadResponse()
         {
             ResourceList = new ChangeTrackingList<ResourceItem>();
             ComplianceReport = new ChangeTrackingList<ComplianceReportItem>();
         }
 
-        /// <summary> Initializes a new instance of DownloadResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadResponse"/>. </summary>
         /// <param name="resourceList"> List of the reports. </param>
         /// <param name="complianceReport"> List of the compliance result. </param>
         /// <param name="compliancePdfReport"> compliance pdf report. </param>

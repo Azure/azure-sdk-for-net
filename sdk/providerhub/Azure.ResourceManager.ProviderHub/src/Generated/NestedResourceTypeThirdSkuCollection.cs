@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NestedResourceTypeThirdSkuResource" /> and their operations.
-    /// Each <see cref="NestedResourceTypeThirdSkuResource" /> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource" />.
-    /// To get a <see cref="NestedResourceTypeThirdSkuCollection" /> instance call the GetNestedResourceTypeThirdSkus method from an instance of <see cref="ResourceTypeRegistrationResource" />.
+    /// A class representing a collection of <see cref="NestedResourceTypeThirdSkuResource"/> and their operations.
+    /// Each <see cref="NestedResourceTypeThirdSkuResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// To get a <see cref="NestedResourceTypeThirdSkuCollection"/> instance call the GetNestedResourceTypeThirdSkus method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
     /// </summary>
     public partial class NestedResourceTypeThirdSkuCollection : ArmCollection, IEnumerable<NestedResourceTypeThirdSkuResource>, IAsyncEnumerable<NestedResourceTypeThirdSkuResource>
     {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NestedResourceTypeThirdSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NestedResourceTypeThirdSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NestedResourceTypeThirdSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NestedResourceTypeThirdSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NestedResourceTypeThirdSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NestedResourceTypeThirdSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);

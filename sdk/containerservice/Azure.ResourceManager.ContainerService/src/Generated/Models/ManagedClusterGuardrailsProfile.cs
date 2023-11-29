@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The Guardrails profile. </summary>
     public partial class ManagedClusterGuardrailsProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterGuardrailsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/>. </summary>
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ExcludedNamespaces = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterGuardrailsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/>. </summary>
         /// <param name="systemExcludedNamespaces"> List of namespaces specified by AKS to be excluded from Guardrails. </param>
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>

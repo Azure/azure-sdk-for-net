@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Identity used to authenticate with key vault. </summary>
     public partial class NetAppEncryptionIdentity
     {
-        /// <summary> Initializes a new instance of NetAppEncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppEncryptionIdentity"/>. </summary>
         public NetAppEncryptionIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppEncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppEncryptionIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         internal NetAppEncryptionIdentity(string principalId, string userAssignedIdentity)

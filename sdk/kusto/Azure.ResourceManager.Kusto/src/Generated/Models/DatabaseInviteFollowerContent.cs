@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The request to invite a follower to a database. </summary>
     public partial class DatabaseInviteFollowerContent
     {
-        /// <summary> Initializes a new instance of DatabaseInviteFollowerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerContent"/>. </summary>
         /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inviteeEmail"/> is null. </exception>
         public DatabaseInviteFollowerContent(string inviteeEmail)

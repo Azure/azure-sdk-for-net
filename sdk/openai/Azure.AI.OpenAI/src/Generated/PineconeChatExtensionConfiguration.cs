@@ -16,80 +16,29 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of PineconeChatExtensionConfiguration. </summary>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        /// <param name="environment"> The environment name of Pinecone. </param>
-        /// <param name="indexName"> The index name name of Pinecone. </param>
-        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/>, <paramref name="environment"/>, <paramref name="indexName"/> or <paramref name="fieldMappingOptions"/> is null. </exception>
-        public PineconeChatExtensionConfiguration(BinaryData parameters, string environment, string indexName, PineconeFieldMappingOptions fieldMappingOptions) : base(parameters)
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI chat extensions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public PineconeChatExtensionConfiguration(PineconeChatExtensionParameters parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
-            Argument.AssertNotNull(environment, nameof(environment));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
 
             Type = AzureChatExtensionType.Pinecone;
-            Environment = environment;
-            IndexName = indexName;
-            FieldMappingOptions = fieldMappingOptions;
+            Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of PineconeChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <param name="parameters">
-        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
-        ///   extension being configured.
-        ///   Azure chat extensions are only compatible with Azure OpenAI.
-        /// </param>
-        /// <param name="authentication"> The authentication option to access the data. </param>
-        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
-        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
-        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
-        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
-        /// <param name="environment"> The environment name of Pinecone. </param>
-        /// <param name="indexName"> The index name name of Pinecone. </param>
-        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal PineconeChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters, OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, string environment, string indexName, PineconeFieldMappingOptions fieldMappingOptions, OnYourDataEmbeddingDependency embeddingDependency) : base(type, parameters)
+        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI chat extensions. </param>
+        internal PineconeChatExtensionConfiguration(AzureChatExtensionType type, PineconeChatExtensionParameters parameters) : base(type)
         {
-            Authentication = authentication;
-            DocumentCount = documentCount;
-            ShouldRestrictResultScope = shouldRestrictResultScope;
-            Strictness = strictness;
-            RoleInformation = roleInformation;
-            Environment = environment;
-            IndexName = indexName;
-            FieldMappingOptions = fieldMappingOptions;
-            EmbeddingDependency = embeddingDependency;
+            Parameters = parameters;
         }
 
-        /// <summary>
-        /// The authentication option to access the data.
-        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
-        /// </summary>
-        public OnYourDataAuthenticationOptions Authentication { get; set; }
-        /// <summary> The configured top number of documents to feature for the configured query. </summary>
-        public int? DocumentCount { get; set; }
-        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
-        public bool? ShouldRestrictResultScope { get; set; }
-        /// <summary> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </summary>
-        public int? Strictness { get; set; }
-        /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
-        public string RoleInformation { get; set; }
-        /// <summary>
-        /// The embedding dependency for vector search.
-        /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataEmbeddingEndpointDependency"/>, <see cref="OnYourDataEmbeddingDeploymentNameDependency"/> and <see cref="OnYourDataEmbeddingModelIdDependency"/>.
-        /// </summary>
-        public OnYourDataEmbeddingDependency EmbeddingDependency { get; set; }
+        /// <summary> The parameters to use when configuring Azure OpenAI chat extensions. </summary>
+        public PineconeChatExtensionParameters Parameters { get; }
     }
 }

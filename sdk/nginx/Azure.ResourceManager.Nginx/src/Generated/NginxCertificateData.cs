@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class representing the NginxCertificate data model. </summary>
     public partial class NginxCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NginxCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The CrossRegionRestoreSettings. </summary>
     internal partial class CrossRegionRestoreSettings
     {
-        /// <summary> Initializes a new instance of CrossRegionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossRegionRestoreSettings"/>. </summary>
         public CrossRegionRestoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CrossRegionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossRegionRestoreSettings"/>. </summary>
         /// <param name="state"> CrossRegionRestore state. </param>
         internal CrossRegionRestoreSettings(CrossRegionRestoreState? state)
         {

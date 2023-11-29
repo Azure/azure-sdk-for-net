@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>  Authentication types supported by with Azure OpenAI on your data. </summary>
+    /// <summary> The authentication types supported with Azure OpenAI On Your Data. </summary>
     internal readonly partial struct OnYourDataAuthenticationType : IEquatable<OnYourDataAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.AI.OpenAI
         private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
-        /// <summary> API key. </summary>
+        /// <summary> Authentication via API key. </summary>
         public static OnYourDataAuthenticationType ApiKey { get; } = new OnYourDataAuthenticationType(ApiKeyValue);
-        /// <summary> Connection string. </summary>
+        /// <summary> Authentication via connection string. </summary>
         public static OnYourDataAuthenticationType ConnectionString { get; } = new OnYourDataAuthenticationType(ConnectionStringValue);
-        /// <summary> Key and keyId pair. </summary>
+        /// <summary> Authentication via key and key ID pair. </summary>
         public static OnYourDataAuthenticationType KeyAndKeyId { get; } = new OnYourDataAuthenticationType(KeyAndKeyIdValue);
-        /// <summary> System-assigned managed identity. </summary>
+        /// <summary> Authentication via system-assigned managed identity. </summary>
         public static OnYourDataAuthenticationType SystemAssignedManagedIdentity { get; } = new OnYourDataAuthenticationType(SystemAssignedManagedIdentityValue);
-        /// <summary> User-assigned managed identity. </summary>
+        /// <summary> Authentication via user-assigned managed identity. </summary>
         public static OnYourDataAuthenticationType UserAssignedManagedIdentity { get; } = new OnYourDataAuthenticationType(UserAssignedManagedIdentityValue);
         /// <summary> Determines if two <see cref="OnYourDataAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(OnYourDataAuthenticationType left, OnYourDataAuthenticationType right) => left.Equals(right);

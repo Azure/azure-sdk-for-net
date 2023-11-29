@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> A structured chat content item containing plain text. </summary>
     public partial class ChatMessageTextContentItem : ChatMessageContentItem
     {
-        /// <summary> Initializes a new instance of ChatMessageTextContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ChatMessageTextContentItem(string text)
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of ChatMessageTextContentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageTextContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="text"> The content of the message. </param>
         internal ChatMessageTextContentItem(string type, string text) : base(type)

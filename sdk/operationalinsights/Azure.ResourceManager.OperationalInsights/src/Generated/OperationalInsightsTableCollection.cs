@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OperationalInsightsTableResource" /> and their operations.
-    /// Each <see cref="OperationalInsightsTableResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource" />.
-    /// To get an <see cref="OperationalInsightsTableCollection" /> instance call the GetOperationalInsightsTables method from an instance of <see cref="OperationalInsightsWorkspaceResource" />.
+    /// A class representing a collection of <see cref="OperationalInsightsTableResource"/> and their operations.
+    /// Each <see cref="OperationalInsightsTableResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get an <see cref="OperationalInsightsTableCollection"/> instance call the GetOperationalInsightsTables method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsTableCollection : ArmCollection, IEnumerable<OperationalInsightsTableResource>, IAsyncEnumerable<OperationalInsightsTableResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsTableTablesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsTableTablesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

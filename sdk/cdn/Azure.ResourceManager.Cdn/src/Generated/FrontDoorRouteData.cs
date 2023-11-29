@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRouteData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRouteData"/>. </summary>
         public FrontDoorRouteData()
         {
             CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRouteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Properties of the smartGroup modification item. </summary>
     public partial class SmartGroupModificationProperties
     {
-        /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationProperties"/>. </summary>
         public SmartGroupModificationProperties()
         {
             Modifications = new ChangeTrackingList<SmartGroupModificationItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationProperties"/>. </summary>
         /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
         /// <param name="nextLink"> URL to fetch the next set of results. </param>

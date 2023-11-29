@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceData"/>. </summary>
         public KustoPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

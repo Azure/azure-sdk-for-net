@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters used for restore operations. </summary>
     public partial class MongoClusterRestoreParameters
     {
-        /// <summary> Initializes a new instance of MongoClusterRestoreParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
         public MongoClusterRestoreParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoClusterRestoreParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
         /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
         /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
         internal MongoClusterRestoreParameters(DateTimeOffset? pointInTimeUTC, string sourceResourceId)

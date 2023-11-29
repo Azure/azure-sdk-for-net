@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownProjectTaskProperties. </summary>
     internal partial class UnknownProjectTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of UnknownProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

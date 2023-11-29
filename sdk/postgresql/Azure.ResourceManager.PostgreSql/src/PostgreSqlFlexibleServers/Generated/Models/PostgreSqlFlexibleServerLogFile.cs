@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a logFile. </summary>
     public partial class PostgreSqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         public PostgreSqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

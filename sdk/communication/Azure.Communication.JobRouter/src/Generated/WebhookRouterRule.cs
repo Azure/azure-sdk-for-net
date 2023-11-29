@@ -12,13 +12,13 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing a binding to an external web server. </summary>
     public partial class WebhookRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
         internal WebhookRouterRule()
         {
             Kind = RouterRuleKind.Webhook;
         }
 
-        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>

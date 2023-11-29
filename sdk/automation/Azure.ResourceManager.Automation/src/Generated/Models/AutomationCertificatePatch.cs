@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update certificate operation. </summary>
     public partial class AutomationCertificatePatch
     {
-        /// <summary> Initializes a new instance of AutomationCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificatePatch"/>. </summary>
         public AutomationCertificatePatch()
         {
         }

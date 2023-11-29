@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Azure query for the update configuration. </summary>
     public partial class MaintenanceConfigurationAssignmentFilter
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
         public MaintenanceConfigurationAssignmentFilter()
         {
             ResourceTypes = new ChangeTrackingList<ResourceType>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
         /// <param name="resourceTypes"> List of allowed resources. </param>
         /// <param name="resourceGroups"> List of allowed resource groups. </param>
         /// <param name="osTypes"> List of allowed operating systems. </param>

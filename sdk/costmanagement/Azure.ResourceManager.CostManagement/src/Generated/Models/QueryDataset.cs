@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of data present in the query. </summary>
     public partial class QueryDataset
     {
-        /// <summary> Initializes a new instance of QueryDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDataset"/>. </summary>
         public QueryDataset()
         {
             Aggregation = new ChangeTrackingDictionary<string, QueryAggregation>();

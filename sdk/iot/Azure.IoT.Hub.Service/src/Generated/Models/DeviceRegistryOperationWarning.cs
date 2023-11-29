@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The device registry operation warning details. </summary>
     public partial class DeviceRegistryOperationWarning
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationWarning"/>. </summary>
         internal DeviceRegistryOperationWarning()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationWarning"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>

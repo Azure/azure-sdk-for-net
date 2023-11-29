@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the Machine Extension Upgrade Properties. </summary>
     public partial class MachineExtensionUpgrade
     {
-        /// <summary> Initializes a new instance of MachineExtensionUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpgrade"/>. </summary>
         public MachineExtensionUpgrade()
         {
             ExtensionTargets = new ChangeTrackingDictionary<string, ExtensionTargetProperties>();

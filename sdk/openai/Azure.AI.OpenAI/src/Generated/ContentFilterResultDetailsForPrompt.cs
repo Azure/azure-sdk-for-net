@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Information about content filtering evaluated against input data to Azure OpenAI. </summary>
     public partial class ContentFilterResultDetailsForPrompt
     {
-        /// <summary> Initializes a new instance of ContentFilterResultDetailsForPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>
         /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jailbreak"/> is null. </exception>
         internal ContentFilterResultDetailsForPrompt(ContentFilterDetectionResult jailbreak)
@@ -26,7 +26,7 @@ namespace Azure.AI.OpenAI
             Jailbreak = jailbreak;
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResultDetailsForPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including

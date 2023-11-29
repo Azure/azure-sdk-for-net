@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class GetRelationshipOptions
     {
-        /// <summary> Initializes a new instance of GetRelationshipOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetRelationshipOptions"/>. </summary>
         public GetRelationshipOptions()
         {
         }

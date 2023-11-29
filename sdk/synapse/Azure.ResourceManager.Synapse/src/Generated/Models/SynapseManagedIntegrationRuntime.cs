@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
     public partial class SynapseManagedIntegrationRuntime : SynapseIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntime"/>. </summary>
         public SynapseManagedIntegrationRuntime()
         {
             IntegrationRuntimeType = IntegrationRuntimeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

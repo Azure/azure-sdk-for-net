@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> An internet location from which the model may retrieve an image. </summary>
     public partial class ChatMessageImageUrl
     {
-        /// <summary> Initializes a new instance of ChatMessageImageUrl. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
         /// <param name="url"> The URL of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ChatMessageImageUrl(Uri url)

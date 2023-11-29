@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatRequestSystemMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of ChatRequestSystemMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestSystemMessage"/>. </summary>
         /// <param name="content"> The contents of the system message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public ChatRequestSystemMessage(string content)
@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of ChatRequestSystemMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRequestSystemMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="content"> The contents of the system message. </param>
         /// <param name="name"> An optional name for the participant. </param>

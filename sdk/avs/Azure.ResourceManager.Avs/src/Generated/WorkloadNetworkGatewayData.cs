@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayData"/>. </summary>
         public WorkloadNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

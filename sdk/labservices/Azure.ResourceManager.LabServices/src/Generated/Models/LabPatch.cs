@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The lab resource for updates. </summary>
     public partial class LabPatch : LabServicesPatchBaseInfo
     {
-        /// <summary> Initializes a new instance of LabPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPatch"/>. </summary>
         public LabPatch()
         {
         }

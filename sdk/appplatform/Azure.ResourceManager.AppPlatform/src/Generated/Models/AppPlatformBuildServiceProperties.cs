@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build service resource properties payload. </summary>
     public partial class AppPlatformBuildServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceProperties"/>. </summary>
         public AppPlatformBuildServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceProperties"/>. </summary>
         /// <param name="kPackVersion"> The installed KPack version in this build service. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="resourceRequests"> The runtime resource configuration of this build service. </param>

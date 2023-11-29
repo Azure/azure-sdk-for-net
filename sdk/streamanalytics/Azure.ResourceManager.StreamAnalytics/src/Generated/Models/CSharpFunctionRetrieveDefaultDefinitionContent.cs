@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The parameters needed to retrieve the default function definition for a CSharp function. </summary>
     public partial class CSharpFunctionRetrieveDefaultDefinitionContent : FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of CSharpFunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionRetrieveDefaultDefinitionContent"/>. </summary>
         public CSharpFunctionRetrieveDefaultDefinitionContent()
         {
             BindingType = "Microsoft.StreamAnalytics/CLRUdf";

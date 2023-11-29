@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the outcome of a detection operation against protected resources as performed by content filtering. </summary>
     public partial class ContentFilterCitedDetectionResult
     {
-        /// <summary> Initializes a new instance of ContentFilterCitedDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterCitedDetectionResult"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
         /// <param name="license"> The license description associated with the detection. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             License = license;
         }
 
-        /// <summary> Initializes a new instance of ContentFilterCitedDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterCitedDetectionResult"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
         /// <param name="url"> The internet location associated with the detection. </param>

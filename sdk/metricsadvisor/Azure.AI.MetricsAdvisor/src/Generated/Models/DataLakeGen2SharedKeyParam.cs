@@ -10,12 +10,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataLakeGen2SharedKeyParam. </summary>
     internal partial class DataLakeGen2SharedKeyParam
     {
-        /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParam"/>. </summary>
         public DataLakeGen2SharedKeyParam()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParam"/>. </summary>
         /// <param name="accountKey"> The account key to access the Azure Data Lake Storage Gen2. </param>
         internal DataLakeGen2SharedKeyParam(string accountKey)
         {

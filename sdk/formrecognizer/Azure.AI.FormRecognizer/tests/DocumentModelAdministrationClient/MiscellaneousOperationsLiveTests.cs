@@ -47,9 +47,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ResourceQuotaDetails neuralQuota = resourceDetails.NeuralDocumentModelQuota;
 
-            Assert.GreaterOrEqual(neuralQuota.Used, 0);
-            Assert.GreaterOrEqual(neuralQuota.Quota, neuralQuota.Used);
-            Assert.Greater(neuralQuota.QuotaResetsOn, startTime);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                Assert.GreaterOrEqual(neuralQuota.Used, 0);
+                Assert.GreaterOrEqual(neuralQuota.Quota, neuralQuota.Used);
+                Assert.Greater(neuralQuota.QuotaResetsOn, startTime);
+            }
+            else
+            {
+                Assert.Null(neuralQuota);
+            }
         }
 
         #endregion
@@ -82,7 +89,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}formrecognizer/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/formrecognizer/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
 
             ValidateOperationDetails(operationDetails, disposableModel.Operation.Id,
                 DocumentOperationKind.DocumentModelBuild, resourceLocation, startTime, options.Tags);
@@ -107,7 +118,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             OperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}formrecognizer/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/formrecognizer/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
 
             ValidateOperationDetails(operationDetails, disposableClassifier.Operation.Id,
                 DocumentOperationKind.DocumentClassifierBuild, resourceLocation, startTime, tags);

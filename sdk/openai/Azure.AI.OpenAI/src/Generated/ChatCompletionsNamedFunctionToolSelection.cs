@@ -10,13 +10,13 @@ namespace Azure.AI.OpenAI
     /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
     internal partial class ChatCompletionsNamedFunctionToolSelection : ChatCompletionsNamedToolSelection
     {
-        /// <summary> Initializes a new instance of ChatCompletionsNamedFunctionToolSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/>. </summary>
         public ChatCompletionsNamedFunctionToolSelection()
         {
             Type = "function";
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsNamedFunctionToolSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="name"> The name of the function that should be called. </param>
         internal ChatCompletionsNamedFunctionToolSelection(string type, ChatCompletionsNamedFunctionToolSelectionName name) : base(type)

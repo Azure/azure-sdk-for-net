@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationServiceEnvironmentManagedApiData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IntegrationServiceEnvironmentManagedApiData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             Capabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
