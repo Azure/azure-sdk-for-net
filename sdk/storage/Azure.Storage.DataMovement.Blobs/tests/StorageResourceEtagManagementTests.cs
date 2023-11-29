@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             BlobStorageResourceContainer containerResource = new(mock.Object);
-             List<StorageResource> children = await containerResource.GetStorageResourcesInternalAsync().ToEnumerableAsync();
+            List<StorageResource> children = await containerResource.GetStorageResourcesInternalAsync().ToEnumerableAsync();
 
             // Assert
 

@@ -136,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                 // Remove known prefix from blob name
                 // Parse subdirectories
-                string[] paths = relativePath.Split(DataMovementConstants.PathBackSlashDelimiterChar);
+                string[] paths = relativePath.Split(DataMovementConstants.PathForwardSlashDelimiterChar);
                 string currentPath = "";
 
                 // Since the last path will always be the blob name, leave out the last one.
