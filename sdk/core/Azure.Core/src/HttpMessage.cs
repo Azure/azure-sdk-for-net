@@ -48,10 +48,9 @@ namespace Azure.Core
             {
                 if (_response == null)
                 {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
+
                 return _response;
             }
 
@@ -65,7 +64,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public new bool HasResponse => _response != null || base.HasResponse;
+        public bool HasResponse => _response != null || TryGetResponse(out _);
 
         internal void ClearResponse() => Response = null!;
 

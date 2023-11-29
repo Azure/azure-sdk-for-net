@@ -1,36 +1,68 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.Diagnostics;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class PipelineTransport : PipelinePolicy, IDisposable
+public abstract class PipelineTransport : PipelinePolicy
 {
-    public static PipelineTransport Create(HttpClient client,
-        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest = default,
-        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse = default)
-        => new HttpClientPipelineTransport(client, onSendingRequest, onReceivedResponse);
+    /// <summary>
+    /// TBD: needed for inheritdoc.
+    /// </summary>
+    /// <param name="message"></param>
+    public void Process(PipelineMessage message)
+    {
+        ProcessCore(message);
+
+        if (!message.TryGetResponse(out PipelineResponse response))
+        {
+            throw new InvalidOperationException("Response was not set by transport.");
+        }
+
+        response.IsError = message.MessageClassifier?.IsError(message) ?? default;
+    }
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    public abstract void Process(PipelineMessage message);
+    public async ValueTask ProcessAsync(PipelineMessage message)
+    {
+        await ProcessCoreAsync(message).ConfigureAwait(false);
+
+        if (message.MessageClassifier != null)
+        {
+            message.Response.IsError = message.MessageClassifier.IsError(message);
+        }
+    }
+
+    protected abstract void ProcessCore(PipelineMessage message);
+
+    protected abstract ValueTask ProcessCoreAsync(PipelineMessage message);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
-    /// <param name="message"></param>
-    public abstract ValueTask ProcessAsync(PipelineMessage message);
+    public PipelineMessage CreateMessage()
+    {
+        PipelineMessage message = CreateMessageCore();
 
-    /// <summary>
-    /// TBD: needed for inheritdoc.
-    /// </summary>
-    public abstract PipelineMessage CreateMessage();
+        if (message.Request is null)
+        {
+            throw new InvalidOperationException("Request was not set on message.");
+        }
+
+        if (message.TryGetResponse(out PipelineResponse _))
+        {
+            throw new InvalidOperationException("Response should not be set before transport is invoked.");
+        }
+
+        return message;
+    }
+
+    protected abstract PipelineMessage CreateMessageCore();
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
@@ -47,7 +79,4 @@ public abstract class PipelineTransport : PipelinePolicy, IDisposable
 
         await ProcessAsync(message).ConfigureAwait(false);
     }
-
-    /// <inheritdoc/>
-    public virtual void Dispose() { }
 }
