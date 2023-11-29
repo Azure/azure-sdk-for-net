@@ -126,7 +126,7 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
-        public async Task TestAnalyzeTextWithAADAuth()
+        public async Task TestAnalyzeTextWithEntraIdAuth()
         {
             var client = CreateContentSafetyClient(true);
 

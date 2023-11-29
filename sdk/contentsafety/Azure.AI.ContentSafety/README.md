@@ -55,16 +55,16 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
     ```
 
-#### Create a ContentSafetyClient with Azure Active Directory credential
+#### Create a ContentSafetyClient with Microsoft Entra ID credential
 
-* Step 1: Enable AAD for your resource Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id]. for the steps to enable AAD for your resource.
+* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
 
     The main steps are:
 
   * Create resource with a custom subdomain.
   * Create Service Principal and assign `Cognitive Services User` role to it.
 
-* Step 2: Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
+* Step 2: Set the values of the client ID, tenant ID, and client secret of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
    DefaultAzureCredential will use the values from these environment variables.
 
    ```csharp

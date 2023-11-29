@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0
+## 1.0.0.
 
 ### Features Added
 
-- Support AAD authentication.
+- Support Microsoft Entra ID authentication.
 - Support 8 severity level for text:analyze API
 
 ### Breaking Changes
