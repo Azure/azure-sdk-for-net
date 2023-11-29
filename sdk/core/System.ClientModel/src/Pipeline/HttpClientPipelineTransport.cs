@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal;
+namespace System.ClientModel.Primitives;
 
-internal class HttpClientPipelineTransport : PipelineTransport
+public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
@@ -19,30 +19,22 @@ internal class HttpClientPipelineTransport : PipelineTransport
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
-    private readonly Action<PipelineMessage, HttpRequestMessage>? _onSendingRequest;
-    private readonly Action<PipelineMessage, HttpResponseMessage>? _onReceivedResponse;
-
     private bool _disposed;
 
-    public HttpClientPipelineTransport() : this(CreateDefaultClient(), default, default)
+    public HttpClientPipelineTransport() : this(CreateDefaultClient())
     {
         // We will dispose the httpClient.
         _ownsClient = true;
     }
 
-    public HttpClientPipelineTransport(HttpClient client,
-        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest,
-        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse)
+    public HttpClientPipelineTransport(HttpClient client)
     {
         ClientUtilities.AssertNotNull(client, nameof(client));
 
-        // The caller will dispose the httpClient.
-        _ownsClient = false;
-
         _httpClient = client;
 
-        _onSendingRequest = onSendingRequest;
-        _onReceivedResponse = onReceivedResponse;
+        // The caller will dispose the httpClient.
+        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -65,7 +57,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         };
     }
 
-    public override PipelineMessage CreateMessage()
+    protected override sealed PipelineMessage CreateMessageCore()
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
@@ -73,7 +65,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         return message;
     }
 
-    public override void Process(PipelineMessage message)
+    protected override void ProcessCore(PipelineMessage message)
     {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 
@@ -95,19 +87,14 @@ internal class HttpClientPipelineTransport : PipelineTransport
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message)
+    protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
-#pragma warning disable CA1801 // async parameter unused on netstandard
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
-#pragma warning restore CA1801
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        if (_onSendingRequest is not null)
-        {
-            _onSendingRequest(message, httpRequest);
-        }
+        OnSendingRequest(message, httpRequest);
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
@@ -168,10 +155,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
-        if (_onReceivedResponse is not null)
-        {
-            _onReceivedResponse(message, responseMessage);
-        }
+        OnReceivedResponse(message, responseMessage);
 
         // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
@@ -184,12 +168,21 @@ internal class HttpClientPipelineTransport : PipelineTransport
         {
             message.Response.ContentStream = contentStream;
         }
-
-        if (message.MessageClassifier != null)
-        {
-            message.Response.IsError = message.MessageClassifier.IsError(message);
-        }
     }
+
+    /// <summary>
+    /// TBD. Needed for inheritdoc.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="httpRequest"></param>
+    protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
+
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="httpResponse"></param>
+    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
@@ -217,7 +210,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         }
     }
 
-    public override void Dispose()
+    public virtual void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

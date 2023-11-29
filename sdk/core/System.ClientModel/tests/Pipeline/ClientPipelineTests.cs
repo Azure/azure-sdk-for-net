@@ -53,12 +53,12 @@ public class ClientPipelineTests
             Id = id;
         }
 
-        public override PipelineMessage CreateMessage()
+        protected override PipelineMessage CreateMessageCore()
         {
             return new TransportMessage();
         }
 
-        public override void Process(PipelineMessage message)
+        protected override void ProcessCore(PipelineMessage message)
         {
             Stamp(message, "Transport");
 
@@ -68,7 +68,7 @@ public class ClientPipelineTests
             }
         }
 
-        public override ValueTask ProcessAsync(PipelineMessage message)
+        protected override ValueTask ProcessCoreAsync(PipelineMessage message)
         {
             Stamp(message, "Transport");
 
@@ -133,7 +133,7 @@ public class ClientPipelineTests
 
         private class TransportResponse : PipelineResponse
         {
-            public override int Status => throw new NotImplementedException();
+            public override int Status => 0;
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
