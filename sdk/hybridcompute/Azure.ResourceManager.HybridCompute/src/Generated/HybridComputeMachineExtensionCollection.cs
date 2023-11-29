@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridComputeMachineExtensionResource" /> and their operations.
-    /// Each <see cref="HybridComputeMachineExtensionResource" /> in the collection will belong to the same instance of <see cref="HybridComputeMachineResource" />.
-    /// To get a <see cref="HybridComputeMachineExtensionCollection" /> instance call the GetHybridComputeMachineExtensions method from an instance of <see cref="HybridComputeMachineResource" />.
+    /// A class representing a collection of <see cref="HybridComputeMachineExtensionResource"/> and their operations.
+    /// Each <see cref="HybridComputeMachineExtensionResource"/> in the collection will belong to the same instance of <see cref="HybridComputeMachineResource"/>.
+    /// To get a <see cref="HybridComputeMachineExtensionCollection"/> instance call the GetHybridComputeMachineExtensions method from an instance of <see cref="HybridComputeMachineResource"/>.
     /// </summary>
     public partial class HybridComputeMachineExtensionCollection : ArmCollection, IEnumerable<HybridComputeMachineExtensionResource>, IAsyncEnumerable<HybridComputeMachineExtensionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridComputeMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputeMachineExtensionResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridComputeMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputeMachineExtensionResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineExtensions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HybridComputeMachineExtensionResource>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridComputeMachineExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineExtensions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        public virtual NullableResponse<HybridComputeMachineExtensionResource> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridComputeMachineExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

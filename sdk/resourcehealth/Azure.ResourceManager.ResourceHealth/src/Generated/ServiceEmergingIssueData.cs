@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ServiceEmergingIssueData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
         internal ServiceEmergingIssueData()
         {
             StatusBanners = new ChangeTrackingList<EmergingIssueBannerType>();
             StatusActiveEvents = new ChangeTrackingList<EmergingIssueActiveEventType>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

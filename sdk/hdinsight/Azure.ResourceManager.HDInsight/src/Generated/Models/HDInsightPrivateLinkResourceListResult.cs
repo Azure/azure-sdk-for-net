@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class HDInsightPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
         internal HDInsightPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<HDInsightPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal HDInsightPrivateLinkResourceListResult(IReadOnlyList<HDInsightPrivateLinkResourceData> value)
         {

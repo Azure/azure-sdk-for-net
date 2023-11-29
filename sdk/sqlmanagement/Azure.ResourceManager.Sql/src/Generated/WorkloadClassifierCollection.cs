@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadClassifierResource" /> and their operations.
-    /// Each <see cref="WorkloadClassifierResource" /> in the collection will belong to the same instance of <see cref="WorkloadGroupResource" />.
-    /// To get a <see cref="WorkloadClassifierCollection" /> instance call the GetWorkloadClassifiers method from an instance of <see cref="WorkloadGroupResource" />.
+    /// A class representing a collection of <see cref="WorkloadClassifierResource"/> and their operations.
+    /// Each <see cref="WorkloadClassifierResource"/> in the collection will belong to the same instance of <see cref="WorkloadGroupResource"/>.
+    /// To get a <see cref="WorkloadClassifierCollection"/> instance call the GetWorkloadClassifiers method from an instance of <see cref="WorkloadGroupResource"/>.
     /// </summary>
     public partial class WorkloadClassifierCollection : ArmCollection, IEnumerable<WorkloadClassifierResource>, IAsyncEnumerable<WorkloadClassifierResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadClassifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadClassifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _workloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadClassifiers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkloadClassifierResource>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+
+            using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadClassifierRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadClassifierResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadClassifiers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        public virtual NullableResponse<WorkloadClassifierResource> GetIfExists(string workloadClassifierName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+
+            using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadClassifierResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

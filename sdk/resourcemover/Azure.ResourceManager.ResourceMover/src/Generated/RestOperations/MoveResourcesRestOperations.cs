@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/>, <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/> or <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/>, <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moverResourceSetName"/> or <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>

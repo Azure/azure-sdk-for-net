@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingPaymentMethodLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkData"/>. </summary>
         public BillingPaymentMethodLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

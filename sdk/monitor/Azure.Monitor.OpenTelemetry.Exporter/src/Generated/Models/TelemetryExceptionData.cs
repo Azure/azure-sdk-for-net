@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> An instance of Exception represents a handled or unhandled exception that occurred during execution of the monitored application. </summary>
     internal partial class TelemetryExceptionData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of TelemetryExceptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="exceptions"> Exception chain - list of inner exceptions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptions"/> is null. </exception>

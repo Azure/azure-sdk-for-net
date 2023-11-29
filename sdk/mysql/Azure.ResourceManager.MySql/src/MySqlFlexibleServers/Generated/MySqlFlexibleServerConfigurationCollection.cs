@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlFlexibleServerConfigurationResource" /> and their operations.
-    /// Each <see cref="MySqlFlexibleServerConfigurationResource" /> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource" />.
-    /// To get a <see cref="MySqlFlexibleServerConfigurationCollection" /> instance call the GetMySqlFlexibleServerConfigurations method from an instance of <see cref="MySqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerConfigurationResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerConfigurationResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerConfigurationCollection"/> instance call the GetMySqlFlexibleServerConfigurations method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class MySqlFlexibleServerConfigurationCollection : ArmCollection, IEnumerable<MySqlFlexibleServerConfigurationResource>, IAsyncEnumerable<MySqlFlexibleServerConfigurationResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="page"> The page of the server configuration. </param>
         /// <param name="pageSize"> The pageSize of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerConfigurationResource> GetAllAsync(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="page"> The page of the server configuration. </param>
         /// <param name="pageSize"> The pageSize of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerConfigurationResource> GetAll(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the server configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MySqlFlexibleServerConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlFlexibleServerConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the server configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        public virtual NullableResponse<MySqlFlexibleServerConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlFlexibleServerConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

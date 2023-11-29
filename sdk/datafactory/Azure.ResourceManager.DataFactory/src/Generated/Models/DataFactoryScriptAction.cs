@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
     public partial class DataFactoryScriptAction
     {
-        /// <summary> Initializes a new instance of DataFactoryScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Roles = roles;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

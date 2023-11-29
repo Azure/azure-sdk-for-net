@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MongoDBDatabaseResource" /> and their operations.
-    /// Each <see cref="MongoDBDatabaseResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="MongoDBDatabaseCollection" /> instance call the GetMongoDBDatabases method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="MongoDBDatabaseResource"/> and their operations.
+    /// Each <see cref="MongoDBDatabaseResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="MongoDBDatabaseCollection"/> instance call the GetMongoDBDatabases method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class MongoDBDatabaseCollection : ArmCollection, IEnumerable<MongoDBDatabaseResource>, IAsyncEnumerable<MongoDBDatabaseResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoDBDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoDBDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBDatabaseMongoDBResourcesRestClient.CreateListMongoDBDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoDBDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoDBDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBDatabaseMongoDBResourcesRestClient.CreateListMongoDBDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -314,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _mongoDBDatabaseMongoDBResourcesRestClient.GetMongoDBDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoDBDatabase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> Cosmos DB database name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MongoDBDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _mongoDBDatabaseMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mongoDBDatabaseMongoDBResourcesRestClient.GetMongoDBDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoDBDatabase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> Cosmos DB database name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual NullableResponse<MongoDBDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _mongoDBDatabaseMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mongoDBDatabaseMongoDBResourcesRestClient.GetMongoDBDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

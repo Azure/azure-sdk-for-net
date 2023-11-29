@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> Object containing updates for patch operations. </summary>
     public partial class ConnectedClusterPatch
     {
-        /// <summary> Initializes a new instance of ConnectedClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
         public ConnectedClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

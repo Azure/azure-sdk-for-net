@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An ADLS Gen 1 file data set. </summary>
     public partial class AdlsGen1FileDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen1FileDataSet"/>. </summary>
         /// <param name="accountName"> The ADLS account name. </param>
         /// <param name="fileName"> The file name in the ADLS account. </param>
         /// <param name="folderPath"> The folder path within the ADLS account. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.AdlsGen1File;
         }
 
-        /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen1FileDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

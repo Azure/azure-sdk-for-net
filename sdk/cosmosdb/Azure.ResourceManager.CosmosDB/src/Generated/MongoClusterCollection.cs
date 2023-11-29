@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MongoClusterResource" /> and their operations.
-    /// Each <see cref="MongoClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="MongoClusterCollection" /> instance call the GetMongoClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="MongoClusterResource"/> and their operations.
+    /// Each <see cref="MongoClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="MongoClusterCollection"/> instance call the GetMongoClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class MongoClusterCollection : ArmCollection, IEnumerable<MongoClusterResource>, IAsyncEnumerable<MongoClusterResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _mongoClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MongoClusterResource>> GetIfExistsAsync(string mongoClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+
+            using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mongoClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
+        public virtual NullableResponse<MongoClusterResource> GetIfExists(string mongoClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+
+            using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mongoClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

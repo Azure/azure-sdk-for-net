@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A Class representing a SuppressionContract along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SuppressionContractResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSuppressionContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceRecommendationBaseResource" /> using the GetSuppressionContract method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SuppressionContractResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSuppressionContractResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceRecommendationBaseResource"/> using the GetSuppressionContract method.
     /// </summary>
     public partial class SuppressionContractResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SuppressionContractResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="recommendationId"> The recommendationId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId, string name)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Advisor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SuppressionContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SuppressionContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SuppressionContractResource(ArmClient client, SuppressionContractData data) : this(client, data.Id)

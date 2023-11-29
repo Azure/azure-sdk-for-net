@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update credential operation. </summary>
     public partial class AutomationCredentialCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationCredentialCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the credential. </param>
         /// <param name="userName"> Gets or sets the user name of the credential. </param>
         /// <param name="password"> Gets or sets the password of the credential. </param>

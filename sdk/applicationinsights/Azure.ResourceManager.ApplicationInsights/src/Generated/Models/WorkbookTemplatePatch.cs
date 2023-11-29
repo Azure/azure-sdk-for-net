@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The parameters that can be provided when updating workbook template. </summary>
     public partial class WorkbookTemplatePatch
     {
-        /// <summary> Initializes a new instance of WorkbookTemplatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatePatch"/>. </summary>
         public WorkbookTemplatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

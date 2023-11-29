@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for backup items. </summary>
     public partial class GenericProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectedItem"/>. </summary>
         public GenericProtectedItem()
         {
             SourceAssociations = new ChangeTrackingDictionary<string, string>();
             ProtectedItemType = "GenericProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
     internal partial class Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema
     {
-        /// <summary> Initializes a new instance of Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema"/>. </summary>
         /// <param name="grantType"> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>

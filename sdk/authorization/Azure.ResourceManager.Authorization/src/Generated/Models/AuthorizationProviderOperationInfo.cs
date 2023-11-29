@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Operation. </summary>
     public partial class AuthorizationProviderOperationInfo
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         internal AuthorizationProviderOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

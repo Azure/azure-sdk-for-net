@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Protocol-specific configuration. </summary>
     internal partial class ConnectivityCheckRequestProtocolConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestProtocolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestProtocolConfiguration"/>. </summary>
         public ConnectivityCheckRequestProtocolConfiguration()
         {
         }

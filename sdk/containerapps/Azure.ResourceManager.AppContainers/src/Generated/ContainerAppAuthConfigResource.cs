@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppAuthConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppAuthConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppAuthConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppAuthConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppAuthConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppAuthConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppAuthConfig method.
     /// </summary>
     public partial class ContainerAppAuthConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppAuthConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="authConfigName"> The authConfigName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppAuthConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppAuthConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppAuthConfigResource(ArmClient client, ContainerAppAuthConfigData data) : this(client, data.Id)

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVirtualHub method.
     /// </summary>
     public partial class VirtualHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualHubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualHubResource(ArmClient client, VirtualHubData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteMapResources and their operations over a RouteMapResource. </returns>
         public virtual RouteMapCollection GetRouteMaps()
         {
-            return GetCachedClient(Client => new RouteMapCollection(Client, Id));
+            return GetCachedClient(client => new RouteMapCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RouteMapResource>> GetRouteMapAsync(string routeMapName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RouteMapResource> GetRouteMap(string routeMapName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubVirtualNetworkConnectionResources and their operations over a HubVirtualNetworkConnectionResource. </returns>
         public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
-            return GetCachedClient(Client => new HubVirtualNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HubVirtualNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubVirtualNetworkConnectionResource>> GetHubVirtualNetworkConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubVirtualNetworkConnectionResource> GetHubVirtualNetworkConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualHubRouteTableV2Resources and their operations over a VirtualHubRouteTableV2Resource. </returns>
         public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
-            return GetCachedClient(Client => new VirtualHubRouteTableV2Collection(Client, Id));
+            return GetCachedClient(client => new VirtualHubRouteTableV2Collection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetVirtualHubRouteTableV2Async(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualHubRouteTableV2Resource> GetVirtualHubRouteTableV2(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BgpConnectionResources and their operations over a BgpConnectionResource. </returns>
         public virtual BgpConnectionCollection GetBgpConnections()
         {
-            return GetCachedClient(Client => new BgpConnectionCollection(Client, Id));
+            return GetCachedClient(client => new BgpConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +273,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BgpConnectionResource>> GetBgpConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +296,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BgpConnectionResource> GetBgpConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubIPConfigurationResources and their operations over a HubIPConfigurationResource. </returns>
         public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
-            return GetCachedClient(Client => new HubIPConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new HubIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +326,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubIPConfigurationResource>> GetHubIPConfigurationAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +349,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubIPConfigurationResource> GetHubIPConfiguration(string ipConfigName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +361,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubRouteTableResources and their operations over a HubRouteTableResource. </returns>
         public virtual HubRouteTableCollection GetHubRouteTables()
         {
-            return GetCachedClient(Client => new HubRouteTableCollection(Client, Id));
+            return GetCachedClient(client => new HubRouteTableCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +379,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubRouteTableResource>> GetHubRouteTableAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -399,8 +402,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubRouteTableResource> GetHubRouteTable(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -411,7 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RoutingIntentResources and their operations over a RoutingIntentResource. </returns>
         public virtual RoutingIntentCollection GetRoutingIntents()
         {
-            return GetCachedClient(Client => new RoutingIntentCollection(Client, Id));
+            return GetCachedClient(client => new RoutingIntentCollection(client, Id));
         }
 
         /// <summary>
@@ -429,8 +432,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoutingIntentResource>> GetRoutingIntentAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
@@ -452,8 +455,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoutingIntentResource> GetRoutingIntent(string routingIntentName, CancellationToken cancellationToken = default)
         {

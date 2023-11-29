@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Represents a cluster for update. </summary>
     public partial class CosmosDBForPostgreSqlClusterPatch
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
         public CosmosDBForPostgreSqlClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public string PostgresqlVersion { get; set; }
         /// <summary> The Citus extension version on all cluster servers. </summary>
         public string CitusVersion { get; set; }
-        /// <summary> If shards on coordinator is enabled or not for the cluster. </summary>
+        /// <summary> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </summary>
         public bool? IsShardsOnCoordinatorEnabled { get; set; }
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
         public bool? IsHAEnabled { get; set; }

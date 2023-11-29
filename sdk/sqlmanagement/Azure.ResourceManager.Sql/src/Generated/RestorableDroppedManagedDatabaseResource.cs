@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a RestorableDroppedManagedDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RestorableDroppedManagedDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRestorableDroppedManagedDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetRestorableDroppedManagedDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RestorableDroppedManagedDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRestorableDroppedManagedDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetRestorableDroppedManagedDatabase method.
     /// </summary>
     public partial class RestorableDroppedManagedDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorableDroppedManagedDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="restorableDroppedDatabaseId"> The restorableDroppedDatabaseId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RestorableDroppedManagedDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorableDroppedManagedDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RestorableDroppedManagedDatabaseResource(ArmClient client, RestorableDroppedManagedDatabaseData data) : this(client, data.Id)
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResources and their operations over a ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource. </returns>
         public virtual ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies()
         {
-            return GetCachedClient(Client => new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(client, Id));
         }
 
         /// <summary>

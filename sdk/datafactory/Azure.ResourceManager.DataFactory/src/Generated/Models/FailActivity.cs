@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> This activity will fail within its own scope and output a custom error message and error code. The error message and code can provided either as a string literal or as an expression that can be evaluated to a string at runtime. The activity scope can be the whole pipeline or a control activity (e.g. foreach, switch, until), if the fail activity is contained in it. </summary>
     public partial class FailActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of FailActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Fail";
         }
 
-        /// <summary> Initializes a new instance of FailActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

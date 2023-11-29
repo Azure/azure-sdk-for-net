@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Error information in OData format. </summary>
     public partial class ODataError
     {
-        /// <summary> Initializes a new instance of ODataError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataError"/>. </summary>
         internal ODataError()
         {
             Details = new ChangeTrackingList<ODataError>();
         }
 
-        /// <summary> Initializes a new instance of ODataError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataError"/>. </summary>
         /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>

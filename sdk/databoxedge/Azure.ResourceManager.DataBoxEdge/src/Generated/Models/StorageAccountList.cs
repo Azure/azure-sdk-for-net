@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all the Storage Accounts on the Data Box Edge/Gateway device. </summary>
     internal partial class StorageAccountList
     {
-        /// <summary> Initializes a new instance of StorageAccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountList"/>. </summary>
         internal StorageAccountList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeStorageAccountData>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountList"/>. </summary>
         /// <param name="value"> The list of storageAccounts. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal StorageAccountList(IReadOnlyList<DataBoxEdgeStorageAccountData> value, string nextLink)

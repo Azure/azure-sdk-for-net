@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class CapabilityTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         public CapabilityTypeData()
         {
+            AzureRbacActions = new ChangeTrackingList<string>();
+            AzureRbacDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,8 +38,10 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
+        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
-        internal CapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, CapabilityTypePropertiesRuntimeProperties runtimeProperties) : base(id, name, resourceType, systemData)
+        internal CapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, CapabilityTypePropertiesRuntimeProperties runtimeProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Publisher = publisher;
@@ -46,6 +51,8 @@ namespace Azure.ResourceManager.Chaos
             ParametersSchema = parametersSchema;
             Urn = urn;
             Kind = kind;
+            AzureRbacActions = azureRbacActions;
+            AzureRbacDataActions = azureRbacDataActions;
             RuntimeProperties = runtimeProperties;
         }
 
@@ -65,6 +72,10 @@ namespace Azure.ResourceManager.Chaos
         public string Urn { get; }
         /// <summary> String of the kind of this Capability Type. </summary>
         public string Kind { get; }
+        /// <summary> Control plane actions necessary to execute capability type. </summary>
+        public IList<string> AzureRbacActions { get; }
+        /// <summary> Data plane actions necessary to execute capability type. </summary>
+        public IList<string> AzureRbacDataActions { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
         internal CapabilityTypePropertiesRuntimeProperties RuntimeProperties { get; set; }
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>

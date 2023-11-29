@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HostPoolResource" /> and their operations.
-    /// Each <see cref="HostPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="HostPoolCollection" /> instance call the GetHostPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HostPoolResource"/> and their operations.
+    /// Each <see cref="HostPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HostPoolCollection"/> instance call the GetHostPools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HostPoolCollection : ArmCollection, IEnumerable<HostPoolResource>, IAsyncEnumerable<HostPoolResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostPoolResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostPoolResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HostPoolResource>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+
+            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HostPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
+        public virtual NullableResponse<HostPoolResource> GetIfExists(string hostPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+
+            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HostPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DefaultRolloutResource" /> and their operations.
-    /// Each <see cref="DefaultRolloutResource" /> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource" />.
-    /// To get a <see cref="DefaultRolloutCollection" /> instance call the GetDefaultRollouts method from an instance of <see cref="ProviderRegistrationResource" />.
+    /// A class representing a collection of <see cref="DefaultRolloutResource"/> and their operations.
+    /// Each <see cref="DefaultRolloutResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
+    /// To get a <see cref="DefaultRolloutCollection"/> instance call the GetDefaultRollouts method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
     public partial class DefaultRolloutCollection : ArmCollection, IEnumerable<DefaultRolloutResource>, IAsyncEnumerable<DefaultRolloutResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DefaultRolloutResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefaultRolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DefaultRolloutResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefaultRolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 var response = _defaultRolloutRestClient.Get(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultRollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DefaultRolloutResource>> GetIfExistsAsync(string rolloutName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+
+            using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRolloutRestClient.GetAsync(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DefaultRolloutResource>(response.GetRawResponse());
+                return Response.FromValue(new DefaultRolloutResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultRollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        public virtual NullableResponse<DefaultRolloutResource> GetIfExists(string rolloutName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+
+            using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _defaultRolloutRestClient.Get(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DefaultRolloutResource>(response.GetRawResponse());
+                return Response.FromValue(new DefaultRolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

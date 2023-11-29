@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -60,6 +61,16 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
+            }
+            if (Optional.IsDefined(VirtualNetwork))
+            {
+                writer.WritePropertyName("virtualNetwork"u8);
+                JsonSerializer.Serialize(writer, VirtualNetwork);
+            }
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                writer.WritePropertyName("networkAcls"u8);
+                writer.WriteObjectValue(NetworkAcls);
             }
             if (Optional.IsDefined(ScaleUnits))
             {
@@ -115,6 +126,8 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<BastionHostIPConfiguration>> ipConfigurations = default;
             Optional<string> dnsName = default;
+            Optional<WritableSubResource> virtualNetwork = default;
+            Optional<BastionHostPropertiesFormatNetworkAcls> networkAcls = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> scaleUnits = default;
             Optional<bool> disableCopyPaste = default;
@@ -217,6 +230,24 @@ namespace Azure.ResourceManager.Network
                             dnsName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("virtualNetwork"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -293,7 +324,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, virtualNetwork, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
         }
     }
 }

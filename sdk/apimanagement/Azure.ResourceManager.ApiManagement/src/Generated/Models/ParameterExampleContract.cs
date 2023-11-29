@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameter example. </summary>
     public partial class ParameterExampleContract
     {
-        /// <summary> Initializes a new instance of ParameterExampleContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterExampleContract"/>. </summary>
         public ParameterExampleContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ParameterExampleContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterExampleContract"/>. </summary>
         /// <param name="summary"> Short description for the example. </param>
         /// <param name="description"> Long description for the example. </param>
         /// <param name="value"> Example value. May be a primitive value, or an object. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

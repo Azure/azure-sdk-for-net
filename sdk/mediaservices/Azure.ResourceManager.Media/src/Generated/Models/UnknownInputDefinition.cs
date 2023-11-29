@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownInputDefinition. </summary>
     internal partial class UnknownInputDefinition : MediaJobInputDefinition
     {
-        /// <summary> Initializes a new instance of UnknownInputDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputDefinition"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.

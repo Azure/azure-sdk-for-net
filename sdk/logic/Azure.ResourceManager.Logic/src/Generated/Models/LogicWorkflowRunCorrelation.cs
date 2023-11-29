@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The correlation properties. </summary>
     public partial class LogicWorkflowRunCorrelation
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunCorrelation"/>. </summary>
         public LogicWorkflowRunCorrelation()
         {
             ClientKeywords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunCorrelation"/>. </summary>
         /// <param name="clientTrackingId"> The client tracking identifier. </param>
         /// <param name="clientKeywords"> The client keywords. </param>
         internal LogicWorkflowRunCorrelation(string clientTrackingId, IList<string> clientKeywords)

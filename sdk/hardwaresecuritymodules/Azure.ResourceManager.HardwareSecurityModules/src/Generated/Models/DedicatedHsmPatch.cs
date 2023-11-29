@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Patchable properties of the dedicated HSM. </summary>
     public partial class DedicatedHsmPatch
     {
-        /// <summary> Initializes a new instance of DedicatedHsmPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatch"/>. </summary>
         public DedicatedHsmPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update schedule operation. </summary>
     public partial class AutomationScheduleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationScheduleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the Schedule. </param>
         /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

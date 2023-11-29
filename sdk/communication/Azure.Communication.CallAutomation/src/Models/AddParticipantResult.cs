@@ -26,12 +26,17 @@ namespace Azure.Communication.CallAutomation
         {
             Participant = new CallParticipant(internalObj.Participant);
             OperationContext = internalObj.OperationContext;
+            InvitationId = internalObj.InvitationId;
         }
 
         /// <summary>Gets the participant.</summary>
         public CallParticipant Participant { get; }
         /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
+        /// <summary>
+        /// The invitation ID used to add the participant.
+        /// </summary>
+        public string InvitationId { get; }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
         {

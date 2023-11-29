@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates. </summary>
     public partial class LabServicesSchedulePatch
     {
-        /// <summary> Initializes a new instance of LabServicesSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesSchedulePatch"/>. </summary>
         public LabServicesSchedulePatch()
         {
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

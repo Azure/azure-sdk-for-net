@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ExperimentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="steps"> List of steps. </param>
-        /// <param name="selectors"> List of selectors. </param>
+        /// <param name="selectors">
+        /// List of selectors.
+        /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="steps"/> or <paramref name="selectors"/> is null. </exception>
         public ExperimentData(AzureLocation location, IEnumerable<Step> steps, IEnumerable<Selector> selectors) : base(location)
         {
@@ -34,16 +38,20 @@ namespace Azure.ResourceManager.Chaos
             Selectors = selectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="steps"> List of steps. </param>
-        /// <param name="selectors"> List of selectors. </param>
+        /// <param name="selectors">
+        /// List of selectors.
+        /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
+        /// </param>
         /// <param name="startOnCreation"> A boolean value that indicates if experiment should be started on creation or not. </param>
         internal ExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Step> steps, IList<Selector> selectors, bool? startOnCreation) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -53,11 +61,15 @@ namespace Azure.ResourceManager.Chaos
             StartOnCreation = startOnCreation;
         }
 
-        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of steps. </summary>
         public IList<Step> Steps { get; }
-        /// <summary> List of selectors. </summary>
+        /// <summary>
+        /// List of selectors.
+        /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
+        /// </summary>
         public IList<Selector> Selectors { get; }
         /// <summary> A boolean value that indicates if experiment should be started on creation or not. </summary>
         public bool? StartOnCreation { get; set; }

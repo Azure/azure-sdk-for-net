@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Advisor Digest configuration entity. </summary>
     public partial class DigestConfig
     {
-        /// <summary> Initializes a new instance of DigestConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigestConfig"/>. </summary>
         public DigestConfig()
         {
             Categories = new ChangeTrackingList<Category>();
         }
 
-        /// <summary> Initializes a new instance of DigestConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigestConfig"/>. </summary>
         /// <param name="name"> Name of digest configuration. Value is case-insensitive and must be unique within a subscription. </param>
         /// <param name="actionGroupResourceId"> Action group resource id used by digest. </param>
         /// <param name="frequency"> Frequency that digest will be triggered, in days. Value must be between 7 and 30 days inclusive. </param>

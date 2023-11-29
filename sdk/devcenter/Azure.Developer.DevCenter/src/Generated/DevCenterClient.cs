@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureDeveloperDevCenterClientOptions())
         {
         }
 
@@ -48,11 +48,11 @@ namespace Azure.Developer.DevCenter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
+        public DevCenterClient(Uri endpoint, TokenCredential credential, AzureDeveloperDevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new DevCenterClientOptions();
+            options ??= new AzureDeveloperDevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -177,108 +177,6 @@ namespace Azure.Developer.DevCenter
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method] Lists Dev Boxes that the caller has access to in the DevCenter.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter, int? maxCount, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists Dev Boxes that the caller has access to in the DevCenter.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDevBoxes(string filter, int? maxCount, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists Dev Boxes in the Dev Center for a particular user.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. The default value is "me". </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId, string filter, int? maxCount, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists Dev Boxes in the Dev Center for a particular user.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. The default value is "me". </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId, string filter, int? maxCount, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
-        }
-
         internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -316,79 +214,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllDevBoxesRequest(string filter, int? maxCount, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/devboxes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllDevBoxesByUserRequest(string userId, string filter, int? maxCount, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/devboxes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllDevBoxesNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

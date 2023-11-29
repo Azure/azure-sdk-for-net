@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Properties of site details provided during the time of site creation. </summary>
     internal partial class FabricCreationProperties
     {
-        /// <summary> Initializes a new instance of FabricCreationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCreationProperties"/>. </summary>
         public FabricCreationProperties()
         {
         }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGlobalSchemaData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGlobalSchemaData"/>. </summary>
         public ApiManagementGlobalSchemaData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGlobalSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

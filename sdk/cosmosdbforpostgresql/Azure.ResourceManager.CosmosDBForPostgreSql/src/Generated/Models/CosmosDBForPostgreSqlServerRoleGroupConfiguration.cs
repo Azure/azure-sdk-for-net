@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Represents server role group configuration value. </summary>
     public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerRoleGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/>. </summary>
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerRoleGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/>. </summary>
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <param name="defaultValue"> Default value of the configuration. </param>

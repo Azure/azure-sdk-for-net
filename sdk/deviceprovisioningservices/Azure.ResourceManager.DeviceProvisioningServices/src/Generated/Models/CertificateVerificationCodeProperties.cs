@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The CertificateVerificationCodeProperties. </summary>
     public partial class CertificateVerificationCodeProperties
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeProperties"/>. </summary>
         internal CertificateVerificationCodeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateVerificationCodeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeProperties"/>. </summary>
         /// <param name="verificationCode"> Verification code. </param>
         /// <param name="subject"> Certificate subject. </param>
         /// <param name="expireOn"> Code expiry. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

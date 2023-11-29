@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProjectData(AzureLocation location) : base(location)
         {
             DatabasesInfo = new ChangeTrackingList<DatabaseInfo>();
         }
 
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

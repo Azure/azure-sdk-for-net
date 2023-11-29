@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan
             PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.ElasticSan
             TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
             PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> resource sku. </summary>
@@ -91,5 +93,7 @@ namespace Azure.ResourceManager.ElasticSan
         public long? TotalSizeTiB { get; }
         /// <summary> The list of Private Endpoint Connections. </summary>
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

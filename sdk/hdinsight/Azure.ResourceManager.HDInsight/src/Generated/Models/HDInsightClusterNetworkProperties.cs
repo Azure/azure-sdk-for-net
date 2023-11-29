@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The network properties. </summary>
     public partial class HDInsightClusterNetworkProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         public HDInsightClusterNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
         /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
         internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink)

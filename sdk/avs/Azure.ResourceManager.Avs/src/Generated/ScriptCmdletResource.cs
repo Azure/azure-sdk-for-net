@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a ScriptCmdlet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptCmdletResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptCmdletResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource" /> using the GetScriptCmdlet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptCmdletResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptCmdletResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource"/> using the GetScriptCmdlet method.
     /// </summary>
     public partial class ScriptCmdletResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScriptCmdletResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptPackageName"> The scriptPackageName. </param>
+        /// <param name="scriptCmdletName"> The scriptCmdletName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptCmdletResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptCmdletResource(ArmClient client, ScriptCmdletData data) : this(client, data.Id)

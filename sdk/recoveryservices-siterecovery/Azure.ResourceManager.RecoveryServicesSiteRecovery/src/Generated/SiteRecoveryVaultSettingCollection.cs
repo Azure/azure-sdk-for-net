@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryVaultSettingResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryVaultSettingResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SiteRecoveryVaultSettingCollection" /> instance call the GetSiteRecoveryVaultSettings method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryVaultSettingResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryVaultSettingResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SiteRecoveryVaultSettingCollection"/> instance call the GetSiteRecoveryVaultSettings method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SiteRecoveryVaultSettingCollection : ArmCollection, IEnumerable<SiteRecoveryVaultSettingResource>, IAsyncEnumerable<SiteRecoveryVaultSettingResource>
     {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryVaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryVaultSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryVaultSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryVaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryVaultSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryVaultSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _siteRecoveryVaultSettingReplicationVaultSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultSettingName"> Vault setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryVaultSettingResource>> GetIfExistsAsync(string vaultSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
+
+            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryVaultSettingReplicationVaultSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryVaultSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryVaultSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultSettingName"> Vault setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryVaultSettingResource> GetIfExists(string vaultSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
+
+            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryVaultSettingReplicationVaultSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryVaultSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryVaultSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

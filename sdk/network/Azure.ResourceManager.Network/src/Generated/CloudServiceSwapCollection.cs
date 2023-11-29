@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServiceSwapResource" /> and their operations.
-    /// Each <see cref="CloudServiceSwapResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CloudServiceSwapCollection" /> instance call the GetCloudServiceSwaps method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CloudServiceSwapResource"/> and their operations.
+    /// Each <see cref="CloudServiceSwapResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CloudServiceSwapCollection"/> instance call the GetCloudServiceSwaps method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CloudServiceSwapCollection : ArmCollection, IEnumerable<CloudServiceSwapResource>, IAsyncEnumerable<CloudServiceSwapResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceSwapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceSwapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceSwapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceSwapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -293,6 +293,70 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _cloudServiceSwapVipSwapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VipSwap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<CloudServiceSwapResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServiceSwapVipSwapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CloudServiceSwapResource>(response.GetRawResponse());
+                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VipSwap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<CloudServiceSwapResource> GetIfExists(CancellationToken cancellationToken = default)
+        {
+            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cloudServiceSwapVipSwapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CloudServiceSwapResource>(response.GetRawResponse());
+                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

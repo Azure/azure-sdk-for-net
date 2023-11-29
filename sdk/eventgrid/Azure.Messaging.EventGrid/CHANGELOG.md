@@ -1,5 +1,34 @@
 # Release History
 
+## 4.22.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
 ## 4.18.0 (2023-09-12)
 
 ### Features Added

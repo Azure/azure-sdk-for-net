@@ -14,15 +14,21 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogOptions. </summary>
     internal partial class DialogOptionsInternal
     {
-        /// <summary> Initializes a new instance of DialogOptionsInternal. </summary>
-        /// <param name="botAppId"> Bot identifier. </param>
+        /// <summary> Initializes a new instance of <see cref="DialogOptionsInternal"/>. </summary>
         /// <param name="dialogContext"> Dialog context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botAppId"/> or <paramref name="dialogContext"/> is null. </exception>
-        public DialogOptionsInternal(string botAppId, IDictionary<string, object> dialogContext)
+        /// <exception cref="ArgumentNullException"> <paramref name="dialogContext"/> is null. </exception>
+        public DialogOptionsInternal(IDictionary<string, object> dialogContext)
         {
-            Argument.AssertNotNull(botAppId, nameof(botAppId));
             Argument.AssertNotNull(dialogContext, nameof(dialogContext));
 
+            DialogContext = dialogContext;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DialogOptionsInternal"/>. </summary>
+        /// <param name="botAppId"> Bot identifier. </param>
+        /// <param name="dialogContext"> Dialog context. </param>
+        internal DialogOptionsInternal(string botAppId, IDictionary<string, object> dialogContext)
+        {
             BotAppId = botAppId;
             DialogContext = dialogContext;
         }

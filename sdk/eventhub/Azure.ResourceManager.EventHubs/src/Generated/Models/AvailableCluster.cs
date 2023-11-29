@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Pre-provisioned and readily available Event Hubs Cluster count per region. </summary>
     public partial class AvailableCluster
     {
-        /// <summary> Initializes a new instance of AvailableCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCluster"/>. </summary>
         internal AvailableCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCluster"/>. </summary>
         /// <param name="location"> Location fo the Available Cluster. </param>
         internal AvailableCluster(AzureLocation? location)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Scaling plan properties that can be patched. </summary>
     public partial class ScalingPlanPatch
     {
-        /// <summary> Initializes a new instance of ScalingPlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPatch"/>. </summary>
         public ScalingPlanPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

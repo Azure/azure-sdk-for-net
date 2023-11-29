@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ArmDeploymentScriptData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptData"/>. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         public ArmDeploymentScriptData(AzureLocation location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

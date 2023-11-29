@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ArmApplicationResource" /> and their operations.
-    /// Each <see cref="ArmApplicationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ArmApplicationCollection" /> instance call the GetArmApplications method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ArmApplicationResource"/> and their operations.
+    /// Each <see cref="ArmApplicationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ArmApplicationCollection"/> instance call the GetArmApplications method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ArmApplicationCollection : ArmCollection, IEnumerable<ArmApplicationResource>, IAsyncEnumerable<ArmApplicationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ArmApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationApplicationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArmApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationApplicationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The name of the managed application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ArmApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ArmApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The name of the managed application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual NullableResponse<ArmApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ArmApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

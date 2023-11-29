@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryTokenResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryTokenResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ContainerRegistryTokenCollection" /> instance call the GetContainerRegistryTokens method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ContainerRegistryTokenResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryTokenResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ContainerRegistryTokenCollection"/> instance call the GetContainerRegistryTokens method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ContainerRegistryTokenCollection : ArmCollection, IEnumerable<ContainerRegistryTokenResource>, IAsyncEnumerable<ContainerRegistryTokenResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryTokenResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerRegistryTokenResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryTokenResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryTokenResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryTokenResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryTokenResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _containerRegistryTokenTokensRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryTokenResource>> GetIfExistsAsync(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryTokenTokensRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryTokenResource> GetIfExists(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryTokenTokensRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

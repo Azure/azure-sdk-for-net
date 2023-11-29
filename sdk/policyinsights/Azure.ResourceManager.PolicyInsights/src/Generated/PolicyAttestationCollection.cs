@@ -20,9 +20,9 @@ using Azure.ResourceManager.PolicyInsights.Models;
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PolicyAttestationResource" /> and their operations.
-    /// Each <see cref="PolicyAttestationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="PolicyAttestationCollection" /> instance call the GetPolicyAttestations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="PolicyAttestationResource"/> and their operations.
+    /// Each <see cref="PolicyAttestationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="PolicyAttestationCollection"/> instance call the GetPolicyAttestations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class PolicyAttestationCollection : ArmCollection, IEnumerable<PolicyAttestationResource>, IAsyncEnumerable<PolicyAttestationResource>
     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
@@ -308,6 +308,80 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PolicyAttestationResource>> GetIfExistsAsync(string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyAttestationResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        public virtual NullableResponse<PolicyAttestationResource> GetIfExists(string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyAttestationResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Automanage configuration profile properties. </summary>
     internal partial class ConfigurationProfileProperties
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileProperties"/>. </summary>
         public ConfigurationProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileProperties"/>. </summary>
         /// <param name="configuration"> configuration dictionary of the configuration profile. </param>
         internal ConfigurationProfileProperties(BinaryData configuration)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

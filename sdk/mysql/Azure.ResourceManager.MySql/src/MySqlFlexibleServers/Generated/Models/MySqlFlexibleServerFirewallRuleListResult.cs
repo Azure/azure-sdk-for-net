@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class MySqlFlexibleServerFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleListResult"/>. </summary>
         internal MySqlFlexibleServerFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal MySqlFlexibleServerFirewallRuleListResult(IReadOnlyList<MySqlFlexibleServerFirewallRuleData> value, string nextLink)

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         public SecurityAlertsSuppressionRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

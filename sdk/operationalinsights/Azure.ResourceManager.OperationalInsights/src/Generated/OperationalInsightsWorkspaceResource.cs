@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOperationalInsightsWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalInsightsWorkspace method.
     /// </summary>
     public partial class OperationalInsightsWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}";
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsWorkspaceResource(ArmClient client, OperationalInsightsWorkspaceData data) : this(client, data.Id)
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsDataExportResources and their operations over a OperationalInsightsDataExportResource. </returns>
         public virtual OperationalInsightsDataExportCollection GetOperationalInsightsDataExports()
         {
-            return GetCachedClient(Client => new OperationalInsightsDataExportCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsDataExportCollection(client, Id));
         }
 
         /// <summary>
@@ -144,8 +147,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsDataExportResource>> GetOperationalInsightsDataExportAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
@@ -167,8 +170,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsDataExportResource> GetOperationalInsightsDataExport(string dataExportName, CancellationToken cancellationToken = default)
         {
@@ -179,7 +182,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsDataSourceResources and their operations over a OperationalInsightsDataSourceResource. </returns>
         public virtual OperationalInsightsDataSourceCollection GetOperationalInsightsDataSources()
         {
-            return GetCachedClient(Client => new OperationalInsightsDataSourceCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsDataSourceCollection(client, Id));
         }
 
         /// <summary>
@@ -197,8 +200,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="dataSourceName"> Name of the datasource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsDataSourceResource>> GetOperationalInsightsDataSourceAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
@@ -220,8 +223,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="dataSourceName"> Name of the datasource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsDataSourceResource> GetOperationalInsightsDataSource(string dataSourceName, CancellationToken cancellationToken = default)
         {
@@ -232,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsLinkedServiceResources and their operations over a OperationalInsightsLinkedServiceResource. </returns>
         public virtual OperationalInsightsLinkedServiceCollection GetOperationalInsightsLinkedServices()
         {
-            return GetCachedClient(Client => new OperationalInsightsLinkedServiceCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsLinkedServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -250,8 +253,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="linkedServiceName"> Name of the linked service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsLinkedServiceResource>> GetOperationalInsightsLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
         {
@@ -273,8 +276,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="linkedServiceName"> Name of the linked service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsLinkedServiceResource> GetOperationalInsightsLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
         {
@@ -285,7 +288,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsLinkedStorageAccountsResources and their operations over a OperationalInsightsLinkedStorageAccountsResource. </returns>
         public virtual OperationalInsightsLinkedStorageAccountsCollection GetAllOperationalInsightsLinkedStorageAccounts()
         {
-            return GetCachedClient(Client => new OperationalInsightsLinkedStorageAccountsCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsLinkedStorageAccountsCollection(client, Id));
         }
 
         /// <summary>
@@ -334,7 +337,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of StorageInsightResources and their operations over a StorageInsightResource. </returns>
         public virtual StorageInsightCollection GetStorageInsights()
         {
-            return GetCachedClient(Client => new StorageInsightCollection(Client, Id));
+            return GetCachedClient(client => new StorageInsightCollection(client, Id));
         }
 
         /// <summary>
@@ -352,8 +355,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageInsightResource>> GetStorageInsightAsync(string storageInsightName, CancellationToken cancellationToken = default)
         {
@@ -375,8 +378,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageInsightResource> GetStorageInsight(string storageInsightName, CancellationToken cancellationToken = default)
         {
@@ -387,7 +390,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsSavedSearchResources and their operations over a OperationalInsightsSavedSearchResource. </returns>
         public virtual OperationalInsightsSavedSearchCollection GetOperationalInsightsSavedSearches()
         {
-            return GetCachedClient(Client => new OperationalInsightsSavedSearchCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsSavedSearchCollection(client, Id));
         }
 
         /// <summary>
@@ -405,8 +408,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="savedSearchId"> The id of the saved search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsSavedSearchResource>> GetOperationalInsightsSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken = default)
         {
@@ -428,8 +431,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="savedSearchId"> The id of the saved search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsSavedSearchResource> GetOperationalInsightsSavedSearch(string savedSearchId, CancellationToken cancellationToken = default)
         {
@@ -440,7 +443,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsTableResources and their operations over a OperationalInsightsTableResource. </returns>
         public virtual OperationalInsightsTableCollection GetOperationalInsightsTables()
         {
-            return GetCachedClient(Client => new OperationalInsightsTableCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsTableCollection(client, Id));
         }
 
         /// <summary>
@@ -458,8 +461,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsTableResource>> GetOperationalInsightsTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -481,8 +484,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsTableResource> GetOperationalInsightsTable(string tableName, CancellationToken cancellationToken = default)
         {
@@ -845,7 +848,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -866,7 +869,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -887,7 +890,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -908,7 +911,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1049,7 +1052,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1070,7 +1073,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1091,7 +1094,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1112,7 +1115,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1195,7 +1198,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1216,7 +1219,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

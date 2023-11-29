@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Parameters supplied to the regenerate authorization rule operation, specifies which key needs to be reset. </summary>
     public partial class RelayRegenerateAccessKeyContent
     {
-        /// <summary> Initializes a new instance of RelayRegenerateAccessKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayRegenerateAccessKeyContent"/>. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         public RelayRegenerateAccessKeyContent(RelayAccessKeyType keyType)
         {

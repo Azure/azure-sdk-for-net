@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Datasource to be backed up. </summary>
     public partial class DataSourceInfo
     {
-        /// <summary> Initializes a new instance of DataSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/>. </summary>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DataSourceInfo(ResourceIdentifier resourceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DataSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/>. </summary>
         /// <param name="dataSourceType"> DatasourceType of the resource. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
@@ -31,7 +31,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
         /// <param name="resourceUriString"> Uri of the resource. </param>
-        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
+        /// <param name="resourceProperties">
+        /// Properties specific to data source
+        /// Please note <see cref="BaseResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DefaultResourceProperties"/>.
+        /// </param>
+        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString, BaseResourceProperties resourceProperties)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceName = resourceName;
             ResourceType = resourceType;
             ResourceUriString = resourceUriString;
+            ResourceProperties = resourceProperties;
         }
 
         /// <summary> DatasourceType of the resource. </summary>
@@ -56,5 +62,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
         public string ResourceUriString { get; set; }
+        /// <summary>
+        /// Properties specific to data source
+        /// Please note <see cref="BaseResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DefaultResourceProperties"/>.
+        /// </summary>
+        public BaseResourceProperties ResourceProperties { get; set; }
     }
 }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Environment Auth Token. </summary>
     public partial class ContainerAppEnvironmentAuthToken : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppEnvironmentAuthToken(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

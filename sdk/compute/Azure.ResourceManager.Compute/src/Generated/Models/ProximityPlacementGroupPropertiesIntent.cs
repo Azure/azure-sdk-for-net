@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the user intent of the proximity placement group. </summary>
     internal partial class ProximityPlacementGroupPropertiesIntent
     {
-        /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPropertiesIntent"/>. </summary>
         public ProximityPlacementGroupPropertiesIntent()
         {
             VmSizes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPropertiesIntent"/>. </summary>
         /// <param name="vmSizes"> Specifies possible sizes of virtual machines that can be created in the proximity placement group. </param>
         internal ProximityPlacementGroupPropertiesIntent(IList<string> vmSizes)
         {

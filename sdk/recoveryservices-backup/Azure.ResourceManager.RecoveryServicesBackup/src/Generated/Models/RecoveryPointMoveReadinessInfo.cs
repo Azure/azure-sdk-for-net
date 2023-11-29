@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The RecoveryPointMoveReadinessInfo. </summary>
     public partial class RecoveryPointMoveReadinessInfo
     {
-        /// <summary> Initializes a new instance of RecoveryPointMoveReadinessInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointMoveReadinessInfo"/>. </summary>
         public RecoveryPointMoveReadinessInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointMoveReadinessInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointMoveReadinessInfo"/>. </summary>
         /// <param name="isReadyForMove"></param>
         /// <param name="additionalInfo"></param>
         internal RecoveryPointMoveReadinessInfo(bool? isReadyForMove, string additionalInfo)

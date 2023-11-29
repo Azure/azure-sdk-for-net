@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionData"/>. </summary>
         public AgFoodPlatformPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

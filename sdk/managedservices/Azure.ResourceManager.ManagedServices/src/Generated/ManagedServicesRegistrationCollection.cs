@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedServicesRegistrationResource" /> and their operations.
-    /// Each <see cref="ManagedServicesRegistrationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ManagedServicesRegistrationCollection" /> instance call the GetManagedServicesRegistrations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ManagedServicesRegistrationResource"/> and their operations.
+    /// Each <see cref="ManagedServicesRegistrationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ManagedServicesRegistrationCollection"/> instance call the GetManagedServicesRegistrations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ManagedServicesRegistrationCollection : ArmCollection, IEnumerable<ManagedServicesRegistrationResource>, IAsyncEnumerable<ManagedServicesRegistrationResource>
     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedServicesRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedServicesRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServicesRegistrationResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedServicesRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedServicesRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServicesRegistrationResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -307,6 +307,80 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 var response = _managedServicesRegistrationRegistrationDefinitionsRestClient.Get(Id, registrationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedServicesRegistrationResource>> GetIfExistsAsync(string registrationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
+
+            using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedServicesRegistrationRegistrationDefinitionsRestClient.GetAsync(Id, registrationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
+        public virtual NullableResponse<ManagedServicesRegistrationResource> GetIfExists(string registrationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
+
+            using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedServicesRegistrationRegistrationDefinitionsRestClient.Get(Id, registrationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

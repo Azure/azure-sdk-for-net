@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterProjectEnvironmentResource" /> and their operations.
-    /// Each <see cref="DevCenterProjectEnvironmentResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
-    /// To get a <see cref="DevCenterProjectEnvironmentCollection" /> instance call the GetDevCenterProjectEnvironments method from an instance of <see cref="DevCenterProjectResource" />.
+    /// A class representing a collection of <see cref="DevCenterProjectEnvironmentResource"/> and their operations.
+    /// Each <see cref="DevCenterProjectEnvironmentResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get a <see cref="DevCenterProjectEnvironmentCollection"/> instance call the GetDevCenterProjectEnvironments method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
     public partial class DevCenterProjectEnvironmentCollection : ArmCollection, IEnumerable<DevCenterProjectEnvironmentResource>, IAsyncEnumerable<DevCenterProjectEnvironmentResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterProjectEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterProjectEnvironmentResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterProjectEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterProjectEnvironmentResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterProjectEnvironmentResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterProjectEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterProjectEnvironmentResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterProjectEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

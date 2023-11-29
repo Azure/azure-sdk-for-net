@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppManagedEnvironmentDetectorResource" /> and their operations.
-    /// Each <see cref="ContainerAppManagedEnvironmentDetectorResource" /> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource" />.
-    /// To get a <see cref="ContainerAppManagedEnvironmentDetectorCollection" /> instance call the GetContainerAppManagedEnvironmentDetectors method from an instance of <see cref="ContainerAppManagedEnvironmentResource" />.
+    /// A class representing a collection of <see cref="ContainerAppManagedEnvironmentDetectorResource"/> and their operations.
+    /// Each <see cref="ContainerAppManagedEnvironmentDetectorResource"/> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
+    /// To get a <see cref="ContainerAppManagedEnvironmentDetectorCollection"/> instance call the GetContainerAppManagedEnvironmentDetectors method from an instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorCollection : ArmCollection, IEnumerable<ContainerAppManagedEnvironmentDetectorResource>, IAsyncEnumerable<ContainerAppManagedEnvironmentDetectorResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,6 +231,80 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppManagedEnvironmentDetectorResource>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppManagedEnvironmentDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppManagedEnvironmentDetectorResource> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppManagedEnvironmentDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

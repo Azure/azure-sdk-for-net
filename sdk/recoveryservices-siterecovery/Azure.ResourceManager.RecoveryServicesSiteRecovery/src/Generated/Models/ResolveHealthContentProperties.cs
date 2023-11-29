@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resolve health input properties. </summary>
     internal partial class ResolveHealthContentProperties
     {
-        /// <summary> Initializes a new instance of ResolveHealthContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContentProperties"/>. </summary>
         public ResolveHealthContentProperties()
         {
             HealthErrors = new ChangeTrackingList<ResolveHealthError>();

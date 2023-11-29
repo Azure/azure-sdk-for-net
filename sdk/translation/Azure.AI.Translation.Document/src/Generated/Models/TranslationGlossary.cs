@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Glossary / translation memory for the request. </summary>
     public partial class TranslationGlossary
     {
-        /// <summary> Initializes a new instance of TranslationGlossary. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationGlossary"/>. </summary>
         /// <param name="glossaryUri">
         /// Location of the glossary.
         /// We will use the file extension to extract the formatting if the format parameter is not supplied.

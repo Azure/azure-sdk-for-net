@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The resource model definition representing SKU. </summary>
     public partial class AvsSku
     {
-        /// <summary> Initializes a new instance of AvsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AvsSku(string name)

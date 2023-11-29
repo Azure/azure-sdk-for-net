@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterEnvironmentType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterEnvironmentTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetDevCenterEnvironmentType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterEnvironmentTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterEnvironmentTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetDevCenterEnvironmentType method.
     /// </summary>
     public partial class DevCenterEnvironmentTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterEnvironmentTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="devCenterName"> The devCenterName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/environmentTypes/{environmentTypeName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterEnvironmentTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterEnvironmentTypeResource(ArmClient client, DevCenterEnvironmentTypeData data) : this(client, data.Id)

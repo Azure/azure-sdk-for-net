@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job stages. </summary>
     public partial class DataBoxJobStage
     {
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
         internal DataBoxJobStage()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Peering
 {
     /// <summary>
     /// A Class representing a PeeringRegisteredAsn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeeringRegisteredAsnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeeringRegisteredAsnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PeeringResource" /> using the GetPeeringRegisteredAsn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringRegisteredAsnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeeringRegisteredAsnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PeeringResource"/> using the GetPeeringRegisteredAsn method.
     /// </summary>
     public partial class PeeringRegisteredAsnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeeringRegisteredAsnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
+        /// <param name="registeredAsnName"> The registeredAsnName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName, string registeredAsnName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Peering
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeeringRegisteredAsnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredAsnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringRegisteredAsnResource(ArmClient client, PeeringRegisteredAsnData data) : this(client, data.Id)

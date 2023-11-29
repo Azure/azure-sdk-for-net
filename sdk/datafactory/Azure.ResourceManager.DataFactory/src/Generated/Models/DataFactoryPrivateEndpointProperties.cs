@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Properties of a managed private endpoint. </summary>
     public partial class DataFactoryPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
         public DataFactoryPrivateEndpointProperties()
         {
             Fqdns = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
         /// <param name="connectionState"> The managed private endpoint connection state. </param>
         /// <param name="fqdns"> Fully qualified domain names. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

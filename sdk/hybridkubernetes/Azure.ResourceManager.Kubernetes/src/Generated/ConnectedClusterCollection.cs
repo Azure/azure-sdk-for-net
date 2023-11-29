@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectedClusterResource" /> and their operations.
-    /// Each <see cref="ConnectedClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConnectedClusterCollection" /> instance call the GetConnectedClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ConnectedClusterResource"/> and their operations.
+    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConnectedClusterCollection : ArmCollection, IEnumerable<ConnectedClusterResource>, IAsyncEnumerable<ConnectedClusterResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 var response = _connectedClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedCluster_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectedClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectedClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectedClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectedClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedCluster_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual NullableResponse<ConnectedClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectedClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectedClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectedClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

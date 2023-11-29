@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DomainOwnershipIdentifierResource" /> and their operations.
-    /// Each <see cref="DomainOwnershipIdentifierResource" /> in the collection will belong to the same instance of <see cref="AppServiceDomainResource" />.
-    /// To get a <see cref="DomainOwnershipIdentifierCollection" /> instance call the GetDomainOwnershipIdentifiers method from an instance of <see cref="AppServiceDomainResource" />.
+    /// A class representing a collection of <see cref="DomainOwnershipIdentifierResource"/> and their operations.
+    /// Each <see cref="DomainOwnershipIdentifierResource"/> in the collection will belong to the same instance of <see cref="AppServiceDomainResource"/>.
+    /// To get a <see cref="DomainOwnershipIdentifierCollection"/> instance call the GetDomainOwnershipIdentifiers method from an instance of <see cref="AppServiceDomainResource"/>.
     /// </summary>
     public partial class DomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<DomainOwnershipIdentifierResource>, IAsyncEnumerable<DomainOwnershipIdentifierResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DomainOwnershipIdentifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DomainOwnershipIdentifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DomainOwnershipIdentifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DomainOwnershipIdentifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DomainOwnershipIdentifierResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DomainOwnershipIdentifierResource>(response.GetRawResponse());
+                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DomainOwnershipIdentifierResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DomainOwnershipIdentifierResource>(response.GetRawResponse());
+                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

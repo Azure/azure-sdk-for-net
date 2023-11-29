@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudVirtualMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudVirtualMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudVirtualMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudVirtualMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudVirtualMachine method.
     /// </summary>
     public partial class NetworkCloudVirtualMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudVirtualMachineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudVirtualMachineResource(ArmClient client, NetworkCloudVirtualMachineData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVirtualMachineConsoleResources and their operations over a NetworkCloudVirtualMachineConsoleResource. </returns>
         public virtual NetworkCloudVirtualMachineConsoleCollection GetNetworkCloudVirtualMachineConsoles()
         {
-            return GetCachedClient(Client => new NetworkCloudVirtualMachineConsoleCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudVirtualMachineConsoleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVirtualMachineConsoleResource>> GetNetworkCloudVirtualMachineConsoleAsync(string consoleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVirtualMachineConsoleResource> GetNetworkCloudVirtualMachineConsole(string consoleName, CancellationToken cancellationToken = default)
         {

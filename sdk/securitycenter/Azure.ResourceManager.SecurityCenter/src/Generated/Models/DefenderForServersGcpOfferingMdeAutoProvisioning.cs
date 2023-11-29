@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
     public partial class DefenderForServersGcpOfferingMdeAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingMdeAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingMdeAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingMdeAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Endpoint autoprovisioning. </param>
         internal DefenderForServersGcpOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

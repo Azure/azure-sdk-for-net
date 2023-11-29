@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> kubernetes Cluster Backup target info for restore operation. </summary>
     public partial class KubernetesClusterRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesClusterRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestoreCriteria"/>. </summary>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
         public KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded)
         {
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExcludedResourceTypes = new ChangeTrackingList<string>();
             LabelSelectors = new ChangeTrackingList<string>();
             NamespaceMappings = new ChangeTrackingDictionary<string, string>();
+            RestoreHookReferences = new ChangeTrackingList<NamespacedName>();
             ObjectType = "KubernetesClusterRestoreCriteria";
         }
 
@@ -45,5 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public KubernetesClusterRestoreExistingResourcePolicy? ConflictPolicy { get; set; }
         /// <summary> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </summary>
         public IDictionary<string, string> NamespaceMappings { get; }
+        /// <summary> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </summary>
+        public IList<NamespacedName> RestoreHookReferences { get; }
     }
 }

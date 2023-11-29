@@ -17,6 +17,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 tagPrefix SwaggerVersionTag
 
 format-by-name-rules:

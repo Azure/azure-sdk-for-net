@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The source trigger that caused a run. </summary>
     public partial class ContainerRegistrySourceTriggerDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerDescriptor"/>. </summary>
         public ContainerRegistrySourceTriggerDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerDescriptor"/>. </summary>
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="eventType"> The event type of the trigger. </param>
         /// <param name="commitId"> The unique ID that identifies a commit. </param>

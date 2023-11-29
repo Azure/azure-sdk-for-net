@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
         protected DataFactoryDataFlowProperties()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

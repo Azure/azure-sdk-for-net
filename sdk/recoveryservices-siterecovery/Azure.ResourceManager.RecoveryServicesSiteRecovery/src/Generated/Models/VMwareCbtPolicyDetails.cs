@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware Cbt specific policy details. </summary>
     public partial class VMwareCbtPolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyDetails"/>. </summary>
         internal VMwareCbtPolicyDetails()
         {
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Publishing options for requested profile. </summary>
     public partial class CsmPublishingProfile
     {
-        /// <summary> Initializes a new instance of CsmPublishingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingProfile"/>. </summary>
         public CsmPublishingProfile()
         {
         }

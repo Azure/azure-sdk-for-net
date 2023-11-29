@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The artifact properties definition. </summary>
     public partial class ArtifactProperties
     {
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         public ArtifactProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

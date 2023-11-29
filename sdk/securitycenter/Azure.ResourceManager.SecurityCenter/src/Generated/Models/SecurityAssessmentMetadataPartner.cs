@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes the partner that created the assessment. </summary>
     public partial class SecurityAssessmentMetadataPartner
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataPartner. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPartner"/>. </summary>
         /// <param name="partnerName"> Name of the company of the partner. </param>
         /// <param name="secret"> Secret to authenticate the partner and verify it created the assessment - write only. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="secret"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Secret = secret;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataPartner. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPartner"/>. </summary>
         /// <param name="partnerName"> Name of the company of the partner. </param>
         /// <param name="productName"> Name of the product of the partner that created the assessment. </param>
         /// <param name="secret"> Secret to authenticate the partner and verify it created the assessment - write only. </param>

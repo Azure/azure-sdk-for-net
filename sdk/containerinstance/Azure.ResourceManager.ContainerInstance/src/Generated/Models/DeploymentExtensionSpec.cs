@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Extension sidecars to be added to the deployment. </summary>
     public partial class DeploymentExtensionSpec
     {
-        /// <summary> Initializes a new instance of DeploymentExtensionSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeploymentExtensionSpec(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DeploymentExtensionSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
         /// <param name="extensionType"> Type of extension to be added. </param>
         /// <param name="version"> Version of the extension being used. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

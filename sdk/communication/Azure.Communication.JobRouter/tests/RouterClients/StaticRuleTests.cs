@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -23,7 +18,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             Assert.DoesNotThrow(() =>
             {
-                var rule = new StaticRouterRule(new LabelValue(input));
+                var rule = new StaticRouterRule(new RouterValue(input));
                 Assert.AreEqual(input, rule.Value.Value);
             });
         }

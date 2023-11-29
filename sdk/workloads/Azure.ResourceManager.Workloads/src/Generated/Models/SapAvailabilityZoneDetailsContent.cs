@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of availability zones. </summary>
     public partial class SapAvailabilityZoneDetailsContent
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>

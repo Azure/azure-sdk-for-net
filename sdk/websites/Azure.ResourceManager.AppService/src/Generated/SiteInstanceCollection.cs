@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteInstanceResource" /> and their operations.
-    /// Each <see cref="SiteInstanceResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteInstanceCollection" /> instance call the GetSiteInstances method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteInstanceResource"/> and their operations.
+    /// Each <see cref="SiteInstanceResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteInstanceCollection"/> instance call the GetSiteInstances method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteInstanceCollection : ArmCollection, IEnumerable<SiteInstanceResource>, IAsyncEnumerable<SiteInstanceResource>
     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceWebAppsRestClient.CreateListInstanceIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceWebAppsRestClient.CreateListInstanceIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceInfo</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteInstanceResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+
+            using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteInstanceWebAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceInfo</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual NullableResponse<SiteInstanceResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+
+            using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

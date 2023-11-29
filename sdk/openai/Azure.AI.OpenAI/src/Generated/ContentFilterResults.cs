@@ -5,17 +5,19 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         internal ContentFilterResults()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
@@ -37,12 +39,17 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
-        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm)
+        /// <param name="error">
+        /// Describes an error returned if the content filtering system is
+        /// down or otherwise unable to complete the operation in time.
+        /// </param>
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ResponseError error)
         {
             Sexual = sexual;
             Violence = violence;
             Hate = hate;
             SelfHarm = selfHarm;
+            Error = error;
         }
 
         /// <summary>
@@ -70,5 +77,10 @@ namespace Azure.AI.OpenAI
         /// or damage one’s body, or kill oneself.
         /// </summary>
         public ContentFilterResult SelfHarm { get; }
+        /// <summary>
+        /// Describes an error returned if the content filtering system is
+        /// down or otherwise unable to complete the operation in time.
+        /// </summary>
+        public ResponseError Error { get; }
     }
 }

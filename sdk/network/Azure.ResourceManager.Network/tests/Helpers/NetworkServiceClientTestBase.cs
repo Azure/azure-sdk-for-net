@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string name,string location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string name, string location)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            var genericResouces = subscription.GetGenericResources();
+            var genericResouces = subscription.GetGenericResourcesAsync();
             GenericResourceData data = new GenericResourceData(location)
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     { "osProfile", new Dictionary<string, object>
                         {
                             { "adminUsername", Recording.GenerateAssetName("admin") },
-                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass") },
+                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass!") },
                             { "computerName", vmName }
                         }
                     },
@@ -395,19 +395,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         //    await deploymentWait.WaitForCompletionAsync();
         //}
 
-        // TODO: we should decide after preview whehter we need to support compute resources like vmss in Network SDK
-        //public async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
-        //{
-        //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
+        public async Task CreateVmss(ResourceGroupResource resourceGroup, string deploymentName)
+        {
+            string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
 
-        //    DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
-        //    {
-        //        Template = templateString
-        //    };
-        //    Deployment deploymentModel = new Deployment(deploymentProperties);
-        //    Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.CreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-        //    await deploymentWait.WaitForCompletionAsync();
-        //}
+            var deploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            {
+                Template = BinaryData.FromString(templateString)
+            };
+            var deploymentModel = new ArmDeploymentContent(deploymentProperties);
+            var deploymentWait = await resourceGroup.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
+            await deploymentWait.WaitForCompletionAsync();
+        }
 
         public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroupResource resourceGroup, string circuitName, string location)
         {
@@ -632,7 +631,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getNicResponse;
         }
 
-        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name, string publicIpAddressId, string subnetId,
             string location, string ipConfigName, NetworkInterfaceCollection networkInterfaceCollection)
         {
             var nicParameters = new NetworkInterfaceData()

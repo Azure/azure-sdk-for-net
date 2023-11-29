@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update runbook operation. </summary>
     public partial class AutomationRunbookCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationRunbookCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookCreateOrUpdateContent"/>. </summary>
         /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         public AutomationRunbookCreateOrUpdateContent(AutomationRunbookType runbookType)
         {

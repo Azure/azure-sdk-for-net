@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The data effect definition. </summary>
     public partial class DataPolicyManifestEffect
     {
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestEffect"/>. </summary>
         internal DataPolicyManifestEffect()
         {
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestEffect"/>. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
         internal DataPolicyManifestEffect(string name, BinaryData detailsSchema)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

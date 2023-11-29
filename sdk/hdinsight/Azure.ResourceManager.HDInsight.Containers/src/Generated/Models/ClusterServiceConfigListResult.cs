@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster instance service configs api response. </summary>
     internal partial class ClusterServiceConfigListResult
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigListResult"/>. </summary>
         internal ClusterServiceConfigListResult()
         {
             Value = new ChangeTrackingList<ClusterServiceConfigResult>();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigListResult"/>. </summary>
         /// <param name="value"> Cluster instance service config array. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal ClusterServiceConfigListResult(IReadOnlyList<ClusterServiceConfigResult> value, string nextLink)

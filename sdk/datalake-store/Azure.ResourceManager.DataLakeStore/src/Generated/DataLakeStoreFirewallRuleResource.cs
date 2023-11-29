@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
     /// A Class representing a DataLakeStoreFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeStoreFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeStoreFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeStoreAccountResource" /> using the GetDataLakeStoreFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeStoreFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeStoreFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeStoreAccountResource"/> using the GetDataLakeStoreFirewallRule method.
     /// </summary>
     public partial class DataLakeStoreFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataLakeStoreFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeStoreFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeStoreFirewallRuleResource(ArmClient client, DataLakeStoreFirewallRuleData data) : this(client, data.Id)

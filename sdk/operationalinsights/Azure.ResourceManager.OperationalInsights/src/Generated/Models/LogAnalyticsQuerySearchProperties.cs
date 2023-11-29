@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Properties that define an Log Analytics QueryPack-Query search properties. </summary>
     public partial class LogAnalyticsQuerySearchProperties
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQuerySearchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySearchProperties"/>. </summary>
         public LogAnalyticsQuerySearchProperties()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();

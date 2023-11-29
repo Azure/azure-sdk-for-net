@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Useful links for service health event. </summary>
     public partial class ResourceHealthEventLink
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         internal ResourceHealthEventLink()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="displayText"> Display text of link. </param>
         /// <param name="extensionName"> It provides the name of portal extension to produce link for given service health event. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

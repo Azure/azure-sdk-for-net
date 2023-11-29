@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> and their operations.
-    /// Each <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AutomanageHciClusterConfigurationProfileAssignmentCollection" /> instance call the GetAutomanageHciClusterConfigurationProfileAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> and their operations.
+    /// Each <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="AutomanageHciClusterConfigurationProfileAssignmentCollection"/> instance call the GetAutomanageHciClusterConfigurationProfileAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentCollection : ArmCollection, IEnumerable<AutomanageHciClusterConfigurationProfileAssignmentResource>, IAsyncEnumerable<AutomanageHciClusterConfigurationProfileAssignmentResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageHciClusterConfigurationProfileAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageHciClusterConfigurationProfileAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.Automanage
             {
                 var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageHciClusterConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageHciClusterConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

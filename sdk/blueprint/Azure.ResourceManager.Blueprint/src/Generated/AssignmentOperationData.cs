@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class AssignmentOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationData"/>. </summary>
         public AssignmentOperationData()
         {
             Deployments = new ChangeTrackingList<AssignmentDeploymentJob>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

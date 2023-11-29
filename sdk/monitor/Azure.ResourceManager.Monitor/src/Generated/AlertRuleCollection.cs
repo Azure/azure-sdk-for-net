@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AlertRuleResource" /> and their operations.
-    /// Each <see cref="AlertRuleResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AlertRuleCollection" /> instance call the GetAlertRules method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AlertRuleResource"/> and their operations.
+    /// Each <see cref="AlertRuleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AlertRuleCollection"/> instance call the GetAlertRules method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AlertRuleCollection : ArmCollection, IEnumerable<AlertRuleResource>, IAsyncEnumerable<AlertRuleResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -314,6 +314,80 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _alertRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AlertRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _alertRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AlertRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual NullableResponse<AlertRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _alertRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AlertRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

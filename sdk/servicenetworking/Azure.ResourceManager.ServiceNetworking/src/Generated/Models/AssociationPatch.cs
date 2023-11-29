@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The type used for update operations of the Association. </summary>
     public partial class AssociationPatch
     {
-        /// <summary> Initializes a new instance of AssociationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationPatch"/>. </summary>
         public AssociationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

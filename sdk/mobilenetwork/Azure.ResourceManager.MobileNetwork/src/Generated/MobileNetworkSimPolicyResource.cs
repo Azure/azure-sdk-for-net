@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkSimPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkSimPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkSimPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource" /> using the GetMobileNetworkSimPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkSimPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkSimPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource"/> using the GetMobileNetworkSimPolicy method.
     /// </summary>
     public partial class MobileNetworkSimPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSimPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mobileNetworkName"> The mobileNetworkName. </param>
+        /// <param name="simPolicyName"> The simPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkSimPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkSimPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkSimPolicyResource(ArmClient client, MobileNetworkSimPolicyData data) : this(client, data.Id)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuCost. </summary>
     public partial class ResourceTypeSkuCost
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/>. </summary>
         /// <param name="meterId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
         public ResourceTypeSkuCost(string meterId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             MeterId = meterId;
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/>. </summary>
         /// <param name="meterId"></param>
         /// <param name="quantity"></param>
         /// <param name="extendedUnit"></param>

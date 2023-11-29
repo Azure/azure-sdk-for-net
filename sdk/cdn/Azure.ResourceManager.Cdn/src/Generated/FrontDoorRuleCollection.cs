@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorRuleResource" /> and their operations.
-    /// Each <see cref="FrontDoorRuleResource" /> in the collection will belong to the same instance of <see cref="FrontDoorRuleSetResource" />.
-    /// To get a <see cref="FrontDoorRuleCollection" /> instance call the GetFrontDoorRules method from an instance of <see cref="FrontDoorRuleSetResource" />.
+    /// A class representing a collection of <see cref="FrontDoorRuleResource"/> and their operations.
+    /// Each <see cref="FrontDoorRuleResource"/> in the collection will belong to the same instance of <see cref="FrontDoorRuleSetResource"/>.
+    /// To get a <see cref="FrontDoorRuleCollection"/> instance call the GetFrontDoorRules method from an instance of <see cref="FrontDoorRuleSetResource"/>.
     /// </summary>
     public partial class FrontDoorRuleCollection : ArmCollection, IEnumerable<FrontDoorRuleResource>, IAsyncEnumerable<FrontDoorRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleRestClient.CreateListByRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleRestClient.CreateListByRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _frontDoorRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontDoorRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual NullableResponse<FrontDoorRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

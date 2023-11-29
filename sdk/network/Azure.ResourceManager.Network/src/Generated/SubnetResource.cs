@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a Subnet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubnetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubnetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource" /> using the GetSubnet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubnetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubnetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource"/> using the GetSubnet method.
     /// </summary>
     public partial class SubnetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubnetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkName"> The virtualNetworkName. </param>
+        /// <param name="subnetName"> The subnetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}";
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubnetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubnetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubnetResource(ArmClient client, SubnetData data) : this(client, data.Id)
@@ -472,7 +476,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceNavigationLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceNavigationLink> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -493,7 +497,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceNavigationLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceNavigationLink> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -514,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceAssociationLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAssociationLink> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -535,7 +539,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceAssociationLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAssociationLink> GetServiceAssociationLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ShareDataSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         public ShareDataSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

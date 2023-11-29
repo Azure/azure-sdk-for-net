@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> and their operations.
-    /// Each <see cref="StreamAnalyticsPrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="StreamAnalyticsClusterResource" />.
-    /// To get a <see cref="StreamAnalyticsPrivateEndpointCollection" /> instance call the GetStreamAnalyticsPrivateEndpoints method from an instance of <see cref="StreamAnalyticsClusterResource" />.
+    /// A class representing a collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> and their operations.
+    /// Each <see cref="StreamAnalyticsPrivateEndpointResource"/> in the collection will belong to the same instance of <see cref="StreamAnalyticsClusterResource"/>.
+    /// To get a <see cref="StreamAnalyticsPrivateEndpointCollection"/> instance call the GetStreamAnalyticsPrivateEndpoints method from an instance of <see cref="StreamAnalyticsClusterResource"/>.
     /// </summary>
     public partial class StreamAnalyticsPrivateEndpointCollection : ArmCollection, IEnumerable<StreamAnalyticsPrivateEndpointResource>, IAsyncEnumerable<StreamAnalyticsPrivateEndpointResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/clusters/{clusterName}/privateEndpoints/{privateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamAnalyticsPrivateEndpointResource>> GetIfExistsAsync(string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamAnalyticsPrivateEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/clusters/{clusterName}/privateEndpoints/{privateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual NullableResponse<StreamAnalyticsPrivateEndpointResource> GetIfExists(string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamAnalyticsPrivateEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

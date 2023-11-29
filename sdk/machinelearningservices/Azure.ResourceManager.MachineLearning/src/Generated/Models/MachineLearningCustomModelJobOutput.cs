@@ -12,24 +12,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningCustomModelJobOutput. </summary>
     public partial class MachineLearningCustomModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         public MachineLearningCustomModelJobOutput()
         {
             JobOutputType = JobOutputType.CustomModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
+        /// <param name="autoDeleteSetting"> Auto delete setting of output data asset. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningCustomModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        internal MachineLearningCustomModelJobOutput(string description, JobOutputType jobOutputType, string assetName, string assetVersion, AutoDeleteSetting autoDeleteSetting, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
         {
+            AssetName = assetName;
+            AssetVersion = assetVersion;
+            AutoDeleteSetting = autoDeleteSetting;
             Mode = mode;
             Uri = uri;
             JobOutputType = jobOutputType;
         }
 
+        /// <summary> Output Asset Name. </summary>
+        public string AssetName { get; set; }
+        /// <summary> Output Asset Version. </summary>
+        public string AssetVersion { get; set; }
+        /// <summary> Auto delete setting of output data asset. </summary>
+        public AutoDeleteSetting AutoDeleteSetting { get; set; }
         /// <summary> Output Asset Delivery Mode. </summary>
         public MachineLearningOutputDeliveryMode? Mode { get; set; }
         /// <summary> Output Asset URI. </summary>

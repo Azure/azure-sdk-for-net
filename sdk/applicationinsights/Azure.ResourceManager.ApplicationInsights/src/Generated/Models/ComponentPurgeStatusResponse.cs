@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Response containing status for a specific purge operation. </summary>
     public partial class ComponentPurgeStatusResponse
     {
-        /// <summary> Initializes a new instance of ComponentPurgeStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeStatusResponse"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         internal ComponentPurgeStatusResponse(PurgeState status)
         {

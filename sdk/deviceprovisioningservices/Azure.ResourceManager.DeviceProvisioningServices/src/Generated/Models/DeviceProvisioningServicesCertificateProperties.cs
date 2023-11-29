@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class DeviceProvisioningServicesCertificateProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         public DeviceProvisioningServicesCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprint"> The certificate's thumbprint. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

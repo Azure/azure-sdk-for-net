@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an Asset used as a JobOutput. </summary>
     public partial class MediaJobOutputAsset : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="assetName"> The name of the output Asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobOutputAsset(string assetName)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JobOutputAsset";
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">

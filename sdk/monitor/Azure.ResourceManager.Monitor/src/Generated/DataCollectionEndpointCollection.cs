@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataCollectionEndpointResource" /> and their operations.
-    /// Each <see cref="DataCollectionEndpointResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataCollectionEndpointCollection" /> instance call the GetDataCollectionEndpoints method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataCollectionEndpointResource"/> and their operations.
+    /// Each <see cref="DataCollectionEndpointResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataCollectionEndpointCollection"/> instance call the GetDataCollectionEndpoints method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataCollectionEndpointCollection : ArmCollection, IEnumerable<DataCollectionEndpointResource>, IAsyncEnumerable<DataCollectionEndpointResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionEndpointRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionEndpointRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataCollectionEndpointResource>> GetIfExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataCollectionEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        public virtual NullableResponse<DataCollectionEndpointResource> GetIfExists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataCollectionEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

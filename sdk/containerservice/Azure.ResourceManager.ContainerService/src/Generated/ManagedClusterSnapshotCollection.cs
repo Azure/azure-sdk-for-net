@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedClusterSnapshotResource" /> and their operations.
-    /// Each <see cref="ManagedClusterSnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedClusterSnapshotCollection" /> instance call the GetManagedClusterSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedClusterSnapshotResource"/> and their operations.
+    /// Each <see cref="ManagedClusterSnapshotResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedClusterSnapshotCollection"/> instance call the GetManagedClusterSnapshots method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedClusterSnapshotCollection : ArmCollection, IEnumerable<ManagedClusterSnapshotResource>, IAsyncEnumerable<ManagedClusterSnapshotResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedClusterSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedClusterSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.ContainerService
             {
                 var response = _managedClusterSnapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterSnapshots_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedClusterSnapshotResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _managedClusterSnapshotClientDiagnostics.CreateScope("ManagedClusterSnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedClusterSnapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedClusterSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterSnapshots_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual NullableResponse<ManagedClusterSnapshotResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _managedClusterSnapshotClientDiagnostics.CreateScope("ManagedClusterSnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedClusterSnapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedClusterSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

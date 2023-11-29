@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteResource" /> and their operations.
-    /// Each <see cref="WebSiteResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="WebSiteCollection" /> instance call the GetWebSites method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="WebSiteResource"/> and their operations.
+    /// Each <see cref="WebSiteResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="WebSiteCollection"/> instance call the GetWebSites method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class WebSiteCollection : ArmCollection, IEnumerable<WebSiteResource>, IAsyncEnumerable<WebSiteResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteResource> GetAllAsync(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteResource> GetAll(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<WebSiteResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

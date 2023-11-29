@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Subscription list operation response. </summary>
     internal partial class SubscriptionListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         internal SubscriptionListResult(string nextLink)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
         /// <param name="value"> An array of subscriptions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal SubscriptionListResult(IReadOnlyList<SubscriptionData> value, string nextLink)

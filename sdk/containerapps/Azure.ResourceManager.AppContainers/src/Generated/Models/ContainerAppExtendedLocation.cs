@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The complex type of the extended location. </summary>
     public partial class ContainerAppExtendedLocation
     {
-        /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppExtendedLocation"/>. </summary>
         public ContainerAppExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         internal ContainerAppExtendedLocation(string name, ContainerAppExtendedLocationType? extendedLocationType)

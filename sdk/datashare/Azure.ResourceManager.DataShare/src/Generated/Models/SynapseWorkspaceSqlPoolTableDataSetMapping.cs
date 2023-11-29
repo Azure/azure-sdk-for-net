@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A Synapse Workspace Sql Pool Table data set mapping. </summary>
     public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="synapseWorkspaceSqlPoolTableResourceId"> Resource id of the Synapse Workspace SQL Pool Table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="synapseWorkspaceSqlPoolTableResourceId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.SynapseWorkspaceSqlPoolTable;
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

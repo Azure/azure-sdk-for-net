@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Common SKU definition. </summary>
     public partial class MachineLearningSkuPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuPatch"/>. </summary>
         public MachineLearningSkuPatch()
         {
         }

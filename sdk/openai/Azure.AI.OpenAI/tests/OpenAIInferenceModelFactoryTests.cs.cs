@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests
@@ -111,6 +113,115 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(chatCompletions.Usage.CompletionTokens, Is.EqualTo(2));
             Assert.That(chatCompletions.Usage.PromptTokens, Is.EqualTo(5));
             Assert.That(chatCompletions.Usage.TotalTokens, Is.EqualTo(7));
+        }
+
+        [Test]
+        public void TestAudioTranscriptionSegment()
+        {
+            AudioTranscriptionSegment segment = AzureOpenAIModelFactory.AudioTranscriptionSegment(
+                id: 42,
+                start: TimeSpan.FromSeconds(5.2),
+                end: TimeSpan.FromSeconds(9.9),
+                text: " test of the emergency",
+                tokens: new int[] { 111, 222, 333, 444 });
+            Assert.That(segment.Id, Is.EqualTo(42));
+            Assert.That(segment.Start, Is.EqualTo(TimeSpan.FromSeconds(5.2)));
+            Assert.That(segment.End, Is.EqualTo(TimeSpan.FromSeconds(9.9)));
+            Assert.That(segment.Text, Is.EqualTo(" test of the emergency"));
+            Assert.That(segment.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(segment.Tokens.Count, Is.EqualTo(4));
+            Assert.That(segment.Tokens[2], Is.EqualTo(333));
+        }
+
+        [Test]
+        public void TestAudioTranscription()
+        {
+            AudioTranscription audioTranscription = AzureOpenAIModelFactory.AudioTranscription(
+                "this is a test of the emergency broadcast system",
+                "en",
+                TimeSpan.FromSeconds(13.3),
+                new AudioTranscriptionSegment[] { AzureOpenAIModelFactory.AudioTranscriptionSegment() });
+            Assert.That(audioTranscription, Is.Not.Null);
+            Assert.That(audioTranscription.Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Language, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(audioTranscription.Segments, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Segments.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void TestAudioTranslationSegment()
+        {
+            AudioTranslationSegment segment = AzureOpenAIModelFactory.AudioTranslationSegment(
+                id: 42,
+                start: TimeSpan.FromSeconds(5.2),
+                end: TimeSpan.FromSeconds(9.9),
+                text: " test of the emergency",
+                tokens: new int[] { 111, 222, 333, 444 });
+            Assert.That(segment.Id, Is.EqualTo(42));
+            Assert.That(segment.Start, Is.EqualTo(TimeSpan.FromSeconds(5.2)));
+            Assert.That(segment.End, Is.EqualTo(TimeSpan.FromSeconds(9.9)));
+            Assert.That(segment.Text, Is.EqualTo(" test of the emergency"));
+            Assert.That(segment.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(segment.Tokens.Count, Is.EqualTo(4));
+            Assert.That(segment.Tokens[2], Is.EqualTo(333));
+        }
+
+        [Test]
+        public void TestAudioTranslation()
+        {
+            AudioTranslation audioTranslation = AzureOpenAIModelFactory.AudioTranslation(
+                "this is a test of the emergency broadcast system",
+                "en",
+                TimeSpan.FromSeconds(13.3),
+                new AudioTranslationSegment[] { AzureOpenAIModelFactory.AudioTranslationSegment() });
+            Assert.That(audioTranslation, Is.Not.Null);
+            Assert.That(audioTranslation.Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Language, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(audioTranslation.Segments, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Segments.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task TestStreamingChatCompletions()
+        {
+            const string expectedId = "expected-id-value";
+
+            StreamingChatCompletionsUpdate[] updates = new[]
+            {
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    role: ChatRole.Assistant,
+                    contentUpdate: "hello"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    contentUpdate: " world"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    finishReason: CompletionsFinishReason.Stopped),
+            };
+
+            async IAsyncEnumerable<StreamingChatCompletionsUpdate> EnumerateMockUpdates()
+            {
+                foreach (StreamingChatCompletionsUpdate update in updates)
+                {
+                    yield return update;
+                }
+                await Task.Delay(0);
+            }
+
+            StringBuilder contentBuilder = new();
+            await foreach (StreamingChatCompletionsUpdate update in EnumerateMockUpdates())
+            {
+                Assert.That(update.Id == expectedId);
+                Assert.That(update.Created > new DateTimeOffset(new DateTime(2023, 1, 1)));
+                contentBuilder.Append(update.ContentUpdate);
+            }
+            Assert.That(contentBuilder.ToString() == "hello world");
         }
     }
 }

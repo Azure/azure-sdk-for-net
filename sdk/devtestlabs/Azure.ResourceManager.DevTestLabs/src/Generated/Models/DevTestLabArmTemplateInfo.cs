@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a generated ARM template. </summary>
     public partial class DevTestLabArmTemplateInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         internal DevTestLabArmTemplateInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         internal DevTestLabArmTemplateInfo(BinaryData template, BinaryData parameters)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

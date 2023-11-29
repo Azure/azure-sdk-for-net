@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SoftwareInventory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoftwareInventoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSoftwareInventoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSoftwareInventory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SoftwareInventoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSoftwareInventoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSoftwareInventory method.
     /// </summary>
     public partial class SoftwareInventoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SoftwareInventoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceNamespace"> The resourceNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="softwareName"> The softwareName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}";
@@ -42,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SoftwareInventoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SoftwareInventoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SoftwareInventoryResource(ArmClient client, SoftwareInventoryData data) : this(client, data.Id)

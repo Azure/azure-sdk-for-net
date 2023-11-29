@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SyncGroupResource" /> and their operations.
-    /// Each <see cref="SyncGroupResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="SyncGroupCollection" /> instance call the GetSyncGroups method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="SyncGroupResource"/> and their operations.
+    /// Each <see cref="SyncGroupResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="SyncGroupCollection"/> instance call the GetSyncGroups method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class SyncGroupCollection : ArmCollection, IEnumerable<SyncGroupResource>, IAsyncEnumerable<SyncGroupResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SyncGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SyncGroupResource>> GetIfExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SyncGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        public virtual NullableResponse<SyncGroupResource> GetIfExists(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SyncGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

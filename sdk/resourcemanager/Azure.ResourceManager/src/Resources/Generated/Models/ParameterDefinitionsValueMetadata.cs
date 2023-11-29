@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> General metadata for the parameter. </summary>
     public partial class ParameterDefinitionsValueMetadata
     {
-        /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
         public ParameterDefinitionsValueMetadata()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
         /// <param name="displayName"> The display name for the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

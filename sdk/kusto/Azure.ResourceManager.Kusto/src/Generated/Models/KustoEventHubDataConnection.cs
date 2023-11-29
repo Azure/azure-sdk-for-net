@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an event hub data connection. </summary>
     public partial class KustoEventHubDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoEventHubDataConnection"/>. </summary>
         public KustoEventHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = DataConnectionKind.EventHub;
         }
 
-        /// <summary> Initializes a new instance of KustoEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoEventHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

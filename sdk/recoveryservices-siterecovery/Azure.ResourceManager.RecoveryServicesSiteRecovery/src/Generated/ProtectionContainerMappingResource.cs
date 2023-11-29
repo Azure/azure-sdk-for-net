@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a ProtectionContainerMapping along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProtectionContainerMappingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProtectionContainerMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetProtectionContainerMapping method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProtectionContainerMappingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProtectionContainerMappingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetProtectionContainerMapping method.
     /// </summary>
     public partial class ProtectionContainerMappingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProtectionContainerMappingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="protectionContainerName"> The protectionContainerName. </param>
+        /// <param name="mappingName"> The mappingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string mappingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}";
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProtectionContainerMappingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProtectionContainerMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProtectionContainerMappingResource(ArmClient client, ProtectionContainerMappingData data) : this(client, data.Id)

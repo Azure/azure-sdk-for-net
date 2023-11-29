@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

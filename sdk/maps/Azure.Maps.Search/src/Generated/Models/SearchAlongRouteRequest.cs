@@ -10,7 +10,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> This type represents the request body for the Search Along Route service. </summary>
     internal partial class SearchAlongRouteRequest
     {
-        /// <summary> Initializes a new instance of SearchAlongRouteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAlongRouteRequest"/>. </summary>
         public SearchAlongRouteRequest()
         {
         }

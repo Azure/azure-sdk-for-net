@@ -14,7 +14,7 @@ namespace Azure.Communication.Rooms
     /// <summary> Request payload for creating new room. </summary>
     internal partial class CreateRoomRequest
     {
-        /// <summary> Initializes a new instance of CreateRoomRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateRoomRequest"/>. </summary>
         public CreateRoomRequest()
         {
             Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
@@ -24,6 +24,8 @@ namespace Azure.Communication.Rooms
         public DateTimeOffset? ValidFrom { get; set; }
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
+        /// <summary> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </summary>
+        public bool? PstnDialOutEnabled { get; set; }
         /// <summary> (Optional) Participants to be invited to the room. </summary>
         public IDictionary<string, ParticipantProperties> Participants { get; }
     }

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityCloudConnectorResource" /> and their operations.
-    /// Each <see cref="SecurityCloudConnectorResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityCloudConnectorCollection" /> instance call the GetSecurityCloudConnectors method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityCloudConnectorResource"/> and their operations.
+    /// Each <see cref="SecurityCloudConnectorResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityCloudConnectorCollection"/> instance call the GetSecurityCloudConnectors method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityCloudConnectorCollection : ArmCollection, IEnumerable<SecurityCloudConnectorResource>, IAsyncEnumerable<SecurityCloudConnectorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCloudConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCloudConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityCloudConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityCloudConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityCloudConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCloudConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual NullableResponse<SecurityCloudConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityCloudConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCloudConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

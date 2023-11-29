@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The api operations properties. </summary>
     public partial class LogicApiOperationProperties
     {
-        /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationProperties"/>. </summary>
         public LogicApiOperationProperties()
         {
             ResponsesDefinition = new ChangeTrackingDictionary<string, SwaggerSchema>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationProperties"/>. </summary>
         /// <param name="summary"> The summary of the api operation. </param>
         /// <param name="description"> The description of the api operation. </param>
         /// <param name="visibility"> The visibility of the api operation. </param>

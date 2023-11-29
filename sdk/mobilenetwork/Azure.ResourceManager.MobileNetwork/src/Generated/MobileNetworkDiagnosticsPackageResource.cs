@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkDiagnosticsPackage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkDiagnosticsPackageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkDiagnosticsPackageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource" /> using the GetMobileNetworkDiagnosticsPackage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkDiagnosticsPackageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkDiagnosticsPackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource"/> using the GetMobileNetworkDiagnosticsPackage method.
     /// </summary>
     public partial class MobileNetworkDiagnosticsPackageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkDiagnosticsPackageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
+        /// <param name="diagnosticsPackageName"> The diagnosticsPackageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkDiagnosticsPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkDiagnosticsPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkDiagnosticsPackageResource(ArmClient client, MobileNetworkDiagnosticsPackageData data) : this(client, data.Id)

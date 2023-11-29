@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsDisasterRecovery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsDisasterRecoveryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsDisasterRecoveryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsDisasterRecovery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsDisasterRecoveryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsDisasterRecoveryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsDisasterRecovery method.
     /// </summary>
     public partial class EventHubsDisasterRecoveryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsDisasterRecoveryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="alias"> The alias. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{@alias}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsDisasterRecoveryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsDisasterRecoveryResource(ArmClient client, EventHubsDisasterRecoveryData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsDisasterRecoveryAuthorizationRuleResources and their operations over a EventHubsDisasterRecoveryAuthorizationRuleResource. </returns>
         public virtual EventHubsDisasterRecoveryAuthorizationRuleCollection GetEventHubsDisasterRecoveryAuthorizationRules()
         {
-            return GetCachedClient(Client => new EventHubsDisasterRecoveryAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsDisasterRecoveryAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsDisasterRecoveryAuthorizationRuleResource>> GetEventHubsDisasterRecoveryAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsDisasterRecoveryAuthorizationRuleResource> GetEventHubsDisasterRecoveryAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {

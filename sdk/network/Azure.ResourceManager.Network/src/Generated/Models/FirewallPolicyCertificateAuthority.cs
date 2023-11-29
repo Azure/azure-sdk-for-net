@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Trusted Root certificates properties for tls. </summary>
     public partial class FirewallPolicyCertificateAuthority
     {
-        /// <summary> Initializes a new instance of FirewallPolicyCertificateAuthority. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyCertificateAuthority"/>. </summary>
         public FirewallPolicyCertificateAuthority()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyCertificateAuthority. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyCertificateAuthority"/>. </summary>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="name"> Name of the CA certificate. </param>
         internal FirewallPolicyCertificateAuthority(string keyVaultSecretId, string name)

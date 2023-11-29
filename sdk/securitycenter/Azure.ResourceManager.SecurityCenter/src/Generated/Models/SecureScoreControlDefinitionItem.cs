@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Information about the security control. </summary>
     public partial class SecureScoreControlDefinitionItem : ResourceData
     {
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
         public SecureScoreControlDefinitionItem()
         {
             AssessmentDefinitions = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

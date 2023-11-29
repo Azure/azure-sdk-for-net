@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapLandscapeMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapLandscapeMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapLandscapeMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource" /> using the GetSapLandscapeMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapLandscapeMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapLandscapeMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource"/> using the GetSapLandscapeMonitor method.
     /// </summary>
     public partial class SapLandscapeMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapLandscapeMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/sapLandscapeMonitor/default";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapLandscapeMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapLandscapeMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapLandscapeMonitorResource(ArmClient client, SapLandscapeMonitorData data) : this(client, data.Id)

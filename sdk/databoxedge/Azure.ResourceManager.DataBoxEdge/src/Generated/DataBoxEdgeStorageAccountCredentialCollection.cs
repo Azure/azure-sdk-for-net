@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeStorageAccountCredentialResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeStorageAccountCredentialResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeStorageAccountCredentialCollection" /> instance call the GetDataBoxEdgeStorageAccountCredentials method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeStorageAccountCredentialResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeStorageAccountCredentialCollection"/> instance call the GetDataBoxEdgeStorageAccountCredentials method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialCollection : ArmCollection, IEnumerable<DataBoxEdgeStorageAccountCredentialResource>, IAsyncEnumerable<DataBoxEdgeStorageAccountCredentialResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeStorageAccountCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeStorageAccountCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeStorageAccountCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeStorageAccountCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The storage account credential name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataBoxEdgeStorageAccountCredentialResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeStorageAccountCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The storage account credential name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DataBoxEdgeStorageAccountCredentialResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeStorageAccountCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

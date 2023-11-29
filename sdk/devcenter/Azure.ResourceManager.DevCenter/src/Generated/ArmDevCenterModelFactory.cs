@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevCenterModelFactory
     {
-        /// <summary> Initializes a new instance of DevCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterData(id, name, resourceType, systemData, tags, location, identity, provisioningState, devCenterUri);
         }
 
-        /// <summary> Initializes a new instance of DevCenterProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterProjectData(id, name, resourceType, systemData, tags, location, devCenterId, description, maxDevBoxesPerUser, provisioningState, devCenterUri);
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.AttachedNetworkConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new AttachedNetworkConnectionData(id, name, resourceType, systemData, provisioningState, networkConnectionId, networkConnectionLocation, healthCheckStatus, domainJoinType);
         }
 
-        /// <summary> Initializes a new instance of DevCenterGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterGalleryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterGalleryData(id, name, resourceType, systemData, provisioningState, galleryResourceId);
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterImageData(id, name, resourceType, systemData, description, publisher, offer, sku, recommendedMachineConfiguration, provisioningState, hibernateSupport);
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedMachineConfiguration"/>. </summary>
         /// <param name="memory"> Recommended memory range. </param>
         /// <param name="vCpus"> Recommended vCPU range. </param>
         /// <returns> A new <see cref="Models.RecommendedMachineConfiguration"/> instance for mocking. </returns>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new RecommendedMachineConfiguration(memory, vCpus);
         }
 
-        /// <summary> Initializes a new instance of DevCenterResourceRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterResourceRange"/>. </summary>
         /// <param name="min"> Minimum value. </param>
         /// <param name="max"> Maximum value. </param>
         /// <returns> A new <see cref="Models.DevCenterResourceRange"/> instance for mocking. </returns>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterResourceRange(min, max);
         }
 
-        /// <summary> Initializes a new instance of ImageVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.ImageVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new ImageVersionData(id, name, resourceType, systemData, namePropertiesName, publishedOn, isExcludedFromLatest, osDiskImageSizeInGB, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DevCenterCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterCatalogData(id, name, resourceType, systemData, gitHub, adoGit, provisioningState, syncState, lastSyncOn);
         }
 
-        /// <summary> Initializes a new instance of DevCenterEnvironmentTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterEnvironmentTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterEnvironmentTypeData(id, name, resourceType, systemData, tags, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AllowedEnvironmentTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.AllowedEnvironmentTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new AllowedEnvironmentTypeData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterProjectEnvironmentData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles) : null, userRoleAssignments, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DevCenterEnvironmentRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironmentRole"/>. </summary>
         /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </param>
         /// <param name="description"> This is a description of the Role Assignment. </param>
         /// <returns> A new <see cref="Models.DevCenterEnvironmentRole"/> instance for mocking. </returns>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterEnvironmentRole(roleName, description);
         }
 
-        /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevBoxDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevBoxDefinitionData(id, name, resourceType, systemData, tags, location, imageReference, sku, osStorageType, hibernateSupport, provisioningState, imageValidationStatus, imageValidationErrorDetails, activeImageReference);
         }
 
-        /// <summary> Initializes a new instance of ImageValidationErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImageValidationErrorDetails"/>. </summary>
         /// <param name="code"> An identifier for the error. </param>
         /// <param name="message"> A message describing the error. </param>
         /// <returns> A new <see cref="Models.ImageValidationErrorDetails"/> instance for mocking. </returns>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new ImageValidationErrorDetails(code, message);
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterImageReference"/>. </summary>
         /// <param name="id"> Image ID, or Image version ID. When Image ID is provided, its latest version will be used. </param>
         /// <param name="exactVersion"> The actual version of the image after use. When id references a gallery image latest version, this will indicate the actual version in use. </param>
         /// <returns> A new <see cref="Models.DevCenterImageReference"/> instance for mocking. </returns>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterImageReference(id, exactVersion);
         }
 
-        /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, resourceId, properties);
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterUsage(currentValue, limit, unit, name);
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterUsageName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="value"> The name of the resource. </param>
         /// <returns> A new <see cref="Models.DevCenterUsageName"/> instance for mocking. </returns>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterUsageName(localizedValue, value);
         }
 
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterSkuDetails(name, tier, size, family, capacity, resourceType, locations?.ToList(), capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DevCenterCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterCapability"/>. </summary>
         /// <param name="name"> Name of the capability. </param>
         /// <param name="value"> Value of the capability. </param>
         /// <returns> A new <see cref="Models.DevCenterCapability"/> instance for mocking. </returns>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterCapability(name, value);
         }
 
-        /// <summary> Initializes a new instance of DevCenterPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterPoolData(id, name, resourceType, systemData, tags, location, devBoxDefinitionName, networkConnectionName, licenseType, localAdministrator, stopOnDisconnect, healthStatus, healthStatusDetails?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthStatusDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterHealthStatusDetail"/>. </summary>
         /// <param name="code"> An identifier for the issue. </param>
         /// <param name="message"> A message describing the issue, intended to be suitable for display in a user interface. </param>
         /// <returns> A new <see cref="Models.DevCenterHealthStatusDetail"/> instance for mocking. </returns>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterHealthStatusDetail(code, message);
         }
 
-        /// <summary> Initializes a new instance of DevCenterScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterScheduleData(id, name, resourceType, systemData, scheduledType, frequency, time, timeZone, state, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DevCenterNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterNetworkConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterNetworkConnectionData(id, name, resourceType, systemData, tags, location, subnetId, domainName, organizationUnit, domainUsername, domainPassword, provisioningState, healthCheckStatus, networkingResourceGroupName, domainJoinType);
         }
 
-        /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenter.HealthCheckStatusDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new HealthCheckStatusDetailData(id, name, resourceType, systemData, startOn, endOn, healthChecks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterHealthCheck"/>. </summary>
         /// <param name="status"> The status of the health check item. </param>
         /// <param name="displayName"> The display name of this health check item. </param>
         /// <param name="startOn"> Start time of health check item. </param>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterHealthCheck(status, displayName, startOn, endOn, errorType, recommendedAction, additionalDetails);
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service that the agent connects to. </param>
         /// <param name="endpoints"> The endpoints for this service for which the agent requires outbound access. </param>
         /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new OutboundEnvironmentEndpoint(category, endpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new EndpointDependency(domainName, description, endpointDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DevCenterEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.DevCenterEndpointDetail"/> instance for mocking. </returns>
         public static DevCenterEndpointDetail DevCenterEndpointDetail(int? port = null)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Error details for the alert. </summary>
     public partial class DataBoxEdgeAlertErrorDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertErrorDetails"/>. </summary>
         internal DataBoxEdgeAlertErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertErrorDetails"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorMessage"> Error Message. </param>
         /// <param name="occurrences"> Number of occurrences. </param>

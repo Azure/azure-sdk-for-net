@@ -14,37 +14,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model asset version details. </summary>
     public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         public MachineLearningModelVersionProperties()
         {
             Flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="flavors"> Mapping of model flavors to their properties. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if model is an Intellectual Property. </param>
         /// <param name="jobName"> Name of the training job which produced this model. </param>
         /// <param name="modelType"> The storage format for this entity. Used for NCD. </param>
         /// <param name="modelUri"> The URI path to the model contents. </param>
-        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, string jobName, string modelType, Uri modelUri) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="provisioningState"> Provisioning state for the model version. </param>
+        /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
+        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, IntellectualProperty intellectualProperty, string jobName, string modelType, Uri modelUri, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             Flavors = flavors;
+            IntellectualProperty = intellectualProperty;
             JobName = jobName;
             ModelType = modelType;
             ModelUri = modelUri;
+            ProvisioningState = provisioningState;
+            Stage = stage;
         }
 
         /// <summary> Mapping of model flavors to their properties. </summary>
         public IDictionary<string, MachineLearningFlavorData> Flavors { get; set; }
+        /// <summary> Intellectual Property details. Used if model is an Intellectual Property. </summary>
+        public IntellectualProperty IntellectualProperty { get; set; }
         /// <summary> Name of the training job which produced this model. </summary>
         public string JobName { get; set; }
         /// <summary> The storage format for this entity. Used for NCD. </summary>
         public string ModelType { get; set; }
         /// <summary> The URI path to the model contents. </summary>
         public Uri ModelUri { get; set; }
+        /// <summary> Provisioning state for the model version. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
+        /// <summary> Stage in the model lifecycle assigned to this model. </summary>
+        public string Stage { get; set; }
     }
 }

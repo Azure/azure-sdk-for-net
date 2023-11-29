@@ -145,35 +145,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsDefined(DeviceStreams))
-            {
-                writer.WritePropertyName("deviceStreams"u8);
-                writer.WriteObjectValue(DeviceStreams);
-            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
-            }
             if (Optional.IsDefined(EnableDataResidency))
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
-            }
-            if (Optional.IsDefined(RootCertificate))
-            {
-                writer.WritePropertyName("rootCertificate"u8);
-                writer.WriteObjectValue(RootCertificate);
-            }
-            if (Optional.IsDefined(IPVersion))
-            {
-                writer.WritePropertyName("ipVersion"u8);
-                writer.WriteStringValue(IPVersion.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -205,13 +185,9 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<bool> enableFileUploadNotifications = default;
             Optional<CloudToDeviceProperties> cloudToDevice = default;
             Optional<string> comments = default;
-            Optional<IotHubPropertiesDeviceStreams> deviceStreams = default;
             Optional<IotHubCapability> features = default;
-            Optional<EncryptionPropertiesDescription> encryption = default;
             Optional<IReadOnlyList<IotHubLocationDescription>> locations = default;
             Optional<bool> enableDataResidency = default;
-            Optional<RootCertificateProperties> rootCertificate = default;
-            Optional<IotHubIPVersion> ipVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationPolicies"u8))
@@ -418,15 +394,6 @@ namespace Azure.ResourceManager.IotHub.Models
                     comments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceStreams"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deviceStreams = IotHubPropertiesDeviceStreams.DeserializeIotHubPropertiesDeviceStreams(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -434,15 +401,6 @@ namespace Azure.ResourceManager.IotHub.Models
                         continue;
                     }
                     features = new IotHubCapability(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("encryption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encryption = EncryptionPropertiesDescription.DeserializeEncryptionPropertiesDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -468,26 +426,8 @@ namespace Azure.ResourceManager.IotHub.Models
                     enableDataResidency = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rootCertificate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rootCertificate = RootCertificateProperties.DeserializeRootCertificateProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("ipVersion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipVersion = new IotHubIPVersion(property.Value.GetString());
-                    continue;
-                }
             }
-            return new IotHubProperties(Optional.ToList(authorizationPolicies), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), networkRuleSets.Value, minTlsVersion.Value, Optional.ToList(privateEndpointConnections), provisioningState.Value, state.Value, hostName.Value, Optional.ToDictionary(eventHubEndpoints), routing.Value, Optional.ToDictionary(storageEndpoints), Optional.ToDictionary(messagingEndpoints), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, deviceStreams.Value, Optional.ToNullable(features), encryption.Value, Optional.ToList(locations), Optional.ToNullable(enableDataResidency), rootCertificate.Value, Optional.ToNullable(ipVersion));
+            return new IotHubProperties(Optional.ToList(authorizationPolicies), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), networkRuleSets.Value, minTlsVersion.Value, Optional.ToList(privateEndpointConnections), provisioningState.Value, state.Value, hostName.Value, Optional.ToDictionary(eventHubEndpoints), routing.Value, Optional.ToDictionary(storageEndpoints), Optional.ToDictionary(messagingEndpoints), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, Optional.ToNullable(features), Optional.ToList(locations), Optional.ToNullable(enableDataResidency));
         }
     }
 }

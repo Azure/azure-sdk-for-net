@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for SQL to Azure SQL DB migration task inputs. </summary>
     public partial class MigrateSqlServerSqlDBDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBDatabaseInput"/>. </summary>
         public MigrateSqlServerSqlDBDatabaseInput()
         {
             TableMap = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="makeSourceDBReadOnly"> Whether to set database read only before migration. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

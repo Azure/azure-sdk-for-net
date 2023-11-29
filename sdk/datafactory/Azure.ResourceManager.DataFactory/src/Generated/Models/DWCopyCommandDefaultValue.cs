@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Default value. </summary>
     public partial class DWCopyCommandDefaultValue
     {
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         public DWCopyCommandDefaultValue()
         {
         }
 
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
         internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

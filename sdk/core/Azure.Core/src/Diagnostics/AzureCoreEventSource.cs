@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Azure.Core.Diagnostics
@@ -55,6 +56,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void Request(string requestId, string method, string uri, string headers, string? clientAssembly)
         {
             WriteEvent(RequestEvent, requestId, method, uri, headers, clientAssembly);
@@ -77,6 +79,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void RequestContent(string requestId, byte[] content)
         {
             WriteEvent(RequestContentEvent, requestId, content);
@@ -98,6 +101,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ResponseEvent, Level = EventLevel.Informational, Message = "Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void Response(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
             WriteEvent(ResponseEvent, requestId, status, reasonPhrase, headers, seconds);
@@ -120,6 +124,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ResponseContentEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void ResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ResponseContentEvent, requestId, content);
@@ -148,12 +153,14 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
         {
             WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(ResponseContentTextBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void ResponseContentTextBlock(string requestId, int blockNumber, string content)
         {
             WriteEvent(ResponseContentTextBlockEvent, requestId, blockNumber, content);
@@ -169,6 +176,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
             WriteEvent(ErrorResponseEvent, requestId, status, reasonPhrase, headers, seconds);
@@ -191,6 +199,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void ErrorResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ErrorResponseContentEvent, requestId, content);
@@ -219,24 +228,28 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
         {
             WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(ErrorResponseContentTextBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content)
         {
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] attempt number {1} took {2:00.0}s")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);
         }
 
         [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void ResponseDelay(string requestId, double seconds)
         {
             WriteEvent(ResponseDelayEvent, requestId, seconds);
@@ -258,6 +271,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestRedirectEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Redirecting from {1} to {2} in response to status code {3}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void RequestRedirect(string requestId, string from, string to, int status)
         {
             WriteEvent(RequestRedirectEvent, requestId, from, to, status);

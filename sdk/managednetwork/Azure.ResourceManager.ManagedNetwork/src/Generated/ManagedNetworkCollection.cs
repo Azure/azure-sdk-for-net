@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedNetworkResource" /> and their operations.
-    /// Each <see cref="ManagedNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedNetworkCollection" /> instance call the GetManagedNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedNetworkResource"/> and their operations.
+    /// Each <see cref="ManagedNetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedNetworkCollection"/> instance call the GetManagedNetworks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedNetworkCollection : ArmCollection, IEnumerable<ManagedNetworkResource>, IAsyncEnumerable<ManagedNetworkResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedNetworkResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedNetworkResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
@@ -320,6 +320,80 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 var response = _managedNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedNetworkResource>> GetIfExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+
+            using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        public virtual NullableResponse<ManagedNetworkResource> GetIfExists(string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+
+            using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

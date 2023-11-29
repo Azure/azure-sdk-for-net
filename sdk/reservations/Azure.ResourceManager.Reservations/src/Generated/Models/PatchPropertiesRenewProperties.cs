@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The PatchPropertiesRenewProperties. </summary>
     internal partial class PatchPropertiesRenewProperties
     {
-        /// <summary> Initializes a new instance of PatchPropertiesRenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchPropertiesRenewProperties"/>. </summary>
         public PatchPropertiesRenewProperties()
         {
         }

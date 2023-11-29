@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> DatabricksSparkPython activity. </summary>
     public partial class DatabricksSparkPythonActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "DatabricksSparkPython";
         }
 
-        /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

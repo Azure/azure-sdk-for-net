@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a DenyAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DenyAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDenyAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetDenyAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DenyAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDenyAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDenyAssignment method.
     /// </summary>
     public partial class DenyAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DenyAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="denyAssignmentId"> The denyAssignmentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string denyAssignmentId)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DenyAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DenyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DenyAssignmentResource(ArmClient client, DenyAssignmentData data) : this(client, data.Id)

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorRoute along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorRouteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorRouteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorEndpointResource" /> using the GetFrontDoorRoute method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRouteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorRouteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorEndpointResource"/> using the GetFrontDoorRoute method.
     /// </summary>
     public partial class FrontDoorRouteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorRouteResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
+        /// <param name="routeName"> The routeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorRouteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorRouteResource(ArmClient client, FrontDoorRouteData data) : this(client, data.Id)

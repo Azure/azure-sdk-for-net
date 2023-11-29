@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FirmwareResource" /> and their operations.
-    /// Each <see cref="FirmwareResource" /> in the collection will belong to the same instance of <see cref="FirmwareWorkspaceResource" />.
-    /// To get a <see cref="FirmwareCollection" /> instance call the GetFirmwares method from an instance of <see cref="FirmwareWorkspaceResource" />.
+    /// A class representing a collection of <see cref="FirmwareResource"/> and their operations.
+    /// Each <see cref="FirmwareResource"/> in the collection will belong to the same instance of <see cref="FirmwareWorkspaceResource"/>.
+    /// To get a <see cref="FirmwareCollection"/> instance call the GetFirmwares method from an instance of <see cref="FirmwareWorkspaceResource"/>.
     /// </summary>
     public partial class FirmwareCollection : ArmCollection, IEnumerable<FirmwareResource>, IAsyncEnumerable<FirmwareResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FirmwareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirmwareResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirmwareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirmwareResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firmware_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FirmwareResource>> GetIfExistsAsync(string firmwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
+
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FirmwareResource>(response.GetRawResponse());
+                return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firmware_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual NullableResponse<FirmwareResource> GetIfExists(string firmwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
+
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FirmwareResource>(response.GetRawResponse());
+                return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Firmware definition. </summary>
     public partial class FirmwarePatch
     {
-        /// <summary> Initializes a new instance of FirmwarePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwarePatch"/>. </summary>
         public FirmwarePatch()
         {
             StatusMessages = new ChangeTrackingList<BinaryData>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

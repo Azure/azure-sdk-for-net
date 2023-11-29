@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01-preview";
+            _apiVersion = apiVersion ?? "2023-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="data"> The StorageMoverAgent to use. </param>
+        /// <param name="data"> The <see cref="StorageMoverAgentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="data"> The StorageMoverAgent to use. </param>
+        /// <param name="data"> The <see cref="StorageMoverAgentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverAgentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="agentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverAgentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="agentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>

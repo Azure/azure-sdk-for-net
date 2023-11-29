@@ -2,15 +2,27 @@
 <doc>
   <members>
     <member name="CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-var data = File.OpenRead("<filePath>");
+using RequestContent content = RequestContent.Create("<insightId>");
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -29,19 +41,30 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-var data = File.OpenRead("<filePath>");
+using RequestContent content = RequestContent.Create("<insightId>");
+Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
-Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", RequestContent.Create(data));
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -60,17 +83,28 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetInsightAttachmentAsync(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetInsightAttachmentAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetInsightAttachmentAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetInsightAttachmentAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", new RequestContext());
+Response response = await client.GetInsightAttachmentAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+]]></code>
+This sample shows how to call GetInsightAttachmentAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetInsightAttachmentAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -89,17 +123,28 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetInsightAttachment(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetInsightAttachment with required parameters and parse the result.
+      <example>
+This sample shows how to call GetInsightAttachment and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetInsightAttachment("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", new RequestContext());
+Response response = client.GetInsightAttachment("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("insightId").ToString());
+]]></code>
+This sample shows how to call GetInsightAttachment with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetInsightAttachment("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -118,77 +163,137 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="DeleteAsync(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call DeleteAsync with required parameters.
+      <example>
+This sample shows how to call DeleteAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="Delete(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call Delete with required parameters.
+      <example>
+This sample shows how to call Delete.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="DownloadAsync(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call DownloadAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call DownloadAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.DownloadAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", new RequestContext());
+Response response = await client.DownloadAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
 if (response.ContentStream != null)
 {
-    using(Stream outFileStream = File.OpenWrite("<filePath>"))
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
+    using Stream outFileStream = File.OpenWrite("<filepath>");
+    response.ContentStream.CopyTo(outFileStream);
 }
 ]]></code>
-</example>
+This sample shows how to call DownloadAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DownloadAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
+if (response.ContentStream != null)
+{
+    using Stream outFileStream = File.OpenWrite("<filepath>");
+    response.ContentStream.CopyTo(outFileStream);
+}
+]]></code></example>
     </member>
     <member name="Download(string,string,string,string,string,RequestContext)">
-<example>
-This sample shows how to call Download with required parameters and parse the result.
+      <example>
+This sample shows how to call Download and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.Download("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", new RequestContext());
+Response response = client.Download("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
 if (response.ContentStream != null)
 {
-    using(Stream outFileStream = File.OpenWrite("<filePath>"))
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
+    using Stream outFileStream = File.OpenWrite("<filepath>");
+    response.ContentStream.CopyTo(outFileStream);
 }
 ]]></code>
-</example>
+This sample shows how to call Download with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Download("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", null);
+
+if (response.ContentStream != null)
+{
+    using Stream outFileStream = File.OpenWrite("<filepath>");
+    response.ContentStream.CopyTo(outFileStream);
+}
+]]></code></example>
     </member>
     <member name="GetInsightAttachmentsByPartyIdModelIdAndResourceAsync(string,string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResourceAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResourceAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (BinaryData item in client.GetInsightAttachmentsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+}
+]]></code>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResourceAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetInsightAttachmentsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new string[] { "<insightIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -208,17 +313,29 @@ await foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResour
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetInsightAttachmentsByPartyIdModelIdAndResource(string,string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResource with required parameters and parse the result.
+      <example>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResource and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetInsightAttachmentsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new String[]{"<insightIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (BinaryData item in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("insightId").ToString());
+}
+]]></code>
+This sample shows how to call GetInsightAttachmentsByPartyIdModelIdAndResource with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", new string[] { "<insightIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -238,8 +355,7 @@ foreach (var item in client.GetInsightAttachmentsByPartyIdModelIdAndResource("<p
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

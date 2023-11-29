@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabNotificationChannel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabNotificationChannelResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabNotificationChannelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabNotificationChannel method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabNotificationChannelResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabNotificationChannelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabNotificationChannel method.
     /// </summary>
     public partial class DevTestLabNotificationChannelResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabNotificationChannelResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels/{name}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabNotificationChannelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabNotificationChannelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabNotificationChannelResource(ArmClient client, DevTestLabNotificationChannelData data) : this(client, data.Id)

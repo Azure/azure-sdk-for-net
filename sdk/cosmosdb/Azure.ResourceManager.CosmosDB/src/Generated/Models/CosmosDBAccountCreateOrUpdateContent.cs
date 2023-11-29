@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
     public partial class CosmosDBAccountCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,8 +78,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
         /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
         /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
+        /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
+        /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
+        /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, CustomerManagedKeyStatus? customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ConsistencyPolicy = consistencyPolicy;
@@ -115,6 +118,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             EnablePartitionMerge = enablePartitionMerge;
             EnableBurstCapacity = enableBurstCapacity;
             MinimalTlsVersion = minimalTlsVersion;
+            CustomerManagedKeyStatus = customerManagedKeyStatus;
+            EnablePriorityBasedExecution = enablePriorityBasedExecution;
+            DefaultPriorityLevel = defaultPriorityLevel;
             Identity = identity;
         }
 
@@ -236,6 +242,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnableBurstCapacity { get; set; }
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
+        /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        public CustomerManagedKeyStatus? CustomerManagedKeyStatus { get; set; }
+        /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        public bool? EnablePriorityBasedExecution { get; set; }
+        /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        public DefaultPriorityLevel? DefaultPriorityLevel { get; set; }
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

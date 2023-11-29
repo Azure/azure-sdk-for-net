@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EndpointResource" /> and their operations.
-    /// Each <see cref="EndpointResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="EndpointResourceCollection" /> instance call the GetEndpointResources method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="EndpointResource"/> and their operations.
+    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointResourceEndpointsRestClient.CreateListRequest(Id);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointResourceEndpointsRestClient.CreateListRequest(Id);
@@ -299,6 +299,78 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 var response = _endpointResourceEndpointsRestClient.Get(Id, endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual NullableResponse<EndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _endpointResourceEndpointsRestClient.Get(Id, endpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing lot summary. </summary>
     internal partial class Lots
     {
-        /// <summary> Initializes a new instance of Lots. </summary>
+        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
         internal Lots()
         {
             Value = new ChangeTrackingList<ConsumptionLotSummary>();
         }
 
-        /// <summary> Initializes a new instance of Lots. </summary>
+        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
         /// <param name="value"> The list of lot summary. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink)

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHDInsightCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHDInsightCluster method.
     /// </summary>
     public partial class HDInsightClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}";
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightClusterResource(ArmClient client, HDInsightClusterData data) : this(client, data.Id)
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightApplicationResources and their operations over a HDInsightApplicationResource. </returns>
         public virtual HDInsightApplicationCollection GetHDInsightApplications()
         {
-            return GetCachedClient(Client => new HDInsightApplicationCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -132,8 +135,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightApplicationResource>> GetHDInsightApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -155,8 +158,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightApplicationResource> GetHDInsightApplication(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateEndpointConnectionResources and their operations over a HDInsightPrivateEndpointConnectionResource. </returns>
         public virtual HDInsightPrivateEndpointConnectionCollection GetHDInsightPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HDInsightPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -185,8 +188,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateEndpointConnectionResource>> GetHDInsightPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -208,8 +211,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateEndpointConnectionResource> GetHDInsightPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -220,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateLinkResources and their operations over a HDInsightPrivateLinkResource. </returns>
         public virtual HDInsightPrivateLinkResourceCollection GetHDInsightPrivateLinkResources()
         {
-            return GetCachedClient(Client => new HDInsightPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -238,8 +241,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetHDInsightPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -261,8 +264,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateLinkResource> GetHDInsightPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -2067,7 +2070,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptActionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2089,7 +2092,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptActions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2251,7 +2254,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptExecutionHistoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2273,7 +2276,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptExecutionHistories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2365,7 +2368,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2386,7 +2389,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

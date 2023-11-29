@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for retargeting a virtual machine schedule. </summary>
     public partial class DevTestLabGlobalScheduleRetargetContent
     {
-        /// <summary> Initializes a new instance of DevTestLabGlobalScheduleRetargetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGlobalScheduleRetargetContent"/>. </summary>
         public DevTestLabGlobalScheduleRetargetContent()
         {
         }

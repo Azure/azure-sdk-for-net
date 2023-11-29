@@ -2,35 +2,37 @@
 <doc>
   <members>
     <member name="CreateOrUpdateAsync(string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     status = "<status>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -45,40 +47,41 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdate(string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     status = "<status>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -93,18 +96,29 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSensorPartnerIntegrationAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPartnerIntegrationAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPartnerIntegrationAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSensorPartnerIntegrationAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -119,18 +133,29 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSensorPartnerIntegration(string,string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPartnerIntegration with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPartnerIntegration and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSensorPartnerIntegration with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -145,104 +170,182 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="DeleteAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call DeleteAsync with required parameters.
+      <example>
+This sample shows how to call DeleteAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="Delete(string,string,RequestContext)">
-<example>
-This sample shows how to call Delete with required parameters.
+      <example>
+This sample shows how to call Delete.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="CheckConsentAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call CheckConsentAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CheckConsentAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>", new RequestContext());
+Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CheckConsentAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consented").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
 Console.WriteLine(result.GetProperty("integrationId").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CheckConsent(string,string,string,RequestContext)">
-<example>
-This sample shows how to call CheckConsent with required parameters and parse the result.
+      <example>
+This sample shows how to call CheckConsent and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>", new RequestContext());
+Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CheckConsent with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consented").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
 Console.WriteLine(result.GetProperty("integrationId").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GenerateConsentLinkAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GenerateConsentLinkAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GenerateConsentLinkAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GenerateConsentLinkAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consentLink").ToString());
 Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GenerateConsentLink(string,string,RequestContext)">
-<example>
-This sample shows how to call GenerateConsentLink with required parameters and parse the result.
+      <example>
+This sample shows how to call GenerateConsentLink and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GenerateConsentLink with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consentLink").ToString());
 Console.WriteLine(result.GetProperty("consentExpiryDateTime").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetSensorPartnerIntegrationsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPartnerIntegrationsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPartnerIntegrationsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (var item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (BinaryData item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSensorPartnerIntegrationsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new string[] { "<integrationIds>" }, new string[] { "<partyIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -257,19 +360,31 @@ await foreach (var item in client.GetSensorPartnerIntegrationsAsync("<sensorPart
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetSensorPartnerIntegrations(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPartnerIntegrations with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPartnerIntegrations and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-foreach (var item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (BinaryData item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSensorPartnerIntegrations with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SensorPartnerIntegrations client = new FarmBeatsClient(endpoint, credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new string[] { "<integrationIds>" }, new string[] { "<partyIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -284,10 +399,9 @@ foreach (var item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", ne
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The Update Resource model definition. </summary>
     public partial class HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeResourceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeResourceUpdate"/>. </summary>
         public HybridComputeResourceUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

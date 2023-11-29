@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A Class representing a StorageSpace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSpaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSpaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStorageSpace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSpaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSpaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageSpace method.
     /// </summary>
     public partial class StorageSpaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSpaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSpacesName"> The storageSpacesName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSpacesName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSpaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSpaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSpaceResource(ArmClient client, StorageSpaceData data) : this(client, data.Id)
@@ -235,7 +238,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The StorageSpacePatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageSpacePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSpaceResource>> UpdateAsync(WaitUntil waitUntil, StorageSpacePatch patch, CancellationToken cancellationToken = default)
@@ -273,7 +276,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The StorageSpacePatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageSpacePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<StorageSpaceResource> Update(WaitUntil waitUntil, StorageSpacePatch patch, CancellationToken cancellationToken = default)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-30-preview";
+            _apiVersion = apiVersion ?? "2023-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. </summary>
+        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. </summary>
+        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -1273,8 +1273,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1302,8 +1302,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2381,8 +2381,8 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2412,8 +2412,8 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>

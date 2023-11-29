@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WcfRelayResource" /> and their operations.
-    /// Each <see cref="WcfRelayResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="WcfRelayCollection" /> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="WcfRelayResource"/> and their operations.
+    /// Each <see cref="WcfRelayResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="WcfRelayCollection"/> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
     public partial class WcfRelayCollection : ArmCollection, IEnumerable<WcfRelayResource>, IAsyncEnumerable<WcfRelayResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Relay
             {
                 var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WcfRelayResource>> GetIfExistsAsync(string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _wcfRelayWCFRelaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        public virtual NullableResponse<WcfRelayResource> GetIfExists(string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

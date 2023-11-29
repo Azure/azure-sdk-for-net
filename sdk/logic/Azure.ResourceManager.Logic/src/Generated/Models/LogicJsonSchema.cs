@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The JSON schema. </summary>
     public partial class LogicJsonSchema
     {
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         internal LogicJsonSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
         internal LogicJsonSchema(string title, BinaryData content)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

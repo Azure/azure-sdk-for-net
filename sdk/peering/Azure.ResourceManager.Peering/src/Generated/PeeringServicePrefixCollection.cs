@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeeringServicePrefixResource" /> and their operations.
-    /// Each <see cref="PeeringServicePrefixResource" /> in the collection will belong to the same instance of <see cref="PeeringServiceResource" />.
-    /// To get a <see cref="PeeringServicePrefixCollection" /> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource" />.
+    /// A class representing a collection of <see cref="PeeringServicePrefixResource"/> and their operations.
+    /// Each <see cref="PeeringServicePrefixResource"/> in the collection will belong to the same instance of <see cref="PeeringServiceResource"/>.
+    /// To get a <see cref="PeeringServicePrefixCollection"/> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource"/>.
     /// </summary>
     public partial class PeeringServicePrefixCollection : ArmCollection, IEnumerable<PeeringServicePrefixResource>, IAsyncEnumerable<PeeringServicePrefixResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringServicePrefixResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringServicePrefixResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -321,6 +321,82 @@ namespace Azure.ResourceManager.Peering
             {
                 var response = _peeringServicePrefixPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefixName"> The name of the prefix. </param>
+        /// <param name="expand"> The properties to be expanded. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefixName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PeeringServicePrefixResource>> GetIfExistsAsync(string prefixName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(prefixName, nameof(prefixName));
+
+            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _peeringServicePrefixPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringServicePrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefixName"> The name of the prefix. </param>
+        /// <param name="expand"> The properties to be expanded. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefixName"/> is null. </exception>
+        public virtual NullableResponse<PeeringServicePrefixResource> GetIfExists(string prefixName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(prefixName, nameof(prefixName));
+
+            using var scope = _peeringServicePrefixPrefixesClientDiagnostics.CreateScope("PeeringServicePrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _peeringServicePrefixPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringServicePrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

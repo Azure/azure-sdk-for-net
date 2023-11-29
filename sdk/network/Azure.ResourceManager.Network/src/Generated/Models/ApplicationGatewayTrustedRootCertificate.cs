@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Trusted Root certificates of an application gateway. </summary>
     public partial class ApplicationGatewayTrustedRootCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         public ApplicationGatewayTrustedRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Concur Service linked service. </summary>
     public partial class ConcurLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of ConcurLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConcurLinkedService"/>. </summary>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Concur";
         }
 
-        /// <summary> Initializes a new instance of ConcurLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConcurLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

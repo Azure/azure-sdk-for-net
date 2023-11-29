@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A Vm managed disk update details. </summary>
     public partial class A2AVmManagedDiskUpdateDetails
     {
-        /// <summary> Initializes a new instance of A2AVmManagedDiskUpdateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskUpdateDetails"/>. </summary>
         public A2AVmManagedDiskUpdateDetails()
         {
         }

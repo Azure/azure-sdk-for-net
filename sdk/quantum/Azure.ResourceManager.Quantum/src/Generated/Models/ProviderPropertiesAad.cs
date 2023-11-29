@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Azure Active Directory info. </summary>
     public partial class ProviderPropertiesAad
     {
-        /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
         internal ProviderPropertiesAad()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
         /// <param name="applicationId"> Provider's application id. </param>
         /// <param name="tenantId"> Provider's tenant id. </param>
         internal ProviderPropertiesAad(string applicationId, Guid? tenantId)

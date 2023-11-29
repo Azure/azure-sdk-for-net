@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualHubData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         public VirtualHubData()
         {
             VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

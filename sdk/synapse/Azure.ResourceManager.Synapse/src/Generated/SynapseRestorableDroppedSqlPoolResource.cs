@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseRestorableDroppedSqlPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseRestorableDroppedSqlPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseRestorableDroppedSqlPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseRestorableDroppedSqlPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseRestorableDroppedSqlPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseRestorableDroppedSqlPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseRestorableDroppedSqlPool method.
     /// </summary>
     public partial class SynapseRestorableDroppedSqlPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseRestorableDroppedSqlPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="restorableDroppedSqlPoolId"> The restorableDroppedSqlPoolId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string restorableDroppedSqlPoolId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseRestorableDroppedSqlPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseRestorableDroppedSqlPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseRestorableDroppedSqlPoolResource(ArmClient client, SynapseRestorableDroppedSqlPoolData data) : this(client, data.Id)

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabGlobalSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabGlobalScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabGlobalScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDevTestLabGlobalSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabGlobalScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabGlobalScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabGlobalSchedule method.
     /// </summary>
     public partial class DevTestLabGlobalScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabGlobalScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabGlobalScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabGlobalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabGlobalScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Columns that define the physical type schema of the dataset. </summary>
     public partial class DatasetSchemaDataElement
     {
-        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
         public DatasetSchemaDataElement()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
         /// <param name="schemaColumnName"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

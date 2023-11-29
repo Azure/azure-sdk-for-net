@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlDatabaseColumnResource" /> and their operations.
-    /// Each <see cref="SqlDatabaseColumnResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseTableResource" />.
-    /// To get a <see cref="SqlDatabaseColumnCollection" /> instance call the GetSqlDatabaseColumns method from an instance of <see cref="SqlDatabaseTableResource" />.
+    /// A class representing a collection of <see cref="SqlDatabaseColumnResource"/> and their operations.
+    /// Each <see cref="SqlDatabaseColumnResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseTableResource"/>.
+    /// To get a <see cref="SqlDatabaseColumnCollection"/> instance call the GetSqlDatabaseColumns method from an instance of <see cref="SqlDatabaseTableResource"/>.
     /// </summary>
     public partial class SqlDatabaseColumnCollection : ArmCollection, IEnumerable<SqlDatabaseColumnResource>, IAsyncEnumerable<SqlDatabaseColumnResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -235,6 +235,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlDatabaseColumnDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseColumns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlDatabaseColumnResource>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseColumnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlDatabaseColumnDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlDatabaseColumnResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseColumns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual NullableResponse<SqlDatabaseColumnResource> GetIfExists(string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseColumnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlDatabaseColumnDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlDatabaseColumnResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRuleData"/>. </summary>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

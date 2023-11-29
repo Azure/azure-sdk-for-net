@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The properties of the price sheet. </summary>
     public partial class PriceSheetProperties
     {
-        /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PriceSheetProperties"/>. </summary>
         internal PriceSheetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PriceSheetProperties"/>. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
         /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>

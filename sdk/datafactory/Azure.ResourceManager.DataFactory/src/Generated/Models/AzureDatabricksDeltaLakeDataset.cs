@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Databricks Delta Lake dataset. </summary>
     public partial class AzureDatabricksDeltaLakeDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureDatabricksDeltaLakeDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureDatabricksDeltaLakeDataset";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

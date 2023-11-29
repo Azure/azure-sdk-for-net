@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CdnEndpointResource" /> and their operations.
-    /// Each <see cref="CdnEndpointResource" /> in the collection will belong to the same instance of <see cref="ProfileResource" />.
-    /// To get a <see cref="CdnEndpointCollection" /> instance call the GetCdnEndpoints method from an instance of <see cref="ProfileResource" />.
+    /// A class representing a collection of <see cref="CdnEndpointResource"/> and their operations.
+    /// Each <see cref="CdnEndpointResource"/> in the collection will belong to the same instance of <see cref="ProfileResource"/>.
+    /// To get a <see cref="CdnEndpointCollection"/> instance call the GetCdnEndpoints method from an instance of <see cref="ProfileResource"/>.
     /// </summary>
     public partial class CdnEndpointCollection : ArmCollection, IEnumerable<CdnEndpointResource>, IAsyncEnumerable<CdnEndpointResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CdnEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CdnEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CdnEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CdnEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual NullableResponse<CdnEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CdnEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotExtensionResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotExtensionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotExtensionCollection" /> instance call the GetWebSiteSlotExtensions method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotExtensionResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotExtensionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebSiteSlotExtensionCollection"/> instance call the GetWebSiteSlotExtensions method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class WebSiteSlotExtensionCollection : ArmCollection, IEnumerable<WebSiteSlotExtensionResource>, IAsyncEnumerable<WebSiteSlotExtensionResource>
     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteSlotExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteSlotExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteSlotExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -311,6 +311,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotExtensionWebAppsRestClient.GetSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteExtensionSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteSlotExtensionResource>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotExtensionWebAppsRestClient.GetSiteExtensionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteExtensionSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual NullableResponse<WebSiteSlotExtensionResource> GetIfExists(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotExtensionWebAppsRestClient.GetSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

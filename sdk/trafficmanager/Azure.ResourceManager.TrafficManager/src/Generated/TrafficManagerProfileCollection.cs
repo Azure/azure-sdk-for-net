@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerProfileResource" /> and their operations.
-    /// Each <see cref="TrafficManagerProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="TrafficManagerProfileCollection" /> instance call the GetTrafficManagerProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="TrafficManagerProfileResource"/> and their operations.
+    /// Each <see cref="TrafficManagerProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TrafficManagerProfileCollection"/> instance call the GetTrafficManagerProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TrafficManagerProfileCollection : ArmCollection, IEnumerable<TrafficManagerProfileResource>, IAsyncEnumerable<TrafficManagerProfileResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficManagerProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficManagerProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -314,6 +314,80 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 var response = _trafficManagerProfileProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TrafficManagerProfileResource>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _trafficManagerProfileProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficManagerProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual NullableResponse<TrafficManagerProfileResource> GetIfExists(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _trafficManagerProfileProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficManagerProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

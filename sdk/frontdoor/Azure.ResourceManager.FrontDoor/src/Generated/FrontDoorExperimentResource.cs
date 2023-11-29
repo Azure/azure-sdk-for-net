@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoorExperiment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorExperimentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorExperimentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource" /> using the GetFrontDoorExperiment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorExperimentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorExperimentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource"/> using the GetFrontDoorExperiment method.
     /// </summary>
     public partial class FrontDoorExperimentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorExperimentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="experimentName"> The experimentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}";
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorExperimentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorExperimentResource(ArmClient client, FrontDoorExperimentData data) : this(client, data.Id)

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedInstanceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

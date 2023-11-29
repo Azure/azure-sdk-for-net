@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HvrA provider specific input for test failover. </summary>
     public partial class HyperVReplicaAzureTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
         public HyperVReplicaAzureTestFailoverContent()
         {
             InstanceType = "HyperVReplicaAzure";
@@ -24,5 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string SecondaryKekCertificatePfx { get; set; }
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

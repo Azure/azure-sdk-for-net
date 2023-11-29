@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> User-defined filters to return data which will be purged from the table. </summary>
     public partial class OperationalInsightsWorkspacePurgeFilter
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeFilter"/>. </summary>
         public OperationalInsightsWorkspacePurgeFilter()
         {
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

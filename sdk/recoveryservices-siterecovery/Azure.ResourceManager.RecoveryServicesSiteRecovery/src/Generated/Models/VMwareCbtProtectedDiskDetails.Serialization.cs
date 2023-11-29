@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetManagedDiskId = default;
             Optional<Uri> targetBlobUri = default;
             Optional<string> targetDiskName = default;
+            Optional<GatewayOperationDetails> gatewayOperationDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -129,8 +130,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetDiskName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gatewayOperationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    continue;
+                }
             }
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value);
+            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value);
         }
     }
 }

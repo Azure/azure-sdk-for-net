@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn NatRule mapping. </summary>
     public partial class VpnNatRuleMapping
     {
-        /// <summary> Initializes a new instance of VpnNatRuleMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnNatRuleMapping"/>. </summary>
         public VpnNatRuleMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnNatRuleMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnNatRuleMapping"/>. </summary>
         /// <param name="addressSpace"> Address space for Vpn NatRule mapping. </param>
         /// <param name="portRange"> Port range for Vpn NatRule mapping. </param>
         internal VpnNatRuleMapping(string addressSpace, string portRange)

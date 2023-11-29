@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Attestation
         public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Attestation
     {
         public AttestationPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+        public string PrivateEndpointStringId { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class AttestationPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -61,13 +63,15 @@ namespace Azure.ResourceManager.Attestation
         public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationProviderResource> GetIfExists(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetIfExistsAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Attestation.AttestationProviderResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Attestation.AttestationProviderResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Attestation.AttestationProviderResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationProviderResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class AttestationProviderData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AttestationProviderData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AttestationProviderData(Azure.Core.AzureLocation location) { }
         public System.Uri AttestUri { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
@@ -100,11 +104,37 @@ namespace Azure.ResourceManager.Attestation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> UpdateAsync(Azure.ResourceManager.Attestation.Models.AttestationProviderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Attestation.Mocking
+{
+    public partial class MockableAttestationArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAttestationArmClient() { }
+        public virtual Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Attestation.AttestationProviderResource GetAttestationProviderResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAttestationResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAttestationResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvider(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetAttestationProviderAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Attestation.AttestationProviderCollection GetAttestationProviders() { throw null; }
+    }
+    public partial class MockableAttestationSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAttestationSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProvider(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultByLocationAttestationProvider(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Attestation.Models
 {
     public static partial class ArmAttestationModelFactory
     {
-        public static Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string privateEndpointStringId = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource AttestationPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Attestation.AttestationProviderData AttestationProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string trustModel = null, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? status = default(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus?), System.Uri attestUri = null, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
     }

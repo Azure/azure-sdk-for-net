@@ -13,11 +13,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A failover group update request. </summary>
     public partial class FailoverGroupPatch
     {
-        /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
         public FailoverGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Databases = new ChangeTrackingList<string>();
+            FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
+            PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -25,20 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
-        internal FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
-        /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
-        public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
-        {
-            get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
-            set
-            {
-                if (ReadOnlyEndpoint is null)
-                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint();
-                ReadOnlyEndpoint.FailoverPolicy = value;
-            }
-        }
-
+        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> List of databases in the failover group. </summary>
-        public IList<string> Databases { get; }
+        public IList<ResourceIdentifier> FailoverDatabases { get; }
+        /// <summary> List of partner server information for the failover group. </summary>
+        public IList<PartnerServerInfo> PartnerServers { get; }
     }
 }

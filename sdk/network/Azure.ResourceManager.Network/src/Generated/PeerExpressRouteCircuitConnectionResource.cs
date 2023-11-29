@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeerExpressRouteCircuitConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeerExpressRouteCircuitConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource" /> using the GetPeerExpressRouteCircuitConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeerExpressRouteCircuitConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeerExpressRouteCircuitConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource"/> using the GetPeerExpressRouteCircuitConnection method.
     /// </summary>
     public partial class PeerExpressRouteCircuitConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeerExpressRouteCircuitConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="circuitName"> The circuitName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeerExpressRouteCircuitConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeerExpressRouteCircuitConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeerExpressRouteCircuitConnectionResource(ArmClient client, PeerExpressRouteCircuitConnectionData data) : this(client, data.Id)

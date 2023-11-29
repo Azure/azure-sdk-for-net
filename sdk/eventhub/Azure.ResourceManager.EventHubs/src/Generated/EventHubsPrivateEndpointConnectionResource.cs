@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsPrivateEndpointConnection method.
     /// </summary>
     public partial class EventHubsPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsPrivateEndpointConnectionResource(ArmClient client, EventHubsPrivateEndpointConnectionData data) : this(client, data.Id)

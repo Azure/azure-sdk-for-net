@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServiceDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppServiceDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServiceDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServiceDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppServiceDomain method.
     /// </summary>
     public partial class AppServiceDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServiceDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServiceDomainResource(ArmClient client, AppServiceDomainData data) : this(client, data.Id)
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DomainOwnershipIdentifierResources and their operations over a DomainOwnershipIdentifierResource. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return GetCachedClient(Client => new DomainOwnershipIdentifierCollection(Client, Id));
+            return GetCachedClient(client => new DomainOwnershipIdentifierCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DomainOwnershipIdentifierResource>> GetDomainOwnershipIdentifierAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DomainOwnershipIdentifierResource> GetDomainOwnershipIdentifier(string name, CancellationToken cancellationToken = default)
         {

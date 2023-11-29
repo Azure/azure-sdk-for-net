@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraKeyspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraKeyspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraKeyspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCassandraKeyspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraKeyspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraKeyspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCassandraKeyspace method.
     /// </summary>
     public partial class CassandraKeyspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CassandraKeyspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="keyspaceName"> The keyspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraKeyspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraKeyspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraKeyspaceResource(ArmClient client, CassandraKeyspaceData data) : this(client, data.Id)
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets an object representing a CassandraKeyspaceThroughputSettingResource along with the instance operations that can be performed on it in the CassandraKeyspace. </summary>
-        /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource"/> object. </returns>
         public virtual CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSetting()
         {
             return new CassandraKeyspaceThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraTableResources and their operations over a CassandraTableResource. </returns>
         public virtual CassandraTableCollection GetCassandraTables()
         {
-            return GetCachedClient(Client => new CassandraTableCollection(Client, Id));
+            return GetCachedClient(client => new CassandraTableCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +121,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraTableResource>> GetCassandraTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +144,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CassandraTableResource> GetCassandraTable(string tableName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraViewGetResultResources and their operations over a CassandraViewGetResultResource. </returns>
         public virtual CassandraViewGetResultCollection GetCassandraViewGetResults()
         {
-            return GetCachedClient(Client => new CassandraViewGetResultCollection(Client, Id));
+            return GetCachedClient(client => new CassandraViewGetResultCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +174,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="viewName"> Cosmos DB view name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraViewGetResultResource>> GetCassandraViewGetResultAsync(string viewName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +197,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="viewName"> Cosmos DB view name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CassandraViewGetResultResource> GetCassandraViewGetResult(string viewName, CancellationToken cancellationToken = default)
         {

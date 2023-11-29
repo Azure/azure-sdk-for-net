@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger tree command. </summary>
     public partial class SwaggerCustomDynamicTreeCommand
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeCommand"/>. </summary>
         public SwaggerCustomDynamicTreeCommand()
         {
             Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeCommand"/>. </summary>
         /// <param name="operationId"> The path to an item property which defines the display name of the item. </param>
         /// <param name="itemsPath"> The path to an item property which defines the display name of the item. </param>
         /// <param name="itemValuePath"> The path to an item property which defines the display name of the item. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Swagger XML. </summary>
     public partial class SwaggerXml
     {
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         public SwaggerXml()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         /// <param name="name"> The xml element or attribute name. </param>
         /// <param name="namespace"> The xml namespace. </param>
         /// <param name="prefix"> The name prefix. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

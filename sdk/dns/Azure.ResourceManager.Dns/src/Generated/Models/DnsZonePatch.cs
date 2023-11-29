@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Describes a request to update a DNS zone. </summary>
     public partial class DnsZonePatch
     {
-        /// <summary> Initializes a new instance of DnsZonePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZonePatch"/>. </summary>
         public DnsZonePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

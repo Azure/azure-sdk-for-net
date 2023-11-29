@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS embedded child package. </summary>
     public partial class SsisChildPackage
     {
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             PackageContent = packageContent;
         }
 
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageName"> Name for embedded child package. </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>

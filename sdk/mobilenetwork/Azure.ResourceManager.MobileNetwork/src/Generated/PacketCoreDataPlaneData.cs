@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreDataPlaneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreDataPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneAccessInterface"/> is null. </exception>
@@ -28,9 +28,10 @@ namespace Azure.ResourceManager.MobileNetwork
             Argument.AssertNotNull(userPlaneAccessInterface, nameof(userPlaneAccessInterface));
 
             UserPlaneAccessInterface = userPlaneAccessInterface;
+            UserPlaneAccessVirtualIPv4Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreDataPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,15 +40,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
         /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
-        internal PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="userPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty. </param>
+        internal PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface, IList<string> userPlaneAccessVirtualIPv4Addresses) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             UserPlaneAccessInterface = userPlaneAccessInterface;
+            UserPlaneAccessVirtualIPv4Addresses = userPlaneAccessVirtualIPv4Addresses;
         }
 
         /// <summary> The provisioning state of the packet core data plane resource. </summary>
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </summary>
         public MobileNetworkInterfaceProperties UserPlaneAccessInterface { get; set; }
+        /// <summary> The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty. </summary>
+        public IList<string> UserPlaneAccessVirtualIPv4Addresses { get; }
     }
 }

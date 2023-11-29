@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Has time period for pulling data for the forecast. </summary>
     public partial class ForecastTimePeriod
     {
-        /// <summary> Initializes a new instance of ForecastTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastTimePeriod"/>. </summary>
         /// <param name="from"> The start date to pull data from. </param>
         /// <param name="to"> The end date to pull data to. </param>
         public ForecastTimePeriod(DateTimeOffset @from, DateTimeOffset to)

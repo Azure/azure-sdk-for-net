@@ -5,19 +5,17 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogConsent. </summary>
     internal partial class DialogConsentInternal
     {
-        /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
         internal DialogConsentInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

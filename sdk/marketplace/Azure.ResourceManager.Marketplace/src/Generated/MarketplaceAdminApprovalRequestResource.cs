@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a MarketplaceAdminApprovalRequest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MarketplaceAdminApprovalRequestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMarketplaceAdminApprovalRequestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource" /> using the GetMarketplaceAdminApprovalRequest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarketplaceAdminApprovalRequestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMarketplaceAdminApprovalRequestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource"/> using the GetMarketplaceAdminApprovalRequest method.
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MarketplaceAdminApprovalRequestResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="adminRequestApprovalId"> The adminRequestApprovalId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, string adminRequestApprovalId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MarketplaceAdminApprovalRequestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MarketplaceAdminApprovalRequestResource(ArmClient client, MarketplaceAdminApprovalRequestData data) : this(client, data.Id)
@@ -172,7 +174,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
@@ -210,7 +212,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)

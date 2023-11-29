@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Models;
@@ -24,6 +25,26 @@ namespace Azure.ResourceManager.Chaos
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AzureRbacActions))
+            {
+                writer.WritePropertyName("azureRbacActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureRbacActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            {
+                writer.WritePropertyName("azureRbacDataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureRbacDataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
@@ -51,6 +72,8 @@ namespace Azure.ResourceManager.Chaos
             Optional<string> parametersSchema = default;
             Optional<string> urn = default;
             Optional<string> kind = default;
+            Optional<IList<string>> azureRbacActions = default;
+            Optional<IList<string>> azureRbacDataActions = default;
             Optional<CapabilityTypePropertiesRuntimeProperties> runtimeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,6 +154,34 @@ namespace Azure.ResourceManager.Chaos
                             kind = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("azureRbacActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            azureRbacActions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("azureRbacDataActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            azureRbacDataActions = array;
+                            continue;
+                        }
                         if (property0.NameEquals("runtimeProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -144,7 +195,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new CapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, runtimeProperties.Value);
+            return new CapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, Optional.ToList(azureRbacActions), Optional.ToList(azureRbacDataActions), runtimeProperties.Value);
         }
     }
 }

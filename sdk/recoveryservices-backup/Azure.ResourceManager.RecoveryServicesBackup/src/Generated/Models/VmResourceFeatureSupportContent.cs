@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureResource(IaaS VM) Specific feature support request. </summary>
     public partial class VmResourceFeatureSupportContent : FeatureSupportContent
     {
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportContent"/>. </summary>
         public VmResourceFeatureSupportContent()
         {
             FeatureType = "AzureVMResourceBackup";

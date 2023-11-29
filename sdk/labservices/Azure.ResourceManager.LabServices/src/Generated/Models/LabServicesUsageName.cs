@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The Usage Names. </summary>
     public partial class LabServicesUsageName
     {
-        /// <summary> Initializes a new instance of LabServicesUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsageName"/>. </summary>
         internal LabServicesUsageName()
         {
             SkuInstances = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsageName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="skuInstances"> The instances of the resource. </param>
         /// <param name="value"> The name of the resource. </param>

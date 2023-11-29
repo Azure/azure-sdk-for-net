@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> NamedValue details. </summary>
     public partial class ApiManagementNamedValueCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementNamedValueCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueCreateOrUpdateContent"/>. </summary>
         public ApiManagementNamedValueCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNamedValueCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

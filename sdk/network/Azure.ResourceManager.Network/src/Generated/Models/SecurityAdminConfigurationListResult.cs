@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A list of network manager security admin configurations. </summary>
     internal partial class SecurityAdminConfigurationListResult
     {
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationListResult"/>. </summary>
         internal SecurityAdminConfigurationListResult()
         {
             Value = new ChangeTrackingList<SecurityAdminConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets a page of security admin configurations. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal SecurityAdminConfigurationListResult(IReadOnlyList<SecurityAdminConfigurationData> value, string nextLink)

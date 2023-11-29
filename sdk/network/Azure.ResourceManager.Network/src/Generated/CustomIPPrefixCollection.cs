@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomIPPrefixResource" /> and their operations.
-    /// Each <see cref="CustomIPPrefixResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CustomIPPrefixCollection" /> instance call the GetCustomIPPrefixes method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CustomIPPrefixResource"/> and their operations.
+    /// Each <see cref="CustomIPPrefixResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CustomIPPrefixCollection"/> instance call the GetCustomIPPrefixes method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CustomIPPrefixCollection : ArmCollection, IEnumerable<CustomIPPrefixResource>, IAsyncEnumerable<CustomIPPrefixResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomIPPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomIPPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -320,6 +320,82 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _customIPPrefixRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CustomIPPrefixResource>> GetIfExistsAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
+
+            using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _customIPPrefixRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CustomIPPrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        public virtual NullableResponse<CustomIPPrefixResource> GetIfExists(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
+
+            using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _customIPPrefixRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CustomIPPrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,12 +10,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Address field value. </summary>
     public partial class AddressValue
     {
-        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
         internal AddressValue()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
         /// <param name="houseNumber"> House or building number. </param>
         /// <param name="poBox"> Post office box number. </param>
         /// <param name="road"> Street name. </param>

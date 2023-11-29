@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteExtensionResource" /> and their operations.
-    /// Each <see cref="WebSiteExtensionResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSiteExtensionCollection" /> instance call the GetWebSiteExtensions method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSiteExtensionResource"/> and their operations.
+    /// Each <see cref="WebSiteExtensionResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WebSiteExtensionCollection"/> instance call the GetWebSiteExtensions method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WebSiteExtensionCollection : ArmCollection, IEnumerable<WebSiteExtensionResource>, IAsyncEnumerable<WebSiteExtensionResource>
     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -311,6 +311,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteExtensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteExtension</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteExtensionResource>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteExtensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteExtension</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual NullableResponse<WebSiteExtensionResource> GetIfExists(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteExtensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

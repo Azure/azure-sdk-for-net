@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Partner Namespace update. </summary>
     public partial class PartnerNamespacePatch
     {
-        /// <summary> Initializes a new instance of PartnerNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespacePatch"/>. </summary>
         public PartnerNamespacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

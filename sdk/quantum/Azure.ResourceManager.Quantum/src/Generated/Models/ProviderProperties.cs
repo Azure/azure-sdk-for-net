@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Provider properties. </summary>
     public partial class ProviderProperties
     {
-        /// <summary> Initializes a new instance of ProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
         internal ProviderProperties()
         {
             Targets = new ChangeTrackingList<TargetDescription>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDimensions = new ChangeTrackingList<PricingDimension>();
         }
 
-        /// <summary> Initializes a new instance of ProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>

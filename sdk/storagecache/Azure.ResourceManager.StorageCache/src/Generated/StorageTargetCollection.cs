@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageTargetResource" /> and their operations.
-    /// Each <see cref="StorageTargetResource" /> in the collection will belong to the same instance of <see cref="StorageCacheResource" />.
-    /// To get a <see cref="StorageTargetCollection" /> instance call the GetStorageTargets method from an instance of <see cref="StorageCacheResource" />.
+    /// A class representing a collection of <see cref="StorageTargetResource"/> and their operations.
+    /// Each <see cref="StorageTargetResource"/> in the collection will belong to the same instance of <see cref="StorageCacheResource"/>.
+    /// To get a <see cref="StorageTargetCollection"/> instance call the GetStorageTargets method from an instance of <see cref="StorageCacheResource"/>.
     /// </summary>
     public partial class StorageTargetCollection : ArmCollection, IEnumerable<StorageTargetResource>, IAsyncEnumerable<StorageTargetResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTargetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTargetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.StorageCache
             {
                 var response = _storageTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageTargetName"> Name of Storage Target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageTargetResource>> GetIfExistsAsync(string storageTargetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageTargetResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageTargetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageTargetName"> Name of Storage Target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        public virtual NullableResponse<StorageTargetResource> GetIfExists(string storageTargetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageTargetResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

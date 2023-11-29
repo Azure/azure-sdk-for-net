@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiReleaseResource" /> and their operations.
-    /// Each <see cref="ApiReleaseResource" /> in the collection will belong to the same instance of <see cref="ApiResource" />.
-    /// To get an <see cref="ApiReleaseCollection" /> instance call the GetApiReleases method from an instance of <see cref="ApiResource" />.
+    /// A class representing a collection of <see cref="ApiReleaseResource"/> and their operations.
+    /// Each <see cref="ApiReleaseResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
+    /// To get an <see cref="ApiReleaseCollection"/> instance call the GetApiReleases method from an instance of <see cref="ApiResource"/>.
     /// </summary>
     public partial class ApiReleaseCollection : ArmCollection, IEnumerable<ApiReleaseResource>, IAsyncEnumerable<ApiReleaseResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiReleaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiReleaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiReleaseResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiReleaseRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiReleaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiReleaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiReleaseResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiReleaseRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiReleaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiReleaseResource>> GetIfExistsAsync(string releaseId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+
+            using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiReleaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiReleaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiReleaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        public virtual NullableResponse<ApiReleaseResource> GetIfExists(string releaseId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+
+            using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiReleaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiReleaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiReleaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

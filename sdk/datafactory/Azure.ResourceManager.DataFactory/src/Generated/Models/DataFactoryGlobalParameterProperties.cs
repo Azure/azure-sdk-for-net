@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class DataFactoryGlobalParameterProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterProperties"/>. </summary>
         /// <param name="globalParameterType"> Global Parameter type. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

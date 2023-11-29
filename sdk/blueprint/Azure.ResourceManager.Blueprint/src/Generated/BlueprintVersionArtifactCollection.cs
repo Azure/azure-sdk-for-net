@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BlueprintVersionArtifactResource" /> and their operations.
-    /// Each <see cref="BlueprintVersionArtifactResource" /> in the collection will belong to the same instance of <see cref="PublishedBlueprintResource" />.
-    /// To get a <see cref="BlueprintVersionArtifactCollection" /> instance call the GetBlueprintVersionArtifacts method from an instance of <see cref="PublishedBlueprintResource" />.
+    /// A class representing a collection of <see cref="BlueprintVersionArtifactResource"/> and their operations.
+    /// Each <see cref="BlueprintVersionArtifactResource"/> in the collection will belong to the same instance of <see cref="PublishedBlueprintResource"/>.
+    /// To get a <see cref="BlueprintVersionArtifactCollection"/> instance call the GetBlueprintVersionArtifacts method from an instance of <see cref="PublishedBlueprintResource"/>.
     /// </summary>
     public partial class BlueprintVersionArtifactCollection : ArmCollection, IEnumerable<BlueprintVersionArtifactResource>, IAsyncEnumerable<BlueprintVersionArtifactResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BlueprintVersionArtifactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintVersionArtifactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BlueprintVersionArtifactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintVersionArtifactResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.Blueprint
             {
                 var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactName"> Name of the blueprint artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BlueprintVersionArtifactResource>> GetIfExistsAsync(string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _blueprintVersionArtifactPublishedArtifactsRestClient.GetAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintVersionArtifactResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactName"> Name of the blueprint artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        public virtual NullableResponse<BlueprintVersionArtifactResource> GetIfExists(string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintVersionArtifactResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

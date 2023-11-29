@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Source and target table mapping details. </summary>
     public partial class DataMapperMapping
     {
-        /// <summary> Initializes a new instance of DataMapperMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMapperMapping"/>. </summary>
         public DataMapperMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMapperMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMapperMapping"/>. </summary>
         /// <param name="targetEntityName"> Name of the target table. </param>
         /// <param name="sourceEntityName"> Name of the source table. </param>
         /// <param name="sourceConnectionReference"> The connection reference for the source connection. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

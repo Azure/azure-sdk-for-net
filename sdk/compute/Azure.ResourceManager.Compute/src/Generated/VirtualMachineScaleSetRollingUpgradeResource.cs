@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineScaleSetRollingUpgradeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineScaleSetRollingUpgradeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource" /> using the GetVirtualMachineScaleSetRollingUpgrade method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineScaleSetRollingUpgradeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource"/> using the GetVirtualMachineScaleSetRollingUpgrade method.
     /// </summary>
     public partial class VirtualMachineScaleSetRollingUpgradeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/rollingUpgrades/latest";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetRollingUpgradeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineScaleSetRollingUpgradeResource(ArmClient client, VirtualMachineScaleSetRollingUpgradeData data) : this(client, data.Id)

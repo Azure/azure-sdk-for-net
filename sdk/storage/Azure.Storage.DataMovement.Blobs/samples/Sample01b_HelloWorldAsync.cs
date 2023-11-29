@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Get a reference to a source local file
                 LocalFilesStorageResourceProvider files = new();
-                StorageResource sourceResource = files.FromPath(sourceLocalPath);
+                StorageResource sourceResource = files.FromFile(sourceLocalPath);
 
                 // Get a reference to a destination blobs
                 BlockBlobClient blockBlobClient = blobContainerClient.GetBlockBlobClient("sample-blob-block");
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromPath(sourceLocalPath),
+                    sourceResource: files.FromFile(sourceLocalPath),
                     destinationResource: blobs.FromClient(destinationBlob));
                 await dataTransfer.WaitForCompletionAsync();
                 #endregion
@@ -206,19 +206,19 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: blobs.FromClient(sourceBlobClient),
-                    destinationResource: files.FromPath(downloadPath));
+                    destinationResource: files.FromFile(downloadPath));
                 await dataTransfer.WaitForCompletionAsync();
                 #endregion
 
                 StorageResource sourceResource2 = blobs.FromClient(sourceBlobClient);
-                StorageResource destinationResource2 = files.FromPath(downloadPath2);
+                StorageResource destinationResource2 = files.FromFile(downloadPath2);
 
                 await transferManager.StartTransferAsync(
                     sourceResource: blobs.FromClient(sourceBlobClient, new BlockBlobStorageResourceOptions()
                     {
                         DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
                     }),
-                    destinationResource: files.FromPath(downloadPath2));
+                    destinationResource: files.FromFile(downloadPath2));
             }
             finally
             {
@@ -287,7 +287,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobsStorageResourceProvider blobs = new();
                 LocalFilesStorageResourceProvider files = new();
                 // Get a storage resource reference to a local directory
-                StorageResource localDirectory = files.FromPath(sourcePath);
+                StorageResource localDirectory = files.FromDirectory(sourcePath);
                 // Get a storage resource to a destination blob directory
                 StorageResource directoryDestination = blobs.FromClient(
                     blobContainerClient,
@@ -306,7 +306,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string optionalDestinationPrefix = "sample-directory2";
                 #region Snippet:SimpleDirectoryUpload
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromPath(sourcePath),
+                    sourceResource: files.FromDirectory(sourcePath),
                     destinationResource: blobs.FromClient(
                         blobContainerClient,
                         new BlobStorageResourceContainerOptions()
@@ -403,7 +403,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-                    files.FromPath(sourcePath),
+                    files.FromDirectory(sourcePath),
                     blobs.FromClient(
                         container,
                         new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = "sample-blob-directory" }));
@@ -480,7 +480,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransferOptions transferOptions = new DataTransferOptions();
                 transferOptions.TransferStatusChanged += (TransferStatusEventArgs args) =>
                 {
-                    if (args.StorageTransferStatus == DataTransferStatus.Completed)
+                    if (args.TransferStatus.HasCompletedSuccessfully)
                     {
                         using (StreamWriter logStream = File.AppendText(logFile))
                         {
@@ -508,7 +508,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-                    files.FromPath(sourcePath),
+                    files.FromDirectory(sourcePath),
                     blobs.FromClient(
                         container,
                         new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = "sample-blob-directory" }));
@@ -569,8 +569,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = "sample-blob-directory" });
                 StorageResource sourceDirectory2 = blobs.FromClient(blobContainerClient,
                     new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = "sample-blob-directory2" });
-                StorageResource destinationDirectory = files.FromPath(downloadPath);
-                StorageResource destinationDirectory2 = files.FromPath(downloadPath2);
+                StorageResource destinationDirectory = files.FromDirectory(downloadPath);
+                StorageResource destinationDirectory2 = files.FromDirectory(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await blobContainerClient.UploadBlobAsync("first", File.OpenRead(CreateTempFile()));
@@ -605,7 +605,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         {
                             BlobDirectoryPrefix = optionalSourcePrefix
                         }),
-                    destinationResource: files.FromPath(downloadPath));
+                    destinationResource: files.FromDirectory(downloadPath));
                 await dataTransfer.WaitForCompletionAsync();
                 #endregion
             }
@@ -672,7 +672,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(dataTransfer.TransferStatus, DataTransferStatus.Completed);
+                Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
             }
             finally
             {
@@ -733,8 +733,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = sourceDirectoryName2 });
 
                 // Create destination paths
-                StorageResource destinationDirectory1 = files.FromPath(downloadPath);
-                StorageResource destinationDirectory2 = files.FromPath(downloadPath2);
+                StorageResource destinationDirectory1 = files.FromDirectory(downloadPath);
+                StorageResource destinationDirectory2 = files.FromDirectory(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));
@@ -811,7 +811,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
                 // Create source and destination resource
                 StorageResource sourceResource = blobs.FromClient(sourceBlob);
-                StorageResource destinationResource = files.FromPath(downloadPath);
+                StorageResource destinationResource = files.FromFile(downloadPath);
 
                 // Create simple transfer single blob download job
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
@@ -863,7 +863,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create source and destination resource
                 StorageResource sourceResource = blobs.FromClient(sourceBlob);
-                StorageResource destinationResource = files.FromPath(downloadPath);
+                StorageResource destinationResource = files.FromFile(downloadPath);
 
                 // Create simple transfer single blob download job
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(

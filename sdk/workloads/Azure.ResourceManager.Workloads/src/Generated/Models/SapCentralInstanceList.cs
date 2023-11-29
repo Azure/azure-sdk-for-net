@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of SAP Central Services Instance resources. </summary>
     internal partial class SapCentralInstanceList
     {
-        /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralInstanceList"/>. </summary>
         internal SapCentralInstanceList()
         {
             Value = new ChangeTrackingList<SapCentralServerInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of SAP central services instance resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
         internal SapCentralInstanceList(IReadOnlyList<SapCentralServerInstanceData> value, string nextLink)

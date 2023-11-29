@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkVirtualApplianceConnectionResource" /> and their operations.
-    /// Each <see cref="NetworkVirtualApplianceConnectionResource" /> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource" />.
-    /// To get a <see cref="NetworkVirtualApplianceConnectionCollection" /> instance call the GetNetworkVirtualApplianceConnections method from an instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// A class representing a collection of <see cref="NetworkVirtualApplianceConnectionResource"/> and their operations.
+    /// Each <see cref="NetworkVirtualApplianceConnectionResource"/> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource"/>.
+    /// To get a <see cref="NetworkVirtualApplianceConnectionCollection"/> instance call the GetNetworkVirtualApplianceConnections method from an instance of <see cref="NetworkVirtualApplianceResource"/>.
     /// </summary>
     public partial class NetworkVirtualApplianceConnectionCollection : ArmCollection, IEnumerable<NetworkVirtualApplianceConnectionResource>, IAsyncEnumerable<NetworkVirtualApplianceConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkVirtualApplianceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkVirtualApplianceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkVirtualApplianceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkVirtualApplianceConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/networkVirtualApplianceConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualApplianceConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the NVA connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkVirtualApplianceConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkVirtualApplianceConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkVirtualApplianceConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/networkVirtualApplianceConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualApplianceConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the NVA connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual NullableResponse<NetworkVirtualApplianceConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkVirtualApplianceConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkVirtualApplianceConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

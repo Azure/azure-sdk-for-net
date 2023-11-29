@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmVirtualMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmVirtualMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmVirtualMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmVirtualMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmVirtualMachine method.
     /// </summary>
     public partial class ScVmmVirtualMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmVirtualMachineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmVirtualMachineResource(ArmClient client, ScVmmVirtualMachineData data) : this(client, data.Id)

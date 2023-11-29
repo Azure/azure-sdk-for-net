@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class VirtualApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
         public VirtualApplicationData(VirtualApplicationCommandLineSetting commandLineSetting)
         {
             CommandLineSetting = commandLineSetting;
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

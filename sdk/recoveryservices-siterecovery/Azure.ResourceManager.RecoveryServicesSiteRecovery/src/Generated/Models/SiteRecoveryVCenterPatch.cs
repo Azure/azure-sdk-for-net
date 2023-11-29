@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input required to update vCenter. </summary>
     public partial class SiteRecoveryVCenterPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterPatch"/>. </summary>
         public SiteRecoveryVCenterPatch()
         {
         }

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScVmmCloudResource" /> and their operations.
-    /// Each <see cref="ScVmmCloudResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ScVmmCloudCollection" /> instance call the GetScVmmClouds method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ScVmmCloudResource"/> and their operations.
+    /// Each <see cref="ScVmmCloudResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScVmmCloudCollection"/> instance call the GetScVmmClouds method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ScVmmCloudCollection : ArmCollection, IEnumerable<ScVmmCloudResource>, IAsyncEnumerable<ScVmmCloudResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmCloudResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmCloudResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clouds_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScVmmCloudResource>> GetIfExistsAsync(string cloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+
+            using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScVmmCloudResource>(response.GetRawResponse());
+                return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clouds_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        public virtual NullableResponse<ScVmmCloudResource> GetIfExists(string cloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+
+            using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScVmmCloudResource>(response.GetRawResponse());
+                return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

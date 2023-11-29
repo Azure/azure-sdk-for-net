@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CosmosDBSqlClientEncryptionKeyProperties. </summary>
     public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyProperties"/>. </summary>
         public CosmosDBSqlClientEncryptionKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyProperties"/>. </summary>
         /// <param name="id"> Name of the ClientEncryptionKey. </param>
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>

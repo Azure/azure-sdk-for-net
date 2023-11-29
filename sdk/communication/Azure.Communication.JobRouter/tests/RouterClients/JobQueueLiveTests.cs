@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -27,13 +24,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new Dictionary<string, LabelValue?>() { ["Label_1"] = new LabelValue("Value_1") };
+            var queueLabels = new Dictionary<string, RouterValue?>() { ["Label_1"] = new RouterValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId,
                     createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
-                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
+                    Labels = { ["Label_1"] = new RouterValue("Value_1") }
                 });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
@@ -47,11 +44,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new Dictionary<string, LabelValue?>
+            var queueLabels = new Dictionary<string, RouterValue?>
             {
-                ["Label_1"] = new LabelValue("Value_1"),
-                ["Label_2"] = new LabelValue(2),
-                ["Label_3"] = new LabelValue(true)
+                ["Label_1"] = new RouterValue("Value_1"),
+                ["Label_2"] = new RouterValue(2),
+                ["Label_3"] = new RouterValue(true)
             };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId,
@@ -60,57 +57,26 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = queueName,
                     Labels =
                     {
-                        ["Label_1"] = new LabelValue("Value_1"),
-                        ["Label_2"] = new LabelValue(2),
-                        ["Label_3"] = new LabelValue(true)
+                        ["Label_1"] = new RouterValue("Value_1"),
+                        ["Label_2"] = new RouterValue(2),
+                        ["Label_3"] = new RouterValue(true)
                     }
                 });
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
 
-            var updatedLabels = new Dictionary<string, LabelValue?>(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => (LabelValue?)x.Value))
+            createQueueResponse.Value.Labels["Label_1"] = null;
+            createQueueResponse.Value.Labels["Label_2"] = new RouterValue(null);
+            createQueueResponse.Value.Labels["Label_3"] = new RouterValue("Value_Updated_3");
+            createQueueResponse.Value.Labels["Label_4"] = new RouterValue("Value_4");
+
+            var updatedQueueResponse = await routerClient.UpdateQueueAsync(createQueueResponse.Value);
+
+            AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, new Dictionary<string, RouterValue?>
             {
-                ["Label_1"] = null,
-                ["Label_2"] = new LabelValue(null),
-                ["Label_3"] = new LabelValue("Value_Updated_3"),
-                ["Label_4"] = new LabelValue("Value_4")
-            };
-
-            var updateOptions = new UpdateQueueOptions(queueId);
-            updateOptions.Labels.Append(updatedLabels);
-
-            var updatedQueueResponse = await routerClient.UpdateQueueAsync(updateOptions);
-
-            AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, new Dictionary<string, LabelValue?>
-            {
-                ["Label_3"] = new LabelValue("Value_Updated_3"),
-                ["Label_4"] = new LabelValue("Value_4")
+                ["Label_3"] = new RouterValue("Value_Updated_3"),
+                ["Label_4"] = new RouterValue("Value_4")
             });
-        }
-
-        [Test]
-        public async Task CreateQueueAndRemoveProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-            var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueAndRemoveProperty));
-            var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueAndRemoveProperty));
-            var queueName = "DefaultQueueWithLabels" + queueId;
-            var createQueueResponse = await routerClient.CreateQueueAsync(
-                new CreateQueueOptions(queueId,
-                    createDistributionPolicyResponse.Value.Id)
-                {
-                    Name = queueName,
-                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
-                });
-            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
-
-            Assert.False(string.IsNullOrWhiteSpace(createQueueResponse.Value.Name));
-
-            var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }));
-
-            var queriedQueue = await routerClient.GetQueueAsync(queueId);
-            Assert.True(string.IsNullOrWhiteSpace(queriedQueue.Value.Name));
         }
 
         #endregion Queue Tests

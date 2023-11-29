@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LoggingHiddenPropertyPaths. </summary>
     public partial class LoggingHiddenPropertyPaths
     {
-        /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingHiddenPropertyPaths"/>. </summary>
         public LoggingHiddenPropertyPaths()
         {
             HiddenPathsOnRequest = new ChangeTrackingList<string>();
             HiddenPathsOnResponse = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingHiddenPropertyPaths"/>. </summary>
         /// <param name="hiddenPathsOnRequest"></param>
         /// <param name="hiddenPathsOnResponse"></param>
         internal LoggingHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse)

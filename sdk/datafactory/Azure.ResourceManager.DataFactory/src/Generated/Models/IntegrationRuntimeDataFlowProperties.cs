@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeDataFlowProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowProperties"/>. </summary>
         public IntegrationRuntimeDataFlowProperties()
         {
             CustomProperties = new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowProperties"/>. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
         /// <param name="timeToLiveInMinutes"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

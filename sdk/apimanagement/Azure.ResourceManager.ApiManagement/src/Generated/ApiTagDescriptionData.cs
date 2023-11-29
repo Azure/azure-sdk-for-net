@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiTagDescriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionData"/>. </summary>
         public ApiTagDescriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

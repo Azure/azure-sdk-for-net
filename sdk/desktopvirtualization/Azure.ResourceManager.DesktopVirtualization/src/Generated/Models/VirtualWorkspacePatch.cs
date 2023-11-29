@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Workspace properties that can be patched. </summary>
     public partial class VirtualWorkspacePatch
     {
-        /// <summary> Initializes a new instance of VirtualWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspacePatch"/>. </summary>
         public VirtualWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -28,5 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string FriendlyName { get; set; }
         /// <summary> List of applicationGroup links. </summary>
         public IList<string> ApplicationGroupReferences { get; }
+        /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

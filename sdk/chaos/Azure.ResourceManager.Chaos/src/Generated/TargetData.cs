@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class TargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetData"/>. </summary>
         /// <param name="properties"> The properties of the target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TargetData(IDictionary<string, BinaryData> properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of TargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The roll up count summary of reservations in each state. </summary>
     internal partial class ReservationSummary
     {
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         internal ReservationSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         /// <param name="succeededCount"> The number of reservation in Succeeded state. </param>
         /// <param name="failedCount"> The number of reservation in Failed state. </param>
         /// <param name="expiringCount"> The number of reservation in Expiring state. </param>

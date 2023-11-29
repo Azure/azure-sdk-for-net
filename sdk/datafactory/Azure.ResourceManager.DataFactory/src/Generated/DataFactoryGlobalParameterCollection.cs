@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryGlobalParameterResource" /> and their operations.
-    /// Each <see cref="DataFactoryGlobalParameterResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryGlobalParameterCollection" /> instance call the GetDataFactoryGlobalParameters method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryGlobalParameterResource"/> and their operations.
+    /// Each <see cref="DataFactoryGlobalParameterResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryGlobalParameterCollection"/> instance call the GetDataFactoryGlobalParameters method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryGlobalParameterCollection : ArmCollection, IEnumerable<DataFactoryGlobalParameterResource>, IAsyncEnumerable<DataFactoryGlobalParameterResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryGlobalParameterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryGlobalParameterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryGlobalParameterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryGlobalParameterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryGlobalParameterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryGlobalParameterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _dataFactoryGlobalParameterGlobalParametersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/globalParameters/{globalParameterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalParameters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalParameterName"> The global parameter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryGlobalParameterResource>> GetIfExistsAsync(string globalParameterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+
+            using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryGlobalParameterGlobalParametersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryGlobalParameterResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/globalParameters/{globalParameterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalParameters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalParameterName"> The global parameter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryGlobalParameterResource> GetIfExists(string globalParameterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+
+            using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryGlobalParameterGlobalParametersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryGlobalParameterResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the ClfsTarget. </summary>
     internal partial class ClfsTarget
     {
-        /// <summary> Initializes a new instance of ClfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClfsTarget"/>. </summary>
         public ClfsTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ClfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClfsTarget"/>. </summary>
         /// <param name="target"> Resource ID of storage container. </param>
         internal ClfsTarget(ResourceIdentifier target)
         {

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDiagnosticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDiagnostic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDiagnosticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteDiagnosticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDiagnostic method.
     /// </summary>
     public partial class SiteDiagnosticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDiagnosticResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDiagnosticResource(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDiagnosticAnalysisResources and their operations over a SiteDiagnosticAnalysisResource. </returns>
         public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
         {
-            return GetCachedClient(Client => new SiteDiagnosticAnalysisCollection(Client, Id));
+            return GetCachedClient(client => new SiteDiagnosticAnalysisCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticAnalysisResource>> GetSiteDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticAnalysisResource> GetSiteDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDiagnosticDetectorResources and their operations over a SiteDiagnosticDetectorResource. </returns>
         public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
         {
-            return GetCachedClient(Client => new SiteDiagnosticDetectorCollection(Client, Id));
+            return GetCachedClient(client => new SiteDiagnosticDetectorCollection(client, Id));
         }
 
         /// <summary>
@@ -161,8 +165,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetSiteDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -184,8 +188,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticDetectorResource> GetSiteDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
         {

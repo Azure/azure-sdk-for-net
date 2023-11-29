@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object containing security policy update parameters. </summary>
     public partial class FrontDoorSecurityPolicyPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyPatch"/>. </summary>
         public FrontDoorSecurityPolicyPatch()
         {
         }

@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -50,6 +52,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> GetAsync(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetIfExists(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> GetIfExistsAsync(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -80,6 +84,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -118,6 +124,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -203,6 +211,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -242,13 +252,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> GetAsync(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetIfExists(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> GetIfExistsAsync(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class LocalRulestackData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LocalRulestackData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LocalRulestackData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> AssociatedSubscriptions { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? DefaultMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -271,6 +283,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -309,6 +323,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -399,6 +415,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>> GetAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> GetIfExists(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>> GetIfExistsAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -487,13 +505,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> GetAsync(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetIfExists(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> GetIfExistsAsync(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class PaloAltoNetworksFirewallData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PaloAltoNetworksFirewallData(Azure.Core.AzureLocation location, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails) : base (default(Azure.Core.AzureLocation)) { }
+        public PaloAltoNetworksFirewallData(Azure.Core.AzureLocation location, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails) { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails AssociatedRulestack { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings DnsSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> FrontEndSettings { get { throw null; } }
@@ -565,6 +585,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>> GetAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> GetIfExists(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>> GetIfExistsAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -624,6 +646,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>> GetAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> GetIfExists(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>> GetIfExistsAsync(string priority, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -671,6 +695,51 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
+{
+    public partial class MockablePaloAltoNetworksNgfwArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePaloAltoNetworksNgfwArmClient() { }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource GetGlobalRulestackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource GetLocalRulestackCertificateObjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource GetLocalRulestackFqdnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource GetLocalRulestackPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource GetLocalRulestackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource GetLocalRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource GetPostRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource GetPreRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockablePaloAltoNetworksNgfwResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePaloAltoNetworksNgfwResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestack(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> GetLocalRulestackAsync(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCollection GetLocalRulestacks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls() { throw null; }
+    }
+    public partial class MockablePaloAltoNetworksNgfwSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePaloAltoNetworksNgfwSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockablePaloAltoNetworksNgfwTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePaloAltoNetworksNgfwTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetGlobalRulestack(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> GetGlobalRulestackAsync(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCollection GetGlobalRulestacks() { throw null; }
     }
 }
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -1027,6 +1096,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType EnableEgressNat { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType NetworkType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> PublicIPs { get { throw null; } }
+        public System.Collections.Generic.IList<string> TrustedRanges { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration VnetConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration VwanConfiguration { get { throw null; } set { } }
     }

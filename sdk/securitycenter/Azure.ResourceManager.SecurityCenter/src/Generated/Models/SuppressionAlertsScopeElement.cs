@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A more specific scope used to identify the alerts to suppress. </summary>
     public partial class SuppressionAlertsScopeElement
     {
-        /// <summary> Initializes a new instance of SuppressionAlertsScopeElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
         public SuppressionAlertsScopeElement()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SuppressionAlertsScopeElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
         /// <param name="field"> The alert entity type to suppress by. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SuppressionAlertsScopeElement(string field, IDictionary<string, BinaryData> additionalProperties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

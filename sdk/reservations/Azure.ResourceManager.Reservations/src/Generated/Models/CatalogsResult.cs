@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The list of catalogs and pagination information. </summary>
     internal partial class CatalogsResult
     {
-        /// <summary> Initializes a new instance of CatalogsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
         internal CatalogsResult()
         {
             Value = new ChangeTrackingList<ReservationCatalog>();
         }
 
-        /// <summary> Initializes a new instance of CatalogsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
         /// <param name="value"> The list of catalogs. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="totalItems"> The total amount of catalog items. </param>

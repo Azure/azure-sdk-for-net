@@ -12,23 +12,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Private Endpoint resource. </summary>
     public partial class MachineLearningPrivateEndpoint
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
         public MachineLearningPrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
+        /// <param name="id"> e.g. /subscriptions/{networkSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </param>
+        /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
         internal MachineLearningPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId)
         {
             Id = id;
             SubnetArmId = subnetArmId;
         }
 
-        /// <summary> The ARM identifier for Private Endpoint. </summary>
+        /// <summary> e.g. /subscriptions/{networkSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> The ARM identifier for Subnet resource that private endpoint links to. </summary>
+        /// <summary> The subnetId that the private endpoint is connected to. </summary>
         public ResourceIdentifier SubnetArmId { get; }
     }
 }

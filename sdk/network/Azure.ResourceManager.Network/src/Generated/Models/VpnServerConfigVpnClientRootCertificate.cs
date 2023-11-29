@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of VPN client root certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigVpnClientRootCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRootCertificate"/>. </summary>
         public VpnServerConfigVpnClientRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRootCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         internal VpnServerConfigVpnClientRootCertificate(string name, BinaryData publicCertData)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

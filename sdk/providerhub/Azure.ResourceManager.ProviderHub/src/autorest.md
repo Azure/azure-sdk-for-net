@@ -66,6 +66,7 @@ rename-mapping:
   ResourceTypeRegistrationProperties.enableAsyncOperation: IsAsyncOperationEnabled
   ResourceTypeRegistrationProperties.enableThirdPartyS2S: IsThirdPartyS2SEnabled
   TemplateDeploymentOptions.preflightSupported: IsPreflightSupported
+  SkuLocationInfo.type: ExtendedLocationType
 
 prepend-rp-prefix:
   - ExtendedLocationOptions

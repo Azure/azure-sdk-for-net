@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an data connection validation. </summary>
     public partial class DataConnectionValidationContent
     {
-        /// <summary> Initializes a new instance of DataConnectionValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationContent"/>. </summary>
         public DataConnectionValidationContent()
         {
         }

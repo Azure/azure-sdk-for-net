@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component feature capabilities. </summary>
     public partial class ApplicationInsightsComponentFeatureCapabilities
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         internal ApplicationInsightsComponentFeatureCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>

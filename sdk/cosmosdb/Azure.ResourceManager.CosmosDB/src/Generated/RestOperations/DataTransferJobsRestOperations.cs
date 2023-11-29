@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-15-preview";
+            _apiVersion = apiVersion ?? "2023-09-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>

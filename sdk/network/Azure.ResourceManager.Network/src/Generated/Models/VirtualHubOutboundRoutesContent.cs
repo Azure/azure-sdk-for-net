@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The parameters specifying the connection resource whose outbound routes are being requested. </summary>
     public partial class VirtualHubOutboundRoutesContent
     {
-        /// <summary> Initializes a new instance of VirtualHubOutboundRoutesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubOutboundRoutesContent"/>. </summary>
         public VirtualHubOutboundRoutesContent()
         {
         }

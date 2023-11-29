@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the client certificate details using thumbprint. </summary>
     public partial class ClusterClientCertificateThumbprint
     {
-        /// <summary> Initializes a new instance of ClusterClientCertificateThumbprint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterClientCertificateThumbprint"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateThumbprint"> The thumbprint of the client certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateThumbprint"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

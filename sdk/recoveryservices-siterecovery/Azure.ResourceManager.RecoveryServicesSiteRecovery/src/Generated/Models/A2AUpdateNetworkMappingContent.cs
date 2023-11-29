@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Updates network mappings input. </summary>
     public partial class A2AUpdateNetworkMappingContent : FabricSpecificUpdateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of A2AUpdateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateNetworkMappingContent"/>. </summary>
         public A2AUpdateNetworkMappingContent()
         {
             InstanceType = "AzureToAzure";

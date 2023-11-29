@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Scaling rule. </summary>
     public partial class ContainerAppJobScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         public ContainerAppJobScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         /// <param name="name"> Scale Rule Name. </param>
         /// <param name="jobScaleRuleType">
         /// Type of the scale rule
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

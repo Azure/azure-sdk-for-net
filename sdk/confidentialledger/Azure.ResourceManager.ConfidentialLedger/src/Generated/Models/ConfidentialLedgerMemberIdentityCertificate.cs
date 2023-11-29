@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Object representing MemberIdentityCertificate for Managed CCF. </summary>
     public partial class ConfidentialLedgerMemberIdentityCertificate
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerMemberIdentityCertificate"/>. </summary>
         public ConfidentialLedgerMemberIdentityCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerMemberIdentityCertificate"/>. </summary>
         /// <param name="certificate"> Member Identity Certificate. </param>
         /// <param name="encryptionkey"> Member Identity Certificate Encryption Key. </param>
         /// <param name="tags"> Anything. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

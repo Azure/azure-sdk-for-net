@@ -2,218 +2,230 @@
 <doc>
   <members>
     <member name="CancelAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CancelAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CancelAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
+});
+Response response = await client.CancelAsync("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("<key>").ToString());
 ]]></code>
-This sample shows how to call CancelAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CancelAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
+});
+Response response = await client.CancelAsync("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="Cancel(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call Cancel with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call Cancel and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
+});
+Response response = client.Cancel("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("<key>").ToString());
 ]]></code>
-This sample shows how to call Cancel with all parameters and request content, and how to parse the result.
+This sample shows how to call Cancel with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
+});
+Response response = client.Cancel("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="FetchAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call FetchAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call FetchAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
+});
+Response response = await client.FetchAsync("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("<key>").ToString());
 ]]></code>
-This sample shows how to call FetchAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call FetchAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
+});
+Response response = await client.FetchAsync("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="Fetch(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call Fetch with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call Fetch and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
+});
+Response response = client.Fetch("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("<key>").ToString());
 ]]></code>
-This sample shows how to call Fetch with all parameters and request content, and how to parse the result.
+This sample shows how to call Fetch with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
+});
+Response response = client.Fetch("<solutionId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdateAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", content);
 BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-var data = new {
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdate(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-};
-
-var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", content);
 BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-var data = new {
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
     requestPath = "<requestPath>",
-    partnerRequestBody = new {
-        key = new {},
+    partnerRequestBody = new
+    {
+        key = new object(),
     },
-};
-
-var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("<key>").ToString());
+]]></code></example>
     </member>
   </members>
 </doc>

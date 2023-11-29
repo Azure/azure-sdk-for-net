@@ -5,19 +5,17 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogSensitivityUpdate. </summary>
     internal partial class DialogSensitivityUpdateInternal
     {
-        /// <summary> Initializes a new instance of DialogSensitivityUpdateInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogSensitivityUpdateInternal"/>. </summary>
         internal DialogSensitivityUpdateInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogSensitivityUpdateInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogSensitivityUpdateInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

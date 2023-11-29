@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A response. </summary>
     public partial class LogicWorkflowResponse
     {
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         public LogicWorkflowResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the response. </param>
         /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="bodyLink"> Details on the location of the body content. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetElasticSan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetElasticSan method.
     /// </summary>
     public partial class ElasticSanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}";
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanResource(ArmClient client, ElasticSanData data) : this(client, data.Id)
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanVolumeGroupResources and their operations over a ElasticSanVolumeGroupResource. </returns>
         public virtual ElasticSanVolumeGroupCollection GetElasticSanVolumeGroups()
         {
-            return GetCachedClient(Client => new ElasticSanVolumeGroupCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanVolumeGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanVolumeGroupResource>> GetElasticSanVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanVolumeGroupResource> GetElasticSanVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanPrivateEndpointConnectionResources and their operations over a ElasticSanPrivateEndpointConnectionResource. </returns>
         public virtual ElasticSanPrivateEndpointConnectionCollection GetElasticSanPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ElasticSanPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +172,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the Private Endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanPrivateEndpointConnectionResource>> GetElasticSanPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -192,8 +195,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the Private Endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanPrivateEndpointConnectionResource> GetElasticSanPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -422,7 +425,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -443,7 +446,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

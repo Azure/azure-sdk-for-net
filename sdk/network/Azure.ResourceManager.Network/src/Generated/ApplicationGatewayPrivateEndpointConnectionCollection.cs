@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ApplicationGatewayResource" />.
-    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection" /> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ApplicationGatewayResource" />.
+    /// A class representing a collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ApplicationGatewayResource"/>.
+    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ApplicationGatewayResource"/>.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>, IAsyncEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApplicationGatewayPrivateEndpointConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _applicationGatewayPrivateEndpointConnectionClientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _applicationGatewayPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the application gateway private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual NullableResponse<ApplicationGatewayPrivateEndpointConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _applicationGatewayPrivateEndpointConnectionClientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _applicationGatewayPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

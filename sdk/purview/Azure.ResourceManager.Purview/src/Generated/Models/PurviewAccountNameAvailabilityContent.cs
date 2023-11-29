@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The request payload for CheckNameAvailability API. </summary>
     public partial class PurviewAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityContent"/>. </summary>
         public PurviewAccountNameAvailabilityContent()
         {
         }

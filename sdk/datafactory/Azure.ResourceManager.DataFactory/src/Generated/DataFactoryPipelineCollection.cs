@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryPipelineResource" /> and their operations.
-    /// Each <see cref="DataFactoryPipelineResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryPipelineCollection" /> instance call the GetDataFactoryPipelines method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryPipelineResource"/> and their operations.
+    /// Each <see cref="DataFactoryPipelineResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryPipelineCollection"/> instance call the GetDataFactoryPipelines method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryPipelineCollection : ArmCollection, IEnumerable<DataFactoryPipelineResource>, IAsyncEnumerable<DataFactoryPipelineResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPipelineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPipelineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPipelineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPipelineResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -321,6 +321,82 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _dataFactoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pipelines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryPipelineResource>> GetIfExistsAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
+
+            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryPipelinePipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryPipelineResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pipelines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryPipelineResource> GetIfExists(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
+
+            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryPipelineResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List VMSS VM Extension operation response. </summary>
     internal partial class VirtualMachineScaleSetVmExtensionsListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsListResult"/>. </summary>
         internal VirtualMachineScaleSetVmExtensionsListResult()
         {
             Value = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsListResult"/>. </summary>
         /// <param name="value"> The list of VMSS VM extensions. </param>
         internal VirtualMachineScaleSetVmExtensionsListResult(IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value)
         {

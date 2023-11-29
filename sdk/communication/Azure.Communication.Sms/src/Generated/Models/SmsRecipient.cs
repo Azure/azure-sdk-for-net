@@ -13,7 +13,7 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Recipient details for sending SMS messages. </summary>
     internal partial class SmsRecipient
     {
-        /// <summary> Initializes a new instance of SmsRecipient. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
         /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public SmsRecipient(string to)

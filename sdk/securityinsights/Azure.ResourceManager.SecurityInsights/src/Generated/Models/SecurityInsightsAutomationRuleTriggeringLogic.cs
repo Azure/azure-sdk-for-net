@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes automation rule triggering logic. </summary>
     public partial class SecurityInsightsAutomationRuleTriggeringLogic
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleTriggeringLogic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
         /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
         /// <param name="triggersOn"></param>
         /// <param name="triggersWhen"></param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Conditions = new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleTriggeringLogic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
         /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
         /// <param name="expireOn"> Determines when the automation rule should automatically expire and be disabled. </param>
         /// <param name="triggersOn"></param>

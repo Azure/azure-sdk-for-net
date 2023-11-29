@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The collection of tasks. </summary>
     internal partial class ContainerRegistryTaskListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskListResult"/>. </summary>
         internal ContainerRegistryTaskListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryTaskData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal ContainerRegistryTaskListResult(IReadOnlyList<ContainerRegistryTaskData> value, string nextLink)

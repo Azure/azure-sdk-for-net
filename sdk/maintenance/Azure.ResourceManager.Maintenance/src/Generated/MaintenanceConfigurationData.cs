@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenanceConfigurationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MaintenanceConfigurationData(AzureLocation location) : base(location)
         {
             ExtensionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,10 +67,6 @@ namespace Azure.ResourceManager.Maintenance
         public MaintenanceConfigurationVisibility? Visibility { get; set; }
         /// <summary> The input parameters to be passed to the patch run operation. </summary>
         public MaintenancePatchConfiguration InstallPatches { get; set; }
-        /// <summary> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </summary>
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </summary>
         public TimeSpan? Duration { get; set; }
         /// <summary> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </summary>

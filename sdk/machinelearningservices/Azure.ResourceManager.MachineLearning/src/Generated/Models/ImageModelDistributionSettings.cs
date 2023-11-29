@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Distribution expressions to sweep over values of model settings.
     /// &lt;example&gt;
     /// Some examples are:
-    /// &lt;code&gt;
+    /// ```
     /// ModelName = "choice('seresnext', 'resnest50')";
     /// LearningRate = "uniform(0.001, 0.01)";
     /// LayersToFreeze = "choice(0, 2)";
-    /// &lt;/code&gt;&lt;/example&gt;
+    /// ```&lt;/example&gt;
     /// All distributions can be specified as distribution_name(min, max) or choice(val1, val2, ..., valn)
     /// where distribution name can be: uniform, quniform, loguniform, etc
     /// For more details on how to compose distribution expressions please check the documentation:
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettings"/>. </summary>
         public ImageModelDistributionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettings"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>

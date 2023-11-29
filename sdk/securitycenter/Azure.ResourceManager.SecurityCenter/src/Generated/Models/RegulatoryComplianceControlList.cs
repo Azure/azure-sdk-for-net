@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of regulatory compliance controls response. </summary>
     internal partial class RegulatoryComplianceControlList
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlList"/>. </summary>
         /// <param name="value"> List of regulatory compliance controls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RegulatoryComplianceControlList(IEnumerable<RegulatoryComplianceControlData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlList"/>. </summary>
         /// <param name="value"> List of regulatory compliance controls. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal RegulatoryComplianceControlList(IReadOnlyList<RegulatoryComplianceControlData> value, string nextLink)

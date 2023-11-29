@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSqlPoolResource" /> and their operations.
-    /// Each <see cref="SynapseSqlPoolResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseSqlPoolCollection" /> instance call the GetSynapseSqlPools method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseSqlPoolResource"/> and their operations.
+    /// Each <see cref="SynapseSqlPoolResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseSqlPoolCollection"/> instance call the GetSynapseSqlPools method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseSqlPoolCollection : ArmCollection, IEnumerable<SynapseSqlPoolResource>, IAsyncEnumerable<SynapseSqlPoolResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseSqlPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSqlPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseSqlPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSqlPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sqlPoolName"> SQL pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseSqlPoolResource>> GetIfExistsAsync(string sqlPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+
+            using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseSqlPoolSqlPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sqlPoolName"> SQL pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
+        public virtual NullableResponse<SynapseSqlPoolResource> GetIfExists(string sqlPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+
+            using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseSqlPoolSqlPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

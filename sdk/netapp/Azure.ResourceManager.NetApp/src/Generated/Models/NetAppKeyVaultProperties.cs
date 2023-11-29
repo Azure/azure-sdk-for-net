@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Properties of key vault. </summary>
     public partial class NetAppKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyVaultResourceId = keyVaultResourceId;
         }
 
-        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>

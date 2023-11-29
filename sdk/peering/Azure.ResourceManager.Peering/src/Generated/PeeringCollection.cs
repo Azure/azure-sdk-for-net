@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeeringResource" /> and their operations.
-    /// Each <see cref="PeeringResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PeeringCollection" /> instance call the GetPeerings method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PeeringResource"/> and their operations.
+    /// Each <see cref="PeeringResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PeeringCollection"/> instance call the GetPeerings method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PeeringCollection : ArmCollection, IEnumerable<PeeringResource>, IAsyncEnumerable<PeeringResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.Peering
             {
                 var response = _peeringRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, peeringName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PeeringResource>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+
+            using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _peeringRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, peeringName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        public virtual NullableResponse<PeeringResource> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+
+            using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _peeringRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, peeringName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

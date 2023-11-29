@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
     /// A Class representing a GitHubRepo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GitHubRepoResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGitHubRepoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GitHubOwnerResource" /> using the GetGitHubRepo method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GitHubRepoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGitHubRepoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GitHubOwnerResource"/> using the GetGitHubRepo method.
     /// </summary>
     public partial class GitHubRepoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GitHubRepoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gitHubConnectorName"> The gitHubConnectorName. </param>
+        /// <param name="gitHubOwnerName"> The gitHubOwnerName. </param>
+        /// <param name="gitHubRepoName"> The gitHubRepoName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}/repos/{gitHubRepoName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GitHubRepoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GitHubRepoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GitHubRepoResource(ArmClient client, GitHubRepoData data) : this(client, data.Id)

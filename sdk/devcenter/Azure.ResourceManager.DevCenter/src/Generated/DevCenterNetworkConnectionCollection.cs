@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterNetworkConnectionResource" /> and their operations.
-    /// Each <see cref="DevCenterNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DevCenterNetworkConnectionCollection" /> instance call the GetDevCenterNetworkConnections method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DevCenterNetworkConnectionResource"/> and their operations.
+    /// Each <see cref="DevCenterNetworkConnectionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DevCenterNetworkConnectionCollection"/> instance call the GetDevCenterNetworkConnections method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DevCenterNetworkConnectionCollection : ArmCollection, IEnumerable<DevCenterNetworkConnectionResource>, IAsyncEnumerable<DevCenterNetworkConnectionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterNetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterNetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterNetworkConnectionResource>> GetIfExistsAsync(string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterNetworkConnectionResource> GetIfExists(string networkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            using var scope = _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics.CreateScope("DevCenterNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

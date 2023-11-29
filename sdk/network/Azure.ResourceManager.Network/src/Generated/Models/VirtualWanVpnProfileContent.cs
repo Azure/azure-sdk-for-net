@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Virtual Wan Vpn profile parameters Vpn profile generation. </summary>
     public partial class VirtualWanVpnProfileContent
     {
-        /// <summary> Initializes a new instance of VirtualWanVpnProfileContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
         public VirtualWanVpnProfileContent()
         {
         }

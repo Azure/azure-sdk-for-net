@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
     public partial class ContainerAppOpenIdConnectConfig
     {
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectConfig"/>. </summary>
         public ContainerAppOpenIdConnectConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectConfig"/>. </summary>
         /// <param name="authorizationEndpoint"> The endpoint to be used to make an authorization request. </param>
         /// <param name="tokenEndpoint"> The endpoint to be used to request a token. </param>
         /// <param name="issuer"> The endpoint that issues the token. </param>

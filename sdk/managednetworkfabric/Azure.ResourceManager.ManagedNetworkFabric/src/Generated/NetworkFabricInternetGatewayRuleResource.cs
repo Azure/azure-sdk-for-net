@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricInternetGatewayRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricInternetGatewayRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricInternetGatewayRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricInternetGatewayRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricInternetGatewayRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricInternetGatewayRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricInternetGatewayRule method.
     /// </summary>
     public partial class NetworkFabricInternetGatewayRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricInternetGatewayRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="internetGatewayRuleName"> The internetGatewayRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string internetGatewayRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricInternetGatewayRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternetGatewayRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricInternetGatewayRuleResource(ArmClient client, NetworkFabricInternetGatewayRuleData data) : this(client, data.Id)

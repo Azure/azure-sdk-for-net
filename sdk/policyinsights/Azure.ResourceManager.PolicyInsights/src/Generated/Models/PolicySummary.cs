@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Summary results. </summary>
     public partial class PolicySummary
     {
-        /// <summary> Initializes a new instance of PolicySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySummary"/>. </summary>
         internal PolicySummary()
         {
             PolicyAssignments = new ChangeTrackingList<PolicyAssignmentSummary>();
         }
 
-        /// <summary> Initializes a new instance of PolicySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySummary"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>

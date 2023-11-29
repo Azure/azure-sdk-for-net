@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Evaluation details of policy language expressions. </summary>
     public partial class ExpressionEvaluationDetails
     {
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         internal ExpressionEvaluationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

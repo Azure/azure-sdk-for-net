@@ -40,6 +40,7 @@
 - [BREAKING CHANGE] Renamed `SingleTransferCompletedEventArgs` to `TransferItemCompletedEventArgs`
 - [BREAKING CHANGE] Renamed `TransferItemFailedEventArgs` to `TransferItemFailedEventArgs`
 - [BREAKING CHANGE] Renamed `TransferItemSkippedEventArgs` to `TransferItemSkippedEventArgs`
+- [BREAKING CHANGE] Renamed `TransferStatusEventArgs.StorageTransferStatus` to `TransferStatus`
 - [BREAKING CHANGE] Renamed `StorageResourceSingle` to `StorageResourceItem`
 - [BREAKING CHANGE] Renamed `StorageResourceItem.WriteFromStreamAsync` to `CopyFromStreamAsync`
 - [BREAKING CHANGE] Renamed `StorageResourceContainer.GetChildStorageResource` to `StorageResourceContainer.GetStorageResourceReference`
@@ -49,10 +50,11 @@
 - [BREAKING CHANGE] Renamed `ErrorHandlingBehavior` to `DataTransferErrorMode`
 - [BREAKING CHANGE] Renamed `DataTransferErrorMode.StopOnAnyFailures` to `StopOnAnyFailure`
 - [BREAKING CHANGE] Renamed `TransferType` to `DataTransferOrder`
-- [BREAKING CHANGE] Renamed `DataTransferOrder.Unordered` to `Unordered`
+- [BREAKING CHANGE] Renamed `DataTransferOrder.Concurrent` to `Unordered`
 - [BREAKING CHANGE] Renamed `StorageTransferStatus` to `DataTransferStatus`
+- [BREAKING CHANGE] Changed `DataTransferStatus` from `enum` to a `class`.
 - [BREAKING CHANGE] Renamed `StorageResourceCreateMode` to `StorageResourceCreationPreference`.
-- [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists` and `Skip` to `SkipIfExists`. `None` was removed, use `FailIfExists` instead.
+- [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists`, `Skip` to `SkipIfExists` and `None` to `Default` which will default to `FailIfExists`.
 - [BREAKING CHANGE] Renamed `DataTransferOptions.CreateMode` to `CreationPreference`.
 - [BREAKING CHANGE] Changed `StorageTransferProgress` constructor from `public` to `protected internal`. 
 - [BREAKING CHANGE] Renamed `StorageTransferProgress` to `DataTransferProgress`.
@@ -65,6 +67,7 @@
 - [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 
 ### Bugs Fixed
+- Fixed bug where if a transfer was in a failed state, and during clean up an exception was thrown the transfer would throw or hang.
 
 ### Other Changes
 

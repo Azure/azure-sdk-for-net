@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger custom dynamic tree parameter. </summary>
     public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         public SwaggerCustomDynamicTreeParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

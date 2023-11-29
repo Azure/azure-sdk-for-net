@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represent a parameter with constrains and metadata. </summary>
     public partial class ParameterDefinition
     {
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
         /// <param name="templateParameterType"> Allowed data types for Resource Manager template parameters. </param>
         public ParameterDefinition(TemplateParameterType templateParameterType)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
         /// <param name="templateParameterType"> Allowed data types for Resource Manager template parameters. </param>
         /// <param name="defaultValue"> Default Value for this parameter. </param>
         /// <param name="allowedValues"> Array of allowed values for this parameter. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

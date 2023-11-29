@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a node type sku. </summary>
     public partial class NodeTypeSku
     {
-        /// <summary> Initializes a new instance of NodeTypeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSku"/>. </summary>
         /// <param name="capacity"> The number of nodes in the node type.&lt;br /&gt;&lt;br /&gt;If present in request it will override properties.vmInstanceCount. </param>
         public NodeTypeSku(int capacity)
         {
             Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of NodeTypeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSku"/>. </summary>
         /// <param name="name"> The sku name. &lt;br /&gt;&lt;br /&gt;Name is internally generated and is used in auto-scale scenarios.&lt;br /&gt; Property does not allow to be changed to other values than generated.&lt;br /&gt; To avoid deployment errors please omit the property. </param>
         /// <param name="tier"> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </param>
         /// <param name="capacity"> The number of nodes in the node type.&lt;br /&gt;&lt;br /&gt;If present in request it will override properties.vmInstanceCount. </param>

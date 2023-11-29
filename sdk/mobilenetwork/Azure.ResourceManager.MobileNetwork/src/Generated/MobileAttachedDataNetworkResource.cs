@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileAttachedDataNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileAttachedDataNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileAttachedDataNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PacketCoreDataPlaneResource" /> using the GetMobileAttachedDataNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileAttachedDataNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileAttachedDataNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PacketCoreDataPlaneResource"/> using the GetMobileAttachedDataNetwork method.
     /// </summary>
     public partial class MobileAttachedDataNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileAttachedDataNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
+        /// <param name="packetCoreDataPlaneName"> The packetCoreDataPlaneName. </param>
+        /// <param name="attachedDataNetworkName"> The attachedDataNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}";
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileAttachedDataNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileAttachedDataNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileAttachedDataNetworkResource(ArmClient client, MobileAttachedDataNetworkData data) : this(client, data.Id)

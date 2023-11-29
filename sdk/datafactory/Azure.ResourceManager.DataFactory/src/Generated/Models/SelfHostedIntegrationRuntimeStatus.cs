@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Self-hosted integration runtime status. </summary>
     public partial class SelfHostedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeStatus"/>. </summary>
         internal SelfHostedIntegrationRuntimeStatus()
         {
             Nodes = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pushedVersion"> The version that the integration runtime is going to update to. </param>
         /// <param name="latestVersion"> The latest version on download center. </param>
         /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUriStringList, IntegrationRuntimeAutoUpdateState? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        /// <param name="isSelfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUriStringList, IntegrationRuntimeAutoUpdateState? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta, bool? isSelfContainedInteractiveAuthoringEnabled) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
             AutoUpdateEta = autoUpdateEta;
+            IsSelfContainedInteractiveAuthoringEnabled = isSelfContainedInteractiveAuthoringEnabled;
             RuntimeType = runtimeType;
         }
 
@@ -98,5 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string LatestVersion { get; }
         /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
         public DateTimeOffset? AutoUpdateEta { get; }
+        /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
+        public bool? IsSelfContainedInteractiveAuthoringEnabled { get; }
     }
 }

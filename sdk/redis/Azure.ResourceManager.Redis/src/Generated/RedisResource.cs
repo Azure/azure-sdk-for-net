@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// A Class representing a Redis along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RedisResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRedisResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRedis method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRedisResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRedis method.
     /// </summary>
     public partial class RedisResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RedisResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}";
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.Redis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RedisResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisResource(ArmClient client, RedisData data) : this(client, data.Id)
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisFirewallRuleResources and their operations over a RedisFirewallRuleResource. </returns>
         public virtual RedisFirewallRuleCollection GetRedisFirewallRules()
         {
-            return GetCachedClient(Client => new RedisFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new RedisFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisFirewallRuleResource>> GetRedisFirewallRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisFirewallRuleResource> GetRedisFirewallRule(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisPatchScheduleResources and their operations over a RedisPatchScheduleResource. </returns>
         public virtual RedisPatchScheduleCollection GetRedisPatchSchedules()
         {
-            return GetCachedClient(Client => new RedisPatchScheduleCollection(Client, Id));
+            return GetCachedClient(client => new RedisPatchScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -200,7 +203,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisLinkedServerWithPropertyResources and their operations over a RedisLinkedServerWithPropertyResource. </returns>
         public virtual RedisLinkedServerWithPropertyCollection GetRedisLinkedServerWithProperties()
         {
-            return GetCachedClient(Client => new RedisLinkedServerWithPropertyCollection(Client, Id));
+            return GetCachedClient(client => new RedisLinkedServerWithPropertyCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +221,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="linkedServerName"> The name of the linked server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisLinkedServerWithPropertyResource>> GetRedisLinkedServerWithPropertyAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +244,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="linkedServerName"> The name of the linked server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisLinkedServerWithPropertyResource> GetRedisLinkedServerWithProperty(string linkedServerName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +256,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisPrivateEndpointConnectionResources and their operations over a RedisPrivateEndpointConnectionResource. </returns>
         public virtual RedisPrivateEndpointConnectionCollection GetRedisPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new RedisPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new RedisPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -271,8 +274,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisPrivateEndpointConnectionResource>> GetRedisPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -294,8 +297,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisPrivateEndpointConnectionResource> GetRedisPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -525,7 +528,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisUpgradeNotification"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisUpgradeNotification> GetUpgradeNotificationsAsync(double history, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
@@ -548,7 +551,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisUpgradeNotification"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisUpgradeNotification> GetUpgradeNotifications(double history, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
@@ -918,7 +921,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCacheAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -939,7 +942,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCache(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

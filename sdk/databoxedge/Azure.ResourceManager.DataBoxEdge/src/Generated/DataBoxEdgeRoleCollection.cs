@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeRoleResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeRoleResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeRoleCollection" /> instance call the GetDataBoxEdgeRoles method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeRoleResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeRoleResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeRoleCollection"/> instance call the GetDataBoxEdgeRoles method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeRoleCollection : ArmCollection, IEnumerable<DataBoxEdgeRoleResource>, IAsyncEnumerable<DataBoxEdgeRoleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeRoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeRoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 var response = _dataBoxEdgeRoleRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataBoxEdgeRoleResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxEdgeRoleRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DataBoxEdgeRoleResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxEdgeRoleRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeRoleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

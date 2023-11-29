@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LocalRulestackResource" /> and their operations.
-    /// Each <see cref="LocalRulestackResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="LocalRulestackCollection" /> instance call the GetLocalRulestacks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="LocalRulestackResource"/> and their operations.
+    /// Each <see cref="LocalRulestackResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LocalRulestackCollection"/> instance call the GetLocalRulestacks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LocalRulestackCollection : ArmCollection, IEnumerable<LocalRulestackResource>, IAsyncEnumerable<LocalRulestackResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 var response = _localRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LocalRulestackResource>> GetIfExistsAsync(string localRulestackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+
+            using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _localRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
+        public virtual NullableResponse<LocalRulestackResource> GetIfExists(string localRulestackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+
+            using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _localRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

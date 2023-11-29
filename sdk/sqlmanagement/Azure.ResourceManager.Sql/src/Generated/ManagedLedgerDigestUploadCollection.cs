@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedLedgerDigestUploadResource" /> and their operations.
-    /// Each <see cref="ManagedLedgerDigestUploadResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedLedgerDigestUploadCollection" /> instance call the GetManagedLedgerDigestUploads method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedLedgerDigestUploadResource"/> and their operations.
+    /// Each <see cref="ManagedLedgerDigestUploadResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedLedgerDigestUploadCollection"/> instance call the GetManagedLedgerDigestUploads method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedLedgerDigestUploadCollection : ArmCollection, IEnumerable<ManagedLedgerDigestUploadResource>, IAsyncEnumerable<ManagedLedgerDigestUploadResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedLedgerDigestUploadResource>> GetAsync(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedLedgerDigestUploadResource> Get(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedLedgerDigestUploadResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedLedgerDigestUploadResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedLedgerDigestUploadResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedLedgerDigestUploadResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedLedgerDigestUploadResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedLedgerDigestUploadResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
@@ -296,6 +296,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedLedgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedLedgerDigestUploadResource>> GetIfExistsAsync(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedLedgerDigestUploadClientDiagnostics.CreateScope("ManagedLedgerDigestUploadCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedLedgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedLedgerDigestUploadResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The <see cref="ManagedLedgerDigestUploadsName"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedLedgerDigestUploadResource> GetIfExists(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedLedgerDigestUploadClientDiagnostics.CreateScope("ManagedLedgerDigestUploadCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedLedgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedLedgerDigestUploadResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

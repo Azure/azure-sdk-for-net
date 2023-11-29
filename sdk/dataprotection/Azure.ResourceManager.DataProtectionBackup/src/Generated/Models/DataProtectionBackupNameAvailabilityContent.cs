@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> CheckNameAvailability Request. </summary>
     public partial class DataProtectionBackupNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityContent"/>. </summary>
         public DataProtectionBackupNameAvailabilityContent()
         {
         }

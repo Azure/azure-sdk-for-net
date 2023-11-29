@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HardwareSecurityModulesPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<HardwareSecurityModulesPrivateLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    List<HardwareSecurityModulesPrivateLinkResource> array = new List<HardwareSecurityModulesPrivateLinkResource>();
+                    List<HardwareSecurityModulesPrivateLinkData> array = new List<HardwareSecurityModulesPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareSecurityModulesPrivateLinkResource.DeserializeHardwareSecurityModulesPrivateLinkResource(item));
+                        array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item));
                     }
                     value = array;
                     continue;

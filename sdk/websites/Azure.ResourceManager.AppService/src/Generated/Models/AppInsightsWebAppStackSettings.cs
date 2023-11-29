@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> App Insights Web App stack settings. </summary>
     public partial class AppInsightsWebAppStackSettings
     {
-        /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
         internal AppInsightsWebAppStackSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff)

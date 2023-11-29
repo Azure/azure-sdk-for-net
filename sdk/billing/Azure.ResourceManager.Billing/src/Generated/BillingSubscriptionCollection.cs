@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingSubscriptionResource" /> and their operations.
-    /// Each <see cref="BillingSubscriptionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingSubscriptionCollection" /> instance call the GetBillingSubscriptions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingSubscriptionResource"/> and their operations.
+    /// Each <see cref="BillingSubscriptionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingSubscriptionCollection"/> instance call the GetBillingSubscriptions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingSubscriptionCollection : ArmCollection, IEnumerable<BillingSubscriptionResource>, IAsyncEnumerable<BillingSubscriptionResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
@@ -239,6 +239,80 @@ namespace Azure.ResourceManager.Billing
             {
                 var response = _billingSubscriptionRestClient.Get(_billingAccountName, billingSubscriptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+
+            using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingSubscriptionRestClient.GetAsync(_billingAccountName, billingSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        public virtual NullableResponse<BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+
+            using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingSubscriptionRestClient.Get(_billingAccountName, billingSubscriptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Information about a pipeline run. </summary>
     public partial class DataFactoryPipelineRunInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunInfo"/>. </summary>
         internal DataFactoryPipelineRunInfo()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunInfo"/>. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <param name="runGroupId"> Identifier that correlates all the recovery runs of a pipeline run. </param>
         /// <param name="isLatest"> Indicates if the recovered pipeline run is the latest in its group. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

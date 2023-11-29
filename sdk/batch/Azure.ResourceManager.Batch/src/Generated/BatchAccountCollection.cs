@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountResource" /> and their operations.
-    /// Each <see cref="BatchAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BatchAccountCollection" /> instance call the GetBatchAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BatchAccountResource"/> and their operations.
+    /// Each <see cref="BatchAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BatchAccountCollection"/> instance call the GetBatchAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BatchAccountCollection : ArmCollection, IEnumerable<BatchAccountResource>, IAsyncEnumerable<BatchAccountResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.Batch
             {
                 var response = _batchAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BatchAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _batchAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BatchAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        public virtual NullableResponse<BatchAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _batchAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BatchAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

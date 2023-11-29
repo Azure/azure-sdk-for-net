@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SSL certificates of an application gateway. </summary>
     public partial class ApplicationGatewaySslCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         public ApplicationGatewaySslCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

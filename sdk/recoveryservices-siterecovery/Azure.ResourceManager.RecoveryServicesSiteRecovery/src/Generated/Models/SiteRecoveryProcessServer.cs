@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the Process Server. </summary>
     public partial class SiteRecoveryProcessServer
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServer"/>. </summary>
         internal SiteRecoveryProcessServer()
         {
             MobilityServiceUpdates = new ChangeTrackingList<MobilityServiceUpdate>();
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServer"/>. </summary>
         /// <param name="friendlyName"> The Process Server's friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>

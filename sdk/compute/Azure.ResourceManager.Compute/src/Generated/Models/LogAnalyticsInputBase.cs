@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Api input base class for LogAnalytics Api. </summary>
     public partial class LogAnalyticsInputBase
     {
-        /// <summary> Initializes a new instance of LogAnalyticsInputBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsInputBase"/>. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>

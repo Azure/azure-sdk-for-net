@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationServiceEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationServiceEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationServiceEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIntegrationServiceEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationServiceEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationServiceEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIntegrationServiceEnvironment method.
     /// </summary>
     public partial class IntegrationServiceEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationServiceEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroup"> The resourceGroup. </param>
+        /// <param name="integrationServiceEnvironmentName"> The integrationServiceEnvironmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}";
@@ -48,7 +51,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationServiceEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationServiceEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationServiceEnvironmentResource(ArmClient client, IntegrationServiceEnvironmentData data) : this(client, data.Id)
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationServiceEnvironmentManagedApiResources and their operations over a IntegrationServiceEnvironmentManagedApiResource. </returns>
         public virtual IntegrationServiceEnvironmentManagedApiCollection GetIntegrationServiceEnvironmentManagedApis()
         {
-            return GetCachedClient(Client => new IntegrationServiceEnvironmentManagedApiCollection(Client, Id));
+            return GetCachedClient(client => new IntegrationServiceEnvironmentManagedApiCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +123,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="apiName"> The api name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> GetIntegrationServiceEnvironmentManagedApiAsync(string apiName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +146,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="apiName"> The api name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> GetIntegrationServiceEnvironmentManagedApi(string apiName, CancellationToken cancellationToken = default)
         {
@@ -433,7 +436,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationServiceEnvironmentSkuDefinition> GetIntegrationServiceEnvironmentSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -455,7 +458,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationServiceEnvironmentSkuDefinition> GetIntegrationServiceEnvironmentSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

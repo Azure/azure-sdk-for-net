@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownDataFlow. </summary>
     internal partial class UnknownDataFlow : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of UnknownDataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>

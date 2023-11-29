@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update protected item input properties. </summary>
     public partial class UpdateReplicationProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of UpdateReplicationProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateReplicationProtectedItemProperties"/>. </summary>
         public UpdateReplicationProtectedItemProperties()
         {
             VmNics = new ChangeTrackingList<VmNicContentDetails>();

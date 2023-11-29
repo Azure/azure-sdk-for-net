@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownTriggerContext. </summary>
     internal partial class UnknownTriggerContext : DataProtectionBackupTriggerContext
     {
-        /// <summary> Initializes a new instance of UnknownTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownTriggerContext(string objectType) : base(objectType)
         {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileAttachedDataNetworkResource" /> and their operations.
-    /// Each <see cref="MobileAttachedDataNetworkResource" /> in the collection will belong to the same instance of <see cref="PacketCoreDataPlaneResource" />.
-    /// To get a <see cref="MobileAttachedDataNetworkCollection" /> instance call the GetMobileAttachedDataNetworks method from an instance of <see cref="PacketCoreDataPlaneResource" />.
+    /// A class representing a collection of <see cref="MobileAttachedDataNetworkResource"/> and their operations.
+    /// Each <see cref="MobileAttachedDataNetworkResource"/> in the collection will belong to the same instance of <see cref="PacketCoreDataPlaneResource"/>.
+    /// To get a <see cref="MobileAttachedDataNetworkCollection"/> instance call the GetMobileAttachedDataNetworks method from an instance of <see cref="PacketCoreDataPlaneResource"/>.
     /// </summary>
     public partial class MobileAttachedDataNetworkCollection : ArmCollection, IEnumerable<MobileAttachedDataNetworkResource>, IAsyncEnumerable<MobileAttachedDataNetworkResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileAttachedDataNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileAttachedDataNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileAttachedDataNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileAttachedDataNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileAttachedDataNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileAttachedDataNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileAttachedDataNetworkAttachedDataNetworksRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileAttachedDataNetworkAttachedDataNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedDataNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileAttachedDataNetworkResource>> GetIfExistsAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+
+            using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileAttachedDataNetworkAttachedDataNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileAttachedDataNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileAttachedDataNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedDataNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
+        public virtual NullableResponse<MobileAttachedDataNetworkResource> GetIfExists(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+
+            using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileAttachedDataNetworkAttachedDataNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileAttachedDataNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileAttachedDataNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

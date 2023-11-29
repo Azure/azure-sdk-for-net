@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Group contract Properties. </summary>
     public partial class GroupContractProperties
     {
-        /// <summary> Initializes a new instance of GroupContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         internal GroupContractProperties(string displayName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DisplayName = displayName;
         }
 
-        /// <summary> Initializes a new instance of GroupContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
         /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ScriptExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         public ScriptExecutionData()
         {
             Parameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs
             Errors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Avs
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container resource requirements. </summary>
     public partial class AppContainerResources
     {
-        /// <summary> Initializes a new instance of AppContainerResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainerResources"/>. </summary>
         public AppContainerResources()
         {
         }
 
-        /// <summary> Initializes a new instance of AppContainerResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainerResources"/>. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A Class representing a HardwareSecurityModulesPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHardwareSecurityModulesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CloudHsmClusterResource" /> using the GetHardwareSecurityModulesPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHardwareSecurityModulesPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CloudHsmClusterResource"/> using the GetHardwareSecurityModulesPrivateEndpointConnection method.
     /// </summary>
     public partial class HardwareSecurityModulesPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudHsmClusterName"> The cloudHsmClusterName. </param>
+        /// <param name="peConnectionName"> The peConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HardwareSecurityModulesPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HardwareSecurityModulesPrivateEndpointConnectionResource(ArmClient client, HardwareSecurityModulesPrivateEndpointConnectionData data) : this(client, data.Id)

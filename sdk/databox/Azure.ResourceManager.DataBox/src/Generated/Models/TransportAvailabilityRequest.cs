@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the transport availability for given sku. </summary>
     internal partial class TransportAvailabilityRequest
     {
-        /// <summary> Initializes a new instance of TransportAvailabilityRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityRequest"/>. </summary>
         public TransportAvailabilityRequest()
         {
         }

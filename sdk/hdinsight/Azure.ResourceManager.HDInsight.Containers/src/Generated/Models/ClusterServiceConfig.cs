@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster configs per component. </summary>
     public partial class ClusterServiceConfig
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfig"/>. </summary>
         /// <param name="component"> Name of the component the config files should apply to. </param>
         /// <param name="files"> List of Config Files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="component"/> or <paramref name="files"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Files = files.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfig"/>. </summary>
         /// <param name="component"> Name of the component the config files should apply to. </param>
         /// <param name="files"> List of Config Files. </param>
         internal ClusterServiceConfig(string component, IList<ClusterConfigFile> files)

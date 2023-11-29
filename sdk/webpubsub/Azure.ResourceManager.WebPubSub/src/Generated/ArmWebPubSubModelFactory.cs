@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWebPubSubModelFactory
     {
-        /// <summary> Initializes a new instance of WebPubSubNameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubNameAvailability"/>. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubNameAvailability(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRServiceUsage"/>. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new SignalRServiceUsage(id, currentValue, limit, name, unit);
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRServiceUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         /// <returns> A new <see cref="Models.SignalRServiceUsageName"/> instance for mocking. </returns>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new SignalRServiceUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubData(id, name, resourceType, systemData, tags, location, sku, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new WebPubSubTlsSettings(isClientCertEnabled) : null, hostNamePrefix, liveTraceConfiguration, resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList()) : null, networkAcls, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled);
         }
 
-        /// <summary> Initializes a new instance of BillingInfoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new BillingInfoSku(name, tier, size, family, capacity);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? new PrivateEndpoint(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubSharedPrivateLinkData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubHubData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubPrivateLink"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubPrivateLink(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubSku(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubSkuCapacity"/>. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>

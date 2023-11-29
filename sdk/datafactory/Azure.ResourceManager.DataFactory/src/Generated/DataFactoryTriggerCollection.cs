@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryTriggerResource" /> and their operations.
-    /// Each <see cref="DataFactoryTriggerResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryTriggerCollection" /> instance call the GetDataFactoryTriggers method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryTriggerResource"/> and their operations.
+    /// Each <see cref="DataFactoryTriggerResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryTriggerCollection"/> instance call the GetDataFactoryTriggers method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryTriggerCollection : ArmCollection, IEnumerable<DataFactoryTriggerResource>, IAsyncEnumerable<DataFactoryTriggerResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -321,6 +321,82 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _dataFactoryTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryTriggerResource>> GetIfExistsAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryTriggerResource> GetIfExists(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, ifNoneMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

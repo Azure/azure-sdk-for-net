@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Customer retrieves list of Available Contacts for a spacecraft resource. Later, one of the available contact can be selected to create a contact. </summary>
     public partial class OrbitalAvailableContact
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContact"/>. </summary>
         internal OrbitalAvailableContact()
         {
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContact"/>. </summary>
         /// <param name="spacecraft"> The reference to the spacecraft resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="maximumElevationDegrees"> Maximum elevation of the antenna during the contact in decimal degrees. </param>

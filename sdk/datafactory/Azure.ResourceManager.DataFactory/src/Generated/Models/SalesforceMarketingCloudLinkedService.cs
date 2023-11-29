@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Salesforce Marketing Cloud linked service. </summary>
     public partial class SalesforceMarketingCloudLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudLinkedService"/>. </summary>
         public SalesforceMarketingCloudLinkedService()
         {
             LinkedServiceType = "SalesforceMarketingCloud";
         }
 
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put subscription additional properties. </summary>
     public partial class SubscriptionAliasAdditionalProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasAdditionalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasAdditionalProperties"/>. </summary>
         public SubscriptionAliasAdditionalProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

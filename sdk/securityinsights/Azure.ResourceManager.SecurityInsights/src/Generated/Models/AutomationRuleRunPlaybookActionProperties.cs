@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRuleRunPlaybookActionProperties. </summary>
     public partial class AutomationRuleRunPlaybookActionProperties
     {
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
         public AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             LogicAppResourceId = logicAppResourceId;
         }
 
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <param name="tenantId"> The tenant id of the playbook resource. </param>
         internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId)

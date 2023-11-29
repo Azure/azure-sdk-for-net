@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EdgeOrderAddressResource" /> and their operations.
-    /// Each <see cref="EdgeOrderAddressResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EdgeOrderAddressCollection" /> instance call the GetEdgeOrderAddresses method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EdgeOrderAddressResource"/> and their operations.
+    /// Each <see cref="EdgeOrderAddressResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EdgeOrderAddressCollection"/> instance call the GetEdgeOrderAddresses method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeOrderAddressCollection : ArmCollection, IEnumerable<EdgeOrderAddressResource>, IAsyncEnumerable<EdgeOrderAddressResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
@@ -320,6 +320,80 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = _edgeOrderAddressRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAddressByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EdgeOrderAddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _edgeOrderAddressRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EdgeOrderAddressResource>(response.GetRawResponse());
+                return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAddressByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public virtual NullableResponse<EdgeOrderAddressResource> GetIfExists(string addressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _edgeOrderAddressRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EdgeOrderAddressResource>(response.GetRawResponse());
+                return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The tracking event. </summary>
     public partial class IntegrationAccountTrackingEvent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
         /// <param name="eventLevel"> The event level. </param>
         /// <param name="eventOn"> The event time. </param>
         /// <param name="recordType"> The record type. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ExperimentExecutionDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailData"/>. </summary>
         internal ExperimentExecutionDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

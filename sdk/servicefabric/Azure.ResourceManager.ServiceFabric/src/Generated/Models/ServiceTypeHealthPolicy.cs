@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ServiceTypeHealthPolicy
     {
-        /// <summary> Initializes a new instance of ServiceTypeHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeHealthPolicy"/>. </summary>
         public ServiceTypeHealthPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTypeHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
         ///

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The comparison rule. </summary>
     public partial class HDInsightComparisonRule
     {
-        /// <summary> Initializes a new instance of HDInsightComparisonRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightComparisonRule"/>. </summary>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold setting. </param>
         public HDInsightComparisonRule(HDInsightComparisonOperator @operator, float threshold)

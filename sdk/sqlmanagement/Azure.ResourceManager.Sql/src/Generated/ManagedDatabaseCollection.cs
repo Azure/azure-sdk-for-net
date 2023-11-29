@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDatabaseResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedDatabaseCollection" /> instance call the GetManagedDatabases method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedDatabaseResource"/> and their operations.
+    /// Each <see cref="ManagedDatabaseResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedDatabaseCollection"/> instance call the GetManagedDatabases method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedDatabaseCollection : ArmCollection, IEnumerable<ManagedDatabaseResource>, IAsyncEnumerable<ManagedDatabaseResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual NullableResponse<ManagedDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

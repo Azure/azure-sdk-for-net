@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A file containing a set of parameter values for an ARM template. </summary>
     public partial class DevTestLabParametersValueFileInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         internal DevTestLabParametersValueFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

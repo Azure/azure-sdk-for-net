@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Quota availability request content. </summary>
     public partial class NetAppQuotaAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NetAppQuotaAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
         /// <param name="name"> Name of the resource to verify. </param>
         /// <param name="availabilityResourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>

@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationJob method.
     /// </summary>
     public partial class AutomationJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomationJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}";
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationJobResource(ArmClient client, AutomationJobData data) : this(client, data.Id)
@@ -634,7 +638,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetJobStreamsAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
@@ -658,7 +662,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetJobStreams(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);

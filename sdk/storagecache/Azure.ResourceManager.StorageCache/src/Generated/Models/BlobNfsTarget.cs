@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the BlobNfsTarget. </summary>
     public partial class BlobNfsTarget
     {
-        /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobNfsTarget"/>. </summary>
         public BlobNfsTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobNfsTarget"/>. </summary>
         /// <param name="target"> Resource ID of the storage container. </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         /// <param name="verificationDelayInSeconds"> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </param>

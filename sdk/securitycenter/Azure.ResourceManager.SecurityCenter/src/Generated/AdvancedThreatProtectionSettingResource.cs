@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an AdvancedThreatProtectionSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AdvancedThreatProtectionSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAdvancedThreatProtectionSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAdvancedThreatProtectionSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdvancedThreatProtectionSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAdvancedThreatProtectionSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAdvancedThreatProtectionSetting method.
     /// </summary>
     public partial class AdvancedThreatProtectionSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdvancedThreatProtectionSettingResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current";
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AdvancedThreatProtectionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdvancedThreatProtectionSettingResource(ArmClient client, AdvancedThreatProtectionSettingData data) : this(client, data.Id)

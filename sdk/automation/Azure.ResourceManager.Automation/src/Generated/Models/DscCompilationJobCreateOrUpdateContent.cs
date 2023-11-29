@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create compilation job operation. </summary>
     public partial class DscCompilationJobCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DscCompilationJobCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
         /// <param name="configuration"> Gets or sets the configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)

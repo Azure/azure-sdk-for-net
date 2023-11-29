@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update request for an Azure SQL Database server. </summary>
     public partial class SqlServerPatch
     {
-        /// <summary> Initializes a new instance of SqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerPatch"/>. </summary>
         public SqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.Sql.Models
         public ServerExternalAdministrator Administrators { get; set; }
         /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
+        /// <summary> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        public ServerNetworkAccessFlag? IsIPv6Enabled { get; set; }
         /// <summary> Status of external governance. </summary>
         public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
     }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
     public partial class PipelineDiagnosticSettings
     {
-        /// <summary> Initializes a new instance of PipelineDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineDiagnosticSettings"/>. </summary>
         public PipelineDiagnosticSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PipelineDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineDiagnosticSettings"/>. </summary>
         /// <param name="request"> Diagnostic settings for request. </param>
         /// <param name="response"> Diagnostic settings for response. </param>
         internal PipelineDiagnosticSettings(HttpMessageDiagnostic request, HttpMessageDiagnostic response)
