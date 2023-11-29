@@ -7,19 +7,20 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class ImageAnalyzeSeverityResult
+    public partial class ImageCategoriesAnalysis
     {
-        internal static ImageAnalyzeSeverityResult DeserializeImageAnalyzeSeverityResult(JsonElement element)
+        internal static ImageCategoriesAnalysis DeserializeImageCategoriesAnalysis(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ImageCategory category = default;
-            int severity = default;
+            Optional<int> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -29,19 +30,23 @@ namespace Azure.AI.ContentSafety
                 }
                 if (property.NameEquals("severity"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     severity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ImageAnalyzeSeverityResult(category, severity);
+            return new ImageCategoriesAnalysis(category, Optional.ToNullable(severity));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageAnalyzeSeverityResult FromResponse(Response response)
+        internal static ImageCategoriesAnalysis FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageAnalyzeSeverityResult(document.RootElement);
+            return DeserializeImageCategoriesAnalysis(document.RootElement);
         }
     }
 }

@@ -5,48 +5,48 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AddBlockItemsResult
+    public partial class TextCategoriesAnalysis
     {
-        internal static AddBlockItemsResult DeserializeAddBlockItemsResult(JsonElement element)
+        internal static TextCategoriesAnalysis DeserializeTextCategoriesAnalysis(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextBlockItem>> value = default;
+            TextCategory category = default;
+            Optional<int> severity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("category"u8))
+                {
+                    category = new TextCategory(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TextBlockItem> array = new List<TextBlockItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TextBlockItem.DeserializeTextBlockItem(item));
-                    }
-                    value = array;
+                    severity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new AddBlockItemsResult(Optional.ToList(value));
+            return new TextCategoriesAnalysis(category, Optional.ToNullable(severity));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AddBlockItemsResult FromResponse(Response response)
+        internal static TextCategoriesAnalysis FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAddBlockItemsResult(document.RootElement);
+            return DeserializeTextCategoriesAnalysis(document.RootElement);
         }
     }
 }
