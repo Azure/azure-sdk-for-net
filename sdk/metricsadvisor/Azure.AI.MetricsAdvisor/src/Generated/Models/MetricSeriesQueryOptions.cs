@@ -22,6 +22,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionFilter = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
+        /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="dimensionFilter"> filter specific dimension name and values. </param>
+        internal MetricSeriesQueryOptions(DateTimeOffset activeSince, IDictionary<string, IList<string>> dimensionFilter)
+        {
+            ActiveSince = activeSince;
+            DimensionFilter = dimensionFilter;
+        }
+
         /// <summary> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </summary>
         public DateTimeOffset ActiveSince { get; }
         /// <summary> filter specific dimension name and values. </summary>

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByAllContextsPayload"/>. </summary>
+        /// <param name="subscriptionIds"> Subscription ids list. </param>
+        internal CollectionOffersByAllContextsPayload(IList<string> subscriptionIds)
+        {
+            SubscriptionIds = subscriptionIds;
+        }
+
         /// <summary> Subscription ids list. </summary>
         public IList<string> SubscriptionIds { get; }
     }

@@ -25,6 +25,25 @@ namespace Azure.ResourceManager.IotHub.Models
             ExcludeKeys = excludeKeys;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/>. </summary>
+        /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
+        /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
+        /// <param name="exportBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="identity"> Managed identity properties of storage endpoint for export devices. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
+        /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
+        internal ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys, string exportBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName)
+        {
+            ExportBlobContainerUri = exportBlobContainerUri;
+            ExcludeKeys = excludeKeys;
+            ExportBlobName = exportBlobName;
+            AuthenticationType = authenticationType;
+            Identity = identity;
+            IncludeConfigurations = includeConfigurations;
+            ConfigurationsBlobName = configurationsBlobName;
+        }
+
         /// <summary> The export blob container URI. </summary>
         public Uri ExportBlobContainerUri { get; }
         /// <summary> The value indicating whether keys should be excluded during export. </summary>

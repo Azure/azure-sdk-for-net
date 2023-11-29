@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UploadUrlContent"/>. </summary>
+        /// <param name="firmwareName"> A unique ID for the firmware to be uploaded. </param>
+        internal UploadUrlContent(string firmwareName)
+        {
+            FirmwareName = firmwareName;
+        }
+
         /// <summary> A unique ID for the firmware to be uploaded. </summary>
         public string FirmwareName { get; set; }
     }

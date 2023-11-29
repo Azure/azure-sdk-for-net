@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="GenerateUpgradedDefinitionContent"/>. </summary>
+        /// <param name="targetSchemaVersion"> The target schema version. </param>
+        internal GenerateUpgradedDefinitionContent(string targetSchemaVersion)
+        {
+            TargetSchemaVersion = targetSchemaVersion;
+        }
+
         /// <summary> The target schema version. </summary>
         public string TargetSchemaVersion { get; set; }
     }

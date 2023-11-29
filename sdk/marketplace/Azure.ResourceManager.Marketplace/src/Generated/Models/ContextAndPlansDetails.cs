@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlanIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContextAndPlansDetails"/>. </summary>
+        /// <param name="context"> Plan's context, e.g. subscription ID, tenant ID. </param>
+        /// <param name="planIds"> List of plan IDs. </param>
+        internal ContextAndPlansDetails(string context, IList<string> planIds)
+        {
+            Context = context;
+            PlanIds = planIds;
+        }
+
         /// <summary> Plan's context, e.g. subscription ID, tenant ID. </summary>
         public string Context { get; set; }
         /// <summary> List of plan IDs. </summary>

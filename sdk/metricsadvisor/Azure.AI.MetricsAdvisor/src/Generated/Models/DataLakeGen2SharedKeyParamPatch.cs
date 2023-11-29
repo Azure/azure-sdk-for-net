@@ -15,6 +15,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParamPatch"/>. </summary>
+        /// <param name="accountKey"> The account key to access the Azure Data Lake Storage Gen2. </param>
+        internal DataLakeGen2SharedKeyParamPatch(string accountKey)
+        {
+            AccountKey = accountKey;
+        }
+
         /// <summary> The account key to access the Azure Data Lake Storage Gen2. </summary>
         public string AccountKey { get; set; }
     }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricUpdateVersionContent"/>. </summary>
+        /// <param name="version"> Specify the version. </param>
+        internal NetworkFabricUpdateVersionContent(string version)
+        {
+            Version = version;
+        }
+
         /// <summary> Specify the version. </summary>
         public string Version { get; set; }
     }
