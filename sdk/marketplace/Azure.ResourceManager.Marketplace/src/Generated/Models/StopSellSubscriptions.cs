@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             Subscriptions = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StopSellSubscriptions"/>. </summary>
+        /// <param name="subscriptions"></param>
+        internal StopSellSubscriptions(IList<string> subscriptions)
+        {
+            Subscriptions = subscriptions;
+        }
+
         /// <summary> Gets the subscriptions. </summary>
         public IList<string> Subscriptions { get; }
     }

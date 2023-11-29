@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.Logic.Models
             KeyVault = keyVault;
         }
 
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountListKeyVaultKeyContent"/>. </summary>
+        /// <param name="keyVault"> The key vault reference. </param>
+        /// <param name="skipToken"> The skip token. </param>
+        internal IntegrationAccountListKeyVaultKeyContent(IntegrationAccountKeyVaultNameReference keyVault, string skipToken)
+        {
+            KeyVault = keyVault;
+            SkipToken = skipToken;
+        }
+
         /// <summary> The key vault reference. </summary>
         public IntegrationAccountKeyVaultNameReference KeyVault { get; }
         /// <summary> The skip token. </summary>

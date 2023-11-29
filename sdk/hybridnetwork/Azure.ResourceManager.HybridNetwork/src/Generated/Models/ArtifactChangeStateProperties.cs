@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeStateProperties"/>. </summary>
+        /// <param name="artifactState"> The artifact state. </param>
+        internal ArtifactChangeStateProperties(ArtifactState? artifactState)
+        {
+            ArtifactState = artifactState;
+        }
+
         /// <summary> The artifact state. </summary>
         public ArtifactState? ArtifactState { get; set; }
     }
