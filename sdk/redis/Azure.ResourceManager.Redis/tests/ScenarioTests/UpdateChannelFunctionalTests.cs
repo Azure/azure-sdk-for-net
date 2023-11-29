@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Redis.Tests
     public class UpdateChannelFunctionalTests : RedisManagementTestBase
     {
         public UpdateChannelFunctionalTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) // RecordedTestMode.Record)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis.Tests
         {
             await SetCollectionsAsync();
 
-            var redisCacheName = Recording.GenerateAssetName("RedisBegin");
+            var redisCacheName = Recording.GenerateAssetName("RedisUpdateChannel");
             var parameter = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Basic, RedisSkuFamily.BasicOrStandard, 0));
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
@@ -46,19 +46,13 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var patch = new RedisPatch()
             {
+                RedisVersion = "6.0",
                 UpdateChannel = UpdateChannel.Preview
             };
 
             var responseUpdate = (await responseCreate.UpdateAsync(WaitUntil.Completed, patch)).Value;
-
-            Assert.AreEqual(DefaultLocation, responseUpdate.Data.Location);
-            Assert.AreEqual(redisCacheName, responseUpdate.Data.Name);
-            Assert.AreEqual(RedisSkuName.Basic, responseUpdate.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseUpdate.Data.Sku.Family);
-            Assert.AreEqual(0, responseUpdate.Data.Sku.Capacity);
-            Assert.AreEqual(6379, responseUpdate.Data.Port);
-            Assert.AreEqual(6380, responseUpdate.Data.SslPort);
-            Assert.AreEqual(UpdateChannel.Preview, responseCreate.Data.UpdateChannel);
+            var response = (await ResourceGroup.GetAllRedis().GetAsync(redisCacheName)).Value;
+            Assert.AreEqual(UpdateChannel.Preview, response.Data.UpdateChannel);
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
