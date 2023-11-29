@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
     public class PolicyArtifactTest : BlueprintManagementTestBase
     {
         public PolicyArtifactTest(bool isAsync) :
-            base(isAsync, RecordedTestMode.Record)
+            base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
