@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal FrontDoorWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParameter"/>. </summary>
+        /// <param name="name"> The name of the artifact parameter. </param>
+        /// <param name="value"> The value of the artifact parameter. </param>
+        internal DevTestLabParameter(string name, string value)
+        {
+            Name = name;
+            Value = value;
+        }
+
         /// <summary> The name of the artifact parameter. </summary>
         public string Name { get; set; }
         /// <summary> The value of the artifact parameter. </summary>

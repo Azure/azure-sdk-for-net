@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
+        /// <param name="tags"> Update tags. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, PublicNetworkAccess? publicNetworkAccess)
+        {
+            Tags = tags;
+            BaseSizeTiB = baseSizeTiB;
+            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> Update tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>

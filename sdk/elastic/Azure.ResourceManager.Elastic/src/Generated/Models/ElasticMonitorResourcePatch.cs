@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Elastic.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourcePatch"/>. </summary>
+        /// <param name="tags"> elastic monitor resource tags. </param>
+        internal ElasticMonitorResourcePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> elastic monitor resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

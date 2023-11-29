@@ -27,6 +27,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelRequest"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="buildMode"> Custom document model build mode. </param>
+        /// <param name="azureBlobSource"> Azure Blob Storage location containing the training data.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
+        /// <param name="azureBlobFileListSource"> Azure Blob Storage file list specifying the training data.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        internal BuildDocumentModelRequest(string modelId, string description, DocumentBuildMode buildMode, BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags)
+        {
+            ModelId = modelId;
+            Description = description;
+            BuildMode = buildMode;
+            AzureBlobSource = azureBlobSource;
+            AzureBlobFileListSource = azureBlobFileListSource;
+            Tags = tags;
+        }
+
         /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
         /// <summary> Document model description. </summary>

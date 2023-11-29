@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExportResourceUsageContent"/>. </summary>
+        /// <param name="blobStorageAbsoluteSasUri"> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </param>
+        /// <param name="usageStartOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
+        internal DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri, DateTimeOffset? usageStartOn)
+        {
+            BlobStorageAbsoluteSasUri = blobStorageAbsoluteSasUri;
+            UsageStartOn = usageStartOn;
+        }
+
         /// <summary> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </summary>
         public Uri BlobStorageAbsoluteSasUri { get; set; }
         /// <summary> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </summary>
