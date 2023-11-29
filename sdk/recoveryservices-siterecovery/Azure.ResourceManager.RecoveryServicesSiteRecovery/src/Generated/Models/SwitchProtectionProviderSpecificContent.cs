@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        internal SwitchProtectionProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
+        }
+
         /// <summary> Gets the Instance type. </summary>
         internal string InstanceType { get; set; }
     }

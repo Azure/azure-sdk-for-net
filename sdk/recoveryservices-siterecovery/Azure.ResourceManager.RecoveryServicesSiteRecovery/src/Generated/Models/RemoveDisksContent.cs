@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksContent"/>. </summary>
+        /// <param name="properties"> Remove disk input properties. </param>
+        internal RemoveDisksContent(RemoveDisksContentProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Remove disk input properties. </summary>
         internal RemoveDisksContentProperties Properties { get; set; }
         /// <summary>

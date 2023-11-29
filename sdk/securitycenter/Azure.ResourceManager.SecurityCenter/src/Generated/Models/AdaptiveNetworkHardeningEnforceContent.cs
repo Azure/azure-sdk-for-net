@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             NetworkSecurityGroups = networkSecurityGroups.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningEnforceContent"/>. </summary>
+        /// <param name="rules"> The rules to enforce. </param>
+        /// <param name="networkSecurityGroups"> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </param>
+        internal AdaptiveNetworkHardeningEnforceContent(IList<RecommendedSecurityRule> rules, IList<string> networkSecurityGroups)
+        {
+            Rules = rules;
+            NetworkSecurityGroups = networkSecurityGroups;
+        }
+
         /// <summary> The rules to enforce. </summary>
         public IList<RecommendedSecurityRule> Rules { get; }
         /// <summary> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </summary>

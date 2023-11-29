@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Policy creation properties. </param>
+        internal SiteRecoveryPolicyCreateOrUpdateContent(SiteRecoveryCreatePolicyProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Policy creation properties. </summary>
         internal SiteRecoveryCreatePolicyProperties Properties { get; set; }
         /// <summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerContent"/>. </summary>
+        /// <param name="properties"> The properties of the PS Failover request. </param>
+        internal FailoverProcessServerContent(FailoverProcessServerProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The properties of the PS Failover request. </summary>
         public FailoverProcessServerProperties Properties { get; set; }
     }
