@@ -656,6 +656,9 @@
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
+# ServiceLabel: %OpenAI %Service Attention
+#/<NotInRepo>/                                                     @jpalvarezl @trrwilson
+
 # ServiceLabel: %Monitor - Operational Insights %Service Attention
 #/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
@@ -811,8 +814,8 @@
 # ServiceLabel: %WebPubSub %Service Attention
 /sdk/webpubsub/                                                    @vicancy @JialinXin
 
-# ServiceLabel: %Personalizer %Service Attention
-# PRLabel: %Personalizer
+# ServiceLabel: %Cognitive - Personalizer %Service Attention
+# PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
 # ######## Management Plane ########
