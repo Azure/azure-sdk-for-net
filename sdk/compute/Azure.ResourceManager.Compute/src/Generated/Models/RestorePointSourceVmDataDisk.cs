@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a data disk. </summary>
     public partial class RestorePointSourceVmDataDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
         public RestorePointSourceVmDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
         /// <param name="lun"> Gets the logical unit number. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>

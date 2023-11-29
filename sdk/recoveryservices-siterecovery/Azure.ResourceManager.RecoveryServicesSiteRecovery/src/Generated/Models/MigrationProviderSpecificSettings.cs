@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class MigrationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/>. </summary>
         protected MigrationProviderSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
         internal MigrationProviderSpecificSettings(string instanceType)
         {

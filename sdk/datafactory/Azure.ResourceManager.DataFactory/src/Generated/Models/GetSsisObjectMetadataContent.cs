@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class GetSsisObjectMetadataContent
     {
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataContent"/>. </summary>
         public GetSsisObjectMetadataContent()
         {
         }

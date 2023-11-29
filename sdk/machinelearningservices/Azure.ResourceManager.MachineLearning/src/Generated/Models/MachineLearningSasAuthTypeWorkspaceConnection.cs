@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningSasAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningSasAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningSasAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.Sas;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

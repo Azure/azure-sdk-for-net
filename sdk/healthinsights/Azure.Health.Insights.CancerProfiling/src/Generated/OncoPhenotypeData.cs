@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The body of the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeData
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
         public OncoPhenotypeData(IEnumerable<PatientRecord> patients)
@@ -25,7 +25,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Patients = patients.ToList();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <param name="configuration"> Configuration affecting the Onco Phenotype model's inference. </param>
         internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration)

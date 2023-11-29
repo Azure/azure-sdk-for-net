@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a UpdateRun. </summary>
     public partial class ContainerServiceFleetUpdateRunStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStatus"/>. </summary>
         internal ContainerServiceFleetUpdateRunStatus()
         {
             Stages = new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="nodeImageSelection"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>

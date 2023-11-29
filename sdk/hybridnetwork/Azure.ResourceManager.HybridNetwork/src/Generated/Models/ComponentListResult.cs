@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Response for list component API service call. </summary>
     internal partial class ComponentListResult
     {
-        /// <summary> Initializes a new instance of ComponentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
         internal ComponentListResult()
         {
             Value = new ChangeTrackingList<ComponentData>();
         }
 
-        /// <summary> Initializes a new instance of ComponentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
         /// <param name="value"> A list of component resources in a networkFunction. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ComponentListResult(IReadOnlyList<ComponentData> value, string nextLink)

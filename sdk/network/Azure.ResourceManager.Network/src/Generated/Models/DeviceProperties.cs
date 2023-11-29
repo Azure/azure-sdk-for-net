@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of properties of the device. </summary>
     public partial class DeviceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         public DeviceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         /// <param name="deviceVendor"> Name of the device Vendor. </param>
         /// <param name="deviceModel"> Model of the device. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>

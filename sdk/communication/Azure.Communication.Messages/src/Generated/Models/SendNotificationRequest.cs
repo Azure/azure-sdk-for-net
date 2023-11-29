@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// <summary> Details of the message to send. </summary>
     internal partial class SendNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendNotificationRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="type"> The type of message. Supports text, image, template. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> The guest configuration assignment resource. </summary>
     public partial class AssignmentReportResourceInfo
     {
-        /// <summary> Initializes a new instance of AssignmentReportResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceInfo"/>. </summary>
         public AssignmentReportResourceInfo()
         {
             Reasons = new ChangeTrackingList<AssignmentReportResourceComplianceReason>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentReportResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceInfo"/>. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="assignmentResourceSettingName"> Name of the guest configuration assignment resource setting. </param>
         /// <param name="reasons"> Compliance reason and reason code for a resource. </param>

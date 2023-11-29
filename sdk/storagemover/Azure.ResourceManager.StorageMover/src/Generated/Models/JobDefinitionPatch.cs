@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Job Definition resource. </summary>
     public partial class JobDefinitionPatch
     {
-        /// <summary> Initializes a new instance of JobDefinitionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionPatch"/>. </summary>
         public JobDefinitionPatch()
         {
         }

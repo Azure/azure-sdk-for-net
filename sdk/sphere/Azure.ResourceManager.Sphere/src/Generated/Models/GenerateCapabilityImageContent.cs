@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class GenerateCapabilityImageContent
     {
-        /// <summary> Initializes a new instance of GenerateCapabilityImageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
         /// <param name="capabilities">
         /// List of capabilities to create
         /// Serialized Name: GenerateCapabilityImageRequest.capabilities

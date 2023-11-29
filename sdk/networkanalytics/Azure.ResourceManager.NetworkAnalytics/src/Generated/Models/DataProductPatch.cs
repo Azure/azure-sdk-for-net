@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The type used for update operations of the DataProduct. </summary>
     public partial class DataProductPatch
     {
-        /// <summary> Initializes a new instance of DataProductPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductPatch"/>. </summary>
         public DataProductPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

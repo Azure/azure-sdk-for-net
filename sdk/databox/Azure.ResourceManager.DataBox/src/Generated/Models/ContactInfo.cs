@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contact Info. </summary>
     public partial class ContactInfo
     {
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> or <paramref name="phone"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy expiration rule. </summary>
     public partial class RoleManagementPolicyExpirationRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
         public RoleManagementPolicyExpirationRule()
         {
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

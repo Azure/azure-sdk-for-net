@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The result data of a query. </summary>
     public partial class QueryBatchMetric
     {
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Description of this metric. </param>
@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query.Models
             Timeseries = timeseries.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Description of this metric. </param>

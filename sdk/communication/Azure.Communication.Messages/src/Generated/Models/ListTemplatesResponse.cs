@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// <summary> The ListTemplatesResponse. </summary>
     internal partial class ListTemplatesResponse
     {
-        /// <summary> Initializes a new instance of ListTemplatesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListTemplatesResponse(IEnumerable<TemplateResponseInternal> value)
@@ -25,7 +25,7 @@ namespace Azure.Communication.Messages
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListTemplatesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <param name="nextLink"></param>
         internal ListTemplatesResponse(IReadOnlyList<TemplateResponseInternal> value, string nextLink)

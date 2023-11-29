@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the vCenter infrastructure specific settings for the virtual machine. </summary>
     public partial class VCenterInfrastructureProfile
     {
-        /// <summary> Initializes a new instance of VCenterInfrastructureProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterInfrastructureProfile"/>. </summary>
         public VCenterInfrastructureProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VCenterInfrastructureProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterInfrastructureProfile"/>. </summary>
         /// <param name="templateId"> Gets or sets the ARM Id of the template resource to deploy the virtual machine. </param>
         /// <param name="vCenterId"> Gets or sets the ARM Id of the vCenter resource in which this resource pool resides. </param>
         /// <param name="moRefId"> Gets or sets the vCenter MoRef (Managed Object Reference) ID for the virtual machine. </param>

@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Permission information for the metadata call, includes apps/workspaces/resource the user didn't have access to. </summary>
     internal partial class MetadataPermissions
     {
-        /// <summary> Initializes a new instance of MetadataPermissions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissions"/>. </summary>
         /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaces"/> is null. </exception>
         internal MetadataPermissions(IEnumerable<MetadataPermissionsWorkspacesItem> workspaces)

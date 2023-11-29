@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Properties of Recovery Point. </summary>
     public partial class RecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointProperties"/>. </summary>
         public RecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointProperties"/>. </summary>
         /// <param name="expireOn"> Expiry time of Recovery Point in UTC. </param>
         /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
         /// <param name="isSoftDeleted"> Bool to indicate whether RP is in soft delete state or not. </param>

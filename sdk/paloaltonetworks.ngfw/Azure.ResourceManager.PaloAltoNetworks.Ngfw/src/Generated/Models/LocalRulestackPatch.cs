@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the LocalRulestackResource. </summary>
     public partial class LocalRulestackPatch
     {
-        /// <summary> Initializes a new instance of LocalRulestackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackPatch"/>. </summary>
         public LocalRulestackPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

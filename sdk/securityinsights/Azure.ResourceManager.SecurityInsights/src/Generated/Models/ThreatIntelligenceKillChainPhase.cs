@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat kill chain phase entity. </summary>
     public partial class ThreatIntelligenceKillChainPhase
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceKillChainPhase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
         public ThreatIntelligenceKillChainPhase()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceKillChainPhase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
         /// <param name="killChainName"> Kill chainName name. </param>
         /// <param name="phaseName"> Phase name. </param>
         internal ThreatIntelligenceKillChainPhase(string killChainName, string phaseName)

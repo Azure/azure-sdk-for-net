@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt disk input. </summary>
     public partial class VMwareCbtDiskContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>

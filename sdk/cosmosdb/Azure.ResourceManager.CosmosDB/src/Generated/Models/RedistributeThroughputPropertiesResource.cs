@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource to redistribute throughput for Azure Cosmos DB resource. </summary>
     public partial class RedistributeThroughputPropertiesResource
     {
-        /// <summary> Initializes a new instance of RedistributeThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/>. </summary>
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SourcePhysicalPartitionThroughputInfo = sourcePhysicalPartitionThroughputInfo.ToList();
         }
 
-        /// <summary> Initializes a new instance of RedistributeThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/>. </summary>
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>

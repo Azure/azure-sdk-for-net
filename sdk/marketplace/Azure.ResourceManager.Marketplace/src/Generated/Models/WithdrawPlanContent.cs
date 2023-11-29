@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Withdraw properties. </summary>
     public partial class WithdrawPlanContent
     {
-        /// <summary> Initializes a new instance of WithdrawPlanContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
         public WithdrawPlanContent()
         {
         }

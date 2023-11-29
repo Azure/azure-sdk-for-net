@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
     public partial class KubernetesBucket
     {
-        /// <summary> Initializes a new instance of KubernetesBucket. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucket"/>. </summary>
         public KubernetesBucket()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesBucket. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucket"/>. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
         /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
         /// <param name="useInsecureCommunication"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>

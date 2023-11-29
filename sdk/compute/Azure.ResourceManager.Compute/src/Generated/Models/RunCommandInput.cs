@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Capture Virtual Machine parameters. </summary>
     public partial class RunCommandInput
     {
-        /// <summary> Initializes a new instance of RunCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandInput"/>. </summary>
         /// <param name="commandId"> The run command id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public RunCommandInput(string commandId)

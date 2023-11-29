@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
         internal DataLakeAnalyticsStorageAccountInformationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

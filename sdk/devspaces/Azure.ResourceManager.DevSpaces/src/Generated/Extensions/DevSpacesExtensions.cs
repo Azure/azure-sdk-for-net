@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="containerHostMapping"/> is null. </exception>
         public static async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="containerHostMapping"/> is null. </exception>
         public static Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)

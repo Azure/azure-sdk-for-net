@@ -13,7 +13,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The desired and reported properties of the twin. The maximum depth of the object is 10. </summary>
     public partial class PropertyContainer
     {
-        /// <summary> Initializes a new instance of PropertyContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyContainer"/>. </summary>
         public PropertyContainer()
         {
             Desired = new ChangeTrackingDictionary<string, object>();

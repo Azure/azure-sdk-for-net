@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Request for getting sso details for a user. </summary>
     public partial class DynatraceSsoDetailsContent
     {
-        /// <summary> Initializes a new instance of DynatraceSsoDetailsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
         public DynatraceSsoDetailsContent()
         {
         }

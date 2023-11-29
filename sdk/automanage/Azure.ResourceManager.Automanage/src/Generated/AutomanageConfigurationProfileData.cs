@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageConfigurationProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomanageConfigurationProfileData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

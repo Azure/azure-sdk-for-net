@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoPatch
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
         public TenantAccessInfoPatch()
         {
         }

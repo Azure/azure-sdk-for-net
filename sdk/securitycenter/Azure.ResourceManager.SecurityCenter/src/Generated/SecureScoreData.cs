@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecureScoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecureScoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
         public SecureScoreData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecureScoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

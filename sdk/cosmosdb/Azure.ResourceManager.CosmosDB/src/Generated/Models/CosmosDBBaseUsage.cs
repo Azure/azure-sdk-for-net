@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The usage data for a usage request. </summary>
     public partial class CosmosDBBaseUsage
     {
-        /// <summary> Initializes a new instance of CosmosDBBaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseUsage"/>. </summary>
         internal CosmosDBBaseUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBBaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>

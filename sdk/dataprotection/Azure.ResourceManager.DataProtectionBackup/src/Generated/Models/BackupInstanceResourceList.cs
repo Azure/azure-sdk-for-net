@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> BackupInstance Resource list response. </summary>
     internal partial class BackupInstanceResourceList
     {
-        /// <summary> Initializes a new instance of BackupInstanceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceResourceList"/>. </summary>
         internal BackupInstanceResourceList()
         {
             Value = new ChangeTrackingList<DataProtectionBackupInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of BackupInstanceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         internal BackupInstanceResourceList(IReadOnlyList<DataProtectionBackupInstanceData> value, string nextLink)

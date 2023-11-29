@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Update version properties. </summary>
     public partial class NetworkFabricUpdateVersionContent
     {
-        /// <summary> Initializes a new instance of NetworkFabricUpdateVersionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricUpdateVersionContent"/>. </summary>
         public NetworkFabricUpdateVersionContent()
         {
         }

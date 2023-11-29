@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BotData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

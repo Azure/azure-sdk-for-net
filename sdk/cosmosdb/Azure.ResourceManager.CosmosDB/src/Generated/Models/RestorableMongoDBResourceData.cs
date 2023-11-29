@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableMongoDBResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableMongoDBResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourceData"/>. </summary>
         internal RestorableMongoDBResourceData()
         {
             CollectionNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableMongoDBResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

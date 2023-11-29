@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverResource>> UpdateAsync(StorageMoverPatch patch, CancellationToken cancellationToken = default)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverResource> Update(StorageMoverPatch patch, CancellationToken cancellationToken = default)

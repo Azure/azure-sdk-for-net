@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> a powershell credential object. </summary>
     public partial class PSCredentialExecutionParameterDetails : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of PSCredentialExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PSCredentialExecutionParameterDetails(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Models
             ParameterType = ScriptExecutionParameterType.Credential;
         }
 
-        /// <summary> Initializes a new instance of PSCredentialExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
         /// <param name="username"> username for login. </param>

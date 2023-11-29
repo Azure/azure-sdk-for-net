@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Metric availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain. </summary>
     public partial class MonitorMetricAvailability
     {
-        /// <summary> Initializes a new instance of MonitorMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricAvailability"/>. </summary>
         internal MonitorMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         internal MonitorMetricAvailability(TimeSpan? timeGrain, TimeSpan? retention)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> The check availability request body. </summary>
     public partial class EnergyServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceNameAvailabilityContent"/>. </summary>
         public EnergyServiceNameAvailabilityContent()
         {
         }

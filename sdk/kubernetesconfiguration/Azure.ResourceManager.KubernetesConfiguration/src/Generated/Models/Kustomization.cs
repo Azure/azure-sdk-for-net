@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Kustomization defining how to reconcile the artifact pulled by the source type on the cluster. </summary>
     public partial class Kustomization
     {
-        /// <summary> Initializes a new instance of Kustomization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kustomization"/>. </summary>
         public Kustomization()
         {
             DependsOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Kustomization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kustomization"/>. </summary>
         /// <param name="name"> Name of the Kustomization, matching the key in the Kustomizations object map. </param>
         /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
         /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>

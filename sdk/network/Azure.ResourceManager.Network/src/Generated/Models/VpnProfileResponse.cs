@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Profile Response for package generation. </summary>
     public partial class VpnProfileResponse
     {
-        /// <summary> Initializes a new instance of VpnProfileResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnProfileResponse"/>. </summary>
         internal VpnProfileResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnProfileResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnProfileResponse"/>. </summary>
         /// <param name="profileUri"> URL to the VPN profile. </param>
         internal VpnProfileResponse(Uri profileUri)
         {

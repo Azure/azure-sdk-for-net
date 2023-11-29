@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerUpdateDestinationInfo
     {
-        /// <summary> Initializes a new instance of PartnerUpdateDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateDestinationInfo"/>. </summary>
         protected PartnerUpdateDestinationInfo()
         {
         }

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> NSX DHCP Relay. </summary>
     public partial class WorkloadNetworkDhcpRelay : WorkloadNetworkDhcpEntity
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpRelay. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpRelay"/>. </summary>
         public WorkloadNetworkDhcpRelay()
         {
             ServerAddresses = new ChangeTrackingList<string>();
             DhcpType = DhcpTypeEnum.Relay;
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpRelay. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpRelay"/>. </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>

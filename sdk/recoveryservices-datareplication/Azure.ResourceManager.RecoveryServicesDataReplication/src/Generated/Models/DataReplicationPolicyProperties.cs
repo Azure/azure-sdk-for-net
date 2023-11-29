@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Policy model properties. </summary>
     public partial class DataReplicationPolicyProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyProperties"/>. </summary>
         /// <param name="customProperties">
         /// Policy model custom properties.
         /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the policy. </param>
         /// <param name="customProperties">
         /// Policy model custom properties.

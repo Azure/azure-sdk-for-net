@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Configurations for provisioning the cluster with HTTP proxy servers. </summary>
     public partial class HttpProxyConfig : HttpProxyConfigResponse
     {
-        /// <summary> Initializes a new instance of HttpProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfig"/>. </summary>
         public HttpProxyConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfig"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>

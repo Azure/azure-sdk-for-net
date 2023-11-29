@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     internal partial class StorageProfile
     {
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
             Disks = new ChangeTrackingList<VirtualDisk>();
         }
 
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         internal StorageProfile(IList<VirtualDisk> disks)
         {

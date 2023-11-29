@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of incident bookmarks. </summary>
     internal partial class IncidentBookmarkList
     {
-        /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentBookmarkList(IEnumerable<SecurityInsightsHuntingBookmark> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
         internal IncidentBookmarkList(IReadOnlyList<SecurityInsightsHuntingBookmark> value)
         {

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents the recovery plan shutdown group task details. </summary>
     public partial class RecoveryPlanShutdownGroupTaskDetails : RecoveryPlanGroupTaskDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanShutdownGroupTaskDetails"/>. </summary>
         internal RecoveryPlanShutdownGroupTaskDetails()
         {
             InstanceType = "RecoveryPlanShutdownGroupTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanShutdownGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="name"> The name. </param>

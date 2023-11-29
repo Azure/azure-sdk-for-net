@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Service Provider Definition. </summary>
     public partial class BotServiceProvider
     {
-        /// <summary> Initializes a new instance of BotServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProvider"/>. </summary>
         internal BotServiceProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProvider"/>. </summary>
         /// <param name="properties"> The Properties of a Service Provider Object. </param>
         internal BotServiceProvider(BotServiceProviderProperties properties)
         {

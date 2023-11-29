@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     /// <summary> The Custom Locations patchable resource definition. </summary>
     public partial class CustomLocationPatch
     {
-        /// <summary> Initializes a new instance of CustomLocationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationPatch"/>. </summary>
         public CustomLocationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

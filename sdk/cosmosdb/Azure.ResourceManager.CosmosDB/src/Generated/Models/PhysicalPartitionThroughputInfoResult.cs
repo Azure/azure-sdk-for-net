@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB PhysicalPartitionThroughputInfoResult object. </summary>
     public partial class PhysicalPartitionThroughputInfoResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public PhysicalPartitionThroughputInfoResult(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the benefit recommendation when scope is 'Shared'. </summary>
     public partial class SharedScopeBenefitRecommendationProperties : BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of SharedScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedScopeBenefitRecommendationProperties"/>. </summary>
         public SharedScopeBenefitRecommendationProperties()
         {
             Scope = BenefitRecommendationScope.Shared;
         }
 
-        /// <summary> Initializes a new instance of SharedScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>

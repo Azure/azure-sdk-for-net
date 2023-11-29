@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetricResultsResponseValuesItem. </summary>
     public partial class MetricResultsResponseValuesItem
     {
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="value"> The value of the collection. </param>
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>

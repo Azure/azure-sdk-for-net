@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Office365 linked service. </summary>
     public partial class Office365LinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Office365";
         }
 
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> An Azure SKU instance. </summary>
     public partial class ServiceSku
     {
-        /// <summary> Initializes a new instance of ServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceSku"/>. </summary>
         public ServiceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceSku"/>. </summary>
         /// <param name="name"> The unique name of the SKU, such as 'P3'. </param>
         /// <param name="tier"> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </param>
         /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </param>

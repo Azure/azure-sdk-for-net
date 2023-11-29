@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Action that need to performed. </summary>
     public partial class NetworkTapRuleAction
     {
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         public NetworkTapRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>

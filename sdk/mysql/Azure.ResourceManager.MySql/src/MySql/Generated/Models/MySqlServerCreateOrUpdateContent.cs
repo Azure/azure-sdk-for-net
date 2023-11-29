@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Represents a server to be created. </summary>
     public partial class MySqlServerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MySqlServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerCreateOrUpdateContent"/>. </summary>
         /// <param name="properties">
         /// Properties of the server.
         /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

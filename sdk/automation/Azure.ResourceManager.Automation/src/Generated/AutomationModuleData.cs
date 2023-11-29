@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationModuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationModuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationModuleData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

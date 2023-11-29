@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of files. </summary>
     internal partial class FileList
     {
-        /// <summary> Initializes a new instance of FileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileList"/>. </summary>
         internal FileList()
         {
             Value = new ChangeTrackingList<ProjectFileData>();
         }
 
-        /// <summary> Initializes a new instance of FileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileList"/>. </summary>
         /// <param name="value"> List of files. </param>
         /// <param name="nextLink"> URL to load the next page of files. </param>
         internal FileList(IReadOnlyList<ProjectFileData> value, string nextLink)

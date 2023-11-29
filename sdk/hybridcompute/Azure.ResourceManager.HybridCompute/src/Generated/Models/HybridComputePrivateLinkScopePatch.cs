@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
     public partial class HybridComputePrivateLinkScopePatch
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopePatch"/>. </summary>
         public HybridComputePrivateLinkScopePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

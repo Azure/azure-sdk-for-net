@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The check availability request body. </summary>
     public partial class VoiceServicesCheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of VoiceServicesCheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCheckNameAvailabilityContent"/>. </summary>
         public VoiceServicesCheckNameAvailabilityContent()
         {
         }

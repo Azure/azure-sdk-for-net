@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Service properties payload. </summary>
     public partial class AppPlatformServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         public AppPlatformServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="vnetAddons"> Additional Service settings in vnet injection instance. </param>

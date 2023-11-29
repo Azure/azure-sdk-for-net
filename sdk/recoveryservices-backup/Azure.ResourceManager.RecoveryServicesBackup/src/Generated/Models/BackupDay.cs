@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Day of the week. </summary>
     public partial class BackupDay
     {
-        /// <summary> Initializes a new instance of BackupDay. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDay"/>. </summary>
         public BackupDay()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupDay. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDay"/>. </summary>
         /// <param name="date"> Date of the month. </param>
         /// <param name="isLast"> Whether Date is last date of month. </param>
         internal BackupDay(int? date, bool? isLast)

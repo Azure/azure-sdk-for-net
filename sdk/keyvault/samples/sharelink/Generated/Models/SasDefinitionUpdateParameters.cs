@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition update parameters. </summary>
     internal partial class SasDefinitionUpdateParameters
     {
-        /// <summary> Initializes a new instance of SasDefinitionUpdateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionUpdateParameters"/>. </summary>
         public SasDefinitionUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

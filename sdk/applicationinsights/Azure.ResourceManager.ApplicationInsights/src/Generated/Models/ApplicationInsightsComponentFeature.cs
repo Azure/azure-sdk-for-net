@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentFeature
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeature"/>. </summary>
         internal ApplicationInsightsComponentFeature()
         {
             Capabilities = new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeature"/>. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>

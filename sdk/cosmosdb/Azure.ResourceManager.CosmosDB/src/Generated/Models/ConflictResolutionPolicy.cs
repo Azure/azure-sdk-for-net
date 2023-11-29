@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The conflict resolution policy for the container. </summary>
     public partial class ConflictResolutionPolicy
     {
-        /// <summary> Initializes a new instance of ConflictResolutionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConflictResolutionPolicy"/>. </summary>
         public ConflictResolutionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ConflictResolutionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConflictResolutionPolicy"/>. </summary>
         /// <param name="mode"> Indicates the conflict resolution mode. </param>
         /// <param name="conflictResolutionPath"> The conflict resolution path in the case of LastWriterWins mode. </param>
         /// <param name="conflictResolutionProcedure"> The procedure to resolve conflicts in the case of custom mode. </param>

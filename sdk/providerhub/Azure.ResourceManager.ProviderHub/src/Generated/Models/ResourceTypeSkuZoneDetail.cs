@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuZoneDetail. </summary>
     public partial class ResourceTypeSkuZoneDetail
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuZoneDetail"/>. </summary>
         public ResourceTypeSkuZoneDetail()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuZoneDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="capabilities"></param>
         internal ResourceTypeSkuZoneDetail(IList<string> name, IList<ResourceSkuCapability> capabilities)

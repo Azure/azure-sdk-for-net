@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Result of the request to list tags of the image. </summary>
     internal partial class RepositoryTags
     {
-        /// <summary> Initializes a new instance of RepositoryTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepositoryTags"/>. </summary>
         internal RepositoryTags()
         {
             Tags = new ChangeTrackingList<string>();

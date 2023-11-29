@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus response. </summary>
     public partial class BackupStatusResult
     {
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         internal BackupStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         /// <param name="protectionStatus"> Specifies whether the container is registered or not. </param>
         /// <param name="vaultId"> Specifies the arm resource id of the vault. </param>
         /// <param name="fabricName"> Specifies the fabric name - Azure or AD. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Workload Profile resource specific properties. </summary>
     public partial class ContainerAppWorkloadProfileStateProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileStateProperties"/>. </summary>
         public ContainerAppWorkloadProfileStateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileStateProperties"/>. </summary>
         /// <param name="minimumCount"> Minimum count of instances. </param>
         /// <param name="maximumCount"> Maximum count of nodes. </param>
         /// <param name="currentCount"> Current count of nodes. </param>

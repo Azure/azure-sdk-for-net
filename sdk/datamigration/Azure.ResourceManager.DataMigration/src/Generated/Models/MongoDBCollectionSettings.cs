@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes how an individual MongoDB collection should be migrated. </summary>
     public partial class MongoDBCollectionSettings
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionSettings"/>. </summary>
         public MongoDBCollectionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionSettings"/>. </summary>
         /// <param name="canDelete"> Whether the migrator is allowed to drop the target collection in the course of performing a migration. The default is true. </param>
         /// <param name="shardKey"> Describes a MongoDB shard key. </param>
         /// <param name="targetRUs"> The RUs that should be configured on a CosmosDB target, or null to use the default. This has no effect on non-CosmosDB targets. </param>

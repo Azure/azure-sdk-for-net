@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base environment type. </summary>
     public partial class BaseEnvironmentType : BaseEnvironmentSource
     {
-        /// <summary> Initializes a new instance of BaseEnvironmentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseEnvironmentType"/>. </summary>
         /// <param name="resourceId"> [Required] Resource id accepting ArmId or AzureMlId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public BaseEnvironmentType(ResourceIdentifier resourceId)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             BaseEnvironmentSourceType = BaseEnvironmentSourceType.EnvironmentAsset;
         }
 
-        /// <summary> Initializes a new instance of BaseEnvironmentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseEnvironmentType"/>. </summary>
         /// <param name="baseEnvironmentSourceType"> [Required] Base environment type. </param>
         /// <param name="resourceId"> [Required] Resource id accepting ArmId or AzureMlId. </param>
         internal BaseEnvironmentType(BaseEnvironmentSourceType baseEnvironmentSourceType, ResourceIdentifier resourceId) : base(baseEnvironmentSourceType)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Descriptions of APIM policies. </summary>
     internal partial class PortalSettingsListResult
     {
-        /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         internal PortalSettingsListResult()
         {
             Value = new ChangeTrackingList<PortalSettingsContractData>();
         }
 
-        /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
         internal PortalSettingsListResult(IReadOnlyList<PortalSettingsContractData> value, long? count)

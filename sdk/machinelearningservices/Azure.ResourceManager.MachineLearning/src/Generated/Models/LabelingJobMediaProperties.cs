@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class LabelingJobMediaProperties
     {
-        /// <summary> Initializes a new instance of LabelingJobMediaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobMediaProperties"/>. </summary>
         protected LabelingJobMediaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LabelingJobMediaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobMediaProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
         internal LabelingJobMediaProperties(MediaType mediaType)
         {

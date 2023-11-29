@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Sku capability. </summary>
     public partial class PostgreSqlFlexibleServerSkuCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         internal PostgreSqlFlexibleServerSkuCapability()
         {
             SupportedZones = new ChangeTrackingList<string>();
             SupportedHaMode = new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Sku name. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Sync BackupInstance Request. </summary>
     public partial class BackupInstanceSyncContent
     {
-        /// <summary> Initializes a new instance of BackupInstanceSyncContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceSyncContent"/>. </summary>
         public BackupInstanceSyncContent()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Property of git. </summary>
     public partial class AppPlatformConfigServerGitProperty
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigServerGitProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerGitProperty"/>. </summary>
         /// <param name="uri"> URI of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AppPlatformConfigServerGitProperty(Uri uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SearchPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigServerGitProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerGitProperty"/>. </summary>
         /// <param name="repositories"> Repositories of git. </param>
         /// <param name="uri"> URI of the repository. </param>
         /// <param name="label"> Label of the repository. </param>

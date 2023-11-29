@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionData"/>. </summary>
         public CosmosDBForPostgreSqlPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

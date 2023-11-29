@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The detected change. </summary>
     public partial class DetectedChangeData : ResourceData
     {
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedChangeData"/>. </summary>
         internal DetectedChangeData()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedChangeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

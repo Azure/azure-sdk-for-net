@@ -10,7 +10,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Parameter group. </summary>
     public partial class ShareFileRequestConditions
     {
-        /// <summary> Initializes a new instance of ShareFileRequestConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileRequestConditions"/>. </summary>
         public ShareFileRequestConditions()
         {
         }

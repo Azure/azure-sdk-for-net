@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines modifiable attributes of a Profile. </summary>
     public partial class FrontDoorNetworkExperimentProfilePatch
     {
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfilePatch"/>. </summary>
         public FrontDoorNetworkExperimentProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

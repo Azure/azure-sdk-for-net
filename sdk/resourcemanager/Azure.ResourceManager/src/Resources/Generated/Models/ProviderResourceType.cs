@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType
     {
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
         {
             Locations = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="locations"> The collection of locations where this resource type can be created. </param>
         /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>

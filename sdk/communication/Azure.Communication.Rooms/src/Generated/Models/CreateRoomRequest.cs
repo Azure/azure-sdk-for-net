@@ -14,7 +14,7 @@ namespace Azure.Communication.Rooms
     /// <summary> Request payload for creating new room. </summary>
     internal partial class CreateRoomRequest
     {
-        /// <summary> Initializes a new instance of CreateRoomRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateRoomRequest"/>. </summary>
         public CreateRoomRequest()
         {
             Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();

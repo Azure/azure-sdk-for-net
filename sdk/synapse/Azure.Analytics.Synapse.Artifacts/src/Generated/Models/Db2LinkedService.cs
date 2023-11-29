@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for DB2 data source. </summary>
     public partial class Db2LinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of Db2LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Db2LinkedService"/>. </summary>
         /// <param name="server"> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Db2";
         }
 
-        /// <summary> Initializes a new instance of Db2LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Db2LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

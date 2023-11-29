@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application locking policy. </summary>
     public partial class ArmApplicationPackageLockingPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageLockingPolicy"/>. </summary>
         public ArmApplicationPackageLockingPolicy()
         {
             AllowedActions = new ChangeTrackingList<string>();
             AllowedDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageLockingPolicy"/>. </summary>
         /// <param name="allowedActions"> The deny assignment excluded actions. </param>
         /// <param name="allowedDataActions"> The deny assignment excluded data actions. </param>
         internal ArmApplicationPackageLockingPolicy(IList<string> allowedActions, IList<string> allowedDataActions)

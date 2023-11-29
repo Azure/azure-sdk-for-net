@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Update Group operation. </summary>
     public partial class ApiManagementGroupPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupPatch"/>. </summary>
         public ApiManagementGroupPatch()
         {
         }

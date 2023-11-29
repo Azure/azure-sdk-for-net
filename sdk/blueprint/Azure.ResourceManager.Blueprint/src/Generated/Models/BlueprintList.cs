@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> List of blueprint definitions. </summary>
     internal partial class BlueprintList
     {
-        /// <summary> Initializes a new instance of BlueprintList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintList"/>. </summary>
         internal BlueprintList()
         {
             Value = new ChangeTrackingList<BlueprintData>();
         }
 
-        /// <summary> Initializes a new instance of BlueprintList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintList"/>. </summary>
         /// <param name="value"> List of blueprint definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal BlueprintList(IReadOnlyList<BlueprintData> value, string nextLink)

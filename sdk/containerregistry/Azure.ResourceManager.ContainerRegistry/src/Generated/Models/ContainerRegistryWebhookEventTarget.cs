@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryWebhookEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventTarget"/>. </summary>
         internal ContainerRegistryWebhookEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>

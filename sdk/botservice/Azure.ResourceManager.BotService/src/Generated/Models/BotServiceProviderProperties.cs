@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The Object used to describe a Service Provider supported by Bot Service. </summary>
     public partial class BotServiceProviderProperties
     {
-        /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderProperties"/>. </summary>
         internal BotServiceProviderProperties()
         {
             Parameters = new ChangeTrackingList<BotServiceProviderParameter>();
         }
 
-        /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderProperties"/>. </summary>
         /// <param name="id"> Id for Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
         /// <param name="serviceProviderName"> Name of the Service Provider. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of workload networks. </summary>
     internal partial class WorkloadNetworkList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkList"/>. </summary>
         internal WorkloadNetworkList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkList(IReadOnlyList<WorkloadNetworkData> value, string nextLink)

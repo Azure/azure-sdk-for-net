@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> The time for a scaling action to occur. </summary>
     public partial class ScalingActionTime
     {
-        /// <summary> Initializes a new instance of ScalingActionTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingActionTime"/>. </summary>
         /// <param name="hour"> The hour. </param>
         /// <param name="minute"> The minute. </param>
         public ScalingActionTime(int hour, int minute)

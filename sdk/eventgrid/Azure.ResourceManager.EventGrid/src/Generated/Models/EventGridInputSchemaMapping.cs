@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class EventGridInputSchemaMapping
     {
-        /// <summary> Initializes a new instance of EventGridInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
         protected EventGridInputSchemaMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
         internal EventGridInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType)
         {

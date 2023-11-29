@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Container identity information. </summary>
     public partial class ContainerIdentityInfo
     {
-        /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerIdentityInfo"/>. </summary>
         public ContainerIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerIdentityInfo"/>. </summary>
         /// <param name="uniqueName"> Unique name of the container. </param>
         /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
         /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BackupFeatureValidationContentBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationContentBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContentBase"/>. </summary>
         protected BackupFeatureValidationContentBase()
         {
         }

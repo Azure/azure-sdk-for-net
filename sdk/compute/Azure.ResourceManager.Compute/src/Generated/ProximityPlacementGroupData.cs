@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class ProximityPlacementGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProximityPlacementGroupData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

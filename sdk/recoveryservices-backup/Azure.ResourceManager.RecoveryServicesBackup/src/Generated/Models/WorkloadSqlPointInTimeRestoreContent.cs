@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadSqlPointInTimeRestoreContent : WorkloadSqlRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreContent()
         {
             ObjectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>

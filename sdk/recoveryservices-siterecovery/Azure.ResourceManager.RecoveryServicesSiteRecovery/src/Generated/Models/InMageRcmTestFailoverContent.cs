@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input for test failover. </summary>
     public partial class InMageRcmTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmTestFailoverContent"/>. </summary>
         public InMageRcmTestFailoverContent()
         {
             InstanceType = "InMageRcm";

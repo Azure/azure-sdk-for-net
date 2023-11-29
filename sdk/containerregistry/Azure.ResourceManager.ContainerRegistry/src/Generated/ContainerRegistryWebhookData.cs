@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryWebhookData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerRegistryWebhookData(AzureLocation location) : base(location)
         {
             Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

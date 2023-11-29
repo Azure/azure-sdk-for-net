@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
-        /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
         /// <param name="type"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public ArrowFieldInternal(string type)

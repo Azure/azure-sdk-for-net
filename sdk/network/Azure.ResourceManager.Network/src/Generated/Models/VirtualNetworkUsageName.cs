@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Usage strings container. </summary>
     public partial class VirtualNetworkUsageName
     {
-        /// <summary> Initializes a new instance of VirtualNetworkUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsageName"/>. </summary>
         internal VirtualNetworkUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsageName"/>. </summary>
         /// <param name="localizedValue"> Localized subnet size and usage string. </param>
         /// <param name="value"> Subnet size and usage string. </param>
         internal VirtualNetworkUsageName(string localizedValue, string value)

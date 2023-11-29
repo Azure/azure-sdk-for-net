@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An action group object for the body of patch operations. </summary>
     public partial class ActionGroupPatch
     {
-        /// <summary> Initializes a new instance of ActionGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
         public ActionGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

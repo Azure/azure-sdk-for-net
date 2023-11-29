@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Attestation Providers List. </summary>
     internal partial class AttestationProviderListResult
     {
-        /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
         internal AttestationProviderListResult()
         {
             Value = new ChangeTrackingList<AttestationProviderData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
         /// <param name="systemData"> The system metadata relating to this resource. </param>
         /// <param name="value"> Attestation Provider array. </param>
         internal AttestationProviderListResult(SystemData systemData, IReadOnlyList<AttestationProviderData> value)

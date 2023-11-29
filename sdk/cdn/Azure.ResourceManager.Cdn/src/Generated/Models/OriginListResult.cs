@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results. </summary>
     internal partial class OriginListResult
     {
-        /// <summary> Initializes a new instance of OriginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginListResult"/>. </summary>
         internal OriginListResult()
         {
             Value = new ChangeTrackingList<CdnOriginData>();
         }
 
-        /// <summary> Initializes a new instance of OriginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginListResult"/>. </summary>
         /// <param name="value"> List of CDN origins within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         internal OriginListResult(IReadOnlyList<CdnOriginData> value, string nextLink)

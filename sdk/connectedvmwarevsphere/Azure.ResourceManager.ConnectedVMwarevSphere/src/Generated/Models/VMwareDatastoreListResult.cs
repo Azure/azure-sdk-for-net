@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of Datastores. </summary>
     internal partial class VMwareDatastoreListResult
     {
-        /// <summary> Initializes a new instance of VMwareDatastoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreListResult"/>. </summary>
         /// <param name="value"> Array of Datastores. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareDatastoreListResult(IEnumerable<VMwareDatastoreData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of Datastores. </param>
         /// <param name="value"> Array of Datastores. </param>
         internal VMwareDatastoreListResult(string nextLink, IReadOnlyList<VMwareDatastoreData> value)

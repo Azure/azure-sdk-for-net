@@ -10,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The phone number search purchase request. </summary>
     internal partial class PhoneNumberPurchaseRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberPurchaseRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
         public PhoneNumberPurchaseRequest()
         {
         }

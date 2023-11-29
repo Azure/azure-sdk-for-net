@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the resource-type. </summary>
     internal partial class MetadataResourceTypeRelated
     {
-        /// <summary> Initializes a new instance of MetadataResourceTypeRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataResourceTypeRelated"/>. </summary>
         internal MetadataResourceTypeRelated()
         {
             Tables = new ChangeTrackingList<string>();

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Describes the json payload for the list of available private stores (between zero and one, inclusive). </summary>
     internal partial class PrivateStoreList
     {
-        /// <summary> Initializes a new instance of PrivateStoreList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreList"/>. </summary>
         internal PrivateStoreList()
         {
             Value = new ChangeTrackingList<PrivateStoreData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of PrivateStore list results if there are any. </param>
         internal PrivateStoreList(IReadOnlyList<PrivateStoreData> value, string nextLink)

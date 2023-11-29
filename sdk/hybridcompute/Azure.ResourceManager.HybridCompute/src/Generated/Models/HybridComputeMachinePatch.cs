@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a hybrid machine Update. </summary>
     public partial class HybridComputeMachinePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         public HybridComputeMachinePatch()
         {
         }

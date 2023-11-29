@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiTagDescriptionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
         public ApiTagDescriptionCreateOrUpdateContent()
         {
         }

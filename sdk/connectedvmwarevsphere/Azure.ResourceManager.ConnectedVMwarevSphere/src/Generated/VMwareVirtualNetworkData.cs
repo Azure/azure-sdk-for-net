@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareVirtualNetworkData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

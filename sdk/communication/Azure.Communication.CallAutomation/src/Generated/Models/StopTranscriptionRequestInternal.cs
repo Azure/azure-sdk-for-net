@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StopTranscriptionRequest. </summary>
     internal partial class StopTranscriptionRequestInternal
     {
-        /// <summary> Initializes a new instance of StopTranscriptionRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequestInternal"/>. </summary>
         public StopTranscriptionRequestInternal()
         {
         }

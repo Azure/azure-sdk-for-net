@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection intent input. </summary>
     public partial class ReplicationProtectionIntentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentCreateOrUpdateContent"/>. </summary>
         public ReplicationProtectionIntentCreateOrUpdateContent()
         {
         }

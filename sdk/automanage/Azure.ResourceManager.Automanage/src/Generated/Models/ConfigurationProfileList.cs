@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list configuration profile operation. </summary>
     internal partial class ConfigurationProfileList
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileList"/>. </summary>
         internal ConfigurationProfileList()
         {
             Value = new ChangeTrackingList<AutomanageConfigurationProfileData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileList"/>. </summary>
         /// <param name="value"> Result of the list ConfigurationProfile operation. </param>
         internal ConfigurationProfileList(IReadOnlyList<AutomanageConfigurationProfileData> value)
         {

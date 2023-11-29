@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Credential reference type. </summary>
     public partial class DataFactoryCredentialReference
     {
-        /// <summary> Initializes a new instance of DataFactoryCredentialReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryCredentialReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

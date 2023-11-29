@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceData"/>. </summary>
         public CosmosDBPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

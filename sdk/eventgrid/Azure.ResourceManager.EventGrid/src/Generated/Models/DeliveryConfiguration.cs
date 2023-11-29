@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the delivery configuration information of the event subscription. </summary>
     public partial class DeliveryConfiguration
     {
-        /// <summary> Initializes a new instance of DeliveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryConfiguration"/>. </summary>
         public DeliveryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryConfiguration"/>. </summary>
         /// <param name="deliveryMode"> Delivery mode of the event subscription. </param>
         /// <param name="queue"> This property should be populated when deliveryMode is queue and represents information about the queue subscription. </param>
         internal DeliveryConfiguration(DeliveryMode? deliveryMode, QueueInfo queue)

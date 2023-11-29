@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class StorageTargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         public StorageTargetData()
         {
             Junctions = new ChangeTrackingList<NamespaceJunction>();
         }
 
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

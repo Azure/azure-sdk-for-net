@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownBackupParameters. </summary>
     internal partial class UnknownBackupParameters : DataProtectionBackupSettingsBase
     {
-        /// <summary> Initializes a new instance of UnknownBackupParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupParameters"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownBackupParameters(string objectType) : base(objectType)
         {

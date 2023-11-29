@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The AzureOperatorNexusCluster NFVI detail. </summary>
     public partial class AzureOperatorNexusClusterNfviDetails : NFVIs
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusClusterNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
         public AzureOperatorNexusClusterNfviDetails()
         {
             NfviType = NfviType.AzureOperatorNexus;
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusClusterNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="customLocationReference"> The reference to the custom location. </param>

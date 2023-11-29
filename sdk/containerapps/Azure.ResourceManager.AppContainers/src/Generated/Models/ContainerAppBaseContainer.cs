@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App base container definition. </summary>
     public partial class ContainerAppBaseContainer
     {
-        /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBaseContainer"/>. </summary>
         public ContainerAppBaseContainer()
         {
             Command = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             VolumeMounts = new ChangeTrackingList<ContainerAppVolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBaseContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class UpdateRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRunData"/>. </summary>
         public UpdateRunData()
         {
             Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

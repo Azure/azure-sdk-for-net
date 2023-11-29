@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkResourceData"/>. </summary>
         public SqlPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

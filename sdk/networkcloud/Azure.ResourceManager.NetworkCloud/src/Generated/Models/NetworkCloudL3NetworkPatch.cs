@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L3NetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
     public partial class NetworkCloudL3NetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudL3NetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkPatch"/>. </summary>
         public NetworkCloudL3NetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

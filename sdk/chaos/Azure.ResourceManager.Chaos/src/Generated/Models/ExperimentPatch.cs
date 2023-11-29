@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Describes an experiment update. </summary>
     public partial class ExperimentPatch
     {
-        /// <summary> Initializes a new instance of ExperimentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentPatch"/>. </summary>
         public ExperimentPatch()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceMovePolicy. </summary>
     public partial class ResourceMovePolicy
     {
-        /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMovePolicy"/>. </summary>
         public ResourceMovePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMovePolicy"/>. </summary>
         /// <param name="isValidationRequired"></param>
         /// <param name="isCrossResourceGroupMoveEnabled"></param>
         /// <param name="isCrossSubscriptionMoveEnabled"></param>

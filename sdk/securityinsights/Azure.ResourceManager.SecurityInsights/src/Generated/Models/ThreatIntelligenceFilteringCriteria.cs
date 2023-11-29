@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Filtering criteria for querying threat intelligence indicators. </summary>
     public partial class ThreatIntelligenceFilteringCriteria
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceFilteringCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
         public ThreatIntelligenceFilteringCriteria()
         {
             SortBy = new ChangeTrackingList<ThreatIntelligenceSortingCriteria>();

@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// </summary>
     internal partial class AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextTask"/>. </summary>
         public AnalyzeTextTask()
         {
         }

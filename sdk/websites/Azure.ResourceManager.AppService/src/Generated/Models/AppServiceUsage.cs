@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Usage of the quota resource. </summary>
     public partial class AppServiceUsage : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
         public AppServiceUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
