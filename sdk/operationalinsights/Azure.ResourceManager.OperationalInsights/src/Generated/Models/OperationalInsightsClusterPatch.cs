@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The top level Log Analytics cluster resource container. </summary>
     public partial class OperationalInsightsClusterPatch
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
         public OperationalInsightsClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

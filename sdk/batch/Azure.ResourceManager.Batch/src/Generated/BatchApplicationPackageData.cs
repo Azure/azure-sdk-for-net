@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchApplicationPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchApplicationPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageData"/>. </summary>
         public BatchApplicationPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchApplicationPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

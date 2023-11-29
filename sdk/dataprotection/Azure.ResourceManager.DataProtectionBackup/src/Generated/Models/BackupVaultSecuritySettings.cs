@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class containing security settings of vault. </summary>
     public partial class BackupVaultSecuritySettings
     {
-        /// <summary> Initializes a new instance of BackupVaultSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultSecuritySettings"/>. </summary>
         public BackupVaultSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultSecuritySettings"/>. </summary>
         /// <param name="softDeleteSettings"> Soft delete related settings. </param>
         /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings)

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The properties of cluster. </summary>
     public partial class HDInsightClusterProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/>. </summary>
         /// <param name="clusterDefinition"> The cluster definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterDefinition"/> is null. </exception>
         public HDInsightClusterProperties(HDInsightClusterDefinition clusterDefinition)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateEndpointConnections = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/>. </summary>
         /// <param name="clusterVersion"> The version of the cluster. </param>
         /// <param name="clusterHdpVersion"> The hdp version of the cluster. </param>
         /// <param name="osType"> The type of operating system. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of the App Service plan scale options. </summary>
     public partial class AppServiceSkuCapacity
     {
-        /// <summary> Initializes a new instance of AppServiceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapacity"/>. </summary>
         public AppServiceSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapacity"/>. </summary>
         /// <param name="minimum"> Minimum number of workers for this App Service plan SKU. </param>
         /// <param name="maximum"> Maximum number of workers for this App Service plan SKU. </param>
         /// <param name="elasticMaximum"> Maximum number of Elastic workers for this App Service plan SKU. </param>

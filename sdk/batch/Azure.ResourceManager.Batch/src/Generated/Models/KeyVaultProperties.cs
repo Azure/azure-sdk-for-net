@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> KeyVault configuration when using an encryption KeySource of Microsoft.KeyVault. </summary>
     internal partial class KeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         public KeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier">
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
         ///

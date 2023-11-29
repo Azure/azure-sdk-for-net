@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The configuration for container-enabled pools. </summary>
     public partial class BatchVmContainerConfiguration
     {
-        /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
         /// <param name="containerType"> The container technology to be used. </param>
         public BatchVmContainerConfiguration(BatchVmContainerType containerType)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }
 
-        /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
         /// <param name="containerType"> The container technology to be used. </param>
         /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>

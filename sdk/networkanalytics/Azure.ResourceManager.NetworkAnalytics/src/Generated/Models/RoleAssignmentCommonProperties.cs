@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The details for role assignment common properties. </summary>
     public partial class RoleAssignmentCommonProperties
     {
-        /// <summary> Initializes a new instance of RoleAssignmentCommonProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCommonProperties"/>. </summary>
         /// <param name="roleId"> Role Id of the Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="userName"> User name. </param>

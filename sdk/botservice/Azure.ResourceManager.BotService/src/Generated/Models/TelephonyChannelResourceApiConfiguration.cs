@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A resource Api configuration for the Telephony channel. </summary>
     public partial class TelephonyChannelResourceApiConfiguration
     {
-        /// <summary> Initializes a new instance of TelephonyChannelResourceApiConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         public TelephonyChannelResourceApiConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TelephonyChannelResourceApiConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         /// <param name="id"> The id of config. </param>
         /// <param name="providerName"> The provider name. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for commit operation. </summary>
     public partial class MoverCommitContent
     {
-        /// <summary> Initializes a new instance of MoverCommitContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverCommitContent"/>. </summary>
         /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverCommitContent(IEnumerable<ResourceIdentifier> moverResources)

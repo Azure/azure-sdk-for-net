@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put tenant policy request properties. </summary>
     public partial class TenantPolicyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of TenantPolicyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyCreateOrUpdateContent"/>. </summary>
         public TenantPolicyCreateOrUpdateContent()
         {
             ExemptedPrincipals = new ChangeTrackingList<Guid>();

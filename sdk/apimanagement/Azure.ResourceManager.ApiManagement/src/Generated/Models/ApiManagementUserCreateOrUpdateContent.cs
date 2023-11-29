@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> User create details. </summary>
     public partial class ApiManagementUserCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementUserCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
         public ApiManagementUserCreateOrUpdateContent()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();

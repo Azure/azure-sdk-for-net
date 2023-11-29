@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus request. </summary>
     public partial class BackupStatusContent
     {
-        /// <summary> Initializes a new instance of BackupStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
         public BackupStatusContent()
         {
         }

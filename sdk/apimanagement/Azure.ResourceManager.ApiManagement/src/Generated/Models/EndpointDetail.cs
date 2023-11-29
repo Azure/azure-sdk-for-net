@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Current TCP connectivity information from the Api Management Service to a single endpoint. </summary>
     public partial class EndpointDetail
     {
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         internal EndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="region"> The region of the dependency. </param>
         internal EndpointDetail(int? port, string region)

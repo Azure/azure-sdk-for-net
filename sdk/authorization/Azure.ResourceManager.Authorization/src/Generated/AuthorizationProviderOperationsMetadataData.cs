@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         internal AuthorizationProviderOperationsMetadataData()
         {
             ResourceTypes = new ChangeTrackingList<AuthorizationProviderResourceType>();
             Operations = new ChangeTrackingList<AuthorizationProviderOperationInfo>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> List of available SKUs for a Kusto Cluster. </summary>
     internal partial class ListResourceSkusResult
     {
-        /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListResourceSkusResult"/>. </summary>
         internal ListResourceSkusResult()
         {
             Value = new ChangeTrackingList<KustoAvailableSkuDetails>();
         }
 
-        /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListResourceSkusResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for an existing resource. </param>
         internal ListResourceSkusResult(IReadOnlyList<KustoAvailableSkuDetails> value)
         {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> Private Link Service Connection State. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public ElasticSanPrivateEndpointConnectionData(ElasticSanPrivateLinkServiceConnectionState connectionState)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// </summary>
     public abstract partial class AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         protected AlertProcessingRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         internal AlertProcessingRuleAction(AlertProcessingRuleActionType actionType)
         {

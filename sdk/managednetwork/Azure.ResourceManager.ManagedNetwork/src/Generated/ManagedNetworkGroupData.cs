@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ManagedNetworkGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedNetworkGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupData"/>. </summary>
         public ManagedNetworkGroupData()
         {
             ManagementGroups = new ChangeTrackingList<WritableSubResource>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

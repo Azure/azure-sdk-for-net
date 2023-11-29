@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Factory's GitHub repo information. </summary>
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryRepoConfigurationType = "FactoryGitHubConfiguration";
         }
 
-        /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>

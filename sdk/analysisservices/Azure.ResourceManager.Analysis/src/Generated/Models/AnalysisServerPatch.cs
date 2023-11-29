@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> Provision request specification. </summary>
     public partial class AnalysisServerPatch
     {
-        /// <summary> Initializes a new instance of AnalysisServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerPatch"/>. </summary>
         public AnalysisServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class representing the AdaptiveApplicationControlGroup data model. </summary>
     public partial class AdaptiveApplicationControlGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroupData"/>. </summary>
         public AdaptiveApplicationControlGroupData()
         {
             Issues = new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
             PathRecommendations = new ChangeTrackingList<PathRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a phone number search request to find phone numbers. Found phone numbers are temporarily held for a following purchase. </summary>
     internal partial class PhoneNumberSearchRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberSearchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/>. </summary>
         /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, or tollFree. </param>
         /// <param name="assignmentType"> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>

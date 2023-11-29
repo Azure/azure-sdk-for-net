@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn device configuration script generation parameters. </summary>
     public partial class VpnDeviceScriptContent
     {
-        /// <summary> Initializes a new instance of VpnDeviceScriptContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnDeviceScriptContent"/>. </summary>
         public VpnDeviceScriptContent()
         {
         }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Gallery Application version operation response. </summary>
     internal partial class GalleryApplicationVersionList
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionList"/>. </summary>
         /// <param name="value"> A list of gallery Application Versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryApplicationVersionList(IEnumerable<GalleryApplicationVersionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionList"/>. </summary>
         /// <param name="value"> A list of gallery Application Versions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </param>
         internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersionData> value, string nextLink)

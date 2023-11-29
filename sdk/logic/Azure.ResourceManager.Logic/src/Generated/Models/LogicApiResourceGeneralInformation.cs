@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The API general information. </summary>
     public partial class LogicApiResourceGeneralInformation
     {
-        /// <summary> Initializes a new instance of LogicApiResourceGeneralInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceGeneralInformation"/>. </summary>
         internal LogicApiResourceGeneralInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceGeneralInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceGeneralInformation"/>. </summary>
         /// <param name="iconUri"> The icon url. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="description"> The description. </param>

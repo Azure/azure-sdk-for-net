@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of RestoreTargetInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfoBase"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         protected RestoreTargetInfoBase(RecoverySetting recoverySetting)
         {

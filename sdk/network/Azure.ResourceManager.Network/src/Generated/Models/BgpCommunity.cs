@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
     public partial class BgpCommunity
     {
-        /// <summary> Initializes a new instance of BgpCommunity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         public BgpCommunity()
         {
             CommunityPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BgpCommunity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
         /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>

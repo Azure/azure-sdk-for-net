@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The UnknownEffectiveBaseSecurityAdminRule. </summary>
     internal partial class UnknownEffectiveBaseSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of UnknownEffectiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>

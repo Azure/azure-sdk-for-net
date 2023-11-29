@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Input values. </summary>
     public partial class IotCentralAppNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of IotCentralAppNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the IoT Central application instance to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotCentralAppNameAvailabilityContent(string name)

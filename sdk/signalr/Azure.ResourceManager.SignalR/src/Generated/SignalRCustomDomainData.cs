@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainData"/>. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificate"> Reference to a resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="customCertificate"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SignalR
             CustomCertificate = customCertificate;
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

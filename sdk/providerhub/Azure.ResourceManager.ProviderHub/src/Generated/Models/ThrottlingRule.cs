@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThrottlingRule. </summary>
     public partial class ThrottlingRule
     {
-        /// <summary> Initializes a new instance of ThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="metrics"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="metrics"></param>
         /// <param name="requiredFeatures"></param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Link to an application package inside the batch account. </summary>
     public partial class BatchApplicationPackageReference
     {
-        /// <summary> Initializes a new instance of BatchApplicationPackageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageReference"/>. </summary>
         /// <param name="id"> The ID of the application package to install. This must be inside the same batch account as the pool. This can either be a reference to a specific version or the default version if one exists. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public BatchApplicationPackageReference(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of BatchApplicationPackageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageReference"/>. </summary>
         /// <param name="id"> The ID of the application package to install. This must be inside the same batch account as the pool. This can either be a reference to a specific version or the default version if one exists. </param>
         /// <param name="version"> If this is omitted, and no default version is specified for this application, the request fails with the error code InvalidApplicationPackageReferences. If you are calling the REST API directly, the HTTP status code is 409. </param>
         internal BatchApplicationPackageReference(ResourceIdentifier id, string version)

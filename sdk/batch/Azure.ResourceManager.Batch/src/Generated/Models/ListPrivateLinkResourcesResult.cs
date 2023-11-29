@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class ListPrivateLinkResourcesResult
     {
-        /// <summary> Initializes a new instance of ListPrivateLinkResourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListPrivateLinkResourcesResult"/>. </summary>
         internal ListPrivateLinkResourcesResult()
         {
             Value = new ChangeTrackingList<BatchPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ListPrivateLinkResourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListPrivateLinkResourcesResult"/>. </summary>
         /// <param name="value"> The collection of returned private link resources. </param>
         /// <param name="nextLink"> The continuation token. </param>
         internal ListPrivateLinkResourcesResult(IReadOnlyList<BatchPrivateLinkResourceData> value, string nextLink)

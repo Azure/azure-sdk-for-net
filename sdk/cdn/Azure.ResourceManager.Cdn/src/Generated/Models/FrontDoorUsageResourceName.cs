@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The usage names. </summary>
     public partial class FrontDoorUsageResourceName
     {
-        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsageResourceName"/>. </summary>
         internal FrontDoorUsageResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsageResourceName"/>. </summary>
         /// <param name="value"> A string describing the resource name. </param>
         /// <param name="localizedValue"> A localized string describing the resource name. </param>
         internal FrontDoorUsageResourceName(string value, string localizedValue)

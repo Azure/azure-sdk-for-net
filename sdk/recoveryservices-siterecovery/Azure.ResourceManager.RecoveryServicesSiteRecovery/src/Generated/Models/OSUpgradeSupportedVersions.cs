@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported OS upgrade versions. </summary>
     public partial class OSUpgradeSupportedVersions
     {
-        /// <summary> Initializes a new instance of OSUpgradeSupportedVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
         internal OSUpgradeSupportedVersions()
         {
             SupportedTargetOSVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OSUpgradeSupportedVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
         /// <param name="supportedSourceOSVersion"> The source OS version name. </param>
         /// <param name="supportedTargetOSVersions"> The target OS version names. </param>
         internal OSUpgradeSupportedVersions(string supportedSourceOSVersion, IReadOnlyList<string> supportedTargetOSVersions)

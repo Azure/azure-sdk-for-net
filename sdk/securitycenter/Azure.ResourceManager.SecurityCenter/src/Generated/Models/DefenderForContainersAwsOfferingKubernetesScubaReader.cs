@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The kubernetes to scuba connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKubernetesScubaReader
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesScubaReader. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesScubaReader"/>. </summary>
         public DefenderForContainersAwsOfferingKubernetesScubaReader()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesScubaReader. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesScubaReader"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature used for reading data. </param>
         internal DefenderForContainersAwsOfferingKubernetesScubaReader(string cloudRoleArn)
         {

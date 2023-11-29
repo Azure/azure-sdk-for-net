@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
     public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnectionVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         internal RecoveryServicesPrivateEndpointConnectionVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnectionVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

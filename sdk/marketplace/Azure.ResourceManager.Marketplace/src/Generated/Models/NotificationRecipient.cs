@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
     public partial class NotificationRecipient
     {
-        /// <summary> Initializes a new instance of NotificationRecipient. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRecipient"/>. </summary>
         public NotificationRecipient()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationRecipient. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRecipient"/>. </summary>
         /// <param name="principalId"> Principal ID. </param>
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Update the administrative state on list of resources. </summary>
     public partial class UpdateDeviceAdministrativeStateContent : UpdateAdministrativeStateOnResources
     {
-        /// <summary> Initializes a new instance of UpdateDeviceAdministrativeStateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDeviceAdministrativeStateContent"/>. </summary>
         public UpdateDeviceAdministrativeStateContent()
         {
         }

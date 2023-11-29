@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The options for history request evaluation. </summary>
     public partial class ResourcesHistoryRequestOptions
     {
-        /// <summary> Initializes a new instance of ResourcesHistoryRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryRequestOptions"/>. </summary>
         public ResourcesHistoryRequestOptions()
         {
         }

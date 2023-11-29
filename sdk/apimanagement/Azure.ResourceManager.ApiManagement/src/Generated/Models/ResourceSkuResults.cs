@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The API Management service SKUs operation response. </summary>
     internal partial class ResourceSkuResults
     {
-        /// <summary> Initializes a new instance of ResourceSkuResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuResults"/>. </summary>
         /// <param name="value"> The list of skus available for the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceSkuResults(IEnumerable<AvailableApiManagementServiceSkuResult> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuResults"/>. </summary>
         /// <param name="value"> The list of skus available for the service. </param>
         /// <param name="nextLink"> The uri to fetch the next page of API Management service Skus. </param>
         internal ResourceSkuResults(IReadOnlyList<AvailableApiManagementServiceSkuResult> value, string nextLink)

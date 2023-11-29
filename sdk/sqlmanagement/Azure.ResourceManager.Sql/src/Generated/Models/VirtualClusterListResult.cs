@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of virtual clusters. </summary>
     internal partial class VirtualClusterListResult
     {
-        /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualClusterListResult"/>. </summary>
         internal VirtualClusterListResult()
         {
             Value = new ChangeTrackingList<VirtualClusterData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualClusterListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal VirtualClusterListResult(IReadOnlyList<VirtualClusterData> value, string nextLink)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Amazon Marketplace Web Service dataset. </summary>
     public partial class AmazonMwsObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AmazonMwsObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMwsObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonMwsObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AmazonMWSObject";
         }
 
-        /// <summary> Initializes a new instance of AmazonMwsObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonMwsObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

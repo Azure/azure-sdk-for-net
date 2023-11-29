@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An ARM Resource SKU. </summary>
     public partial class SqlSku
     {
-        /// <summary> Initializes a new instance of SqlSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSku"/>. </summary>
         /// <param name="name"> The name of the SKU, typically, a letter + Number code, e.g. P3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlSku(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SqlSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSku"/>. </summary>
         /// <param name="name"> The name of the SKU, typically, a letter + Number code, e.g. P3. </param>
         /// <param name="tier"> The tier or edition of the particular SKU, e.g. Basic, Premium. </param>
         /// <param name="size"> Size of the particular SKU. </param>

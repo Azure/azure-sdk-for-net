@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters supplied to the Create operation. </summary>
     public partial class BatchAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of BatchAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The region in which to create the account. </param>
         public BatchAccountCreateOrUpdateContent(AzureLocation location)
         {

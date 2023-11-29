@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the undo edit runbook operation. </summary>
     public partial class RunbookDraftUndoEditResult
     {
-        /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookDraftUndoEditResult"/>. </summary>
         internal RunbookDraftUndoEditResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookDraftUndoEditResult"/>. </summary>
         /// <param name="statusCode"></param>
         /// <param name="requestId"></param>
         internal RunbookDraftUndoEditResult(AutomationHttpStatusCode? statusCode, string requestId)

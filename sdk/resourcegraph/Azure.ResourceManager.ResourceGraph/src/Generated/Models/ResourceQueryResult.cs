@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Query result. </summary>
     public partial class ResourceQueryResult
     {
-        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryResult"/>. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Facets = new ChangeTrackingList<Facet>();
         }
 
-        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryResult"/>. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>

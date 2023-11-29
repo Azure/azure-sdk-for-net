@@ -14,7 +14,7 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class QuantumJobsModelFactory
     {
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobDetails"/>. </summary>
         /// <param name="id"> The job id. </param>
         /// <param name="name"> The job name. Is not required for the name to be unique and it's only used for display purposes. </param>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
@@ -43,7 +43,7 @@ namespace Azure.Quantum.Jobs.Models
             return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, costEstimate, errorData, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CostEstimate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CostEstimate"/>. </summary>
         /// <param name="currencyCode"> The currency code. </param>
         /// <param name="events"> List of usage events. </param>
         /// <param name="estimatedTotal"> The estimated total. </param>
@@ -55,7 +55,7 @@ namespace Azure.Quantum.Jobs.Models
             return new CostEstimate(currencyCode, events?.ToList(), estimatedTotal);
         }
 
-        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UsageEvent"/>. </summary>
         /// <param name="dimensionId"> The dimension id. </param>
         /// <param name="dimensionName"> The dimension name. </param>
         /// <param name="measureUnit"> The unit of measure. </param>
@@ -68,7 +68,7 @@ namespace Azure.Quantum.Jobs.Models
             return new UsageEvent(dimensionId, dimensionName, measureUnit, amountBilled, amountConsumed, unitPrice);
         }
 
-        /// <summary> Initializes a new instance of ErrorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorData"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for displaying in a user interface. </param>
         /// <returns> A new <see cref="Models.ErrorData"/> instance for mocking. </returns>
@@ -77,7 +77,7 @@ namespace Azure.Quantum.Jobs.Models
             return new ErrorData(code, message);
         }
 
-        /// <summary> Initializes a new instance of ProviderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderStatus"/>. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
         /// <param name="targets"></param>
@@ -89,7 +89,7 @@ namespace Azure.Quantum.Jobs.Models
             return new ProviderStatus(id, currentAvailability, targets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TargetStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetStatus"/>. </summary>
         /// <param name="id"> Target id. </param>
         /// <param name="currentAvailability"> Target availability. </param>
         /// <param name="averageQueueTime"> Average queue time in seconds. </param>
@@ -100,7 +100,7 @@ namespace Azure.Quantum.Jobs.Models
             return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage);
         }
 
-        /// <summary> Initializes a new instance of SasUriResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SasUriResponse"/>. </summary>
         /// <param name="sasUri"> A URL with a SAS token to upload a blob for execution in the given workspace. </param>
         /// <returns> A new <see cref="Models.SasUriResponse"/> instance for mocking. </returns>
         public static SasUriResponse SasUriResponse(string sasUri = null)
@@ -108,7 +108,7 @@ namespace Azure.Quantum.Jobs.Models
             return new SasUriResponse(sasUri);
         }
 
-        /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumJobQuotaList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <returns> A new <see cref="Models.QuantumJobQuotaList"/> instance for mocking. </returns>
@@ -119,7 +119,7 @@ namespace Azure.Quantum.Jobs.Models
             return new QuantumJobQuotaList(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumJobQuota"/>. </summary>
         /// <param name="dimension"> The name of the dimension associated with the quota. </param>
         /// <param name="scope"> The scope at which the quota is applied. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>

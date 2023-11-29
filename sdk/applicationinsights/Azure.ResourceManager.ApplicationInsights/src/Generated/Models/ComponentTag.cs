@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a WebTest instance. </summary>
     public partial class ComponentTag
     {
-        /// <summary> Initializes a new instance of ComponentTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentTag"/>. </summary>
         public ComponentTag()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

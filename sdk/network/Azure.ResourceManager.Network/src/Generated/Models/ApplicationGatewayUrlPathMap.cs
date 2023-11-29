@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> UrlPathMaps give a url path to the backend mapping information for PathBasedRouting. </summary>
     public partial class ApplicationGatewayUrlPathMap : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlPathMap"/>. </summary>
         public ApplicationGatewayUrlPathMap()
         {
             PathRules = new ChangeTrackingList<ApplicationGatewayPathRule>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlPathMap"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

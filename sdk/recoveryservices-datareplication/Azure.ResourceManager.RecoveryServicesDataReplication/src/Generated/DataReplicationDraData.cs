@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationDraData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationDraData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraData"/>. </summary>
         /// <param name="properties"> Dra model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationDraData(DataReplicationDraProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationDraData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

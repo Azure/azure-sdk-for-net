@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Application definition artifact. </summary>
     public partial class ArmApplicationDefinitionArtifact
     {
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/>. </summary>
         /// <param name="name"> The managed application definition artifact name. </param>
         /// <param name="uri"> The managed application definition artifact blob uri. </param>
         /// <param name="artifactType"> The managed application definition artifact type. </param>

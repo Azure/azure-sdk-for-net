@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual Network information contract. </summary>
     public partial class AppServiceVirtualNetworkProperties
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProperties"/>. </summary>
         internal AppServiceVirtualNetworkProperties()
         {
             Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProperties"/>. </summary>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">

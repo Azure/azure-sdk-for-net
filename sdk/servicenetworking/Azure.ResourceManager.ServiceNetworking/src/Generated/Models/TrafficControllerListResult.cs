@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The response of a TrafficController list operation. </summary>
     internal partial class TrafficControllerListResult
     {
-        /// <summary> Initializes a new instance of TrafficControllerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerListResult"/>. </summary>
         /// <param name="value"> The TrafficController items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TrafficControllerListResult(IEnumerable<TrafficControllerData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TrafficControllerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerListResult"/>. </summary>
         /// <param name="value"> The TrafficController items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal TrafficControllerListResult(IReadOnlyList<TrafficControllerData> value, Uri nextLink)

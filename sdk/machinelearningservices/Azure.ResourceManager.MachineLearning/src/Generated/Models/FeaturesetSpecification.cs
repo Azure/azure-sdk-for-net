@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing specification. </summary>
     internal partial class FeaturesetSpecification
     {
-        /// <summary> Initializes a new instance of FeaturesetSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetSpecification"/>. </summary>
         public FeaturesetSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of FeaturesetSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetSpecification"/>. </summary>
         /// <param name="path"> Specifies the spec path. </param>
         internal FeaturesetSpecification(string path)
         {

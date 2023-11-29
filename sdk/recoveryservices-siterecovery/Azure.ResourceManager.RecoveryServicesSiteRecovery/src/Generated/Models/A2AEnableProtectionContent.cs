@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A enable protection input. </summary>
     public partial class A2AEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AEnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AEnableProtectionContent"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/> is null. </exception>
         public A2AEnableProtectionContent(ResourceIdentifier fabricObjectId)

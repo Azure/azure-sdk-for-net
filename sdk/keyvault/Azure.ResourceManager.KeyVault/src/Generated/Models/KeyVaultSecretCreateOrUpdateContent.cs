@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for creating or updating a secret. </summary>
     public partial class KeyVaultSecretCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultSecretCreateOrUpdateContent(SecretProperties properties)

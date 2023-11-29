@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ApiManagementSkuLocationInfo. </summary>
     public partial class ApiManagementSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuLocationInfo"/>. </summary>
         internal ApiManagementSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ApiManagementSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>

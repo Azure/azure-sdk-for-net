@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The compression method used on a dataset. </summary>
     public partial class DatasetCompression
     {
-        /// <summary> Initializes a new instance of DatasetCompression. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/>. </summary>
         /// <param name="type"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public DatasetCompression(object type)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DatasetCompression. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/>. </summary>
         /// <param name="type"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

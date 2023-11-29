@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Policy description details. </summary>
     public partial class PolicyDescriptionContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyDescriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionContractData"/>. </summary>
         public PolicyDescriptionContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyDescriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> A Microsoft Teams user. </summary>
     internal partial class MicrosoftTeamsUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         internal MicrosoftTeamsUserIdentifierModel(string userId)

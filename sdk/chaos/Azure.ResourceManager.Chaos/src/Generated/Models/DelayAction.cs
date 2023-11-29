@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a delay action. </summary>
     public partial class DelayAction : Action
     {
-        /// <summary> Initializes a new instance of DelayAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelayAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ActionType = "delay";
         }
 
-        /// <summary> Initializes a new instance of DelayAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelayAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>

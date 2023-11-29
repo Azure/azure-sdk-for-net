@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> The core properties of guest configuration resources. </summary>
     public partial class GuestConfigurationResourceData
     {
-        /// <summary> Initializes a new instance of GuestConfigurationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
         public GuestConfigurationResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="location"> Region where the VM is located. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> ManagedResourceGroup related properties. </summary>
     public partial class NetworkAnalyticsManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> Name of managed resource group. </param>
         /// <param name="location"> Managed Resource Group location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

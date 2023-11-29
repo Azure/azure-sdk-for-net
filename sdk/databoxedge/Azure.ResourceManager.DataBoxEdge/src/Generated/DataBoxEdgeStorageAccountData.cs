@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="dataPolicy"> Data policy of the storage Account. </param>
         public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
         {
             DataPolicy = dataPolicy;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties needed for calculate refund including the scope and the reservation to be returned. </summary>
     public partial class ReservationCalculateRefundRequestProperties
     {
-        /// <summary> Initializes a new instance of ReservationCalculateRefundRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundRequestProperties"/>. </summary>
         public ReservationCalculateRefundRequestProperties()
         {
         }

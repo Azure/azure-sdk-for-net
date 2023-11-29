@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Channel update. </summary>
     public partial class PartnerNamespaceChannelPatch
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelPatch"/>. </summary>
         public PartnerNamespaceChannelPatch()
         {
         }

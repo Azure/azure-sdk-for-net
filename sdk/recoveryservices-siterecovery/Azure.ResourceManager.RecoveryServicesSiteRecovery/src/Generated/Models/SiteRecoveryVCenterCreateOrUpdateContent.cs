@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input required to add vCenter. </summary>
     public partial class SiteRecoveryVCenterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryVCenterCreateOrUpdateContent()
         {
         }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class CustomAssessmentAutomationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationData"/>. </summary>
         public CustomAssessmentAutomationData()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

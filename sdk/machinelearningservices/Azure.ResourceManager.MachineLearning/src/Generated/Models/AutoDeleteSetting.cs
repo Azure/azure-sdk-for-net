@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The AutoDeleteSetting. </summary>
     public partial class AutoDeleteSetting
     {
-        /// <summary> Initializes a new instance of AutoDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoDeleteSetting"/>. </summary>
         public AutoDeleteSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoDeleteSetting"/>. </summary>
         /// <param name="condition"> When to check if an asset is expired. </param>
         /// <param name="value"> Expiration condition value. </param>
         internal AutoDeleteSetting(AutoDeleteCondition? condition, string value)

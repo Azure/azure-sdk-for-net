@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> Base type for List return in our api. </summary>
     internal partial class SupportedStorageSources
     {
-        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SupportedStorageSources(IEnumerable<StorageSource> value)
@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>
         internal SupportedStorageSources(IReadOnlyList<StorageSource> value)
         {

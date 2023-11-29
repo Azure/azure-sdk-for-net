@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a generated ARM template. </summary>
     public partial class DevTestLabArmTemplateInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         internal DevTestLabArmTemplateInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         internal DevTestLabArmTemplateInfo(BinaryData template, BinaryData parameters)

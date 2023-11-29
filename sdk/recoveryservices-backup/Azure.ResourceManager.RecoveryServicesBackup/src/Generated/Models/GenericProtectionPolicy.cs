@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
     public partial class GenericProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectionPolicy"/>. </summary>
         public GenericProtectionPolicy()
         {
             SubProtectionPolicy = new ChangeTrackingList<SubProtectionPolicy>();
             BackupManagementType = "GenericProtectionPolicy";
         }
 
-        /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>

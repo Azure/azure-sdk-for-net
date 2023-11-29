@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware migrate fabric model custom properties. </summary>
     public partial class VMwareMigrateFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="vMwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vMwareSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareMigrate";
         }
 
-        /// <summary> Initializes a new instance of VMwareMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="vMwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>

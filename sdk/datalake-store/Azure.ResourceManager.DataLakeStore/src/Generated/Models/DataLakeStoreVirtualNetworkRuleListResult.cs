@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store virtual network rule list information. </summary>
     internal partial class DataLakeStoreVirtualNetworkRuleListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleListResult"/>. </summary>
         internal DataLakeStoreVirtualNetworkRuleListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleListResult"/>. </summary>
         /// <param name="value"> The results of the list operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeStoreVirtualNetworkRuleListResult(IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> value, string nextLink)

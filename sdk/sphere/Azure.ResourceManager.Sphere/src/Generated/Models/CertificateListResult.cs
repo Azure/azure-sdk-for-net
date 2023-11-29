@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class CertificateListResult
     {
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         /// <param name="value">
         /// The Certificate items on this page
         /// Serialized Name: CertificateListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         /// <param name="value">
         /// The Certificate items on this page
         /// Serialized Name: CertificateListResult.value

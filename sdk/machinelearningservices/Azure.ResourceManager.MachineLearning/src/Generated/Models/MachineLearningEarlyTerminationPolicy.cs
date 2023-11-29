@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         protected MachineLearningEarlyTerminationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>

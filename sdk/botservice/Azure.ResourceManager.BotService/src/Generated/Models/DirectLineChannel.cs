@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Direct Line channel definition. </summary>
     public partial class DirectLineChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of DirectLineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
         public DirectLineChannel()
         {
             ChannelName = "DirectLineChannel";
         }
 
-        /// <summary> Initializes a new instance of DirectLineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

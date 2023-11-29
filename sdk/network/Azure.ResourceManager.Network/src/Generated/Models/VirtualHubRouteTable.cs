@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHub route table. </summary>
     internal partial class VirtualHubRouteTable
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTable"/>. </summary>
         public VirtualHubRouteTable()
         {
             Routes = new ChangeTrackingList<VirtualHubRoute>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTable"/>. </summary>
         /// <param name="routes"> List of all routes. </param>
         internal VirtualHubRouteTable(IList<VirtualHubRoute> routes)
         {

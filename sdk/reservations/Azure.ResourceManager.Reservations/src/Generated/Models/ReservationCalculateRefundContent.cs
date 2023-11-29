@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request containing information needed for calculating refund. </summary>
     public partial class ReservationCalculateRefundContent
     {
-        /// <summary> Initializes a new instance of ReservationCalculateRefundContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundContent"/>. </summary>
         public ReservationCalculateRefundContent()
         {
         }

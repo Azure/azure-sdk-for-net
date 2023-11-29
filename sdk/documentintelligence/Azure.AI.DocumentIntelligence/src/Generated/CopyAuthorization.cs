@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class CopyAuthorization
     {
-        /// <summary> Initializes a new instance of CopyAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyAuthorization"/>. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the document model should be copied to. </param>
         /// <param name="targetResourceRegion">
         /// Location of the target Azure resource where the document model should be copied

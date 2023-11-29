@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class ArcExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         public ArcExtensionData()
         {
             PerNodeExtensionDetails = new ChangeTrackingList<PerNodeExtensionState>();
         }
 
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

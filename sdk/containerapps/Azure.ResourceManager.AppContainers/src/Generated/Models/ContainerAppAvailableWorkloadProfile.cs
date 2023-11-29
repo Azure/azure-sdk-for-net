@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> A workload profile with specific hardware configure to run container apps. </summary>
     public partial class ContainerAppAvailableWorkloadProfile : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfile"/>. </summary>
         public ContainerAppAvailableWorkloadProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

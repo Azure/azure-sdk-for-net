@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Identity registry statistics. </summary>
     public partial class IotHubRegistryStatistics
     {
-        /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRegistryStatistics"/>. </summary>
         internal IotHubRegistryStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRegistryStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
         /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
         /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>

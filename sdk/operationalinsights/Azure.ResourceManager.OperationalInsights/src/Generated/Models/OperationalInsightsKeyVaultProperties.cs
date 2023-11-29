@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The key vault properties. </summary>
     public partial class OperationalInsightsKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of OperationalInsightsKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsKeyVaultProperties"/>. </summary>
         public OperationalInsightsKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Key Vault uri which holds they key associated with the Log Analytics cluster. </param>
         /// <param name="keyName"> The name of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyVersion"> The version of the key associated with the Log Analytics cluster. </param>

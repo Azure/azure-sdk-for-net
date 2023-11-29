@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB redistribute throughput parameters object. </summary>
     public partial class RedistributeThroughputParameters : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RedistributeThroughputParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputParameters"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of RedistributeThroughputParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputParameters"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

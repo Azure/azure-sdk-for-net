@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HciClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HciClusterData(AzureLocation location) : base(location)
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of HciClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

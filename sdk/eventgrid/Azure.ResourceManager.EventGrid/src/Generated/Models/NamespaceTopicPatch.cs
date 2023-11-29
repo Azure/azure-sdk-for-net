@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the namespace topic update. </summary>
     public partial class NamespaceTopicPatch
     {
-        /// <summary> Initializes a new instance of NamespaceTopicPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
         public NamespaceTopicPatch()
         {
         }

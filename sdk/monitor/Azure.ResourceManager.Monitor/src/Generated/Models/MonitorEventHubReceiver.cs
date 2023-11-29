@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Event hub receiver. </summary>
     public partial class MonitorEventHubReceiver
     {
-        /// <summary> Initializes a new instance of MonitorEventHubReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorEventHubReceiver"/>. </summary>
         /// <param name="name"> The name of the Event hub receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="eventHubNameSpace"> The Event Hub namespace. </param>
         /// <param name="eventHubName"> The name of the specific Event Hub queue. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary> Initializes a new instance of MonitorEventHubReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorEventHubReceiver"/>. </summary>
         /// <param name="name"> The name of the Event hub receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="eventHubNameSpace"> The Event Hub namespace. </param>
         /// <param name="eventHubName"> The name of the specific Event Hub queue. </param>

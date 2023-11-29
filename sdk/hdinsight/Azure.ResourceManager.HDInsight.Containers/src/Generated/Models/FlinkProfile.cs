@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The Flink cluster profile. </summary>
     public partial class FlinkProfile
     {
-        /// <summary> Initializes a new instance of FlinkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/>. </summary>
         /// <param name="storage"> The storage profile. </param>
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             TaskManager = taskManager;
         }
 
-        /// <summary> Initializes a new instance of FlinkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/>. </summary>
         /// <param name="storage"> The storage profile. </param>
         /// <param name="numReplicas"> The number of task managers. </param>
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The secrets related to a databox job. </summary>
     public partial class DataboxJobSecrets : JobSecrets
     {
-        /// <summary> Initializes a new instance of DataboxJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataboxJobSecrets"/>. </summary>
         internal DataboxJobSecrets()
         {
             PodSecrets = new ChangeTrackingList<DataBoxSecret>();
             JobSecretsType = DataBoxOrderType.DataBox;
         }
 
-        /// <summary> Initializes a new instance of DataboxJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataboxJobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>

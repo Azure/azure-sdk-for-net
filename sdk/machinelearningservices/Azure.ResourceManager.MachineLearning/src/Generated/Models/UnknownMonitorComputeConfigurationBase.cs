@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownMonitorComputeConfigurationBase. </summary>
     internal partial class UnknownMonitorComputeConfigurationBase : MonitorComputeConfigurationBase
     {
-        /// <summary> Initializes a new instance of UnknownMonitorComputeConfigurationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeConfigurationBase"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
         internal UnknownMonitorComputeConfigurationBase(MonitorComputeType computeType) : base(computeType)
         {

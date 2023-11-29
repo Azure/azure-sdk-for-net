@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Rule for trusted access role. </summary>
     public partial class ContainerServiceTrustedAccessRoleRule
     {
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleRule"/>. </summary>
         internal ContainerServiceTrustedAccessRoleRule()
         {
             Verbs = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NonResourceUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleRule"/>. </summary>
         /// <param name="verbs"> List of allowed verbs. </param>
         /// <param name="apiGroups"> List of allowed apiGroups. </param>
         /// <param name="resources"> List of allowed resources. </param>

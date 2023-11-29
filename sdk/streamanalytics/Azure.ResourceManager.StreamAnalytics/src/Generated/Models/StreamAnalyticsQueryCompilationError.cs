@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> An error produced by the compiler. </summary>
     public partial class StreamAnalyticsQueryCompilationError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationError"/>. </summary>
         internal StreamAnalyticsQueryCompilationError()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationError"/>. </summary>
         /// <param name="message"> The content of the error message. </param>
         /// <param name="startLine"> Describes the error location in the original query. Not set if isGlobal is true. </param>
         /// <param name="startColumn"> Describes the error location in the original query. Not set if isGlobal is true. </param>

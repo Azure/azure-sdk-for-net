@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Snapshots. </summary>
     internal partial class SnapshotsList
     {
-        /// <summary> Initializes a new instance of SnapshotsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
         internal SnapshotsList()
         {
             Value = new ChangeTrackingList<NetAppVolumeSnapshotData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
         /// <param name="value"> A list of Snapshots. </param>
         internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value)
         {

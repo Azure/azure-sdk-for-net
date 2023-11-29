@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAdvisorModelFactory
     {
-        /// <summary> Initializes a new instance of MetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Advisor.MetadataEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new MetadataEntityData(id, name, resourceType, systemData, displayName, dependsOn?.ToList(), applicableScenarios?.ToList(), supportedValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetadataSupportedValueDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new MetadataSupportedValueDetail(id, displayName);
         }
 
-        /// <summary> Initializes a new instance of ConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new ConfigData(id, name, resourceType, systemData, exclude, lowCpuThreshold, digests?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Advisor.ResourceRecommendationBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new ResourceRecommendationBaseData(id, name, resourceType, systemData, category, impact, impactedField, impactedValue, lastUpdated, metadata, recommendationTypeId, risk, shortDescription, suppressionIds?.ToList(), extendedProperties, resourceMetadata, description, label, learnMoreLink, potentialBenefits, actions?.ToList(), remediation, exposedMetadataProperties);
         }
 
-        /// <summary> Initializes a new instance of SuppressionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Advisor.SuppressionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

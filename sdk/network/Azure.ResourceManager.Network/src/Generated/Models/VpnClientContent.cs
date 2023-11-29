@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Client Parameters for package generation. </summary>
     public partial class VpnClientContent
     {
-        /// <summary> Initializes a new instance of VpnClientContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientContent"/>. </summary>
         public VpnClientContent()
         {
             ClientRootCertificates = new ChangeTrackingList<string>();

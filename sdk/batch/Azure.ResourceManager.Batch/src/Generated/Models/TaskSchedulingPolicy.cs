@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
     internal partial class TaskSchedulingPolicy
     {
-        /// <summary> Initializes a new instance of TaskSchedulingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/>. </summary>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         public TaskSchedulingPolicy(BatchNodeFillType nodeFillType)
         {

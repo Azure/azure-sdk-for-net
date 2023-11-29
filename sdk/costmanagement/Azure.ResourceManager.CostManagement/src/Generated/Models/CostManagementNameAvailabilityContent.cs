@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The check availability request body. </summary>
     public partial class CostManagementNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CostManagementNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementNameAvailabilityContent"/>. </summary>
         public CostManagementNameAvailabilityContent()
         {
         }

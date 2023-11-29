@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of gateway resources and a possible link for next set. </summary>
     internal partial class GatewayResourceList
     {
-        /// <summary> Initializes a new instance of GatewayResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceList"/>. </summary>
         internal GatewayResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceList"/>. </summary>
         /// <param name="value"> Collection of gateway resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

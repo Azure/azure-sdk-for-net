@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The SubscriptionRegisteredFeatures. </summary>
     public partial class SubscriptionRegisteredFeatures
     {
-        /// <summary> Initializes a new instance of SubscriptionRegisteredFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRegisteredFeatures"/>. </summary>
         internal SubscriptionRegisteredFeatures()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionRegisteredFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRegisteredFeatures"/>. </summary>
         /// <param name="name"></param>
         /// <param name="state"></param>
         internal SubscriptionRegisteredFeatures(string name, string state)

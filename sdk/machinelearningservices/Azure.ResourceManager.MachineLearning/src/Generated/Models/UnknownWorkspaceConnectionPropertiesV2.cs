@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownWorkspaceConnectionPropertiesV2. </summary>
     internal partial class UnknownWorkspaceConnectionPropertiesV2 : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of UnknownWorkspaceConnectionPropertiesV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkspaceConnectionPropertiesV2"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

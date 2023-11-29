@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraConnectionError. </summary>
     public partial class CassandraConnectionError
     {
-        /// <summary> Initializes a new instance of CassandraConnectionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraConnectionError"/>. </summary>
         internal CassandraConnectionError()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraConnectionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraConnectionError"/>. </summary>
         /// <param name="connectionState"> The kind of connection error that occurred. </param>
         /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
         /// <param name="ipTo"> The IP that the connection attempted to reach. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of ArcSetting proxy resources for the HCI cluster. </summary>
     internal partial class ArcSettingList
     {
-        /// <summary> Initializes a new instance of ArcSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingList"/>. </summary>
         internal ArcSettingList()
         {
             Value = new ChangeTrackingList<ArcSettingData>();
         }
 
-        /// <summary> Initializes a new instance of ArcSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingList"/>. </summary>
         /// <param name="value"> List of ArcSetting proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ArcSettingList(IReadOnlyList<ArcSettingData> value, string nextLink)

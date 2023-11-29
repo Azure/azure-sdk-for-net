@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachinePatchParameters represents the body of the request to patch bare metal machine properties. </summary>
     public partial class NetworkCloudBareMetalMachinePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachinePatch"/>. </summary>
         public NetworkCloudBareMetalMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

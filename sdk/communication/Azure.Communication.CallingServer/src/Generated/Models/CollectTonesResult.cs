@@ -13,13 +13,13 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CollectTonesResult. </summary>
     public partial class CollectTonesResult
     {
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectTonesResult"/>. </summary>
         internal CollectTonesResult()
         {
             Tones = new ChangeTrackingList<DtmfTone>();
         }
 
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
         internal CollectTonesResult(IReadOnlyList<DtmfTone> tones)
         {

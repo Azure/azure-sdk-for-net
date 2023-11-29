@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkResourceData"/>. </summary>
         public BatchPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BatchPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

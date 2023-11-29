@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Application type update request. </summary>
     public partial class ServiceFabricManagedApplicationTypePatch
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypePatch"/>. </summary>
         public ServiceFabricManagedApplicationTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

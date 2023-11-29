@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDataItem. </summary>
     public partial class MetricSeriesData
     {
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricValues = metricValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>

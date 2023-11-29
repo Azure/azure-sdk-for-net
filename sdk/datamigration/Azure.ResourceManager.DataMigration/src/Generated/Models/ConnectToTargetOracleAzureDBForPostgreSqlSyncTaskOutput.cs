@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure Database for PostgreSQL and target server requirements for Oracle source. </summary>
     public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DatabaseSchemaMap = new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="targetServerVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>

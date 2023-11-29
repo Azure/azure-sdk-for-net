@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class SecurityAlertSimulatorRequestProperties
     {
-        /// <summary> Initializes a new instance of SecurityAlertSimulatorRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
         public SecurityAlertSimulatorRequestProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();

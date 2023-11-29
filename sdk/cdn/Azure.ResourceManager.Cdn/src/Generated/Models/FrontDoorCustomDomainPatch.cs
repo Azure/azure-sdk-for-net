@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class FrontDoorCustomDomainPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
         public FrontDoorCustomDomainPatch()
         {
         }

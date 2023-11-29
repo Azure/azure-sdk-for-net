@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApplicationInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentData(id, name, resourceType, systemData, tags, location, kind, etag, applicationId, appId, namePropertiesName, applicationType, flowType, requestSource, instrumentationKey, createdOn, tenantId, hockeyAppId, hockeyAppToken, provisioningState, samplingPercentage, connectionString, retentionInDays, isDisableIPMasking, isImmediatePurgeDataOn30Days, workspaceResourceId, laMigrationOn, privateLinkScopedResources?.ToList(), publicNetworkAccessForIngestion, publicNetworkAccessForQuery, ingestionMode, isDisableLocalAuth, isForceCustomerStorageForProfiler);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopedResourceContent"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
         /// <returns> A new <see cref="Models.PrivateLinkScopedResourceContent"/> instance for mocking. </returns>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new PrivateLinkScopedResourceContent(resourceId, scopeId);
         }
 
-        /// <summary> Initializes a new instance of ComponentPurgeResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeResponse"/>. </summary>
         /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A new <see cref="Models.ComponentPurgeResponse"/> instance for mocking. </returns>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentPurgeResponse(operationId);
         }
 
-        /// <summary> Initializes a new instance of ComponentPurgeStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeStatusResponse"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         /// <returns> A new <see cref="Models.ComponentPurgeStatusResponse"/> instance for mocking. </returns>
         public static ComponentPurgeStatusResponse ComponentPurgeStatusResponse(PurgeState status = default)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentPurgeStatusResponse(status);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAPIKey"/>. </summary>
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
         /// <param name="createdDate"> The create date of this API key. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentAPIKey(id, apiKey, createdDate, name, linkedReadProperties?.ToList(), linkedWriteProperties?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentExportConfiguration"/>. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
         /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentExportConfiguration(exportId, instrumentationKey, recordTypes, applicationName, subscriptionId, resourceGroup, destinationStorageSubscriptionId, destinationStorageLocationId, destinationAccountId, destinationType, isUserEnabled, lastUserUpdate, notificationQueueEnabled, exportStatus, lastSuccessTime, lastGapTime, permanentErrorReason, storageName, containerName);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentDataVolumeCap. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentDataVolumeCap"/>. </summary>
         /// <param name="cap"> Daily data volume cap in GB. </param>
         /// <param name="resetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="warningThreshold"> Reserved, not used for now. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentDataVolumeCap(cap, resetTime, warningThreshold, isStopSendNotificationWhenHitThreshold, isStopSendNotificationWhenHitCap, maxHistoryCap);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentQuotaStatus"/>. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
         /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentFeatureCapabilities(supportExportData, burstThrottlePolicy, metadataClass, liveStreamMetrics, applicationMap, workItemIntegration, powerBIIntegration, openSchema, proactiveDetection, analyticsIntegration, multipleStepWebTest, apiAccessLevel, trackingType, dailyCap, dailyCapResetTime, throttleRate);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAvailableFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAvailableFeatures"/>. </summary>
         /// <param name="result"> A list of Application Insights component feature. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentAvailableFeatures"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentAvailableFeatures ApplicationInsightsComponentAvailableFeatures(IEnumerable<ApplicationInsightsComponentFeature> result = null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentAvailableFeatures(result?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeature"/>. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentFeature(featureName, meterId, meterRateFrequency, resourceId, isHidden, capabilities?.ToList(), title, isMainFeature, supportedAddonFeatures);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeatureCapability"/>. </summary>
         /// <param name="name"> The name of the capability. </param>
         /// <param name="description"> The description of the capability. </param>
         /// <param name="value"> The value of the capability. </param>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentFeatureCapability(name, description, value, unit, meterId, meterRateFrequency);
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkItemConfiguration"/>. </summary>
         /// <param name="connectorId"> Connector identifier where work item is created. </param>
         /// <param name="configDisplayName"> Configuration friendly name. </param>
         /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WorkItemConfiguration(connectorId, configDisplayName, isDefault, id, configProperties);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFavorite"/>. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentFavorite(name, config, version, favoriteId, favoriteType, sourceType, timeModified, tags?.ToList(), category, isGeneratedFromTemplate, userId);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentWebTestLocation"/>. </summary>
         /// <param name="displayName"> The display name of the web test location. </param>
         /// <param name="tag"> Internally defined geographic location tag. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentWebTestLocation"/> instance for mocking. </returns>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentWebTestLocation(displayName, tag);
         }
 
-        /// <summary> Initializes a new instance of WebTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WebTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WebTestData(id, name, resourceType, systemData, tags, location, kind, syntheticMonitorId, webTestName, description, isEnabled, frequencyInSeconds, timeoutInSeconds, webTestKind, isRetryEnabled, locations?.ToList(), webTest != null ? new WebTestPropertiesConfiguration(webTest) : null, provisioningState, request, validationRules);
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/>. </summary>
         /// <param name="id"> Internally assigned unique id of the item definition. </param>
         /// <param name="name"> The user-defined name of the item. </param>
         /// <param name="content"> The content of this item. </param>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentAnalyticsItem(id, name, content, version, scope, itemType, timeCreated, timeModified, applicationInsightsComponentAnalyticsItemFunctionAlias != null ? new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias) : null);
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WorkbookTemplateData(id, name, resourceType, systemData, tags, location, priority, author, templateData, galleries?.ToList(), localizedGalleries);
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.MyWorkbookData"/>. </summary>
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="name"> Azure resource name. </param>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new MyWorkbookData(identity, id, name, resourceType, location, tags, etag, kind, systemData, displayName, serializedData, version, timeModified, category, userId, sourceId, storageUri);
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookUserAssignedIdentities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MyWorkbookUserAssignedIdentities"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <returns> A new <see cref="Models.MyWorkbookUserAssignedIdentities"/> instance for mocking. </returns>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new MyWorkbookUserAssignedIdentities(principalId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of WorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WorkbookData(id, name, resourceType, systemData, tags, location, displayName, serializedData, version, modifiedOn, category, userId, sourceId, storageUri, description, revision, identity, kind, etag);
         }
 
-        /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LiveTokenResponse"/>. </summary>
         /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
         /// <returns> A new <see cref="Models.LiveTokenResponse"/> instance for mocking. </returns>
         public static LiveTokenResponse LiveTokenResponse(string liveToken = null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new LiveTokenResponse(liveToken);
         }
 
-        /// <summary> Initializes a new instance of ComponentLinkedStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

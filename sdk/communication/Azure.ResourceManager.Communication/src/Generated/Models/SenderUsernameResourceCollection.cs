@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class representing a Domains SenderUsernames collection. </summary>
     internal partial class SenderUsernameResourceCollection
     {
-        /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SenderUsernameResourceCollection"/>. </summary>
         internal SenderUsernameResourceCollection()
         {
             Value = new ChangeTrackingList<SenderUsernameResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SenderUsernameResourceCollection"/>. </summary>
         /// <param name="value"> List of SenderUsernames. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
         internal SenderUsernameResourceCollection(IReadOnlyList<SenderUsernameResourceData> value, string nextLink)

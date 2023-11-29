@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a DNS resolver for PATCH operation. </summary>
     public partial class DnsResolverPatch
     {
-        /// <summary> Initializes a new instance of DnsResolverPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverPatch"/>. </summary>
         public DnsResolverPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

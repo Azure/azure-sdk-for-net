@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningWebhook
     {
-        /// <summary> Initializes a new instance of MachineLearningWebhook. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         protected MachineLearningWebhook()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWebhook. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
         internal MachineLearningWebhook(string eventType, MachineLearningWebhookType webhookType)

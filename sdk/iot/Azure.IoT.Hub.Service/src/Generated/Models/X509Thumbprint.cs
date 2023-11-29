@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The X509Thumbprint. </summary>
     public partial class X509Thumbprint
     {
-        /// <summary> Initializes a new instance of X509Thumbprint. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509Thumbprint"/>. </summary>
         public X509Thumbprint()
         {
         }
 
-        /// <summary> Initializes a new instance of X509Thumbprint. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509Thumbprint"/>. </summary>
         /// <param name="primaryThumbprint"> The X509 client certificate primary thumbprint. </param>
         /// <param name="secondaryThumbprint"> The X509 client certificate secondary thumbprint. </param>
         internal X509Thumbprint(string primaryThumbprint, string secondaryThumbprint)

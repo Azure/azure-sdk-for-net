@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncGroupData"/>. </summary>
         public StorageSyncGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

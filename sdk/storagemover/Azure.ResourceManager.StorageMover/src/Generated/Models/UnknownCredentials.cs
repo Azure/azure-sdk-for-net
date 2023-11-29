@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The UnknownCredentials. </summary>
     internal partial class UnknownCredentials : StorageMoverCredentials
     {
-        /// <summary> Initializes a new instance of UnknownCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCredentials"/>. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
         internal UnknownCredentials(CredentialType credentialType) : base(credentialType)
         {

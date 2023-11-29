@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The Usage Names. </summary>
     public partial class DevCenterUsageName
     {
-        /// <summary> Initializes a new instance of DevCenterUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsageName"/>. </summary>
         internal DevCenterUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsageName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="value"> The name of the resource. </param>
         internal DevCenterUsageName(string localizedValue, string value)

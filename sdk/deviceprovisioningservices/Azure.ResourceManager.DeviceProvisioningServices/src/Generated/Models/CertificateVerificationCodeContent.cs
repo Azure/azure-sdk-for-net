@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class CertificateVerificationCodeContent
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeContent"/>. </summary>
         public CertificateVerificationCodeContent()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes all the content for single compliance result. </summary>
     public partial class ComplianceReportItem
     {
-        /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         internal ComplianceReportItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         /// <param name="categoryName"> The category name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>

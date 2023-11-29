@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto data connection validation result. </summary>
     public partial class DataConnectionValidationResults
     {
-        /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResults"/>. </summary>
         internal DataConnectionValidationResults()
         {
             Value = new ChangeTrackingList<DataConnectionValidationResult>();
         }
 
-        /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResults"/>. </summary>
         /// <param name="value"> The list of Kusto data connection validation errors. </param>
         internal DataConnectionValidationResults(IReadOnlyList<DataConnectionValidationResult> value)
         {

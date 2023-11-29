@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
     public partial class SecurityAutomationActionEventHub : SecurityAutomationAction
     {
-        /// <summary> Initializes a new instance of SecurityAutomationActionEventHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionEventHub"/>. </summary>
         public SecurityAutomationActionEventHub()
         {
             ActionType = ActionType.EventHub;
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationActionEventHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionEventHub"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update configuration operation. </summary>
     public partial class DscConfigurationPatch
     {
-        /// <summary> Initializes a new instance of DscConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationPatch"/>. </summary>
         public DscConfigurationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

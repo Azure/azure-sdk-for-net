@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ExpressRouteAuthorizationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationData"/>. </summary>
         public ExpressRouteAuthorizationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Description related properties of a product system. </summary>
     public partial class ProductDescription
     {
-        /// <summary> Initializes a new instance of ProductDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDescription"/>. </summary>
         internal ProductDescription()
         {
             Keywords = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Links = new ChangeTrackingList<ProductLink>();
         }
 
-        /// <summary> Initializes a new instance of ProductDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDescription"/>. </summary>
         /// <param name="descriptionType"> Type of description. </param>
         /// <param name="shortDescription"> Short description of the product system. </param>
         /// <param name="longDescription"> Long description of the product system. </param>

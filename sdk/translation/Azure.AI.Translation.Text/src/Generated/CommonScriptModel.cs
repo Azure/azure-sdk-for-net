@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Common properties of language script. </summary>
     public partial class CommonScriptModel
     {
-        /// <summary> Initializes a new instance of CommonScriptModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>

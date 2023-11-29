@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
     public partial class ContainerAppOpenIdConnectClientCredential
     {
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectClientCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectClientCredential"/>. </summary>
         public ContainerAppOpenIdConnectClientCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectClientCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectClientCredential"/>. </summary>
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
         internal ContainerAppOpenIdConnectClientCredential(ContainerAppOpenIdConnectClientCredentialMethod? method, string clientSecretSettingName)

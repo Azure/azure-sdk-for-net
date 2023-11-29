@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Filters configuration for the Event Subscription. </summary>
     public partial class FiltersConfiguration
     {
-        /// <summary> Initializes a new instance of FiltersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FiltersConfiguration"/>. </summary>
         public FiltersConfiguration()
         {
             IncludedEventTypes = new ChangeTrackingList<string>();
             Filters = new ChangeTrackingList<EventGridFilter>();
         }
 
-        /// <summary> Initializes a new instance of FiltersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FiltersConfiguration"/>. </summary>
         /// <param name="includedEventTypes"> A list of applicable event types that need to be part of the event subscription. If it is desired to subscribe to all default event types, set the IncludedEventTypes to null. </param>
         /// <param name="filters">
         /// An array of filters that are used for filtering event subscriptions.

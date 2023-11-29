@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AgentOptions are configurations that will be applied to each agent in an agent pool. </summary>
     public partial class NetworkCloudAgentConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkCloudAgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentConfiguration"/>. </summary>
         /// <param name="hugepagesCount"> The number of hugepages to allocate. </param>
         public NetworkCloudAgentConfiguration(long hugepagesCount)
         {
             HugepagesCount = hugepagesCount;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudAgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentConfiguration"/>. </summary>
         /// <param name="hugepagesCount"> The number of hugepages to allocate. </param>
         /// <param name="hugepagesSize"> The size of the hugepages to allocate. </param>
         internal NetworkCloudAgentConfiguration(long hugepagesCount, HugepagesSize? hugepagesSize)

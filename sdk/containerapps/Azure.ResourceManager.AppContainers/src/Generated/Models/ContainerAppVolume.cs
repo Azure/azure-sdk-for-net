@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Volume definitions for the Container App. </summary>
     public partial class ContainerAppVolume
     {
-        /// <summary> Initializes a new instance of ContainerAppVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolume"/>. </summary>
         public ContainerAppVolume()
         {
             Secrets = new ChangeTrackingList<SecretVolumeItem>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolume"/>. </summary>
         /// <param name="name"> Volume name. </param>
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
         /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir and Secret. </param>

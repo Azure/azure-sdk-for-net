@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Manager Deployment Status Parameter. </summary>
     public partial class NetworkManagerDeploymentStatusContent
     {
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusContent"/>. </summary>
         public NetworkManagerDeploymentStatusContent()
         {
             Regions = new ChangeTrackingList<string>();

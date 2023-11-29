@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Network function definition group properties. </summary>
     public partial class NetworkFunctionDefinitionGroupPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
         public NetworkFunctionDefinitionGroupPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
         /// <param name="description"> The network function definition group description. </param>
         internal NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState, string description)

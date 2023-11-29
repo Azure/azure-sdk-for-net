@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkProfileData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         public NetworkProfileData()
         {
             ContainerNetworkInterfaces = new ChangeTrackingList<ContainerNetworkInterface>();
             ContainerNetworkInterfaceConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

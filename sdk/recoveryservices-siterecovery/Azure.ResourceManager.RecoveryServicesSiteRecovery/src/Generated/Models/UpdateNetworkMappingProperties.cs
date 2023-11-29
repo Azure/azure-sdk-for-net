@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Common input details for network mapping operation. </summary>
     public partial class UpdateNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of UpdateNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateNetworkMappingProperties"/>. </summary>
         public UpdateNetworkMappingProperties()
         {
         }

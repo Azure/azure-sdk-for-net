@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties of a private endpoint connection. </summary>
     public partial class DigitalTwinsPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
         public DigitalTwinsPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpoint"> The private endpoint. </param>
         /// <param name="groupIds"> The list of group ids for the private endpoint connection. </param>

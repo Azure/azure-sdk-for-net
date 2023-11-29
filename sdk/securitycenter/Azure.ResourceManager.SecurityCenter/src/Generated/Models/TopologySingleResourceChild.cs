@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologySingleResourceChild. </summary>
     public partial class TopologySingleResourceChild
     {
-        /// <summary> Initializes a new instance of TopologySingleResourceChild. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceChild"/>. </summary>
         internal TopologySingleResourceChild()
         {
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResourceChild. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceChild"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
         internal TopologySingleResourceChild(ResourceIdentifier resourceId)
         {

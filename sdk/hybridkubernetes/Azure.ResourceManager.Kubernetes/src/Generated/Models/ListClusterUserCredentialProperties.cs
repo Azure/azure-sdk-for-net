@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> The ListClusterUserCredentialProperties. </summary>
     public partial class ListClusterUserCredentialProperties
     {
-        /// <summary> Initializes a new instance of ListClusterUserCredentialProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/>. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="clientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
         public ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod, bool clientProxy)

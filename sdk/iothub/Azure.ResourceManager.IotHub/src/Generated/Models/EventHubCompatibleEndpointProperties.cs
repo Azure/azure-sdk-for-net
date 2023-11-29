@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the provisioned Event Hub-compatible endpoint used by the IoT hub. </summary>
     public partial class EventHubCompatibleEndpointProperties
     {
-        /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubCompatibleEndpointProperties"/>. </summary>
         public EventHubCompatibleEndpointProperties()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubCompatibleEndpointProperties"/>. </summary>
         /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>

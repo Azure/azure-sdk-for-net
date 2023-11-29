@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class CommunicationDomainResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CommunicationDomainResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

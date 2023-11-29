@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalyzeJobDisplayName. </summary>
     internal partial class AnalyzeJobDisplayName
     {
-        /// <summary> Initializes a new instance of AnalyzeJobDisplayName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobDisplayName"/>. </summary>
         internal AnalyzeJobDisplayName()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeJobDisplayName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobDisplayName"/>. </summary>
         /// <param name="displayName"></param>
         internal AnalyzeJobDisplayName(string displayName)
         {

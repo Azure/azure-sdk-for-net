@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementBackendData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementBackendData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendData"/>. </summary>
         public ApiManagementBackendData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementBackendData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

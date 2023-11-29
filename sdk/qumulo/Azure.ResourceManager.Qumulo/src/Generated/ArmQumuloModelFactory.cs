@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmQumuloModelFactory
     {
-        /// <summary> Initializes a new instance of QumuloFileSystemResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Qumulo.QumuloFileSystemResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             return new QumuloFileSystemResourceData(id, name, resourceType, systemData, tags, location, identity, marketplaceDetails, provisioningState, storageSku, userDetailsEmail != null ? new QumuloUserDetails(userDetailsEmail) : null, delegatedSubnetId, clusterLoginUri, privateIPs?.ToList(), adminPassword, initialCapacity, availabilityZone);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>

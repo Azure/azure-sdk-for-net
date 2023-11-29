@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A managed server dns alias creation request. </summary>
     public partial class ManagedServerDnsAliasCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasCreateOrUpdateContent"/>. </summary>
         public ManagedServerDnsAliasCreateOrUpdateContent()
         {
         }

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Legacy usage detail. </summary>
     public partial class ConsumptionLegacyUsageDetail : ConsumptionUsageDetail
     {
-        /// <summary> Initializes a new instance of ConsumptionLegacyUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyUsageDetail"/>. </summary>
         internal ConsumptionLegacyUsageDetail()
         {
             Kind = UsageDetailsKind.Legacy;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

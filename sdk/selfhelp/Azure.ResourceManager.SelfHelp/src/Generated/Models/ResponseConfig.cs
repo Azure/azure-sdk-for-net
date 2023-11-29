@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> The status of the resource. </summary>
     public partial class ResponseConfig
     {
-        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseConfig"/>. </summary>
         internal ResponseConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseConfig"/>. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
         internal ResponseConfig(string key, string value)

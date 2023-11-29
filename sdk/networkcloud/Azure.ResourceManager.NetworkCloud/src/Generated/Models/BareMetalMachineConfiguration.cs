@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineConfigurationData represents configuration for the bare metal machine. </summary>
     public partial class BareMetalMachineConfiguration
     {
-        /// <summary> Initializes a new instance of BareMetalMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
         /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
         }
 
-        /// <summary> Initializes a new instance of BareMetalMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>

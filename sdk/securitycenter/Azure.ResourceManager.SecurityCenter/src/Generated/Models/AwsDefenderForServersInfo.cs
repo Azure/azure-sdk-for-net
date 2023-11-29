@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for servers connection configuration. </summary>
     internal partial class AwsDefenderForServersInfo
     {
-        /// <summary> Initializes a new instance of AwsDefenderForServersInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsDefenderForServersInfo"/>. </summary>
         public AwsDefenderForServersInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsDefenderForServersInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsDefenderForServersInfo"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         internal AwsDefenderForServersInfo(string cloudRoleArn)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Network access profile for Batch endpoint. </summary>
     public partial class BatchEndpointAccessProfile
     {
-        /// <summary> Initializes a new instance of BatchEndpointAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/>. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         public BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
             IPRules = new ChangeTrackingList<BatchIPRule>();
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/>. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         /// <param name="ipRules"> Array of IP ranges to filter client IP address. </param>
         internal BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction, IList<BatchIPRule> ipRules)

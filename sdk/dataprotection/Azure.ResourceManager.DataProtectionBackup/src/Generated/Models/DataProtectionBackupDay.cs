@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Day of the week. </summary>
     public partial class DataProtectionBackupDay
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupDay. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDay"/>. </summary>
         public DataProtectionBackupDay()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupDay. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDay"/>. </summary>
         /// <param name="date"> Date of the month. </param>
         /// <param name="isLast"> Whether Date is last date of month. </param>
         internal DataProtectionBackupDay(int? date, bool? isLast)

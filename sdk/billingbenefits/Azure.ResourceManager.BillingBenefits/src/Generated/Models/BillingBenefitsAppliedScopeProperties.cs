@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
     public partial class BillingBenefitsAppliedScopeProperties
     {
-        /// <summary> Initializes a new instance of BillingBenefitsAppliedScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsAppliedScopeProperties"/>. </summary>
         public BillingBenefitsAppliedScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsAppliedScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsAppliedScopeProperties"/>. </summary>
         /// <param name="tenantId"> Tenant ID where the benefit is applied. </param>
         /// <param name="managementGroupId"> Fully-qualified identifier of the management group where the benefit must be applied. </param>
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>

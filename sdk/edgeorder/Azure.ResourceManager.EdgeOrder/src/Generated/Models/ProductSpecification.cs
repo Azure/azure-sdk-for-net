@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Specifications of the configurations. </summary>
     public partial class ProductSpecification
     {
-        /// <summary> Initializes a new instance of ProductSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductSpecification"/>. </summary>
         internal ProductSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductSpecification"/>. </summary>
         /// <param name="name"> Name of the specification. </param>
         /// <param name="value"> Value of the specification. </param>
         internal ProductSpecification(string name, string value)

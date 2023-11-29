@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common response for device updates. </summary>
     public partial class DeviceUpdateCommonPostActionResult : NetworkFabricErrorResult
     {
-        /// <summary> Initializes a new instance of DeviceUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateCommonPostActionResult"/>. </summary>
         internal DeviceUpdateCommonPostActionResult()
         {
             SuccessfulDevices = new ChangeTrackingList<string>();
             FailedDevices = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateCommonPostActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateCommonPostActionResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="successfulDevices"> List of ARM Resource IDs for which the given action applied successfully. </param>

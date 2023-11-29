@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksEntityRecognitionTasksItem. </summary>
     internal partial class TasksStateTasksEntityRecognitionTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksEntityRecognitionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksEntityRecognitionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksEntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksEntityRecognitionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksEntityRecognitionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

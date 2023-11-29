@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class VirtualNetworkList
     {
-        /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkList"/>. </summary>
         internal VirtualNetworkList()
         {
             Value = new ChangeTrackingList<DevTestLabVirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal VirtualNetworkList(IReadOnlyList<DevTestLabVirtualNetworkData> value, string nextLink)

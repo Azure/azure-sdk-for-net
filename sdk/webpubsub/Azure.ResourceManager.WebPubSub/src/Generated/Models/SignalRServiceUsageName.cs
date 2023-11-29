@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Localizable String object containing the name and a localized value. </summary>
     public partial class SignalRServiceUsageName
     {
-        /// <summary> Initializes a new instance of SignalRServiceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageName"/>. </summary>
         internal SignalRServiceUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         internal SignalRServiceUsageName(string value, string localizedValue)

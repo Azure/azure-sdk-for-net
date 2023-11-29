@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Xml read settings. </summary>
     public partial class XmlReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         public XmlReadSettings()
         {
             FormatReadSettingsType = "XmlReadSettings";
         }
 
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

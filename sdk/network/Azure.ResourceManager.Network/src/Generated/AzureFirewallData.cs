@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class AzureFirewallData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         public AzureFirewallData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
             AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

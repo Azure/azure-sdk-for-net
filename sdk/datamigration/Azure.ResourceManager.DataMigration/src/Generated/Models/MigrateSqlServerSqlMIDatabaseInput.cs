@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for SQL to Azure SQL DB Managed Instance migration task inputs. </summary>
     public partial class MigrateSqlServerSqlMIDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMIDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMIDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="restoreDatabaseName"> Name of the database at destination. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="restoreDatabaseName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupFilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMIDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMIDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="restoreDatabaseName"> Name of the database at destination. </param>
         /// <param name="backupFileShare"> Backup file share information for backing up this database. </param>

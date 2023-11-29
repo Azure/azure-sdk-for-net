@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Tables are part of the workspace schema, and contain a list of columns and a reference to other relevant metadata items. </summary>
     internal partial class MetadataTable
     {
-        /// <summary> Initializes a new instance of MetadataTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataTable"/>. </summary>
         /// <param name="id"> The ID of the table. </param>
         /// <param name="name"> The name of the table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>

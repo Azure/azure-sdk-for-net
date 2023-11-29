@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureWorkload SAP Hana -specific restore. Specifically for PointInTime/Log restore. </summary>
     public partial class WorkloadPointInTimeRestoreContent : WorkloadRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadPointInTimeRestoreContent"/>. </summary>
         public WorkloadPointInTimeRestoreContent()
         {
             ObjectType = "AzureWorkloadPointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>

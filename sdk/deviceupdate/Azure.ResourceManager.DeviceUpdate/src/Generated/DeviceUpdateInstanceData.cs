@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdateInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateInstanceData(AzureLocation location) : base(location)
         {
             IotHubs = new ChangeTrackingList<DeviceUpdateIotHubSettings>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

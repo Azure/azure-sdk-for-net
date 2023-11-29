@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response containing ids for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult
     {
-        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="workerId"> Id of the worker that has been assigned this job. </param>

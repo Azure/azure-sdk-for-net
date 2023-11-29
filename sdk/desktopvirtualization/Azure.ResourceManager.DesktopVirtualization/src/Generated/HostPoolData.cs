@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class HostPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="hostPoolType"> HostPool type for desktop. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PrivateEndpointConnections = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkspaceAadAdminInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceAadAdminInfoData"/>. </summary>
         public SynapseWorkspaceAadAdminInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceAadAdminInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Endpoint resource. </summary>
     public partial class StorageMoverEndpointPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointPatch"/>. </summary>
         public StorageMoverEndpointPatch()
         {
         }

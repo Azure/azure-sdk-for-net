@@ -838,7 +838,7 @@
 /doc/DataPlaneCodeGeneration                                       @chunyu3 @pshao25 @lirenhe @annelo-msft
 
 # PRLabel: %Cognitive - Content Safety
-/sdk/contentsafety/												   @bowgong @mengaims
+/sdk/contentsafety/												   @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety %Service Attention
-/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims
+/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims @JieZhou000

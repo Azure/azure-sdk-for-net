@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the statistic. </summary>
     public partial class AutomationAccountStatistics
     {
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         internal AutomationAccountStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         /// <param name="counterProperty"> Gets the property value of the statistic. </param>
         /// <param name="counterValue"> Gets the value of the statistic. </param>
         /// <param name="startOn"> Gets the startTime of the statistic. </param>

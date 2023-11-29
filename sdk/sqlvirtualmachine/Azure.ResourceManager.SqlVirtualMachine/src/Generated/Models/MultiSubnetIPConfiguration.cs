@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Multi subnet ip configuration for an availability group listener. </summary>
     public partial class MultiSubnetIPConfiguration
     {
-        /// <summary> Initializes a new instance of MultiSubnetIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiSubnetIPConfiguration"/>. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="sqlVmInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVmInstance"/> is null. </exception>

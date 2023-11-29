@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartDialogRequest. </summary>
     internal partial class StartDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialogOptions"/> is null. </exception>

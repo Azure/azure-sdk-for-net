@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Settings controlling data network use. </summary>
     public partial class DataNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
         /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
         /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
         /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             AllowedServices = allowedServices.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
         /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
         /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
         /// <param name="fiveQi"> Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values. </param>

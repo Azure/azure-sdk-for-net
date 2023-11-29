@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that installs an OCI driver. </summary>
     public partial class InstallOciDriverTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of InstallOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskProperties"/>. </summary>
         public InstallOciDriverTaskProperties()
         {
             Output = new ChangeTrackingList<InstallOciDriverTaskOutput>();
             TaskType = TaskType.ServiceInstallOci;
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
