@@ -23,6 +23,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugPackageContent"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="dataFlow"> Data flow instance. </param>
+        /// <param name="dataFlows"> List of Data flows. </param>
+        /// <param name="datasets"> List of datasets. </param>
+        /// <param name="linkedServices"> List of linked services. </param>
+        /// <param name="staging"> Staging info for debug session. </param>
+        /// <param name="debugSettings"> Data flow debug settings. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DataFactoryDataFlowDebugPackageContent(Guid? sessionId, DataFactoryDataFlowDebugInfo dataFlow, IList<DataFactoryDataFlowDebugInfo> dataFlows, IList<DataFactoryDatasetDebugInfo> datasets, IList<DataFactoryLinkedServiceDebugInfo> linkedServices, DataFlowStagingInfo staging, DataFlowDebugPackageDebugSettings debugSettings, IDictionary<string, BinaryData> additionalProperties)
+        {
+            SessionId = sessionId;
+            DataFlow = dataFlow;
+            DataFlows = dataFlows;
+            Datasets = datasets;
+            LinkedServices = linkedServices;
+            Staging = staging;
+            DebugSettings = debugSettings;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> The ID of data flow debug session. </summary>
         public Guid? SessionId { get; set; }
         /// <summary> Data flow instance. </summary>

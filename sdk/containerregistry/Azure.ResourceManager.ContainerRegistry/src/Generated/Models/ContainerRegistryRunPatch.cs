@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
+        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
+        internal ContainerRegistryRunPatch(bool? isArchiveEnabled)
+        {
+            IsArchiveEnabled = isArchiveEnabled;
+        }
+
         /// <summary> The value that indicates whether archiving is enabled or not. </summary>
         public bool? IsArchiveEnabled { get; set; }
     }

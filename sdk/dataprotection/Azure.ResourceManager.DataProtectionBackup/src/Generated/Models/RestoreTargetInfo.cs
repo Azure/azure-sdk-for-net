@@ -25,6 +25,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "RestoreTargetInfo";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfo"/>. </summary>
+        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="dataSourceInfo"> Information of target DS. </param>
+        /// <param name="dataSourceSetInfo"> Information of target DS Set. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
+        /// </param>
+        internal RestoreTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, DataProtectionBackupAuthCredentials dataSourceAuthCredentials) : base(objectType, recoverySetting, restoreLocation)
+        {
+            DataSourceInfo = dataSourceInfo;
+            DataSourceSetInfo = dataSourceSetInfo;
+            DataSourceAuthCredentials = dataSourceAuthCredentials;
+            ObjectType = objectType ?? "RestoreTargetInfo";
+        }
+
         /// <summary> Information of target DS. </summary>
         public DataSourceInfo DataSourceInfo { get; }
         /// <summary> Information of target DS Set. </summary>

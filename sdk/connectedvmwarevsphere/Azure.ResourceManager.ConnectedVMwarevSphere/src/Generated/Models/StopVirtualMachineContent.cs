@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StopVirtualMachineContent"/>. </summary>
+        /// <param name="skipShutdown"> Gets or sets a value indicating whether to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Defaults to false. </param>
+        internal StopVirtualMachineContent(bool? skipShutdown)
+        {
+            SkipShutdown = skipShutdown;
+        }
+
         /// <summary> Gets or sets a value indicating whether to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Defaults to false. </summary>
         public bool? SkipShutdown { get; set; }
     }

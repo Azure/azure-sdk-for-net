@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TriggerFilterContent"/>. </summary>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
+        /// <param name="parentTriggerName"> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </param>
+        internal TriggerFilterContent(string continuationToken, string parentTriggerName)
+        {
+            ContinuationToken = continuationToken;
+            ParentTriggerName = parentTriggerName;
+        }
+
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
         public string ContinuationToken { get; set; }
         /// <summary> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </summary>

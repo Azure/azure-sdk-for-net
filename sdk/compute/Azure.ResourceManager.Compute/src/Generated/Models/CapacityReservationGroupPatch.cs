@@ -21,6 +21,18 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
+        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
+        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
+        internal CapacityReservationGroupPatch(IDictionary<string, string> tags, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(tags)
+        {
+            CapacityReservations = capacityReservations;
+            VirtualMachinesAssociated = virtualMachinesAssociated;
+            InstanceView = instanceView;
+        }
+
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
         public IReadOnlyList<SubResource> CapacityReservations { get; }
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
