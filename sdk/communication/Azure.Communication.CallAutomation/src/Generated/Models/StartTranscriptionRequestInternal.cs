@@ -15,6 +15,15 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
+        /// <param name="locale"> Defines Locale for the transcription e,g en-US. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StartTranscriptionRequestInternal(string locale, string operationContext)
+        {
+            Locale = locale;
+            OperationContext = operationContext;
+        }
+
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
         public string Locale { get; set; }
         /// <summary> The value to identify context of the operation. </summary>

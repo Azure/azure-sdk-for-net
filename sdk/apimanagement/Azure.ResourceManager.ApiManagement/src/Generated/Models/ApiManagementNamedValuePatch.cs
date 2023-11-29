@@ -19,6 +19,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Tags = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValuePatch"/>. </summary>
+        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. </param>
+        /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
+        internal ApiManagementNamedValuePatch(IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractCreateProperties keyVault)
+        {
+            Tags = tags;
+            IsSecret = isSecret;
+            DisplayName = displayName;
+            Value = value;
+            KeyVault = keyVault;
+        }
+
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
         public IList<string> Tags { get; }
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>

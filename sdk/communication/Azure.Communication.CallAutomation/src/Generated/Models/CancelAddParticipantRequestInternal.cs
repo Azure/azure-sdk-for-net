@@ -23,6 +23,17 @@ namespace Azure.Communication.CallAutomation
             InvitationId = invitationId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
+        /// <param name="invitationId"> Invitation ID used to add a participant. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal CancelAddParticipantRequestInternal(string invitationId, string operationContext, string callbackUri)
+        {
+            InvitationId = invitationId;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary> Invitation ID used to add a participant. </summary>
         public string InvitationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>

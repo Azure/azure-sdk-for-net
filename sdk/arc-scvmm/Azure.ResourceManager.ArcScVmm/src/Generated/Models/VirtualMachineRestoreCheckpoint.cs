@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRestoreCheckpoint"/>. </summary>
+        /// <param name="id"> ID of the checkpoint to be restored to. </param>
+        internal VirtualMachineRestoreCheckpoint(string id)
+        {
+            Id = id;
+        }
+
         /// <summary> ID of the checkpoint to be restored to. </summary>
         public string Id { get; set; }
     }

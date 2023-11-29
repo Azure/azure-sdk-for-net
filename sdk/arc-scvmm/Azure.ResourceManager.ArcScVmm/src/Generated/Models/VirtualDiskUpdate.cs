@@ -15,6 +15,27 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualDiskUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the disk. </param>
+        /// <param name="diskId"> Gets or sets the disk id. </param>
+        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
+        /// <param name="bus"> Gets or sets the disk bus. </param>
+        /// <param name="lun"> Gets or sets the disk lun. </param>
+        /// <param name="busType"> Gets or sets the disk bus type. </param>
+        /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
+        /// <param name="storageQoSPolicy"> The QoS policy for the disk. </param>
+        internal VirtualDiskUpdate(string name, string diskId, int? diskSizeGB, int? bus, int? lun, string busType, string vhdType, StorageQoSPolicyDetails storageQoSPolicy)
+        {
+            Name = name;
+            DiskId = diskId;
+            DiskSizeGB = diskSizeGB;
+            Bus = bus;
+            Lun = lun;
+            BusType = busType;
+            VhdType = vhdType;
+            StorageQoSPolicy = storageQoSPolicy;
+        }
+
         /// <summary> Gets or sets the name of the disk. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the disk id. </summary>

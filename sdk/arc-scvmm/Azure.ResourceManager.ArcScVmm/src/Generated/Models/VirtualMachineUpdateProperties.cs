@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineUpdateProperties"/>. </summary>
+        /// <param name="hardwareProfile"> Defines the resource properties. </param>
+        /// <param name="storageProfile"> Defines the resource properties. </param>
+        /// <param name="networkProfile"> Defines the resource properties. </param>
+        /// <param name="availabilitySets"> Availability Sets in vm. </param>
+        internal VirtualMachineUpdateProperties(HardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, IList<AvailabilitySetListItem> availabilitySets)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            AvailabilitySets = availabilitySets;
+        }
+
         /// <summary> Defines the resource properties. </summary>
         public HardwareProfileUpdate HardwareProfile { get; set; }
         /// <summary> Defines the resource properties. </summary>

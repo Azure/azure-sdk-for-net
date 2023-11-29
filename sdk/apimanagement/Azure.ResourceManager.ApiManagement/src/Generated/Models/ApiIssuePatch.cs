@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiIssuePatch"/>. </summary>
+        /// <param name="createdOn"> Date and time when the issue was created. </param>
+        /// <param name="state"> Status of the issue. </param>
+        /// <param name="apiId"> A resource identifier for the API the issue was created for. </param>
+        /// <param name="title"> The issue title. </param>
+        /// <param name="description"> Text describing the issue. </param>
+        /// <param name="userId"> A resource identifier for the user created the issue. </param>
+        internal ApiIssuePatch(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, string userId)
+        {
+            CreatedOn = createdOn;
+            State = state;
+            ApiId = apiId;
+            Title = title;
+            Description = description;
+            UserId = userId;
+        }
+
         /// <summary> Date and time when the issue was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Status of the issue. </summary>

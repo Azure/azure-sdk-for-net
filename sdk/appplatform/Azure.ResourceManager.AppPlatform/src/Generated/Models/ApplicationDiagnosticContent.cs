@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationDiagnosticContent"/>. </summary>
+        /// <param name="appInstance"> App instance name. </param>
+        /// <param name="filePath"> Your target file path in your own BYOS. </param>
+        /// <param name="durationValue"> Duration of your JFR. 1 min can be represented by 1m or 60s. </param>
+        internal ApplicationDiagnosticContent(string appInstance, string filePath, string durationValue)
+        {
+            AppInstance = appInstance;
+            FilePath = filePath;
+            DurationValue = durationValue;
+        }
+
         /// <summary> App instance name. </summary>
         public string AppInstance { get; set; }
         /// <summary> Your target file path in your own BYOS. </summary>

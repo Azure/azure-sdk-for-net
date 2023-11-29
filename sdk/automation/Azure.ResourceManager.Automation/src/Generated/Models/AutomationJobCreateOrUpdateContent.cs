@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>
+        /// <param name="runbook"> Gets or sets the runbook. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        internal AutomationJobCreateOrUpdateContent(RunbookAssociationProperty runbook, IDictionary<string, string> parameters, string runOn)
+        {
+            Runbook = runbook;
+            Parameters = parameters;
+            RunOn = runOn;
+        }
+
         /// <summary> Gets or sets the runbook. </summary>
         internal RunbookAssociationProperty Runbook { get; set; }
         /// <summary> Gets or sets the name of the runbook. </summary>

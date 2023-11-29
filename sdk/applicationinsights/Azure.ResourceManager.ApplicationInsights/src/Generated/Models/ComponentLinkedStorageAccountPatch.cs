@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComponentLinkedStorageAccountPatch"/>. </summary>
+        /// <param name="linkedStorageAccount"> Linked storage account resource ID. </param>
+        internal ComponentLinkedStorageAccountPatch(string linkedStorageAccount)
+        {
+            LinkedStorageAccount = linkedStorageAccount;
+        }
+
         /// <summary> Linked storage account resource ID. </summary>
         public string LinkedStorageAccount { get; set; }
     }
