@@ -633,6 +633,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode OutOfRangeInput { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode OutOfRangeQueryParameterValue { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ParentNotFound { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode PreviousSnapshotNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ReadOnlyAttribute { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode RequestBodyTooLarge { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode RequestUrlFailedToParse { get { throw null; } }
