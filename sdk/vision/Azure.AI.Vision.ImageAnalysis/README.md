@@ -9,7 +9,7 @@ Use the Image Analysis client library to:
 * Get the analysis result
 
 [Product documentation][image_analysis_overview] 
-| [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)
+| [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)
 | [Vision Studio][vision_studio]
 | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis)
 | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/)
@@ -51,13 +51,13 @@ Here we are using enviornment variables to hold the endpoint and key for the Com
 
 Once you've initialized an `ImageAnalysisClient`, you need to select one or more visual features to analyze. The options are specified by the enum class `VisualFeatures`. The following features are supported:
 
-1. `VisualFeatures.Caption` ([Examples](#generate-an-image-caption-for-an-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample01_HellowWorld.md)): Generate a human-readable sentence that describes the content of an image.
-1. `VisualFeatures.Read` ([Examples](#extract-text-from-the-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)): Also known as Optical Character Recognition (OCR). Extract printed or handwritten text from images.
-1. `VisualFeatures.DenseCaptions` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample02_DenseCaptions.md)): Dense Captions provides more details by generating one-sentence captions for up to 10 different regions in the image, including one for the whole image. 
-1. `VisualFeatures.Tags` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample03_Tags.md)): Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images.
-1. `VisualFeatures.Objects` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample04_Objects.md)): Object detection. This is similar to tagging, but focused on detecting physical objects in the image and returning their location.
-1. `VisualFeatures.SmartCrops` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)): Used to find a representative sub-region of the image for thumbnail generation, with priority given to include faces.
-1. `VisualFeatures.People` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)): Locate people in the image and return their location.
+1. `VisualFeatures.Caption` ([Examples](#generate-an-image-caption-for-an-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample01_HellowWorld.md)): Generate a human-readable sentence that describes the content of an image.
+1. `VisualFeatures.Read` ([Examples](#extract-text-from-the-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)): Also known as Optical Character Recognition (OCR). Extract printed or handwritten text from images.
+1. `VisualFeatures.DenseCaptions` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample02_DenseCaptions.md)): Dense Captions provides more details by generating one-sentence captions for up to 10 different regions in the image, including one for the whole image. 
+1. `VisualFeatures.Tags` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample03_Tags.md)): Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images.
+1. `VisualFeatures.Objects` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample04_Objects.md)): Object detection. This is similar to tagging, but focused on detecting physical objects in the image and returning their location.
+1. `VisualFeatures.SmartCrops` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)): Used to find a representative sub-region of the image for thumbnail generation, with priority given to include faces.
+1. `VisualFeatures.People` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)): Locate people in the image and return their location.
 
 For more information about these features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
 
@@ -87,7 +87,7 @@ The following sections provide code snippets covering these common Image Analysi
 
 These snippets use the synchronous `client` from [Create and authenticate the client](#create-and-authenticate-the-client).
 
-See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) folder for fully working samples for all visual features, including asynchronous calls.
+See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) folder for fully working samples for all visual features, including asynchronous calls.
 
 ### Generate an image caption for an image file
 
@@ -232,7 +232,7 @@ You can learn more about how to enable SDK logging [here](https://learn.microsof
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure.AI.Vision.ImageAnalysis client library offers support for additional scenarios to help take advantage of the full feature set of the Azure.AI.Vision.ImageAnalysis service. In order to help explore some of these scenarios, the ImageAnalysis client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) for details.
+Beyond the introductory scenarios discussed, the Azure.AI.Vision.ImageAnalysis client library offers support for additional scenarios to help take advantage of the full feature set of the Azure.AI.Vision.ImageAnalysis service. In order to help explore some of these scenarios, the ImageAnalysis client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) for details.
 
 ## Contributing
 
@@ -248,5 +248,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [image_analysis_overview]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis?tabs=4-0
 [image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
 [vision_studio]: https://portal.vision.cognitive.azure.com/gallery/imageanalysis
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
-[samples]: https://github.com/azure-sdk-for-python/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[samples]: https://github.com/azure-sdk-for-python/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples
