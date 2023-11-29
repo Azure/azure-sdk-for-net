@@ -8,7 +8,7 @@ Use the ImageAnalysis client library to:
 - Upload an image for analysis
 - Extract smart-cropped thumbnails
 
-[Product documentation][image_analysis_overview] | [Samples](samples) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/) | [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
+[Product documentation][image_analysis_overview] | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/) | [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
 
 ## Getting started
 
@@ -57,7 +57,7 @@ The following sections provide code snippets using the `client` created above, c
 
 ### Generate smart-cropped thumbnails for an image file
 
-This example demonstrates how to generate smart-cropped thumbnails for the image file [sample.jpg](sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains a list of `CropRegion` objects representing the regions identified for smart-cropping. Each `CropRegion` has an aspect ratio and a bounding box that defines the region in the image. You can then crop and return the image using those coordinates.
+This example demonstrates how to generate smart-cropped thumbnails for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains a list of `CropRegion` objects representing the regions identified for smart-cropping. Each `CropRegion` has an aspect ratio and a bounding box that defines the region in the image. You can then crop and return the image using those coordinates.
 
 ```C# Snippet:ImageAnalysisSmartCropsFromFile
 // Use a file stream to pass the image data to the analyze call
