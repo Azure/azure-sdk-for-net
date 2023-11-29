@@ -21,6 +21,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         protected ImageAnalysisTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Ocp-Apim-Subscription-Key", "***********"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"https:\/\/[a-zA-Z0-9-]*\.cognitiveservices.azure.com/", @"https://ResourceName.cognitiveservices.azure.com/"));
         }
 
         protected ImageAnalysisClient GetClientWithKey(string apiKey = null, ImageAnalysisClientOptions options = null)
