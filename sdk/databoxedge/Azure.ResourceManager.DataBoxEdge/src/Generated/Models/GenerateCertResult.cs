@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Used in activation key generation flow. </summary>
     public partial class GenerateCertResult
     {
-        /// <summary> Initializes a new instance of GenerateCertResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateCertResult"/>. </summary>
         internal GenerateCertResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateCertResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateCertResult"/>. </summary>
         /// <param name="publicKey">
         /// Gets or sets base64 encoded certificate raw data,
         /// this is the public part needed to be uploaded to cert vault

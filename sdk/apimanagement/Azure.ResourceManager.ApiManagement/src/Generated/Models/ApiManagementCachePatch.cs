@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Cache update details. </summary>
     public partial class ApiManagementCachePatch
     {
-        /// <summary> Initializes a new instance of ApiManagementCachePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCachePatch"/>. </summary>
         public ApiManagementCachePatch()
         {
         }

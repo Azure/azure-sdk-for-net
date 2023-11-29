@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> WorkspaceHub's configuration object. </summary>
     public partial class WorkspaceHubConfig
     {
-        /// <summary> Initializes a new instance of WorkspaceHubConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceHubConfig"/>. </summary>
         public WorkspaceHubConfig()
         {
             AdditionalWorkspaceStorageAccounts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceHubConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceHubConfig"/>. </summary>
         /// <param name="additionalWorkspaceStorageAccounts"></param>
         /// <param name="defaultWorkspaceResourceGroup"></param>
         internal WorkspaceHubConfig(IList<string> additionalWorkspaceStorageAccounts, string defaultWorkspaceResourceGroup)

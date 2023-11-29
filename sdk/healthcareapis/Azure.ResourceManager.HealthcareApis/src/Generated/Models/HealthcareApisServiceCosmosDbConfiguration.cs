@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for the Cosmos DB database backing the service. </summary>
     public partial class HealthcareApisServiceCosmosDbConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceCosmosDbConfiguration"/>. </summary>
         public HealthcareApisServiceCosmosDbConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceCosmosDbConfiguration"/>. </summary>
         /// <param name="offerThroughput"> The provisioned throughput for the backing database. </param>
         /// <param name="keyVaultKeyUri"> The URI of the customer-managed key for the backing database. </param>
         internal HealthcareApisServiceCosmosDbConfiguration(int? offerThroughput, Uri keyVaultKeyUri)

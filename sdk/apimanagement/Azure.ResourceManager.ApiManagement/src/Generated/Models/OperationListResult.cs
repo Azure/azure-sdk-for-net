@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Operation list representation. </summary>
     internal partial class OperationListResult
     {
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         internal OperationListResult()
         {
             Value = new ChangeTrackingList<ApiOperationData>();
         }
 
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

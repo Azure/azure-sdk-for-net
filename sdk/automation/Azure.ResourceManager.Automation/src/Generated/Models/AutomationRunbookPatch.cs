@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update runbook operation. </summary>
     public partial class AutomationRunbookPatch
     {
-        /// <summary> Initializes a new instance of AutomationRunbookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookPatch"/>. </summary>
         public AutomationRunbookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceOSFamilyData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSFamilyData"/>. </summary>
         internal CloudServiceOSFamilyData()
         {
             Versions = new ChangeTrackingList<OSVersionPropertiesBase>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSFamilyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

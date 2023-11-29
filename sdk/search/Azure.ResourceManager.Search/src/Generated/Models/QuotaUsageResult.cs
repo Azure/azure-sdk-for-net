@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the quota usage for a particular sku supported by Azure Cognitive Search. </summary>
     public partial class QuotaUsageResult
     {
-        /// <summary> Initializes a new instance of QuotaUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageResult"/>. </summary>
         internal QuotaUsageResult()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageResult"/>. </summary>
         /// <param name="id"> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </param>
         /// <param name="unit"> The unit of measurement for the search sku. </param>
         /// <param name="currentValue"> The currently used up value for the particular search sku. </param>

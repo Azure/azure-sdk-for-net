@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> CPU consumption datapoint. </summary>
     internal partial class ProcessCpuData
     {
-        /// <summary> Initializes a new instance of ProcessCpuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/>. </summary>
         public ProcessCpuData()
         {
         }

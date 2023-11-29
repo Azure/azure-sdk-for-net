@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a virtual machine returned by the Microsoft.Compute API. </summary>
     public partial class ComputeVmProperties
     {
-        /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmProperties"/>. </summary>
         internal ComputeVmProperties()
         {
             Statuses = new ChangeTrackingList<ComputeVmInstanceViewStatus>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DataDisks = new ChangeTrackingList<ComputeDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmProperties"/>. </summary>
         /// <param name="statuses"> Gets the statuses of the virtual machine. </param>
         /// <param name="osType"> Gets the OS type of the virtual machine. </param>
         /// <param name="vmSize"> Gets the size of the virtual machine. </param>

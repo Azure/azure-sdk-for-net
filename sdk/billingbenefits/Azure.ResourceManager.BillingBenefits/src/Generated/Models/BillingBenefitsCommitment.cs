@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Commitment towards the benefit. </summary>
     public partial class BillingBenefitsCommitment : BillingBenefitsPrice
     {
-        /// <summary> Initializes a new instance of BillingBenefitsCommitment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsCommitment"/>. </summary>
         public BillingBenefitsCommitment()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsCommitment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsCommitment"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <param name="grain"> Commitment grain. </param>

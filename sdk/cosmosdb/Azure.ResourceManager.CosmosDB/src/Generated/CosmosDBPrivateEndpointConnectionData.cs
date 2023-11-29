@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
         public CosmosDBPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Parameters supplied to the Start Streaming Job operation. </summary>
     public partial class StartStreamingJobContent
     {
-        /// <summary> Initializes a new instance of StartStreamingJobContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartStreamingJobContent"/>. </summary>
         public StartStreamingJobContent()
         {
         }

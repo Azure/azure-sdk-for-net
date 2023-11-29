@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiCenterModelFactory
     {
-        /// <summary> Initializes a new instance of ApiCenterServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

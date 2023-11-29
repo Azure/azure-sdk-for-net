@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> A list of SQL Migration Service. </summary>
     internal partial class SqlMigrationListResult
     {
-        /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationListResult"/>. </summary>
         internal SqlMigrationListResult()
         {
             Value = new ChangeTrackingList<SqlMigrationServiceData>();
         }
 
-        /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal SqlMigrationListResult(IReadOnlyList<SqlMigrationServiceData> value, string nextLink)

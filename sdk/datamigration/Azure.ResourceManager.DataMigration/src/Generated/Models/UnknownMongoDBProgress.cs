@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMongoDBProgress. </summary>
     internal partial class UnknownMongoDBProgress : MongoDBProgress
     {
-        /// <summary> Initializes a new instance of UnknownMongoDBProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>

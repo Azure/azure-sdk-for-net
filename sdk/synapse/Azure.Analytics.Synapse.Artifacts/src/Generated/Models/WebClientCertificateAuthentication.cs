@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme follows mutual authentication; the server must also provide valid credentials to the client. </summary>
     public partial class WebClientCertificateAuthentication : WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AuthenticationType = WebAuthenticationType.ClientCertificate;
         }
 
-        /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="pfx">

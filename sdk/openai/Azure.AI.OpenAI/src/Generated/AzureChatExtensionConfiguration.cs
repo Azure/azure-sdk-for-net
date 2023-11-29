@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.

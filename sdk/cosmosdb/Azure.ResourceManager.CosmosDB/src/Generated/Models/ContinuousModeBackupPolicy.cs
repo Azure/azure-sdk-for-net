@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The object representing continuous mode backup policy. </summary>
     public partial class ContinuousModeBackupPolicy : CosmosDBAccountBackupPolicy
     {
-        /// <summary> Initializes a new instance of ContinuousModeBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousModeBackupPolicy"/>. </summary>
         public ContinuousModeBackupPolicy()
         {
             BackupPolicyType = BackupPolicyType.Continuous;
         }
 
-        /// <summary> Initializes a new instance of ContinuousModeBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousModeBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
         /// <param name="continuousModeProperties"> Configuration values for continuous mode backup. </param>

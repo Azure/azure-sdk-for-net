@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePoliciesContent
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesContent"/>. </summary>
         public DevTestLabEvaluatePoliciesContent()
         {
             Policies = new ChangeTrackingList<DevTestLabEvaluatePolicy>();

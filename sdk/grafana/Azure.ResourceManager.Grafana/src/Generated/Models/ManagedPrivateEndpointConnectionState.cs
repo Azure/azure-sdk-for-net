@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The state of managed private endpoint connection. </summary>
     public partial class ManagedPrivateEndpointConnectionState
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         internal ManagedPrivateEndpointConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> The approval/rejection status of managed private endpoint connection. </param>
         /// <param name="description"> Gets or sets the reason for approval/rejection of the connection. </param>
         internal ManagedPrivateEndpointConnectionState(ManagedPrivateEndpointConnectionStatus? status, string description)

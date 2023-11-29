@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitorComputeIdentityBase
     {
-        /// <summary> Initializes a new instance of MonitorComputeIdentityBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityBase"/>. </summary>
         protected MonitorComputeIdentityBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorComputeIdentityBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityBase"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
         internal MonitorComputeIdentityBase(MonitorComputeIdentityType computeIdentityType)
         {

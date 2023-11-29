@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration creation payload. </summary>
     public partial class WorkItemCreateConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemCreateConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
         public WorkItemCreateConfiguration()
         {
             WorkItemProperties = new ChangeTrackingDictionary<string, string>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The native cloud connection configuration. </summary>
     public partial class GcpDefenderForDatabasesArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForDatabasesArcAutoProvisioning"/>. </summary>
         public GcpDefenderForDatabasesArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForDatabasesArcAutoProvisioning"/>. </summary>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this offering. </param>
         internal GcpDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId)

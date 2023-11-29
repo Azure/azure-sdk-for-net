@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook snapshot result. </summary>
     public partial class RunNotebookSnapshotResult
     {
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="runStatus"> Status of the run notebook. </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RunStatus = runStatus;
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="error"> Run notebook error. </param>
         /// <param name="runId"> Run id. </param>

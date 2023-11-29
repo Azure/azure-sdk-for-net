@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent"/>. </summary>
         /// <param name="accessKey">
         /// The access key associated with this Azure Storage account that will be used to connect to it.
         /// Serialized Name: AddStorageAccountParameters.properties.accessKey

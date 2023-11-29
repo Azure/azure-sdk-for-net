@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Get Capabilities operation response. </summary>
     public partial class HDInsightCapabilitiesResult
     {
-        /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightCapabilitiesResult"/>. </summary>
         internal HDInsightCapabilitiesResult()
         {
             Versions = new ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightCapabilitiesResult"/>. </summary>
         /// <param name="versions"> The version capability. </param>
         /// <param name="regions"> The virtual machine size compatibility features. </param>
         /// <param name="features"> The capability features. </param>

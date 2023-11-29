@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of NetworkInterfaces. </summary>
     internal partial class NetworkDeviceInterfacesList
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacesList"/>. </summary>
         internal NetworkDeviceInterfacesList()
         {
             Value = new ChangeTrackingList<NetworkDeviceInterfaceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacesList"/>. </summary>
         /// <param name="value"> List of NetworkInterfaces resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkDeviceInterfacesList(IReadOnlyList<NetworkDeviceInterfaceData> value, string nextLink)

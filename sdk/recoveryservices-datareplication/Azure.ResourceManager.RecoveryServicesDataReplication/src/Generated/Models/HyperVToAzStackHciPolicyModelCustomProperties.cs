@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV To AzStackHCI Policy model custom properties. </summary>
     public partial class HyperVToAzStackHciPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>. </summary>
         /// <param name="recoveryPointHistoryInMinutes">
         /// Gets or sets the duration in minutes until which the recovery points need to be
         /// stored.
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="recoveryPointHistoryInMinutes">
         /// Gets or sets the duration in minutes until which the recovery points need to be

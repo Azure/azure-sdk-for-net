@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookParameterPatch. </summary>
     internal partial class WebhookHookParameterPatch
     {
-        /// <summary> Initializes a new instance of WebhookHookParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameterPatch"/>. </summary>
         public WebhookHookParameterPatch()
         {
             Headers = new ChangeTrackingDictionary<string, string>();

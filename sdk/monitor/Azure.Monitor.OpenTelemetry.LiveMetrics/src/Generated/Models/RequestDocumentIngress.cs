@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Request type document. </summary>
     internal partial class RequestDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of RequestDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestDocumentIngress"/>. </summary>
         public RequestDocumentIngress()
         {
         }

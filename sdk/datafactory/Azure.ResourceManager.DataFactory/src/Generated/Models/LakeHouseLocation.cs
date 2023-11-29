@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The location of Microsoft Fabric LakeHouse Files dataset. </summary>
     public partial class LakeHouseLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of LakeHouseLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseLocation"/>. </summary>
         public LakeHouseLocation()
         {
             DatasetLocationType = "LakeHouseLocation";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>

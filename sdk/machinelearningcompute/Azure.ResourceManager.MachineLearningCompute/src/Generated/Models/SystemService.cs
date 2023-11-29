@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Information about a system service deployed in the cluster. </summary>
     public partial class SystemService
     {
-        /// <summary> Initializes a new instance of SystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemService"/>. </summary>
         /// <param name="systemServiceType"> The system service type. </param>
         public SystemService(SystemServiceType systemServiceType)
         {
             SystemServiceType = systemServiceType;
         }
 
-        /// <summary> Initializes a new instance of SystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemService"/>. </summary>
         /// <param name="systemServiceType"> The system service type. </param>
         /// <param name="publicIPAddress"> The public IP address of the system service. </param>
         /// <param name="version"> The state of the system service. </param>

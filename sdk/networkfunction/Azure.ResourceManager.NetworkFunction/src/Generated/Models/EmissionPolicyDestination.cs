@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Emission policy destination properties. </summary>
     public partial class EmissionPolicyDestination
     {
-        /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmissionPolicyDestination"/>. </summary>
         public EmissionPolicyDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmissionPolicyDestination"/>. </summary>
         /// <param name="destinationType"> Emission destination type. </param>
         internal EmissionPolicyDestination(EmissionDestinationType? destinationType)
         {

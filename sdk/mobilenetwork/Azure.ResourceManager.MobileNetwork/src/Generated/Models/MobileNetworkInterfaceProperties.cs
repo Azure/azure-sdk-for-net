@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Interface properties. </summary>
     public partial class MobileNetworkInterfaceProperties
     {
-        /// <summary> Initializes a new instance of MobileNetworkInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInterfaceProperties"/>. </summary>
         public MobileNetworkInterfaceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInterfaceProperties"/>. </summary>
         /// <param name="name"> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </param>
         /// <param name="ipv4Address"> The IPv4 address. </param>
         /// <param name="ipv4Subnet"> The IPv4 subnet. </param>

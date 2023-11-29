@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputeMachineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridComputeMachineData(AzureLocation location) : base(location)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute
             DetectedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

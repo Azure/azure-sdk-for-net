@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Domain availability. </summary>
     public partial class CognitiveServicesDomainAvailabilityList
     {
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityList"/>. </summary>
         internal CognitiveServicesDomainAvailabilityList()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityList"/>. </summary>
         /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="subdomainName"> The subdomain name to use. </param>

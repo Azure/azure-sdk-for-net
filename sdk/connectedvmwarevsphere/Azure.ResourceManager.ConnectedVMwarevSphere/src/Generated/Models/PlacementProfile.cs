@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the compute and storage placement settings for the virtual machine. </summary>
     public partial class PlacementProfile
     {
-        /// <summary> Initializes a new instance of PlacementProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
         public PlacementProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
         /// <param name="resourcePoolId"> Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will deploy. </param>
         /// <param name="clusterId"> Gets or sets the ARM Id of the cluster resource on which this virtual machine will deploy. </param>
         /// <param name="hostId"> Gets or sets the ARM Id of the host resource on which this virtual machine will deploy. </param>

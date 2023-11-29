@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> AWS cloud account connector based credentials, the credentials is composed of access key ID and secret key, for more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"&gt;Creating an IAM User in Your AWS Account (write only)&lt;/a&gt;. </summary>
     public partial class AwsCredsAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
-        /// <summary> Initializes a new instance of AwsCredsAuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/>. </summary>
         /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
         /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="awsAccessKeyId"/> or <paramref name="awsSecretAccessKey"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType = AuthenticationType.AwsCreds;
         }
 
-        /// <summary> Initializes a new instance of AwsCredsAuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>

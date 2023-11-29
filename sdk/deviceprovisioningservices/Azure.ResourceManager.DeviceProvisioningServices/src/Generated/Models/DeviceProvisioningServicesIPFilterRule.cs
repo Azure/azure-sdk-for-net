@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The IP filter rules for a provisioning Service. </summary>
     public partial class DeviceProvisioningServicesIPFilterRule
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesIPFilterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesIPFilterRule"/>. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IPMask = ipMask;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesIPFilterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesIPFilterRule"/>. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The selected configurations for azure monitor. </summary>
     public partial class HDInsightAzureMonitorSelectedConfigurations
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorSelectedConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorSelectedConfigurations"/>. </summary>
         public HDInsightAzureMonitorSelectedConfigurations()
         {
             GlobalConfigurations = new ChangeTrackingDictionary<string, string>();
             TableList = new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorSelectedConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorSelectedConfigurations"/>. </summary>
         /// <param name="configurationVersion"> The configuration version. </param>
         /// <param name="globalConfigurations"> The global configurations of selected configurations. </param>
         /// <param name="tableList"> The table list. </param>

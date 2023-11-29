@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> LogAnalytics output properties. </summary>
     internal partial class LogAnalyticsOutput
     {
-        /// <summary> Initializes a new instance of LogAnalyticsOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsOutput"/>. </summary>
         internal LogAnalyticsOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsOutput"/>. </summary>
         /// <param name="output"> Output file Uri path to blob container. </param>
         internal LogAnalyticsOutput(string output)
         {

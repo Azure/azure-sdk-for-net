@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
     public partial class KubernetesGitRepositoryUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepositoryUpdateContent"/>. </summary>
         public KubernetesGitRepositoryUpdateContent()
         {
         }

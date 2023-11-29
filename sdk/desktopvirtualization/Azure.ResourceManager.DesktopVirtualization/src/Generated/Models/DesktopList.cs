@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of Desktop definitions. </summary>
     internal partial class DesktopList
     {
-        /// <summary> Initializes a new instance of DesktopList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopList"/>. </summary>
         internal DesktopList()
         {
             Value = new ChangeTrackingList<VirtualDesktopData>();
         }
 
-        /// <summary> Initializes a new instance of DesktopList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopList"/>. </summary>
         /// <param name="value"> List of Desktop definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal DesktopList(IReadOnlyList<VirtualDesktopData> value, string nextLink)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific enable migration input. </summary>
     public partial class VMwareCbtEnableMigrationContent : EnableMigrationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtEnableMigrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtEnableMigrationContent"/>. </summary>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>

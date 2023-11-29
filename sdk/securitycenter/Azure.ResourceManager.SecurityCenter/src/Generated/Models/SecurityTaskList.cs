@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security task recommendations. </summary>
     internal partial class SecurityTaskList
     {
-        /// <summary> Initializes a new instance of SecurityTaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         internal SecurityTaskList()
         {
             Value = new ChangeTrackingList<SecurityTaskData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecurityTaskList(IReadOnlyList<SecurityTaskData> value, string nextLink)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private endpoint update details. </summary>
     public partial class DeviceUpdatePrivateEndpointUpdate
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointUpdate"/>. </summary>
         public DeviceUpdatePrivateEndpointUpdate()
         {
         }

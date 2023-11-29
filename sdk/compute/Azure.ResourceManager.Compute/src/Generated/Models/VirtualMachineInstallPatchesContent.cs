@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Input for InstallPatches as directly received by the API. </summary>
     public partial class VirtualMachineInstallPatchesContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstallPatchesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesContent"/>. </summary>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         public VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting rebootSetting)
         {

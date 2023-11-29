@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadsModelFactory
     {
-        /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapSupportedResourceSkusResult"/>. </summary>
         /// <param name="supportedSkus"> Gets the list of SAP supported SKUs. </param>
         /// <returns> A new <see cref="Models.SapSupportedResourceSkusResult"/> instance for mocking. </returns>
         public static SapSupportedResourceSkusResult SapSupportedResourceSkusResult(IEnumerable<SapSupportedSku> supportedSkus = null)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapSupportedResourceSkusResult(supportedSkus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapSupportedSku"/>. </summary>
         /// <param name="vmSku"> The VM Sku. </param>
         /// <param name="isAppServerCertified"> True if the Sku is certified for App server in the SAP system. </param>
         /// <param name="isDatabaseCertified"> True if the Sku is certified for Database server in the SAP system. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapSupportedSku(vmSku, isAppServerCertified, isDatabaseCertified);
         }
 
-        /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapDiskConfigurationsResult"/>. </summary>
         /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
         /// <returns> A new <see cref="Models.SapDiskConfigurationsResult"/> instance for mocking. </returns>
         public static SapDiskConfigurationsResult SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations = null)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapDiskConfigurationsResult(volumeConfigurations);
         }
 
-        /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapDiskConfiguration"/>. </summary>
         /// <param name="recommendedConfiguration"> The recommended disk details for a given VM Sku. </param>
         /// <param name="supportedConfigurations"> The list of supported disks for a given VM Sku. </param>
         /// <returns> A new <see cref="Models.SapDiskConfiguration"/> instance for mocking. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedConfigurationsDiskDetails"/>. </summary>
         /// <param name="skuName"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SupportedConfigurationsDiskDetails(skuName != null ? new SapDiskSku(skuName) : null, sizeInGB, minimumSupportedDiskCount, maximumSupportedDiskCount, iopsReadWrite, mbpsReadWrite, diskTier);
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapAvailabilityZoneDetailsResult"/>. </summary>
         /// <param name="availabilityZonePairs"> Gets the list of availability zone pairs. </param>
         /// <returns> A new <see cref="Models.SapAvailabilityZoneDetailsResult"/> instance for mocking. </returns>
         public static SapAvailabilityZoneDetailsResult SapAvailabilityZoneDetailsResult(IEnumerable<SapAvailabilityZonePair> availabilityZonePairs = null)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapAvailabilityZoneDetailsResult(availabilityZonePairs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZonePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapAvailabilityZonePair"/>. </summary>
         /// <param name="zoneA"> The zone A. </param>
         /// <param name="zoneB"> The zone B. </param>
         /// <returns> A new <see cref="Models.SapAvailabilityZonePair"/> instance for mocking. </returns>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapAvailabilityZonePair(zoneA, zoneB);
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapVirtualInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapVirtualInstanceData(id, name, resourceType, systemData, tags, location, identity, environment, sapProduct, configuration, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, status, health, state, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapVirtualInstanceErrorDetail"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> Internal error details. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapVirtualInstanceErrorDetail(code, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapCentralServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapCentralServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, messageServerProperties, enqueueServerProperties, gatewayServerProperties, enqueueReplicationServerProperties, kernelVersion, kernelPatch, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MessageServerProperties"/>. </summary>
         /// <param name="msPort"> Message Server port. </param>
         /// <param name="internalMsPort"> Message Server internal MS port. </param>
         /// <param name="httpPort"> Message Server HTTP Port. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new MessageServerProperties(msPort, internalMsPort, httpPort, httpsPort, hostname, ipAddress, health);
         }
 
-        /// <summary> Initializes a new instance of EnqueueServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnqueueServerProperties"/>. </summary>
         /// <param name="hostname"> Enqueue Server SAP Hostname. </param>
         /// <param name="ipAddress"> Enqueue Server SAP IP Address. </param>
         /// <param name="port"> Enqueue Server Port. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new EnqueueServerProperties(hostname, ipAddress, port, health);
         }
 
-        /// <summary> Initializes a new instance of GatewayServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayServerProperties"/>. </summary>
         /// <param name="port"> Gateway Port. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <returns> A new <see cref="Models.GatewayServerProperties"/> instance for mocking. </returns>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new GatewayServerProperties(port, health);
         }
 
-        /// <summary> Initializes a new instance of EnqueueReplicationServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnqueueReplicationServerProperties"/>. </summary>
         /// <param name="ersVersion"> Defines the type of Enqueue Replication Server. </param>
         /// <param name="instanceNo"> ERS Instance Number. </param>
         /// <param name="hostname"> ERS SAP Hostname. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new EnqueueReplicationServerProperties(ersVersion, instanceNo, hostname, kernelVersion, kernelPatch, ipAddress, health);
         }
 
-        /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CentralServerVmDetails"/>. </summary>
         /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"></param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the ASCS Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new CentralServerVmDetails(virtualMachineType, virtualMachineId, storageDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapDatabaseInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapDatabaseInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapDatabaseInstanceData(id, name, resourceType, systemData, tags, location, subnetId, databaseSid, databaseType, ipAddress, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseVmDetails"/>. </summary>
         /// <param name="virtualMachineId"></param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new DatabaseVmDetails(virtualMachineId, status, storageDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapApplicationServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapApplicationServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, hostname, kernelVersion, kernelPatch, ipAddress, gatewayPort, icmHttpPort, icmHttpsPort, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of ApplicationServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationServerVmDetails"/>. </summary>
         /// <param name="virtualMachineType"> Defines the type of application server VM. </param>
         /// <param name="virtualMachineId"></param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the App Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ApplicationServerVmDetails(virtualMachineType, virtualMachineId, storageDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SapMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapMonitorData(id, name, resourceType, systemData, tags, location, identity, provisioningState, errors, appLocation, routingPreference, zoneRedundancyPreference, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, logAnalyticsWorkspaceArmId, monitorSubnetId, msiArmId, storageAccountArmId);
         }
 
-        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapProviderInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapProviderInstanceData(id, name, resourceType, systemData, identity, provisioningState, errors, providerSettings);
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workloads.SapLandscapeMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapLandscapeMonitorData(id, name, resourceType, systemData, provisioningState, grouping, topMetricsThresholds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SingleServerRecommendationResult"/>. </summary>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
         /// <returns> A new <see cref="Models.SingleServerRecommendationResult"/> instance for mocking. </returns>
         public static SingleServerRecommendationResult SingleServerRecommendationResult(string vmSku = null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SingleServerRecommendationResult(SapDeploymentType.SingleServer, vmSku);
         }
 
-        /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreeTierRecommendationResult"/>. </summary>
         /// <param name="dbVmSku"> The database VM SKU. </param>
         /// <param name="databaseInstanceCount"> The database server instance count. </param>
         /// <param name="centralServerVmSku"> The central server VM SKU. </param>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ThreeTierRecommendationResult(SapDeploymentType.ThreeTier, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
         }
 
-        /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryConfiguration"/>. </summary>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>

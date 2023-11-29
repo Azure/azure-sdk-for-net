@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// </summary>
     public partial class SnapshotResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         public SnapshotResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

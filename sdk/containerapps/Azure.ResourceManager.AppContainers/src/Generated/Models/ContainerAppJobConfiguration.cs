@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Non versioned Container Apps Job configuration properties. </summary>
     public partial class ContainerAppJobConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppJobConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobConfiguration"/>. </summary>
         /// <param name="triggerType"> Trigger type of the job. </param>
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
         public ContainerAppJobConfiguration(ContainerAppJobTriggerType triggerType, int replicaTimeout)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container Apps Job. </param>
         /// <param name="triggerType"> Trigger type of the job. </param>
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>

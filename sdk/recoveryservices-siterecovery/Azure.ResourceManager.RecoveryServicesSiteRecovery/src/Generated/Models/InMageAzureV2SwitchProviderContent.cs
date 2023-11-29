@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Provider specific input for InMageAzureV2 switch provider. </summary>
     public partial class InMageAzureV2SwitchProviderContent : SwitchProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderContent"/>. </summary>
         /// <param name="targetVaultId"> The target vault Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>

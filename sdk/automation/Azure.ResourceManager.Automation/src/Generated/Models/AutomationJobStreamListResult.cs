@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job stream operation. </summary>
     internal partial class AutomationJobStreamListResult
     {
-        /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStreamListResult"/>. </summary>
         internal AutomationJobStreamListResult()
         {
             Value = new ChangeTrackingList<AutomationJobStream>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStreamListResult"/>. </summary>
         /// <param name="value"> A list of job streams. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationJobStreamListResult(IReadOnlyList<AutomationJobStream> value, string nextLink)

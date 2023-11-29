@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningOnlineDeploymentPatch : MachineLearningResourcePatch
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentPatch"/>. </summary>
         public MachineLearningOnlineDeploymentPatch()
         {
         }

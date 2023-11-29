@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Payload to get and set the default account in the given scope. </summary>
     public partial class DefaultPurviewAccountPayload
     {
-        /// <summary> Initializes a new instance of DefaultPurviewAccountPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultPurviewAccountPayload"/>. </summary>
         public DefaultPurviewAccountPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultPurviewAccountPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultPurviewAccountPayload"/>. </summary>
         /// <param name="accountName"> The name of the account that is set as the default. </param>
         /// <param name="resourceGroupName"> The resource group name of the account that is set as the default. </param>
         /// <param name="scope"> The scope object ID. For example, sub ID or tenant ID. </param>

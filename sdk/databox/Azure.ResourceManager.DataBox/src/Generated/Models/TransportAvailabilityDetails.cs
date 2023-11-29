@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Transport options availability details for given region. </summary>
     public partial class TransportAvailabilityDetails
     {
-        /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityDetails"/>. </summary>
         internal TransportAvailabilityDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityDetails"/>. </summary>
         /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
         internal TransportAvailabilityDetails(TransportShipmentType? shipmentType)
         {

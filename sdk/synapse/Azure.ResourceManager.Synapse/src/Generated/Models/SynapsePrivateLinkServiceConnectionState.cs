@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Connection state details of the private endpoint. </summary>
     public partial class SynapsePrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkServiceConnectionState"/>. </summary>
         public SynapsePrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>

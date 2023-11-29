@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityAlertResourceIdentifier
     {
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         protected SecurityAlertResourceIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
         internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType)
         {

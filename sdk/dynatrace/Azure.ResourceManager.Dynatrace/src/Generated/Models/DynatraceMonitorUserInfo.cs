@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> User info. </summary>
     public partial class DynatraceMonitorUserInfo
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorUserInfo"/>. </summary>
         public DynatraceMonitorUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitorUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorUserInfo"/>. </summary>
         /// <param name="firstName"> First Name of the user. </param>
         /// <param name="lastName"> Last Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Dynatrace for contacting them if needed. </param>

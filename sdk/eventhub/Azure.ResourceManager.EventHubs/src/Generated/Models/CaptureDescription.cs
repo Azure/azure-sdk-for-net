@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties to configure capture description for eventhub. </summary>
     public partial class CaptureDescription
     {
-        /// <summary> Initializes a new instance of CaptureDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaptureDescription"/>. </summary>
         public CaptureDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of CaptureDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaptureDescription"/>. </summary>
         /// <param name="enabled"> A value that indicates whether capture description is enabled. </param>
         /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: 'AvroDeflate' will be deprecated in New API Version. </param>
         /// <param name="intervalInSeconds"> The time window allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds. </param>

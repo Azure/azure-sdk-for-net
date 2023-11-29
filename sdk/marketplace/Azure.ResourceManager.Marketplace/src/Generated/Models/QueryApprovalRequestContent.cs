@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The details to get the request plans statuses. </summary>
     public partial class QueryApprovalRequestContent
     {
-        /// <summary> Initializes a new instance of QueryApprovalRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestContent"/>. </summary>
         public QueryApprovalRequestContent()
         {
             PlanIds = new ChangeTrackingList<string>();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Cluster details to update. </summary>
     public partial class HciClusterPatch
     {
-        /// <summary> Initializes a new instance of HciClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterPatch"/>. </summary>
         public HciClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

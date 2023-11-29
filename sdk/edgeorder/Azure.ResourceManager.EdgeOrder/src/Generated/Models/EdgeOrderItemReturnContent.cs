@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Return order item request body. </summary>
     public partial class EdgeOrderItemReturnContent
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemReturnContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemReturnContent"/>. </summary>
         /// <param name="returnReason"> Return Reason. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="returnReason"/> is null. </exception>
         public EdgeOrderItemReturnContent(string returnReason)

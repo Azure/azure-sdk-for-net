@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of UserSession definitions. </summary>
     internal partial class UserSessionList
     {
-        /// <summary> Initializes a new instance of UserSessionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionList"/>. </summary>
         internal UserSessionList()
         {
             Value = new ChangeTrackingList<UserSessionData>();
         }
 
-        /// <summary> Initializes a new instance of UserSessionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionList"/>. </summary>
         /// <param name="value"> List of UserSession definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal UserSessionList(IReadOnlyList<UserSessionData> value, string nextLink)

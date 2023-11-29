@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines top-level WebApplicationFirewallPolicy configuration settings. </summary>
     public partial class FrontDoorWebApplicationFirewallPolicySettings
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicySettings"/>. </summary>
         public FrontDoorWebApplicationFirewallPolicySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicySettings"/>. </summary>
         /// <param name="enabledState"> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
         /// <param name="redirectUri"> If action type is redirect, this field represents redirect URL for the client. </param>

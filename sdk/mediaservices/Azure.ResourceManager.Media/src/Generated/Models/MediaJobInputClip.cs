@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class MediaJobInputClip : MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of MediaJobInputClip. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputClip"/>. </summary>
         public MediaJobInputClip()
         {
             Files = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JobInputClip";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputClip. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputClip"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="files"> List of files. Required for JobInputHttp. Maximum of 4000 characters each. Query strings will not be returned in service responses to prevent sensitive data exposure. </param>
         /// <param name="start">

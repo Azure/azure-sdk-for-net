@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownMonitorComputeIdentityBase. </summary>
     internal partial class UnknownMonitorComputeIdentityBase : MonitorComputeIdentityBase
     {
-        /// <summary> Initializes a new instance of UnknownMonitorComputeIdentityBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeIdentityBase"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
         internal UnknownMonitorComputeIdentityBase(MonitorComputeIdentityType computeIdentityType) : base(computeIdentityType)
         {

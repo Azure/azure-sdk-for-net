@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeviceUpdateModelFactory
     {
-        /// <summary> Initializes a new instance of DeviceUpdateNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdateNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdateAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, encryption, locations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateAccountLocationDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="role"> Whether the location is primary or failover. </param>
         /// <returns> A new <see cref="Models.DeviceUpdateAccountLocationDetail"/> instance for mocking. </returns>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdateAccountLocationDetail(name, role);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdateInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdateInstanceData(id, name, resourceType, systemData, tags, location, provisioningState, accountName, iotHubs?.ToList(), enableDiagnostics, diagnosticStorageProperties);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdatePrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, resourceType, systemData, provisioningState, eTag, remotePrivateEndpoint, status);
         }
 
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupConnectivityInformation"/>. </summary>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
         /// <param name="customerVisibleFqdns"> List of customer visible FQDNs. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new GroupConnectivityInformation(groupId, memberName, customerVisibleFqdns?.ToList(), internalFqdn, redirectMapId, privateLinkServiceArmRegion);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
         /// <param name="id"> Connection details ID. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="linkIdentifier"> Link ID. </param>

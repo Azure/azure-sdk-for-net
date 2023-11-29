@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class LinkResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkResourceFormatData"/>. </summary>
         public LinkResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights
             ParticipantPropertyReferences = new ChangeTrackingList<ParticipantPropertyReference>();
         }
 
-        /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkDeviceInterfaceData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
         public NetworkDeviceInterfaceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

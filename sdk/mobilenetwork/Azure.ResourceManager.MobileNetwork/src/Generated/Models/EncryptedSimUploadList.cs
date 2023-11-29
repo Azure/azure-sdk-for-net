@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The SIMs to upload. The SIM credentials must be encrypted. </summary>
     public partial class EncryptedSimUploadList
     {
-        /// <summary> Initializes a new instance of EncryptedSimUploadList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/>. </summary>
         /// <param name="version"> The upload file format version. </param>
         /// <param name="azureKeyIdentifier"> An identifier for the Azure SIM onboarding public key used for encrypted upload. </param>
         /// <param name="vendorKeyFingerprint"> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </param>

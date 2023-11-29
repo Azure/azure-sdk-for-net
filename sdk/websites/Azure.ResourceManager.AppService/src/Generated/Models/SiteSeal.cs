@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Site seal. </summary>
     public partial class SiteSeal
     {
-        /// <summary> Initializes a new instance of SiteSeal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSeal"/>. </summary>
         /// <param name="html"> HTML snippet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)

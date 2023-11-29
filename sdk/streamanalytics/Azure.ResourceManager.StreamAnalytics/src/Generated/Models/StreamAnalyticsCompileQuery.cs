@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The query compilation object which defines the input, output, and transformation for the query compilation. </summary>
     public partial class StreamAnalyticsCompileQuery
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsCompileQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsCompileQuery"/>. </summary>
         /// <param name="query"> The query to compile. </param>
         /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>

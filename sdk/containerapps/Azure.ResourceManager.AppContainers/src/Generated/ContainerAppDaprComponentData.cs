@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDaprComponentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
         public ContainerAppDaprComponentData()
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

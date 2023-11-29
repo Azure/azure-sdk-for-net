@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Response for ConfigurationAssignments list. </summary>
     internal partial class MaintenanceConfigurationAssignmentListResult
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         internal MaintenanceConfigurationAssignmentListResult()
         {
             Value = new ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of configuration Assignments. </param>
         internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignmentData> value)
         {

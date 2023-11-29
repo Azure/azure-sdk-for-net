@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Spring Cloud Gateway route config resources and a possible link for next set. </summary>
     internal partial class GatewayRouteConfigResourceList
     {
-        /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRouteConfigResourceList"/>. </summary>
         internal GatewayRouteConfigResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformGatewayRouteConfigData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRouteConfigResourceList"/>. </summary>
         /// <param name="value"> Collection of Spring Cloud Gateway route config resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

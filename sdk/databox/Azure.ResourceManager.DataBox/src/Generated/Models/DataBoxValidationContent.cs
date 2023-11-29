@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxValidationContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/>. </summary>
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

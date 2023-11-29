@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> An instance of Request represents completion of an external request to the application to do work and contains a summary of that request execution and the results. </summary>
     internal partial class RequestData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of RequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="id"> Identifier of a request call instance. Used for correlation between request and other telemetry items. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Email Template Parameter contract. </summary>
     public partial class EmailTemplateParametersContractProperties
     {
-        /// <summary> Initializes a new instance of EmailTemplateParametersContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateParametersContractProperties"/>. </summary>
         public EmailTemplateParametersContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EmailTemplateParametersContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateParametersContractProperties"/>. </summary>
         /// <param name="name"> Template parameter name. </param>
         /// <param name="title"> Template parameter title. </param>
         /// <param name="description"> Template parameter description. </param>

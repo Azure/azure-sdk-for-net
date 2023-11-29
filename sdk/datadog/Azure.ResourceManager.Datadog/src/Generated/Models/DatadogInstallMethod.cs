@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogInstallMethod. </summary>
     public partial class DatadogInstallMethod
     {
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         internal DatadogInstallMethod()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         /// <param name="tool"> The tool. </param>
         /// <param name="toolVersion"> The tool version. </param>
         /// <param name="installerVersion"> The installer version. </param>

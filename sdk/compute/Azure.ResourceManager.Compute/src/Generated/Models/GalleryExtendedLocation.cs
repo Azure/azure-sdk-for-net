@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The name of the extended location. </summary>
     public partial class GalleryExtendedLocation
     {
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         public GalleryExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         /// <param name="name"></param>
         /// <param name="extendedLocationType"> It is type of the extended location. </param>
         internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType)

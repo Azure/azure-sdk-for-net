@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> AzStackHCI cluster properties. </summary>
     public partial class AzStackHciClusterProperties
     {
-        /// <summary> Initializes a new instance of AzStackHciClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzStackHciClusterProperties"/>. </summary>
         /// <param name="clusterName"> Gets or sets the AzStackHCICluster FQDN name. </param>
         /// <param name="resourceName"> Gets or sets the AzStackHCICluster resource name. </param>
         /// <param name="storageAccountName"> Gets or sets the Storage account name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             StorageContainers = storageContainers.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzStackHciClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzStackHciClusterProperties"/>. </summary>
         /// <param name="clusterName"> Gets or sets the AzStackHCICluster FQDN name. </param>
         /// <param name="resourceName"> Gets or sets the AzStackHCICluster resource name. </param>
         /// <param name="storageAccountName"> Gets or sets the Storage account name. </param>

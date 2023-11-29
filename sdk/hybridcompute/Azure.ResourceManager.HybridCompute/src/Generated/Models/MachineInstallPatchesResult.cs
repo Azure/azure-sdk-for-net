@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The result summary of an installation operation. </summary>
     public partial class MachineInstallPatchesResult
     {
-        /// <summary> Initializes a new instance of MachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         internal MachineInstallPatchesResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. </param>
         /// <param name="rebootStatus"> The reboot state of the VM following completion of the operation. </param>

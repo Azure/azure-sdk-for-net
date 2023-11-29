@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The connector mapping properties. </summary>
     public partial class ConnectorMappingProperties
     {
-        /// <summary> Initializes a new instance of ConnectorMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingProperties"/>. </summary>
         /// <param name="errorManagement"> The error management setting for the mapping. </param>
         /// <param name="format"> The format of mapping property. </param>
         /// <param name="availability"> The availability of mapping property. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             CompleteOperation = completeOperation;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingProperties"/>. </summary>
         /// <param name="folderPath"> The folder path for the mapping. </param>
         /// <param name="fileFilter"> The file filter for the mapping. </param>
         /// <param name="hasHeader"> If the file contains a header or not. </param>

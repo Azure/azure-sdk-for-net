@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ReplicationProviderSpecificContainerCreationContent
     {
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificContainerCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificContainerCreationContent"/>. </summary>
         protected ReplicationProviderSpecificContainerCreationContent()
         {
         }

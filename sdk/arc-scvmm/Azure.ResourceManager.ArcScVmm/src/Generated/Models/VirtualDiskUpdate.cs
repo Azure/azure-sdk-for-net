@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Virtual disk model. </summary>
     public partial class VirtualDiskUpdate
     {
-        /// <summary> Initializes a new instance of VirtualDiskUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDiskUpdate"/>. </summary>
         public VirtualDiskUpdate()
         {
         }

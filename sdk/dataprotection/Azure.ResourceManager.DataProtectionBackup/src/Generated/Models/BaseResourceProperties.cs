@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BaseResourceProperties
     {
-        /// <summary> Initializes a new instance of BaseResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseResourceProperties"/>. </summary>
         protected BaseResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BaseResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseResourceProperties"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal BaseResourceProperties(ResourcePropertiesObjectType objectType)
         {

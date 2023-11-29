@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The EventGridInboundIPRule. </summary>
     public partial class EventGridInboundIPRule
     {
-        /// <summary> Initializes a new instance of EventGridInboundIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInboundIPRule"/>. </summary>
         public EventGridInboundIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridInboundIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInboundIPRule"/>. </summary>
         /// <param name="ipMask"> IP Address in CIDR notation e.g., 10.0.0.0/8. </param>
         /// <param name="action"> Action to perform based on the match or no match of the IpMask. </param>
         internal EventGridInboundIPRule(string ipMask, EventGridIPActionType? action)

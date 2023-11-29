@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Factory's git repo information. </summary>
     public partial class FactoryRepoContent
     {
-        /// <summary> Initializes a new instance of FactoryRepoContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoContent"/>. </summary>
         public FactoryRepoContent()
         {
         }

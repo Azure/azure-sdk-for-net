@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class contains the error details per object. </summary>
     public partial class SiteRecoveryJobProviderError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProviderError"/>. </summary>
         internal SiteRecoveryJobProviderError()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProviderError"/>. </summary>
         /// <param name="errorCode"> The Error code. </param>
         /// <param name="errorMessage"> The Error message. </param>
         /// <param name="errorId"> The Provider error Id. </param>

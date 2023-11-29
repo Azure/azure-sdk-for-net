@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
     public partial class AppServiceBillingMeter : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
         public AppServiceBillingMeter()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

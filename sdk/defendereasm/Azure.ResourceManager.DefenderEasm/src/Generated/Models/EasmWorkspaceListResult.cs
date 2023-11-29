@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> The list of workspaces. </summary>
     internal partial class EasmWorkspaceListResult
     {
-        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceListResult"/>. </summary>
         internal EasmWorkspaceListResult()
         {
             Value = new ChangeTrackingList<EasmWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Workspace list. </param>
         /// <param name="value"> The list of workspaces. </param>
         internal EasmWorkspaceListResult(string nextLink, IReadOnlyList<EasmWorkspaceData> value)

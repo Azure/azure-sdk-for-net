@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The JIT authorization policies. </summary>
     public partial class JitAuthorizationPolicies
     {
-        /// <summary> Initializes a new instance of JitAuthorizationPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitAuthorizationPolicies"/>. </summary>
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>

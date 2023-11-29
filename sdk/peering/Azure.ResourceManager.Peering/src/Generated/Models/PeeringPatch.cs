@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The PeeringPatch. </summary>
     public partial class PeeringPatch : PeeringResourceTagsPatch
     {
-        /// <summary> Initializes a new instance of PeeringPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringPatch"/>. </summary>
         public PeeringPatch()
         {
         }

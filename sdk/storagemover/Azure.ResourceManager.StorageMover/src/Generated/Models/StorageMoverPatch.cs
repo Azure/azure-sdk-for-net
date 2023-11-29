@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Storage Mover resource. </summary>
     public partial class StorageMoverPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverPatch"/>. </summary>
         public StorageMoverPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

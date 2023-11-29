@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> File server read settings. </summary>
     public partial class FileServerReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of FileServerReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerReadSettings"/>. </summary>
         public FileServerReadSettings()
         {
             StoreReadSettingsType = "FileServerReadSettings";
         }
 
-        /// <summary> Initializes a new instance of FileServerReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

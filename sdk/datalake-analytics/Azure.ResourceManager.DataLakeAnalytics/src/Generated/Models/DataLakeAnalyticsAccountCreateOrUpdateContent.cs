@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location">
         /// The resource location.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.location

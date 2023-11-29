@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Patchable Quota Rule of a Volume. </summary>
     public partial class NetAppVolumeQuotaRulePatch
     {
-        /// <summary> Initializes a new instance of NetAppVolumeQuotaRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRulePatch"/>. </summary>
         public NetAppVolumeQuotaRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

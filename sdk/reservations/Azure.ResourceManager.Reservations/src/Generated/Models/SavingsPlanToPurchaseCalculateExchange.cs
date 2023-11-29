@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Savings plan purchase details. </summary>
     public partial class SavingsPlanToPurchaseCalculateExchange
     {
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseCalculateExchange"/>. </summary>
         internal SavingsPlanToPurchaseCalculateExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseCalculateExchange"/>. </summary>
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         internal SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal)

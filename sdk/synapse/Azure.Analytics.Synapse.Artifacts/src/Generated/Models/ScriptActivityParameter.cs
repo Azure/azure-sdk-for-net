@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Parameters of a script block. </summary>
     public partial class ScriptActivityParameter
     {
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         public ScriptActivityParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         /// <param name="name"> The name of the parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the parameter. </param>
         /// <param name="value"> The value of the parameter. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The stream analytics input to sample. </summary>
     public partial class StreamAnalyticsSampleInputContent
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSampleInputContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSampleInputContent"/>. </summary>
         public StreamAnalyticsSampleInputContent()
         {
         }

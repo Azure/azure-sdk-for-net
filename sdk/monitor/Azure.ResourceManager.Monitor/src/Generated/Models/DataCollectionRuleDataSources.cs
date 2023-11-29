@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class DataCollectionRuleDataSources : DataSourcesSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleDataSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDataSources"/>. </summary>
         public DataCollectionRuleDataSources()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleDataSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDataSources"/>. </summary>
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>

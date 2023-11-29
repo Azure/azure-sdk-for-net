@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The flow endpoints configuration. </summary>
     public partial class FlowEndpoints
     {
-        /// <summary> Initializes a new instance of FlowEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         public FlowEndpoints()
         {
             OutgoingIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
             AccessEndpointIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
         }
 
-        /// <summary> Initializes a new instance of FlowEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
         /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
         internal FlowEndpoints(IList<FlowEndpointIPAddress> outgoingIPAddresses, IList<FlowEndpointIPAddress> accessEndpointIPAddresses)

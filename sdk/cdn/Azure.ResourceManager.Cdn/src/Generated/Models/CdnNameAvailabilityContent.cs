@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Input of CheckNameAvailability API. </summary>
     public partial class CdnNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CdnNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload from declining a job. </summary>
     internal partial class DeclineJobOfferResult
     {
-        /// <summary> Initializes a new instance of DeclineJobOfferResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferResult"/>. </summary>
         internal DeclineJobOfferResult()
         {
         }

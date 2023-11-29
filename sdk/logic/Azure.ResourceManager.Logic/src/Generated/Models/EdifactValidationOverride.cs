@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact validation override settings. </summary>
     public partial class EdifactValidationOverride
     {
-        /// <summary> Initializes a new instance of EdifactValidationOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactValidationOverride"/>. </summary>
         /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
         /// <param name="enforceCharacterSet"> The value indicating whether to validate character Set. </param>
         /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>

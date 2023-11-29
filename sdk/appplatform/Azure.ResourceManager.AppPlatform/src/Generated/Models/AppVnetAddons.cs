@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Additional App settings in vnet injection instance. </summary>
     public partial class AppVnetAddons
     {
-        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppVnetAddons"/>. </summary>
         public AppVnetAddons()
         {
         }
 
-        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppVnetAddons"/>. </summary>
         /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
         /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
         internal AppVnetAddons(bool? isPublicEndpoint, Uri publicEndpointUri)

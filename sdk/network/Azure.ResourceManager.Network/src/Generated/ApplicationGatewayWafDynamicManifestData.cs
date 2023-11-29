@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         internal ApplicationGatewayWafDynamicManifestData()
         {
             AvailableRuleSets = new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

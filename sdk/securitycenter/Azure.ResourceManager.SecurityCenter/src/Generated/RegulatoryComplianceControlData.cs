@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class RegulatoryComplianceControlData : ResourceData
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
         public RegulatoryComplianceControlData()
         {
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

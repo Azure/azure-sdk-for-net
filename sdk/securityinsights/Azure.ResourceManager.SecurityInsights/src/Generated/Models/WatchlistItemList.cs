@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the watchlist items. </summary>
     internal partial class WatchlistItemList
     {
-        /// <summary> Initializes a new instance of WatchlistItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
         /// <param name="value"> Array of watchlist items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WatchlistItemList(IEnumerable<SecurityInsightsWatchlistItemData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WatchlistItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of watchlist items. </param>
         /// <param name="value"> Array of watchlist items. </param>
         internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value)

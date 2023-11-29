@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Push installer details. </summary>
     public partial class PushInstallerDetails
     {
-        /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PushInstallerDetails"/>. </summary>
         internal PushInstallerDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PushInstallerDetails"/>. </summary>
         /// <param name="id"> The push installer Id. </param>
         /// <param name="name"> The push installer name. </param>
         /// <param name="biosId"> The push installer Bios Id. </param>

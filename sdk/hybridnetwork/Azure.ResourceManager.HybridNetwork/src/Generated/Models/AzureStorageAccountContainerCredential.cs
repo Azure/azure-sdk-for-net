@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The azure storage account container credential definition. </summary>
     public partial class AzureStorageAccountContainerCredential
     {
-        /// <summary> Initializes a new instance of AzureStorageAccountContainerCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountContainerCredential"/>. </summary>
         internal AzureStorageAccountContainerCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureStorageAccountContainerCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountContainerCredential"/>. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
         internal AzureStorageAccountContainerCredential(string containerName, Uri containerSasUri)

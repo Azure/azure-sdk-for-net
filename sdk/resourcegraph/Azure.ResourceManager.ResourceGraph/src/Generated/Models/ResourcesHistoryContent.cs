@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Describes a history request to be executed. </summary>
     public partial class ResourcesHistoryContent
     {
-        /// <summary> Initializes a new instance of ResourcesHistoryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryContent"/>. </summary>
         public ResourcesHistoryContent()
         {
             Subscriptions = new ChangeTrackingList<string>();

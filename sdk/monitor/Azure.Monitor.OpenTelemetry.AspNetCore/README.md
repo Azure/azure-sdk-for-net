@@ -33,7 +33,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
 Install the Azure Monitor Distro for .NET from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
 ```
 
 #### Nightly builds
@@ -219,9 +219,3 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
-
-## Release Schedule
-
-This distro is under active development.
-
-The library is not yet _generally available_, and is not officially supported. Future releases will not attempt to maintain backwards compatibility with previous releases. Each beta release includes significant changes to the distro package, making them incompatible with each other.

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A remove disk(s) input. </summary>
     public partial class A2ARemoveDisksContent : RemoveDisksProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2ARemoveDisksContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ARemoveDisksContent"/>. </summary>
         public A2ARemoveDisksContent()
         {
             VmDisksUris = new ChangeTrackingList<Uri>();

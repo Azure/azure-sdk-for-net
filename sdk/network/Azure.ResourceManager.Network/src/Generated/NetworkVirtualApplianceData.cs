@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         public NetworkVirtualApplianceData()
         {
             BootStrapConfigurationBlobs = new ChangeTrackingList<string>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

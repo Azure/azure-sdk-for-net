@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A description of a clinical trial. </summary>
     public partial class ClinicalTrialDetails
     {
-        /// <summary> Initializes a new instance of ClinicalTrialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDetails"/>. </summary>
         /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="metadata"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDetails"/>. </summary>
         /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
         /// <param name="eligibilityCriteriaText"> The eligibility criteria of the clinical trial (inclusion and exclusion), given as text. </param>
         /// <param name="demographics"> Demographic criteria for a clinical trial. </param>

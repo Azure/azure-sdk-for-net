@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection container input properties. </summary>
     internal partial class SiteRecoveryCreateProtectionContainerProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerProperties"/>. </summary>
         public SiteRecoveryCreateProtectionContainerProperties()
         {
             ProviderSpecificContent = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the disk image encryption base class. </summary>
     public partial class DiskImageEncryption
     {
-        /// <summary> Initializes a new instance of DiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageEncryption"/>. </summary>
         public DiskImageEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         internal DiskImageEncryption(ResourceIdentifier diskEncryptionSetId)
         {

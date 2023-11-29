@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> Parameters for updating a Azure Health Bot. </summary>
     public partial class HealthBotPatch
     {
-        /// <summary> Initializes a new instance of HealthBotPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotPatch"/>. </summary>
         public HealthBotPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The workflow trigger cron for ComputeStartStop schedule type. </summary>
     public partial class ComputeStartStopCronSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopCronSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopCronSchedule"/>. </summary>
         public ComputeStartStopCronSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopCronSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopCronSchedule"/>. </summary>
         /// <param name="startTime"> The start time in yyyy-MM-ddTHH:mm:ss format. </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.

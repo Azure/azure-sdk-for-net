@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Teradata data source. </summary>
     public partial class TeradataLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of TeradataLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataLinkedService"/>. </summary>
         public TeradataLinkedService()
         {
             LinkedServiceType = "Teradata";
         }
 
-        /// <summary> Initializes a new instance of TeradataLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

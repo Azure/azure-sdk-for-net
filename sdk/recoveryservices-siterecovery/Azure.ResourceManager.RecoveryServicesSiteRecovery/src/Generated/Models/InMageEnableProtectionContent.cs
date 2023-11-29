@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware Azure specific enable protection input. </summary>
     public partial class InMageEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageEnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/>. </summary>
         /// <param name="masterTargetId"> The Master Target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
         /// <param name="retentionDrive"> The retention drive to use on the MT. </param>

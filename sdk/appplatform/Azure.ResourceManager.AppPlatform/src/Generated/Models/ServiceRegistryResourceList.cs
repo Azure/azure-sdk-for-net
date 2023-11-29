@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Service Registry resources and a possible link for next set. </summary>
     internal partial class ServiceRegistryResourceList
     {
-        /// <summary> Initializes a new instance of ServiceRegistryResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceList"/>. </summary>
         internal ServiceRegistryResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformServiceRegistryData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceList"/>. </summary>
         /// <param name="value"> Collection of Service Registry resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

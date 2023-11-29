@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> An authentication key to regenerate. </summary>
     public partial class RegenAuthKeys
     {
-        /// <summary> Initializes a new instance of RegenAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenAuthKeys"/>. </summary>
         public RegenAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RegenAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenAuthKeys"/>. </summary>
         /// <param name="keyName"> The name of authentication key to generate. </param>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>

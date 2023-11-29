@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ScopeConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
         public ScopeConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

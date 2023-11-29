@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class MonitoringTagRulesListResponse
     {
-        /// <summary> Initializes a new instance of MonitoringTagRulesListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
         internal MonitoringTagRulesListResponse()
         {
             Value = new ChangeTrackingList<MonitoringTagRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRulesListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal MonitoringTagRulesListResponse(IReadOnlyList<MonitoringTagRuleData> value, string nextLink)

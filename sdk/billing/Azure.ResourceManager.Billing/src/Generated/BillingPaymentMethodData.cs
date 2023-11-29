@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingPaymentMethodData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
         public BillingPaymentMethodData()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

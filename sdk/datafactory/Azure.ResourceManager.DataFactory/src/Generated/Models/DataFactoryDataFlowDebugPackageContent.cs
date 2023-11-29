@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class DataFactoryDataFlowDebugPackageContent
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugPackageContent"/>. </summary>
         public DataFactoryDataFlowDebugPackageContent()
         {
             DataFlows = new ChangeTrackingList<DataFactoryDataFlowDebugInfo>();

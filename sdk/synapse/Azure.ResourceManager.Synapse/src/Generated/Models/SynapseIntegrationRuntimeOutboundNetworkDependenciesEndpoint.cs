@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint()
         {
             EndpointDetails = new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="domainName"> The domain name of endpoint. </param>
         /// <param name="endpointDetails"> The details of endpoint. </param>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails)

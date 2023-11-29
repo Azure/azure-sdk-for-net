@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Define user session group by clause variables. </summary>
     public partial class GroupByVariable
     {
-        /// <summary> Initializes a new instance of GroupByVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupByVariable"/>. </summary>
         /// <param name="variableName"> User Session clause variable. </param>
         public GroupByVariable(ApplicationGatewayFirewallUserSessionVariable variableName)
         {

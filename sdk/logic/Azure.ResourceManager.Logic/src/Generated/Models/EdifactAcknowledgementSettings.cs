@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement acknowledgement settings. </summary>
     public partial class EdifactAcknowledgementSettings
     {
-        /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactAcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
         }
 
-        /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactAcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>

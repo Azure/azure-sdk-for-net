@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Site seal request. </summary>
     public partial class SiteSealContent
     {
-        /// <summary> Initializes a new instance of SiteSealContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSealContent"/>. </summary>
         public SiteSealContent()
         {
         }

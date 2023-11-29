@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network default admin rule. </summary>
     public partial class ActiveDefaultSecurityAdminRule : ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of ActiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveDefaultSecurityAdminRule"/>. </summary>
         internal ActiveDefaultSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of ActiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveDefaultSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>

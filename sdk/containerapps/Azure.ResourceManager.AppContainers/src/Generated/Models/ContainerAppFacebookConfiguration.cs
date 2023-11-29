@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Facebook provider. </summary>
     public partial class ContainerAppFacebookConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppFacebookConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppFacebookConfiguration"/>. </summary>
         public ContainerAppFacebookConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppFacebookConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppFacebookConfiguration"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
         /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>

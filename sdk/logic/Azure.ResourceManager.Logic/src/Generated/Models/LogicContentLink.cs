@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The content link. </summary>
     public partial class LogicContentLink
     {
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         public LogicContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         /// <param name="uri"> The content link URI. </param>
         /// <param name="contentVersion"> The content version. </param>
         /// <param name="contentSize"> The content size. </param>

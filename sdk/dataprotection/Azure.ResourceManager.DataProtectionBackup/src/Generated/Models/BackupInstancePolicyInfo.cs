@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Policy Info in backupInstance. </summary>
     public partial class BackupInstancePolicyInfo
     {
-        /// <summary> Initializes a new instance of BackupInstancePolicyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicyInfo"/>. </summary>
         /// <param name="policyId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public BackupInstancePolicyInfo(ResourceIdentifier policyId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             PolicyId = policyId;
         }
 
-        /// <summary> Initializes a new instance of BackupInstancePolicyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicyInfo"/>. </summary>
         /// <param name="policyId"></param>
         /// <param name="policyVersion"></param>
         /// <param name="policyParameters"> Policy parameters for the backup instance. </param>

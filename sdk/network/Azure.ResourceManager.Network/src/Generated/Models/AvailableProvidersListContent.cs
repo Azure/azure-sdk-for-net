@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Constraints that determine the list of available Internet service providers. </summary>
     public partial class AvailableProvidersListContent
     {
-        /// <summary> Initializes a new instance of AvailableProvidersListContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListContent"/>. </summary>
         public AvailableProvidersListContent()
         {
             AzureLocations = new ChangeTrackingList<AzureLocation>();

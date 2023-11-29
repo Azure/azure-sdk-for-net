@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The kinesis to s3 connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKinesisToS3
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         public DefenderForContainersAwsOfferingKinesisToS3()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </param>
         internal DefenderForContainersAwsOfferingKinesisToS3(string cloudRoleArn)
         {

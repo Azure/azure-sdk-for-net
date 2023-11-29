@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> VideoGroup video detail. </summary>
     public partial class VideoGroupVideo
     {
-        /// <summary> Initializes a new instance of VideoGroupVideo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
         public VideoGroupVideo()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoGroupVideo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
         internal VideoGroupVideo(string src, string title)

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Snapshot's properties. </summary>
     public partial class SnapshotProperties
     {
-        /// <summary> Initializes a new instance of SnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         internal SnapshotProperties()
         {
             ComplianceResults = new ChangeTrackingList<ComplianceResult>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         /// <param name="id"> Snapshot id in the database. </param>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>

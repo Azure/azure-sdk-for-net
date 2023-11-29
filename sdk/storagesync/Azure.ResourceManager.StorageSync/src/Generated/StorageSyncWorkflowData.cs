@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncWorkflowData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowData"/>. </summary>
         public StorageSyncWorkflowData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

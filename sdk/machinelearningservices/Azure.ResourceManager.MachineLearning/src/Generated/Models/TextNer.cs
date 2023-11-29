@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextNer : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextNer(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.TextNER;
         }
 
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

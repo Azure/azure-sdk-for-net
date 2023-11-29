@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DigitalTwins
     /// </summary>
     public partial class TimeSeriesDatabaseConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionData"/>. </summary>
         public TimeSeriesDatabaseConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

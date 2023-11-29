@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An SMS receiver. </summary>
     public partial class MonitorSmsReceiver
     {
-        /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSmsReceiver"/>. </summary>
         /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the SMS receiver. </param>
         /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             PhoneNumber = phoneNumber;
         }
 
-        /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSmsReceiver"/>. </summary>
         /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the SMS receiver. </param>
         /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>

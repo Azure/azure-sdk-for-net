@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list managed private endpoints operation response. </summary>
     internal partial class ManagedPrivateEndpointListResult
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResult"/>. </summary>
         internal ManagedPrivateEndpointListResult()
         {
             Value = new ChangeTrackingList<KustoManagedPrivateEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResult"/>. </summary>
         /// <param name="value"> The list of managed private endpoints. </param>
         internal ManagedPrivateEndpointListResult(IReadOnlyList<KustoManagedPrivateEndpointData> value)
         {

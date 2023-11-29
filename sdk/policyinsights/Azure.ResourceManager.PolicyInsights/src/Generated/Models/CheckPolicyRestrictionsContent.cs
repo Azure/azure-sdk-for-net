@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
     public partial class CheckPolicyRestrictionsContent
     {
-        /// <summary> Initializes a new instance of CheckPolicyRestrictionsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsContent"/>. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> is null. </exception>
         public CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails)

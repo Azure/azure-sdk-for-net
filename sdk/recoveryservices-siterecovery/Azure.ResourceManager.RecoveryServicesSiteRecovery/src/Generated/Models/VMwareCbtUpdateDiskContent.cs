@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt disk input for update. </summary>
     public partial class VMwareCbtUpdateDiskContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtUpdateDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskContent(string diskId)

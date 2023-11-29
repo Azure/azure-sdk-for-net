@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> The description of the IoT Central application. </summary>
     public partial class IotCentralAppPatch
     {
-        /// <summary> Initializes a new instance of IotCentralAppPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppPatch"/>. </summary>
         public IotCentralAppPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

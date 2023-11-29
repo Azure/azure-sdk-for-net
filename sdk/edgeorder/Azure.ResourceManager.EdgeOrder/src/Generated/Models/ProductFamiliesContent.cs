@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The filters for showing the product families. </summary>
     public partial class ProductFamiliesContent
     {
-        /// <summary> Initializes a new instance of ProductFamiliesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesContent"/>. </summary>
         /// <param name="filterableProperties"> Dictionary of filterable properties on product family. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterableProperties"/> is null. </exception>
         public ProductFamiliesContent(IDictionary<string, IList<FilterableProperty>> filterableProperties)

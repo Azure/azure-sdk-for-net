@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Gets the application HTTP endpoints. </summary>
     public partial class HDInsightApplicationHttpsEndpoint
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationHttpsEndpoint"/>. </summary>
         public HDInsightApplicationHttpsEndpoint()
         {
             AccessModes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationHttpsEndpoint"/>. </summary>
         /// <param name="accessModes"> The list of access modes for the application. </param>
         /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="destinationPort"> The destination port to connect to. </param>

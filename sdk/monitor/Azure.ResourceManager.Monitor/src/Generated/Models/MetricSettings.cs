@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
     public partial class MetricSettings
     {
-        /// <summary> Initializes a new instance of MetricSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSettings"/>. </summary>
         /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
         public MetricSettings(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of MetricSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSettings"/>. </summary>
         /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
         /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
         /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>

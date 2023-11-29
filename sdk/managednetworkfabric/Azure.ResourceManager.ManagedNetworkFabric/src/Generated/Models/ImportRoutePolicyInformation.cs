@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Import Route Policy Configuration. </summary>
     public partial class ImportRoutePolicyInformation
     {
-        /// <summary> Initializes a new instance of ImportRoutePolicyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportRoutePolicyInformation"/>. </summary>
         public ImportRoutePolicyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ImportRoutePolicyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportRoutePolicyInformation"/>. </summary>
         /// <param name="importIPv4RoutePolicyId"> Import IPv4 Route Policy Id. </param>
         /// <param name="importIPv6RoutePolicyId"> Import IPv6 Route Policy Id. </param>
         internal ImportRoutePolicyInformation(ResourceIdentifier importIPv4RoutePolicyId, ResourceIdentifier importIPv6RoutePolicyId)

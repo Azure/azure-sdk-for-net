@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App init container definition. </summary>
     public partial class ContainerAppInitContainer : ContainerAppBaseContainer
     {
-        /// <summary> Initializes a new instance of ContainerAppInitContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppInitContainer"/>. </summary>
         public ContainerAppInitContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppInitContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppInitContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>

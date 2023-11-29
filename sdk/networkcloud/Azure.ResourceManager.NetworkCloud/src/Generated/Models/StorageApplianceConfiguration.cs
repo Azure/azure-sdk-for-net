@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageApplianceConfigurationData represents configuration for the storage application. </summary>
     public partial class StorageApplianceConfiguration
     {
-        /// <summary> Initializes a new instance of StorageApplianceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/>. </summary>
         /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
         }
 
-        /// <summary> Initializes a new instance of StorageApplianceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/>. </summary>
         /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>

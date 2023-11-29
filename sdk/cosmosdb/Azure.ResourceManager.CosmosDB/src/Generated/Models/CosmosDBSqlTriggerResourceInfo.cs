@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL trigger resource object. </summary>
     public partial class CosmosDBSqlTriggerResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlTriggerResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerResourceInfo"/>. </summary>
         /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public CosmosDBSqlTriggerResourceInfo(string triggerName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TriggerName = triggerName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlTriggerResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerResourceInfo"/>. </summary>
         /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>

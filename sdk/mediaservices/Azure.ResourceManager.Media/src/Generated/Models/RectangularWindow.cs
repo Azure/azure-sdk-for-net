@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the properties of a rectangular window applied to the input media before processing it. </summary>
     public partial class RectangularWindow
     {
-        /// <summary> Initializes a new instance of RectangularWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="RectangularWindow"/>. </summary>
         public RectangularWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of RectangularWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="RectangularWindow"/>. </summary>
         /// <param name="left"> The number of pixels from the left-margin. This can be absolute pixel value (e.g 100), or relative to the size of the video (For example, 50%). </param>
         /// <param name="top"> The number of pixels from the top-margin. This can be absolute pixel value (e.g 100), or relative to the size of the video (For example, 50%). </param>
         /// <param name="width"> The width of the rectangular region in pixels. This can be absolute pixel value (e.g 100), or relative to the size of the video (For example, 50%). </param>

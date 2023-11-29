@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownSsisObjectMetadata. </summary>
     internal partial class UnknownSsisObjectMetadata : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of UnknownSsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

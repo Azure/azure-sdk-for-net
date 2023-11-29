@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable protection input properties. </summary>
     public partial class EnableProtectionProperties
     {
-        /// <summary> Initializes a new instance of EnableProtectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableProtectionProperties"/>. </summary>
         public EnableProtectionProperties()
         {
         }

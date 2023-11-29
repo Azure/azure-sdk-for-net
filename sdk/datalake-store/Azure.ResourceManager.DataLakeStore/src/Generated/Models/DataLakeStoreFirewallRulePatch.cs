@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a firewall rule. </summary>
     public partial class DataLakeStoreFirewallRulePatch
     {
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRulePatch"/>. </summary>
         public DataLakeStoreFirewallRulePatch()
         {
         }

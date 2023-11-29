@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> Data of a property change. </summary>
     public partial class PropertyChange
     {
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyChange"/>. </summary>
         internal PropertyChange()
         {
         }
 
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyChange"/>. </summary>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="changeCategory"> The change category. </param>
         /// <param name="jsonPath"> The json path of the changed property. </param>

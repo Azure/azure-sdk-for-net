@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure backup recoveryPoint resource list. </summary>
     internal partial class AzureBackupRecoveryPointResourceList
     {
-        /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBackupRecoveryPointResourceList"/>. </summary>
         internal AzureBackupRecoveryPointResourceList()
         {
             Value = new ChangeTrackingList<DataProtectionBackupRecoveryPointData>();
         }
 
-        /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBackupRecoveryPointResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         internal AzureBackupRecoveryPointResourceList(IReadOnlyList<DataProtectionBackupRecoveryPointData> value, string nextLink)

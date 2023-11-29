@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the Sql Database resource settings. </summary>
     public partial class SqlDatabaseResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResourceSettings"/>. </summary>
         public SqlDatabaseResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Sql/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Linux specific update configuration. </summary>
     public partial class LinuxUpdateConfigurationProperties
     {
-        /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxUpdateConfigurationProperties"/>. </summary>
         public LinuxUpdateConfigurationProperties()
         {
             ExcludedPackageNameMasks = new ChangeTrackingList<string>();
             IncludedPackageNameMasks = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxUpdateConfigurationProperties"/>. </summary>
         /// <param name="includedPackageClassifications"> Update classifications included in the software update configuration. </param>
         /// <param name="excludedPackageNameMasks"> packages excluded from the software update configuration. </param>
         /// <param name="includedPackageNameMasks"> packages included from the software update configuration. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan test failover cleanup input properties. </summary>
     public partial class RecoveryPlanTestFailoverCleanupProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPlanTestFailoverCleanupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverCleanupProperties"/>. </summary>
         public RecoveryPlanTestFailoverCleanupProperties()
         {
         }

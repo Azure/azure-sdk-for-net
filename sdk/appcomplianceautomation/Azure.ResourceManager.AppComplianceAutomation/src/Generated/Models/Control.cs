@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the control. </summary>
     public partial class Control
     {
-        /// <summary> Initializes a new instance of Control. </summary>
+        /// <summary> Initializes a new instance of <see cref="Control"/>. </summary>
         internal Control()
         {
             Assessments = new ChangeTrackingList<Assessment>();
         }
 
-        /// <summary> Initializes a new instance of Control. </summary>
+        /// <summary> Initializes a new instance of <see cref="Control"/>. </summary>
         /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
         /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
         /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
