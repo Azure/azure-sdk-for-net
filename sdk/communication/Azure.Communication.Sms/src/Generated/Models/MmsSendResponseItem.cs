@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    /// <summary> SMS response for a single recipient. </summary>
-    public partial class SmsSendResult
+    /// <summary> MMS response for a single recipient. </summary>
+    public partial class MmsSendResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
-        /// <param name="to"> The recipient's phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of MmsSendResponseItem. </summary>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        internal SmsSendResult(string to, int httpStatusCode, bool successful)
+        internal MmsSendResponseItem(string to, int httpStatusCode, bool successful)
         {
             Argument.AssertNotNull(to, nameof(to));
 
@@ -27,14 +27,14 @@ namespace Azure.Communication.Sms
             Successful = successful;
         }
 
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
+        /// <summary> Initializes a new instance of MmsSendResponseItem. </summary>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
         /// <param name="messageId"> The identifier of the outgoing message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
         /// <param name="repeatabilityResult"> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
-        internal SmsSendResult(string to, string messageId, int httpStatusCode, string errorMessage, SmsSendResponseItemRepeatabilityResult? repeatabilityResult, bool successful)
+        internal MmsSendResponseItem(string to, string messageId, int httpStatusCode, string errorMessage, MmsSendResponseItemRepeatabilityResult? repeatabilityResult, bool successful)
         {
             To = to;
             MessageId = messageId;
@@ -44,7 +44,7 @@ namespace Azure.Communication.Sms
             Successful = successful;
         }
 
-        /// <summary> The recipient's phone number in E.164 format. </summary>
+        /// <summary> The recipient&apos;s phone number in E.164 format. </summary>
         public string To { get; }
         /// <summary> The identifier of the outgoing message. Only present if message processed. </summary>
         public string MessageId { get; }
@@ -52,6 +52,8 @@ namespace Azure.Communication.Sms
         public int HttpStatusCode { get; }
         /// <summary> Optional error message in case of 4xx/5xx/repeatable errors. </summary>
         public string ErrorMessage { get; }
+        /// <summary> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </summary>
+        public MmsSendResponseItemRepeatabilityResult? RepeatabilityResult { get; }
         /// <summary> Indicates if the message is processed successfully or not. </summary>
         public bool Successful { get; }
     }

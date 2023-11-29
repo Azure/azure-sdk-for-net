@@ -8,22 +8,22 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Sms.Models
+namespace Azure.Communication.Sms
 {
     /// <summary> Represents properties for a single recipient. </summary>
-    internal partial class SmsRecipient
+    public partial class MmsRecipient
     {
-        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
-        /// <param name="to"> The recipient's phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of MmsRecipient. </summary>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        public SmsRecipient(string to)
+        public MmsRecipient(string to)
         {
             Argument.AssertNotNull(to, nameof(to));
 
             To = to;
         }
 
-        /// <summary> The recipient's phone number in E.164 format. </summary>
+        /// <summary> The recipient&apos;s phone number in E.164 format. </summary>
         public string To { get; }
         /// <summary> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </summary>
         public string RepeatabilityRequestId { get; set; }

@@ -12,13 +12,12 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.Sms.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Sms
 {
-    internal partial class SmsRestClient
+    internal partial class MmsRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -27,13 +26,13 @@ namespace Azure.Communication.Sms
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of SmsRestClient. </summary>
+        /// <summary> Initializes a new instance of MmsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-14-preview")
+        public MmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-14-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -41,21 +40,22 @@ namespace Azure.Communication.Sms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions)
+        internal HttpMessage CreateSendRequest(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message, MmsSendOptions sendOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/sms", false);
+            uri.AppendPath("/mms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendMessageRequest(@from, smsRecipients.ToList(), message)
+            var model = new MmsSendMessageRequest(@from, recipients.ToList(), attachments.ToList())
             {
-                SmsSendOptions = smsSendOptions
+                Message = message,
+                SendOptions = sendOptions
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -63,37 +63,38 @@ namespace Azure.Communication.Sms
             return message0;
         }
 
-        /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
+        /// <summary> Sends MMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
-        /// <param name="smsRecipients"> The recipient&apos;s phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
-        /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
+        /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
+        /// <param name="message"> The contents of the message that will be sent to the recipient. </param>
+        /// <param name="sendOptions"> Optional configuration for sending MMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        public async Task<Response<SmsSendResponse>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
+        public async Task<Response<MmsSendResponse>> SendAsync(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
                 throw new ArgumentNullException(nameof(@from));
             }
-            if (smsRecipients == null)
+            if (recipients == null)
             {
-                throw new ArgumentNullException(nameof(smsRecipients));
+                throw new ArgumentNullException(nameof(recipients));
             }
-            if (message == null)
+            if (attachments == null)
             {
-                throw new ArgumentNullException(nameof(message));
+                throw new ArgumentNullException(nameof(attachments));
             }
 
-            using var message0 = CreateSendRequest(@from, smsRecipients, message, smsSendOptions);
+            using var message0 = CreateSendRequest(@from, recipients, attachments, message, sendOptions);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SmsSendResponse value = default;
+                        MmsSendResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
+                        value = MmsSendResponse.DeserializeMmsSendResponse(document.RootElement);
                         return Response.FromValue(value, message0.Response);
                     }
                 default:
@@ -101,37 +102,38 @@ namespace Azure.Communication.Sms
             }
         }
 
-        /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
+        /// <summary> Sends MMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
-        /// <param name="smsRecipients"> The recipient&apos;s phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
-        /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
+        /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
+        /// <param name="message"> The contents of the message that will be sent to the recipient. </param>
+        /// <param name="sendOptions"> Optional configuration for sending MMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        public Response<SmsSendResponse> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
+        public Response<MmsSendResponse> Send(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
                 throw new ArgumentNullException(nameof(@from));
             }
-            if (smsRecipients == null)
+            if (recipients == null)
             {
-                throw new ArgumentNullException(nameof(smsRecipients));
+                throw new ArgumentNullException(nameof(recipients));
             }
-            if (message == null)
+            if (attachments == null)
             {
-                throw new ArgumentNullException(nameof(message));
+                throw new ArgumentNullException(nameof(attachments));
             }
 
-            using var message0 = CreateSendRequest(@from, smsRecipients, message, smsSendOptions);
+            using var message0 = CreateSendRequest(@from, recipients, attachments, message, sendOptions);
             _pipeline.Send(message0, cancellationToken);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SmsSendResponse value = default;
+                        MmsSendResponse value = default;
                         using var document = JsonDocument.Parse(message0.Response.ContentStream);
-                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
+                        value = MmsSendResponse.DeserializeMmsSendResponse(document.RootElement);
                         return Response.FromValue(value, message0.Response);
                     }
                 default:

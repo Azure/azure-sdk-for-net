@@ -6,10 +6,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-sms-2021-03-07
+tag: package-2024-01-14-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Sms/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4ad21c4cd5f024b520b77907b8ac15fb84c8413a/specification/communication/data-plane/Sms/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
 ```

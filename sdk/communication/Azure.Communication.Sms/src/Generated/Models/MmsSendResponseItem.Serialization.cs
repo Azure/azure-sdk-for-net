@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class SmsSendResult
+    public partial class MmsSendResponseItem
     {
-        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
+        internal static MmsSendResponseItem DeserializeMmsSendResponseItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,7 @@ namespace Azure.Communication.Sms
             Optional<string> messageId = default;
             int httpStatusCode = default;
             Optional<string> errorMessage = default;
-            Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
+            Optional<MmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
             bool successful = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.Communication.Sms
                     {
                         continue;
                     }
-                    repeatabilityResult = new SmsSendResponseItemRepeatabilityResult(property.Value.GetString());
+                    repeatabilityResult = new MmsSendResponseItemRepeatabilityResult(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("successful"u8))
@@ -61,7 +61,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, errorMessage.Value, Optional.ToNullable(repeatabilityResult), successful);
+            return new MmsSendResponseItem(to, messageId.Value, httpStatusCode, errorMessage.Value, Optional.ToNullable(repeatabilityResult), successful);
         }
     }
 }
