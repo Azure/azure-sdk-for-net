@@ -25,7 +25,7 @@ Use the Image Analysis client library to:
   * You can use the free pricing tier (`F0`) to try the service, and upgrade later to a paid tier for production.
   * Note that in order to run Image Analysis with the `Caption` or `Dense Captions` features, the Azure resource needs to be from one of the following GPU-supported regions: `East US`, `France Central`, `Korea Central`, `North Europe`, `Southeast Asia`, `West Europe`, or `West US`.
 
-### Install the Image Analysis package
+### Install the package
 
 ```dotnetcli
 dotnet add package Azure.AI.Vision.ImageAnalysis
