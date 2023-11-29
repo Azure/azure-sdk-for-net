@@ -57,15 +57,16 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 
 #### Create a ContentSafetyClient with Azure Active Directory credential
 
-- Step 1: Enable AAD for your resource Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id]. for the steps to enable AAD for your resource.
+* Step 1: Enable AAD for your resource Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id]. for the steps to enable AAD for your resource.
 
     The main steps are:
 
-    - Create resource with a custom subdomain.
-    - Create Service Principal and assign `Cognitive Services User` role to it.
+  * Create resource with a custom subdomain.
+  * Create Service Principal and assign `Cognitive Services User` role to it.
 
-- Step 2: Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
+* Step 2: Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
    DefaultAzureCredential will use the values from these environment variables.
+
    ```csharp
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
 
@@ -78,12 +79,12 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 
 Content Safety recognizes four distinct categories of objectionable content.
 
-|Category |Description  |
+|Category|Description|
 |---------|---------|
-|Hate |Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
-|Sexual |Sexual describes content related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts—including those acts portrayed as an assault or a forced sexual violent act against one’s will—, prostitution, pornography, and abuse.|
-|Violence |Violence describes content related to physical actions intended to hurt, injure, damage, or kill someone or something. It also includes weapons, guns and related entities, such as manufacturers, associations, legislation, and similar.|
-|Self-harm |Self-harm describes content related to physical actions intended to purposely hurt, injure, or damage one’s body or kill oneself.|
+|Hate |Hate and fairness-related harms refer to any content that attacks or uses pejorative or discriminatory language with reference to a person or identity group based on certain differentiating attributes of these groups including but not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
+|Sexual |Sexual describes language related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts, including those portrayed as an assault or a forced sexual violent act against one's will, prostitution, pornography, and abuse.|
+|Violence |Violence describes language related to physical actions intended to hurt, injure, damage, or kill someone or something; describes weapons, guns and related entities, such as manufactures, associations, legislation, and so on.|
+|Self-harm |Self-harm describes language related to physical actions intended to purposely hurt, injure, damage one's body or kill oneself.|
 
 Classification can be multi-labeled. For example, when a text sample goes through the text moderation model, it could be classified as both Sexual content and Violence.
 
@@ -91,12 +92,19 @@ Classification can be multi-labeled. For example, when a text sample goes throug
 
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
 
-|Severity |Label |
-|---------|---------|
-|0 |Safe|
-|2 |Low|
-|4 |Medium|
-|6 |High|
+**Text**: The current version of the text model supports the full 0-7 severity scale. The classifier detects amongst all severities along this scale. If the user specifies, it can return severities in the trimmed scale of 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [text content severity levels definitions][text_severity_levels] for details.
+
+- [0,1] -> 0
+- [2,3] -> 2
+- [4,5] -> 4
+- [6,7] -> 6
+
+**Image**: The current version of the image model supports the trimmed version of the full 0-7 severity scale. The classifier only returns severities 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [image content severity levels definitions][image_severity_levels] for details.
+
+- [0,1] -> 0
+- [2,3] -> 2
+- [4,5] -> 4
+- [6,7] -> 6
 
 ### Text blocklist management
 
@@ -401,5 +409,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [authenticate_with_microsoft_entra_id]: https://learn.microsoft.com/azure/ai-services/authentication?tabs=powershell#authenticate-with-microsoft-entra-id
+[text_severity_levels]: https://learn.microsoft.com/azure/ai-services/content-safety/concepts/harm-categories?tabs=definitions#text-content
+[image_severity_levels]: https://learn.microsoft.com/azure/ai-services/content-safety/concepts/harm-categories?tabs=definitions#image-content
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk//Azure.AI/README.png)

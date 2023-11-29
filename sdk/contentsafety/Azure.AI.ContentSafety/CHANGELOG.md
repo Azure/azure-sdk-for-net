@@ -1,13 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0
 
 ### Features Added
-Support AAD authentication.
 
-### Other Changes
-1. Split blocklist management to an independent BlocklistClient
-2. Contract change for AnalyzeText, AnalyzeImage, Blocklist management related methods
+- Support AAD authentication.
+- Support 8 severity level for text:analyze API
+
+### Breaking Changes
+
+- Split blocklist management to an independent BlocklistClient
+- Contract change for AnalyzeText, AnalyzeImage, Blocklist management related methods
 
 ## 1.0.0-beta.1 (2023-06-06)
 
