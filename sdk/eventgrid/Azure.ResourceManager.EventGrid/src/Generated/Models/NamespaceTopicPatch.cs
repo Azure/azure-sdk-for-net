@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
+        /// <param name="eventRetentionInDays">
+        /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
+        /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
+        /// </param>
+        internal NamespaceTopicPatch(int? eventRetentionInDays)
+        {
+            EventRetentionInDays = eventRetentionInDays;
+        }
+
         /// <summary>
         /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
         /// Min event retention duration value is 1 day and max event retention duration value is 1 day.

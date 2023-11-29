@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="checkNameAvailabilityRequestType"> The resource type. </param>
+        internal DeviceUpdateAvailabilityContent(string name, ResourceType? checkNameAvailabilityRequestType)
+        {
+            Name = name;
+            CheckNameAvailabilityRequestType = checkNameAvailabilityRequestType;
+        }
+
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>

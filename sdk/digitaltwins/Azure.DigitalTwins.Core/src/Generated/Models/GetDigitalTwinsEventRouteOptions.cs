@@ -14,5 +14,14 @@ namespace Azure.DigitalTwins.Core
         public GetDigitalTwinsEventRouteOptions()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="GetDigitalTwinsEventRouteOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal GetDigitalTwinsEventRouteOptions(string traceParent, string traceState)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+        }
     }
 }
