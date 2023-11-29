@@ -818,6 +818,9 @@
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
+# ServiceLabel: %edgemarketplace %Service Attention
+/sdk/edgemarketplace/                                              @anponnet
+
 # ######## Management Plane ########
 
 /**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
