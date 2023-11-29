@@ -15,6 +15,19 @@ namespace Azure.Communication.ShortCodes.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
+        /// <param name="communicationUser"> The communication user. </param>
+        /// <param name="phoneNumber"> The phone number. </param>
+        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        {
+            RawId = rawId;
+            CommunicationUser = communicationUser;
+            PhoneNumber = phoneNumber;
+            MicrosoftTeamsUser = microsoftTeamsUser;
+        }
+
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
         public string RawId { get; }
         /// <summary> The communication user. </summary>

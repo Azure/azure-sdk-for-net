@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.DataBox.Models
             ValidationType = DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        internal CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator validationType, DataBoxSkuName deviceType) : base(validationType)
+        {
+            DeviceType = deviceType;
+            ValidationType = validationType;
+        }
+
         /// <summary> Device type to be used for the job. </summary>
         public DataBoxSkuName DeviceType { get; }
     }

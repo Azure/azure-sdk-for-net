@@ -26,6 +26,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
+        /// <param name="gitHubAccessCode"> GitHub access code. </param>
+        /// <param name="gitHubClientId"> GitHub application client ID. </param>
+        /// <param name="gitHubClientSecret"> GitHub bring your own app client secret information. </param>
+        /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
+        internal GitHubAccessTokenContent(string gitHubAccessCode, string gitHubClientId, FactoryGitHubClientSecret gitHubClientSecret, Uri gitHubAccessTokenBaseUri)
+        {
+            GitHubAccessCode = gitHubAccessCode;
+            GitHubClientId = gitHubClientId;
+            GitHubClientSecret = gitHubClientSecret;
+            GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
+        }
+
         /// <summary> GitHub access code. </summary>
         public string GitHubAccessCode { get; }
         /// <summary> GitHub application client ID. </summary>
