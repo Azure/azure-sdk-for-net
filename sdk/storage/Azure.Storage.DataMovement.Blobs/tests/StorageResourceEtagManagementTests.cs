@@ -189,11 +189,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             List<ETag> etags = Enumerable.Range(0, blobTypes.Count)
                 .Select(_ => new ETag(Convert.ToBase64String(Guid.NewGuid().ToByteArray())))
                 .ToList();
-            List<BlobItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
-                .Select(i => BlobsModelFactory.BlobItemProperties(
-                    accessTierInferred: false, eTag: etags[i], blobType: blobTypes[i]))
-                .Select(props => BlobsModelFactory.BlobItem(properties: props))
+            List<string> names = Enumerable.Range(0, blobTypes.Count)
+                .Select(_ => Guid.NewGuid().ToString())
                 .ToList();
+            List<BlobItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
+                .Select(i => BlobsModelFactory.BlobItem(
+                    name: names[i],
+                    properties: BlobsModelFactory.BlobItemProperties(
+                        accessTierInferred: false,
+                        eTag: etags[i],
+                        blobType: blobTypes[i]))).ToList();
             Mock<BlobContainerClient> mock = new(new Uri("https://storageaccount.blob.core.windows.net/container"), new BlobClientOptions())
             {
                 CallBase = true
@@ -209,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             BlobStorageResourceContainer containerResource = new(mock.Object);
-            List<StorageResource> children = await containerResource.GetStorageResourcesInternalAsync().ToEnumerableAsync();
+             List<StorageResource> children = await containerResource.GetStorageResourcesInternalAsync().ToEnumerableAsync();
 
             // Assert
 
