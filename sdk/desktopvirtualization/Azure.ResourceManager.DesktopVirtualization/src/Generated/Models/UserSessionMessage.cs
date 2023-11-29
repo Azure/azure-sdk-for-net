@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UserSessionMessage"/>. </summary>
+        /// <param name="messageTitle"> Title of message. </param>
+        /// <param name="messageBody"> Body of message. </param>
+        internal UserSessionMessage(string messageTitle, string messageBody)
+        {
+            MessageTitle = messageTitle;
+            MessageBody = messageBody;
+        }
+
         /// <summary> Title of message. </summary>
         public string MessageTitle { get; set; }
         /// <summary> Body of message. </summary>

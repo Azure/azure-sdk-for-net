@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
+        /// <param name="tags"> The Cloud HSM Cluster's tags. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="backupProperties"> Cloud Hsm Cluster backup information. </param>
+        internal CloudHsmClusterPatch(IDictionary<string, string> tags, CloudHsmClusterSku sku, ManagedServiceIdentity identity, BackupProperties backupProperties)
+        {
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            BackupProperties = backupProperties;
+        }
+
         /// <summary> The Cloud HSM Cluster's tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> SKU details. </summary>

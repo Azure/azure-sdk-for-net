@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.DevSpaces.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ControllerPatch"/>. </summary>
+        /// <param name="tags"> Tags for the Azure Dev Spaces Controller. </param>
+        /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
+        internal ControllerPatch(IDictionary<string, string> tags, string targetContainerHostCredentialsBase64)
+        {
+            Tags = tags;
+            TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
+        }
+
         /// <summary> Tags for the Azure Dev Spaces Controller. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Credentials of the target container host (base64). </summary>

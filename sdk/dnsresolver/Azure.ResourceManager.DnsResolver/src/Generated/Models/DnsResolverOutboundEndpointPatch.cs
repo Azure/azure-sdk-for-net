@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointPatch"/>. </summary>
+        /// <param name="tags"> Tags for outbound endpoint. </param>
+        internal DnsResolverOutboundEndpointPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Tags for outbound endpoint. </summary>
         public IDictionary<string, string> Tags { get; }
     }

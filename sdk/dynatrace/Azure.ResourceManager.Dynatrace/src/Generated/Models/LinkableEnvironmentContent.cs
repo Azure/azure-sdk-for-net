@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
+        /// <param name="tenantId"> Tenant Id of the user in which they want to link the environment. </param>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <param name="region"> Azure region in which we want to link the environment. </param>
+        internal LinkableEnvironmentContent(Guid? tenantId, string userPrincipal, AzureLocation? region)
+        {
+            TenantId = tenantId;
+            UserPrincipal = userPrincipal;
+            Region = region;
+        }
+
         /// <summary> Tenant Id of the user in which they want to link the environment. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> user principal id of the user. </summary>
