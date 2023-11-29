@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,13 +19,15 @@ using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    public class BlobDirectoryToShareDirectoryTests : StartTransferDirectoryCopyTestBase
+    [ShareClientTestFixture]
+    public class BlockBlobDirectoryToShareDirectoryTests : StartTransferDirectoryCopyTestBase
         <BlobServiceClient,
         BlobContainerClient,
         BlobClientOptions,
@@ -40,7 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
         protected readonly object _serviceVersion;
 
-        public BlobDirectoryToShareDirectoryTests(
+        public BlockBlobDirectoryToShareDirectoryTests(
             bool async,
             object serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
@@ -164,9 +165,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
             // List all files in the destination blob folder path
             List<string> destinationFileNames = new List<string>();
-            ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(sourcePrefix) ?
+            ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(destinationPrefix) ?
                 destinationContainer.GetRootDirectoryClient() :
-                destinationContainer.GetDirectoryClient(sourcePrefix);
+                destinationContainer.GetDirectoryClient(destinationPrefix);
             await foreach ((ShareDirectoryClient dir, ShareFileClient file) in ScanShareDirectoryAsync(
                 destinationDirectory, cancellationToken).ConfigureAwait(false))
             {
