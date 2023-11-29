@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NginxProvisioningState> provisioningState = default;
             Optional<string> nginxVersion = default;
             Optional<string> managedResourceGroup = default;
             Optional<NginxNetworkProfile> networkProfile = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NginxProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nginxVersion"u8))

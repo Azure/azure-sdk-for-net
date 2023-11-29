@@ -5,4 +5,7 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Attestation.</Description>
     <PackageTags>azure;management;arm;resource manager;attestation</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Custom\Models\" />
+  </ItemGroup>
 </Project>

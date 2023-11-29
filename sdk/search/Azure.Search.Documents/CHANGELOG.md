@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 11.5.1 (2023-11-28)
+
+### Bugs Fixed
+- Fix paging issue for semantic and vector search ([#40137](https://github.com/Azure/azure-sdk-for-net/issues/40137)).
+
 ## 11.5.0 (2023-11-10)
 
 ### Features Added

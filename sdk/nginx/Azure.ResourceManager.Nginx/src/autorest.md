@@ -9,7 +9,7 @@ csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
 require: https://github.com/Azure/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/nginx/resource-manager/readme.md
-tag: package-2023-04-01
+#tag: package-2023-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,7 +19,17 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
+  NginxPrivateIPAddress.privateIPAddress: -|ip-address
+  NginxPrivateIPAddress.subnetId: -|arm-id
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - ResourceSku
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -50,5 +60,4 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
 ```

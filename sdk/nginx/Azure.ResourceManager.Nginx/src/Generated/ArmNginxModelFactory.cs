@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
         /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
-        public static NginxCertificateProperties NginxCertificateProperties(ProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
+        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
         {
             return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId);
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
         /// <returns> A new <see cref="Models.NginxConfigurationProperties"/> instance for mocking. </returns>
-        public static NginxConfigurationProperties NginxConfigurationProperties(ProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationFile> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
+        public static NginxConfigurationProperties NginxConfigurationProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationFile> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
         {
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationFile>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName) : null);
+            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new NginxResourceSku(skuName) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentProperties"/>. </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="scalingCapacity"></param>
         /// <param name="userPreferredEmail"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentProperties NginxDeploymentProperties(ProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = null, string userPreferredEmail = null)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = null, string userPreferredEmail = null)
         {
             return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount) : null, scalingCapacity != null ? new NginxDeploymentScalingProperties(scalingCapacity) : null, userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail) : null);
         }

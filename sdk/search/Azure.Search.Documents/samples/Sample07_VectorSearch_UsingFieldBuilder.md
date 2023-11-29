@@ -31,7 +31,7 @@ We will create an instace of `SearchIndex` and use `FieldBuilder` to define fiel
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
-string indexName = "MyDocument";
+string indexName = "my-document";
 // Create Index
 SearchIndex searchIndex = new SearchIndex(indexName)
 {

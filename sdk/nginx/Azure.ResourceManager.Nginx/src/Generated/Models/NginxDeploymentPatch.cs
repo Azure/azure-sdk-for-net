@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the sku. </summary>
-        internal ResourceSku Sku { get; set; }
+        internal NginxResourceSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
-            set => Sku = new ResourceSku(value);
+            set => Sku = new NginxResourceSku(value);
         }
 
         /// <summary> Gets or sets the location. </summary>

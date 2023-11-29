@@ -5,17 +5,12 @@
 ### Features Added
 
 - Upgrade to Nginx API version 2023-04-01.
-- Added support for scaling.
-
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+    - Added support for scaling.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.0-beta.2 (2023-05-30)
 
