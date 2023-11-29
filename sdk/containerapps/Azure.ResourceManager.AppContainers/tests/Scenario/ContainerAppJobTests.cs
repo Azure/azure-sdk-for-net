@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 {
     internal class ContainerAppJobTests : AppContainersManagementTestBase
     {
-        public ContainerAppJobTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerAppJobTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.AppContainers.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            //SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            //var rgg = await subscription.GetResourceGroups().GetAsync("ContainerAppRG5028");
-            //var jobbs = await rgg.Value.GetContainerAppJobs().GetAllAsync().ToEnumerableAsync();
-            //await Console.Out.WriteLineAsync();
-
             ResourceGroupResource resourceGroup = await CreateResourceGroup("ContainerAppRG", AzureLocation.WestUS);
 
             // Create ContainerApp
@@ -67,7 +62,8 @@ namespace Azure.ResourceManager.AppContainers.Tests
                     {
                         new ContainerAppWritableSecret()
                         {
-                            Name = "reg-pswd-83dfdda0-b313"
+                            Name = "reg-pswd-83dfdda0-b313",
+                            Value = "reg-pswd-83dfdda0-b313",
                         }
                     }
                 },
@@ -91,10 +87,9 @@ namespace Azure.ResourceManager.AppContainers.Tests
             var job = await resourceGroup.GetContainerAppJobs().CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
             await job.Value.StartAsync(WaitUntil.Completed);
             var executions = await job.Value.GetContainerAppJobExecutions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(executions.FirstOrDefault().Data.Status);
-            Assert.IsNotNull(executions.FirstOrDefault().Data.Template);
             Assert.IsNotNull(executions.FirstOrDefault().Data.StartOn);
-            Assert.IsNotNull(executions.FirstOrDefault().Data.EndOn);
+            Assert.AreEqual(JobExecutionRunningState.Running, executions.FirstOrDefault().Data.Status);
+            Assert.AreEqual(1, executions.FirstOrDefault().Data.Template.Containers.Count);
         }
     }
 }
