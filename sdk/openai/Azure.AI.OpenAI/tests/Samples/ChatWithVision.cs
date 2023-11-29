@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples;
 
-public partial class VisionSamples
+public partial class ChatWithVision
 {
     [Test]
     [Ignore("Only verifying that the sample builds")]

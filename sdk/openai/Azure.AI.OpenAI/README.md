@@ -63,29 +63,6 @@ string endpoint = "https://myaccount.openai.azure.com/";
 var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
-## Key concepts
-
-The main concept to understand is [Completions][azure_openai_completions_docs]. Briefly explained, completions provides its functionality in the form of a text prompt, which by using a specific [model](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/models), will then attempt to match the context and patterns, providing an output text. The following code snippet provides a rough overview (more details can be found in the `GenerateChatbotResponsesWithToken` sample code):
-
-```C# Snippet:UseAzureOrNonAzureOpenAI
-OpenAIClient client = useAzureOpenAI
-    ? new OpenAIClient(
-        new Uri("https://your-azure-openai-resource.com/"),
-        new AzureKeyCredential("your-azure-openai-resource-api-key"))
-    : new OpenAIClient("your-api-key-from-platform.openai.com");
-
-Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
-{
-    DeploymentName = "text-davinci-003", // assumes a matching model deployment or model name
-    Prompts = { "Hello, world!" },
-});
-
-foreach (Choice choice in response.Value.Choices)
-{
-    Console.WriteLine(choice.Text);
-}
-```
-
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -105,91 +82,54 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
 
-### Generate chatbot response
+### Get a chat completion
 
-The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
+```C# Snippet:SimpleChatResponse
+Uri azureOpenAIResourceUri = new("https://my-resource.openai.azure.com/");
+AzureKeyCredential azureOpenAIApiKey = new(Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY"));
+OpenAIClient client = new(azureOpenAIResourceUri, azureOpenAIApiKey);
 
-```C# Snippet:GenerateChatbotResponse
-string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
-
-CompletionsOptions completionsOptions = new()
+var chatCompletionsOptions = new ChatCompletionsOptions()
 {
-    DeploymentName = "text-davinci-003",
-    Prompts = { "What is Azure OpenAI?" },
-};
-
-Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
-string completion = completionsResponse.Value.Choices[0].Text;
-Console.WriteLine($"Chatbot: {completion}");
-```
-
-### Generate multiple chatbot responses with subscription key
-
-The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
-
-```C# Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
-// Replace with your Azure OpenAI key
-string key = "YOUR_AZURE_OPENAI_KEY";
-string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
-
-CompletionsOptions completionsOptions = new()
-{
-    DeploymentName = "text-davinci-003",
-    Prompts =
+    DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
+    Messages =
     {
-        "How are you today?",
-        "What is Azure OpenAI?",
-        "Why do children love dinosaurs?",
-        "Generate a proof of Euler's identity",
-        "Describe in single words only the good things that come into your mind about your mother."
-    },
+        // The system message represents instructions or other guidance about how the assistant should behave
+        new ChatRequestSystemMessage("You are a helpful assistant. You will talk like a pirate."),
+        // User messages represent current or historical input from the end user
+        new ChatRequestUserMessage("Can you help me?"),
+        // Assistant messages represent historical responses from the assistant
+        new ChatRequestAssistantMessage("Arrrr! Of course, me hearty! What can I do for ye?"),
+        new ChatRequestUserMessage("What's the best way to train a parrot?"),
+    }
 };
 
-Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
-
-foreach (Choice choice in completionsResponse.Value.Choices)
-{
-    Console.WriteLine($"Response for prompt {choice.Index}: {choice.Text}");
-}
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
+Console.WriteLine($"[{responseMessage.Role.ToString().ToUpperInvariant()}]: {responseMessage.Content}");
 ```
 
-### Summarize text with completion
+### Legacy completions
 
-The `SummarizeText` method generates a summarization of the given input prompt.
+Although using chat completions is recommended, the library also supports using so-called "legacy" completions for older models.
 
-```C# Snippet:SummarizeText
-string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+```C# Snippet:UseAzureOrNonAzureOpenAIForCompletions
+OpenAIClient client = useAzureOpenAI
+    ? new OpenAIClient(
+        new Uri("https://your-azure-openai-resource.com/"),
+        new AzureKeyCredential("your-azure-openai-resource-api-key"))
+    : new OpenAIClient("your-api-key-from-platform.openai.com");
 
-string textToSummarize = @"
-    Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
-
-    ""As a layman I would say: 'I think we have it'. Would you agree?"" Rolf-Dieter Heuer, CERN's director-general, asked the packed auditorium. The physicists assembled there burst into applause.
-:";
-
-string summarizationPrompt = @$"
-    Summarize the following text.
-
-    Text:
-    """"""
-    {textToSummarize}
-    """"""
-
-    Summary:
-";
-
-Console.Write($"Input: {summarizationPrompt}");
-var completionsOptions = new CompletionsOptions()
+Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
 {
-    DeploymentName = "text-davinci-003",
-    Prompts = { summarizationPrompt },
-};
+    DeploymentName = "text-davinci-003", // assumes a matching model deployment or model name
+    Prompts = { "Hello, world!" },
+});
 
-Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
-string completion = completionsResponse.Value.Choices[0].Text;
-Console.WriteLine($"Summarization: {completion}");
+foreach (Choice choice in response.Value.Choices)
+{
+    Console.WriteLine(choice.Text);
+}
 ```
 
 ### Stream chat messages with non-Azure OpenAI
@@ -254,10 +194,113 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate
 }
 ```
 
+### Use chat tools
+
+**Tools** extend chat completions by allowing an assistant to invoke defined functions and other capabilities in the
+process of fulfilling a chat completions request. To use chat tools, start by defining a function tool:
+
+```C# Snippet:ChatTools:DefineTool
+var getWeatherFunctionDefinition = new FunctionDefinition()
+{
+    Name = "get_current_weather",
+    Description = "Get the current weather in a given location",
+    Parameters = BinaryData.FromObjectAsJson(
+    new
+    {
+        Type = "object",
+        Properties = new
+        {
+            Location = new
+            {
+                Type = "string",
+                Description = "The city and state, e.g. San Francisco, CA",
+            },
+            Unit = new
+            {
+                Type = "string",
+                Enum = new[] { "celsius", "fahrenheit" },
+            }
+        },
+        Required = new[] { "location" },
+    },
+    new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+};
+var getWeatherTool = new ChatCompletionsFunctionToolDefinition(getWeatherFunctionDefinition);
+```
+
+With the tool defined, include that new definition in the options for a chat completions request:
+
+```C# Snippet:ChatTools:RequestWithFunctions
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    DeploymentName = "gpt-35-turbo-1106",
+    Messages = { new ChatRequestUserMessage("What's the weather like in Boston?") },
+    Tools = { getWeatherTool },
+};
+
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+```
+
+When the assistant decides that one or more tools should be used, the response message includes one or more "tool
+calls" that must all be resolved via "tool messages" on the subsequent request. This resolution of tool calls into
+new request messages can be thought of as a sort of "callback" for chat completions.
+
+```C# Snippet:ChatTools:HandleToolCalls
+// Purely for convenience and clarity, this standalone local method handles tool call responses.
+ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall)
+{
+    var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
+    if (functionToolCall?.Function?.Name == getWeatherFunctionDefinition.Name)
+    {
+        // Validate and process the JSON arguments for the function call
+        string unvalidatedArguments = functionToolCall.Function.Arguments;
+        var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
+        // Here, replacing with an example as if returned from "GetYourFunctionResultData"
+        functionResultData = "31 celsius";
+        return new ChatRequestToolMessage(functionResultData.ToString(), toolCall.Id);
+    }
+    else
+    {
+        // Handle other or unexpected calls
+        throw new NotImplementedException();
+    }
+}
+```
+
+To provide tool call resolutions to the assistant to allow the request to continue, provide all prior historical
+context -- including the original system and user messages, the response from the assistant that included the tool
+calls, and the tool messages that resolved each of those tools -- when making a subsequent request.
+
+```C# Snippet:ChatTools:HandleResponseWithToolCalls
+ChatChoice responseChoice = response.Value.Choices[0];
+if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
+{
+    List<ChatRequestToolMessage> toolCallResolutionMessages = new();
+    foreach (ChatCompletionsToolCall toolCall in responseChoice.Message.ToolCalls)
+    {
+        toolCallResolutionMessages.Add(GetToolCallResponseMessage(toolCall));
+    }
+
+    // Include the ToolCall message from the assistant in the conversation history, too
+    var toolCallHistoryMessage = new ChatRequestAssistantMessage(responseChoice.Message.Content);
+    foreach (ChatCompletionsToolCall requestedToolCall in responseChoice.Message.ToolCalls)
+    {
+        toolCallHistoryMessage.ToolCalls.Add(requestedToolCall);
+    }
+
+    // Now make a new request using all the messages, including the original
+    chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
+    foreach (ChatRequestToolMessage resolutionMessage in toolCallResolutionMessages)
+    {
+        chatCompletionsOptions.Messages.Add(resolutionMessage);
+    }
+}
+```
+
 ### Use chat functions
 
-Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
-functionality into external tools and data sources.
+Chat Functions are a legacy form of chat tools. Although still supported by older models, the use of tools is encouraged
+when available.
 
 You can read more about Chat Functions on OpenAI's blog: https://openai.com/blog/function-calling-and-other-api-updates
 
