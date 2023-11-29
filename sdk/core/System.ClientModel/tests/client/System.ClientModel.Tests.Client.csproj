@@ -4,8 +4,6 @@
     <Description>Test client code for use in System.ClientModel test libraries.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
-    <PackageIcon>DotNetPackageIconNew.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>
 
   <ItemGroup>
