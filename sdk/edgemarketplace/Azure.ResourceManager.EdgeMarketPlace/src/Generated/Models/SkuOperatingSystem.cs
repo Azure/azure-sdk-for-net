@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The sku operating system. </summary>
     public partial class SkuOperatingSystem
     {
-        /// <summary> Initializes a new instance of SkuOperatingSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuOperatingSystem"/>. </summary>
         /// <param name="name"> The name of the operating system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal SkuOperatingSystem(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SkuOperatingSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuOperatingSystem"/>. </summary>
         /// <param name="family"> The family of the operating system. </param>
         /// <param name="skuOperatingSystemType"> The type of the operating system. </param>
         /// <param name="name"> The name of the operating system. </param>

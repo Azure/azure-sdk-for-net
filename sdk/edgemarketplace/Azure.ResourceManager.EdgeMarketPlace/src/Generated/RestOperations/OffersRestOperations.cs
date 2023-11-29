@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     internal partial class OffersRestOperations
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.EdgeMarketPlace/offers", false);
+            uri.AppendPath("/providers/Microsoft.EdgeMarketplace/offers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EdgeMarketPlace/offers", false);
+            uri.AppendPath("/providers/Microsoft.EdgeMarketplace/offers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.EdgeMarketPlace/offers/", false);
+            uri.AppendPath("/providers/Microsoft.EdgeMarketplace/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.EdgeMarketPlace/offers/", false);
+            uri.AppendPath("/providers/Microsoft.EdgeMarketplace/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath("/generateAccessToken", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.EdgeMarketPlace/offers/", false);
+            uri.AppendPath("/providers/Microsoft.EdgeMarketplace/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath("/getAccessToken", false);
             uri.AppendQuery("api-version", _apiVersion, true);

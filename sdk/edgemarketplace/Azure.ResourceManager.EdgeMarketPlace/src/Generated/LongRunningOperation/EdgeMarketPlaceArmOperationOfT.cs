@@ -13,28 +13,28 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class EdgeMarketPlaceArmOperation<T> : ArmOperation<T>
+    internal class EdgeMarketplaceArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of EdgeMarketPlaceArmOperation for mocking. </summary>
-        protected EdgeMarketPlaceArmOperation()
+        /// <summary> Initializes a new instance of EdgeMarketplaceArmOperation for mocking. </summary>
+        protected EdgeMarketplaceArmOperation()
         {
         }
 
-        internal EdgeMarketPlaceArmOperation(Response<T> response)
+        internal EdgeMarketplaceArmOperation(Response<T> response)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal EdgeMarketPlaceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal EdgeMarketplaceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "EdgeMarketPlaceArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "EdgeMarketplaceArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

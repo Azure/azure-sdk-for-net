@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.EdgeMarketPlace.csproj" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.EdgeMarketplace.csproj" />
   </ItemGroup>
 </Project>

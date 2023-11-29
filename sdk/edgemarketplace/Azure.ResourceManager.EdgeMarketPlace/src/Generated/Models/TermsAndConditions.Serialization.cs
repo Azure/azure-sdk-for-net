@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     public partial class TermsAndConditions
     {

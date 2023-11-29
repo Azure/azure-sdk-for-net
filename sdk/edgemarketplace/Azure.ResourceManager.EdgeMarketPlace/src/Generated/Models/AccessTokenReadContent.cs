@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Access token request object. </summary>
     public partial class AccessTokenReadContent
     {
-        /// <summary> Initializes a new instance of AccessTokenReadContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessTokenReadContent"/>. </summary>
         /// <param name="requestId"> The name of the publisher. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public AccessTokenReadContent(string requestId)

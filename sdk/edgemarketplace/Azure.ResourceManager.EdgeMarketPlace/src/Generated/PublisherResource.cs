@@ -14,20 +14,22 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
     /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublisherResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPublisher method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPublisher method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublisherResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="publisherName"> The publisherName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string publisherName)
         {
-            var resourceId = $"{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}";
+            var resourceId = $"{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketPlace", ResourceType.Namespace, Diagnostics);
+            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string publisherApiVersion);
             _publisherRestClient = new PublishersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion);
 #if DEBUG
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeMarketPlace/publishers";
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeMarketplace/publishers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -123,7 +125,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

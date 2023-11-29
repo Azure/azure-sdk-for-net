@@ -5,17 +5,17 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Icon files. </summary>
     public partial class IconFileUris
     {
-        /// <summary> Initializes a new instance of IconFileUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="IconFileUris"/>. </summary>
         internal IconFileUris()
         {
         }
 
-        /// <summary> Initializes a new instance of IconFileUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="IconFileUris"/>. </summary>
         /// <param name="small"> uri of small icon. </param>
         /// <param name="medium"> uri of medium icon. </param>
         /// <param name="wide"> uri of wide icon. </param>

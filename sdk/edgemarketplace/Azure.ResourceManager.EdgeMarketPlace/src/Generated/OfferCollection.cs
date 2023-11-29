@@ -17,12 +17,12 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OfferResource" /> and their operations.
-    /// Each <see cref="OfferResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="OfferCollection" /> instance call the GetOffers method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="OfferResource"/> and their operations.
+    /// Each <see cref="OfferResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="OfferCollection"/> instance call the GetOffers method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class OfferCollection : ArmCollection, IEnumerable<OfferResource>, IAsyncEnumerable<OfferResource>
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OfferCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _offerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketPlace", OfferResource.ResourceType.Namespace, Diagnostics);
+            _offerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketplace", OfferResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OfferResource.ResourceType, out string offerApiVersion);
             _offerRestClient = new OffersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, offerApiVersion);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// </item>
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketPlace/offers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketplace/offers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OfferResource> GetAllAsync(int? top = null, int? skip = null, int? maxpagesize = null, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == "")
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// </item>
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketPlace/offers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketplace/offers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OfferResource> GetAll(int? top = null, int? skip = null, int? maxpagesize = null, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == "")
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -276,6 +276,80 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             {
                 var response = _offerRestClient.Get(Id, offerId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        public virtual async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+
+            using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _offerRestClient.GetAsync(Id, offerId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OfferResource>(response.GetRawResponse());
+                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        public virtual NullableResponse<OfferResource> GetIfExists(string offerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+
+            using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _offerRestClient.Get(Id, offerId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OfferResource>(response.GetRawResponse());
+                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

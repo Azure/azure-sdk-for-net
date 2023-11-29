@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeMarketPlace;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Samples
+namespace Azure.ResourceManager.EdgeMarketplace.Samples
 {
     public partial class Sample_OfferResource
     {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetOffer()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GetOffer.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetOffer.json
             // this example is just showing the usage of "Offers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateAccessToken_GenerateAccessToken()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GenerateAccessToken.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GenerateAccessToken.json
             // this example is just showing the usage of "Offers_GenerateAccessToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAccessToken_GetAccessToken()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GetAccessToken.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetAccessToken.json
             // this example is just showing the usage of "Offers_GetAccessToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

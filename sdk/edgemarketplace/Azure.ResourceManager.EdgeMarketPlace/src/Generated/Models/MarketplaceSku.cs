@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The marketplace sku. </summary>
     public partial class MarketplaceSku
     {
-        /// <summary> Initializes a new instance of MarketplaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSku"/>. </summary>
         /// <param name="catalogPlanId"> The catalog plan id. </param>
         /// <param name="marketplaceSkuId"> The marketplace sku id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogPlanId"/> or <paramref name="marketplaceSkuId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             MarketplaceSkuVersions = new ChangeTrackingList<MarketplaceSkuVersion>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSku"/>. </summary>
         /// <param name="catalogPlanId"> The catalog plan id. </param>
         /// <param name="marketplaceSkuId"> The marketplace sku id. </param>
         /// <param name="marketplaceSkuType"> The type of marketplace sku. </param>

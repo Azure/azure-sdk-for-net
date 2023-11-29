@@ -17,12 +17,12 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PublisherResource" /> and their operations.
-    /// Each <see cref="PublisherResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="PublisherCollection" /> instance call the GetPublishers method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="PublisherResource"/> and their operations.
+    /// Each <see cref="PublisherResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="PublisherCollection"/> instance call the GetPublishers method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class PublisherCollection : ArmCollection, IEnumerable<PublisherResource>, IAsyncEnumerable<PublisherResource>
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PublisherCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketPlace", PublisherResource.ResourceType.Namespace, Diagnostics);
+            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketplace", PublisherResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PublisherResource.ResourceType, out string publisherApiVersion);
             _publisherRestClient = new PublishersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// </item>
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketPlace/publishers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketplace/publishers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublisherResource> GetAllAsync(int? top = null, int? skip = null, int? maxpagesize = null, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == "")
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// </item>
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketPlace/publishers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeMarketplace/publishers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublisherResource> GetAll(int? top = null, int? skip = null, int? maxpagesize = null, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == "")
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -276,6 +276,80 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             {
                 var response = _publisherRestClient.Get(Id, publisherName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> Name of the publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _publisherRestClient.GetAsync(Id, publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> Name of the publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        public virtual NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _publisherRestClient.Get(Id, publisherName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

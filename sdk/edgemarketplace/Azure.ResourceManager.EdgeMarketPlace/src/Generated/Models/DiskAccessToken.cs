@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The disk access token. </summary>
     public partial class DiskAccessToken
     {
-        /// <summary> Initializes a new instance of DiskAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessToken"/>. </summary>
         /// <param name="accessToken"> The access token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         internal DiskAccessToken(string accessToken)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             AccessToken = accessToken;
         }
 
-        /// <summary> Initializes a new instance of DiskAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessToken"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="status"> The access token creation status. </param>
         /// <param name="accessToken"> The access token. </param>

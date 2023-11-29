@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The provisioning state of a resource type. </summary>
     public readonly partial struct ResourceProvisioningState : IEquatable<ResourceProvisioningState>

@@ -7,12 +7,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Samples
+namespace Azure.ResourceManager.EdgeMarketplace.Samples
 {
     public partial class Sample_OfferCollection
     {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOffers()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/ListOffers.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/ListOffers.json
             // this example is just showing the usage of "Offers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOffersBySubscription()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/ListOffersBySubscription.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/ListOffersBySubscription.json
             // this example is just showing the usage of "Offers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetOffer()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GetOffer.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetOffer.json
             // this example is just showing the usage of "Offers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetOffer()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GetOffer.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetOffer.json
             // this example is just showing the usage of "Offers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,6 +143,46 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
             bool result = await collection.ExistsAsync(offerId);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get offer
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetOffer()
+        {
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetOffer.json
+            // this example is just showing the usage of "Offers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this OfferResource
+            string resourceUri = "subscriptions/4bed37fd-19a1-4d31-8b44-40267555bec5/resourceGroups/edgemarketplace-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/edgemarketplace-demo";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
+            OfferCollection collection = client.GetOffers(scopeId);
+
+            // invoke the operation
+            string offerId = "0001-com-ubuntu-pro-jammy";
+            NullableResponse<OfferResource> response = await collection.GetIfExistsAsync(offerId);
+            OfferResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                OfferData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -11,72 +11,34 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeMarketplace.Mocking;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeMarketPlace. </summary>
-    public static partial class EdgeMarketPlaceExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeMarketplace. </summary>
+    public static partial class EdgeMarketplaceExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableEdgeMarketplaceArmClient GetMockableEdgeMarketplaceArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableEdgeMarketplaceArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-        #region PublisherResource
         /// <summary>
-        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of PublisherResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetPublishers(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
-        public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                PublisherResource.ValidateResourceId(id);
-                return new PublisherResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region OfferResource
-        /// <summary>
-        /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
-        public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                OfferResource.ValidateResourceId(id);
-                return new OfferResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of PublisherResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
         public static PublisherCollection GetPublishers(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetPublishers();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetPublishers(scope);
         }
 
         /// <summary>
@@ -84,24 +46,30 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetPublisherAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PublisherResource>> GetPublisherAsync(this ArmClient client, ResourceIdentifier scope, string publisherName, CancellationToken cancellationToken = default)
         {
-            return await client.GetPublishers(scope).GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableEdgeMarketplaceArmClient(client).GetPublisherAsync(scope, publisherName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -109,33 +77,48 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/publishers/{publisherName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/publishers/{publisherName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetPublisher(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<PublisherResource> GetPublisher(this ArmClient client, ResourceIdentifier scope, string publisherName, CancellationToken cancellationToken = default)
         {
-            return client.GetPublishers(scope).Get(publisherName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetPublisher(scope, publisherName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OfferResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of OfferResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetOffers(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of OfferResources and their operations over a OfferResource. </returns>
         public static OfferCollection GetOffers(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetOffers();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetOffers(scope);
         }
 
         /// <summary>
@@ -143,24 +126,30 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetOfferAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OfferResource>> GetOfferAsync(this ArmClient client, ResourceIdentifier scope, string offerId, CancellationToken cancellationToken = default)
         {
-            return await client.GetOffers(scope).GetAsync(offerId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableEdgeMarketplaceArmClient(client).GetOfferAsync(scope, offerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,24 +157,68 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetOffer(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<OfferResource> GetOffer(this ArmClient client, ResourceIdentifier scope, string offerId, CancellationToken cancellationToken = default)
         {
-            return client.GetOffers(scope).Get(offerId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetOffer(scope, offerId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetPublisherResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
+        public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetPublisherResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeMarketplaceArmClient.GetOfferResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
+        public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeMarketplaceArmClient(client).GetOfferResource(id);
         }
     }
 }

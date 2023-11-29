@@ -7,17 +7,17 @@
 
 using System;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Terms and conditions. </summary>
     public partial class TermsAndConditions
     {
-        /// <summary> Initializes a new instance of TermsAndConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TermsAndConditions"/>. </summary>
         internal TermsAndConditions()
         {
         }
 
-        /// <summary> Initializes a new instance of TermsAndConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TermsAndConditions"/>. </summary>
         /// <param name="legalTermsUri"> The legal terms and conditions uri. </param>
         /// <param name="legalTermsType"> The type of legal terms. </param>
         /// <param name="privacyPolicyUri"> The privacy policy uri. </param>

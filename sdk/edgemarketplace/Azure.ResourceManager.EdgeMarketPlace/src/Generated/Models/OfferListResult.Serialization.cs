@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     internal partial class OfferListResult
     {

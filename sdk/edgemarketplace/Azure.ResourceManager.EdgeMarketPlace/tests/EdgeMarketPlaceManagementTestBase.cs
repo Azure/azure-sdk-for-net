@@ -8,19 +8,19 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Tests
+namespace Azure.ResourceManager.EdgeMarketplace.Tests
 {
-    public class EdgeMarketPlaceManagementTestBase : ManagementRecordedTestBase<EdgeMarketPlaceManagementTestEnvironment>
+    public class EdgeMarketplaceManagementTestBase : ManagementRecordedTestBase<EdgeMarketplaceManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected EdgeMarketPlaceManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected EdgeMarketplaceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected EdgeMarketPlaceManagementTestBase(bool isAsync)
+        protected EdgeMarketplaceManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

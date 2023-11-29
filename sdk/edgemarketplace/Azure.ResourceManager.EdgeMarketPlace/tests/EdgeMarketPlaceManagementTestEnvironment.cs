@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Tests
+namespace Azure.ResourceManager.EdgeMarketplace.Tests
 {
-    public class EdgeMarketPlaceManagementTestEnvironment : TestEnvironment
+    public class EdgeMarketplaceManagementTestEnvironment : TestEnvironment
     {
     }
 }

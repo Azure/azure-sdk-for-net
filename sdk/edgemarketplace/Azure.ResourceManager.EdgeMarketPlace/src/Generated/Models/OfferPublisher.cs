@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The offer publisher. </summary>
     public partial class OfferPublisher
     {
-        /// <summary> Initializes a new instance of OfferPublisher. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferPublisher"/>. </summary>
         /// <param name="publisherId"> The publisher Id. </param>
         /// <param name="publisherDisplayName"> The publisher name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> or <paramref name="publisherDisplayName"/> is null. </exception>

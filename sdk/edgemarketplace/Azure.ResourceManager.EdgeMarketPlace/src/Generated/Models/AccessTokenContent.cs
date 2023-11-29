@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Access token request object. </summary>
     public partial class AccessTokenContent
     {
-        /// <summary> Initializes a new instance of AccessTokenContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessTokenContent"/>. </summary>
         /// <param name="edgeMarketPlaceRegion"> The region where the disk will be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeMarketPlaceRegion"/> is null. </exception>
         public AccessTokenContent(string edgeMarketPlaceRegion)

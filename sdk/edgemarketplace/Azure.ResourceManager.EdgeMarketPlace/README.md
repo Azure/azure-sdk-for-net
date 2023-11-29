@@ -1,4 +1,4 @@
-# Microsoft Azure EdgeMarketPlace management client library for .NET
+# Microsoft Azure EdgeMarketplace management client library for .NET
 
 **[Describe the service briefly first.]**
 
@@ -14,10 +14,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure EdgeMarketPlace management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure EdgeMarketplace management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.EdgeMarketPlace --prerelease
+dotnet add package Azure.ResourceManager.EdgeMarketplace --prerelease
 ```
 
 ### Prerequisites

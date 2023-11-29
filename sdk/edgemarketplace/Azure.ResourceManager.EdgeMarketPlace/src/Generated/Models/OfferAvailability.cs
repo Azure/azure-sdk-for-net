@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Says if the offer is public/private. </summary>
     public readonly partial struct OfferAvailability : IEquatable<OfferAvailability>

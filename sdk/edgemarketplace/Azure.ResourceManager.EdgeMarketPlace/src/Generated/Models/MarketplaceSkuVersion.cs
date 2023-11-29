@@ -8,12 +8,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The marketplace sku version. </summary>
     public partial class MarketplaceSkuVersion
     {
-        /// <summary> Initializes a new instance of MarketplaceSkuVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSkuVersion"/>. </summary>
         /// <param name="name"> The name of sku version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal MarketplaceSkuVersion(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MarketplaceSkuVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSkuVersion"/>. </summary>
         /// <param name="name"> The name of sku version. </param>
         /// <param name="sizeOnDiskInMb"> The size of the image. </param>
         /// <param name="minimumDownloadSizeInMb"> The size of the download. </param>

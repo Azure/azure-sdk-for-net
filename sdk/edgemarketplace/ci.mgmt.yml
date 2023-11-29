@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/edgemarketplace/ci.mgmt.yml
-    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketPlace/
+    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketplace/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: edgemarketplace
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.EdgeMarketPlace
-      safeName: AzureResourceManagerEdgeMarketPlace
+    - name: Azure.ResourceManager.EdgeMarketplace
+      safeName: AzureResourceManagerEdgeMarketplace

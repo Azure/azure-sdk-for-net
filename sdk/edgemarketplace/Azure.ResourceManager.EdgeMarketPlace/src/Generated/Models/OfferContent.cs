@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The offer content. </summary>
     public partial class OfferContent
     {
-        /// <summary> Initializes a new instance of OfferContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferContent"/>. </summary>
         /// <param name="displayName"> The display name of the offer. </param>
         /// <param name="offerId"> The offer id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="offerId"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             OperatingSystems = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OfferContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferContent"/>. </summary>
         /// <param name="displayName"> The display name of the offer. </param>
         /// <param name="summary"> The summary. </param>
         /// <param name="longSummary"> The long summary. </param>

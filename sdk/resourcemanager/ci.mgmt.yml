@@ -71,7 +71,7 @@ trigger:
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
-    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketPlace
+    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketplace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -256,7 +256,7 @@ pr:
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
-    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketPlace
+    - sdk/edgemarketplace/Azure.ResourceManager.EdgeMarketplace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Samples
+namespace Azure.ResourceManager.EdgeMarketplace.Samples
 {
     public partial class Sample_PublisherResource
     {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPublisher()
         {
-            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketPlace/stable/2023-08-01/examples/GetPublisher.json
+            // Generated from example definition: specification/edgemarketplace/resource-manager/Microsoft.EdgeMarketplace/stable/2023-08-01/examples/GetPublisher.json
             // this example is just showing the usage of "Publishers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

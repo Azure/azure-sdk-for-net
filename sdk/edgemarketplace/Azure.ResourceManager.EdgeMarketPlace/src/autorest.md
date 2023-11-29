@@ -5,9 +5,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 csharp: true
-library-name: EdgeMarketPlace
-namespace: Azure.ResourceManager.EdgeMarketPlace
-require: https://github.com/Azure/azure-rest-api-specs/blob/c569e620deb08facaefa4f49204f9fbc3fbc264c/specification/edgemarketplace/resource-manager/readme.md
+library-name: EdgeMarketplace
+namespace: Azure.ResourceManager.EdgeMarketplace
+require: https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/edgemarketplace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -16,6 +16,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug:
+#  show-serialized-names: true
 
  
 

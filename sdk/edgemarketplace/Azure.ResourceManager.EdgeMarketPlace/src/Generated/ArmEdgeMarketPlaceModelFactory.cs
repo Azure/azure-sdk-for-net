@@ -9,27 +9,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArmEdgeMarketPlaceModelFactory
+    public static partial class ArmEdgeMarketplaceModelFactory
     {
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMarketplace.PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <returns> A new <see cref="EdgeMarketPlace.PublisherData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="EdgeMarketplace.PublisherData"/> instance for mocking. </returns>
         public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceProvisioningState? provisioningState = null)
         {
             return new PublisherData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMarketplace.OfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
         /// <param name="offerContent"> The offer content. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="marketplaceSkus"> The marketplace skus. </param>
-        /// <returns> A new <see cref="EdgeMarketPlace.OfferData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="EdgeMarketplace.OfferData"/> instance for mocking. </returns>
         public static OfferData OfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentVersion = null, Uri contentUri = null, OfferContent offerContent = null, ResourceProvisioningState? provisioningState = null, IEnumerable<MarketplaceSku> marketplaceSkus = null)
         {
             marketplaceSkus ??= new List<MarketplaceSku>();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new OfferData(id, name, resourceType, systemData, contentVersion, contentUri, offerContent, provisioningState, marketplaceSkus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OfferContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OfferContent"/>. </summary>
         /// <param name="displayName"> The display name of the offer. </param>
         /// <param name="summary"> The summary. </param>
         /// <param name="longSummary"> The long summary. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new OfferContent(displayName, summary, longSummary, description, offerId, offerType, supportUri, popularity, offerPublisher, availability, releaseType, iconFileUris, termsAndConditions, categoryIds?.ToList(), operatingSystems?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OfferPublisher. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OfferPublisher"/>. </summary>
         /// <param name="publisherId"> The publisher Id. </param>
         /// <param name="publisherDisplayName"> The publisher name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> or <paramref name="publisherDisplayName"/> is null. </exception>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new OfferPublisher(publisherId, publisherDisplayName);
         }
 
-        /// <summary> Initializes a new instance of IconFileUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IconFileUris"/>. </summary>
         /// <param name="small"> uri of small icon. </param>
         /// <param name="medium"> uri of medium icon. </param>
         /// <param name="wide"> uri of wide icon. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new IconFileUris(small, medium, wide, large);
         }
 
-        /// <summary> Initializes a new instance of TermsAndConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TermsAndConditions"/>. </summary>
         /// <param name="legalTermsUri"> The legal terms and conditions uri. </param>
         /// <param name="legalTermsType"> The type of legal terms. </param>
         /// <param name="privacyPolicyUri"> The privacy policy uri. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new TermsAndConditions(legalTermsUri, legalTermsType, privacyPolicyUri);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSku"/>. </summary>
         /// <param name="catalogPlanId"> The catalog plan id. </param>
         /// <param name="marketplaceSkuId"> The marketplace sku id. </param>
         /// <param name="marketplaceSkuType"> The type of marketplace sku. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new MarketplaceSku(catalogPlanId, marketplaceSkuId, marketplaceSkuType, displayName, summary, longSummary, description, generation, displayRank, operatingSystem, marketplaceSkuVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SkuOperatingSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuOperatingSystem"/>. </summary>
         /// <param name="family"> The family of the operating system. </param>
         /// <param name="skuOperatingSystemType"> The type of the operating system. </param>
         /// <param name="name"> The name of the operating system. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new SkuOperatingSystem(family, skuOperatingSystemType, name);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceSkuVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSkuVersion"/>. </summary>
         /// <param name="name"> The name of sku version. </param>
         /// <param name="sizeOnDiskInMb"> The size of the image. </param>
         /// <param name="minimumDownloadSizeInMb"> The size of the download. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             return new MarketplaceSkuVersion(name, sizeOnDiskInMb, minimumDownloadSizeInMb, stageName);
         }
 
-        /// <summary> Initializes a new instance of DiskAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiskAccessToken"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="status"> The access token creation status. </param>
         /// <param name="accessToken"> The access token. </param>

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
     /// A class representing the Offer data model.
@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EdgeMarketPlace
     /// </summary>
     public partial class OfferData : ResourceData
     {
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
         internal OfferData()
         {
             MarketplaceSkus = new ChangeTrackingList<MarketplaceSku>();
         }
 
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

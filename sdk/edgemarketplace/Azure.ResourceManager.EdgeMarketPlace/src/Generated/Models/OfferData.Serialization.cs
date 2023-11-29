@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     public partial class OfferData
     {

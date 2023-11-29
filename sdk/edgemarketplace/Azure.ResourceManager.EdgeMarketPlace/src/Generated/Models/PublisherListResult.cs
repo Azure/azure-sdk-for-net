@@ -9,14 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The response of a Publisher list operation. </summary>
     internal partial class PublisherListResult
     {
-        /// <summary> Initializes a new instance of PublisherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherListResult"/>. </summary>
         /// <param name="value"> The Publisher items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublisherListResult(IEnumerable<PublisherData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PublisherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherListResult"/>. </summary>
         /// <param name="value"> The Publisher items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal PublisherListResult(IReadOnlyList<PublisherData> value, Uri nextLink)

@@ -13,22 +13,24 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
     /// A Class representing an Offer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OfferResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetOffer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OfferResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOfferResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetOffer method.
     /// </summary>
     public partial class OfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OfferResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="offerId"> The offerId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string offerId)
         {
-            var resourceId = $"{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}";
+            var resourceId = $"{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OfferResource(ArmClient client, OfferData data) : this(client, data.Id)
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OfferResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _offerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketPlace", ResourceType.Namespace, Diagnostics);
+            _offerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeMarketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string offerApiVersion);
             _offerRestClient = new OffersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, offerApiVersion);
 #if DEBUG
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeMarketPlace/offers";
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeMarketplace/offers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}/generateAccessToken</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}/generateAccessToken</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -177,7 +179,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             try
             {
                 var response = await _offerRestClient.GenerateAccessTokenAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeMarketPlaceArmOperation<DiskAccessToken>(new DiskAccessTokenOperationSource(), _offerClientDiagnostics, Pipeline, _offerRestClient.CreateGenerateAccessTokenRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeMarketplaceArmOperation<DiskAccessToken>(new DiskAccessTokenOperationSource(), _offerClientDiagnostics, Pipeline, _offerRestClient.CreateGenerateAccessTokenRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}/generateAccessToken</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}/generateAccessToken</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
             try
             {
                 var response = _offerRestClient.GenerateAccessToken(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new EdgeMarketPlaceArmOperation<DiskAccessToken>(new DiskAccessTokenOperationSource(), _offerClientDiagnostics, Pipeline, _offerRestClient.CreateGenerateAccessTokenRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeMarketplaceArmOperation<DiskAccessToken>(new DiskAccessTokenOperationSource(), _offerClientDiagnostics, Pipeline, _offerRestClient.CreateGenerateAccessTokenRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -232,7 +234,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}/getAccessToken</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}/getAccessToken</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -266,7 +268,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketPlace/offers/{offerId}/getAccessToken</description>
+        /// <description>/{resourceUri}/providers/Microsoft.EdgeMarketplace/offers/{offerId}/getAccessToken</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

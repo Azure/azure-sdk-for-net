@@ -9,14 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace;
+using Azure.ResourceManager.EdgeMarketplace;
 
-namespace Azure.ResourceManager.EdgeMarketPlace.Models
+namespace Azure.ResourceManager.EdgeMarketplace.Models
 {
     /// <summary> The response of a Offer list operation. </summary>
     internal partial class OfferListResult
     {
-        /// <summary> Initializes a new instance of OfferListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferListResult"/>. </summary>
         /// <param name="value"> The Offer items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OfferListResult(IEnumerable<OfferData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeMarketPlace.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OfferListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferListResult"/>. </summary>
         /// <param name="value"> The Offer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal OfferListResult(IReadOnlyList<OfferData> value, Uri nextLink)

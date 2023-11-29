@@ -6,10 +6,10 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.EdgeMarketPlace.Models;
+using Azure.ResourceManager.EdgeMarketplace.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EdgeMarketPlace
+namespace Azure.ResourceManager.EdgeMarketplace
 {
     /// <summary>
     /// A class representing the Publisher data model.
@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EdgeMarketPlace
     /// </summary>
     public partial class PublisherData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         internal PublisherData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
