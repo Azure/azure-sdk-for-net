@@ -37,11 +37,6 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         _ownsClient = false;
     }
 
-    // TODO: We might be able to remove this, but we would need to revisit
-    // whether Azure.Core Response can inherit from PipelineResponse.
-    public static PipelineResponse CreateResponse(HttpResponseMessage response)
-        => new HttpPipelineResponse(response);
-
     private static HttpClient CreateDefaultClient()
     {
         // TODO:
@@ -155,6 +150,8 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             throw new ClientRequestException(response: null, e.Message, e);
         }
 
+        message.Response = new HttpPipelineResponse(responseMessage);
+
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
@@ -185,8 +182,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
-    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpPipelineResponse(httpResponse);
+    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {

@@ -133,7 +133,7 @@ public class ClientPipelineTests
 
         private class TransportResponse : PipelineResponse
         {
-            public override int Status => throw new NotImplementedException();
+            public override int Status => 0;
 
             public override string ReasonPhrase => throw new NotImplementedException();
 

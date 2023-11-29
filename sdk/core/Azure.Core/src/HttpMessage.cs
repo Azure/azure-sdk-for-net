@@ -57,6 +57,8 @@ namespace Azure.Core
             set
             {
                 _response = value;
+
+                // TODO: do we still need this?
                 base.Response = ToPipelineResponse(value)!;
             }
         }
