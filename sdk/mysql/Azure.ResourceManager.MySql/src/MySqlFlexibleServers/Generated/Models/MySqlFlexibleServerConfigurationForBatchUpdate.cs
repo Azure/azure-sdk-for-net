@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
+        /// <param name="name"> Name of the configuration. </param>
+        /// <param name="value"> Value of the configuration. </param>
+        /// <param name="source"> Source of the configuration. </param>
+        internal MySqlFlexibleServerConfigurationForBatchUpdate(string name, string value, string source)
+        {
+            Name = name;
+            Value = value;
+            Source = source;
+        }
+
         /// <summary> Name of the configuration. </summary>
         public string Name { get; set; }
         /// <summary> Value of the configuration. </summary>

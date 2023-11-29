@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageAppliancePatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="serialNumber"> The serial number for the storage appliance. </param>
+        internal NetworkCloudStorageAppliancePatch(IDictionary<string, string> tags, string serialNumber)
+        {
+            Tags = tags;
+            SerialNumber = serialNumber;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The serial number for the storage appliance. </summary>

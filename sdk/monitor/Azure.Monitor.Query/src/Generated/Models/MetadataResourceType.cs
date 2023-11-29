@@ -28,6 +28,27 @@ namespace Azure.Monitor.Query.Models
             Labels = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataResourceType"/>. </summary>
+        /// <param name="id"> The ID of the resource-type. </param>
+        /// <param name="type"> The type of the resource-type. </param>
+        /// <param name="displayName"> The display name of the resource-type. </param>
+        /// <param name="description"> The description of the resource-type. </param>
+        /// <param name="labels"> The user-defined labels of the resource-type. </param>
+        /// <param name="tags"> The tags associated with the resource-type. </param>
+        /// <param name="properties"> The properties of the resource-type. </param>
+        /// <param name="related"> The related metadata items for the resource-type. </param>
+        internal MetadataResourceType(string id, string type, string displayName, string description, IReadOnlyList<string> labels, object tags, object properties, MetadataResourceTypeRelated related)
+        {
+            Id = id;
+            Type = type;
+            DisplayName = displayName;
+            Description = description;
+            Labels = labels;
+            Tags = tags;
+            Properties = properties;
+            Related = related;
+        }
+
         /// <summary> The ID of the resource-type. </summary>
         public string Id { get; }
         /// <summary> The type of the resource-type. </summary>

@@ -30,6 +30,21 @@ namespace Azure.ResourceManager.Network.Models
             EndOn = endOn;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
+        /// <param name="providerLocation"> Parameters that define a geographic location. </param>
+        /// <param name="providers"> List of Internet service providers. </param>
+        /// <param name="azureLocations"> Optional Azure regions to scope the query to. </param>
+        /// <param name="startOn"> The start time for the Azure reachability report. </param>
+        /// <param name="endOn"> The end time for the Azure reachability report. </param>
+        internal AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation, IList<string> providers, IList<AzureLocation> azureLocations, DateTimeOffset startOn, DateTimeOffset endOn)
+        {
+            ProviderLocation = providerLocation;
+            Providers = providers;
+            AzureLocations = azureLocations;
+            StartOn = startOn;
+            EndOn = endOn;
+        }
+
         /// <summary> Parameters that define a geographic location. </summary>
         public AzureReachabilityReportLocation ProviderLocation { get; }
         /// <summary> List of Internet service providers. </summary>

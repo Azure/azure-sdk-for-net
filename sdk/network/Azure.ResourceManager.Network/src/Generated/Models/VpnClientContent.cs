@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.Network.Models
             ClientRootCertificates = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VpnClientContent"/>. </summary>
+        /// <param name="processorArchitecture"> VPN client Processor Architecture. </param>
+        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        /// <param name="radiusServerAuthCertificate"> The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only if external radius authentication has been configured with EAPTLS authentication. </param>
+        /// <param name="clientRootCertificates"> A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external radius based authentication with EAPTLS. </param>
+        internal VpnClientContent(ProcessorArchitecture? processorArchitecture, NetworkAuthenticationMethod? authenticationMethod, string radiusServerAuthCertificate, IList<string> clientRootCertificates)
+        {
+            ProcessorArchitecture = processorArchitecture;
+            AuthenticationMethod = authenticationMethod;
+            RadiusServerAuthCertificate = radiusServerAuthCertificate;
+            ClientRootCertificates = clientRootCertificates;
+        }
+
         /// <summary> VPN client Processor Architecture. </summary>
         public ProcessorArchitecture? ProcessorArchitecture { get; set; }
         /// <summary> VPN client authentication method. </summary>

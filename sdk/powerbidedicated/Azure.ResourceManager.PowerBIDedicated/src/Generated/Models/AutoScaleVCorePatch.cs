@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCorePatch"/>. </summary>
+        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
+        internal AutoScaleVCorePatch(AutoScaleVCoreSku sku, IDictionary<string, string> tags, int? capacityLimit)
+        {
+            Sku = sku;
+            Tags = tags;
+            CapacityLimit = capacityLimit;
+        }
+
         /// <summary> The SKU of the auto scale v-core resource. </summary>
         public AutoScaleVCoreSku Sku { get; set; }
         /// <summary> Key-value pairs of additional provisioning properties. </summary>
