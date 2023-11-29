@@ -732,6 +732,7 @@ namespace Azure.Storage.Files.Shares.Models
         public string PreviousSnapshot { get { throw null; } set { } }
         public Azure.HttpRange? Range { get { throw null; } set { } }
         public string Snapshot { get { throw null; } set { } }
+        public bool SupportRename { get { throw null; } set { } }
     }
     public partial class ShareFileGetRangeListOptions
     {
