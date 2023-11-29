@@ -97,7 +97,11 @@ foreach (DetectedObject detectedObject in result.Objects.Values)
 
 ## Troubleshooting
 
-See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
+### Common errors
+When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
+
+### Logging
+You can learn more about how to enable SDK logging [here](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 
 ### General
 
