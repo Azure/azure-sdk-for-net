@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> A content line object consisting of an adjacent sequence of content elements, such as words and selection marks. </summary>
     public partial class DocumentLine
     {
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="boundingBox"> The bounding box of the line. </param>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="boundingBox"> The bounding box of the line. </param>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>

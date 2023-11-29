@@ -10,7 +10,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Metadata associated with the analyzed image. </summary>
     public partial class ImageMetadata
     {
-        /// <summary> Initializes a new instance of ImageMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         internal ImageMetadata(int height, int width)

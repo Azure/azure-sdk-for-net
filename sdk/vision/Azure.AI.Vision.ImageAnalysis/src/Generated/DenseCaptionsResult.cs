@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class DenseCaptionsResult
     {
-        /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal DenseCaptionsResult(IEnumerable<DenseCaption> values)
@@ -28,7 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
         internal DenseCaptionsResult(IReadOnlyList<DenseCaption> values)
         {

@@ -16,7 +16,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class CropRegion
     {
-        /// <summary> Initializes a new instance of CropRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="CropRegion"/>. </summary>
         /// <param name="aspectRatio">
         /// The aspect ratio of the crop region.
         /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.

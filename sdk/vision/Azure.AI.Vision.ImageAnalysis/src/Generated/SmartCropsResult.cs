@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class SmartCropsResult
     {
-        /// <summary> Initializes a new instance of SmartCropsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal SmartCropsResult(IEnumerable<CropRegion> values)
@@ -28,7 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of SmartCropsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
         internal SmartCropsResult(IReadOnlyList<CropRegion> values)
         {

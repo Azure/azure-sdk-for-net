@@ -14,7 +14,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Model factory for models. </summary>
     public static partial class AIVisionImageAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageAnalysisResult"/>. </summary>
         /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>
         /// <param name="denseCaptions">
         /// The up to 10 generated phrases, the first describing the content of the whole image,
@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new ImageAnalysisResult(caption, denseCaptions, metadata, modelVersion, objects, people, read, smartCrops, tags);
         }
 
-        /// <summary> Initializes a new instance of CaptionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CaptionResult"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -54,7 +54,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new CaptionResult(confidence, text);
         }
 
-        /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaptionsResult"/> instance for mocking. </returns>
         public static DenseCaptionsResult DenseCaptionsResult(IEnumerable<DenseCaption> values = null)
@@ -64,7 +64,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DenseCaptionsResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DenseCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaption"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -87,7 +87,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DenseCaption(confidence, text, boundingBox);
         }
 
-        /// <summary> Initializes a new instance of ImageBoundingBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageBoundingBox"/>. </summary>
         /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>
@@ -98,7 +98,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new ImageBoundingBox(x, y, width, height);
         }
 
-        /// <summary> Initializes a new instance of ImageMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageMetadata"/>. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
@@ -107,7 +107,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new ImageMetadata(height, width);
         }
 
-        /// <summary> Initializes a new instance of ObjectsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <returns> A new <see cref="ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
         public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = null)
@@ -117,7 +117,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new ObjectsResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DetectedObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
@@ -128,7 +128,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DetectedObject(boundingBox, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DetectedTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTag"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
         /// Higher values indicating higher confidence.
@@ -146,7 +146,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DetectedTag(confidence, name);
         }
 
-        /// <summary> Initializes a new instance of PeopleResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <returns> A new <see cref="ImageAnalysis.PeopleResult"/> instance for mocking. </returns>
         public static PeopleResult PeopleResult(IEnumerable<DetectedPerson> values = null)
@@ -156,7 +156,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new PeopleResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DetectedPerson. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedPerson"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the person was detected. </param>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
@@ -168,7 +168,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DetectedPerson(boundingBox, confidence);
         }
 
-        /// <summary> Initializes a new instance of ReadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ReadResult"/>. </summary>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> A list of analyzed pages. </param>
         /// <param name="stringIndexType"> The method used to compute string offset and length, possible values include: 'textElements', 'unicodeCodePoint', 'utf16CodeUnit' etc. </param>
@@ -183,7 +183,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new ReadResult(content, pages?.ToList(), stringIndexType, styles?.ToList(), modelVersion);
         }
 
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentPage"/>. </summary>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
@@ -201,7 +201,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DocumentPage(angle, height, lines?.ToList(), pageNumber, spans?.ToList(), width, words?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentLine"/>. </summary>
         /// <param name="boundingBox"> The bounding box of the line. </param>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
@@ -214,7 +214,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DocumentLine(boundingBox?.ToList(), content, spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentSpan"/>. </summary>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <returns> A new <see cref="ImageAnalysis.DocumentSpan"/> instance for mocking. </returns>
@@ -223,7 +223,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DocumentSpan(length, offset);
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentWord"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the word. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <param name="content"> Text content of the word. </param>
@@ -236,7 +236,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DocumentWord(boundingBox?.ToList(), confidence, content, span);
         }
 
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentStyle"/>. </summary>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="isHandwritten"> Is content handwritten or not. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
@@ -248,7 +248,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DocumentStyle(confidence, isHandwritten, spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SmartCropsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
         /// <returns> A new <see cref="ImageAnalysis.SmartCropsResult"/> instance for mocking. </returns>
         public static SmartCropsResult SmartCropsResult(IEnumerable<CropRegion> values = null)
@@ -258,7 +258,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new SmartCropsResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CropRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CropRegion"/>. </summary>
         /// <param name="aspectRatio">
         /// The aspect ratio of the crop region.
         /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
@@ -278,7 +278,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new CropRegion(aspectRatio, boundingBox);
         }
 
-        /// <summary> Initializes a new instance of TagsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
         /// <returns> A new <see cref="ImageAnalysis.TagsResult"/> instance for mocking. </returns>
         public static TagsResult TagsResult(IEnumerable<DetectedTag> values = null)

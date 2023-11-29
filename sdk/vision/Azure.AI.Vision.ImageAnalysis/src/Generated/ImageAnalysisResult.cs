@@ -13,7 +13,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents the outcome of an Image Analysis operation. </summary>
     public partial class ImageAnalysisResult
     {
-        /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/>. </summary>
         /// <param name="metadata"> Metadata associated with the analyzed image. </param>
         /// <param name="modelVersion"> The cloud AI model used for the analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modelVersion"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/>. </summary>
         /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>
         /// <param name="denseCaptions">
         /// The up to 10 generated phrases, the first describing the content of the whole image,

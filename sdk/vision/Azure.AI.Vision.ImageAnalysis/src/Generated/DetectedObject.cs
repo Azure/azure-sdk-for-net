@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a physical object detected in an image. </summary>
     public partial class DetectedObject
     {
-        /// <summary> Initializes a new instance of DetectedObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> or <paramref name="tags"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Tags = tags.ToList();
         }
 
-        /// <summary> Initializes a new instance of DetectedObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags)

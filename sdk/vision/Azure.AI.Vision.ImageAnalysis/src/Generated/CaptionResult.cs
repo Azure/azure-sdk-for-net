@@ -13,7 +13,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a generated phrase that describes the content of the whole image. </summary>
     public partial class CaptionResult
     {
-        /// <summary> Initializes a new instance of CaptionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaptionResult"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.

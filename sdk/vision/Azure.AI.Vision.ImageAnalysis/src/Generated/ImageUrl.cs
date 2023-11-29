@@ -13,7 +13,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> An object holding the publicly reachable URL of an image to analyze. </summary>
     internal partial class ImageUrl
     {
-        /// <summary> Initializes a new instance of ImageUrl. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageUrl"/>. </summary>
         /// <param name="url"> Publicly reachable URL of an image to analyze. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ImageUrl(Uri url)

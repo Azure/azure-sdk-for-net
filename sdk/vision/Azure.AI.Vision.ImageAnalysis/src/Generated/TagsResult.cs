@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class TagsResult
     {
-        /// <summary> Initializes a new instance of TagsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal TagsResult(IEnumerable<DetectedTag> values)
@@ -28,7 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of TagsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
         internal TagsResult(IReadOnlyList<DetectedTag> values)
         {

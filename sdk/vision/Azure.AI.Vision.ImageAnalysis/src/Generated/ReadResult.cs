@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> The results of a Read (OCR) operation. </summary>
     public partial class ReadResult
     {
-        /// <summary> Initializes a new instance of ReadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> A list of analyzed pages. </param>
         /// <param name="stringIndexType"> The method used to compute string offset and length, possible values include: 'textElements', 'unicodeCodePoint', 'utf16CodeUnit' etc. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of ReadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> A list of analyzed pages. </param>
         /// <param name="stringIndexType"> The method used to compute string offset and length, possible values include: 'textElements', 'unicodeCodePoint', 'utf16CodeUnit' etc. </param>

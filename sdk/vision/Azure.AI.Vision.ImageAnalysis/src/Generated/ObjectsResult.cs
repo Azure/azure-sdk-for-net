@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a list of physical object detected in an image and their location. </summary>
     public partial class ObjectsResult
     {
-        /// <summary> Initializes a new instance of ObjectsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal ObjectsResult(IEnumerable<DetectedObject> values)
@@ -25,7 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of ObjectsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         internal ObjectsResult(IReadOnlyList<DetectedObject> values)
         {

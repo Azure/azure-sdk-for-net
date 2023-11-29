@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a list of people detected in an image and their location. </summary>
     public partial class PeopleResult
     {
-        /// <summary> Initializes a new instance of PeopleResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal PeopleResult(IEnumerable<DetectedPerson> values)
@@ -25,7 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of PeopleResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         internal PeopleResult(IReadOnlyList<DetectedPerson> values)
         {

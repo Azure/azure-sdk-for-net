@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> An object representing observed text styles. </summary>
     public partial class DocumentStyle
     {
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="isHandwritten"> Is content handwritten or not. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="isHandwritten"> Is content handwritten or not. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>

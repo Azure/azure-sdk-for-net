@@ -10,7 +10,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> A basic rectangle specifying a sub-region of the image. </summary>
     public partial class ImageBoundingBox
     {
-        /// <summary> Initializes a new instance of ImageBoundingBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageBoundingBox"/>. </summary>
         /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>

@@ -10,12 +10,12 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a person detected in an image. </summary>
     public partial class DetectedPerson
     {
-        /// <summary> Initializes a new instance of DetectedPerson. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedPerson"/>. </summary>
         internal DetectedPerson()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectedPerson. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedPerson"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the person was detected. </param>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.

@@ -16,7 +16,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class DetectedTag
     {
-        /// <summary> Initializes a new instance of DetectedTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedTag"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
         /// Higher values indicating higher confidence.

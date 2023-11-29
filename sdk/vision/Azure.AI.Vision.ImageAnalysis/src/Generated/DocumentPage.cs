@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> The content and layout elements extracted from a page from the input. </summary>
     public partial class DocumentPage
     {
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>

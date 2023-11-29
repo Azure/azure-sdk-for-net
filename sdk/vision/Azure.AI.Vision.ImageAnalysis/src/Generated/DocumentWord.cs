@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class DocumentWord
     {
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the word. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <param name="content"> Text content of the word. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             Span = span;
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the word. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <param name="content"> Text content of the word. </param>
