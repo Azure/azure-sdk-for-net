@@ -7,9 +7,9 @@ namespace System.ClientModel;
 
 /// <summary>
 /// Controls the creation of the pipeline.
-/// Works with RequestOptions (TODO: RequestOptions), which controls the behavior of the pipeline.
+/// Works with RequestOptions which controls the behavior of the pipeline.
 /// </summary>
-public abstract class ServiceClientOptions
+public class ServiceClientOptions
 {
     #region Pipeline creation: User-specified policies
 
