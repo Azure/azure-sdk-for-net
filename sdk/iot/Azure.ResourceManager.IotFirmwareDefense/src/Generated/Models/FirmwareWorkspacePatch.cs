@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspacePatch"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal FirmwareWorkspacePatch(ProvisioningState? provisioningState)
+        {
+            ProvisioningState = provisioningState;
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

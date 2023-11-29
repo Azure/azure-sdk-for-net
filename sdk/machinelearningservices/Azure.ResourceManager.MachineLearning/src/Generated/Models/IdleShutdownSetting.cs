@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IdleShutdownSetting"/>. </summary>
+        /// <param name="idleTimeBeforeShutdown"> Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </param>
+        internal IdleShutdownSetting(string idleTimeBeforeShutdown)
+        {
+            IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
+        }
+
         /// <summary> Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </summary>
         public string IdleTimeBeforeShutdown { get; set; }
     }

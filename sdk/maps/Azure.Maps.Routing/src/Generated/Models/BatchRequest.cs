@@ -19,6 +19,13 @@ namespace Azure.Maps.Routing.Models
             BatchItems = new ChangeTrackingList<BatchRequestItem>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="batchItems"> The list of queries to process. </param>
+        internal BatchRequest(IList<BatchRequestItem> batchItems)
+        {
+            BatchItems = batchItems;
+        }
+
         /// <summary> The list of queries to process. </summary>
         public IList<BatchRequestItem> BatchItems { get; }
     }
