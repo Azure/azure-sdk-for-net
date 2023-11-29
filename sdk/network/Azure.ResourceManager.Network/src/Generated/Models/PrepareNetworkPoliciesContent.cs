@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             NetworkIntentPolicyConfigurations = new ChangeTrackingList<NetworkIntentPolicyConfiguration>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PrepareNetworkPoliciesContent"/>. </summary>
+        /// <param name="serviceName"> The name of the service for which subnet is being prepared for. </param>
+        /// <param name="networkIntentPolicyConfigurations"> A list of NetworkIntentPolicyConfiguration. </param>
+        internal PrepareNetworkPoliciesContent(string serviceName, IList<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations)
+        {
+            ServiceName = serviceName;
+            NetworkIntentPolicyConfigurations = networkIntentPolicyConfigurations;
+        }
+
         /// <summary> The name of the service for which subnet is being prepared for. </summary>
         public string ServiceName { get; set; }
         /// <summary> A list of NetworkIntentPolicyConfiguration. </summary>

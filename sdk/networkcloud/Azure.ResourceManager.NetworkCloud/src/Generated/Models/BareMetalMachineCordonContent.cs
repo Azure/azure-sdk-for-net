@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineCordonContent"/>. </summary>
+        /// <param name="evacuate"> The indicator of whether to evacuate the node workload when the bare metal machine is cordoned. </param>
+        internal BareMetalMachineCordonContent(BareMetalMachineEvacuate? evacuate)
+        {
+            Evacuate = evacuate;
+        }
+
         /// <summary> The indicator of whether to evacuate the node workload when the bare metal machine is cordoned. </summary>
         public BareMetalMachineEvacuate? Evacuate { get; set; }
     }

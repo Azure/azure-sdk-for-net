@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             Regions = new ChangeTrackingList<AzureLocation>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ActiveConfigurationContent"/>. </summary>
+        /// <param name="regions"> List of regions. </param>
+        /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
+        internal ActiveConfigurationContent(IList<AzureLocation> regions, string skipToken)
+        {
+            Regions = regions;
+            SkipToken = skipToken;
+        }
+
         /// <summary> List of regions. </summary>
         public IList<AzureLocation> Regions { get; }
         /// <summary> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </summary>

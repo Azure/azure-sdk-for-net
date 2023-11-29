@@ -27,6 +27,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageData"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="message"> Trace message. </param>
+        /// <param name="severityLevel"> Trace severity level. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="measurements"> Collection of custom measurements. </param>
+        internal MessageData(int version, IDictionary<string, object> additionalProperties, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        {
+            Message = message;
+            SeverityLevel = severityLevel;
+            Properties = properties;
+            Measurements = measurements;
+        }
+
         /// <summary> Trace message. </summary>
         public string Message { get; }
         /// <summary> Trace severity level. </summary>

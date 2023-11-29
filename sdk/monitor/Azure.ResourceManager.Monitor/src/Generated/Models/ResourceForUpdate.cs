@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceForUpdate"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed Service Identity. </param>
+        internal ResourceForUpdate(IDictionary<string, string> tags, ManagedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed Service Identity. </summary>

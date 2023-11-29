@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
             FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapContent"/>. </summary>
+        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        internal LoadBalancerVipSwapContent(IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations)
+        {
+            FrontendIPConfigurations = frontendIPConfigurations;
+        }
+
         /// <summary> A list of frontend IP configuration resources that should swap VIPs. </summary>
         public IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> FrontendIPConfigurations { get; }
     }

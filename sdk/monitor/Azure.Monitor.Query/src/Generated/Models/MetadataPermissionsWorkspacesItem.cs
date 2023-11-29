@@ -25,6 +25,15 @@ namespace Azure.Monitor.Query.Models
             DenyTables = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsWorkspacesItem"/>. </summary>
+        /// <param name="resourceId"> The resource ID on the permission indication. </param>
+        /// <param name="denyTables"> The list of tables that were denied access for the resource ID. </param>
+        internal MetadataPermissionsWorkspacesItem(string resourceId, IReadOnlyList<string> denyTables)
+        {
+            ResourceId = resourceId;
+            DenyTables = denyTables;
+        }
+
         /// <summary> The resource ID on the permission indication. </summary>
         public string ResourceId { get; }
         /// <summary> The list of tables that were denied access for the resource ID. </summary>

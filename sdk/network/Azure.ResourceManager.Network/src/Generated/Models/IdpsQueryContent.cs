@@ -19,6 +19,21 @@ namespace Azure.ResourceManager.Network.Models
             Filters = new ChangeTrackingList<IdpsQueryFilterItems>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryContent"/>. </summary>
+        /// <param name="filters"> Contain all filters names and values. </param>
+        /// <param name="search"> Search term in all columns. </param>
+        /// <param name="orderBy"> Column to sort response by. </param>
+        /// <param name="resultsPerPage"> The number of the results to return in each page. </param>
+        /// <param name="skip"> The number of records matching the filter to skip. </param>
+        internal IdpsQueryContent(IList<IdpsQueryFilterItems> filters, string search, IdpsQueryOrderBy orderBy, int? resultsPerPage, int? skip)
+        {
+            Filters = filters;
+            Search = search;
+            OrderBy = orderBy;
+            ResultsPerPage = resultsPerPage;
+            Skip = skip;
+        }
+
         /// <summary> Contain all filters names and values. </summary>
         public IList<IdpsQueryFilterItems> Filters { get; }
         /// <summary> Search term in all columns. </summary>
