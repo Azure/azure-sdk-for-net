@@ -26,6 +26,15 @@ namespace Azure.Communication.CallingServer
             ParticipantsToRemove = participantsToRemove.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequestInternal"/>. </summary>
+        /// <param name="participantsToRemove"> The participants to invite. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        internal RemoveParticipantsRequestInternal(IList<CommunicationIdentifierModel> participantsToRemove, string operationContext)
+        {
+            ParticipantsToRemove = participantsToRemove;
+            OperationContext = operationContext;
+        }
+
         /// <summary> The participants to invite. </summary>
         public IList<CommunicationIdentifierModel> ParticipantsToRemove { get; }
         /// <summary> The operation context. </summary>

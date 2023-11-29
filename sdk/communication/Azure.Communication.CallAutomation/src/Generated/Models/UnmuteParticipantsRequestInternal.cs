@@ -29,6 +29,18 @@ namespace Azure.Communication.CallAutomation
             TargetParticipants = targetParticipants.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsRequestInternal"/>. </summary>
+        /// <param name="targetParticipants">
+        /// Participants to be unmuted from the call.
+        /// Only ACS Users are supported.
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal UnmuteParticipantsRequestInternal(IList<CommunicationIdentifierModel> targetParticipants, string operationContext)
+        {
+            TargetParticipants = targetParticipants;
+            OperationContext = operationContext;
+        }
+
         /// <summary>
         /// Participants to be unmuted from the call.
         /// Only ACS Users are supported.

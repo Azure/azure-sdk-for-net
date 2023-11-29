@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.Automation.Models
             Base64Value = base64Value;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationCertificateCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the certificate. </param>
+        /// <param name="base64Value"> Gets or sets the base64 encoded value of the certificate. </param>
+        /// <param name="description"> Gets or sets the description of the certificate. </param>
+        /// <param name="thumbprintString"> Gets or sets the thumbprint of the certificate. </param>
+        /// <param name="isExportable"> Gets or sets the is exportable flag of the certificate. </param>
+        internal AutomationCertificateCreateOrUpdateContent(string name, string base64Value, string description, string thumbprintString, bool? isExportable)
+        {
+            Name = name;
+            Base64Value = base64Value;
+            Description = description;
+            ThumbprintString = thumbprintString;
+            IsExportable = isExportable;
+        }
+
         /// <summary> Gets or sets the name of the certificate. </summary>
         public string Name { get; }
         /// <summary> Gets or sets the base64 encoded value of the certificate. </summary>

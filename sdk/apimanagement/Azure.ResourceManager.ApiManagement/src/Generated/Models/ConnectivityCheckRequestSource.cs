@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestSource"/>. </summary>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
+        /// <param name="instance"> The particular VMSS instance from which to fire the request. </param>
+        internal ConnectivityCheckRequestSource(string region, long? instance)
+        {
+            Region = region;
+            Instance = instance;
+        }
+
         /// <summary> The API Management service region from where to start the connectivity check operation. </summary>
         public string Region { get; }
         /// <summary> The particular VMSS instance from which to fire the request. </summary>

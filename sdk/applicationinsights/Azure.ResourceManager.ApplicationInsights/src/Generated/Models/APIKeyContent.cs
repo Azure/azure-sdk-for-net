@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             LinkedWriteProperties = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="APIKeyContent"/>. </summary>
+        /// <param name="name"> The name of the API Key. </param>
+        /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
+        /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
+        internal APIKeyContent(string name, IList<string> linkedReadProperties, IList<string> linkedWriteProperties)
+        {
+            Name = name;
+            LinkedReadProperties = linkedReadProperties;
+            LinkedWriteProperties = linkedWriteProperties;
+        }
+
         /// <summary> The name of the API Key. </summary>
         public string Name { get; set; }
         /// <summary> The read access rights of this API Key. </summary>

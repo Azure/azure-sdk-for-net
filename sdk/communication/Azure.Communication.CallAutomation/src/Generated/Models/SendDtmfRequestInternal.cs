@@ -29,6 +29,19 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
+        /// <param name="tones"> List of tones to be sent to target participant. </param>
+        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal SendDtmfRequestInternal(IList<DtmfTone> tones, CommunicationIdentifierModel targetParticipant, string operationContext, string callbackUri)
+        {
+            Tones = tones;
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary> List of tones to be sent to target participant. </summary>
         public IList<DtmfTone> Tones { get; }
         /// <summary> Target participant of send DTMF. </summary>

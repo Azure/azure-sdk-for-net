@@ -25,6 +25,23 @@ namespace Azure.Communication.CallAutomation
             RecognizeOptions = recognizeOptions;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
+        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
+        /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
+        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string callbackUri)
+        {
+            RecognizeInputType = recognizeInputType;
+            PlayPrompt = playPrompt;
+            InterruptCallMediaOperation = interruptCallMediaOperation;
+            RecognizeOptions = recognizeOptions;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary> Determines the type of the recognition. </summary>
         public RecognizeInputType RecognizeInputType { get; }
         /// <summary> The source of the audio to be played for recognition. </summary>

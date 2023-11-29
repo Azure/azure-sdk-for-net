@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HciClusterCertificateContent"/>. </summary>
+        /// <param name="properties"></param>
+        internal HciClusterCertificateContent(HciClusterRawCertificate properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Gets or sets the properties. </summary>
         internal HciClusterRawCertificate Properties { get; set; }
         /// <summary> Gets the certificates. </summary>
