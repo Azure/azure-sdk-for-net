@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementEmailTemplateData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
         public ApiManagementEmailTemplateData()
         {
             Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthBot
     /// </summary>
     public partial class HealthBotData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HealthBotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the Azure Health Bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthBot
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of HealthBotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

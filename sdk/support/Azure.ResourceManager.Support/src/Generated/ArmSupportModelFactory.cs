@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSupportModelFactory
     {
-        /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.SupportAzureServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.ProblemClassificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Support.Models
             return new ProblemClassificationData(id, name, resourceType, systemData, displayName, secondaryConsentEnabled?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SecondaryConsentEnabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
         /// <param name="description"> User consent description. </param>
         /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
         /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SecondaryConsentEnabled(description, secondaryConsentEnabledType);
         }
 
-        /// <summary> Initializes a new instance of SupportNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SupportNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.SupportTicketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress) : null, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId) : null, quotaTicketDetails, secondaryConsent?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SupportServiceLevelAgreement"/>. </summary>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
         /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
         /// <param name="slaInMinutes"> Service Level Agreement in minutes. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes);
         }
 
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.SupportTicketCommunicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn);
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.ChatTranscriptDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Support.Models
             return new ChatTranscriptDetailData(id, name, resourceType, systemData, messages?.ToList(), startOn);
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>
         /// <param name="contentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Support.Models
             return new ChatTranscriptMessageProperties(contentType, communicationDirection, sender, body, createdOn);
         }
 
-        /// <summary> Initializes a new instance of FileWorkspaceDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.FileWorkspaceDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Support.Models
             return new FileWorkspaceDetailData(id, name, resourceType, systemData, createdOn, expireOn);
         }
 
-        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.SupportFileDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

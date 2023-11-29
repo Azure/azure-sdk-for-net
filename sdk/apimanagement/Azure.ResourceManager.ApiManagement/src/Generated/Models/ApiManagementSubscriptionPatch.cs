@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Subscription update details. </summary>
     public partial class ApiManagementSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementSubscriptionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
         public ApiManagementSubscriptionPatch()
         {
         }

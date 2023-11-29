@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Salesforce Marketing Cloud linked service. </summary>
     public partial class SalesforceMarketingCloudLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudLinkedService"/>. </summary>
         /// <param name="clientId"> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public SalesforceMarketingCloudLinkedService(object clientId)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SalesforceMarketingCloud";
         }
 
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

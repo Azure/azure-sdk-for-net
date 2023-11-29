@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Update Restore Point collection parameters. </summary>
     public partial class RestorePointGroupPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of RestorePointGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupPatch"/>. </summary>
         public RestorePointGroupPatch()
         {
             RestorePoints = new ChangeTrackingList<RestorePointData>();

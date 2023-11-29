@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitorComputeConfigurationBase
     {
-        /// <summary> Initializes a new instance of MonitorComputeConfigurationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeConfigurationBase"/>. </summary>
         protected MonitorComputeConfigurationBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorComputeConfigurationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeConfigurationBase"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
         internal MonitorComputeConfigurationBase(MonitorComputeType computeType)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterPatchParameters represents the body of the request to patch the Hybrid AKS cluster. </summary>
     public partial class NetworkCloudKubernetesClusterPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
         public NetworkCloudKubernetesClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

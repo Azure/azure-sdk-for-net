@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the role profile for the cloud service. </summary>
     internal partial class CloudServiceRoleProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfile"/>. </summary>
         public CloudServiceRoleProfile()
         {
             Roles = new ChangeTrackingList<CloudServiceRoleProfileProperties>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfile"/>. </summary>
         /// <param name="roles"> List of roles for the cloud service. </param>
         internal CloudServiceRoleProfile(IList<CloudServiceRoleProfileProperties> roles)
         {

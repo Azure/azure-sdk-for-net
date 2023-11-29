@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Resize Cluster request parameters. </summary>
     public partial class HDInsightClusterResizeContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
         public HDInsightClusterResizeContent()
         {
         }

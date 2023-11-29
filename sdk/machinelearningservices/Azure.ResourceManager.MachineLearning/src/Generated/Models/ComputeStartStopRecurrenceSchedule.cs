@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The workflow trigger recurrence for ComputeStartStop schedule type. </summary>
     public partial class ComputeStartStopRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         public ComputeStartStopRecurrenceSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="startTime"> The start time in yyyy-MM-ddTHH:mm:ss format. </param>

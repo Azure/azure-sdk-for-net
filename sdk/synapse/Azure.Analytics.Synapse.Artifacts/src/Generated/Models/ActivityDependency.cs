@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Activity dependency information. </summary>
     public partial class ActivityDependency
     {
-        /// <summary> Initializes a new instance of ActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The private cloud SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
             ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

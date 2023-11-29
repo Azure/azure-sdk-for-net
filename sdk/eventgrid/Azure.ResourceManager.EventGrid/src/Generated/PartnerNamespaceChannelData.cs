@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         public PartnerNamespaceChannelData()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

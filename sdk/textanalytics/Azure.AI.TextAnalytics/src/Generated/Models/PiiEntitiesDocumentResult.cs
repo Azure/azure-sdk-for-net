@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The PiiEntitiesDocumentResult. </summary>
     internal partial class PiiEntitiesDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of PiiEntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of PiiEntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

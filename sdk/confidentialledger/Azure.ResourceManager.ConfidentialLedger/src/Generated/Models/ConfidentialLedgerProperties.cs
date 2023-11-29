@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Additional Confidential Ledger properties. </summary>
     public partial class ConfidentialLedgerProperties
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         public ConfidentialLedgerProperties()
         {
             AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
             CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a database within a MongoDB data source. </summary>
     public partial class MongoDBDatabaseInfo : MongoDBObjectInfo
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SupportsSharding = supportsSharding;
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>

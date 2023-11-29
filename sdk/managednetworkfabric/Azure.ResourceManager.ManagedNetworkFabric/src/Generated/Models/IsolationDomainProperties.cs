@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Isolation Domain Properties. </summary>
     public partial class IsolationDomainProperties
     {
-        /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsolationDomainProperties"/>. </summary>
         public IsolationDomainProperties()
         {
             NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsolationDomainProperties"/>. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
         internal IsolationDomainProperties(IsolationDomainEncapsulationType? encapsulation, IList<ResourceIdentifier> neighborGroupIds)

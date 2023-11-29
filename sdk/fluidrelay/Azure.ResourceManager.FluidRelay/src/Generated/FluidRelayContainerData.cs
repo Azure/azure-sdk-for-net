@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.FluidRelay
     /// </summary>
     public partial class FluidRelayContainerData : ResourceData
     {
-        /// <summary> Initializes a new instance of FluidRelayContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerData"/>. </summary>
         public FluidRelayContainerData()
         {
         }
 
-        /// <summary> Initializes a new instance of FluidRelayContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationRunbookData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationRunbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationRunbookData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation
             OutputTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

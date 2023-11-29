@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The details for storage account sas creation. </summary>
     public partial class AccountSasContent
     {
-        /// <summary> Initializes a new instance of AccountSasContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
         /// <param name="startTimeStamp"> Sas token start timestamp. </param>
         /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
         /// <param name="ipAddress"> Ip Address. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a security solution which sends CEF logs to an OMS workspace. </summary>
     public partial class CefExternalSecuritySolution : ExternalSecuritySolution
     {
-        /// <summary> Initializes a new instance of CefExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="CefExternalSecuritySolution"/>. </summary>
         public CefExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.Cef;
         }
 
-        /// <summary> Initializes a new instance of CefExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="CefExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Vendor reference. </summary>
     public partial class VendorReference
     {
-        /// <summary> Initializes a new instance of VendorReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="VendorReference"/>. </summary>
         internal VendorReference()
         {
         }
 
-        /// <summary> Initializes a new instance of VendorReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="VendorReference"/>. </summary>
         /// <param name="title"> Link title. </param>
         /// <param name="link"> Link url. </param>
         internal VendorReference(string title, string link)

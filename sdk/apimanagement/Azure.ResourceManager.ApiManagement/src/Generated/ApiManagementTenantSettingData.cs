@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementTenantSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingData"/>. </summary>
         public ApiManagementTenantSettingData()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

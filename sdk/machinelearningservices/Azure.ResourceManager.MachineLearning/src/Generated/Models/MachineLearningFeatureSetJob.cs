@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing the feature set job. </summary>
     public partial class MachineLearningFeatureSetJob
     {
-        /// <summary> Initializes a new instance of MachineLearningFeatureSetJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetJob"/>. </summary>
         internal MachineLearningFeatureSetJob()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFeatureSetJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetJob"/>. </summary>
         /// <param name="createdOn"> Specifies the created date. </param>
         /// <param name="displayName"> Specifies the display name. </param>
         /// <param name="duration"> Specifies the duration. </param>

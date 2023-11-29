@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class AppServiceVirtualNetworkRoute : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRoute"/>. </summary>
         public AppServiceVirtualNetworkRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRoute"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

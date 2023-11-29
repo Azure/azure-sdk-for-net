@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PrivateDnsZoneGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         public PrivateDnsZoneGroupData()
         {
             PrivateDnsZoneConfigs = new ChangeTrackingList<PrivateDnsZoneConfig>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

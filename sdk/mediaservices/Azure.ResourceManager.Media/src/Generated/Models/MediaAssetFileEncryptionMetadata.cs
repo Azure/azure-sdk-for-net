@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The Asset File Storage encryption metadata. </summary>
     public partial class MediaAssetFileEncryptionMetadata
     {
-        /// <summary> Initializes a new instance of MediaAssetFileEncryptionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFileEncryptionMetadata"/>. </summary>
         /// <param name="assetFileId"> The Asset File Id. </param>
         internal MediaAssetFileEncryptionMetadata(Guid assetFileId)
         {
             AssetFileId = assetFileId;
         }
 
-        /// <summary> Initializes a new instance of MediaAssetFileEncryptionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFileEncryptionMetadata"/>. </summary>
         /// <param name="initializationVector"> The Asset File initialization vector. </param>
         /// <param name="assetFileName"> The Asset File name. </param>
         /// <param name="assetFileId"> The Asset File Id. </param>

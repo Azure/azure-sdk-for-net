@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Condition to trigger an alert processing rule. </summary>
     public partial class AlertProcessingRuleCondition
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
         public AlertProcessingRuleCondition()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>

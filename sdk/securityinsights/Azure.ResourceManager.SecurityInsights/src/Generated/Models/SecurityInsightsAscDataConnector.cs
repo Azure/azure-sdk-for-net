@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents ASC (Azure Security Center) data connector. </summary>
     public partial class SecurityInsightsAscDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAscDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAscDataConnector"/>. </summary>
         public SecurityInsightsAscDataConnector()
         {
             Kind = DataConnectorKind.AzureSecurityCenter;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAscDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAscDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

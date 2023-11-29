@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for creating a custom image from a VHD. </summary>
     public partial class DevTestLabCustomImageVhd
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
         public DevTestLabCustomImageVhd(DevTestLabCustomImageOSType osType)
         {
             OSType = osType;
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>

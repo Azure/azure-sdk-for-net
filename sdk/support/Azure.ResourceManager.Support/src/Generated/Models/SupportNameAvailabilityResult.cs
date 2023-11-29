@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Output of check name availability API. </summary>
     public partial class SupportNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of SupportNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportNameAvailabilityResult"/>. </summary>
         internal SupportNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>

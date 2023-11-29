@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The replication policy rule between two containers. </summary>
     public partial class ObjectReplicationPolicyRule
     {
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyRule"/>. </summary>
         /// <param name="sourceContainer"> Required. Source container name. </param>
         /// <param name="destinationContainer"> Required. Destination container name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceContainer"/> or <paramref name="destinationContainer"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             DestinationContainer = destinationContainer;
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyRule"/>. </summary>
         /// <param name="ruleId"> Rule Id is auto-generated for each new rule on destination account. It is required for put policy on source account. </param>
         /// <param name="sourceContainer"> Required. Source container name. </param>
         /// <param name="destinationContainer"> Required. Destination container name. </param>

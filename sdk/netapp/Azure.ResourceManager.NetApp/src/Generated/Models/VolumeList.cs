@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of volume resources. </summary>
     internal partial class VolumeList
     {
-        /// <summary> Initializes a new instance of VolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
         internal VolumeList()
         {
             Value = new ChangeTrackingList<NetAppVolumeData>();
         }
 
-        /// <summary> Initializes a new instance of VolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
         /// <param name="value"> List of volumes. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal VolumeList(IReadOnlyList<NetAppVolumeData> value, string nextLink)

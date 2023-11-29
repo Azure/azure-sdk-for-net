@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The related metadata items for the function. </summary>
     public partial class LogAnalyticsQuerySearchRelatedMetadata
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQuerySearchRelatedMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySearchRelatedMetadata"/>. </summary>
         public LogAnalyticsQuerySearchRelatedMetadata()
         {
             Categories = new ChangeTrackingList<string>();

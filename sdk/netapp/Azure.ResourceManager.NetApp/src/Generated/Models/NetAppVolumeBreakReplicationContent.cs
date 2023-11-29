@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Break replication request. </summary>
     public partial class NetAppVolumeBreakReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBreakReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
         public NetAppVolumeBreakReplicationContent()
         {
         }

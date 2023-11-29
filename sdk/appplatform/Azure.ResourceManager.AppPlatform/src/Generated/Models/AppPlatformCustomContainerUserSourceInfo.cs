@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom container user source info. </summary>
     public partial class AppPlatformCustomContainerUserSourceInfo : AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomContainerUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomContainerUserSourceInfo"/>. </summary>
         public AppPlatformCustomContainerUserSourceInfo()
         {
             UserSourceInfoType = "Container";
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomContainerUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomContainerUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="customContainer"> Custom container payload. </param>

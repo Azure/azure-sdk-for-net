@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a firewall rule while updating a Data Lake Store account. </summary>
     public partial class FirewallRuleForDataLakeStoreAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeStoreAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
         /// <param name="name"> The unique name of the firewall rule to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FirewallRuleForDataLakeStoreAccountUpdateContent(string name)

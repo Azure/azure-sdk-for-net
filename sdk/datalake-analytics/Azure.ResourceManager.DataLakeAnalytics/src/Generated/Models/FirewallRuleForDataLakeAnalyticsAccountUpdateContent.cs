@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to update.
         /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name

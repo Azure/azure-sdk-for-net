@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint. </summary>
     public partial class ConnectionMonitorEndpoint
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorEndpoint(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="resourceId"> Resource ID of the connection monitor endpoint. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API portal properties payload. </summary>
     public partial class AppPlatformApiPortalProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalProperties"/>. </summary>
         public AppPlatformApiPortalProperties()
         {
             GatewayIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Instances = new ChangeTrackingList<AppPlatformApiPortalInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalProperties"/>. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>

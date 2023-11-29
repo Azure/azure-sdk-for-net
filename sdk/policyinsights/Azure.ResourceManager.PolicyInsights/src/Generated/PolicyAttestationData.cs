@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// </summary>
     public partial class PolicyAttestationData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationData"/>. </summary>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
         public PolicyAttestationData(ResourceIdentifier policyAssignmentId)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Evidence = new ChangeTrackingList<AttestationEvidence>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

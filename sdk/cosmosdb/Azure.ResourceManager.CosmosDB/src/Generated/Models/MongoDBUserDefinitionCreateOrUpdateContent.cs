@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB Mongo User Definition. </summary>
     public partial class MongoDBUserDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
         public MongoDBUserDefinitionCreateOrUpdateContent()
         {
             Roles = new ChangeTrackingList<MongoDBRole>();

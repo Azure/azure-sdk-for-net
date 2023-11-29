@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Instance. </summary>
     public partial class DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = objectType;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>

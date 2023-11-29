@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the endpoint properties. </summary>
     public partial class FrontDoorExperimentEndpointProperties
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentEndpointProperties"/>. </summary>
         public FrontDoorExperimentEndpointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentEndpointProperties"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="endpoint"> The endpoint URL. </param>
         internal FrontDoorExperimentEndpointProperties(string name, string endpoint)

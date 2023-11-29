@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile_ShortVersion()
+        public void Example_CancerProfilingClient_InferCancerProfile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -49,7 +49,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_ShortVersion_Async()
+        public async Task Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -78,7 +78,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile_ShortVersion_Convenience()
+        public void Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -94,7 +94,7 @@ new PatientRecord("<id>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_ShortVersion_Convenience_Async()
+        public async Task Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -110,7 +110,7 @@ new PatientRecord("<id>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile_AllParameters()
+        public void Example_CancerProfilingClient_InferCancerProfile_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -200,7 +200,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_AllParameters_Async()
+        public async Task Example_CancerProfilingClient_InferCancerProfile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -290,7 +290,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile_AllParameters_Convenience()
+        public void Example_CancerProfilingClient_InferCancerProfile_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -333,7 +333,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_AllParameters_Convenience_Async()
+        public async Task Example_CancerProfilingClient_InferCancerProfile_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");

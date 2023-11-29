@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as 'true', will the event trigger the defined actions. </summary>
     public partial class SecurityAutomationRuleSet
     {
-        /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationRuleSet"/>. </summary>
         public SecurityAutomationRuleSet()
         {
             Rules = new ChangeTrackingList<SecurityAutomationTriggeringRule>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationRuleSet"/>. </summary>
         /// <param name="rules"></param>
         internal SecurityAutomationRuleSet(IList<SecurityAutomationTriggeringRule> rules)
         {

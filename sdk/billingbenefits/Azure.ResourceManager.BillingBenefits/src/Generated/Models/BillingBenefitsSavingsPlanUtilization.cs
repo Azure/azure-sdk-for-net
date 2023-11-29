@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Savings plan utilization. </summary>
     public partial class BillingBenefitsSavingsPlanUtilization
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         internal BillingBenefitsSavingsPlanUtilization()
         {
             Aggregates = new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>();
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates)

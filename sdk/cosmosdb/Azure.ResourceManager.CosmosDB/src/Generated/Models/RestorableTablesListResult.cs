@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Table events and their properties. </summary>
     internal partial class RestorableTablesListResult
     {
-        /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTablesListResult"/>. </summary>
         internal RestorableTablesListResult()
         {
             Value = new ChangeTrackingList<RestorableTable>();
         }
 
-        /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTablesListResult"/>. </summary>
         /// <param name="value"> List of Table events and their properties. </param>
         internal RestorableTablesListResult(IReadOnlyList<RestorableTable> value)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Service Level Agreement details for a support ticket. </summary>
     public partial class SupportServiceLevelAgreement
     {
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
         public SupportServiceLevelAgreement()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
         /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
         /// <param name="slaInMinutes"> Service Level Agreement in minutes. </param>

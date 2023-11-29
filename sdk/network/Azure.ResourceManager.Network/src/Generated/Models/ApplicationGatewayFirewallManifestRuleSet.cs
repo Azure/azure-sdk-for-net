@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the web application firewall rule set. </summary>
     public partial class ApplicationGatewayFirewallManifestRuleSet
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallManifestRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallManifestRuleSet"/>. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleGroups = ruleGroups.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallManifestRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallManifestRuleSet"/>. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="status"> The rule set status. </param>

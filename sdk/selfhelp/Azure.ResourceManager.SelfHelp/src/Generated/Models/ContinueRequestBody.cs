@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter ContinueRequest body. </summary>
     public partial class ContinueRequestBody
     {
-        /// <summary> Initializes a new instance of ContinueRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinueRequestBody"/>. </summary>
         public ContinueRequestBody()
         {
             Responses = new ChangeTrackingList<TroubleshooterResult>();

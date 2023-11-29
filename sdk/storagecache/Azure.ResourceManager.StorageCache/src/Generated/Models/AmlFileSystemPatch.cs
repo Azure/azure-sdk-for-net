@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> An AML file system update instance. </summary>
     public partial class AmlFileSystemPatch
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
         public AmlFileSystemPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

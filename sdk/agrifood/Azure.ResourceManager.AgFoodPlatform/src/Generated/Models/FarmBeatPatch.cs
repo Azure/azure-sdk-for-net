@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> FarmBeats update request. </summary>
     public partial class FarmBeatPatch
     {
-        /// <summary> Initializes a new instance of FarmBeatPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
         public FarmBeatPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

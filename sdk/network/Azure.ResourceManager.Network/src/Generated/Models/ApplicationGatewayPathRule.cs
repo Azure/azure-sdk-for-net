@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Path rule of URL path map of an application gateway. </summary>
     public partial class ApplicationGatewayPathRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         public ApplicationGatewayPathRule()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

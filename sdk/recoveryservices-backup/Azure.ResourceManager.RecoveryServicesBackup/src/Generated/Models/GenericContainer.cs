@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for generic container of backup items. </summary>
     public partial class GenericContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of GenericContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainer"/>. </summary>
         public GenericContainer()
         {
             ContainerType = ProtectableContainerType.GenericContainer;
         }
 
-        /// <summary> Initializes a new instance of GenericContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

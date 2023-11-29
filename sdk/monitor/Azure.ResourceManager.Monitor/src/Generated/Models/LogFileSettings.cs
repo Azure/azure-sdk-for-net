@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Settings for different log file formats. </summary>
     internal partial class LogFileSettings
     {
-        /// <summary> Initializes a new instance of LogFileSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogFileSettings"/>. </summary>
         public LogFileSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LogFileSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogFileSettings"/>. </summary>
         /// <param name="text"> Text settings. </param>
         internal LogFileSettings(LogFileSettingsText text)
         {

@@ -12,7 +12,7 @@ namespace Azure.Maps.Routing
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery
     {
-        /// <summary> Initializes a new instance of RouteMatrixQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
         public RouteMatrixQuery()
         {
         }

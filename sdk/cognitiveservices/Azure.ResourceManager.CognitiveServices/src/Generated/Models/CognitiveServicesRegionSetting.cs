@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The call rate limit Cognitive Services account. </summary>
     public partial class CognitiveServicesRegionSetting
     {
-        /// <summary> Initializes a new instance of CognitiveServicesRegionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesRegionSetting"/>. </summary>
         public CognitiveServicesRegionSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesRegionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesRegionSetting"/>. </summary>
         /// <param name="name"> Name of the region. </param>
         /// <param name="value"> A value for priority or weighted routing methods. </param>
         /// <param name="customsubdomain"> Maps the region to the regional custom subdomain. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Enterprise details of a Grafana instance. </summary>
     public partial class EnterpriseDetails
     {
-        /// <summary> Initializes a new instance of EnterpriseDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseDetails"/>. </summary>
         internal EnterpriseDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EnterpriseDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseDetails"/>. </summary>
         /// <param name="saasSubscriptionDetails"> SaaS subscription details of a Grafana instance. </param>
         /// <param name="marketplaceTrialQuota"> The allocation details of the per subscription free trial slot of the subscription. </param>
         internal EnterpriseDetails(SaasSubscriptionDetails saasSubscriptionDetails, MarketplaceTrialQuota marketplaceTrialQuota)

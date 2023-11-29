@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> ListResource. </summary>
     internal partial class DppResourceList
     {
-        /// <summary> Initializes a new instance of DppResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DppResourceList"/>. </summary>
         internal DppResourceList()
         {
         }
 
-        /// <summary> Initializes a new instance of DppResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DppResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         internal DppResourceList(string nextLink)
         {

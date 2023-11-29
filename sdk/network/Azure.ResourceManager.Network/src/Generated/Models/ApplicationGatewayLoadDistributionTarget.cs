@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load Distribution Target of an application gateway. </summary>
     public partial class ApplicationGatewayLoadDistributionTarget : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         public ApplicationGatewayLoadDistributionTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of the disk to attach. </summary>
     public partial class DevTestLabDiskAttachContent
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskAttachContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskAttachContent"/>. </summary>
         public DevTestLabDiskAttachContent()
         {
         }

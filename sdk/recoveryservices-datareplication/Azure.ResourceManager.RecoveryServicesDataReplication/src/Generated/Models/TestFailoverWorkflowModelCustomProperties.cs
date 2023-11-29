@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Test failover workflow model custom properties. </summary>
     public partial class TestFailoverWorkflowModelCustomProperties : WorkflowModelCustomProperties
     {
-        /// <summary> Initializes a new instance of TestFailoverWorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverWorkflowModelCustomProperties"/>. </summary>
         internal TestFailoverWorkflowModelCustomProperties()
         {
             ProtectedItemDetails = new ChangeTrackingList<FailoverProtectedItemProperties>();
             InstanceType = "TestFailoverWorkflowDetails";
         }
 
-        /// <summary> Initializes a new instance of TestFailoverWorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverWorkflowModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>

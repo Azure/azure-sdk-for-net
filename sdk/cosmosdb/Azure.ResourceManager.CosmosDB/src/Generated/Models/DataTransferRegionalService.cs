@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource for a regional service location. </summary>
     public partial class DataTransferRegionalService : CosmosDBRegionalService
     {
-        /// <summary> Initializes a new instance of DataTransferRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferRegionalService"/>. </summary>
         internal DataTransferRegionalService()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferRegionalService"/>. </summary>
         /// <param name="name"> The regional service name. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>

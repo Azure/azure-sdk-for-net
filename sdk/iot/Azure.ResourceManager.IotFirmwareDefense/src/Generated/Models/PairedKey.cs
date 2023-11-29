@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Details of a matching paired key or certificate. </summary>
     public partial class PairedKey
     {
-        /// <summary> Initializes a new instance of PairedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="PairedKey"/>. </summary>
         internal PairedKey()
         {
         }
 
-        /// <summary> Initializes a new instance of PairedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="PairedKey"/>. </summary>
         /// <param name="id"> ID of the paired key or certificate. </param>
         /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
         /// <param name="additionalProperties"> Additional paired key properties. </param>

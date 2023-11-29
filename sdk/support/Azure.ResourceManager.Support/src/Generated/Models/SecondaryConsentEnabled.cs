@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
     public partial class SecondaryConsentEnabled
     {
-        /// <summary> Initializes a new instance of SecondaryConsentEnabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
         internal SecondaryConsentEnabled()
         {
         }
 
-        /// <summary> Initializes a new instance of SecondaryConsentEnabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
         /// <param name="description"> User consent description. </param>
         /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
         internal SecondaryConsentEnabled(string description, string secondaryConsentEnabledType)

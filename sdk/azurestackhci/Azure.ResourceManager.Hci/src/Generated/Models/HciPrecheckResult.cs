@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The HciPrecheckResult. </summary>
     public partial class HciPrecheckResult
     {
-        /// <summary> Initializes a new instance of HciPrecheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPrecheckResult"/>. </summary>
         public HciPrecheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HciPrecheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPrecheckResult"/>. </summary>
         /// <param name="name"> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </param>
         /// <param name="tags"> Key-value pairs that allow grouping/filtering individual tests. </param>
         /// <param name="title"> User-facing name; one or more sentences indicating the direct issue. </param>

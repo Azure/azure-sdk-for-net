@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricL2IsolationDomainData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricL2IsolationDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             VlanId = vlanId;
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricL2IsolationDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

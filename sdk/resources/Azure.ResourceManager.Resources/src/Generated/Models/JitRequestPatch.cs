@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information about JIT request. </summary>
     public partial class JitRequestPatch
     {
-        /// <summary> Initializes a new instance of JitRequestPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestPatch"/>. </summary>
         public JitRequestPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

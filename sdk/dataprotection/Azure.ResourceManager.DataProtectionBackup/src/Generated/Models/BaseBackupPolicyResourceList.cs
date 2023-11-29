@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of BaseBackupPolicy resources. </summary>
     internal partial class BaseBackupPolicyResourceList
     {
-        /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseBackupPolicyResourceList"/>. </summary>
         internal BaseBackupPolicyResourceList()
         {
             Value = new ChangeTrackingList<DataProtectionBackupPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseBackupPolicyResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         internal BaseBackupPolicyResourceList(IReadOnlyList<DataProtectionBackupPolicyData> value, string nextLink)

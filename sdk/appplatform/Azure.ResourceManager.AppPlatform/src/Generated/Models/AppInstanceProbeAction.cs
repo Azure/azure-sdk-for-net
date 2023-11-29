@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppInstanceProbeAction
     {
-        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbeAction"/>. </summary>
         protected AppInstanceProbeAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbeAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
         internal AppInstanceProbeAction(ProbeActionType probeActionType)
         {

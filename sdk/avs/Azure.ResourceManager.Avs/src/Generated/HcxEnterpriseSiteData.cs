@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class HcxEnterpriseSiteData : ResourceData
     {
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteData"/>. </summary>
         public HcxEnterpriseSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

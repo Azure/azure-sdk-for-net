@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Result object for a Search Address Reverse Cross Street response. </summary>
     public partial class ReverseSearchCrossStreetAddressResultItem
     {
-        /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchCrossStreetAddressResultItem"/>. </summary>
         internal ReverseSearchCrossStreetAddressResultItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchCrossStreetAddressResultItem"/>. </summary>
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
         internal ReverseSearchCrossStreetAddressResultItem(MapsAddress address, string position)

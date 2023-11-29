@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of configuration group schema resources. </summary>
     internal partial class ConfigurationGroupSchemaListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaListResult"/>. </summary>
         internal ConfigurationGroupSchemaListResult()
         {
             Value = new ChangeTrackingList<ConfigurationGroupSchemaData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaListResult"/>. </summary>
         /// <param name="value"> A list of configuration group schema. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ConfigurationGroupSchemaListResult(IReadOnlyList<ConfigurationGroupSchemaData> value, string nextLink)

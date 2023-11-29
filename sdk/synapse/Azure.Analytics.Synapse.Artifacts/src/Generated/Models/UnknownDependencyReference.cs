@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownDependencyReference. </summary>
     internal partial class UnknownDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of UnknownDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
         internal UnknownDependencyReference(string type) : base(type)
         {

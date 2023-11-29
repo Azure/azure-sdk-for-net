@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// </summary>
     public abstract partial class ClusterJobProperties
     {
-        /// <summary> Initializes a new instance of ClusterJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJobProperties"/>. </summary>
         protected ClusterJobProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJobProperties"/>. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
         internal ClusterJobProperties(ClusterJobType jobType)
         {

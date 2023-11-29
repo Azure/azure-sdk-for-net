@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Gateway load balancer tunnel interface of a load balancer backend address pool. </summary>
     public partial class GatewayLoadBalancerTunnelInterface
     {
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         public GatewayLoadBalancerTunnelInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         /// <param name="port"> Port of gateway load balancer tunnel interface. </param>
         /// <param name="identifier"> Identifier of gateway load balancer tunnel interface. </param>
         /// <param name="protocol"> Protocol of gateway load balancer tunnel interface. </param>

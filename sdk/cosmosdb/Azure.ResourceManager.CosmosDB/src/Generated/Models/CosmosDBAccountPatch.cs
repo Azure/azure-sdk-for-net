@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters for patching Azure Cosmos DB database account properties. </summary>
     public partial class CosmosDBAccountPatch
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountPatch"/>. </summary>
         public CosmosDBAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

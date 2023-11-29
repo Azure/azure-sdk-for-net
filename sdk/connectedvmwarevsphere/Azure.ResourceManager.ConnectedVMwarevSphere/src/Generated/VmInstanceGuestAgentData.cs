@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VmInstanceGuestAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentData"/>. </summary>
         public VmInstanceGuestAgentData()
         {
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

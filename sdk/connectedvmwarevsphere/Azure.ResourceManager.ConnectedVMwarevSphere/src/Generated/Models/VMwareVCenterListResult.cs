@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VCenters. </summary>
     internal partial class VMwareVCenterListResult
     {
-        /// <summary> Initializes a new instance of VMwareVCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVCenterListResult"/>. </summary>
         /// <param name="value"> Array of VCenters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVCenterListResult(IEnumerable<VMwareVCenterData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareVCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVCenterListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VCenters. </param>
         /// <param name="value"> Array of VCenters. </param>
         internal VMwareVCenterListResult(string nextLink, IReadOnlyList<VMwareVCenterData> value)

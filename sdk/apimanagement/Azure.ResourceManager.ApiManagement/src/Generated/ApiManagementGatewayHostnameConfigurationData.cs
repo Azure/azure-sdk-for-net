@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         public ApiManagementGatewayHostnameConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

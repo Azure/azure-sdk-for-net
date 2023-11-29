@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingLocatorData : ResourceData
     {
-        /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorData"/>. </summary>
         public StreamingLocatorData()
         {
             ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
             Filters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> Defines the Azure Active Directory principal that can approve any just-in-time access requests by the principal defined in the EligibleAuthorization. </summary>
     public partial class ManagedServicesEligibleApprover
     {
-        /// <summary> Initializes a new instance of ManagedServicesEligibleApprover. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesEligibleApprover"/>. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         public ManagedServicesEligibleApprover(Guid principalId)
         {
             PrincipalId = principalId;
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesEligibleApprover. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesEligibleApprover"/>. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
         internal ManagedServicesEligibleApprover(Guid principalId, string principalIdDisplayName)

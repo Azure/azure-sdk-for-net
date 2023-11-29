@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The response from the List Usages operation. </summary>
     internal partial class UsageListResult
     {
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageListResult"/>. </summary>
         internal UsageListResult()
         {
             Value = new ChangeTrackingList<StorageUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
         internal UsageListResult(IReadOnlyList<StorageUsage> value)
         {

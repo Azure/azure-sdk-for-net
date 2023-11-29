@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to execute a search query against time series instances and return matching time series instances. </summary>
     internal partial class SearchInstancesRequest
     {
-        /// <summary> Initializes a new instance of SearchInstancesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesRequest"/>. </summary>
         /// <param name="searchString"> Query search string that will be matched to the attributes of time series instances. Example: "floor 100". Case-insensitive, must be present, but can be empty string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchString"/> is null. </exception>
         public SearchInstancesRequest(string searchString)

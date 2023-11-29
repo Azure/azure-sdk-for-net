@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         internal ContainerAppJobExecutionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

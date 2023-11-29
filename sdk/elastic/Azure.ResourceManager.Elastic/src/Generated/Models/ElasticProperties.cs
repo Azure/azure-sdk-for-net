@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Elastic Resource Properties. </summary>
     public partial class ElasticProperties
     {
-        /// <summary> Initializes a new instance of ElasticProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticProperties"/>. </summary>
         public ElasticProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticProperties"/>. </summary>
         /// <param name="elasticCloudUser"> Details of the user's elastic account. </param>
         /// <param name="elasticCloudDeployment"> Details of the elastic cloud deployment. </param>
         internal ElasticProperties(ElasticCloudUser elasticCloudUser, ElasticCloudDeployment elasticCloudDeployment)

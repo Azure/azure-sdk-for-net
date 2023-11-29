@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Describes the properties of a secret object value. </summary>
     public partial class ContainerRegistrySecretObject
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySecretObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySecretObject"/>. </summary>
         public ContainerRegistrySecretObject()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySecretObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySecretObject"/>. </summary>
         /// <param name="value">
         /// The value of the secret. The format of this value will be determined
         /// based on the type of the secret object. If the type is Opaque, the value will be

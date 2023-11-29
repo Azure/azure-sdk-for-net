@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class QuantumWorkspacePatch
     {
-        /// <summary> Initializes a new instance of QuantumWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspacePatch"/>. </summary>
         public QuantumWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

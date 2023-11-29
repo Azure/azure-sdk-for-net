@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> External Cloud Service connectors. </summary>
     internal partial class CloudConnectors
     {
-        /// <summary> Initializes a new instance of CloudConnectors. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudConnectors"/>. </summary>
         public CloudConnectors()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudConnectors. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudConnectors"/>. </summary>
         /// <param name="awsExternalId">
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning

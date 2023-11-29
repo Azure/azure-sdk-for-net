@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The object sent for a kusto pool check name availability request. </summary>
     public partial class KustoPoolNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Kusto Pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolNameAvailabilityContent(string name)

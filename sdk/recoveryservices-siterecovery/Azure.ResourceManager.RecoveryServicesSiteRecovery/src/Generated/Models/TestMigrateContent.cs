@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input for test migrate. </summary>
     public partial class TestMigrateContent
     {
-        /// <summary> Initializes a new instance of TestMigrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestMigrateContent"/>. </summary>
         /// <param name="properties"> Test migrate input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TestMigrateContent(TestMigrateProperties properties)

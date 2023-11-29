@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
         public ApiManagementGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

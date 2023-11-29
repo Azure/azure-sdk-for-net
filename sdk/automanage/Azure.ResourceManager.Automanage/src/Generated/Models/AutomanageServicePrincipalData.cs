@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The Service Principal Id for the subscription. </summary>
     public partial class AutomanageServicePrincipalData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageServicePrincipalData"/>. </summary>
         public AutomanageServicePrincipalData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageServicePrincipalData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

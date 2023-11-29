@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         internal ResourceHealthEventImpactedResourceData()
         {
             Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alerts summary group item. </summary>
     public partial class ServiceAlertSummaryGroupItemInfo
     {
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
         public ServiceAlertSummaryGroupItemInfo()
         {
             Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>

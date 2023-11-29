@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class DisableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of DisableProtectionProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisableProtectionProviderSpecificContent"/>. </summary>
         protected DisableProtectionProviderSpecificContent()
         {
         }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

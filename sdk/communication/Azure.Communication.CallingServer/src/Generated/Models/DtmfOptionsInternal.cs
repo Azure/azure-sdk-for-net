@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> Options for DTMF recognition. </summary>
     public partial class DtmfOptionsInternal
     {
-        /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfOptionsInternal"/>. </summary>
         public DtmfOptionsInternal()
         {
             StopTones = new ChangeTrackingList<DtmfTone>();

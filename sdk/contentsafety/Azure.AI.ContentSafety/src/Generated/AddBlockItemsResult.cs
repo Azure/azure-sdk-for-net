@@ -13,13 +13,13 @@ namespace Azure.AI.ContentSafety
     /// <summary> The response of adding blockItems to text blocklist. </summary>
     public partial class AddBlockItemsResult
     {
-        /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddBlockItemsResult"/>. </summary>
         internal AddBlockItemsResult()
         {
             Value = new ChangeTrackingList<TextBlockItem>();
         }
 
-        /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddBlockItemsResult"/>. </summary>
         /// <param name="value"> Array of blockItems added. </param>
         internal AddBlockItemsResult(IReadOnlyList<TextBlockItem> value)
         {

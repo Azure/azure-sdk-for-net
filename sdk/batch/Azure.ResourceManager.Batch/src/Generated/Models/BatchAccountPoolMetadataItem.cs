@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The Batch service does not assign any meaning to this metadata; it is solely for the use of user code. </summary>
     public partial class BatchAccountPoolMetadataItem
     {
-        /// <summary> Initializes a new instance of BatchAccountPoolMetadataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolMetadataItem"/>. </summary>
         /// <param name="name"> The name of the metadata item. </param>
         /// <param name="value"> The value of the metadata item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

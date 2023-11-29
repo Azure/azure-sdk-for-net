@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> The entry point for the POI being returned. </summary>
     public partial class FacilityEntryPoint
     {
-        /// <summary> Initializes a new instance of FacilityEntryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacilityEntryPoint"/>. </summary>
         internal FacilityEntryPoint()
         {
         }
 
-        /// <summary> Initializes a new instance of FacilityEntryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacilityEntryPoint"/>. </summary>
         /// <param name="entryPointType"> The type of entry point. Value can be either _main_ or _minor_. </param>
         /// <param name="positionInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
         internal FacilityEntryPoint(EntryPointType? entryPointType, LatLongPairAbbreviated positionInternal)

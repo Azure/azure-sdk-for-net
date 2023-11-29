@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// </summary>
     public partial class EdgeKubernetesRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         public EdgeKubernetesRole()
         {
             Kind = DataBoxEdgeRoleType.Kubernetes;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerDestinationInfo
     {
-        /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationInfo"/>. </summary>
         protected PartnerDestinationInfo()
         {
             ResourceMoveChangeHistory = new ChangeTrackingList<ResourceMoveChangeHistory>();
         }
 
-        /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.

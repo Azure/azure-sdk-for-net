@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscNodeConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DscNodeConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
         public DscNodeConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

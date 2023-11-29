@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition for data in the export. </summary>
     public partial class ExportDataset
     {
-        /// <summary> Initializes a new instance of ExportDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
         public ExportDataset()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
         /// <param name="granularity"> The granularity of rows in the export. Currently only 'Daily' is supported. </param>
         /// <param name="configuration"> The export dataset configuration. </param>
         internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration)

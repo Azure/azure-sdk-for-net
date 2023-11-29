@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
+        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal LexicalAnalyzer(string oDataType, string name)

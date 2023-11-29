@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of a management cluster. </summary>
     public partial class AvsManagementCluster : CommonClusterProperties
     {
-        /// <summary> Initializes a new instance of AvsManagementCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsManagementCluster"/>. </summary>
         public AvsManagementCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsManagementCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsManagementCluster"/>. </summary>
         /// <param name="clusterSize"> The cluster size. </param>
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>

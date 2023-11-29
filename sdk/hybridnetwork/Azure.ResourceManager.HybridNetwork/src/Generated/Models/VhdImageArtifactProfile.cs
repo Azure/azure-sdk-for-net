@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Vhd artifact profile. </summary>
     public partial class VhdImageArtifactProfile
     {
-        /// <summary> Initializes a new instance of VhdImageArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageArtifactProfile"/>. </summary>
         public VhdImageArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VhdImageArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageArtifactProfile"/>. </summary>
         /// <param name="vhdName"> Vhd name. </param>
         /// <param name="vhdVersion"> Vhd version. </param>
         internal VhdImageArtifactProfile(string vhdName, string vhdVersion)

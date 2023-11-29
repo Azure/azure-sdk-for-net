@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of tasks. </summary>
     internal partial class TaskList
     {
-        /// <summary> Initializes a new instance of TaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         internal TaskList()
         {
             Value = new ChangeTrackingList<ProjectTaskData>();
         }
 
-        /// <summary> Initializes a new instance of TaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         /// <param name="value"> List of tasks. </param>
         /// <param name="nextLink"> URL to load the next page of tasks. </param>
         internal TaskList(IReadOnlyList<ProjectTaskData> value, string nextLink)

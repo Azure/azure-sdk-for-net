@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

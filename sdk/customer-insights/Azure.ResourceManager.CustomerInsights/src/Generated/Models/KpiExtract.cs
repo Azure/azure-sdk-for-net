@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI extract. </summary>
     public partial class KpiExtract
     {
-        /// <summary> Initializes a new instance of KpiExtract. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiExtract"/>. </summary>
         /// <param name="extractName"> KPI extract name. </param>
         /// <param name="expression"> The expression. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extractName"/> or <paramref name="expression"/> is null. </exception>

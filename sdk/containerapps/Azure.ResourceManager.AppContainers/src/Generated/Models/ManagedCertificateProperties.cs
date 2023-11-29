@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Certificate resource specific properties. </summary>
     public partial class ManagedCertificateProperties
     {
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         public ManagedCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="error"> Any error occurred during the certificate provision. </param>

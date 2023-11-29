@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure virtual network function template. </summary>
     public partial class AzureCoreNetworkFunctionTemplate : VirtualNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionTemplate"/>. </summary>
         public AzureCoreNetworkFunctionTemplate()
         {
             NetworkFunctionApplications = new ChangeTrackingList<AzureCoreNetworkFunctionApplication>();
             NfviType = VirtualNetworkFunctionNfviType.AzureCore;
         }
 
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.

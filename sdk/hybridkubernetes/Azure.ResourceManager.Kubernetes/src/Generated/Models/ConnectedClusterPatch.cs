@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> Object containing updates for patch operations. </summary>
     public partial class ConnectedClusterPatch
     {
-        /// <summary> Initializes a new instance of ConnectedClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
         public ConnectedClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

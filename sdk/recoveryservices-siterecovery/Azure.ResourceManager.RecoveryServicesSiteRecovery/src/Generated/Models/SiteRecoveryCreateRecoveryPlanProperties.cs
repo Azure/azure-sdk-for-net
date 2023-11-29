@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan creation properties. </summary>
     public partial class SiteRecoveryCreateRecoveryPlanProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateRecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateRecoveryPlanProperties"/>. </summary>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
         /// <param name="groups"> The recovery plan groups. </param>

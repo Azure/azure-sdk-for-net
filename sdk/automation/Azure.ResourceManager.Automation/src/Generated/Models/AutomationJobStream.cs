@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the job stream. </summary>
     public partial class AutomationJobStream
     {
-        /// <summary> Initializes a new instance of AutomationJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         internal AutomationJobStream()
         {
             Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
         /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
         /// <param name="time"> Gets or sets the creation time of the job. </param>

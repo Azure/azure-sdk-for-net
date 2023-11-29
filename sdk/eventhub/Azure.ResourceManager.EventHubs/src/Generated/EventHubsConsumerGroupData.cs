@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsConsumerGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsConsumerGroupData"/>. </summary>
         public EventHubsConsumerGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsConsumerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppHttpSettings
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpSettings"/>. </summary>
         public ContainerAppHttpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpSettings"/>. </summary>
         /// <param name="requireHttps"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
         /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>

@@ -13,13 +13,13 @@ namespace Azure.Communication.CallingServer
     /// <summary> The GetParticipantsResponse. </summary>
     internal partial class GetParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         internal GetParticipantsResponseInternal()
         {
             Values = new ChangeTrackingList<AcsCallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         /// <param name="values"></param>
         /// <param name="nextLink"></param>
         internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink)

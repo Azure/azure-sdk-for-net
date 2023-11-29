@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A type of synchronization setting based on schedule. </summary>
     public partial class ScheduledSynchronizationSetting : DataShareSynchronizationSettingData
     {
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         public ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = SynchronizationSettingKind.ScheduleBased;
         }
 
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

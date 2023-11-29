@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Provider specific input for InMage unplanned failover. </summary>
     public partial class InMageUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageUnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageUnplannedFailoverContent"/>. </summary>
         public InMageUnplannedFailoverContent()
         {
             InstanceType = "InMage";

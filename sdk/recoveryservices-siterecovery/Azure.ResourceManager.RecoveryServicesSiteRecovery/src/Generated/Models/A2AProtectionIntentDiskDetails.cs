@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure VM unmanaged disk input details. </summary>
     public partial class A2AProtectionIntentDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskDetails(Uri diskUri)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskUri = diskUri;
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountCustomContent">
         /// The recovery VHD storage account input.

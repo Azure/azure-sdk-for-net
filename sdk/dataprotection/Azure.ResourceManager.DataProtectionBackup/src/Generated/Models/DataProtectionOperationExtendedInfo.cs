@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionOperationExtendedInfo
     {
-        /// <summary> Initializes a new instance of DataProtectionOperationExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationExtendedInfo"/>. </summary>
         protected DataProtectionOperationExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionOperationExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal DataProtectionOperationExtendedInfo(string objectType)
         {

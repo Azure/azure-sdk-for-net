@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Summary of the replication monitoring data for this vault. </summary>
     public partial class VaultMonitoringSummary
     {
-        /// <summary> Initializes a new instance of VaultMonitoringSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSummary"/>. </summary>
         internal VaultMonitoringSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultMonitoringSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSummary"/>. </summary>
         /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
         /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
         /// <param name="eventsCount"> Count of all critical warnings. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> User update parameters. </summary>
     public partial class ApiManagementUserPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementUserPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
         public ApiManagementUserPatch()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();

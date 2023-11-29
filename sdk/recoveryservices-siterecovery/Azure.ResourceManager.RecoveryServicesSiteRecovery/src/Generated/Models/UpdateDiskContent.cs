@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input for update. </summary>
     public partial class UpdateDiskContent
     {
-        /// <summary> Initializes a new instance of UpdateDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public UpdateDiskContent(string diskId)

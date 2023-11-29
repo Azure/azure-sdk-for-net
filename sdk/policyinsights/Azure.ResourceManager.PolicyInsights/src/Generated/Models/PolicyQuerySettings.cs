@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Parameter group. </summary>
     public partial class PolicyQuerySettings
     {
-        /// <summary> Initializes a new instance of PolicyQuerySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
         public PolicyQuerySettings()
         {
         }

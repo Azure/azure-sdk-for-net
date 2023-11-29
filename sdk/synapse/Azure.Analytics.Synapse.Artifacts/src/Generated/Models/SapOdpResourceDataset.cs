@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SAP ODP Resource properties. </summary>
     public partial class SapOdpResourceDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapOdpResource";
         }
 
-        /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

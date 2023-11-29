@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class CustomKeysWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of CustomKeysWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomKeysWorkspaceConnectionProperties"/>. </summary>
         public CustomKeysWorkspaceConnectionProperties()
         {
             AuthType = MachineLearningConnectionAuthType.CustomKeys;
         }
 
-        /// <summary> Initializes a new instance of CustomKeysWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomKeysWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

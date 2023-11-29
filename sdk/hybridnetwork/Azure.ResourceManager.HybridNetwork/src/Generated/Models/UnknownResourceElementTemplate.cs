@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The UnknownResourceElementTemplate. </summary>
     internal partial class UnknownResourceElementTemplate : ResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of UnknownResourceElementTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceElementTemplate"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>

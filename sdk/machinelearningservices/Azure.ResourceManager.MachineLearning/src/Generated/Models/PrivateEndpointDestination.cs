@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class PrivateEndpointDestination
     {
-        /// <summary> Initializes a new instance of PrivateEndpointDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointDestination"/>. </summary>
         public PrivateEndpointDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointDestination"/>. </summary>
         /// <param name="serviceResourceId"></param>
         /// <param name="sparkEnabled"></param>
         /// <param name="sparkStatus"> Type of a managed network Outbound Rule of a machine learning workspace. </param>

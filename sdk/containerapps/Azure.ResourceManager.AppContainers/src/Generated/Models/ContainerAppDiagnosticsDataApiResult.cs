@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics data returned from a detector. </summary>
     public partial class ContainerAppDiagnosticsDataApiResult
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsDataApiResult"/>. </summary>
         public ContainerAppDiagnosticsDataApiResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsDataApiResult"/>. </summary>
         /// <param name="table"> Table response. </param>
         /// <param name="renderingProperties"> Details of the table response. </param>
         internal ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table, ContainerAppDiagnosticRendering renderingProperties)

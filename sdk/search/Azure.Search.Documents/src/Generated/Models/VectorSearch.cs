@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options related to vector search. </summary>
     public partial class VectorSearch
     {
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         public VectorSearch()
         {
             Profiles = new ChangeTrackingList<VectorSearchProfile>();
             Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         /// <param name="profiles"> Defines combinations of configurations to use with vector search. </param>
         /// <param name="algorithms">
         /// Contains configuration options specific to the algorithm used during indexing or querying.

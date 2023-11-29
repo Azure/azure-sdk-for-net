@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A list of Network Manager Deployment Status. </summary>
     internal partial class NetworkManagerDeploymentStatusListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusListResult"/>. </summary>
         internal NetworkManagerDeploymentStatusListResult()
         {
             Value = new ChangeTrackingList<NetworkManagerDeploymentStatus>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusListResult"/>. </summary>
         /// <param name="value"> Gets a page of Network Manager Deployment Status. </param>
         /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
         internal NetworkManagerDeploymentStatusListResult(IReadOnlyList<NetworkManagerDeploymentStatus> value, string skipToken)

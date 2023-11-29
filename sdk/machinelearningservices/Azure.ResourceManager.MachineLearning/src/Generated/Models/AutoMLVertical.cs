@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         protected AutoMLVertical(MachineLearningTableJobInput trainingData)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TrainingData = trainingData;
         }
 
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster monitor parameters. </summary>
     public partial class HDInsightClusterEnableClusterMonitoringContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterEnableClusterMonitoringContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterEnableClusterMonitoringContent"/>. </summary>
         public HDInsightClusterEnableClusterMonitoringContent()
         {
         }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a machine that is part of a machine group. </summary>
     public partial class VmRecommendation
     {
-        /// <summary> Initializes a new instance of VmRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmRecommendation"/>. </summary>
         public VmRecommendation()
         {
         }
 
-        /// <summary> Initializes a new instance of VmRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmRecommendation"/>. </summary>
         /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
         /// <param name="recommendationAction"> The recommendation action of the machine or rule. </param>
         /// <param name="resourceId"> The full resource id of the machine. </param>

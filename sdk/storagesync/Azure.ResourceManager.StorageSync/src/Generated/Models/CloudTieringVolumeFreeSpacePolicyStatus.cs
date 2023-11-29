@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Status of the volume free space policy. </summary>
     public partial class CloudTieringVolumeFreeSpacePolicyStatus
     {
-        /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         internal CloudTieringVolumeFreeSpacePolicyStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>

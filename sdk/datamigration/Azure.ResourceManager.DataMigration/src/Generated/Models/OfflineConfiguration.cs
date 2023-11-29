@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Offline configuration. </summary>
     public partial class OfflineConfiguration
     {
-        /// <summary> Initializes a new instance of OfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfflineConfiguration"/>. </summary>
         public OfflineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of OfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfflineConfiguration"/>. </summary>
         /// <param name="offline"> Offline migration. </param>
         /// <param name="lastBackupName"> Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share. </param>
         internal OfflineConfiguration(bool? offline, string lastBackupName)

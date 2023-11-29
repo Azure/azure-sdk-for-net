@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Https settings for a domain. </summary>
     public partial class CustomHttpsConfiguration
     {
-        /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             MinimumTlsVersion = minimumTlsVersion;
         }
 
-        /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>

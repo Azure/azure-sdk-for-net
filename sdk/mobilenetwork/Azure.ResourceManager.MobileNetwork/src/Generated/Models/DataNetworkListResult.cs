@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for data network API service call. </summary>
     internal partial class DataNetworkListResult
     {
-        /// <summary> Initializes a new instance of DataNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkListResult"/>. </summary>
         internal DataNetworkListResult()
         {
             Value = new ChangeTrackingList<MobileDataNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of DataNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkListResult"/>. </summary>
         /// <param name="value"> A list of data networks. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal DataNetworkListResult(IReadOnlyList<MobileDataNetworkData> value, string nextLink)

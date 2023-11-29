@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The recurrence schedule. </summary>
     public partial class LogicWorkflowRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceSchedule"/>. </summary>
         public LogicWorkflowRecurrenceSchedule()
         {
             Minutes = new ChangeTrackingList<int>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             MonthlyOccurrences = new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceSchedule"/>. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>

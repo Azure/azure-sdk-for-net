@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesFluxConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         public KubernetesFluxConfigurationData()
         {
             Kustomizations = new ChangeTrackingDictionary<string, Kustomization>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Statuses = new ChangeTrackingList<KubernetesObjectStatus>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A VM Family and its associated core quota for the Batch account. </summary>
     public partial class BatchVmFamilyCoreQuota
     {
-        /// <summary> Initializes a new instance of BatchVmFamilyCoreQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmFamilyCoreQuota"/>. </summary>
         internal BatchVmFamilyCoreQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchVmFamilyCoreQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmFamilyCoreQuota"/>. </summary>
         /// <param name="name"> The Virtual Machine family name. </param>
         /// <param name="coreQuota"> The core quota for the VM family for the Batch account. </param>
         internal BatchVmFamilyCoreQuota(string name, int? coreQuota)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Pre Restore request object. </summary>
     public partial class PreRestoreContent
     {
-        /// <summary> Initializes a new instance of PreRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreRestoreContent"/>. </summary>
         public PreRestoreContent()
         {
             RestoreFileSpec = new ChangeTrackingList<RestoreFileSpec>();

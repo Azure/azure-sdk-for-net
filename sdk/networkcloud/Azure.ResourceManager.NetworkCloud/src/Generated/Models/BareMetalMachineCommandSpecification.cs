@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineCommandSpecification represents the command and optional arguments to exercise against the bare metal machine. </summary>
     public partial class BareMetalMachineCommandSpecification
     {
-        /// <summary> Initializes a new instance of BareMetalMachineCommandSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineCommandSpecification"/>. </summary>
         /// <param name="command"> The command to execute against the bare metal machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public BareMetalMachineCommandSpecification(string command)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration Run properties. </summary>
     public partial class SoftwareUpdateConfigurationRun
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         internal SoftwareUpdateConfigurationRun()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration run. </param>
         /// <param name="id"> Resource Id of the software update configuration run. </param>
         /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>

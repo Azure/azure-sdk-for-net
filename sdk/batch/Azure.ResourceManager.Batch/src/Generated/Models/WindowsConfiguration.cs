@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Windows operating system settings to apply to the virtual machine. </summary>
     internal partial class WindowsConfiguration
     {
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         public WindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         /// <param name="isAutomaticUpdateEnabled"> If omitted, the default value is true. </param>
         internal WindowsConfiguration(bool? isAutomaticUpdateEnabled)
         {

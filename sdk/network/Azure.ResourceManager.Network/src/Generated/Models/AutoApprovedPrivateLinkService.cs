@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The information of an AutoApprovedPrivateLinkService. </summary>
     public partial class AutoApprovedPrivateLinkService
     {
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkService"/>. </summary>
         internal AutoApprovedPrivateLinkService()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkService"/>. </summary>
         /// <param name="privateLinkService"> The id of the private link service resource. </param>
         internal AutoApprovedPrivateLinkService(string privateLinkService)
         {
