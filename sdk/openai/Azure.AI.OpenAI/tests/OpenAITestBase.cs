@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI.Tests
             string azureResourceApiKeyVariableName = null)
         {
             string endpointVariableName = GetAzureEndpointVariableNameForScenario(scenario);
-            string keyVariableName = GetAzureEndpointVariableNameForScenario(scenario);
+            string keyVariableName = GetAzureKeyVariableNameForScenario(scenario);
             if (TestEnvironment.TryGetUrlVariable(endpointVariableName, out var urlVariable)
                 && TestEnvironment.TryGetKeyVariable(keyVariableName, out var keyVariable))
             {
@@ -394,6 +394,13 @@ namespace Azure.AI.OpenAI.Tests
                 NonAzureModelName = "dall-e-3",
             },
 
+            [Scenario.LegacyImageGenerations] = new()
+            {
+                AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                AzureDeploymentName = "None!",
+                AzureResourceLocation = AzureLocation.EastUS,
+            },
+
             [Scenario.ChatTools] = new()
             {
                 AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
@@ -488,6 +495,7 @@ namespace Azure.AI.OpenAI.Tests
             Embeddings,
             AudioTranscription,
             ImageGenerations,
+            LegacyImageGenerations,
             ChatTools,
             VisionPreview,
         }

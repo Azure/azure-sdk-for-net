@@ -52,5 +52,43 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
         }
+
+        [RecordedTest]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview)]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview)]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview, false)]
+        [TestCase(Service.NonAzure)]
+        public async Task DallE2LegacySupport(
+            Service serviceTarget,
+            OpenAIClientOptions.ServiceVersion azureServiceVersion = default,
+            bool shouldWork = true)
+        {
+            OpenAIClient client = GetTestClient(
+                serviceTarget,
+                Scenario.LegacyImageGenerations,
+                azureServiceVersionOverride: azureServiceVersion);
+
+            var requestOptions = new ImageGenerationOptions()
+            {
+                Prompt = "an old dall-e-2 image generator still creating images",
+            };
+
+            if (shouldWork)
+            {
+                Response<ImageGenerations> response = await client.GetImageGenerationsAsync(requestOptions);
+                Assert.That(response.Value, Is.InstanceOf<ImageGenerations>());
+
+                Assert.That(response.Value.Data, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Data[0].Url, Is.Not.Null.Or.Empty);
+            }
+            else
+            {
+                NotSupportedException exception = Assert.ThrowsAsync<NotSupportedException>(async () =>
+                {
+                    await client.GetImageGenerationsAsync(requestOptions);
+                });
+                Assert.That(exception.Message.Contains("dall-e-2"));
+            }
+        }
     }
 }
